@@ -1,0 +1,742 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type person ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol ( type amount ) ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( grantment grant ( symbol ( type data ) ) ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol «bar» ) 
+                                    ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                            ( combinor ( combinand 
+                                                    ( scalar-comparison 
+                                                        ( scalar-expression 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression ( symbol «bar» ) ) 
+                                                                        ( time-unit years ) ) 
+                                                                    ( symbol «bar» ) ) ) ) 
+                                                        ( comparison-operator later ) 
+                                                        ( scalar-expression ( symbol «bar» ) ) ) ) ) 
+                                            ( combinator neither ) ) ) ) ) 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand ( symbol «bar» ) 
+                                                                            expiration ) ) 
+                                                                    ( combinand ( symbol «bar» ) 
+                                                                        expiration ) 
+                                                                    ( combinator nor ) ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( comparison-operator equal ) 
+                                                                        ( scalar-expression 123 ) ) ) ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression ( symbol «bar» ) ) 
+                                                                                    ( time-unit milliseconds ) ) 
+                                                                                ( symbol «bar» ) ) ) ) ) 
+                                                                ( combinand ( symbol ( type time ) ) 
+                                                                    expiration ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand ( symbol ( type person ) ) ) 
+                                                            ( combinator or- ) ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression ( symbol ( type time ) ) ) ) ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinor ( combinor ( combinand ( symbol «bar» ) ) ) 
+                                                        ( combinand ( symbol ( type person ) ) 
+                                                            expiration ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time current-time ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinor ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression ( symbol ( type time ) ) ) ) ) ) 
+                                                ( combinand ( symbol «bar» ) ) 
+                                                ( combinator neither ) ) 
+                                            ( combinator nor ) ) ) 
+                                    preposition 
+                                    ( object reflexive ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol ( type amount ) ) ) ) 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combinor ( combinand ( symbol ( type time ) ) 
+                                                        expiration ) ) ) 
+                                            ( combinor ( combinand 
+                                                    ( scalar-comparison 
+                                                        ( scalar-expression 123 ) 
+                                                        ( comparison-operator equal ) 
+                                                        ( scalar-expression 123 ) ) ) ) 
+                                            ( combinator or- ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type amount ) ) ) ) 
+                                                                                                ( combinand 
+                                                                                                    ( point-in-time 
+                                                                                                        ( relative-time 
+                                                                                                            ( duration 
+                                                                                                                ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                                                                ( time-unit years ) ) 
+                                                                                                            ( symbol «bar» ) ) ) ) 
+                                                                                                ( combinator or- ) ) 
+                                                                                            ( combinand 
+                                                                                                ( negation 
+                                                                                                    ( negator ) 
+                                                                                                    ( symbol ( type time ) ) 
+                                                                                                    fixed ) ) 
+                                                                                            ( combinator and ) ) ) 
+                                                                                    ( combinor ( combinand 
+                                                                                            ( scalar-comparison 
+                                                                                                ( scalar-expression 123 ) 
+                                                                                                ( comparison-operator equal ) 
+                                                                                                ( scalar-expression 123 ) ) ) ) 
+                                                                                    ( combinator nor ) ) 
+                                                                                ( combinor ( combinand ( symbol «bar» ) 
+                                                                                        expiration ) ) ) 
+                                                                            ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «bar» ) ) ) 
+                                                                                        ( combinand ( symbol ( type time ) ) ) 
+                                                                                        ( combinator and ) ) 
+                                                                                    ( combinand ( symbol ( type amount ) ) 
+                                                                                        expiration ) 
+                                                                                    ( combinator nor ) ) 
+                                                                                ( combinand 
+                                                                                    ( existence ( symbol «bar» ) 
+                                                                                        be 
+                                                                                        ( contract 
+                                                                                            ( this-contract «bar» ) ) ) ) 
+                                                                                ( combinator nor ) ) 
+                                                                            ( combinator and ) ) 
+                                                                        ( combinor ( combinand 
+                                                                                ( existence ( symbol «bar» ) 
+                                                                                    equal fixed ) ) ) 
+                                                                        ( combinator neither ) ) 
+                                                                    ( combinor ( combinand 
+                                                                            ( existence ( symbol ( type time ) ) 
+                                                                                being true ) ) ) 
+                                                                    ( combinator nor ) ) 
+                                                                ( combinor ( combinor ( combinor ( combinand 
+                                                                                ( existence ( symbol «bar» ) 
+                                                                                    be ) ) ) 
+                                                                        ( combinand ( symbol «bar» ) 
+                                                                            expiration ) 
+                                                                        ( combinator nor ) ) 
+                                                                    ( combinand 
+                                                                        ( existence ( symbol ( type data ) ) 
+                                                                            being true ) ) 
+                                                                    ( combinator and ) ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol «bar» ) 
+                                                                        ( contract 
+                                                                            ( this-contract «bar» ) ) ) ) ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                    ( point-in-time 
+                                                                                        ( relative-time 
+                                                                                            ( duration 
+                                                                                                ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                                                ( time-unit hours ) ) 
+                                                                                            ( symbol ( type text ) ) ) ) ) ) 
+                                                                            ( combinand 
+                                                                                ( negation 
+                                                                                    ( negator be ) 
+                                                                                    ( symbol ( type time ) ) ) ) 
+                                                                            ( combinator and ) ) 
+                                                                        ( combinand ( symbol ( type binary ) ) 
+                                                                            expiration ) 
+                                                                        ( combinator and ) ) 
+                                                                    ( combinand ( symbol ( type binary ) ) 
+                                                                        expiration ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression ( symbol ( type person ) ) ) 
+                                                                        ( comparison-operator equal ) 
+                                                                        ( scalar-expression ( symbol «bar» ) ) ) ) 
+                                                                ( combinator and ) ) 
+                                                            ( combinand ( symbol «bar» ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinator nor ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( time-unit hours ) ) ) ) ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( existence ( symbol «bar» ) 
+                                                            equal fixed ) ) ) ) 
+                                            ( combinor ( combinand ( symbol ( type amount ) ) 
+                                                    expiration ) ) 
+                                            ( combinator and ) ) ) 
+                                    preposition 
+                                    ( object reflexive ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «bar» ) ) ) 
+                            ( predicate 
+                                ( setting 
+                                    ( illocutor be ) 
+                                    ( symbol «bar» ) ) ) 
+                            ( predicate 
+                                ( setting 
+                                    ( illocutor be ) 
+                                    ( symbol «bar» ) ) ) 
+                            ( predicate 
+                                ( registration register ( symbol «bar» ) 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                                    ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression ( symbol ( type text ) ) ) 
+                                                                            ( comparison-operator later ) 
+                                                                            ( scalar-expression 123 ) ) ) 
+                                                                    ( combinator neither ) ) ) 
+                                                            ( combinor ( combinor ( combinor ( combinand 
+                                                                            ( scalar-comparison 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time current-time ) ) 
+                                                                                ( comparison-operator equal ) 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time current-time ) ) ) ) ) 
+                                                                    ( combinand 
+                                                                        ( existence ( symbol «bar» ) 
+                                                                            be 
+                                                                            ( contract all-contracts ) ) ) 
+                                                                    ( combinator neither ) ) 
+                                                                ( combinand ( symbol ( type time ) ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( point-in-time current-time ) ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol ( type person ) ) 
+                                                                fixed ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinor ( combinand ( symbol «bar» ) ) ) ) 
+                                            ( combinor ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «bar» ) 
+                                                            fixed ) ) ) 
+                                                ( combinand 
+                                                    ( scalar-comparison 
+                                                        ( scalar-expression ( symbol «bar» ) ) 
+                                                        ( comparison-operator equal ) 
+                                                        ( scalar-expression 123 ) ) ) 
+                                                ( combinator neither ) ) ) ) ) ) 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «bar» ) ) ) ) 
+                                                                ( combinor ( combinand expiration ) ) 
+                                                                ( combinator and ) ) 
+                                                            ( combinor ( combinor ( combinand 
+                                                                        ( point-in-time current-time ) ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «bar» ) 
+                                                                    fixed ) ) ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( point-in-time current-time ) ) ) 
+                                                        ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 123 ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) ) ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) 
+                                                                        ( comparison-operator equal ) 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time 
+                                                                                ( relative-time 
+                                                                                    ( duration 
+                                                                                        ( scalar-expression ( symbol «bar» ) ) 
+                                                                                        ( time-unit milliseconds ) ) 
+                                                                                    ( symbol ( type text ) ) ) ) ) ) ) ) 
+                                                            ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression ( symbol «bar» ) ) ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand ( symbol «bar» ) 
+                                                            expiration ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand ( symbol «bar» ) ) 
+                                                    ( combinator and ) ) ) 
+                                            ( combinor ( combinand ( symbol «bar» ) 
+                                                    expiration ) ) ) ) 
+                                    preposition 
+                                    ( object reflexive ) 
+                                    from-escrow ) ) 
+                            ( predicate 
+                                ( payment pay preposition 
+                                    ( object ( symbol «bar» ) ) 
+                                    escrow ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combinor ( combinand 
+                                            ( scalar-comparison 
+                                                ( scalar-expression 
+                                                    ( point-in-time current-time ) ) 
+                                                ( comparison-operator later ) 
+                                                ( scalar-expression 123 ) ) ) ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «corge» 
+            ( provisions 
+                ( definitions 
+                    ( definition «corge» ( type amount ) ) 
+                    ( definition «corge» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «corge» ( type text ) ) 
+                    ( definition «corge» 
+                        ( this-contract «bar» ) ) ) 
+                ( clauses 
+                    ( clause «grault» 
+                        ( body 
+                            ( function «grault» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand ( symbol ( type time ) ) 
+                                                        expiration ) ) ) 
+                                            ( combinor ( combinand ( symbol ( type binary ) ) ) ) ) 
+                                        ( combinor ( combinand 
+                                                ( point-in-time 
+                                                    ( relative-time 
+                                                        ( duration 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 123 ) 
+                                                                            ( time-unit months ) ) ) ) ) 
+                                                            ( time-unit minutes ) ) ) ) ) ) ) ) ) ) ) 
+                    ( clause «garply» 
+                        ( body 
+                            ( function «garply» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combinor ( combinand 
+                                                ( existence ( symbol «garply» ) 
+                                                    be ) ) ) ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols ( symbol «corge» ) ) 
+                                    ( symbol «corge» ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( declaration declare ( symbol «corge» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type time ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type data ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «corge» ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type time ) ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                            ( negation 
+                                                                                ( negator ) 
+                                                                                ( symbol ( type data ) ) 
+                                                                                ( contract all-contracts ) ) ) ) 
+                                                                    ( combinand ( symbol ( type amount ) ) ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand 
+                                                                    ( existence ( symbol ( type text ) ) 
+                                                                        be ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand expiration ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol ( type amount ) ) 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( time-unit hours ) ) 
+                                                                ( symbol ( type amount ) ) ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol «corge» ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «corge» ) ) ) ) ) ) 
+                                        preposition 
+                                        ( object ( symbol ( type person ) ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol «corge» ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator and ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type text ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type time ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «corge» ) ) ) ) 
+                                                                                ( combinor ( combinand 
+                                                                                        ( existence ( symbol «corge» ) 
+                                                                                            being true ) ) ) 
+                                                                                ( combinator and ) ) 
+                                                                            ( combinor ( combinand expiration ) ) 
+                                                                            ( combinator and ) ) 
+                                                                        ( combinor ( combinand 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression 
+                                                                                                ( point-in-time current-time ) ) 
+                                                                                            ( time-unit years ) ) 
+                                                                                        ( symbol «corge» ) ) ) ) ) ) 
+                                                                    ( combinor ( combinand 
+                                                                            ( negation 
+                                                                                ( negator be ) 
+                                                                                ( symbol «corge» ) ) ) ) 
+                                                                    ( combinator nor ) ) 
+                                                                ( combinor ( combinor ( combinand 
+                                                                            ( scalar-comparison 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time current-time ) ) 
+                                                                                ( comparison-operator later ) 
+                                                                                ( scalar-expression 123 ) ) ) ) 
+                                                                    ( combinand ( symbol ( type amount ) ) 
+                                                                        expiration ) 
+                                                                    ( combinator neither ) ) ) 
+                                                            ( combinor ( combinand ( symbol «corge» ) ) ) ) 
+                                                        ( combinor ( combinor ( combinand ( symbol «corge» ) 
+                                                                    expiration ) ) 
+                                                            ( combinand ( symbol «corge» ) ) 
+                                                            ( combinator neither ) ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinand ( symbol ( type binary ) ) ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol ( type data ) ) 
+                                                                    be 
+                                                                    ( contract 
+                                                                        ( this-contract «bar» ) ) ) ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol ( type amount ) ) 
+                                                                being true ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol ( type amount ) ) 
+                                                                fixed ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «corge» ) 
+                                                            fixed ) ) 
+                                                    ( combinator nor ) ) ) ) 
+                                        preposition 
+                                        ( object ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol «corge» ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type binary ) ) ) ) ) 
+                                                                                                        ( combinor ( combinor ( combinor ( combinand 
+                                                                                                                        ( existence ( symbol ( type text ) ) 
+                                                                                                                            be ) ) ) 
+                                                                                                                ( combinand ( symbol ( type data ) ) 
+                                                                                                                    expiration ) 
+                                                                                                                ( combinator or- ) ) 
+                                                                                                            ( combinand ( symbol «corge» ) ) 
+                                                                                                            ( combinator or- ) ) ) 
+                                                                                                    ( combinor ( combinand ( symbol ( type amount ) ) ) ) 
+                                                                                                    ( combinator nor ) ) 
+                                                                                                ( combinor ( combinand 
+                                                                                                        ( scalar-comparison 
+                                                                                                            ( scalar-expression 
+                                                                                                                ( point-in-time 
+                                                                                                                    ( relative-time 
+                                                                                                                        ( duration 
+                                                                                                                            ( scalar-expression ( symbol «corge» ) ) 
+                                                                                                                            ( time-unit minutes ) ) 
+                                                                                                                        ( symbol «corge» ) ) ) ) 
+                                                                                                            ( comparison-operator equal ) 
+                                                                                                            ( scalar-expression 
+                                                                                                                ( point-in-time current-time ) ) ) ) ) 
+                                                                                                ( combinator neither ) ) 
+                                                                                            ( combinor ( combinand expiration ) ) ) 
+                                                                                        ( combinor ( combinor ( combinand expiration ) ) 
+                                                                                            ( combinand ( symbol «corge» ) ) 
+                                                                                            ( combinator neither ) ) ) 
+                                                                                    ( combinor ( combinand ( symbol ( type data ) ) ) ) 
+                                                                                    ( combinator neither ) ) 
+                                                                                ( combinor ( combinand expiration ) ) ) 
+                                                                            ( combinor ( combinor ( combinand 
+                                                                                        ( existence ( symbol «corge» ) 
+                                                                                            be ) ) ) 
+                                                                                ( combinand 
+                                                                                    ( point-in-time current-time ) ) 
+                                                                                ( combinator nor ) ) 
+                                                                            ( combinator or- ) ) 
+                                                                        ( combinor ( combinand ( symbol ( type binary ) ) 
+                                                                                expiration ) ) 
+                                                                        ( combinator neither ) ) 
+                                                                    ( combinor ( combinand expiration ) ) ) 
+                                                                ( combinor ( combinand expiration ) ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( existence ( symbol «corge» ) 
+                                                                        be ) ) ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                                ( combinand ( symbol «corge» ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol ( type time ) ) 
+                                                                    being true ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinand ( symbol «corge» ) 
+                                                                    expiration ) ) 
+                                                            ( combinand ( symbol ( type time ) ) 
+                                                                expiration ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time current-time ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( negation 
+                                                                            ( negator ) 
+                                                                            ( symbol «corge» ) ) ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator ) 
+                                                                        ( symbol «corge» ) ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol «corge» ) 
+                                                                    being true ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator nor ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression ( symbol ( type text ) ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression ( symbol ( type binary ) ) ) ) ) 
+                                                    ( combinator and ) ) ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 123 ) ) ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression ( symbol ( type data ) ) ) 
+                                                                    ( time-unit minutes ) ) ) ) ) 
+                                                    ( combinator nor ) ) ) 
+                                            ( combinor ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
+                                                            expiration ) ) 
+                                                    ( combinand ( symbol «corge» ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinand expiration ) 
+                                                ( combinator nor ) ) 
+                                            ( combinator and ) ) 
+                                        ( combinor ( combinor ( combinand ( symbol ( type amount ) ) 
+                                                    expiration ) ) 
+                                            ( combinand ( symbol «corge» ) ) 
+                                            ( combinator nor ) ) 
+                                        ( combinator nor ) ) ) ) ) ) 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol «corge» ) 
+                            ( this-contract «bar» ) ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols ( symbol «corge» ) ) 
+                                    ( symbol «corge» ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                                    ( combinand expiration ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol «corge» ) 
+                                                                        ( contract 
+                                                                            ( this-contract «bar» ) ) ) ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinand ( symbol «corge» ) 
+                                                                expiration ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time 
+                                                                                        ( relative-time 
+                                                                                            ( duration 
+                                                                                                ( scalar-expression 
+                                                                                                    ( point-in-time current-time ) ) 
+                                                                                                ( time-unit months ) ) 
+                                                                                            ( symbol ( type person ) ) ) ) ) 
+                                                                                ( time-unit years ) ) 
+                                                                            ( symbol ( type text ) ) ) ) ) ) ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression 
+                                                                                                ( point-in-time 
+                                                                                                    ( relative-time 
+                                                                                                        ( duration 
+                                                                                                            ( scalar-expression 
+                                                                                                                ( point-in-time 
+                                                                                                                    ( relative-time 
+                                                                                                                        ( duration 
+                                                                                                                            ( scalar-expression 
+                                                                                                                                ( point-in-time current-time ) ) 
+                                                                                                                            ( time-unit weeks ) ) 
+                                                                                                                        ( symbol ( type person ) ) ) ) ) 
+                                                                                                            ( time-unit hours ) ) 
+                                                                                                        ( symbol ( type text ) ) ) ) ) 
+                                                                                            ( time-unit months ) ) 
+                                                                                        ( symbol ( type person ) ) ) ) ) 
+                                                                            ( time-unit weeks ) ) ) ) ) ) ) ) ) ) 
+                                        preposition 
+                                        ( object ( symbol «corge» ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type person ) ) ) ) ) 
+                                                ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «corge» ) ) ) 
+                                                            ( combinand ( symbol ( type text ) ) 
+                                                                expiration ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinand ( symbol ( type person ) ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression ( symbol ( type data ) ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression 123 ) 
+                                                                                            ( time-unit milliseconds ) ) 
+                                                                                        ( symbol «corge» ) ) ) ) 
+                                                                            ( time-unit seconds ) ) ) ) ) ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinator and ) ) 
+                                            ( combinor ( combinor ( combinor ( combinand ( symbol «corge» ) ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinand 
+                                                    ( existence ( symbol ( type person ) ) 
+                                                        be ) ) 
+                                                ( combinator neither ) ) 
+                                            ( combinator or- ) ) 
+                                        ( combinor ( combinand 
+                                                ( point-in-time 
+                                                    ( relative-time 
+                                                        ( duration 
+                                                            ( scalar-expression 123 ) 
+                                                            ( time-unit years ) ) 
+                                                        ( symbol «corge» ) ) ) ) ) 
+                                        ( combinator neither ) ) ) ) ) ) ) ) ) ) )

@@ -1,0 +1,18 @@
+	%token A
+	%token Appoint
+	%token Appointment_Predicate
+	%token Appoints
+	%token Be
+	%token Party
+	%token Somebody
+	%token To
+	
+	Appointment_Predicate:	
+		  Appoints Somebody A Party                       { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoints Somebody Be A Party                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoints Somebody To A Party                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoints Somebody To Be A Party                 { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoint Somebody A Party                        { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoint Somebody Be A Party                     { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoint Somebody To A Party                     { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+		| Appoint Somebody To Be A Party                  { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }

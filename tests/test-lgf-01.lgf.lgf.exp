@@ -1,0 +1,15 @@
+	
+	Document:	
+		  Code
+		;
+
+
+	Name: NAME						{ $$=$NAME; }
+	    ;
+
+	Description: DESCRIPTION						{ $$=$DESCRIPTION; }
+	    ;
+
+	Scalar: SCALAR						{ $$=$SCALAR; }
+	    ;
+

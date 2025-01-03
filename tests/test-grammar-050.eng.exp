@@ -1,0 +1,142 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type person ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) 
+                        ( this-contract «bar» ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «foo-bar» 
+            ( provisions 
+                ( definitions 
+                    ( definition «foo-bar» ( type text ) ) ) 
+                ( clauses 
+                    ( clause «foo-fred» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «foo-fred» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( notification notify 
+                                                    ( object ) 
+                                                    preposition 
+                                                    ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                                ( negation 
+                                                                                                    ( negator be ) 
+                                                                                                    ( symbol ( type time ) ) 
+                                                                                                    fixed ) ) ) 
+                                                                                        ( combinand ( symbol ( type binary ) ) 
+                                                                                            expiration ) 
+                                                                                        ( combinator or- ) ) 
+                                                                                    ( combinand 
+                                                                                        ( negation 
+                                                                                            ( negator be ) 
+                                                                                            ( symbol ( type amount ) ) 
+                                                                                            fixed ) ) 
+                                                                                    ( combinator or- ) ) 
+                                                                                ( combinand ( symbol «foo-fred» ) ) 
+                                                                                ( combinator nor ) ) 
+                                                                            ( combinand ( symbol «foo-fred» ) ) 
+                                                                            ( combinator and ) ) ) 
+                                                                    ( combinor ( combinor ( combinand expiration ) ) 
+                                                                        ( combinand ( symbol «foo-fred» ) ) 
+                                                                        ( combinator or- ) ) ) 
+                                                                ( combinor ( combinand 
+                                                                        ( existence ( symbol ( type time ) ) 
+                                                                            be 
+                                                                            ( contract 
+                                                                                ( this-contract «bar» ) ) ) ) ) ) 
+                                                            ( combinor ( combinand expiration ) ) ) ) ) ) 
+                                            ( predicate 
+                                                ( grantment grant ( symbol «foo-fred» ) ) ) 
+                                            ( predicate 
+                                                ( declaration declare ( symbol ( type data ) ) 
+                                                    ( contract all-contracts ) ) ) 
+                                            ( predicate 
+                                                ( grantment grant ( symbol «foo-fred» ) ) ) 
+                                            ( predicate 
+                                                ( grantment grant ( symbol ( type person ) ) ) ) ) 
+                                        permission 
+                                        ( condition if 
+                                            ( expression ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type person ) ) ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol «foo-fred» ) 
+                                                                    equal fixed ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «foo-fred» ) 
+                                                                fixed ) ) 
+                                                        ( combinator and ) ) ) ) ) ) ) 
+                                ( statement 
+                                    ( flagging 
+                                        ( illocutor be ) 
+                                        ( symbol ( type person ) ) 
+                                        ( this-contract «bar» ) ) ) ) ) ) 
+                    ( clause «baz» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «baz» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( setting 
+                                                    ( illocutor be ) 
+                                                    ( symbol «baz» ) ) ) 
+                                            ( predicate 
+                                                ( notification notify 
+                                                    ( object reflexive ) 
+                                                    preposition 
+                                                    ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( existence ( symbol «baz» ) 
+                                                                        equal fixed ) ) ) ) ) ) ) 
+                                            ( predicate 
+                                                ( grantment grant ( symbol ( type binary ) ) ) ) ) 
+                                        permission 
+                                        ( condition if 
+                                            ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                        ( point-in-time current-time ) ) ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( comparison-operator later ) 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) ) ) ) ) 
+                                                        ( combinor ( combinor ( combinand ( symbol ( type binary ) ) ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol ( type binary ) ) 
+                                                                    be 
+                                                                    ( contract 
+                                                                        ( this-contract «bar» ) ) ) ) 
+                                                            ( combinator and ) ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinand 
+                                                                    ( existence ( symbol ( type data ) ) 
+                                                                        be ) ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol «baz» ) 
+                                                                    being true ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol ( type person ) ) ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression ( symbol ( type binary ) ) ) ) ) 
+                                                        ( combinator nor ) ) ) ) ) ) ) 
+                                ( statement 
+                                    ( flagging 
+                                        ( illocutor be ) 
+                                        ( symbol «baz» ) ) ) ) ) ) ) ) ) ) )

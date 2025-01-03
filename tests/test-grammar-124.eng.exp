@@ -1,0 +1,8 @@
+( document 
+    ( head 
+        ( lex «foo-bar» ) 
+        ( lexon "Lorem ipsum dolor sit amet, consectetuer.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «plugh» ( type data ) ) ) ) ) )

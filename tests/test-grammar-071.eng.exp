@@ -1,0 +1,102 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type amount ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type person ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» ( type data ) ) 
+                    ( definition «garply» ( type time ) ) 
+                    ( definition «garply» ( type text ) ) 
+                    ( definition «garply» ( type amount ) ) 
+                    ( definition «garply» ( type data ) ) 
+                    ( definition «garply» ( type person ) ) 
+                    ( definition «garply» 
+                        ( this-contract «bar» ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol «garply» ) ) ) ) ) ) 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» ( type amount ) ) ) 
+                ( clauses 
+                    ( clause «garply-foo-bar» 
+                        ( body 
+                            ( function «garply-foo-bar» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                                            ( combinor ( combinand ( symbol «garply-foo-bar» ) ) ) ) 
+                                                        ( combinor ( combinor ( combinand ( symbol «garply-foo-bar» ) 
+                                                                    expiration ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinor ( combinand ( symbol ( type text ) ) 
+                                                                expiration ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time current-time ) ) 
+                                                        ( combinator neither ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol ( type time ) ) ) 
+                                                                            ( time-unit milliseconds ) ) ) ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression ( symbol «garply-foo-bar» ) ) ) ) ) ) 
+                                            ( combinor ( combinand expiration ) ) ) 
+                                        ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                ( existence ( symbol ( type text ) ) 
+                                                                    be ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol ( type time ) ) 
+                                                                fixed ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time current-time ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinand ( symbol ( type data ) ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinand 
+                                                ( existence ( symbol «garply-foo-bar» ) 
+                                                    equal fixed ) ) 
+                                            ( combinator and ) ) 
+                                        ( combinator or- ) ) ) ) ) ) 
+                    ( clause «fred» 
+                        ( body 
+                            ( function «fred» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combinor ( combinor ( combinand 
+                                                    ( point-in-time current-time ) ) ) 
+                                            ( combinand 
+                                                ( point-in-time 
+                                                    ( relative-time 
+                                                        ( duration 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol «fred» ) ) 
+                                                                            ( time-unit minutes ) ) 
+                                                                        ( symbol «fred» ) ) ) ) 
+                                                            ( time-unit weeks ) ) 
+                                                        ( symbol «fred» ) ) ) ) 
+                                            ( combinator neither ) ) ) ) ) ) ) ) ) ) ) )

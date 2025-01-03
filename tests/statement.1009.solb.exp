@@ -1,0 +1,177 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+contract UCCFinancingStatement {
+
+    string file_number;
+    uint initial_statement_date;
+    address payable filer;
+    address payable debtor;
+    address payable secured_party;
+    address payable filing_office;
+    string collateral;
+    uint digital_asset_collateral;
+    uint reminder_service_fee;
+    uint continuation_window_start;
+    uint continuation_statement_date;
+    string continuation_statement_filing_number;
+    uint lapse_date;
+    bool _default;
+    bool continuation_statement;
+    bool termination_statement;
+    uint termination_statement_time;
+    string notification_statement;
+    bool reminder_service_fee__set = false;
+    bool digital_asset_collateral__set = false;
+    bool terminated = false;
+
+    event Message(
+        address indexed _from,
+        address indexed _to,
+        string _message);
+
+    constructor(address payable _filing_office, address payable _debtor, address payable _secured_party, string memory _collateral) {
+        filer = payable(msg.sender);
+        filing_office = _filing_office;
+        debtor = _debtor;
+        secured_party = _secured_party;
+        collateral = _collateral;
+    }
+
+    function termination() internal {
+        terminated = true;
+    }
+
+    function check_termination() internal view {
+        require(!terminated, "contract system terminated before");
+    }
+
+    function transfer(address _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+    function send(address _to, string storage _message) internal {
+        emit Message(msg.sender, _to, _message);
+    }
+
+    function permit(address _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+
+    function certify(string memory _file_number) public {
+        check_termination();
+        permit(filing_office);
+        file_number = _file_number;
+    }
+
+    function set_file_date() public view {
+        check_termination();
+        permit(filing_office);
+        initial_statement_date = block.timestamp;
+    }
+
+    function set_lapse(uint _lapse_date) public {
+        check_termination();
+        permit(filing_office);
+        lapse_date = _lapse_date;
+    }
+
+    function set_continuation_start(uint _continuation_window_start) public {
+        check_termination();
+        permit(filing_office);
+        continuation_window_start = _continuation_window_start;
+    }
+
+    function pay_service_fee() public payable {
+        check_termination();
+        permit(secured_party);
+        reminder_service_fee = msg.value;
+        reminder_service_fee__set = true;
+    }
+
+    function notice(string memory _notification_statement) public {
+        check_termination();
+        permit(filing_office);
+        notification_statement = _notification_statement;
+    }
+
+    function notify() public view {
+        check_termination();
+        permit(filing_office);
+        if(continuation_window_start <= block.timestamp) {
+            send(secured_party, notification_statement);
+        }
+    }
+
+    function pay_escrow_in() public payable {
+        check_termination();
+        permit(debtor);
+        digital_asset_collateral = msg.value;
+        digital_asset_collateral__set = true;
+    }
+
+    function fail_to_pay() public {
+        check_termination();
+        permit(secured_party);
+        _default = true;
+    }
+
+    function take_possession() public {
+        check_termination();
+        permit(filing_office);
+        if(_default) {
+            transfer(secured_party, digital_asset_collateral);
+        }
+    }
+
+    function file_continuation(bool _continuation_statement) public {
+        check_termination();
+        permit(secured_party);
+        continuation_statement = _continuation_statement;
+    }
+
+    function set_continuation_lapse(uint _continuation_statement_date) public {
+        check_termination();
+        permit(filing_office);
+        if(continuation_statement) {
+            continuation_statement_date = _continuation_statement_date;
+        }
+    }
+
+    function file_termination(bool _termination_statement) public {
+        check_termination();
+        permit(secured_party);
+        termination_statement = _termination_statement;
+        termination_statement_time = block.timestamp;
+    }
+
+    function release_escrow() public {
+        check_termination();
+        permit(filing_office);
+        if(termination_statement) {
+            transfer(debtor, digital_asset_collateral);
+        }
+    }
+
+    function release_reminder_service_fee() public {
+        check_termination();
+        permit(filing_office);
+        if(termination_statement) {
+            transfer(secured_party, reminder_service_fee);
+        }
+    }
+
+    function termination_period() public view returns(uint) {
+        return (termination_statement_time + (365 * 86400));
+    }
+
+    function terminate_and_clear() public {
+        check_termination();
+        permit(filing_office);
+        if(termination_period() <= block.timestamp) {
+            termination();
+        }
+    }
+}

@@ -1,0 +1,108 @@
+   document 
+    ↳  head 
+    ⎸   ↳  lex «escrow»   
+    ↳  terms 
+        ↳  provisions 
+            ↳  definitions 
+            ⎸   ↳  definitions 
+            ⎸   ⎸   ↳  definitions 
+            ⎸   ⎸   ⎸   ↳  definitions 
+            ⎸   ⎸   ⎸   ⎸   ↳  definition «payer» 
+            ⎸   ⎸   ⎸   ⎸       ↳  type-term 
+            ⎸   ⎸   ⎸   ⎸           ↳  type 
+            ⎸   ⎸   ⎸   ⎸               ↳  person   
+            ⎸   ⎸   ⎸   ⎸ 
+            ⎸   ⎸   ⎸   ↳  definition «seller» 
+            ⎸   ⎸   ⎸       ↳  type-term 
+            ⎸   ⎸   ⎸           ↳  type 
+            ⎸   ⎸   ⎸               ↳  person   
+            ⎸   ⎸   ⎸ 
+            ⎸   ⎸   ↳  definition «agent» 
+            ⎸   ⎸       ↳  type-term 
+            ⎸   ⎸           ↳  type 
+            ⎸   ⎸               ↳  person   
+            ⎸   ⎸ 
+            ⎸   ↳  definition «amount» 
+            ⎸       ↳  type-term 
+            ⎸           ↳  type 
+            ⎸               ↳  amount    
+            ⎸ 
+            ↳  clauses 
+            ⎸   ↳  clauses 
+            ⎸   ⎸   ↳  clause «pay-out» 
+            ⎸   ⎸       ↳  body 
+            ⎸   ⎸           ↳  statements 
+            ⎸   ⎸               ↳  statement 
+            ⎸   ⎸                   ↳  action 
+            ⎸   ⎸                       ↳  subject 
+            ⎸   ⎸                       ⎸   ↳  symbols 
+            ⎸   ⎸                       ⎸       ↳  symbol «agent»    
+            ⎸   ⎸                       ⎸ 
+            ⎸   ⎸                       ↳  predicates 
+            ⎸   ⎸                       ⎸   ↳  predicate 
+            ⎸   ⎸                       ⎸       ↳  payment 
+            ⎸   ⎸                       ⎸           ↳  pay 
+            ⎸   ⎸                       ⎸           ⎸ 
+            ⎸   ⎸                       ⎸           ↳  preposition 
+            ⎸   ⎸                       ⎸           ⎸ 
+            ⎸   ⎸                       ⎸           ↳  object 
+            ⎸   ⎸                       ⎸           ⎸   ↳  symbol «seller»   
+            ⎸   ⎸                       ⎸           ⎸ 
+            ⎸   ⎸                       ⎸           ↳  escrow    
+            ⎸   ⎸                       ⎸ 
+            ⎸   ⎸                       ↳  permission      
+            ⎸   ⎸ 
+            ⎸   ↳  clause «pay-back» 
+            ⎸       ↳  body 
+            ⎸           ↳  statements 
+            ⎸               ↳  statement 
+            ⎸                   ↳  action 
+            ⎸                       ↳  subject 
+            ⎸                       ⎸   ↳  symbols 
+            ⎸                       ⎸       ↳  symbol «agent»    
+            ⎸                       ⎸ 
+            ⎸                       ↳  predicates 
+            ⎸                       ⎸   ↳  predicate 
+            ⎸                       ⎸       ↳  payment 
+            ⎸                       ⎸           ↳  pay 
+            ⎸                       ⎸           ⎸ 
+            ⎸                       ⎸           ↳  preposition 
+            ⎸                       ⎸           ⎸ 
+            ⎸                       ⎸           ↳  object 
+            ⎸                       ⎸           ⎸   ↳  symbol «payer»   
+            ⎸                       ⎸           ⎸ 
+            ⎸                       ⎸           ↳  escrow    
+            ⎸                       ⎸ 
+            ⎸                       ↳  permission       
+            ↳  statements 
+                ↳  statement 
+                    ↳  action 
+                        ↳  subject 
+                        ⎸   ↳  symbols 
+                        ⎸       ↳  symbol «payer»    
+                        ↳  predicates 
+                            ↳  predicates 
+                            ⎸   ↳  predicates 
+                            ⎸   ⎸   ↳  predicate 
+                            ⎸   ⎸       ↳  payment 
+                            ⎸   ⎸           ↳  pay 
+                            ⎸   ⎸           ⎸ 
+                            ⎸   ⎸           ↳  expression 
+                            ⎸   ⎸           ⎸   ↳  combination 
+                            ⎸   ⎸           ⎸       ↳  combinor 
+                            ⎸   ⎸           ⎸           ↳  combinand 
+                            ⎸   ⎸           ⎸               ↳  symbol «amount»      
+                            ⎸   ⎸           ⎸ 
+                            ⎸   ⎸           ↳  preposition 
+                            ⎸   ⎸           ⎸ 
+                            ⎸   ⎸           ↳  object    
+                            ⎸   ⎸ 
+                            ⎸   ↳  predicate 
+                            ⎸       ↳  appointment 
+                            ⎸           ↳  appoint 
+                            ⎸           ⎸ 
+                            ⎸           ↳  symbol «seller»    
+                            ↳  predicate 
+                                ↳  appointment 
+                                    ↳  appoint 
+                                    ↳  symbol «agent»          

@@ -1,0 +1,375 @@
+( document 
+    ( head 
+        ( lex «xyzzy» ) 
+        ( preamble "Cras dapibus. Vivamus elementum semper.") 
+        ( comment "Integer tincidunt. Cras dapibus..") 
+        ( authors "Nullam dictum felis.") 
+        ( lexon "In enim.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «plugh» 
+                    ( this-contract «xyzzy» ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type binary ) ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols 
+                                ( symbols 
+                                    ( symbols 
+                                        ( symbols 
+                                            ( symbols ( symbol «plugh» ) ) 
+                                            ( symbol ( type time ) ) 
+                                            catena ) 
+                                        ( symbol «plugh» ) 
+                                        catena ) 
+                                    ( symbol «plugh» ) 
+                                    catena ) 
+                                ( symbol «plugh» ) 
+                                catena ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) 
+                                                ( combinor ( combinor ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression 
+                                                                                        ( point-in-time current-time ) ) 
+                                                                                    ( time-unit years ) ) ) ) ) 
+                                                                    ( comparison-operator later ) 
+                                                                    ( scalar-expression ( symbol «plugh» ) ) ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «plugh» ) 
+                                                                ( contract all-contracts ) ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand ( symbol ( type data ) ) 
+                                                        expiration ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinator neither ) ) 
+                                            ( combinor ( combinand ( symbol ( type binary ) ) 
+                                                    expiration ) ) 
+                                            ( combinator nor ) ) ) 
+                                    preposition 
+                                    ( object reflexive ) ) ) 
+                            ( predicate 
+                                ( grantment grant ( symbol ( type binary ) ) ) ) 
+                            ( predicate 
+                                ( filing file ( symbol ( type person ) ) 
+                                    ( contract 
+                                        ( this-contract «xyzzy» ) ) ) ) 
+                            ( predicate 
+                                ( registration register ( symbol «plugh» ) ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol ( type amount ) ) 
+                                    ( expression ( combination ( combinor ( combinand 
+                                                    ( existence ( symbol ( type time ) ) 
+                                                        be 
+                                                        ( contract 
+                                                            ( this-contract «xyzzy» ) ) ) ) ) ) ) ) ) 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                            ( scalar-comparison 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time current-time ) ) 
+                                                                                ( comparison-operator later ) 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time 
+                                                                                        ( relative-time 
+                                                                                            ( duration 
+                                                                                                ( scalar-expression 123 ) 
+                                                                                                ( time-unit weeks ) ) ) ) ) ) ) ) ) 
+                                                                ( combinor ( combinand 
+                                                                        ( existence ( symbol «plugh» ) 
+                                                                            equal fixed ) ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinor ( combinor ( combinor ( combinand 
+                                                                            ( negation 
+                                                                                ( negator be ) 
+                                                                                ( symbol «plugh» ) 
+                                                                                ( contract all-contracts ) ) ) ) 
+                                                                    ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression ( symbol ( type time ) ) ) 
+                                                                            ( comparison-operator later ) 
+                                                                            ( scalar-expression 123 ) ) ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand ( symbol ( type binary ) ) ) 
+                                                                ( combinator and ) ) ) 
+                                                        ( combinor ( combinor ( combinand 
+                                                                    ( existence ( symbol ( type time ) ) 
+                                                                        equal fixed ) ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «plugh» ) ) ) 
+                                                            ( combinator neither ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) ) ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol «plugh» ) 
+                                                            expiration ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time current-time ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinor ( combinand ( symbol «plugh» ) ) ) 
+                                            ( combinator neither ) ) ) 
+                                    preposition 
+                                    ( object ( symbol «plugh» ) ) 
+                                    from-escrow ) ) 
+                            ( predicate 
+                                ( termination terminate all-contracts ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combination ( combinor ( combinand 
+                                                ( scalar-comparison 
+                                                    ( scalar-expression ( symbol «plugh» ) ) 
+                                                    ( comparison-operator later ) 
+                                                    ( scalar-expression ( symbol ( type person ) ) ) ) ) ) ) 
+                                    ( combinor ( combinand 
+                                            ( existence ( symbol ( type text ) ) 
+                                                be 
+                                                ( contract 
+                                                    ( this-contract «xyzzy» ) ) ) ) ) ) ) ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol ( type text ) ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                            ( combinor ( combinand expiration ) ) ) ) 
+                                    preposition 
+                                    ( object ( symbol ( type time ) ) ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «plugh» ) 
+                                    ( contract 
+                                        ( this-contract «xyzzy» ) ) ) ) 
+                            ( predicate 
+                                ( certification certify ( symbol «plugh» ) 
+                                    ( contract 
+                                        ( this-contract «xyzzy» ) ) ) ) 
+                            ( predicate 
+                                ( certification certify ( symbol «plugh» ) ) ) 
+                            ( predicate 
+                                ( registration register ( symbol «plugh» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «plugh» ) 
+                                    ( contract 
+                                        ( this-contract «xyzzy» ) ) ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression 123 ) ) ) ) ) 
+                                                    ( combinor ( combinor ( combinand ( symbol ( type person ) ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol «plugh» ) ) ) 
+                                                        ( combinator nor ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «plugh» ) 
+                                                            ( contract all-contracts ) ) ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinor ( combinand 
+                                                    ( scalar-comparison 
+                                                        ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                        ( comparison-operator equal ) 
+                                                        ( scalar-expression 
+                                                            ( point-in-time current-time ) ) ) ) ) 
+                                            ( combinator neither ) ) 
+                                        ( combinor ( combinand 
+                                                ( negation 
+                                                    ( negator ) 
+                                                    ( symbol «plugh» ) 
+                                                    fixed ) ) ) 
+                                        ( combinator or- ) ) 
+                                    ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «plugh» ) 
+                                                                expiration ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator and ) ) 
+                                                ( combinand 
+                                                    ( existence ( symbol «plugh» ) 
+                                                        be ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinand 
+                                                ( point-in-time 
+                                                    ( relative-time 
+                                                        ( duration 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( time-unit hours ) ) 
+                                                        ( symbol ( type data ) ) ) ) ) 
+                                            ( combinator nor ) ) 
+                                        ( combinand 
+                                            ( point-in-time current-time ) ) 
+                                        ( combinator or- ) ) ) ) ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «plugh» ) 
+                        ( this-contract «xyzzy» ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «plugh» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( filing file ( symbol ( type binary ) ) 
+                                    ( contract all-contracts ) ) ) 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand 
+                                                                ( point-in-time current-time ) ) ) 
+                                                        ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) ) ) 
+                                                        ( combinator or- ) ) ) 
+                                                ( combinor ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol ( type data ) ) ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression 123 ) ) ) ) 
+                                                    ( combinand ( symbol «plugh» ) ) 
+                                                    ( combinator or- ) ) ) 
+                                            ( combinor ( combinor ( combinand ( symbol ( type text ) ) 
+                                                        expiration ) ) 
+                                                ( combinand ( symbol «plugh» ) 
+                                                    expiration ) 
+                                                ( combinator and ) ) 
+                                            ( combinator and ) ) ) 
+                                    preposition 
+                                    ( object ( symbol «plugh» ) ) ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol «plugh» ) 
+                                    ( contract 
+                                        ( this-contract «xyzzy» ) ) ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol «plugh» ) 
+                                    ( contract all-contracts ) ) ) 
+                            ( predicate 
+                                ( notification notify 
+                                    ( object ( symbol ( type data ) ) ) 
+                                    preposition 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator ) 
+                                                                        ( symbol ( type binary ) ) 
+                                                                        ( contract all-contracts ) ) ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( existence ( symbol «plugh» ) 
+                                                                    being true ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator ) 
+                                                                        ( symbol «plugh» ) ) ) ) 
+                                                            ( combinand expiration ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression ( symbol ( type time ) ) ) 
+                                                                        ( time-unit minutes ) ) 
+                                                                    ( symbol «plugh» ) ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinor ( combinor ( combinand 
+                                                            ( existence ( symbol ( type time ) ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «xyzzy» ) ) ) ) ) 
+                                                    ( combinand ( symbol ( type amount ) ) ) 
+                                                    ( combinator nor ) ) ) 
+                                            ( combinor ( combinand 
+                                                    ( point-in-time current-time ) ) ) 
+                                            ( combinator neither ) ) ) ) ) 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combination ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol ( type text ) ) ) ) ) ) 
+                                            ( combinor ( combinor ( combinor ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( time-unit seconds ) ) ) ) ) ) 
+                                                    ( combinand ( symbol ( type person ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinand ( symbol «plugh» ) ) 
+                                                ( combinator and ) ) 
+                                            ( combinator and ) ) ) 
+                                    preposition 
+                                    ( object ) 
+                                    from-escrow ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «plugh» ) ) ) ) 
+                                            ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol ( type time ) ) 
+                                                                    fixed ) ) ) 
+                                                        ( combinand ( symbol ( type person ) ) 
+                                                            expiration ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinand 
+                                                        ( existence ( symbol «plugh» ) 
+                                                            being true ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinand 
+                                                    ( negation 
+                                                        ( negator ) 
+                                                        ( symbol «plugh» ) ) ) 
+                                                ( combinator and ) ) 
+                                            ( combinator and ) ) 
+                                        ( combinor ( combinor ( combinand ( symbol ( type person ) ) ) ) 
+                                            ( combinand ( symbol «plugh» ) ) 
+                                            ( combinator or- ) ) ) 
+                                    ( combinor ( combinand ( symbol ( type text ) ) 
+                                            expiration ) ) ) ) ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «plugh» ) 
+                        ( this-contract «xyzzy» ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «plugh» 
+            ( provisions 
+                ( definitions 
+                    ( definition «plugh» 
+                        ( this-contract «xyzzy» ) ) 
+                    ( definition «plugh» 
+                        ( this-contract «xyzzy» ) ) ) ) ) ) )

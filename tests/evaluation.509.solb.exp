@@ -1,0 +1,112 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+contract EvaluationLicenseSystem {
+
+    address payable licensor;
+    address payable arbiter;
+    uint licensing_fee;
+    uint breach_fee;
+    bool licensing_fee__set = false;
+
+    constructor(address payable _arbiter, uint _breach_fee) payable {
+        licensor = payable(msg.sender);
+        arbiter = _arbiter;
+        
+        licensing_fee = msg.value;
+        licensing_fee__set = true;
+        breach_fee = _breach_fee;
+    }
+
+    mapping(uint => contract) public _license_list;
+    uint _license_count = 0;
+
+    function add_license(address payable _licensee, string memory _description_of_goods) returns(License) {
+        check_termination();
+        return _license_list[_license_count += 1] = new License(_licensee, _description_of_goods);
+    }
+
+    function transfer(address _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+    function permit(address _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+}
+
+contract License {
+    constructor(address payable _licensee, string memory _description_of_goods) {
+        licensee = _licensee;
+        description_of_goods = _description_of_goods;
+    }
+
+    function pay() public {
+        check_termination();
+        if(msg.sender == licensee) {
+            transfer(licensor, licensing_fee);
+        } else {
+            revert("not permitted");
+        }
+        paid = true;
+    }
+
+    function commission(bool _commissioned) public {
+        check_termination();
+        permit(licensor);
+        commissioned = _commissioned;
+    }
+
+    function comment(string memory _comment_text) public {
+        check_termination();
+        permit(licensee);
+        comment_text = _comment_text;
+    }
+
+    function publication(bool _published) public {
+        check_termination();
+        permit(licensee);
+        published = _published;
+    }
+
+    function grant_permission_to_comment() public {
+        check_termination();
+        permit(licensee);
+        permission_to_comment = true;
+    }
+
+    function declare_breach() public {
+        check_termination();
+        permit(arbiter);
+        if(factually_breached()) {
+            transfer(licensor, breach_fee);
+            termination();
+        }
+    }
+
+    function factually_breached() public view returns(bool) {
+        return ((commissioned && comment_text == "")
+                 || (published && (!permission_to_comment && (notice_time <= (block.timestamp - (24 * 3600))))));
+    }
+
+    function notice() public view {
+        check_termination();
+        require(msg.sender == arbiter || msg.sender == licensor, "not permitted");
+        notice_time = block.timestamp;
+    }
+
+    function noticed() public view returns(bool) {
+        return notice_time != 0;
+    }
+
+    function termination() internal {
+        terminated = true;
+    }
+
+    function already_terminated() internal view returns(bool) {
+        if(!terminated) return false;
+        return true;
+    }
+}

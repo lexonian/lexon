@@ -1,0 +1,52 @@
+( document 
+    ( head 
+        ( lex «escrow» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «buyer» ( type person ) ) 
+                ( definition «seller» ( type person ) ) 
+                ( definition «arbiter» ( type person ) ) 
+                ( definition «amount» ( type amount ) ) ) 
+            ( clauses 
+                ( clause «pay-out» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «arbiter» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «seller» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «pay-back» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «arbiter» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «buyer» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «buyer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol «amount» ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «seller» ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «arbiter» ) ) ) ) ) ) ) ) ) )

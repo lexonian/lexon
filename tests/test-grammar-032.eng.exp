@@ -1,0 +1,1072 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type data ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type text ) ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «fred-grault» 
+            ( provisions 
+                ( definitions 
+                    ( definition «fred-grault» 
+                        ( this-contract «bar» ) ) ) 
+                ( clauses 
+                    ( clause «xyzzy» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( flagging 
+                                        ( illocutor be ) 
+                                        ( symbol ( type amount ) ) ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols 
+                                        ( symbols 
+                                            ( symbols ( symbol «fred-grault» ) ) 
+                                            ( symbol ( type person ) ) 
+                                            catena ) 
+                                        ( symbol «fred-grault» ) 
+                                        catena ) 
+                                    ( symbol «fred-grault» ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( termination terminate all-contracts ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinand 
+                                                                ( existence ( symbol ( type amount ) ) 
+                                                                    being true ) ) ) ) 
+                                                    ( combinor ( combinor ( combinand ( symbol ( type binary ) ) 
+                                                                expiration ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol ( type binary ) ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) 
+                                                        ( combinator neither ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «fred-grault» ) ) ) ) ) ) 
+                                        preposition 
+                                        ( object ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol ( type text ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol «fred-grault» ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol ( type person ) ) ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «fred-grault» ) ) ) 
+                                                        ( combinator neither ) ) ) 
+                                                ( combinor ( combinor ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                                expiration ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol ( type person ) ) 
+                                                                be 
+                                                                ( contract all-contracts ) ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator nor ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                                ( combinor ( combinand ( symbol ( type amount ) ) 
+                                                        expiration ) ) 
+                                                ( combinator nor ) ) ) 
+                                        preposition 
+                                        ( object ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol ( type amount ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol «fred-grault» ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol ( type data ) ) ) ) 
+                                                                    ( combinand 
+                                                                        ( point-in-time current-time ) ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol «fred-grault» ) 
+                                                                        fixed ) ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «fred-grault» ) 
+                                                                    ( contract 
+                                                                        ( this-contract «bar» ) ) ) ) 
+                                                            ( combinator or- ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( existence ( symbol ( type binary ) ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) ) ) 
+                                                ( combinor ( combinand expiration ) ) 
+                                                ( combinator neither ) ) ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol ( type amount ) ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                        ( combinand ( symbol ( type time ) ) 
+                                                            expiration ) 
+                                                        ( combinator neither ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol ( type text ) ) ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «fred-grault» ) ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinator and ) ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «fred-grault» ) 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
+                                                                            expiration ) ) 
+                                                                    ( combinand 
+                                                                        ( negation 
+                                                                            ( negator ) 
+                                                                            ( symbol ( type text ) ) ) ) 
+                                                                    ( combinator neither ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator and ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( existence ( symbol ( type time ) ) 
+                                                                    be ) ) ) 
+                                                        ( combinator nor ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression ( symbol «fred-grault» ) ) ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol ( type text ) ) 
+                                                                ( contract all-contracts ) ) ) 
+                                                        ( combinator or- ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol ( type person ) ) 
+                                                            ( contract 
+                                                                ( this-contract «bar» ) ) ) ) ) 
+                                                ( combinator and ) ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type time ) ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol «fred-grault» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type text ) ) 
+                                        ( expression ( combination ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type amount ) ) 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                                expiration ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol ( type binary ) ) 
+                                                                fixed ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «fred-grault» ) 
+                                                            ( contract all-contracts ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type data ) ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol ( type person ) ) 
+                                                                    be ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator nor ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol ( type data ) ) ) ) 
+                                                    ( combinator and ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol ( type time ) ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( existence ( symbol ( type binary ) ) 
+                                                                            equal fixed ) ) ) 
+                                                                ( combinand ( symbol ( type text ) ) 
+                                                                    expiration ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol ( type amount ) ) ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( time-unit minutes ) ) ) ) ) 
+                                                        ( combinator neither ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol ( type data ) ) ) 
+                                                                            ( time-unit hours ) ) 
+                                                                        ( symbol «fred-grault» ) ) ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression ( symbol «fred-grault» ) ) ) ) ) 
+                                                ( combinator nor ) ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type text ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type text ) ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinand 
+                                                                ( existence ( symbol ( type data ) ) 
+                                                                    equal fixed ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol «fred-grault» ) 
+                                                                fixed ) ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol ( type binary ) ) ) ) ) 
+                                                ( combinator nor ) ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type amount ) ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols 
+                                        ( symbols ( symbol ( type person ) ) ) 
+                                        ( symbol ( type data ) ) 
+                                        catena ) 
+                                    ( symbol «fred-grault» ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( registration register ( symbol ( type time ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol ( type person ) ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                            ( comparison-operator equal ) 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression 
+                                                                                                ( point-in-time current-time ) ) 
+                                                                                            ( time-unit minutes ) ) 
+                                                                                        ( symbol ( type binary ) ) ) ) ) ) ) ) ) 
+                                                            ( combinor ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                                        expiration ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol ( type text ) ) ) ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol ( type person ) ) 
+                                                                    ( contract all-contracts ) ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinand ( symbol ( type time ) ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinor ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 123 ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression ( symbol «fred-grault» ) ) ) ) ) 
+                                                    ( combinand ( symbol «fred-grault» ) ) 
+                                                    ( combinator or- ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type binary ) ) 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «fred-grault» ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type time ) ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol ( type data ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combinor ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression ( symbol ( type binary ) ) ) 
+                                                                    ( time-unit milliseconds ) ) 
+                                                                ( symbol «fred-grault» ) ) ) ) ) 
+                                                ( combinand ( symbol «fred-grault» ) ) 
+                                                ( combinator and ) ) ) 
+                                        ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
+                                                            expiration ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression ( symbol «fred-grault» ) ) ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinand 
+                                                    ( existence ( symbol «fred-grault» ) 
+                                                        being true ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinand 
+                                                ( negation 
+                                                    ( negator be ) 
+                                                    ( symbol ( type text ) ) 
+                                                    ( contract all-contracts ) ) ) 
+                                            ( combinator neither ) ) 
+                                        ( combinator or- ) ) ) ) ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol ( type text ) ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «bar» ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol ( type data ) ) 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «fred-grault» ) ) ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( existence ( symbol «fred-grault» ) 
+                                                                being true ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinor ( combinand ( symbol ( type time ) ) 
+                                                        expiration ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «fred-grault» ) ) ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol ( type amount ) ) 
+                                                            expiration ) ) 
+                                                    ( combinand 
+                                                        ( existence ( symbol «fred-grault» ) 
+                                                            being true ) ) 
+                                                    ( combinator neither ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( termination terminate all-contracts ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object reflexive ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                                    expiration ) ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression ( symbol «fred-grault» ) ) 
+                                                                            ( comparison-operator equal ) 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time current-time ) ) ) ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol «fred-grault» ) 
+                                                                    ( contract all-contracts ) ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol «fred-grault» ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression ( symbol ( type data ) ) ) ) ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol ( type time ) ) ) ) 
+                                                    ( combinand ( symbol «fred-grault» ) 
+                                                        expiration ) 
+                                                    ( combinator or- ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type person ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type time ) ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «bar» ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                        expiration ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinand 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 123 ) 
+                                                                            ( time-unit seconds ) ) 
+                                                                        ( symbol ( type person ) ) ) ) ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression ( symbol ( type data ) ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression ( symbol «fred-grault» ) ) ) ) ) 
+                                                ( combinator or- ) ) ) 
+                                        preposition 
+                                        ( object ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type person ) ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( negation 
+                                                                            ( negator ) 
+                                                                            ( symbol «fred-grault» ) 
+                                                                            ( contract 
+                                                                                ( this-contract «bar» ) ) ) ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol ( type person ) ) ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinand ( symbol «fred-grault» ) 
+                                                            expiration ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinand ( symbol ( type person ) ) 
+                                                        expiration ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type text ) ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type text ) ) 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol ( type person ) ) ) ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression ( symbol ( type text ) ) ) 
+                                                                        ( time-unit days ) ) 
+                                                                    ( symbol «fred-grault» ) ) ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «fred-grault» ) ) ) ) ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                                    expiration ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol «fred-grault» ) ) 
+                                                                            ( time-unit seconds ) ) 
+                                                                        ( symbol ( type binary ) ) ) ) ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time current-time ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 123 ) ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinand expiration ) 
+                                                ( combinator neither ) ) 
+                                            ( combinand 
+                                                ( negation 
+                                                    ( negator be ) 
+                                                    ( symbol ( type amount ) ) 
+                                                    fixed ) ) 
+                                            ( combinator neither ) ) ) ) ) ) ) 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type amount ) ) ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols ( symbol «fred-grault» ) ) 
+                                    ( symbol ( type binary ) ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( grantment grant ( symbol «fred-grault» ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combinor ( combinor ( combinand 
+                                                            ( existence ( symbol «fred-grault» ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time current-time ) ) 
+                                                    ( combinator and ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type person ) ) ) ) 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «bar» ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                    ( point-in-time current-time ) ) ) 
+                                                                            ( combinand ( symbol ( type data ) ) ) 
+                                                                            ( combinator or- ) ) 
+                                                                        ( combinand 
+                                                                            ( scalar-comparison 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time 
+                                                                                        ( relative-time 
+                                                                                            ( duration 
+                                                                                                ( scalar-expression ( symbol ( type time ) ) ) 
+                                                                                                ( time-unit milliseconds ) ) 
+                                                                                            ( symbol ( type text ) ) ) ) ) 
+                                                                                ( comparison-operator equal ) 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time 
+                                                                                        ( relative-time 
+                                                                                            ( duration 
+                                                                                                ( scalar-expression 123 ) 
+                                                                                                ( time-unit weeks ) ) 
+                                                                                            ( symbol «fred-grault» ) ) ) ) ) ) 
+                                                                        ( combinator neither ) ) 
+                                                                    ( combinand 
+                                                                        ( existence ( symbol «fred-grault» ) 
+                                                                            be ) ) 
+                                                                    ( combinator and ) ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) 
+                                                                        ( comparison-operator later ) 
+                                                                        ( scalar-expression ( symbol «fred-grault» ) ) ) ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol ( type binary ) ) ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinand expiration ) ) ) 
+                                                ( combinor ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «fred-grault» ) 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( time-unit days ) ) 
+                                                                ( symbol «fred-grault» ) ) ) ) 
+                                                    ( combinator nor ) ) ) ) 
+                                        preposition 
+                                        ( object ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol «fred-grault» ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol ( type amount ) ) 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                                            expiration ) ) ) 
+                                                                ( combinor ( combinand 
+                                                                        ( negation 
+                                                                            ( negator ) 
+                                                                            ( symbol ( type amount ) ) ) ) ) ) 
+                                                            ( combinor ( combinor ( combinand 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression ( symbol «fred-grault» ) ) 
+                                                                                    ( time-unit seconds ) ) ) ) ) ) 
+                                                                ( combinand ( symbol «fred-grault» ) 
+                                                                    expiration ) 
+                                                                ( combinator nor ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «fred-grault» ) ) ) ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( existence ( symbol ( type data ) ) 
+                                                                    equal fixed ) ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol ( type person ) ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol «fred-grault» ) ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinator nor ) ) ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combinor ( combinand ( symbol ( type text ) ) ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type data ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol ( type binary ) ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combinor ( combinor ( combinand ( symbol ( type binary ) ) ) ) 
+                                                    ( combinand ( symbol ( type text ) ) ) 
+                                                    ( combinator neither ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol «fred-grault» ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinand ( symbol «fred-grault» ) ) ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression 
+                                                                                                ( point-in-time 
+                                                                                                    ( relative-time 
+                                                                                                        ( duration 
+                                                                                                            ( scalar-expression 123 ) 
+                                                                                                            ( time-unit years ) ) 
+                                                                                                        ( symbol ( type time ) ) ) ) ) 
+                                                                                            ( time-unit milliseconds ) ) 
+                                                                                        ( symbol «fred-grault» ) ) ) ) 
+                                                                            ( time-unit years ) ) ) ) ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol «fred-grault» ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol ( type binary ) ) ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinand ( symbol «fred-grault» ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand 
+                                                        ( existence ( symbol ( type data ) ) 
+                                                            be ) ) 
+                                                    ( combinator and ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type text ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ) 
+                                        preposition 
+                                        ( expression ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( existence ( symbol ( type person ) ) 
+                                                                            be 
+                                                                            ( contract all-contracts ) ) ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator ) 
+                                                                        ( symbol ( type data ) ) ) ) 
+                                                                ( combinator and ) ) 
+                                                            ( combinand ( symbol ( type data ) ) 
+                                                                expiration ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «fred-grault» ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol «fred-grault» ) ) 
+                                                                            ( time-unit weeks ) ) ) ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression 123 ) ) ) 
+                                                    ( combinator neither ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol ( type data ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol «fred-grault» ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type data ) ) ) ) ) 
+                                                        ( combinor ( combinand ( symbol ( type binary ) ) ) ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( point-in-time current-time ) ) ) 
+                                                        ( combinand ( symbol ( type binary ) ) 
+                                                            expiration ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol «fred-grault» ) 
+                                                            expiration ) ) 
+                                                    ( combinand ( symbol «fred-grault» ) ) 
+                                                    ( combinator nor ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «bar» ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «fred-grault» ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type person ) ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( existence ( symbol «fred-grault» ) 
+                                                                be 
+                                                                ( contract all-contracts ) ) ) ) ) 
+                                                ( combinor ( combinand ( symbol ( type time ) ) 
+                                                        expiration ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combinor ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression ( symbol «fred-grault» ) ) 
+                                                                                    ( time-unit months ) ) ) ) ) 
+                                                                    ( time-unit milliseconds ) ) 
+                                                                ( symbol «fred-grault» ) ) ) ) ) 
+                                                ( combinand ( symbol «fred-grault» ) ) 
+                                                ( combinator and ) ) ) 
+                                        ( combinor ( combinor ( combinor ( combinand ( symbol «fred-grault» ) ) ) 
+                                                ( combinand ( symbol ( type data ) ) 
+                                                    expiration ) 
+                                                ( combinator neither ) ) 
+                                            ( combinand 
+                                                ( negation 
+                                                    ( negator ) 
+                                                    ( symbol ( type binary ) ) ) ) 
+                                            ( combinator or- ) ) 
+                                        ( combinator neither ) ) ) ) ) ) ) ) ) 
+        ( covenant «xyzzy» 
+            ( provisions 
+                ( definitions 
+                    ( definition «xyzzy» ( type amount ) ) 
+                    ( definition «xyzzy» ( type time ) ) 
+                    ( definition «xyzzy» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «xyzzy» ( type binary ) ) 
+                    ( definition «xyzzy» 
+                        ( this-contract «bar» ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols ( symbol ( type text ) ) ) 
+                                    ( symbol «xyzzy» ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combinor ( combinor ( combinand ( symbol ( type binary ) ) ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator and ) ) ) ) 
+                                        preposition 
+                                        ( object ( symbol ( type binary ) ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «xyzzy» ) 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                ( existence ( symbol «xyzzy» ) 
+                                                                                    equal fixed ) ) ) 
+                                                                        ( combinand 
+                                                                            ( existence ( symbol ( type text ) ) 
+                                                                                be 
+                                                                                ( contract all-contracts ) ) ) 
+                                                                        ( combinator nor ) ) 
+                                                                    ( combinand ( symbol ( type text ) ) ) 
+                                                                    ( combinator nor ) ) 
+                                                                ( combinand 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression ( symbol ( type data ) ) ) 
+                                                                                ( time-unit months ) ) ) ) ) 
+                                                                ( combinator nor ) ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinand ( symbol «xyzzy» ) ) ) 
+                                                                ( combinand 
+                                                                    ( existence ( symbol ( type amount ) ) 
+                                                                        equal fixed ) ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time current-time ) ) 
+                                                                    ( comparison-operator later ) 
+                                                                    ( scalar-expression ( symbol «xyzzy» ) ) ) ) 
+                                                            ( combinator nor ) ) ) 
+                                                    ( combinor ( combinand expiration ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol ( type binary ) ) ) ) ) 
+                                                ( combinator and ) ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol ( type binary ) ) 
+                                        ( expression ( combination ( combinor ( combinor ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( comparison-operator later ) 
+                                                                    ( scalar-expression ( symbol «xyzzy» ) ) ) ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol ( type binary ) ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression ( symbol ( type text ) ) ) 
+                                                                    ( time-unit milliseconds ) ) 
+                                                                ( symbol «xyzzy» ) ) ) ) 
+                                                    ( combinator nor ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time current-time ) ) 
+                                                                            ( time-unit months ) ) 
+                                                                        ( symbol «xyzzy» ) ) ) ) ) ) ) ) ) 
+                                        preposition 
+                                        ( object ) ) ) 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «bar» ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type text ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type data ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «xyzzy» ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol ( type amount ) ) ) ) ) 
+                                                            ( combinand ( symbol «xyzzy» ) 
+                                                                expiration ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression 123 ) 
+                                                                                ( time-unit hours ) ) 
+                                                                            ( symbol ( type amount ) ) ) ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 123 ) ) ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinand expiration ) ) 
+                                                ( combinator neither ) ) ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol «xyzzy» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «bar» ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type amount ) ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol «xyzzy» ) 
+                                                                        fixed ) ) 
+                                                                ( combinator nor ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( existence ( symbol ( type time ) ) 
+                                                                    be 
+                                                                    ( contract 
+                                                                        ( this-contract «bar» ) ) ) ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinor ( combinor ( combinand ( symbol ( type amount ) ) ) ) 
+                                                        ( combinand expiration ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinand expiration ) ) 
+                                                ( combinator nor ) ) ) 
+                                        preposition 
+                                        ( object ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type text ) ) 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                            ( negation 
+                                                                                ( negator be ) 
+                                                                                ( symbol ( type binary ) ) ) ) ) 
+                                                                    ( combinand expiration ) 
+                                                                    ( combinator neither ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol ( type text ) ) 
+                                                                        fixed ) ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression 123 ) 
+                                                                                            ( time-unit seconds ) ) 
+                                                                                        ( symbol «xyzzy» ) ) ) ) 
+                                                                            ( time-unit weeks ) ) 
+                                                                        ( symbol «xyzzy» ) ) ) ) 
+                                                            ( combinator nor ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol ( type binary ) ) ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinor ( combinand ( symbol ( type person ) ) 
+                                                        expiration ) ) 
+                                                ( combinator neither ) ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol «xyzzy» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( termination terminate all-contracts ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol ( type data ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                            ( combinor ( combinand 
+                                                    ( existence ( symbol «xyzzy» ) 
+                                                        being true ) ) ) ) 
+                                        ( combinor ( combinand ( symbol «xyzzy» ) ) ) 
+                                        ( combinator nor ) ) ) ) ) ) ) ) ) ) )

@@ -1,0 +1,16 @@
+	
+	Code:	
+		  Head Terms
+		| Head Terms Contracts
+		;
+
+
+	Name: NAME						{ $$=$NAME; }
+	    ;
+
+	Description: DESCRIPTION						{ $$=$DESCRIPTION; }
+	    ;
+
+	Scalar: SCALAR						{ $$=$SCALAR; }
+	    ;
+

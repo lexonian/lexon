@@ -1,0 +1,127 @@
+( document 
+    ( head 
+        ( lex «grault-fred» ) 
+        ( comment "Aenean massa. Cum.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «corge» 
+                    ( this-contract «grault-fred» ) ) ) 
+            ( clauses 
+                ( clause «garply» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols 
+                                            ( symbols 
+                                                ( symbols 
+                                                    ( symbols 
+                                                        ( symbols ( symbol «garply» ) ) 
+                                                        ( symbol ( type text ) ) 
+                                                        catena ) 
+                                                    ( symbol ( type time ) ) 
+                                                    catena ) 
+                                                ( symbol ( type amount ) ) 
+                                                catena ) 
+                                            ( symbol «garply» ) 
+                                            catena ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( certification certify ( symbol «garply» ) 
+                                                ( contract all-contracts ) ) ) 
+                                        ( predicate 
+                                            ( setting 
+                                                ( illocutor be ) 
+                                                ( symbol ( type data ) ) ) ) 
+                                        ( predicate 
+                                            ( fixture fix ( symbol ( type time ) ) ) ) 
+                                        ( predicate 
+                                            ( declaration declare ( symbol «garply» ) 
+                                                ( expression ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                                ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol «garply» ) ) ) 
+                                                                ( combinator or- ) ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                ( point-in-time 
+                                                                                    ( relative-time 
+                                                                                        ( duration 
+                                                                                            ( scalar-expression ( symbol ( type data ) ) ) 
+                                                                                            ( time-unit years ) ) 
+                                                                                        ( symbol «garply» ) ) ) ) ) 
+                                                                        ( combinand 
+                                                                            ( existence ( symbol «garply» ) 
+                                                                                equal fixed ) ) 
+                                                                        ( combinator nor ) ) 
+                                                                    ( combinand expiration ) 
+                                                                    ( combinator and ) ) 
+                                                                ( combinand 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression ( symbol «garply» ) ) 
+                                                                                ( time-unit milliseconds ) ) 
+                                                                            ( symbol «garply» ) ) ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinator neither ) ) ) ) ) 
+                                        ( predicate 
+                                            ( declaration declare ( symbol ( type time ) ) 
+                                                ( contract all-contracts ) ) ) 
+                                        ( predicate 
+                                            ( registration register ( symbol «garply» ) 
+                                                ( expression ( combination ( combinor ( combinor ( combinand ( symbol ( type binary ) ) 
+                                                                    expiration ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 123 ) 
+                                                                            ( time-unit days ) ) 
+                                                                        ( symbol «garply» ) ) ) ) 
+                                                            ( combinator nor ) ) ) ) ) ) 
+                                        ( predicate 
+                                            ( fixture fix ( symbol ( type time ) ) 
+                                                ( contract 
+                                                    ( this-contract «grault-fred» ) ) ) ) 
+                                        ( predicate 
+                                            ( notification notify 
+                                                ( object ) 
+                                                preposition 
+                                                ( expression ( combination ( combinor ( combinand 
+                                                                ( existence ( symbol «garply» ) 
+                                                                    be ) ) ) ) ) ) ) ) 
+                                    permission 
+                                    ( condition if 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( existence ( symbol ( type time ) ) 
+                                                                be 
+                                                                ( contract all-contracts ) ) ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression ( symbol «garply» ) ) 
+                                                                    ( time-unit weeks ) ) 
+                                                                ( symbol ( type data ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» 
+                        ( this-contract «grault-fred» ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol «garply» ) 
+                            ( this-contract «grault-fred» ) ) ) 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type text ) ) ) ) ) ) ) ) )

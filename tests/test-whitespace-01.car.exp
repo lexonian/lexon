@@ -1,0 +1,28 @@
+
+precompilation:
+---------------
+
+test whitespace 01   1:   LEX: «Paid Escrow».
+test whitespace 01   2:   COMMENT: ‹%PRE %GEN ›.
+
+test whitespace 01   4:   “«Paying Party»” is a person.
+test whitespace 01   5:   “«Paid Party»” is a person.
+test whitespace 01   6:   “«Pay Master»” is a person.
+test whitespace 01   7:   “«Payment»” is an amount.
+test whitespace 01   8:   “«Payment Fee»” is an amount.
+test whitespace 01   9:   “«Non-Payment Fee»” is an amount.
+test whitespace 01  10:   “«Master's Fee»” is an amount.
+
+test whitespace 01  12:   The «Paying Party» pays a «Payment» into escrow,
+test whitespace 01  13:   appoints the «Paid Party»,
+test whitespace 01  14:   appoints the «Pay Master»,
+test whitespace 01  15:   and also fixes the «Master's Fee».
+
+test whitespace 01  17:   CLAUSE: «Make Payment».
+test whitespace 01  18:   The «Pay Master» may pay from escrow the «Master's Fee» to themselves,
+test whitespace 01  20:   and afterwards pay the remainder of the escrow to the «Paid Party».
+
+test whitespace 01  22:   CLAUSE: «Return Payment».
+test whitespace 01  23:   The «Pay Master» may pay from escrow the «Non-Payment Fee» to themselves,
+test whitespace 01  25:   and afterwards return the remainder of the escrow to the «Paying Party».
+

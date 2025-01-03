@@ -1,0 +1,27 @@
+( document 
+    ( head 
+        ( lex «thud» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «plugh» ( type person ) ) 
+                ( definition «plugh» ( type person ) ) ) ) ) 
+    ( covenants 
+        ( covenant «plugh» 
+            ( provisions 
+                ( definitions 
+                    ( definition «plugh» 
+                        ( this-contract «thud» ) ) 
+                    ( definition «plugh» 
+                        ( this-contract «thud» ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol «plugh» ) 
+                            ( this-contract «thud» ) ) ) ) ) ) 
+        ( covenant «plugh» 
+            ( provisions 
+                ( definitions 
+                    ( definition «plugh» 
+                        ( this-contract «thud» ) ) ) ) ) ) )

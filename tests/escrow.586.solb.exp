@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+contract Escrow {
+
+    address payable payer;
+    address payable seller;
+    address payable arbiter;
+    uint amount;
+    uint service_fee;
+    bool amount__set = false;
+
+    constructor(address payable _seller, address payable _arbiter, uint _service_fee) payable {
+        payer = payable(msg.sender);
+        amount = msg.value;
+        amount__set = true;
+        seller = _seller;
+        arbiter = _arbiter;
+        service_fee = _service_fee;
+    }
+
+    function transfer(address _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+    function permit(address _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+
+    function pay_out() public {
+        permit(arbiter);
+        transfer(arbiter, service_fee);
+        transfer(seller, address(this).balance);
+    }
+
+    function pay_back() public {
+        permit(arbiter);
+        transfer(arbiter, service_fee);
+        transfer(payer, address(this).balance);
+    }
+}

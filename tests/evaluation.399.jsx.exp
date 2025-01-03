@@ -1,0 +1,513 @@
+/* Lexon-generated Javascript 
+
+   code:        Evaluation License System
+
+   preamble:    This is licensing contract for software evaluation.
+
+   authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+
+   file:        lexon/evaluation.399.lex
+
+   code tagged: 0.2.1
+
+   compiler:    lexon 0.3 alpha 93 U
+
+   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+
+   backend:     javascript 0.3.93 U
+
+   target:      node 14.1+
+
+   parameters:  --javascript  --all-auxiliaries 
+
+
+   INSTRUCTIONS FOR USE:
+
+   Execute this program using node. Replace the <parameters> with literal values.
+
+   Running this program as-is requires beginners programmer knowledge. This phase is
+   yet not covered by lexon's mission to make code readable and useful for non-coders.
+   In the future, an interface will be generated to complete this last mile. However,
+   embedding this code into a self-explanatory user interface is a straight forward
+   task for a full-stack programmer.
+
+   Note that the instructions below reflect your lexon code as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input. Some functions are 'built-in' but only appear when needed as
+   per compiled-in features – a list of which is available with lexon -h. The functions
+   are not given in a specific order of execution but as listed in the lexon source.
+
+   These node modules have to be installed once:
+
+   $ npm install serialize-javascript
+   $ npm install tar
+   $ npm install nodemailer
+   $ npm install prompt-sync
+
+   Parameters below are marked with double angle brackets << >> for the respective
+   required caller. If the role is defined earlier, it can only be performed by this
+   person. (But remember that this entire setup is trustful: anyone can manipulate
+   anything about this contract. Though they cannot sign it or change the signed log.)
+   If the role is not defined earlier, the call makes the role be assigned to the
+   person named for the call. Some functions can be called without naming a caller.
+   Some clauses of the original lexon source will not appear below. Namely, those
+   that have no permission phrase, wherefore they are regarded as internal.
+
+   The main contract system is initialized by loading the module and instantiating:
+
+   $ node
+   > contract = require("./lexon/evaluation.399.jsx");
+   > evaluation = new contract(<<licensor>>, <arbiter>, <licensing_service_fee>, <breach_service_fee>);
+
+   Remember to reset node's module cache each time you edit and recompile your code:
+
+   > delete require.cache[require.resolve('./lexon/evaluation.399.jsx')];
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per License.
+
+   > license = evaluation.add_license(<<licensor>>, <license_taker>, <description_of_goods>)
+   > license.pay(<<license_taker>>)
+   > license.commission(<<licensor>>)
+   > license.comment(<<license_taker>>, <comment_text>)
+   > license.publication(<<license_taker>>)
+   > license.grant_permission_to_comment(<<license_taker>>)
+   > license.declare_breach(<<arbiter>>)
+   > license.factually_breached()
+   > license.notice(<<arbiter or licensor>>)
+   > license.noticed()
+
+   state changes of the contract can be listed, e.g. actions performed by
+   a party to it, or agents who are assigned privileges. In case hash chains
+   or signatures are used, they are visible in this log. The log is stored in
+   in the file 'log'.
+
+   > evaluation.history()
+
+   The complete contract state can be saved to disk and re-loaded at a
+   later point in time. This serves to continue work after stopping and
+   restarting node; or to send the entire contract system and its current
+   state - which can include hashes and signatures - to another party,
+   who may perform the next steps.
+
+   > evaluation.persist()
+   > evaluation.load()
+
+   The contract code, state and log can be bundled into one file to exchange
+   or archive it:
+
+   > evaluation.bundle()
+   > evaluation.unbundle()
+
+   The contract code, state and log can be sent to a counterparty. This
+   requires configuring an email account in the file 'config'.
+
+   > evaluation.send()
+
+   Keys for signing log entries are expected on-file, by default named after
+   the actor, with the extension .key. For demo purposes, key files can be
+   created using this utility function:
+
+   > evaluation.create_key(name, passphrase)
+*/
+
+var fs = require('fs');
+var crypto = require('crypto');
+var serialize = require('serialize-javascript');
+var prompt = require('prompt-sync')();
+var tar = require('tar');
+var nodemailer = require('nodemailer');
+var last_caller;
+var last_passphrase;
+
+/**
+ **
+ ** Main Evaluation License System contract system
+ **
+ **/
+
+/** LEX: Evaluation License System.
+ *	LEXON: 0.2.1
+ *	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ *	PREAMBLE: This is licensing contract for software evaluation.
+ *
+ *	TERMS:
+ *
+ *	"Licensor" is person.
+ *	"Arbiter" is person.
+ *	"Licensing Service Fee" is amount.
+ *	"Breach Service Fee" is amount.
+ *
+ *	The Licensor appoints the Arbiter,
+ *	fixes the Licensing Service Fee,
+ *	and fixes the Breach Service Fee.
+ *
+ *	TERMS PER License:
+ *
+ *	"Description of Goods" is text.
+ *	"License Taker" is person.
+ *	"Paid" is binary.
+ *	"Commissioned" is binary.
+ *	"Comment Text" is text.
+ *	"Published" is binary.
+ *	"Permission to Comment" is binary.
+ *	"Notice Time" is time.
+ *	"License" is this contract.
+ *
+ *	The Licensor appoints the License Taker, and fixes the Description of Goods.
+**/
+
+module.exports = class EvaluationLicenseSystem {
+
+    /* This classes constructor's is the only scope where the covenant classes exist. 
+       This can hide them in larger contexts but requires constructor indirections. */
+    constructor(licensor, arbiter, licensing_service_fee, breach_service_fee) {
+
+        let main = this;
+
+        /* object members: skip for restoring serialized object */
+        if(typeof licensor !== 'undefined') {
+            this._escrow = 0;
+            this.licensor = licensor;
+            this.arbiter = arbiter;
+            this.licensing_service_fee = licensing_service_fee;
+            this.breach_service_fee = breach_service_fee;
+            this.logname = 'log';
+
+            /* start log - overwrites previous by same name */
+            fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
+            this.log(licensor, "✓ Arbiter appointed");
+            this.log(licensor, "✓ Licensing Service Fee fixed");
+            this.log(licensor, "✓ Breach Service Fee fixed");
+        }
+
+        /* aggregation of covenants for folds and serialization */
+        this._license_list = {};
+        this._license_count = 0;
+
+        /**
+         ** License covenant class
+         **/
+
+        /* this closure exports the covenant's constructor to the scope of the main */
+        this.License = (caller, license_taker, description_of_goods) => {
+            if(caller == main.licensor) {
+                return new License(caller, license_taker, description_of_goods);
+            }
+        };
+
+        class License {
+
+            constructor(caller, license_taker, description_of_goods) {
+
+                /* object members: skip for restoring serialized object */
+                if(typeof caller !== 'undefined') {
+                    this.description_of_goods = description_of_goods;
+                    this.license_taker = license_taker;
+                    this.paid = null;
+                    this.commissioned = null;
+                    this.comment_text = null;
+                    this.published = null;
+                    this.permission_to_comment = null;
+                    this.notice_time = null;
+                    this.terminated = false;
+                    main.log(caller, "✓ License Taker appointed");
+                    main.log(caller, "✓ Description of Goods fixed");
+                }
+            }
+
+            /* Pay clause */
+
+    /*
+     *  CLAUSE: Pay.
+     *  The License Taker pays the Licensing Service Fee to the Licensor,
+     *  and pays the Breach Service Fee into escrow.
+     *  This License is therefore Paid.
+     */
+            pay(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.license_taker) {
+                    main._pay(caller, this.license_taker, main.licensor, main.licensing_service_fee);
+                    main._pay(caller, this.license_taker, 'escrow', main.breach_service_fee);
+                } else {
+                    return 'not permitted.';
+                }
+                this.paid = true;
+                return 'done.';
+            }
+
+            /* Commission clause */
+
+    /*
+     *  CLAUSE: Commission.
+     *  The Licensor may certify this License as Commissioned.
+     */
+            commission(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == main.licensor) {
+                    this.commissioned = true;
+                    main.log(caller, "✓ Commissioned certified");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Comment clause */
+
+    /*
+     *  CLAUSE: Comment.
+     *  The License Taker may register Comment Text.
+     */
+            comment(caller, comment_text)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.license_taker) {
+                    this.comment_text = comment_text;
+                    main.log(caller, "✓ Comment Text registered");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Publication clause */
+
+    /*
+     *  CLAUSE: Publication.
+     *  The License Taker may certify this License as Published.
+     */
+            publication(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.license_taker) {
+                    this.published = true;
+                    main.log(caller, "✓ Published certified");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Grant Permission to Comment clause */
+
+    /*
+     *  CLAUSE: Grant Permission to Comment.
+     *  The License Taker may grant the Permission to Comment.
+     */
+            grant_permission_to_comment(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.license_taker) {
+                    this.permission_to_comment = true;
+                    main.log(caller, "✓ Permission to Comment granted");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Declare Breach clause */
+
+    /*
+     *  CLAUSE: Declare Breach.
+     *  The Arbiter may, given that this License is Factually Breached:
+     *  pay the Breach Service Fee to the Licensor,
+     *  and afterwards terminate this License.
+     */
+            declare_breach(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == main.arbiter) {
+                    if(this.factually_breached()) {
+                        main._pay(caller, main.arbiter, main.licensor, main.breach_service_fee);
+                        this.termination(caller);
+                    }
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Factually Breached clause */
+
+    /*
+     *  CLAUSE: Factually Breached.
+     *  "Factually Breached" is defined as:
+     *  this License is Commissioned and the Comment Text is not fixed,
+     *  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+     */
+            factually_breached()  {
+                return ((this.commissioned && !this.comment_text)
+                         || (this.published && (!this.permission_to_comment && (this.notice_time <= (Date.now() - (24 * 3600000))))));
+            }
+
+            /* Notice clause */
+
+    /*
+     *  CLAUSE: Notice.
+     *  The Licensor or the Arbiter may fix the Notice Time as the respective current time.
+     */
+            notice(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == main.arbiter || caller == main.licensor) {
+                    this.notice_time = Date.now();
+                    main.log(caller, "✓ Notice Time fixed");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Noticed clause */
+
+    /*
+     *  CLAUSE: Noticed.
+     *  "Noticed" is defined as Notice Time being fixed.
+     */
+            noticed()  {
+                return this.notice_time;
+            }
+
+            /* built-in termination of this covenant */
+            termination(caller) {
+                this.terminated = true;
+                main.log(caller, '■ covenant terminated');
+            }
+
+            already_terminated() {
+                if(!this.terminated) return false;
+                console.log('✕ covenant previously terminated');
+                return true;
+            }
+        }
+
+        /* restore object from file - must be below class definition */
+        if(typeof licensor === 'undefined') {
+            console.log("> restore from file 'state'");
+            var data = fs.readFileSync('state', ()=>{});
+            var live = eval('(' + data + ')');
+            Object.assign(this, live);
+            
+            /* restore License objects */
+            for (let id in this._license_list) {
+                var live = this._license_list[id];
+                var instance = new License();
+                Object.assign(instance, live);
+                this._license_list[id] = instance;
+            }
+        }
+    }
+
+    /* create new instance of License covenant, and register it with main */
+    add_license(caller, license_taker, description_of_goods) {
+        if (this.already_terminated()) return undefined;
+        return this._license_list[this._license_count += 1] = this.License(caller, license_taker, description_of_goods);
+    }
+
+
+    /* built-in convenience function to view state change log. */
+    history() {
+        fs.readFile(this.logname, (e,d)=>{console.log(d.toString())});
+    }
+
+    /* built-in serialization and storage of entire contract system state. */
+    persist() {
+        console.log('> persisting');
+        var data = serialize(this, {space: 4});
+        fs.writeFileSync('state', data, ()=>{});
+    }
+
+    /* re-instate entire contract system from serialized file store */
+    static load() {
+        return new EvaluationLicenseSystem();
+    }
+
+    /* built-in tar-balling of code, log and state. */
+    bundle() {
+        console.log('> bundling into contract.tgz');
+        tar.create({gzip:true, file:'contract.tgz'}, ['lexon/evaluation.399.lex', 'lexon/evaluation.399.jsx', 'state', 'log', 'INSTRUCTIONS.TXT']);
+    }
+
+    /* built-in untar-balling of code, log and state. */
+    static unbundle() {
+        console.log('> unbundling contract.tgz');
+        tar.extract('contract.tgz');
+    }
+
+    /* built-in email sending of code, log and state. */
+    send() {
+
+        this.persist();
+        this.bundle();
+
+        console.log('> sending via email');
+        var receiver = prompt('enter receiver address: ');
+
+        var config = fs.readFileSync('config', ()=>{});
+        var email = eval('(' + config + ')').email;
+        console.log(email);
+
+        var transporter = nodemailer.createTransport({
+            service: email.service,
+            auth: { user: email.user, pass: email.pass }});
+
+        var mailOptions = {
+            from: email.from,
+            to: receiver,
+            subject: email.subject,
+            text: email.text,
+            attachments: { path: './contract.tgz', contentType: 'application/gzip' }};
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('> email sent: ' + info.response); }});
+    }
+
+    /* built-in logging of state changes. */
+    log(caller, msg) {
+        console.log(msg);
+        let stamp = (new Date()).toLocaleString('en-US');
+        var entry = `⌽  ${stamp} ✦ ${caller} ${msg}`;
+        var passphrase = this.sync_passphrase(caller);
+        var pem = fs.readFileSync(caller + '.key');
+        var key = pem.toString('ascii');
+        var sign = crypto.createSign('RSA-SHA256');
+        sign.update(entry);
+        var sig = sign.sign({ key: key, passphrase: passphrase }, 'hex');
+        fs.appendFileSync(this.logname, `${entry} ❈ ${sig}\n`);
+        let pay = fs.readFileSync(this.logname);
+        let hash = crypto.createHash('sha256').update(pay);
+        fs.appendFileSync(this.logname, '⧉ ' + hash.digest('hex').substr(0, 12) + " ");
+    }
+
+    /* built-in password query for private key file, with cache. */
+    sync_passphrase(caller) {
+        if(!caller) process.exit('no caller information');
+        if(caller == last_caller) return last_passphrase;
+        last_caller = caller;
+        return last_passphrase = prompt('enter pass phrase for ' + caller + ': ', {echo: ''});
+    }
+
+    /* built-in convenience function to create keys for users. */
+    static create_key(name, passphrase) {
+        const { publicKey, privateKey } =
+            crypto.generateKeyPairSync('rsa',
+                { modulusLength: 2048,
+                    publicKeyEncoding: { type: 'spki', format: 'pem' },
+                    privateKeyEncoding: { type: 'pkcs8', format: 'pem', cipher: 'aes-256-cbc', passphrase: passphrase }});
+
+        fs.writeFileSync(name+'.key', privateKey);
+        fs.writeFileSync(name+'.pub', publicKey);
+        return true;
+    }
+
+    /* built-in pay message */
+    _pay(caller, from, to, amount) {
+        this.log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') main._escrow -= amount;
+        if(to == 'escrow') main._escrow += amount;
+    }
+}
+
+/* end */

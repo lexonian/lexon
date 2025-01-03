@@ -1,0 +1,90 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type data ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol ( type amount ) ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression ( symbol «bar» ) ) 
+                                                                    ( time-unit minutes ) ) ) ) ) ) ) 
+                                            ( combinor ( combinor ( combinand 
+                                                        ( existence ( symbol «bar» ) 
+                                                            be 
+                                                            ( contract all-contracts ) ) ) ) 
+                                                ( combinand 
+                                                    ( point-in-time current-time ) ) 
+                                                ( combinator and ) ) 
+                                            ( combinator or- ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol ( type text ) ) ) ) 
+                            ( predicate 
+                                ( grantment grant ( symbol ( type amount ) ) ) ) 
+                            ( predicate 
+                                ( termination terminate 
+                                    ( this-contract «bar» ) ) ) 
+                            ( predicate 
+                                ( filing file ( symbol «bar» ) 
+                                    ( contract all-contracts ) ) ) 
+                            ( predicate 
+                                ( termination terminate 
+                                    ( this-contract «bar» ) ) ) 
+                            ( predicate 
+                                ( payment pay preposition 
+                                    ( object reflexive ) 
+                                    escrow ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol ( type binary ) ) ) ) 
+                            ( predicate 
+                                ( filing file ( symbol ( type data ) ) 
+                                    ( contract all-contracts ) ) ) 
+                            ( predicate 
+                                ( termination terminate all-contracts ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combination ( combinor ( combinand 
+                                                ( negation 
+                                                    ( negator be ) 
+                                                    ( symbol ( type person ) ) ) ) ) ) 
+                                    ( combinor ( combinand ( symbol «bar» ) 
+                                            expiration ) ) ) ) ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) 
+                        ( this-contract «bar» ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) 
+                        ( this-contract «bar» ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «corge-garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «corge-garply» ( type data ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type time ) ) 
+                            ( this-contract «bar» ) ) ) 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type binary ) ) 
+                            ( this-contract «bar» ) ) ) ) ) ) ) )

@@ -1,0 +1,38 @@
+module.exports = class Escrow {
+
+    constructor(buyer, amount, payee, agent, fee) {
+
+        let main = this;
+        this._escrow = 0;
+        this.buyer = buyer;
+        this.payee = payee;
+        this.agent = agent;
+        this.fee = fee;
+        this._pay(this.buyer, 'escrow', amount);
+    }
+
+
+    pay_out(caller)  {
+        if(caller == this.agent) {
+            this._pay('escrow', this.agent, this.fee);
+            this._pay('escrow', this.payee, this._escrow);
+        } else {
+            return 'not permitted.';
+        }
+    }
+
+    pay_back(caller)  {
+        if(caller == this.agent) {
+            this._pay('escrow', this.agent, this.fee);
+            this._pay('escrow', this.buyer, this._escrow);
+        } else {
+            return 'not permitted.';
+        }
+    }
+
+    _pay(from, to, amount) {
+        console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') main._escrow -= amount;
+        if(to == 'escrow') main._escrow += amount;
+    }
+}

@@ -1,0 +1,377 @@
+/* Lexon-generated Javascript 
+
+   code:        Evaluation License System
+
+   preamble:    This is a licensing contract for a software evaluation.
+
+   authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+
+   file:        evaluation.lex
+
+   code tagged: 0.2.1
+
+   compiler:    lexon 0.3 alpha 93 U
+
+   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+
+   backend:     javascript 0.3.93 U
+
+   target:      node 14.1+
+
+   parameters:  --javascript  --feedback  --log  --chaining  --signatures  --persistence  --comment 
+
+*/
+
+var fs = require('fs');
+var crypto = require('crypto');
+var serialize = require('serialize-javascript');
+var prompt = require('prompt-sync')();
+var last_caller;
+var last_passphrase;
+
+/**
+ **
+ ** Main Evaluation License System contract system
+ **
+ **/
+
+/** LEX: Evaluation License System.
+ *	LEXON: 0.2.1
+ *	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ *	PREAMBLE: This is a licensing contract for a software evaluation.
+ *
+ *	TERMS:
+ *
+ *	"Licensor" is a person.
+ *	"Arbiter" is a person.
+ *	"Licensing Fee" is an amount.
+ *	"Breach Fee" is an amount.
+ *
+ *	The Licensor appoints the Arbiter,
+ *	fixes the Licensing Fee,
+ *	and fixes the Breach Fee.
+ *
+ *	TERMS PER License:
+ *
+ *	"Description of Goods" is a text.
+ *	"Licensee" is a person.
+ *	"Paid" is a binary.
+ *	"Commissioned" is a binary.
+ *	"Comment Text" is a text.
+ *	"Published" is a binary.
+ *	"Permission to Comment" is a binary.
+ *	"Notice Time" is a time.
+ *	"License" is this contract.
+ *
+ *	The Licensor appoints the Licensee, and fixes the Description of Goods.
+**/
+
+module.exports = class EvaluationLicenseSystem {
+
+    /* This classes constructor's is the only scope where the covenant classes exist. 
+       This can hide them in larger contexts but requires constructor indirections. */
+    constructor(licensor, arbiter, licensing_fee, breach_fee) {
+
+        let main = this;
+
+        /* object members: skip for restoring serialized object */
+        if(typeof licensor !== 'undefined') {
+            this._escrow = 0;
+            this.licensor = licensor;
+            this.arbiter = arbiter;
+            this.licensing_fee = licensing_fee;
+            this.breach_fee = breach_fee;
+            this.logname = 'log';
+
+            /* start log - overwrites previous by same name */
+            fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
+            this.log(licensor, "✓ Arbiter appointed");
+            this.log(licensor, "✓ Licensing Fee fixed");
+            this.log(licensor, "✓ Breach Fee fixed");
+        }
+
+        /* aggregation of covenants for folds and serialization */
+        this._license_list = {};
+        this._license_count = 0;
+
+        /**
+         ** License covenant class
+         **/
+
+        /* this closure exports the covenant's constructor to the scope of the main */
+        this.License = (caller, licensee, description_of_goods) => {
+            if(caller == main.licensor) {
+                return new License(caller, licensee, description_of_goods);
+            }
+        };
+
+        class License {
+
+            constructor(caller, licensee, description_of_goods) {
+
+                /* object members: skip for restoring serialized object */
+                if(typeof caller !== 'undefined') {
+                    this.description_of_goods = description_of_goods;
+                    this.licensee = licensee;
+                    this.paid = null;
+                    this.commissioned = null;
+                    this.comment_text = null;
+                    this.published = null;
+                    this.permission_to_comment = null;
+                    this.notice_time = null;
+                    this.terminated = false;
+                    main.log(caller, "✓ Licensee appointed");
+                    main.log(caller, "✓ Description of Goods fixed");
+                }
+            }
+
+            /* Pay clause */
+
+    /*
+     *  CLAUSE: Pay.
+     *  The Licensee pays the Licensing Fee to the Licensor,
+     *  and pays the Breach Fee into escrow.
+     *  This License is therefore Paid.
+     */
+            pay(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.licensee) {
+                    main._pay(caller, this.licensee, main.licensor, main.licensing_fee);
+                    main._pay(caller, this.licensee, 'escrow', main.breach_fee);
+                } else {
+                    return 'not permitted.';
+                }
+                this.paid = true;
+                return 'done.';
+            }
+
+            /* Commission clause */
+
+    /*
+     *  CLAUSE: Commission.
+     *  The Licensor may certify this License as Commissioned.
+     */
+            commission(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == main.licensor) {
+                    this.commissioned = true;
+                    main.log(caller, "✓ Commissioned certified");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Comment clause */
+
+    /*
+     *  CLAUSE: Comment.
+     *  The Licensee may register a Comment Text.
+     */
+            comment(caller, comment_text)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.licensee) {
+                    this.comment_text = comment_text;
+                    main.log(caller, "✓ Comment Text registered");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Publication clause */
+
+    /*
+     *  CLAUSE: Publication.
+     *  The Licensee may certify this License as Published.
+     */
+            publication(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.licensee) {
+                    this.published = true;
+                    main.log(caller, "✓ Published certified");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Grant Permission to Comment clause */
+
+    /*
+     *  CLAUSE: Grant Permission to Comment.
+     *  The Licensee may grant the Permission to Comment.
+     */
+            grant_permission_to_comment(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == this.licensee) {
+                    this.permission_to_comment = true;
+                    main.log(caller, "✓ Permission to Comment granted");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Declare Breach clause */
+
+    /*
+     *  CLAUSE: Declare Breach.
+     *  The Arbiter may, if this License is Factually Breached:
+     *  pay the Breach Fee to the Licensor,
+     *  and afterwards terminate this License.
+     */
+            declare_breach(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == main.arbiter) {
+                    if(this.factually_breached()) {
+                        main._pay(caller, main.arbiter, main.licensor, main.breach_fee);
+                        this.termination(caller);
+                    }
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Factually Breached clause */
+
+    /*
+     *  CLAUSE: Factually Breached.
+     *  "Factually Breached" is defined as:
+     *  this License is Commissioned and the Comment Text is not fixed,
+     *  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+     */
+            factually_breached()  {
+                return ((this.commissioned && !this.comment_text)
+                         || (this.published && (!this.permission_to_comment && (this.notice_time <= (Date.now() - (24 * 3600000))))));
+            }
+
+            /* Notice clause */
+
+    /*
+     *  CLAUSE: Notice.
+     *  The Licensor or the Arbiter may fix the Notice Time as the respective current time.
+     */
+            notice(caller)  {
+                if(this.already_terminated()) return undefined;
+                if(caller == main.arbiter || caller == main.licensor) {
+                    this.notice_time = Date.now();
+                    main.log(caller, "✓ Notice Time fixed");
+                } else {
+                    return 'not permitted.';
+                }
+                return 'done.';
+            }
+
+            /* Noticed clause */
+
+    /*
+     *  CLAUSE: Noticed.
+     *  "Noticed" is defined as a Notice Time being fixed.
+     */
+            noticed()  {
+                return this.notice_time;
+            }
+
+            /* built-in termination of this covenant */
+            termination(caller) {
+                this.terminated = true;
+                main.log(caller, '■ covenant terminated');
+            }
+
+            already_terminated() {
+                if(!this.terminated) return false;
+                console.log('✕ covenant previously terminated');
+                return true;
+            }
+        }
+
+        /* restore object from file - must be below class definition */
+        if(typeof licensor === 'undefined') {
+            console.log("> restore from file 'state'");
+            var data = fs.readFileSync('state', ()=>{});
+            var live = eval('(' + data + ')');
+            Object.assign(this, live);
+            
+            /* restore License objects */
+            for (let id in this._license_list) {
+                var live = this._license_list[id];
+                var instance = new License();
+                Object.assign(instance, live);
+                this._license_list[id] = instance;
+            }
+        }
+    }
+
+    /* create new instance of License covenant, and register it with main */
+    add_license(caller, licensee, description_of_goods) {
+        if (this.already_terminated()) return undefined;
+        return this._license_list[this._license_count += 1] = this.License(caller, licensee, description_of_goods);
+    }
+
+
+    /* built-in convenience function to view state change log. */
+    history() {
+        fs.readFile(this.logname, (e,d)=>{console.log(d.toString())});
+    }
+
+    /* built-in serialization and storage of entire contract system state. */
+    persist() {
+        console.log('> persisting');
+        var data = serialize(this, {space: 4});
+        fs.writeFileSync('state', data, ()=>{});
+    }
+
+    /* re-instate entire contract system from serialized file store */
+    static load() {
+        return new EvaluationLicenseSystem();
+    }
+
+    /* built-in logging of state changes. */
+    log(caller, msg) {
+        console.log(msg);
+        let stamp = (new Date()).toLocaleString('en-US');
+        var entry = `⌽  ${stamp} ✦ ${caller} ${msg}`;
+        var passphrase = this.sync_passphrase(caller);
+        var pem = fs.readFileSync(caller + '.key');
+        var key = pem.toString('ascii');
+        var sign = crypto.createSign('RSA-SHA256');
+        sign.update(entry);
+        var sig = sign.sign({ key: key, passphrase: passphrase }, 'hex');
+        fs.appendFileSync(this.logname, `${entry} ❈ ${sig}\n`);
+        let pay = fs.readFileSync(this.logname);
+        let hash = crypto.createHash('sha256').update(pay);
+        fs.appendFileSync(this.logname, '⧉ ' + hash.digest('hex').substr(0, 12) + " ");
+    }
+
+    /* built-in password query for private key file, with cache. */
+    sync_passphrase(caller) {
+        if(!caller) process.exit('no caller information');
+        if(caller == last_caller) return last_passphrase;
+        last_caller = caller;
+        return last_passphrase = prompt('enter pass phrase for ' + caller + ': ', {echo: ''});
+    }
+
+    /* built-in convenience function to create keys for users. */
+    static create_key(name, passphrase) {
+        const { publicKey, privateKey } =
+            crypto.generateKeyPairSync('rsa',
+                { modulusLength: 2048,
+                    publicKeyEncoding: { type: 'spki', format: 'pem' },
+                    privateKeyEncoding: { type: 'pkcs8', format: 'pem', cipher: 'aes-256-cbc', passphrase: passphrase }});
+
+        fs.writeFileSync(name+'.key', privateKey);
+        fs.writeFileSync(name+'.pub', publicKey);
+        return true;
+    }
+
+    /* built-in pay message */
+    _pay(caller, from, to, amount) {
+        this.log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') main._escrow -= amount;
+        if(to == 'escrow') main._escrow += amount;
+    }
+}
+
+/* end */

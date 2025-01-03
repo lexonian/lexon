@@ -1,0 +1,245 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type data ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type time ) ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type time ) ) 
+                        ( this-contract «bar» ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «baz-garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «baz-garply» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «baz-garply» ( type text ) ) ) 
+                ( clauses 
+                    ( clause «corge» 
+                        ( body 
+                            ( function «corge» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combination ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
+                                                        expiration ) ) 
+                                                ( combinand 
+                                                    ( negation 
+                                                        ( negator be ) 
+                                                        ( symbol «corge» ) ) ) 
+                                                ( combinator nor ) ) ) 
+                                        ( combinor ( combinand 
+                                                ( negation 
+                                                    ( negator ) 
+                                                    ( symbol «corge» ) ) ) ) ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols 
+                                        ( symbols 
+                                            ( symbols 
+                                                ( symbols ( symbol ( type binary ) ) ) 
+                                                ( symbol ( type time ) ) 
+                                                catena ) 
+                                            ( symbol «baz-garply» ) 
+                                            catena ) 
+                                        ( symbol ( type time ) ) 
+                                        catena ) 
+                                    ( symbol ( type text ) ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combinor ( combinand expiration ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                                ( combinand 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol «baz-garply» ) ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time 
+                                                                                ( relative-time 
+                                                                                    ( duration 
+                                                                                        ( scalar-expression 
+                                                                                            ( point-in-time 
+                                                                                                ( relative-time 
+                                                                                                    ( duration 
+                                                                                                        ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                                                        ( time-unit years ) ) 
+                                                                                                    ( symbol ( type person ) ) ) ) ) 
+                                                                                        ( time-unit days ) ) ) ) ) 
+                                                                        ( time-unit weeks ) ) ) ) ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand ( symbol «baz-garply» ) ) ) 
+                                                ( combinator nor ) ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «baz-garply» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type text ) ) 
+                                                            expiration ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 123 ) ) ) ) ) 
+                                            ( combinor ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol ( type time ) ) ) ) ) 
+                                                ( combinand expiration ) 
+                                                ( combinator or- ) ) ) 
+                                        ( combinor ( combinand 
+                                                ( scalar-comparison 
+                                                    ( scalar-expression 
+                                                        ( point-in-time current-time ) ) 
+                                                    ( comparison-operator equal ) 
+                                                    ( scalar-expression 123 ) ) ) ) 
+                                        ( combinator nor ) ) ) ) ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «baz-garply» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( fixture fix ( symbol «baz-garply» ) 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 123 ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression ( symbol ( type binary ) ) ) ) ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression ( symbol ( type person ) ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression 123 ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol «baz-garply» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol «baz-garply» ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time current-time ) ) 
+                                                                            ( comparison-operator later ) 
+                                                                            ( scalar-expression ( symbol ( type text ) ) ) ) ) ) 
+                                                                ( combinand 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «baz-garply» ) ) ) 
+                                                            ( combinator nor ) ) 
+                                                        ( combinand ( symbol «baz-garply» ) ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression ( symbol ( type data ) ) ) ) ) ) ) ) 
+                                        preposition 
+                                        ( object ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type person ) ) 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression ( symbol ( type data ) ) ) 
+                                                                                ( time-unit years ) ) ) ) ) ) ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( existence ( symbol ( type person ) ) 
+                                                            be ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ) 
+                                        preposition 
+                                        ( expression ( combination ( combinor ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time current-time ) ) 
+                                                                                ( time-unit milliseconds ) ) ) ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression ( symbol ( type data ) ) ) ) ) ) 
+                                                    ( combinand 
+                                                        ( existence ( symbol «baz-garply» ) 
+                                                            being true ) ) 
+                                                    ( combinator and ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol «baz-garply» ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «baz-garply» ) ) ) 
+                                ( predicate 
+                                    ( payment pay preposition 
+                                        ( object ( symbol ( type binary ) ) ) 
+                                        escrow ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «baz-garply» ) ) ) 
+                                ( predicate 
+                                    ( termination terminate all-contracts ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «baz-garply» ) 
+                                        ( contract 
+                                            ( this-contract «bar» ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «baz-garply» ) 
+                                        ( contract all-contracts ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                            ( combinand 
+                                                ( existence ( symbol «baz-garply» ) 
+                                                    equal fixed ) ) 
+                                            ( combinator neither ) ) ) ) ) ) ) ) ) ) 
+        ( covenant «corge» 
+            ( provisions 
+                ( definitions 
+                    ( definition «corge» ( type person ) ) 
+                    ( definition «corge» ( type binary ) ) ) ) ) ) )
