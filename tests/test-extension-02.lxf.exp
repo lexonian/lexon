@@ -1,0 +1,10 @@
+	%token Appointment_Predicate
+	%token Appoints
+	%token Party
+	%token Somebody
+	
+	Appointment_Predicate:	
+		  Appoints Somebody Party                         { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; Appointment->Party=$Party; root=process_appointment(Appointment); }
+	
+	Appointment_Predicate:	
+		  Appoints Somebody                               { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; root=process_appointment(Appointment); }

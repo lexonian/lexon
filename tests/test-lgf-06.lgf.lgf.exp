@@ -1,0 +1,22 @@
+	
+	Head:	
+		  Lex
+		| Lex Preamble
+		| Lex Authors
+		| Lex Authors Preamble
+		| Lex Lexon
+		| Lex Lexon Preamble
+		| Lex Lexon Authors
+		| Lex Lexon Authors Preamble
+		;
+
+
+	Name: NAME						{ $$=$NAME; }
+	    ;
+
+	Description: DESCRIPTION						{ $$=$DESCRIPTION; }
+	    ;
+
+	Scalar: SCALAR						{ $$=$SCALAR; }
+	    ;
+

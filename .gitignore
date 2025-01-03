@@ -1,0 +1,17 @@
+.*
+*.o
+*.obj
+*.map
+*.a
+*.so
+*.out
+
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+*.tmp
+*.swp
+*.bak
+*~

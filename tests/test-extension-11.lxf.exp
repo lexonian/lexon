@@ -1,0 +1,20 @@
+	%token Appointment_Predicate
+	%token Appoints
+	%token Somebody
+	%token SomebodyBe
+	%token SomebodyBeParty
+	%token SomebodyParty
+	%token SomebodyTo
+	%token SomebodyToBe
+	%token SomebodyToBeParty
+	%token SomebodyToParty
+	
+	Appointment_Predicate:	
+		  Appoints Somebody                               { NEW(Appointment, *((Literal **)&yylval)); Appointment->Somebody=$Somebody; root=process_appointment(Appointment); }
+		| Appoints SomebodyParty                          { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }
+		| Appoints SomebodyBe                             { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }
+		| Appoints SomebodyBeParty                        { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }
+		| Appoints SomebodyTo                             { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }
+		| Appoints SomebodyToParty                        { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }
+		| Appoints SomebodyToBe                           { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }
+		| Appoints SomebodyToBeParty                      { NEW(Appointment, *((Literal **)&yylval)); root=process_appointment(Appointment); }

@@ -1,0 +1,34 @@
+
+precompilation:
+---------------
+
+test law 02   1:   LEX: «Paid Escrow».
+test law 02   2:   LEXON: ‹0.3.xx›.
+test law 02   3:   COMMENT: ‹%PRE %GEN %JUR an escrow that is controlled by a third party for a fee.›.
+test law 02   4:   LAW: New York
+
+library 1     1:   CLAUSE: «Deadline Past».
+library 1     2:   "«Deadline Past»" is defined as a given Time being earlier than Today.
+
+test law 02   6:   “«Paying Party»” is a person.
+test law 02   7:   “«Paid Party»” is a person.
+test law 02   8:   “«Pay Master»” is a person.
+test law 02   9:   “«Payment»” is an amount.
+test law 02  10:   “«Payment Fee»” is an amount.
+test law 02  11:   “«Non-Payment Fee»” is an amount.
+test law 02  12:   “«Master's Fee»” is an amount.
+
+test law 02  14:   The «Paying Party» pays a «Payment» into escrow,
+test law 02  15:   appoints the «Paid Party»,
+test law 02  16:   appoints the «Pay Master»,
+test law 02  17:   and also fixes the «Master's Fee».
+
+test law 02  19:   CLAUSE: «Make Payment».
+test law 02  20:   The «Pay Master» may pay from escrow the «Master's Fee» to themselves,
+test law 02  22:   and afterwards pay the remainder of the escrow to the «Paid Party».
+
+test law 02  24:   CLAUSE: «Return Payment».
+test law 02  25:   The «Pay Master» may pay from escrow the «Non-Payment Fee» to themselves,
+test law 02  27:   and afterwards return the remainder of the escrow to the «Paying Party».
+
+

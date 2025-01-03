@@ -1,0 +1,273 @@
+( document 
+    ( head 
+        ( lex «corge» ) 
+        ( comment "Donec pede justo, fringilla.") 
+        ( lexon "Nulla consequat massa.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «qux-thud» 
+                    ( this-contract «corge» ) ) ) 
+            ( clauses 
+                ( clause «grault-thud» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( flagging 
+                                    ( illocutor be ) 
+                                    ( symbol «grault-thud» ) ) ) ) ) ) 
+                ( clause «garply» 
+                    ( body 
+                        ( function «garply» 
+                            ( illocutor be ) 
+                            ( expression ( combination ( combinor ( combinand ( symbol ( type person ) ) 
+                                            expiration ) ) ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type time ) ) 
+                        ( this-contract «corge» ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols 
+                                ( symbols ( symbol ( type text ) ) ) 
+                                ( symbol ( type amount ) ) 
+                                catena ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( grantment grant ( symbol ( type binary ) ) ) ) 
+                            ( predicate 
+                                ( termination terminate 
+                                    ( this-contract «corge» ) ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol «qux-thud» ) 
+                                    ( contract all-contracts ) ) ) 
+                            ( predicate 
+                                ( filing file ( symbol ( type amount ) ) 
+                                    ( expression ( combination ( combinor ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( time-unit seconds ) ) ) ) ) ) 
+                                                ( combinand 
+                                                    ( negation 
+                                                        ( negator ) 
+                                                        ( symbol ( type time ) ) ) ) 
+                                                ( combinator nor ) ) ) ) ) ) 
+                            ( predicate 
+                                ( declaration declare ( symbol ( type amount ) ) 
+                                    ( contract 
+                                        ( this-contract «corge» ) ) ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combinor ( combinor ( combinand ( symbol ( type binary ) ) ) ) 
+                                        ( combinand 
+                                            ( existence ( symbol ( type binary ) ) 
+                                                equal fixed ) ) 
+                                        ( combinator or- ) ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» 
+                        ( this-contract «corge» ) ) 
+                    ( definition «garply» 
+                        ( this-contract «corge» ) ) ) ) ) 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» ( type text ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols 
+                                        ( symbols ( symbol ( type person ) ) ) 
+                                        ( symbol «garply» ) 
+                                        catena ) 
+                                    ( symbol ( type binary ) ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator be ) 
+                                                                        ( symbol «garply» ) ) ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression ( symbol «garply» ) ) 
+                                                                                    ( time-unit hours ) ) ) ) ) 
+                                                                    ( comparison-operator later ) 
+                                                                    ( scalar-expression ( symbol «garply» ) ) ) ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) 
+                                                                        ( time-unit weeks ) ) 
+                                                                    ( symbol «garply» ) ) ) ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinor ( combinand 
+                                                        ( existence ( symbol ( type time ) ) 
+                                                            equal fixed ) ) ) 
+                                                ( combinator and ) ) ) 
+                                        preposition 
+                                        ( object ( symbol ( type time ) ) ) ) ) 
+                                ( predicate 
+                                    ( payment pay preposition 
+                                        ( object reflexive ) 
+                                        escrow ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «garply» ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( existence ( symbol ( type binary ) ) 
+                                                                being true ) ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol «garply» ) 
+                                                            expiration ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression 
+                                                                                        ( point-in-time 
+                                                                                            ( relative-time 
+                                                                                                ( duration 
+                                                                                                    ( scalar-expression ( symbol ( type text ) ) ) 
+                                                                                                    ( time-unit years ) ) 
+                                                                                                ( symbol ( type person ) ) ) ) ) 
+                                                                                    ( time-unit days ) ) ) ) ) 
+                                                                    ( time-unit milliseconds ) ) 
+                                                                ( symbol ( type binary ) ) ) ) ) 
+                                                    ( combinator and ) ) ) ) 
+                                        preposition 
+                                        ( object ( symbol ( type person ) ) ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol «garply» ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type text ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type time ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol «garply» ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand 
+                                                                                        ( existence ( symbol ( type amount ) ) 
+                                                                                            being true ) ) ) 
+                                                                                ( combinand 
+                                                                                    ( existence ( symbol ( type data ) ) 
+                                                                                        be 
+                                                                                        ( contract 
+                                                                                            ( this-contract «corge» ) ) ) ) 
+                                                                                ( combinator and ) ) 
+                                                                            ( combinand 
+                                                                                ( scalar-comparison 
+                                                                                    ( scalar-expression 
+                                                                                        ( point-in-time 
+                                                                                            ( relative-time 
+                                                                                                ( duration 
+                                                                                                    ( scalar-expression ( symbol «garply» ) ) 
+                                                                                                    ( time-unit years ) ) ) ) ) 
+                                                                                    ( comparison-operator equal ) 
+                                                                                    ( scalar-expression 
+                                                                                        ( point-in-time current-time ) ) ) ) 
+                                                                            ( combinator and ) ) ) 
+                                                                    ( combinor ( combinand expiration ) ) 
+                                                                    ( combinator nor ) ) 
+                                                                ( combinor ( combinand expiration ) ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinor ( combinor ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                            ( comparison-operator later ) 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time current-time ) ) ) ) ) 
+                                                                ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( comparison-operator later ) 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time 
+                                                                                ( relative-time 
+                                                                                    ( duration 
+                                                                                        ( scalar-expression 123 ) 
+                                                                                        ( time-unit milliseconds ) ) 
+                                                                                    ( symbol «garply» ) ) ) ) ) ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinor ( combinor ( combinand ( symbol «garply» ) ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( combinator nor ) ) ) 
+                                                    ( combinor ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( comparison-operator later ) 
+                                                                    ( scalar-expression 123 ) ) ) ) 
+                                                        ( combinand ( symbol «garply» ) 
+                                                            expiration ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinor ( combinor ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression 
+                                                                                        ( point-in-time 
+                                                                                            ( relative-time 
+                                                                                                ( duration 
+                                                                                                    ( scalar-expression 123 ) 
+                                                                                                    ( time-unit seconds ) ) 
+                                                                                                ( symbol «garply» ) ) ) ) 
+                                                                                    ( time-unit years ) ) ) ) ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression 123 ) ) ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( time-unit hours ) ) 
+                                                                    ( symbol ( type person ) ) ) ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand ( symbol «garply» ) 
+                                                        expiration ) 
+                                                    ( combinator or- ) ) ) 
+                                            ( combinor ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression ( symbol «garply» ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression ( symbol ( type binary ) ) ) ) ) ) 
+                                                ( combinand 
+                                                    ( negation 
+                                                        ( negator be ) 
+                                                        ( symbol «garply» ) ) ) 
+                                                ( combinator and ) ) ) 
+                                        ( combinor ( combinand 
+                                                ( negation 
+                                                    ( negator ) 
+                                                    ( symbol «garply» ) 
+                                                    ( contract 
+                                                        ( this-contract «corge» ) ) ) ) ) 
+                                        ( combinator or- ) ) ) ) ) ) ) ) ) ) )

@@ -1,0 +1,31 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type binary ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type person ) ) 
+                        ( this-contract «bar» ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) 
+                        ( this-contract «bar» ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «baz-waldo» 
+            ( provisions 
+                ( definitions 
+                    ( definition «baz-waldo» ( type binary ) ) ) 
+                ( clauses 
+                    ( clause «corge» 
+                        ( body 
+                            ( function «corge» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) 
+                                                expiration ) ) ) ) ) ) ) ) ) ) ) )

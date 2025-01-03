@@ -1,0 +1,673 @@
+( document 
+    ( head 
+        ( lex «foo-thud-bar» ) 
+        ( preamble "Donec quam.") 
+        ( lexon "Cum.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «foo-bar» ( type binary ) ) ) 
+            ( clauses 
+                ( clause «baz» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( flagging 
+                                    ( illocutor be ) 
+                                    ( symbol «baz» ) ) ) 
+                            ( statement 
+                                ( flagging 
+                                    ( illocutor be ) 
+                                    ( symbol ( type binary ) ) 
+                                    ( this-contract «foo-thud-bar» ) ) ) 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols 
+                                            ( symbols 
+                                                ( symbols 
+                                                    ( symbols ( symbol «baz» ) ) 
+                                                    ( symbol «baz» ) 
+                                                    catena ) 
+                                                ( symbol «baz» ) 
+                                                catena ) 
+                                            ( symbol «baz» ) 
+                                            catena ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( fixture fix ( symbol ( type text ) ) 
+                                                ( expression ( combination ( combinor ( combinand 
+                                                                ( existence ( symbol ( type binary ) ) 
+                                                                    being true ) ) ) ) ) ) ) 
+                                        ( predicate 
+                                            ( sending send 
+                                                ( expression ( combination ( combinor ( combinor ( combinand ( symbol «baz» ) ) ) 
+                                                            ( combinand ( symbol ( type data ) ) 
+                                                                expiration ) 
+                                                            ( combinator nor ) ) ) ) 
+                                                preposition 
+                                                ( object ) ) ) 
+                                        ( predicate 
+                                            ( declaration declare ( symbol ( type time ) ) 
+                                                ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                                        ( combinand expiration ) 
+                                                                        ( combinator neither ) ) ) 
+                                                                ( combinor ( combinand 
+                                                                        ( negation 
+                                                                            ( negator be ) 
+                                                                            ( symbol ( type amount ) ) 
+                                                                            fixed ) ) ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinor ( combinand expiration ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinor ( combinand expiration ) ) ) ) ) ) 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol ( type amount ) ) ) ) 
+                                        ( predicate 
+                                            ( certification certify ( symbol «baz» ) ) ) 
+                                        ( predicate 
+                                            ( declaration declare ( symbol ( type person ) ) ) ) 
+                                        ( predicate 
+                                            ( declaration declare ( symbol «baz» ) ) ) 
+                                        ( predicate 
+                                            ( declaration declare ( symbol «baz» ) 
+                                                ( contract all-contracts ) ) ) 
+                                        ( predicate 
+                                            ( termination terminate 
+                                                ( this-contract «foo-thud-bar» ) ) ) ) ) ) ) ) ) 
+                ( clause «qux-thud» 
+                    ( body 
+                        ( function «qux-thud» 
+                            ( illocutor be ) 
+                            ( expression ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                        ( combinor ( combinand 
+                                                ( scalar-comparison 
+                                                    ( scalar-expression ( symbol ( type text ) ) ) 
+                                                    ( comparison-operator equal ) 
+                                                    ( scalar-expression 123 ) ) ) ) ) 
+                                    ( combinor ( combinand 
+                                            ( negation 
+                                                ( negator be ) 
+                                                ( symbol «qux-thud» ) 
+                                                fixed ) ) ) 
+                                    ( combinator and ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «qux-thud» 
+            ( provisions 
+                ( definitions 
+                    ( definition «qux-thud» ( type text ) ) 
+                    ( definition «qux-thud» 
+                        ( this-contract «foo-thud-bar» ) ) 
+                    ( definition «qux-thud» 
+                        ( this-contract «foo-thud-bar» ) ) ) ) ) 
+        ( covenant «qux-thud» 
+            ( provisions 
+                ( definitions 
+                    ( definition «qux-thud» 
+                        ( this-contract «foo-thud-bar» ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type time ) ) ) ) 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol «qux-thud» ) 
+                            ( this-contract «foo-thud-bar» ) ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols ( symbol ( type time ) ) ) 
+                                    ( symbol ( type person ) ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( payment pay preposition 
+                                        ( object ) 
+                                        escrow ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol ( type amount ) ) 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand ( symbol «qux-thud» ) ) ) 
+                                                                        ( combinand ( symbol ( type amount ) ) 
+                                                                            expiration ) 
+                                                                        ( combinator and ) ) ) 
+                                                                ( combinor ( combinor ( combinand ( symbol «qux-thud» ) ) ) 
+                                                                    ( combinand 
+                                                                        ( point-in-time current-time ) ) 
+                                                                    ( combinator or- ) ) ) 
+                                                            ( combinor ( combinand ( symbol ( type data ) ) ) ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                ( scalar-comparison 
+                                                                                    ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                                    ( comparison-operator equal ) 
+                                                                                    ( scalar-expression ( symbol «qux-thud» ) ) ) ) ) 
+                                                                        ( combinand 
+                                                                            ( existence ( symbol «qux-thud» ) 
+                                                                                be 
+                                                                                ( contract 
+                                                                                    ( this-contract «foo-thud-bar» ) ) ) ) 
+                                                                        ( combinator and ) ) 
+                                                                    ( combinand 
+                                                                        ( negation 
+                                                                            ( negator ) 
+                                                                            ( symbol ( type person ) ) 
+                                                                            fixed ) ) 
+                                                                    ( combinator and ) ) 
+                                                                ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression ( symbol «qux-thud» ) ) 
+                                                                        ( comparison-operator equal ) 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) ) ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression 123 ) 
+                                                                                    ( time-unit hours ) ) ) ) ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression ( symbol «qux-thud» ) ) ) ) 
+                                                            ( combinator nor ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( existence ( symbol ( type data ) ) 
+                                                                equal fixed ) ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol ( type text ) ) 
+                                                            expiration ) ) 
+                                                    ( combinand ( symbol ( type time ) ) ) 
+                                                    ( combinator neither ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol «qux-thud» ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type binary ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object reflexive ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                                                ( combinor ( combinor ( combinand ( symbol ( type person ) ) 
+                                                                            expiration ) ) 
+                                                                    ( combinand ( symbol ( type binary ) ) ) 
+                                                                    ( combinator and ) ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinor ( combinor ( combinand ( symbol ( type amount ) ) ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator and ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                        ( point-in-time current-time ) ) ) 
+                                                                                ( combinand expiration ) 
+                                                                                ( combinator nor ) ) 
+                                                                            ( combinand 
+                                                                                ( existence ( symbol «qux-thud» ) 
+                                                                                    being true ) ) 
+                                                                            ( combinator or- ) ) 
+                                                                        ( combinand expiration ) 
+                                                                        ( combinator nor ) ) 
+                                                                    ( combinand ( symbol «qux-thud» ) ) 
+                                                                    ( combinator neither ) ) 
+                                                                ( combinand 
+                                                                    ( existence ( symbol «qux-thud» ) 
+                                                                        be 
+                                                                        ( contract 
+                                                                            ( this-contract «foo-thud-bar» ) ) ) ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinand ( symbol ( type time ) ) 
+                                                                expiration ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «qux-thud» ) ) ) 
+                                                                    ( combinand 
+                                                                        ( point-in-time 
+                                                                            ( relative-time 
+                                                                                ( duration 
+                                                                                    ( scalar-expression ( symbol «qux-thud» ) ) 
+                                                                                    ( time-unit months ) ) 
+                                                                                ( symbol «qux-thud» ) ) ) ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand ( symbol «qux-thud» ) ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator ) 
+                                                                    ( symbol «qux-thud» ) 
+                                                                    fixed ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) 
+                                                                        ( time-unit hours ) ) 
+                                                                    ( symbol «qux-thud» ) ) ) ) 
+                                                        ( combinator and ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol ( type binary ) ) ) 
+                                                                            ( time-unit days ) ) ) ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression ( symbol ( type time ) ) ) ) ) ) 
+                                                ( combinator nor ) ) ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand ( symbol ( type person ) ) 
+                                                                                expiration ) ) 
+                                                                        ( combinand ( symbol ( type text ) ) 
+                                                                            expiration ) 
+                                                                        ( combinator neither ) ) ) 
+                                                                ( combinor ( combinand 
+                                                                        ( scalar-comparison 
+                                                                            ( scalar-expression ( symbol ( type amount ) ) ) 
+                                                                            ( comparison-operator equal ) 
+                                                                            ( scalar-expression 123 ) ) ) ) 
+                                                                ( combinator nor ) ) 
+                                                            ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator ) 
+                                                                        ( symbol «qux-thud» ) 
+                                                                        fixed ) ) ) ) 
+                                                        ( combinor ( combinand 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 123 ) 
+                                                                            ( time-unit weeks ) ) ) ) ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( existence ( symbol ( type data ) ) 
+                                                                be ) ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinand expiration ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «qux-thud» ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
+                                                                    expiration ) ) 
+                                                            ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time current-time ) ) 
+                                                                    ( comparison-operator equal ) 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time current-time ) ) ) ) 
+                                                            ( combinator neither ) ) ) 
+                                                    ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
+                                                                    ( combinand 
+                                                                        ( negation 
+                                                                            ( negator be ) 
+                                                                            ( symbol ( type time ) ) 
+                                                                            fixed ) ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator neither ) ) 
+                                                            ( combinand 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( combinator or- ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol «qux-thud» ) 
+                                                                fixed ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinor ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol ( type text ) ) 
+                                                                fixed ) ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator and ) ) 
+                                                ( combinator nor ) ) ) 
+                                        preposition 
+                                        ( object ( symbol «qux-thud» ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type person ) ) 
+                                        ( expression ( combination ( combinor ( combinand 
+                                                        ( point-in-time current-time ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( setting 
+                                        ( illocutor be ) 
+                                        ( symbol ( type amount ) ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type binary ) ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
+                                                                                    ( negation 
+                                                                                        ( negator be ) 
+                                                                                        ( symbol ( type data ) ) ) ) ) ) 
+                                                                        ( combinor ( combinor ( combinand 
+                                                                                    ( existence ( symbol «qux-thud» ) 
+                                                                                        be 
+                                                                                        ( contract all-contracts ) ) ) ) 
+                                                                            ( combinand 
+                                                                                ( negation 
+                                                                                    ( negator ) 
+                                                                                    ( symbol ( type data ) ) 
+                                                                                    fixed ) ) 
+                                                                            ( combinator neither ) ) 
+                                                                        ( combinator neither ) ) 
+                                                                    ( combinor ( combinand 
+                                                                            ( negation 
+                                                                                ( negator ) 
+                                                                                ( symbol «qux-thud» ) ) ) ) 
+                                                                    ( combinator or- ) ) 
+                                                                ( combinor ( combinand ( symbol ( type data ) ) 
+                                                                        expiration ) ) ) 
+                                                            ( combinor ( combinand expiration ) ) ) 
+                                                        ( combinor ( combinor ( combinand 
+                                                                    ( negation 
+                                                                        ( negator ) 
+                                                                        ( symbol «qux-thud» ) 
+                                                                        fixed ) ) ) 
+                                                            ( combinand 
+                                                                ( existence ( symbol ( type time ) ) 
+                                                                    equal fixed ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol ( type text ) ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 123 ) ) ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinor ( combinor ( combinor ( combinand 
+                                                                ( point-in-time current-time ) ) ) 
+                                                        ( combinand ( symbol «qux-thud» ) ) 
+                                                        ( combinator nor ) ) 
+                                                    ( combinand expiration ) 
+                                                    ( combinator or- ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «qux-thud» ) ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ) 
+                                        preposition 
+                                        ( expression ( combination ( combinor ( combinand ( symbol ( type binary ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( negation 
+                                                            ( negator ) 
+                                                            ( symbol ( type time ) ) 
+                                                            ( contract 
+                                                                ( this-contract «foo-thud-bar» ) ) ) ) ) 
+                                                ( combinator or- ) ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «qux-thud» ) 
+                                                                    expiration ) ) ) 
+                                                        ( combinor ( combinor ( combinand expiration ) ) 
+                                                            ( combinand ( symbol «qux-thud» ) 
+                                                                expiration ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( existence ( symbol ( type time ) ) 
+                                                                be ) ) ) 
+                                                    ( combinator neither ) ) 
+                                                ( combinor ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression ( symbol «qux-thud» ) ) 
+                                                                    ( time-unit minutes ) ) 
+                                                                ( symbol ( type time ) ) ) ) ) ) 
+                                                ( combinator and ) ) ) ) ) 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( comparison-operator equal ) 
+                                                                        ( scalar-expression 123 ) ) ) ) 
+                                                            ( combinand ( symbol ( type binary ) ) ) 
+                                                            ( combinator neither ) ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) 
+                                                                ( comparison-operator equal ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time current-time ) ) ) ) ) ) 
+                                                ( combinor ( combinor ( combinand expiration ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 
+                                                                ( point-in-time current-time ) ) ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinator nor ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) 
+                                        from-escrow ) ) 
+                                ( predicate 
+                                    ( notification notify 
+                                        ( object ( symbol ( type data ) ) ) 
+                                        preposition 
+                                        ( expression ( combination ( combination ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «qux-thud» ) ) ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol ( type time ) ) ) 
+                                                                            ( time-unit seconds ) ) 
+                                                                        ( symbol «qux-thud» ) ) ) ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 123 ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol ( type person ) ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol ( type person ) ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol ( type data ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol «qux-thud» ) ) ) 
+                                ( predicate 
+                                    ( termination terminate 
+                                        ( this-contract «foo-thud-bar» ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «qux-thud» ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type time ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol ( type time ) ) 
+                                        ( contract all-contracts ) ) ) 
+                                ( predicate 
+                                    ( declaration declare ( symbol «qux-thud» ) 
+                                        ( contract 
+                                            ( this-contract «foo-thud-bar» ) ) ) ) 
+                                ( predicate 
+                                    ( filing file ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand 
+                                                                    ( scalar-comparison 
+                                                                        ( scalar-expression 
+                                                                            ( point-in-time current-time ) ) 
+                                                                        ( comparison-operator equal ) 
+                                                                        ( scalar-expression ( symbol ( type data ) ) ) ) ) ) 
+                                                            ( combinand ( symbol ( type amount ) ) ) 
+                                                            ( combinator and ) ) 
+                                                        ( combinand 
+                                                            ( negation 
+                                                                ( negator be ) 
+                                                                ( symbol «qux-thud» ) ) ) 
+                                                        ( combinator nor ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
+                                                            expiration ) ) 
+                                                    ( combinand ( symbol ( type time ) ) 
+                                                        expiration ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinator and ) ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type amount ) ) ) ) 
+                                ( predicate 
+                                    ( sending send 
+                                        ( expression ( combination ( combinor ( combinor ( combinand 
+                                                            ( point-in-time 
+                                                                ( relative-time 
+                                                                    ( duration 
+                                                                        ( scalar-expression 123 ) 
+                                                                        ( time-unit days ) ) 
+                                                                    ( symbol ( type binary ) ) ) ) ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 123 ) ) ) 
+                                                    ( combinator nor ) ) ) ) 
+                                        preposition 
+                                        ( object reflexive ) ) ) 
+                                ( predicate 
+                                    ( grantment grant ( symbol ( type amount ) ) ) ) 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type time ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 123 ) 
+                                                            ( comparison-operator later ) 
+                                                            ( scalar-expression 123 ) ) ) ) ) ) ) ) 
+                                ( predicate 
+                                    ( certification certify ( symbol «qux-thud» ) 
+                                        ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                            ( combinand 
+                                                                ( negation 
+                                                                    ( negator be ) 
+                                                                    ( symbol «qux-thud» ) ) ) 
+                                                            ( combinator nor ) ) ) 
+                                                    ( combinor ( combinand expiration ) ) ) 
+                                                ( combinor ( combinor ( combinand 
+                                                            ( existence ( symbol ( type binary ) ) 
+                                                                equal fixed ) ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol «qux-thud» ) 
+                                                            fixed ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinator nor ) ) ) ) ) ) 
+                            permission ) ) 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols 
+                                    ( symbols ( symbol «qux-thud» ) ) 
+                                    ( symbol ( type time ) ) 
+                                    catena ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( certification certify ( symbol «qux-thud» ) 
+                                        ( contract 
+                                            ( this-contract «foo-thud-bar» ) ) ) ) 
+                                ( predicate 
+                                    ( registration register ( symbol «qux-thud» ) 
+                                        ( contract 
+                                            ( this-contract «foo-thud-bar» ) ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                                                    ( scalar-comparison 
+                                                                                                        ( scalar-expression 123 ) 
+                                                                                                        ( comparison-operator later ) 
+                                                                                                        ( scalar-expression ( symbol «qux-thud» ) ) ) ) ) 
+                                                                                            ( combinand 
+                                                                                                ( point-in-time current-time ) ) 
+                                                                                            ( combinator and ) ) 
+                                                                                        ( combinand 
+                                                                                            ( negation 
+                                                                                                ( negator ) 
+                                                                                                ( symbol ( type time ) ) ) ) 
+                                                                                        ( combinator and ) ) 
+                                                                                    ( combinand 
+                                                                                        ( existence ( symbol «qux-thud» ) 
+                                                                                            being true ) ) 
+                                                                                    ( combinator nor ) ) 
+                                                                                ( combinand 
+                                                                                    ( scalar-comparison 
+                                                                                        ( scalar-expression 123 ) 
+                                                                                        ( comparison-operator equal ) 
+                                                                                        ( scalar-expression 123 ) ) ) 
+                                                                                ( combinator or- ) ) 
+                                                                            ( combinand 
+                                                                                ( scalar-comparison 
+                                                                                    ( scalar-expression 123 ) 
+                                                                                    ( comparison-operator later ) 
+                                                                                    ( scalar-expression 
+                                                                                        ( point-in-time 
+                                                                                            ( relative-time 
+                                                                                                ( duration 
+                                                                                                    ( scalar-expression ( symbol ( type binary ) ) ) 
+                                                                                                    ( time-unit days ) ) ) ) ) ) ) 
+                                                                            ( combinator nor ) ) 
+                                                                        ( combinand expiration ) 
+                                                                        ( combinator neither ) ) 
+                                                                    ( combinand 
+                                                                        ( point-in-time current-time ) ) 
+                                                                    ( combinator neither ) ) 
+                                                                ( combinand expiration ) 
+                                                                ( combinator or- ) ) 
+                                                            ( combinand 
+                                                                ( scalar-comparison 
+                                                                    ( scalar-expression ( symbol «qux-thud» ) ) 
+                                                                    ( comparison-operator later ) 
+                                                                    ( scalar-expression 
+                                                                        ( point-in-time current-time ) ) ) ) 
+                                                            ( combinator neither ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol «qux-thud» ) 
+                                                                equal fixed ) ) 
+                                                        ( combinator or- ) ) ) 
+                                                ( combinor ( combinand 
+                                                        ( existence ( symbol ( type text ) ) 
+                                                            be 
+                                                            ( contract all-contracts ) ) ) ) 
+                                                ( combinator nor ) ) 
+                                            ( combinor ( combinor ( combinor ( combinand 
+                                                            ( negation 
+                                                                ( negator ) 
+                                                                ( symbol «qux-thud» ) ) ) ) 
+                                                    ( combinand 
+                                                        ( existence ( symbol «qux-thud» ) 
+                                                            being true ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinand expiration ) 
+                                                ( combinator neither ) ) ) 
+                                        ( combinor ( combinor ( combinor ( combinand ( symbol ( type text ) ) ) ) 
+                                                ( combinand 
+                                                    ( scalar-comparison 
+                                                        ( scalar-expression 
+                                                            ( point-in-time current-time ) ) 
+                                                        ( comparison-operator later ) 
+                                                        ( scalar-expression 123 ) ) ) 
+                                                ( combinator or- ) ) 
+                                            ( combinand ( symbol ( type time ) ) ) 
+                                            ( combinator neither ) ) ) ) ) ) ) ) ) ) ) )

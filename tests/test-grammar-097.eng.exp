@@ -1,0 +1,37 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» 
+                    ( this-contract «bar» ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol «bar» ) 
+                        ( this-contract «bar» ) ) ) 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type binary ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» ( type time ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type time ) ) 
+                            ( this-contract «bar» ) ) ) ) ) ) 
+        ( covenant «garply» 
+            ( provisions 
+                ( definitions 
+                    ( definition «garply» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «garply» ( type binary ) ) 
+                    ( definition «garply» ( type person ) ) ) ) ) ) )

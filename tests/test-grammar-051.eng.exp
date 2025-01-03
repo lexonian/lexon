@@ -1,0 +1,44 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type data ) ) ) 
+            ( statements 
+                ( statement 
+                    ( flagging 
+                        ( illocutor be ) 
+                        ( symbol ( type person ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «baz» 
+            ( provisions 
+                ( definitions 
+                    ( definition «baz» ( type data ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol ( type data ) ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( appointment appoint ( symbol ( type person ) ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «baz» ) 
+                                        ( contract all-contracts ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type amount ) ) ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time 
+                                                            ( relative-time 
+                                                                ( duration 
+                                                                    ( scalar-expression 123 ) 
+                                                                    ( time-unit months ) ) 
+                                                                ( symbol ( type data ) ) ) ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinand ( symbol ( type text ) ) ) 
+                                                ( combinator and ) ) ) 
+                                        ( combinor ( combinand expiration ) ) 
+                                        ( combinator or- ) ) ) ) ) ) ) ) ) ) )

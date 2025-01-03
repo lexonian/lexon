@@ -1,0 +1,32 @@
+
+precompilation:
+---------------
+
+test include 01   1:   LEX: «Paid Escrow».
+test include 01   2:   LEXON: ‹0.3.xx›.
+test include 01   3:   COMMENT: ‹%PRE %GEN an escrow that is controlled by a third party for a fee.›.
+
+library 1         1:   CLAUSE: «Deadline Past».
+library 1         2:   "«Deadline Past»" is defined as a given Time being earlier than Today.
+
+test include 01   7:   “«Paying Party»” is a person.
+test include 01   8:   “«Paid Party»” is a person.
+test include 01   9:   “«Pay Master»” is a person.
+test include 01  10:   “«Payment»” is an amount.
+test include 01  11:   “«Payment Fee»” is an amount.
+test include 01  12:   “«Non-Payment Fee»” is an amount.
+test include 01  13:   “«Master's Fee»” is an amount.
+
+test include 01  15:   The «Paying Party» pays a «Payment» into escrow,
+test include 01  16:   appoints the «Paid Party»,
+test include 01  17:   appoints the «Pay Master»,
+test include 01  18:   and also fixes the «Master's Fee».
+
+test include 01  20:   CLAUSE: «Make Payment».
+test include 01  21:   The «Pay Master» may pay from escrow the «Master's Fee» to themselves,
+test include 01  23:   and afterwards pay the remainder of the escrow to the «Paid Party».
+
+test include 01  25:   CLAUSE: «Return Payment».
+test include 01  26:   The «Pay Master» may pay from escrow the «Non-Payment Fee» to themselves,
+test include 01  28:   and afterwards return the remainder of the escrow to the «Paying Party».
+

@@ -1,0 +1,131 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» 
+                    ( this-contract «bar» ) ) ) 
+            ( clauses 
+                ( clause «baz» 
+                    ( body 
+                        ( function «baz» 
+                            ( illocutor be ) 
+                            ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
+                                                                ( existence ( symbol ( type data ) ) 
+                                                                    be ) ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol «baz» ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «bar» ) ) ) ) 
+                                                        ( combinator neither ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol ( type amount ) ) ) ) 
+                                                    ( combinator or- ) ) 
+                                                ( combinand expiration ) 
+                                                ( combinator neither ) ) 
+                                            ( combinand 
+                                                ( negation 
+                                                    ( negator ) 
+                                                    ( symbol «baz» ) ) ) 
+                                            ( combinator nor ) ) ) 
+                                    ( combinor ( combinand ( symbol ( type text ) ) 
+                                            expiration ) ) 
+                                    ( combinator neither ) ) ) ) ) ) 
+                ( clause «qux» 
+                    ( body 
+                        ( function «qux» 
+                            ( illocutor be ) 
+                            ( expression ( combination ( combinor ( combinand ( symbol «qux» ) 
+                                            expiration ) ) ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol ( type text ) ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( grantment grant ( symbol «bar» ) ) ) 
+                            ( predicate 
+                                ( termination terminate 
+                                    ( this-contract «bar» ) ) ) 
+                            ( predicate 
+                                ( notification notify 
+                                    ( object ) 
+                                    preposition 
+                                    ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand 
+                                                                        ( point-in-time current-time ) ) ) 
+                                                                ( combinand ( symbol «bar» ) 
+                                                                    expiration ) 
+                                                                ( combinator nor ) ) ) 
+                                                        ( combinor ( combinand ( symbol «bar» ) ) ) 
+                                                        ( combinator and ) ) 
+                                                    ( combinor ( combinand 
+                                                            ( existence ( symbol «bar» ) 
+                                                                being true ) ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression 
+                                                                                ( point-in-time current-time ) ) 
+                                                                            ( time-unit days ) ) ) ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression 123 ) ) ) ) 
+                                                ( combinator or- ) ) 
+                                            ( combinor ( combinand 
+                                                    ( scalar-comparison 
+                                                        ( scalar-expression 123 ) 
+                                                        ( comparison-operator equal ) 
+                                                        ( scalar-expression ( symbol ( type data ) ) ) ) ) ) 
+                                            ( combinator and ) ) ) ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «bar» ) ) ) ) 
+                                                ( combinor ( combinor ( combinand ( symbol «bar» ) 
+                                                            expiration ) ) 
+                                                    ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression 
+                                                                ( point-in-time 
+                                                                    ( relative-time 
+                                                                        ( duration 
+                                                                            ( scalar-expression ( symbol «bar» ) ) 
+                                                                            ( time-unit minutes ) ) 
+                                                                        ( symbol «bar» ) ) ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression ( symbol ( type amount ) ) ) ) ) 
+                                                    ( combinator nor ) ) ) 
+                                            ( combinor ( combinor ( combinand expiration ) ) 
+                                                ( combinand 
+                                                    ( point-in-time 
+                                                        ( relative-time 
+                                                            ( duration 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression 
+                                                                                    ( point-in-time current-time ) ) 
+                                                                                ( time-unit years ) ) ) ) ) 
+                                                                ( time-unit minutes ) ) ) ) ) 
+                                                ( combinator neither ) ) 
+                                            ( combinator or- ) ) 
+                                        ( combinor ( combinand ( symbol ( type amount ) ) 
+                                                expiration ) ) ) 
+                                    ( combinor ( combinand 
+                                            ( existence ( symbol ( type data ) ) 
+                                                be ) ) ) 
+                                    ( combinator nor ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «plugh-grault» 
+            ( provisions 
+                ( definitions 
+                    ( definition «plugh-grault» ( type time ) ) ) ) ) ) )

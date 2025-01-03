@@ -1,0 +1,66 @@
+( document 
+    ( head 
+        ( lex «escrow» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «buyer» ( type person ) ) 
+                ( definition «payee» ( type person ) ) 
+                ( definition «agent» ( type person ) ) 
+                ( definition «service-fee» ( type amount ) ) ) 
+            ( clauses 
+                ( clause «pay-out» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «agent» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «service-fee» ) ) ) ) ) 
+                                                preposition 
+                                                ( object reflexive ) 
+                                                from-escrow ) ) 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «payee» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «pay-back» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «agent» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «service-fee» ) ) ) ) ) 
+                                                preposition 
+                                                ( object reflexive ) 
+                                                from-escrow ) ) 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «buyer» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «buyer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «payee» ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «agent» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «service-fee» ) ) ) ) ) ) ) ) ) )

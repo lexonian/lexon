@@ -1,0 +1,316 @@
+/* Lexon-generated Sophia code
+
+   code:        Evaluation License System
+
+   preamble:    This is a licensing contract for a software evaluation
+
+   authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+
+   file:        lexon/evaluation.998.lex
+
+   code tagged: 0.2.1
+
+   compiler:    lexon 0.3 alpha 93 U
+
+   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+
+   backend:     sophia 0.3.93 U
+
+   target:      sophia 6+
+
+   options:     --sophia  --all-auxiliaries 
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <arbiter : option(address)>, <breach_service_fee : option(int)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per License.
+
+   > license = evaluation.add_license(<license_taker : option(address)>, <description_of_goods : option(string)>)
+   • <<License Taker>> ⟶  pay()
+   • <<Licensor>> ⟶  commission()
+   • <<License Taker>> ⟶  comment(<comment_text : option(string)>)
+   • <<License Taker>> ⟶  publication()
+   • <<License Taker>> ⟶  grant_permission_to_comment()
+   • <<Arbiter>> ⟶  declare_breach()
+   • <<Arbiter or Licensor>> ⟶  factually_breached()
+   • <<Arbiter or Licensor>> ⟶  notice()
+   • %26%noticed()
+*/
+
+@compiler >=6
+
+include "Option.aes"
+
+/**
+ **
+ ** Main Evaluation License System contract system
+ **
+ **/
+
+/** LEX: Evaluation License System
+ *
+ *	LEXON: 0.2.1
+ *	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ *	PREAMBLE: This is a licensing contract for a software evaluation
+ *
+ *	
+ *	TERMS:
+ *
+ *	"Licensor" is a person
+ *
+ *	"Arbiter" is a person
+ *
+ *	"Licensing Service Fee" is an amount
+ *
+ *	"Breach Service Fee" is an amount
+ *
+ *	
+ *	The Licensor appoints the Arbiter,
+ *	fixes the Licensing Service Fee,
+ *	and fixes the Breach Service Fee
+ *
+ *	
+ *	TERMS PER License:
+ *
+ *	"Description of Goods" is a text
+ *
+ *	"License Taker" is a person
+ *
+ *	"Paid" is a binary
+ *
+ *	"Commissioned" is a binary
+ *
+ *	"Comment Text" is a text
+ *
+ *	"Published" is a binary
+ *
+ *	"Permission to Comment" is a binary
+ *
+ *	"Notice Time" is a time
+ *
+ *	"License" is this contract
+ *
+ *	
+ *	The Licensor appoints the License Taker, and fixes the Description of Goods
+**/
+
+
+
+main contract EvaluationLicenseSystem =
+
+    record state = {
+            licensor : option(address),
+            arbiter : option(address),
+            licensing_service_fee : option(int),
+            breach_service_fee : option(int)
+        }
+
+    entrypoint init(arbiter : address, breach_service_fee : int) = {
+            licensor = Some(Call.caller),
+            arbiter = Some(arbiter),
+            licensing_service_fee = Some(Call.value),
+            breach_service_fee = Some(breach_service_fee)
+        }
+
+
+    /* safe transfer */
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+    /* built-in caller assertion */
+    function permit(authorized : option(address), name : string) =
+        require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
+
+    /* built-in option type force function */
+    function force(o : option('a), name : string) : 'a =
+        switch(o)
+            None => abort(StringInternal.concat(name, " not fixed"))
+            Some(a) => a
+
+
+/* aggregation of covenants for folds and serialization */
+this._license_list = {};
+this._license_count = 0;
+
+/**
+ ** License covenant class
+ **/
+
+contract License =
+
+    record state = {
+            description_of_goods : option(string),
+            license_taker : option(address),
+            paid : option(bool),
+            commissioned : option(bool),
+            comment_text : option(string),
+            published : option(bool),
+            permission_to_comment : option(bool),
+            notice_time : option(int)
+        }
+
+    entrypoint init(license_taker : address, description_of_goods : string) = {
+            description_of_goods = Some(description_of_goods),
+            license_taker = Some(license_taker),
+            paid = None,
+            commissioned = None,
+            comment_text = None,
+            published = None,
+            permission_to_comment = None,
+            notice_time = None
+        }
+
+
+        /* Pay clause */
+
+    /*
+     *  CLAUSE: Pay
+     *  
+     *  The License Taker pays the Licensing Service Fee to the Licensor,
+     *  and pays the Breach Service Fee into escrow
+     *  
+     *  This License is therefore Paid
+     */
+        stateful entrypoint pay() =
+            check_termination()
+            if(Some(Call.caller) == license_taker
+                transfer(force(state.licensor, "Licensor"), force(state.licensing_service_fee, "Licensing Service Fee"))
+            else
+                abort("not permitted")
+            paid = true;
+
+        /* Commission clause */
+
+    /*
+     *  CLAUSE: Commission
+     *  
+     *  The Licensor may certify this License as Commissioned
+     */
+        stateful entrypoint commission() =
+            check_termination()
+            permit(state.licensor, "Licensor")
+            put(state{commissioned = true})
+
+        /* Comment clause */
+
+    /*
+     *  CLAUSE: Comment
+     *  
+     *  The License Taker may register a Comment Text.
+     */
+        stateful entrypoint comment(comment_text : string) =
+            check_termination()
+            permit(license_taker, "License Taker")
+            put(state{comment_text = Some(comment_text)})
+
+        /* Publication clause */
+
+    /*
+     *  CLAUSE: Publication
+     *  
+     *  The License Taker may certify this License as Published
+     */
+        stateful entrypoint publication() =
+            check_termination()
+            permit(license_taker, "License Taker")
+            put(state{published = true})
+
+        /* Grant Permission to Comment clause */
+
+    /*
+     *  CLAUSE: Grant Permission to Comment
+     *  
+     *  The License Taker may grant the Permission to Comment
+     */
+        stateful entrypoint grant_permission_to_comment() =
+            check_termination()
+            permit(license_taker, "License Taker")
+            put(state{permission_to_comment = true})
+
+        /* Declare Breach clause */
+
+    /*
+     *  CLAUSE: Declare Breach
+     *  
+     *  The Arbiter may, provided this License is Factually Breached:
+     *  pay the Breach Service Fee to the Licensor,
+     *  and afterwards terminate this License
+     */
+        stateful entrypoint declare_breach() =
+            check_termination()
+            permit(state.arbiter, "Arbiter")
+            if(factually_breached() == Some(true))
+                transfer(force(state.licensor, "Licensor"), force(state.breach_service_fee, "Breach Service Fee"))
+                termination()
+
+        /* Factually Breached clause */
+
+    /*
+     *  CLAUSE: Factually Breached
+     *  
+     *  "Factually Breached" is defined as:
+     *  this License is Commissioned and the Comment Text is not fixed,
+     *  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past
+     */
+        entrypoint factually_breached() =
+            ((commissioned == Some(true) && comment_text == None)
+                     || (published == Some(true) && (permission_to_comment == Some(false) && (notice_time =< (Chain.timestamp - (24 * 3600000))))))
+
+        /* Notice clause */
+
+    /*
+     *  CLAUSE: Notice
+     *  
+     *  The Licensor or the Arbiter may fix the Notice Time as the respective current time
+     */
+        stateful entrypoint notice() =
+            check_termination()
+            require(Some(Call.caller) == state.arbiter || Some(Call.caller) == state.licensor, "not permitted")
+            put(state{notice_time = Chain.timestamp})
+
+        /* Noticed clause */
+
+    /*
+     *  CLAUSE: Noticed
+     *  
+     *  "Noticed" is defined as a Notice Time being fixed
+     */
+        entrypoint noticed() =
+            notice_time != None
+
+    /* built-in termination of this covenant */
+    stateful function termination() =
+        put(state{terminated = true})
+
+    function already_terminated() =
+            state.terminated
+
+/* end */

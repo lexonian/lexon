@@ -1,0 +1,12 @@
+Hello, mtrac!
+
+	Dynamic Allocation Summary
+	--------------------------
+	total allocation:            0 count            0 bytes
+	total freed     :            0 count            0 bytes
+	total remain    :            0 count            0 bytes
+	max allocation  :            0 count            0 bytes
+	total actions   :            2 count
+	set limit       :                      1000000000 bytes
+
+done.

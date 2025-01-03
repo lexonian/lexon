@@ -1,0 +1,608 @@
+	
+	Document:	
+		  Head Terms
+		| Head Terms Xcontracts
+		;
+
+
+	
+	Head:	
+		  Lex
+		| Lex Preamble
+		| Lex Xcomment
+		| Lex Xcomment Preamble
+		| Lex Authors
+		| Lex Authors Preamble
+		| Lex Authors Xcomment
+		| Lex Authors Xcomment Preamble
+		| Lex Lexon
+		| Lex Lexon Preamble
+		| Lex Lexon Xcomment
+		| Lex Lexon Xcomment Preamble
+		| Lex Lexon Authors
+		| Lex Lexon Authors Preamble
+		| Lex Lexon Authors Xcomment
+		| Lex Lexon Authors Xcomment Preamble
+		;
+
+
+	
+	Lex:	
+		  LEX Colon Name Separator
+		;
+
+
+	
+	Lexon:	
+		  LEXON Colon Text Separator
+		;
+
+
+	
+	Authors:	
+		  AUTHOR Colon Text Separator
+		| AUTHORS Colon Text Separator
+		;
+
+
+	
+	Xcomment:	
+		  COMMENT Colon Text Separator
+		| COMMENTS Colon Text Separator
+		;
+
+
+	
+	Preamble:	
+		  PREAMBLE Colon Text Separator
+		;
+
+
+	
+	Terms:	
+		   Provisions
+		|  Separator Provisions
+		| TERMS Colon Provisions
+		| TERMS Colon Separator Provisions
+		;
+
+
+	
+	Xcontracts:	
+		   Contract
+		| Xcontracts Contract
+		;
+
+
+	
+	Contract:	
+		  CONTRACTA PER Name Colon Provisions
+		| CONTRACTA PER Name Colon Separator Provisions
+		;
+
+
+	
+	Provisions:	
+		  Definitions
+		| Definitions Clauses
+		| Definitions Statements
+		| Definitions Statements Clauses
+		;
+
+
+	
+	Definitions:	
+		   Definition
+		| Definitions Definition
+		;
+
+
+	
+	Definition:	
+		   Quote Name Quote IS Placeholder Separator
+		| Article Quote Name Quote IS Placeholder Separator
+		|  Quote Name Quote IS This_Contract Separator
+		| Article Quote Name Quote IS This_Contract Separator
+		;
+
+
+	
+	Placeholder:	
+		   Type
+		| Article Type
+		;
+
+
+	
+	Type:	
+		  PERSON
+		| AMOUNT
+		| TIME
+		| BINARY
+		| WRIT
+		;
+
+
+	
+	This_Contract:	
+		  This CONTRACT
+		| This Name
+		;
+
+
+	
+	All_Contracts:	
+		  ALL CONTRACTS
+		;
+
+
+	
+	This:	
+		  THIS
+		| THESE
+		| THE
+		| SAID
+		;
+
+
+	
+	Clauses:	
+		   Clause
+		| Clauses Clause
+		;
+
+
+	
+	Clause:	
+		  CLAUSE Colon Name Separator Body
+		;
+
+
+	
+	Body:	
+		  Actions
+		| Functions
+		;
+
+
+	
+	Functions:	
+		   Function
+		| Functions Function
+		;
+
+
+	
+	Function:	
+		   Quote Name Quote Illocutor Expression Separator
+		|  Quote Name Quote Illocutor Colon Expression Separator
+		| Article Quote Name Quote Illocutor Expression Separator
+		| Article Quote Name Quote Illocutor Colon Expression Separator
+		;
+
+
+	
+	Statements:	
+		   Statement
+		| Statements Statement
+		;
+
+
+	
+	Statement:	
+		  Action
+		| Flagging
+		;
+
+
+	
+	Actions:	
+		   Action
+		| Actions Action
+		;
+
+
+	
+	Action:	
+		  Simple
+		;
+
+
+	
+	Simple:	
+		  Subject Predicates Separator
+		| Subject Condition Colon Predicates Separator
+		| Subject Permission Predicates Separator
+		| Subject Permission Condition Colon Predicates Separator
+		;
+
+
+	
+	Subject:	
+		  Symbols
+		;
+
+
+	
+	Symbols:	
+		   Symbol
+		| Symbols Catena Symbol
+		;
+
+
+	
+	Symbol:	
+		   Name
+		| Article Name
+		;
+
+
+	
+	Catena:	
+		  OR
+		| Comma
+		;
+
+
+	
+	Object:	
+		  Symbol
+		| ESCROW
+		;
+
+
+	
+	Predicates:	
+		  Predicates Comma Predicate
+		| Predicates Comma AFTERWARDS Predicate
+		| Predicates Comma AND Predicate
+		| Predicates Comma AND AFTERWARDS Predicate
+		| Predicate
+		;
+
+
+	
+	Predicate:	
+		  Certification
+		| Xregistration
+		| Grantment
+		| Appointment
+		| Fixture
+		| Setting
+		| Payment
+		| Termination
+		;
+
+
+	
+	Permission:	
+		  MAY
+		;
+
+
+	
+	Certification:	
+		  Certify This_Contract Binary_Type_Symbol
+		| Certify This_Contract AS Binary_Type_Symbol
+		;
+
+
+	
+	Certify:	
+		  CERTIFY
+		| CERTIFIES
+		;
+
+
+	
+	Xregistration:	
+		  Register Symbol
+		| Register Symbol Expression
+		| Register Symbol AS Expression
+		;
+
+
+	
+	Register:	
+		  REGISTER
+		| REGISTERS
+		;
+
+
+	
+	Grantment:	
+		  Grant Binary_Type_Symbol
+		;
+
+
+	
+	Grant:	
+		  GRANT
+		| GRANTS
+		;
+
+
+	
+	Appointment:	
+		  Appoint Symbol
+		;
+
+
+	
+	Appoint:	
+		  APPOINT
+		| APPOINTS
+		;
+
+
+	
+	Fixture:	
+		  Fix Symbol
+		| Fix Expression AS Name
+		| Fix Expression AS NEW Name
+		| Fix Expression AS Article Name
+		| Fix Expression AS Article NEW Name
+		;
+
+
+	
+	Fix:	
+		  FIX
+		| FIXES
+		;
+
+
+	
+	Setting:	
+		  Illocutor Symbol
+		| Illocutor THEREFOR Symbol
+		| Illocutor THEREFORE Symbol
+		;
+
+
+	
+	Illocutor:	
+		  Be
+		| Be AS
+		| Be DEFINED
+		| Be DEFINED AS
+		;
+
+
+	
+	Be:	
+		  BE
+		| IS
+		;
+
+
+	
+	Payment:	
+		  Pay Expression Preposition Object
+		| Pay From_Escrow Expression Preposition Object
+		| Pay Expression From_Escrow Preposition Object
+		;
+
+
+	
+	Pay:	
+		  PAY
+		| PAYS
+		| RETURN
+		| RETURNS
+		;
+
+
+	
+	Preposition:	
+		  TO
+		| INTO
+		;
+
+
+	
+	From_Escrow:	
+		  FROM ESCROW
+		;
+
+
+	
+	Termination:	
+		  Terminate This_Contract
+		| Terminate All_Contracts
+		;
+
+
+	
+	Terminate:	
+		  TERMINATE
+		| TERMINATES
+		;
+
+
+	
+	Flagging:	
+		   Illocutor Binary_Type_Symbol Separator
+		|  Illocutor THEREFORE Binary_Type_Symbol Separator
+		| This_Contract Illocutor Binary_Type_Symbol Separator
+		| This_Contract Illocutor THEREFORE Binary_Type_Symbol Separator
+		;
+
+
+	
+	Binary_Type_Symbol:	
+		  Symbol
+		;
+
+
+	
+	Condition:	
+		  If Logic Then
+		;
+
+
+	
+	If:	
+		  IF
+		;
+
+
+	
+	Then:	
+		  THEN
+		;
+
+
+	
+	Expression:	
+		  Logic
+		| Symbol
+		;
+
+
+	
+	Scalar_Comparison:	
+		  Scalar_Expression Comparison_Operator Scalar_Expression
+		;
+
+
+	
+	Comparison_Operator:	
+		  Equal
+		;
+
+
+	
+	Equal:	
+		  EQUAL
+		| EQUAL TO
+		| EQUALING
+		| IS
+		| IS EQUAL
+		| IS EQUAL TO
+		| XBEING
+		| XBEING EQUAL
+		| XBEING EQUAL TO
+		;
+
+
+	
+	Scalar_Expression:	
+		  SCALAR
+		;
+
+
+	
+	Logic:	
+		  Combination
+		| Scalar_Comparison
+		;
+
+
+	
+	Combination:	
+		  Combinor
+		| Combinor Comma Combination
+		| Combinor Comma Combinator Combination
+		| Negation
+		;
+
+
+	
+	Combinor:	
+		  Combinand
+		| Combinand Combinator Combinor
+		;
+
+
+	
+	Combinand:	
+		  Existence
+		| Time_Comparison
+		;
+
+
+	
+	Combinator:	
+		  Comma
+		|  OR
+		| Comma OR
+		|  AND
+		| Comma AND
+		|  NEITHER
+		| Comma NEITHER
+		|  NOR
+		| Comma NOR
+		| Equal
+		;
+
+
+	
+	Existence:	
+		  Symbol BEING FIXED
+		;
+
+
+	
+	Negation:	
+		  Negator Symbol
+		;
+
+
+	
+	Negator:	
+		  NO
+		;
+
+
+	
+	Article:	
+		  A
+		| AN
+		| THE
+		;
+
+
+	
+	Numeric_Expression:	
+		  NUMBER
+		;
+
+
+	
+	Time:	
+		  THE CURRENT TIME
+		| THE RESPECTIVE CURRENT TIME
+		| Numeric_Expression Time_Unit
+		;
+
+
+	
+	Time_Unit:	
+		  HOUR
+		| HOURS
+		;
+
+
+	
+	Time_Comparison:	
+		  Name Equal Relative_Time
+		;
+
+
+	
+	Relative_Time:	
+		  Time PAST
+		| Time IN THE PAST
+		;
+
+
+	Name: NAME						{ $$=$NAME; }
+	    ;
+
+	Description: DESCRIPTION						{ $$=$DESCRIPTION; }
+	    ;
+
+	Scalar: SCALAR						{ $$=$SCALAR; }
+	    ;
+

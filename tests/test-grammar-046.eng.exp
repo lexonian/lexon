@@ -1,0 +1,164 @@
+( document 
+    ( head 
+        ( lex «bar» ) 
+        ( preamble "Aenean commodo.") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «bar» ( type time ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols 
+                                ( symbols 
+                                    ( symbols ( symbol «bar» ) ) 
+                                    ( symbol «bar» ) 
+                                    catena ) 
+                                ( symbol ( type time ) ) 
+                                catena ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( notification notify 
+                                    ( object ( symbol «bar» ) ) 
+                                    preposition 
+                                    ( expression ( combination ( combination ( combinor ( combinand 
+                                                        ( existence ( symbol «bar» ) 
+                                                            be 
+                                                            ( contract 
+                                                                ( this-contract «bar» ) ) ) ) ) ) 
+                                            ( combinor ( combinand 
+                                                    ( existence ( symbol ( type binary ) ) 
+                                                        being true ) ) ) 
+                                            ( combinator nor ) ) ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «bar» ) ) ) 
+                            ( predicate 
+                                ( sending send 
+                                    ( expression ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol ( type amount ) ) 
+                                                            ( contract all-contracts ) ) ) 
+                                                    ( combinator or- ) ) ) 
+                                            ( combinor ( combinor ( combinand expiration ) ) 
+                                                ( combinand 
+                                                    ( existence ( symbol ( type text ) ) 
+                                                        equal fixed ) ) 
+                                                ( combinator and ) ) ) ) 
+                                    preposition 
+                                    ( object reflexive ) ) ) ) 
+                        permission 
+                        ( condition if 
+                            ( expression ( combination ( combinor ( combinor ( combinand 
+                                                ( negation 
+                                                    ( negator be ) 
+                                                    ( symbol «bar» ) ) ) ) 
+                                        ( combinand 
+                                            ( existence ( symbol ( type amount ) ) 
+                                                being true ) ) 
+                                        ( combinator or- ) ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «corge-waldo» 
+            ( provisions 
+                ( definitions 
+                    ( definition «corge-waldo» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «corge-waldo» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «corge-waldo» 
+                        ( this-contract «bar» ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( flagging 
+                            ( illocutor be ) 
+                            ( symbol ( type time ) ) 
+                            ( this-contract «bar» ) ) ) ) ) ) 
+        ( covenant «corge-waldo» 
+            ( provisions 
+                ( definitions 
+                    ( definition «corge-waldo» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «corge-waldo» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «corge-waldo» 
+                        ( this-contract «bar» ) ) ) 
+                ( clauses 
+                    ( clause «garply» 
+                        ( body 
+                            ( function «garply» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combination ( combinor ( combinand 
+                                                    ( existence ( symbol ( type binary ) ) 
+                                                        being true ) ) ) ) 
+                                        ( combinor ( combinand ( symbol ( type binary ) ) ) ) ) ) ) ) ) 
+                    ( clause «garply-waldo» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol ( type person ) ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( certification certify ( symbol «garply-waldo» ) 
+                                                    ( contract 
+                                                        ( this-contract «bar» ) ) ) ) ) 
+                                        permission 
+                                        ( condition if 
+                                            ( expression ( combination ( combinor ( combinor ( combinand 
+                                                                ( existence ( symbol ( type person ) ) 
+                                                                    being true ) ) ) 
+                                                        ( combinand ( symbol ( type text ) ) 
+                                                            expiration ) 
+                                                        ( combinator nor ) ) ) ) ) ) ) ) ) ) 
+                    ( clause «fred» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( flagging 
+                                        ( illocutor be ) 
+                                        ( symbol ( type binary ) ) ) ) ) ) ) 
+                    ( clause «fred-waldo» 
+                        ( body 
+                            ( function «fred-waldo» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol ( type data ) ) 
+                                                                expiration ) ) 
+                                                        ( combinand 
+                                                            ( existence ( symbol «fred-waldo» ) 
+                                                                being true ) ) 
+                                                        ( combinator or- ) ) 
+                                                    ( combinand 
+                                                        ( point-in-time current-time ) ) 
+                                                    ( combinator nor ) ) 
+                                                ( combinand expiration ) 
+                                                ( combinator nor ) ) ) 
+                                        ( combinor ( combinor ( combinor ( combinand 
+                                                        ( point-in-time current-time ) ) ) 
+                                                ( combinand ( symbol «fred-waldo» ) ) 
+                                                ( combinator and ) ) 
+                                            ( combinand ( symbol «fred-waldo» ) 
+                                                expiration ) 
+                                            ( combinator or- ) ) ) ) ) ) ) ) ) ) 
+        ( covenant «fred-waldo» 
+            ( provisions 
+                ( definitions 
+                    ( definition «fred-waldo» 
+                        ( this-contract «bar» ) ) ) ) ) 
+        ( covenant «fred-waldo» 
+            ( provisions 
+                ( definitions 
+                    ( definition «fred-waldo» ( type amount ) ) 
+                    ( definition «fred-waldo» 
+                        ( this-contract «bar» ) ) 
+                    ( definition «fred-waldo» ( type time ) ) 
+                    ( definition «fred-waldo» 
+                        ( this-contract «bar» ) ) ) 
+                ( clauses 
+                    ( clause «xyzzy» 
+                        ( body 
+                            ( function «xyzzy» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) ) ) ) ) ) )

@@ -1,0 +1,6 @@
+document: head
+head: lex [lexon] [authors] [preamble]
+lex: "LEX" [":"] name separator
+lexon: "LEXON" [":"] text separator
+authors: "AUTHOR"["S"] [colon] text separator
+preamble: "PREAMBLE" colon text separator

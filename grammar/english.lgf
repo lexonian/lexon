@@ -1,0 +1,384 @@
+##
+##	 _      ____   _      ___    _          ___       ___
+##	| |    | |_   \ \_/  / / \  | |\ |     / / \  __  _) )
+##	|_|__  |_|__  /_/ \  \_\_/  |_| \|     \_\_/ (_() _)_)
+##
+##
+##	Lexon — natural language programming
+##
+##	Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+##	AGPL3 subject to the conditions described in the file LICENSE.
+##
+##	Also see https://www.lexon.org/license-0.3.html
+##
+##
+##
+##	english.lgf — Lexon controlled English grammar
+##
+##	Version 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+##
+##	This document is in Lexon Grammar Form, a variation of BNF.
+##	Square brackets indicate optionality, 'or' separates variants.
+##	Literals in quotes are case-insensitive.
+##
+
+
+## Document Head
+
+   document:	head terms [covenants]
+
+   head:	lex [lexon] [authors] [comment] [preamble]
+
+   lex: 	"LEX" ":" name separator
+   lexon: 	"LEXON" ":" description separator
+   authors: 	"AUTHOR"["S"] ":" description separator
+   comment: 	"COMMENT"["S"] ":" description separator
+   preamble: 	"PREAMBLE" ":" description separator
+
+
+## Sections
+
+   t e r m s: 	["GENERAL"] ["TERMS" ":"] [separator] provisions
+
+   covenants: 	[covenants] covenant
+
+   c o v e n a n t: ["TERMS"] "PER" name ":" [separator] provisions
+
+
+## Provisions
+
+   p r o v i s i o n s: definitions [statements] [clauses]
+
+
+## Definitions
+
+   definitions: [definitions] definition
+
+   definition: 	[article] quote name quote "is" type_term separator
+		or [article] quote name quote "is" this_contract separator
+
+   type_term:	[article] type
+
+## Types
+
+   type: 	person or amount or time or binary or text or data
+
+   person:	"person"
+   amount:	"amount"
+   time:	"time"
+   binary:	"binary"
+   text:	"text"
+   data:	"data"
+
+   this_contract: this "contract"
+		or this name
+
+   all_contracts: "all" "contracts"
+
+   this: 	"this" or "these"
+
+
+## Clauses
+
+   clauses: 	[clauses] clause
+
+   c l a u s e : "CLAUSE" ":" name separator body
+
+   body: 	statements or function
+
+
+## FUNCTION
+
+   function: 	[article] quote name quote illocutor [":"] expression separator
+
+
+
+# IV. SENTENCE LEVEL
+
+## STATEMENT
+
+   s t a t e m e n t s : [statements] statement
+
+   statement:	action or flagging
+
+
+## ACTION
+
+   action:	subject [permission [comma] [condition [comma] [":"]]] predicates separator
+
+
+
+# V. PHRASE LEVEL
+
+## SUBJECT
+
+   subject:	symbols
+
+
+## SYMBOLS
+
+   symbols:	[symbols catena] symbol
+
+   symbol:	[article] name
+		or [article] type
+
+   catena:	"or" or comma
+
+
+## OBJECT
+
+   object:	symbol or reflexive or "escrow"
+
+   reflexive:	"myself" or "yourself" or "herself" or "himself" or "oneself" or "itself" or "themself" or "ourselves" or "yourselves" or "themselves"
+
+
+## SELF-REFERENCE
+
+   contract:    this_contract
+		or all_contracts
+
+
+## PREDICATE
+
+   predicates:	predicates comma ["and" ["also"]] ["if" "so"] ["afterwards"] predicate
+		or predicates comma "and" "with" "this" predicate
+		or predicate
+
+
+   predicate:	certification
+		or declaration
+		or filing
+		or registration
+		or grantment
+		or appointment
+		or fixture
+		or setting
+		or payment
+		or sending
+		or notification
+		or termination
+
+   permission:	"may"
+
+
+## CERTIFICATION PREDICATE
+
+   certification: certify symbol [["as"] expression]
+		or certify contract ["as"] symbol
+
+   certify:	"certify" or "certifies"
+
+
+## DECLARAION PREDICATE
+
+   declaration: declare symbol [["to" "be"] expression]
+		or declare contract ["as"] symbol
+
+   declare:	"declare" or "declares"
+
+
+## FILING PREDICATE
+
+  filing:	file ["for"] symbol [["to" "be"] expression]
+		or file ["for"] contract ["to" "be"] symbol
+
+  file:		"file" or "files"
+
+
+## REGISTRATION PREDICATE
+
+   registration: register symbol [["as"] expression]
+		or register contract ["as"] symbol
+
+   register:	"register" or "registers"
+
+
+## GRANT PREDICATE
+
+   grantment:	grant symbol
+
+   grant:	"grant" or "grants"
+
+
+## APPOINTMENT PREDICATE
+
+   appointment:	appoint symbol
+
+   appoint:	"appoint" or "appoints"
+
+
+## FIXTURE PREDICATE
+
+   fixture:	fix symbol ["as" expression]
+		or fix contract "as" symbol
+
+   fix:		"fix" or "fixes"
+
+   fixed:	"fixed"
+
+
+## FIXTURE PREDICATE / PASSIVE
+
+   setting:	illocutor ["then"] ["therefor"["e"]] symbol
+
+   illocutor: 	be ["defined"] ["as"]
+
+   be:		"be" or "is"
+
+
+## PAYMENT PREDICATE
+
+   payment: 	pay [from_escrow] expression preposition object
+		or pay expression from_escrow preposition object
+		or pay escrow preposition object
+
+   pay:		"pay" or "pays" or "return" or "returns"
+
+   preposition:	"to" or "into"
+
+   escrow:	["the"] ["remainder" "of" "the"] "escrow"
+
+   from_escrow:	"from" ["the"] ["remainder" "of" "the"] "escrow"
+
+
+## SENDING PREDICATE
+
+   sending:	send expression preposition object
+
+   send:	"send" or "sends"
+
+
+## NOTIFICATION PREDICATE
+
+   notification: notify object preposition expression
+
+   notify:	"notify" or "notifies"
+
+
+## TERMINATION PREDICATE
+
+   termination:	terminate this_contract
+		or terminate all_contracts
+
+   terminate:	"terminate" or "terminates"
+
+
+## FLAGGING
+
+   flagging:	[this_contract] illocutor ["then"] ["therefore"] symbol separator
+
+
+
+# VI. EXPRESSION LEVEL
+
+## CONDITIONS
+
+   condition:	if expression [[comma] "then"]
+
+   if:		"if" or "given" "that" or "provided"
+
+
+## EXPRESSION
+
+   expression: 	combination
+
+
+## COMPARISON
+
+   scalar_comparison:	scalar_expression comparison_operator scalar_expression
+
+   comparison_operator:	equal
+			or later
+
+   equal:		"equal" ["to"]
+			or "equaling"
+			or "is" ["equal" ["to"]]
+			or "being" ["equal" ["to"]]
+
+   later:		"is" "at" ["the"] "least"
+			or "lies" "at" ["the"] "least"
+
+   scalar_expression:	symbol or scalar or point_in_time
+
+
+## LOGIC EXPRESSIONS
+
+   combination: combinor [comma [combinator] combination]
+
+   combinor:	combinand [combinator combinor]
+
+   combinand:	symbol [expiration]
+		or scalar_comparison
+		or negation
+		or existence
+		or point_in_time
+		or expiration
+
+   combinator:	or_
+		or and
+		or neither
+		or nor
+
+   or_:		"or"
+
+   and:		"and"
+
+   neither:	"neither"
+
+   nor:		"nor"
+
+   existence:	symbol equal fixed
+		or "there" be symbol
+		or contract be symbol
+		or symbol being true
+
+   negation:	negator symbol
+		or symbol negator fixed
+		or "there" negator symbol
+		or contract negator symbol
+
+   negator:	[be] "not"
+		or [be] "no"
+
+   being:	"is"
+		or "has" "been"
+		or "was"
+
+   true:	"true"
+		or "yes"
+		or "certified"
+		or "declared"
+		or "announced"
+		or "filed" ["for"]
+		or "signed" "off" ["on"]
+
+## FILLERS
+
+   article:	"a" or "an" or "the"
+
+
+## TIME
+
+   point_in_time: current_time
+		or relative_time
+
+   current_time: "the" ["respective"] ["then"] "current" "time"
+		or "now"
+
+   relative_time: duration ["in" "the"] "past" [symbol]
+		or duration "after" symbol
+
+   duration:	scalar_expression time_unit
+
+   time_unit:	years or months or weeks or days or hours or minutes or seconds or milliseconds
+
+   years:	"year"["s"]
+   months:	"month"["s"]
+   weeks:	"week"["s"]
+   days:	"day"["s"]
+   hours:	"hour"["s"]
+   minutes:	"minute"["s"]
+   seconds:	"second"["s"]
+   milliseconds: "millisecond"["s"]
+
+   expiration:	"has" "passed" or ["is"] "past"

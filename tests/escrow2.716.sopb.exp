@@ -1,0 +1,37 @@
+
+
+@compiler >=6
+
+main contract Escrow =
+
+    record state = {
+            buyer : address,
+            payee : address,
+            agent : address,
+            service_fee : int
+        }
+
+    entrypoint init(payee : address, agent : address, service_fee : int) = {
+            buyer = Call.caller,
+            payee = payee,
+            agent = agent,
+            service_fee = service_fee
+        }
+
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+    function permit(authorized : address) =
+        require(Call.caller == authorized, "access")
+
+
+    stateful entrypoint pay_out() =
+        permit(state.agent)
+        transfer(state.agent, state.service_fee)
+        transfer(state.payee, Contract.balance)
+
+    stateful entrypoint pay_back() =
+        permit(state.agent)
+        transfer(state.agent, state.service_fee)
+        transfer(state.buyer, Contract.balance)

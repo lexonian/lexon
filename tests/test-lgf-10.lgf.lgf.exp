@@ -1,0 +1,57 @@
+	
+	Document:	
+		  Head
+		;
+
+
+	
+	Head:	
+		  Lex
+		| Lex Preamble
+		| Lex Authors
+		| Lex Authors Preamble
+		| Lex Lexon
+		| Lex Lexon Preamble
+		| Lex Lexon Authors
+		| Lex Lexon Authors Preamble
+		;
+
+
+	
+	Lex:	
+		  LEX Name Separator
+		| LEX Colon Name Separator
+		;
+
+
+	
+	Lexon:	
+		  LEXON Text Separator
+		| LEXON Colon Text Separator
+		;
+
+
+	
+	Authors:	
+		  AUTHOR Text Separator
+		| AUTHOR Colon Text Separator
+		| AUTHORS Text Separator
+		| AUTHORS Colon Text Separator
+		;
+
+
+	
+	Preamble:	
+		  PREAMBLE Colon Text Separator
+		;
+
+
+	Name: NAME						{ $$=$NAME; }
+	    ;
+
+	Description: DESCRIPTION						{ $$=$DESCRIPTION; }
+	    ;
+
+	Scalar: SCALAR						{ $$=$SCALAR; }
+	    ;
+

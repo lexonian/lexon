@@ -1,0 +1,16 @@
+	
+	Lex:	
+		  LEX Name Separator
+		| LEXCOLON Name Separator
+		;
+
+
+	Name: NAME						{ $$=$NAME; }
+	    ;
+
+	Description: DESCRIPTION						{ $$=$DESCRIPTION; }
+	    ;
+
+	Scalar: SCALAR						{ $$=$SCALAR; }
+	    ;
+

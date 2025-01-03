@@ -1,0 +1,204 @@
+( document 
+    ( head 
+        ( lex «evaluation-license-system» ) 
+        ( preamble "This is a licensing contract for a software evaluation.") 
+        ( authors "FLORIAN IDELBERGER, HENNING DIEDRICH") 
+        ( lexon "0.2.1") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «licensor» ( type person ) ) 
+                ( definition «agent» ( type person ) ) 
+                ( definition «licensing-fee» ( type amount ) ) 
+                ( definition «breach-fee» ( type amount ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «licensor» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( appointment appoint ( symbol «agent» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «licensing-fee» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «breach-fee» ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «license» 
+            ( provisions 
+                ( definitions 
+                    ( definition «description-of-goods» ( type text ) ) 
+                    ( definition «licensee» ( type person ) ) 
+                    ( definition «paid» ( type binary ) ) 
+                    ( definition «commissioned» ( type binary ) ) 
+                    ( definition «comment-text» ( type text ) ) 
+                    ( definition «published» ( type binary ) ) 
+                    ( definition «permission-to-comment» ( type binary ) ) 
+                    ( definition «notice-time» ( type time ) ) 
+                    ( definition «license» 
+                        ( this-contract ) ) ) 
+                ( clauses 
+                    ( clause «pay» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «licensee» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( payment pay 
+                                                    ( expression ( combination ( combinor ( combinand ( symbol «licensing-fee» ) ) ) ) ) 
+                                                    preposition 
+                                                    ( object ( symbol «licensor» ) ) ) ) 
+                                            ( predicate 
+                                                ( payment pay 
+                                                    ( expression ( combination ( combinor ( combinand ( symbol «breach-fee» ) ) ) ) ) 
+                                                    preposition 
+                                                    ( object ) ) ) ) ) ) 
+                                ( statement 
+                                    ( flagging 
+                                        ( illocutor be ) 
+                                        ( symbol «paid» ) 
+                                        ( this-contract «license» ) ) ) ) ) ) 
+                    ( clause «commission» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «licensor» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( certification certify ( symbol «commissioned» ) 
+                                                    ( contract 
+                                                        ( this-contract «license» ) ) ) ) ) 
+                                        permission ) ) ) ) ) 
+                    ( clause «comment» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «licensee» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( registration register ( symbol «comment-text» ) ) ) ) 
+                                        permission ) ) ) ) ) 
+                    ( clause «publication» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «licensee» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( certification certify ( symbol «published» ) 
+                                                    ( contract 
+                                                        ( this-contract «license» ) ) ) ) ) 
+                                        permission ) ) ) ) ) 
+                    ( clause «grant-permission-to-comment» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «licensee» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( grantment grant ( symbol «permission-to-comment» ) ) ) ) 
+                                        permission ) ) ) ) ) 
+                    ( clause «declare-breach» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «agent» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( payment pay 
+                                                    ( expression ( combination ( combinor ( combinand ( symbol «breach-fee» ) ) ) ) ) 
+                                                    preposition 
+                                                    ( object ( symbol «licensor» ) ) ) ) 
+                                            ( predicate 
+                                                ( termination terminate 
+                                                    ( this-contract «license» ) ) ) ) 
+                                        permission 
+                                        ( condition if 
+                                            ( expression ( combination ( combinor ( combinand 
+                                                            ( existence ( symbol «factually-breached» ) 
+                                                                be 
+                                                                ( contract 
+                                                                    ( this-contract «license» ) ) ) ) ) ) ) ) ) ) ) ) ) 
+                    ( clause «factually-breached» 
+                        ( body 
+                            ( function «factually-breached» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol «notice-time» ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression 24 ) 
+                                                                                ( time-unit hours ) ) ) ) ) ) ) ) 
+                                                    ( combinand 
+                                                        ( negation 
+                                                            ( negator be ) 
+                                                            ( symbol «permission-to-comment» ) ) ) 
+                                                    ( combinator and ) ) 
+                                                ( combinand 
+                                                    ( existence ( symbol «published» ) 
+                                                        be 
+                                                        ( contract 
+                                                            ( this-contract «license» ) ) ) ) 
+                                                ( combinator and ) ) ) 
+                                        ( combinor ( combinor ( combinand 
+                                                    ( negation 
+                                                        ( negator be ) 
+                                                        ( symbol «comment-text» ) 
+                                                        fixed ) ) ) 
+                                            ( combinand 
+                                                ( existence ( symbol «commissioned» ) 
+                                                    be 
+                                                    ( contract 
+                                                        ( this-contract «license» ) ) ) ) 
+                                            ( combinator and ) ) 
+                                        ( combinator or- ) ) ) ) ) ) 
+                    ( clause «notice» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols 
+                                                ( symbols ( symbol «licensor» ) ) 
+                                                ( symbol «agent» ) 
+                                                catena ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( fixture fix ( symbol «notice-time» ) 
+                                                    ( expression ( combination ( combinor ( combinand 
+                                                                    ( point-in-time current-time ) ) ) ) ) ) ) ) 
+                                        permission ) ) ) ) ) 
+                    ( clause «noticed» 
+                        ( body 
+                            ( function «noticed» 
+                                ( illocutor be ) 
+                                ( expression ( combination ( combinor ( combinand 
+                                                ( existence ( symbol «notice-time» ) 
+                                                    equal fixed ) ) ) ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «licensor» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «licensee» ) ) ) 
+                                ( predicate 
+                                    ( fixture fix ( symbol «description-of-goods» ) ) ) ) ) ) ) ) ) ) )
