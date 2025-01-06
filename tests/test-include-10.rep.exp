@@ -1,4 +1,0 @@
-fatal: circular include
-test include 10 line 5 ⟶  
-library 5 line 3 ⟶  
-library 5 again - fails

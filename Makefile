@@ -437,6 +437,31 @@ diffclean:
 	@git branch
 	@git status
 
+srcclean:
+	@printf "\n$(hi)▫️  all clean for sources branch $(off)\n\n"
+	@$(MAKE) clean expclean
+	mkdir -p .bin.bak
+	-mv bin/lexon_* .bin.bak
+	@rm -rf bin
+	@rm -rf build
+
+	@echo
+	@echo .:
+	@ls -A
+	@echo
+	@echo bin:
+	@if [ -e bin ] ; then ls bin ; else echo "[not present]" ; fi
+	@echo
+	@echo build:
+	@if [ -e build ] ; then ls bin ; else echo "[not present]" ; fi
+	@echo
+	@echo src:
+	@ls -A src
+	@echo
+	@printf "$(ok)√ cleaned for sources branch $(off)\n\n"
+	@git branch
+	@git status
+
 binaries:
 	@echo "» checking that binaries are in place"
 ifeq (,$(wildcard bin/lexon_mac))
