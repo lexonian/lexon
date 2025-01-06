@@ -1,4 +1,0 @@
-fatal: repeat include
-test include 03 line 23 ⟼   library 1
-test include 03 line 24 ⟼   library 2
-test include 03 line 31 ⟼   library 1 again - fails

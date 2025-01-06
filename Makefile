@@ -400,8 +400,7 @@ distclean:
 	rm -f bin/lexon
 	rm -f build/.compiler
 	rm -f build/README
-	@echo cd tests
-	@cd tests ; $(MAKE) clean
+
 	@echo
 	ls -A
 	@echo
@@ -411,7 +410,7 @@ distclean:
 	@echo
 	ls -A src
 	@echo
-	@printf "$(ok)√ cleaned and pre-built for targets branch $(off)\n\n"
+	@printf "$(ok)√ cleaned and pre-built for master branch $(off)\n\n"
 
 diffclean:
 	@printf "\n$(hi)▫️  clean and pre-build for targets branch $(off)\n\n"
@@ -419,16 +418,21 @@ diffclean:
 	mkdir -p .bin.bak
 	-mv bin/lexon_* .bin.bak
 	@rm -rf bin
-	rm -f build/.compiler
+	rm -f build/lexccc.c
 	rm -f build/scanner.*
 	rm -f build/parser.*
 	rm -f build/README
+	rm -f build/.??*
+
 	@echo
 	@echo .:
 	@ls -A
 	@echo
 	@echo bin:
 	@if [ -e bin ] ; then ls bin ; else echo "[not present]" ; fi
+	@echo
+	@echo build:
+	@ls -A build
 	@echo
 	@echo src:
 	@ls -A src

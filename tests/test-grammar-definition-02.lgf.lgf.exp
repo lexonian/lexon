@@ -1,2 +1,0 @@
-Lexon: name 'Combinant' cannot appear twice in 'Combinant Combinator Combinant' in file test grammar definition 02.lgf.
-Only simple LGF rules can repeat names. Simple rules cannot have options ([..]) nor alternatives (.. or ..) .
