@@ -2,6 +2,7 @@
 
 SHELL := /bin/bash
 VPATH = bin:grammar:src:build
+MAKEFLAGS += --no-print-directory
 
 # installation location
 ifeq ($(PREFIX),)
