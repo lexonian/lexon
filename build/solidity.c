@@ -1138,7 +1138,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 		    && strcspn(rump,
 			       "/.-0123456789") > 1) *(rump + strcspn(rump,
 								      "/.-0123456789"))
-			  = 0;
+				= 0;
 		else if (*rump && strcspn(rump, "/.-0123456789") == 1
 			 && strlen(rump) > 2) {
 			rump += 2;
@@ -1152,9 +1152,9 @@ bool sol_document(char **production, Document *Document, int indent) {
 
 	/* obtain the names of the clauses */
 	Clauses *clauses =
-		!Document->Terms ? null : (!Document->Terms->
-					   Provisions ? null : Document->Terms->
-					   Provisions->Clauses);
+		!Document->Terms ? null : (!Document->
+					   Terms->Provisions ? null : Document->
+					   Terms->Provisions->Clauses);
 	while (clauses) {
 		char *name = !clauses->Clause ? null : clauses->Clause->Name;
 
@@ -1774,8 +1774,8 @@ const char *type(const char *name, bool option_type, bool forpara) {
 	while (d && d->Definition) {
 		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
 			mtrac_free(_name);
-			return typemap(d->Definition->Placeholder->Type->
-				       Literal, option_type, forpara);
+			return typemap(d->Definition->Placeholder->
+				       Type->Literal, option_type, forpara);
 		}
 		d = d->Definitions;
 		if (!d
@@ -1793,8 +1793,8 @@ const char *nullvalue(const char *name, bool defined_default) {
 	while (d) {
 		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
 			mtrac_free(_name);
-			return nullmap(d->Definition->Placeholder->Type->
-				       Literal, defined_default);
+			return nullmap(d->Definition->Placeholder->
+				       Type->Literal, defined_default);
 		}
 		d = d->Definitions;
 	}
@@ -1802,8 +1802,8 @@ const char *nullvalue(const char *name, bool defined_default) {
 	while (d) {
 		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
 			mtrac_free(_name);
-			return nullmap(d->Definition->Placeholder->Type->
-				       Literal, defined_default);
+			return nullmap(d->Definition->Placeholder->
+				       Type->Literal, defined_default);
 		}
 		d = d->Definitions;
 	}
@@ -2081,10 +2081,9 @@ bool sol_action(char **production, Action *Action, int indent) {
 		Symbols *symbols = Action->Subject->Symbols;
 
 		while (symbols && symbols->Symbol) {
-			if (symbols->Symbol->
-			    Name
+			if (symbols->Symbol->Name
 			    /* && !in_list(active_subjects, symbol->Symbol->Name) */
-			    ) {
+				) {
 				list_add(&active_subjects,
 					 symbols->Symbol->Name);
 				assert(active_subjects);
@@ -2139,8 +2138,9 @@ bool sol_action(char **production, Action *Action, int indent) {
 				padcat(0, 0, production, "msg.sender == ");
 
 				sol_symbol(production, Symbols->Symbol, 0);
-				if (current_function) current_function->
-						uses_caller = true;
+				if (current_function)
+						current_function->uses_caller =
+						true;
 				Symbols = Symbols->Symbols;
 			}
 			// either close the require phrase or open the block which's else is the revert with 'not permitted' at [2]
@@ -2588,12 +2588,12 @@ bool sol_payment(char **production, Payment *Payment, int indent) {
 			assert(Payment->Expression->Combination);
 			assert(!Payment->Expression->Combination->Combination);
 			assert(Payment->Expression->Combination->Combinor);
-			assert(!Payment->Expression->Combination->Combinor->
-			       Combinor);
-			assert(Payment->Expression->Combination->Combinor->
-			       Combinand);
-			assert(Payment->Expression->Combination->Combinor->
-			       Combinand->Symbol);
+			assert(!Payment->Expression->Combination->
+			       Combinor->Combinor);
+			assert(Payment->Expression->Combination->
+			       Combinor->Combinand);
+			assert(Payment->Expression->Combination->
+			       Combinor->Combinand->Symbol);
 			no_literal = true;
 			sol_expression(production, Payment->Expression, 0);
 			no_literal = false;
