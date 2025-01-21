@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 alpha 93 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+	0.3 alpha 94 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**
@@ -150,10 +150,10 @@ Lexon compiler.**
 	src             C and Flex compiler sources / cycle 1
 	build           intermediary C sources / cycle 2
 	Makefile        build scripts
-	tests           compiler self-tests*
+	tests           compiler self-tests (*)
 	CREDITS         contributors and supporters
 
-Note * that github will omit relevant files and sub folders of the `test/` directory.
+(*) Note that github will omit relevant files and sub folders of the `tests/` directory.
 
 
 ## Stack
@@ -194,17 +194,18 @@ compiler building have to be addressed, and overcome.
 
 ## Portability
 
-Because of its low number of dependencies, the content of this repository should
-remain usable for an extended amount of time. In essence it
-needs but a (slighlty tolerant) C99 compiler.
+Because of its low number of dependencies, the content of this repository
+should remain usable for an extended amount of time, on a wide array of current
+and future platforms.  It should be immediately portable to all 60 hardware
+platforms that GCC supports, and with slight formal adaptions, beyond. In
+essence it needs but a C99 compiler.
 
-It should be immediately portable to all 60 hardware platforms that GCC
-supports, and with slight formal adaptions, beyond.
-
-Because of its small footprint and fast pace, it can be embedded in web sites
-and run on smart phones. Compilation of medium size texts takes milliseconds,
-with virtually no overhead for start up and wind down. The size of the compiler
-executable is roughly 1MB.
+Because of its small footprint and fast pace, the compiler can be embedded in
+web sites and run on smart phones. Compilation of medium size texts takes
+milliseconds on a normal machine, with virtually no overhead for start up and
+wind down. The size of the compiler executable is roughly 1MB. Building the
+compiler itself from source takes seconds. This makes all kinds of nimble edge
+devices possible hosts.
 
 To use Lexon on your own machine——to create your own workflows and be protected
 from bitrot——you don't have to build it yourself but can use the binaries for
@@ -212,7 +213,6 @@ Mac or Linux that are located in the [`bin/`](bin/) folder of this repository's
 master branch. You can also download the
 [binaries](https://www.lexon.org/download.html) from the Lexon site. That page
 also has a step-by-step installation instruction.
-
 
 
 
@@ -239,8 +239,8 @@ is tested on Linux and Mac. The `dev` branch starts from this stage.
 
 #### Tested With
 
-	gcc 7.5.0
-	clang 12.0.5
+	gcc 7.5.0 / c99
+	clang 12.0.5 / c99
 	make 3.81 and 4.1
 
 
@@ -277,8 +277,8 @@ compilers:
 
 #### Tested With
 
-	gcc 7.5.0
-	clang 12.0.5
+	gcc 7.5.0 / c99
+	clang 12.0.5 / c99
 	bison 3.8
 	flex 2.5.35 and 2.6.4
 	make 3.81 and 4.1
@@ -381,22 +381,27 @@ options.
 
 	$ make <rules>
 
-	all             build compiler and run an example
+	all             build compiler and run an example (default)
 	build           build compiler
-	install         install compiler
-	lexcc           [a build part:] build lexccc compiler compiler
-	lexon           [a build part:] build lexon compiler
+	install         install compiler (run with sudo)
 	sample          build escrow example to solidity
 	check           compiler tests: deeptest, focustest, sample
 	devcheck        all tests: envtest, deeptest, grammarcheck, focustest, sample
+	testlog         dump the 100 last lines of the test log
 	clean           delete all built files, except pre-built binaries
+	ls              show the source and build directories
+	license         show the license agreement
+	help            this list
+
+**dev support**
+
+	lexcc           a build part: build lexccc compiler compiler
+	lexon           a build part: build lexon compiler
 	distclean       clean and pre-build cycle 2 sources for master branch
 	diffclean       clean and pre-build backend modules (targets branch)
 	devclean        clean and delete pre-build binaries (dev branch)
 	srcclean        devclean and delete test expectations (sources branch)
-	ls              show the source and build directories
-	license         show the license agreement
-	help            this list
+	rulecheck       test of different repository clean state transitions
 
 **3rd level of tests: grammar**
 

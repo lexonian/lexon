@@ -4,16 +4,26 @@
 
 SHELL := /bin/bash
 
+
 hi = \033[97m
 ok = \033[36m
 err = \033[91m
 off = \033[0m
+errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok)ok$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
+
 
 ifeq (, $(shell which md5sum))
         MD5=md5 -q
 else
         MD5=md5sum
 endif
+
+ifeq (, $(shell which colordiff))
+        DIFF=diff
+else
+        DIFF=colordiff
+endif
+
 
 define sep
 	printf '$(1)%.0s' {1..$(2)} ; printf '\n'
@@ -42,7 +52,7 @@ endef
 define tag
 	@echo OS: `uname` `printf "$$OSTYPE "` > $(1)
 	@echo lexon: `../bin/lexon --version` `$(MD5) ../bin/lexon | cut -c-5` >> $(1)
-	@cat ../Makefile | grep -o -E '\.targets:.*' | cut -c 2- | sed 's/build\/._targets //g' | sed 's/build\///g' | sed 's/\.c//g' >> $(1)
+	@cat ../Makefile | grep -o -E '\.targets:.*' | cut -c 2- | sed 's/ .*backend//g' | sed 's/build\///g' | sed 's/\.c//g' >> $(1)
 	@# 	@printf commit: echo `git rev-parse HEAD` >> $(1)
 	@printf "tests: %d+ files (" $$((`find . | grep -e '\.lex$$' -e '\.c$$' -e '\.lgf$$' | wc -l`)) >> $(1)
 	@cat `find . | grep -e '\.lex$$' -e '\.c$$' -e '\.lgf$$'` | $(MD5) | cut -c -5 | tr "\n" "\0" >> $(1)
@@ -87,6 +97,7 @@ endef
 define testrun
 	@if [[ ! -f quit.tmp ]] ; then \
 	    printf "\n$(ok)$(1) tests$(off)\n" ; \
+	    printf "\n## $(1) tests\n\n" >> test.log ; \
 	    if [[ ! -f concise ]] ; then printf '–%.0s' {1..$(shell printf "$(1) tests" | wc -c | sed 's/ //g')} ; echo ; fi ; \
 	    testnumber=`cat testnumber.tmp` ; \
 	    quit=0 ; \
@@ -95,12 +106,17 @@ define testrun
 		; echo "$(3) $(4) $$filename" > now.tmp \
 		; if [[ -f lastfail ]] &&  [[ ! -f nopickup ]]; then diff now.tmp lastfail > tmp ; rret=$$? \
 			; if (( $$rret == 0 )) ; then \
-				echo " picking up:" ; rm lastfail ; echo \
+				echo " picking up:" \
+				; echo -n " picking up at " >> test.log ; cat lastfail >> test.log \
+				; rm -f lastfail \
+				; echo \
 			; else printf "·" \
 				; $(call count,skip) \
+				; echo -n "skipping " >> test.log ; cat now.tmp >> test.log \
 				; continue \
 			; fi \
 		; fi \
+		; echo -n "testing " >> test.log ; cat now.tmp | tr '\n' ' ' >> test.log \
 		; expfile=$$(basename "$$filename" .lex)$(7) \
 		; testfile=$$(basename "$$expfile" .exp).now \
 		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/.lex//g' -e 's/-/ /g'`" \
@@ -123,8 +139,13 @@ define testrun
 			; continue \
 		; fi \
 		; echo $$((`cat explines.tmp` + `cat $$expfile | wc -l`)) > explines.tmp \
-		; diff -d -y --suppress-common-lines $$expfile $$testfile > diff.tmp \
+		; cat $$expfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.exp \
+		; cat $$testfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.tmp \
+		; diff -d -y --suppress-common-lines unvers.exp unvers.tmp > diff.tmp \
 		; dret=$$? \
+		; if (( $$dret == 0 )) ; then printf "  √\n" >> test.log ; fi \
+		; if (( $$dret == 1 )) ; then printf "  #  failed\n" >> test.log ; fi \
+		; if (( $$dret == 2 )) ; then printf "  o  can't perform test\n" >> test.log ; fi \
 		; if [[ -f concise ]] ; then \
 		    if (( $$dret == 0 )) ; then printf "+" ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 1 )) ; then printf "#" ; $(call count,err) ; if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; fi \
@@ -132,23 +153,23 @@ define testrun
 		; else \
 		    if (( $$dret == 0 )) && (( $$ret == 0 )) && (( $$failer == 0 )) ; then echo ok ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 0 )) && (( $$ret >  0 )) && (( $$failer >  0 )) ; then echo "ok (errors as expected)" ; $(call count,ok) ; fi \
-		    ; if (( $$dret == 0 )) && (( $$ret >  0 )) && (( $$failer == 0 )) ; then echo "ok (unmarked error, output as expected)" ; $(call count,warn) ; fi \
-		    ; if (( $$dret == 0 )) && (( $$ret == 0 )) && (( $$failer >  0 )) ; then echo "ok (marked error, output as expected)" ; $(call count,warn) ; fi \
+		    ; if (( $$dret == 0 )) && (( $$ret >  0 )) && (( $$failer == 0 )) ; then echo "ok (unmarked error, but output as expected)" ; $(call count,warn) ; fi \
+		    ; if (( $$dret == 0 )) && (( $$ret == 0 )) && (( $$failer >  0 )) ; then echo "ok (marked error, output as expected)" ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 2 )) ; then echo "can't perform test -> skip" ; $(call count,skip) ; fi \
 		    ; if (( $$dret == 1 )) ; then echo "failed: $(3) $(4) $$filename #< exp | got >#" ;  $(call count,err) ; $(call sep,#,132) ; cat diff.tmp ; $(call sep,#,132) ; \
 			if [[ ! -f noupdate ]] ; then \
-			    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
-				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak" \
+			    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
+				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
-				; elif [[ $$REPLY =~ ^[Rr]$$ ]] ; then echo "Result now ($$testfile):" ; $(call sep,_,132) ; cat $$testfile ; $(call sep,_,132) \
-				; elif [[ $$REPLY =~ ^[Ee]$$ ]] ; then echo "Expected result not gotten ($$expfile):" ; $(call sep,:~,66) ; cat $$expfile ; $(call sep,:~,66) \
+				; elif [[ $$REPLY =~ ^[Rr]$$ ]] ; then echo "Result now ($$testfile -- version tags are ignored):" ; $(call sep,_,132) ; cat $$testfile ; $(call sep,_,132) \
+				; elif [[ $$REPLY =~ ^[Ee]$$ ]] ; then echo "Expected result not gotten ($$expfile -- version tags are ignored):" ; $(call sep,:~,66) ; cat $$expfile ; $(call sep,:~,66) \
 				; elif [[ $$REPLY =~ ^[Ss]$$ ]] ; then echo "Source code ($$filename):" ; $(call sep,=•,66) ; cat $$filename ; $(call sep,=•,66) \
 				; elif [[ $$REPLY =~ ^[Pp]$$ ]] ; then echo "Precompiled source code ($$filename):" ; $(call sep,«»,66) ; $(3) $(4) -p $$filename ; $(call sep,«»,66) \
-				; elif [[ $$REPLY =~ ^[Ff]$$ ]] ; then echo "Difference #< exp | got >#:" \
+				; elif [[ $$REPLY =~ ^[Ff]$$ ]] ; then echo "Difference #< exp | got ># (version tags are ignored):" \
 					; diff -y $$expfile $$testfile | sed -e "s/»/»  /g" | sed -e "s/.*|.*/`printf "\033[33m&\033[0m"`/" -e "s/.*<.*/`printf "\033[31m&\033[0m"`/" -e "s/.*>.*/`printf "\033[36m&\033[0m"`/" \
-				; elif [[ $$REPLY =~ ^[Dd]$$ ]] ; then echo "Difference from expectation:" \
+				; elif [[ $$REPLY =~ ^[Dd]$$ ]] ; then echo "Difference from expectation (version tags are ignored):" \
 					; diff -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
-				; elif [[ $$REPLY =~ ^[Ww]$$ ]] ; then echo "Difference from expectation, ignoring whitespace:" \
+				; elif [[ $$REPLY =~ ^[Ww]$$ ]] ; then echo "Difference from expectation, ignoring whitespace (and version tags):" \
 					; diff -b -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Kk]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; break \
 				; elif [[ $$REPLY =~ ^[Ii]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; touch noupdate ; break \
@@ -166,6 +187,19 @@ define testrun
 	fi
 endef
 
+define focustest
+	cd focus ; \
+	cat $(1) | sed "s/compiler:.*/compiler:    [...]/g" | sed "s/grammar:.*/grammar:     [...]/g" | sed "s/backend:.*/backend:     [...]/g" > unvers.exp ; \
+	cat $(2) | sed "s/compiler:.*/compiler:    [...]/g" | sed "s/grammar:.*/grammar:     [...]/g" | sed "s/backend:.*/backend:     [...]/g" > unvers.now ; \
+	$(DIFF) -wB unvers.exp unvers.now ; \
+	$(errtag)
+endef
+
+define log
+	printf "\n# %s %s\n\n" "$(1)" $(shell date "+%Y-%m-%d-%H-%M-%S") >> test.log
+endef
+
+
 files=test-*.lex
 
 all: clean test
@@ -181,6 +215,7 @@ clean:
 	rm -f *.now
 	rm -f *.bak
 	rm -f *.test
+	rm -f unvers.exp
 	rm -f whitebox.c
 	rm -f a.out
 	rm -f test
@@ -188,6 +223,8 @@ clean:
 	rm -f focus/*.sol
 	rm -f focus/*.aes
 	rm -f focus/*.lcc
+	rm -f focus/*.now
+	rm -f focus/unvers.exp
 	rm -f lastfail
 	rm -f nopickup
 	rm -f noupdate
@@ -199,19 +236,29 @@ expclean: clean
 	@echo » deleting regression test expectations
 	rm -f *.exp
 
-test:
+check:
+	@$(call log,CHECK)
 	@touch concise
 	@touch noupdate
 	@rm -f lastfail
 	@$(MAKE) _test
 
 update:
+	@$(call log,UPDATE FAILED TESTS)
 	@rm -f concise
 	@rm -f noupdate
 	@rm -f lastfail
 	@$(MAKE) _test
 
 recheck:
+	@if [[ ! -f lastfail ]] ; then \
+	  echo "no failure in last test run" ; \
+	else \
+	  $(MAKE) _recheck ; \
+	fi
+
+_recheck:
+	@$(call log,RECHECK FAILED TESTS)
 	@rm -f concise
 	@rm -f noupdate
 	@rm -f nopickup
@@ -269,7 +316,7 @@ _test:
 			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
 		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
 			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
-		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs more than %'.f files.\n" \
+		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
 			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
 		if [[ ! -f perfect ]] ; then \
 			echo ; \
@@ -290,6 +337,7 @@ _test:
 	if (( $? == 2 )) ; then echo worse ; fi
 
 new:
+	@$(call log,CREATE MISSING EXPECTATIONS)
 	@echo
 	@echo Building missing expectation files that regression tests will compare against
 	@echo This sets the current lexon build as benchmark for future tests.
@@ -298,6 +346,7 @@ new:
 	$(MAKE) _expects
 
 expectations:
+	@$(call log,REMAKE EXPECTATIONS)
 	@echo
 	@echo Rebuilding expectation files that regression tests will compare against
 	@echo This sets the current lexon build as benchmark for future tests.
@@ -348,6 +397,7 @@ _expects:
 	@echo
 
 grammar_expectations:
+	@$(call log,REMAKE GRAMMAR EXPECTATIONS)
 	@echo
 	@echo Rebuilding grammar test expectation files that regression tests will compare against
 	@echo This sets the current lexon build as benchmark for future tests.
@@ -376,6 +426,133 @@ grammar_expects:
 	if (( $$ok == 0 )) && (( $$err == 0 )) ; then echo "### no tests #########################"; fi ; \
 	if (( $$ok != 0 )) && (( $$err == 0 )) ; then echo "==== perfect ===="; fi
 	@echo
+
+focustest:
+	@$(call log,FOCUS TEST)
+	@printf "\n$(hi)▫️  focus test $(off)\n\n"
+	@echo compiling and diffing of distribution-defining example texts.
+	@echo
+
+	@printf "$(ok)• escrow ⟶   core $(off)\n"
+	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.lcc
+	-@$(call focustest,escrow.lcc.exp,escrow.lcc)
+
+	@printf "$(ok)• escrow 2 ⟶   core $(off)\n"
+	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.lcc
+	-@$(call focustest,escrow2.lcc.exp,escrow2.lcc)
+
+	@printf "$(ok)• statement ⟶   core $(off)\n"
+	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.lcc
+	-@$(call focustest,statement.lcc.exp,statement.lcc)
+
+	@printf "$(ok)• evaluation ⟶   core $(off)\n"
+	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.lcc
+	-@$(call focustest,evaluation.lcc.exp,evaluation.lcc)
+
+	@printf "$(ok)• escrow ⟶   javascript $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.jsx
+	-@$(call focustest,escrow.jsx.exp,escrow.jsx)
+
+	@printf "$(ok)• escrow 2 ⟶   javascript $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.jsx
+	-@$(call focustest,escrow2.jsx.exp,escrow2.jsx)
+
+	@printf "$(ok)• statement ⟶   javascript $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.jsx
+	-@$(call focustest,statement.jsx.exp,statement.jsx)
+
+	@printf "$(ok)• evaluation ⟶   javascript $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.jsx
+	-@$(call focustest,evaluation.jsx.exp,evaluation.jsx)
+
+	@printf "$(ok)• escrow ⟶   solidity $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol
+	-@$(call focustest,escrow.sol.exp,escrow.sol)
+
+	@printf "$(ok)• escrow 2 ⟶   solidity $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --comment escrow2.lex > escrow2.sol
+	-@$(call focustest,escrow2.sol.exp,escrow2.sol)
+
+	@printf "$(ok)• statement ⟶   solidity $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --comment statement.lex > statement.sol
+	-@$(call focustest,statement.sol.exp,statement.sol)
+
+	@printf "$(ok)• evaluation ⟶   solidity $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol
+	-@$(call focustest,evaluation.sol.exp,evaluation.sol)
+
+	@printf "$(ok)• escrow ⟶   sophia $(off)\n"
+	-cd focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes
+	-@$(call focustest,escrow.aes.exp,escrow.aes)
+
+	@printf "$(ok)• escrow 2 ⟶   sophia $(off)\n"
+	-cd focus ; ../../bin/lexon --sophia --comment escrow2.lex > escrow2.aes
+	-@$(call focustest,escrow2.aes.exp,escrow2.aes)
+
+	@printf "$(ok)• statement ⟶   sophia $(off)\n"
+	-cd focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes
+	-@$(call focustest,statement.aes.exp,statement.aes)
+
+	@echo ---
+	@printf "$(ok)done$(off)\n"
+	@echo
+
+focusprep:
+	@$(call log,CREATE FOCUS TEST EXPECTATIONS)
+	@printf "\n\n$(hi)▫️  preparation of expectations for focustest. $(off)\n\n"
+
+	@echo »»» escrow core
+	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.lcc.exp
+
+	@echo »»» escrow 2 core
+	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.lcc.exp
+
+	@echo »»» statement core
+	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.lcc.exp
+
+	@echo »»» evaluation core
+	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.lcc.exp
+
+	@echo »»» escrow javascript
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.jsx.exp
+
+	@echo »»» escrow 2 javascript
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.jsx.exp
+
+	@echo »»» statement javascript
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.jsx.exp
+
+	@echo »»» evaluation javascript
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.jsx.exp
+
+	@echo »»» escrow solidity
+	cd focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol.exp
+
+	@echo »»» escrow 2 solidity
+	cd focus ; ../../bin/lexon --solidity --comment escrow2.lex > escrow2.sol.exp
+
+	@echo »»» statement solidity
+	cd focus ; ../../bin/lexon --solidity --comment statement.lex > statement.sol.exp
+
+	@echo »»» evaluation solidity
+	cd focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol.exp
+
+	@echo »»» escrow sophia
+	cd focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes.exp
+
+	@echo »»» escrow 2 sophia
+	cd focus ; ../../bin/lexon --sophia --comment escrow2.lex > escrow2.aes.exp
+
+	@echo »»» statement sophia
+	cd focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes.exp
+
+	@echo ---
+	@echo done
+	@echo
+
+testlog:
+	@printf "\nLast 100 lines of test.log:\n\n"
+	@tail -n100 test.log
 
 list_expectations:
 	@echo Listing of the expected results for the test source files used in the deeptest suit.
@@ -437,7 +614,4 @@ list_sources:
 	@printf "\n$(hi)▫️  LEXON COMPILATION TESTS $(off)\n"
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' lexon/*.lex
 
-.PHONY: all build run clean expclean test update recheck _test expectations new _expects one
-
-features:
-	echo $(.FEATURES)
+.PHONY: all one clean expclean check update recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 

@@ -26,13 +26,12 @@
  **	generation. The last part are the C functions that handle LGF, LXF and
  **	Lexon parsing. The parts are separated by %% as Flex requires.
  */
-
+%{
 
 /* part I: declarations --------------------------------------------------- */
 
-
-%{
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <getopt.h>
 #include <stdarg.h>
@@ -43,7 +42,11 @@
 #include <limits.h>
 #include <math.h>
 
-#define program_vers "0.3 alpha 93 U" // unified 0.3 + experimental 0.4
+#ifndef PATH_MAX
+#define PATH_MAX 1000
+#endif
+
+#define program_vers "0.3 alpha 94 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -74,7 +77,9 @@ char *grammar_version = grammar_vers;
 	if(!var) { fprintf(stderr, "out of memory %s %d", __FILE__, __LINE__); exit(137); } \
 	memset(var, 0, size);
 
+#ifndef CYCLE_2
 typedef int bool;
+#endif
 #define false 0
 #define true 1
 #define null (void *)0
@@ -142,13 +147,12 @@ void setlaw(char *);
 void emulaws();
 void dump_laws();
 
+char name_homedir[PATH_MAX];
 char *file_clearname = null;
 char *file_namepart = null;
 char *file_pathpart = null;
 char *file_location = null;
 FILE *file_fileptr = null;
-FILE *file_dirptr = null;
-FILE *file_homeptr = null;
 
 /* The currently selected jurisdiction (can be none). */
 char *law_name = null;
@@ -294,7 +298,6 @@ struct _include_stack {
 	char *namepart;
 	char *pathpart;
 	char *location;
-	FILE *dirptr;
 	FILE *fileptr;
 	int line;
 };
@@ -455,20 +458,22 @@ bool bracket_just_closed = false;
 
 /* alternate memory management */
 void *(*system_malloc)(size_t) = &malloc;
-char *(*system_strdup)(const char *) = &strdup;
 void (*system_free)(void *) = &free;
 #define MEMORY_CHECKS
 #ifdef MEMORY_CHECKS
 #define mtrac_malloc(size_) _mtrac_malloc(size_, "[unknown]", __FILE__, __LINE__)
 #define mtrac_strdup(string_) _mtrac_strdup(string_, "[unknown]", __FILE__, __LINE__)
+#define mtrac_strdup_gross(string_) mtrac_gross(_mtrac_strdup(string_, "[unknown]", __FILE__, __LINE__))
 #define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)
 #define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)
 #else
 #define mtrac_malloc(size_) malloc(size_)
 #define mtrac_strdup(string_) strdup(string_)
+#define mtrac_strdup_gross(string_) strdup(string_)
 #define mtrac_concat(var_, ...) _concat(0, 0, var_, __VA_ARGS__, null)
 #define mtrac_free(var_) free(var_)
 #endif
+
 #define add_token(tokens_, string_, only_, ignores_, keep_order_) \
 	_add_token(tokens_, string_, only_, ignores_, keep_order_, #tokens_, __FILE__, __LINE__)
 void *_mtrac_malloc(size_t size, char *name, char *file, int line);
@@ -484,7 +489,7 @@ bool mtrac_really_free = true;
 bool mtrac_verbose = false;
 bool mtrac_blank_pointers = false;
 char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
-void mtrac_gross(void *rec);
+void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
 /* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
@@ -543,14 +548,13 @@ YYSTYPE yylval;
 int yyparse (void);
 
 #endif /* !YY_YY_LEXC_TAB_H_INCLUDED  */
-
 %}
 
 
- /* part II: scanner ------------------------------------------------------ */
+/* part II: scanner ------------------------------------------------------ */
 
 
- // speed-up:
+/* speed-up: */
 %option never-interactive
 
 %option case-insensitive
@@ -575,7 +579,7 @@ brackets [\[\]]
 space	 [ \t]
 white	 [ \t\n]
 
- /* two compiler passes (PRE, MAIN), multiple sub scan states */
+/* two compiler passes (PRE, MAIN), multiple sub scan states */
 %x BOFTRIM
 %x PRE
 %s MAIN
@@ -711,8 +715,8 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 {white}+							{ D; }
 «								{ D; BEGIN(NAME_); }
 ‹								{ D; BEGIN(DESCRIPTION_); }
-{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=strdup(yytext); return SCALAR; }
- /* //# {hex}								{ D; DX(HEX); yylval.Hex=strdup(yytext); return HEX; } */
+{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
+ /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
  /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */
 {term}                                                          { D; printf(" %s", yytext); }
  /* <-- TO HERE <-- */
@@ -729,13 +733,13 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 }
 
 <NAME_>{
-[^»]+								{ D; DX(NAME); yylval.Name=strdup(yytext); return NAME; }
+[^»]+								{ D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }
 »								{ D; BEGIN(MAIN); }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler name quote error", yytext); }
 }
 
 <DESCRIPTION_>{
-[^›]+								{ D; DX(DESCRIPTION); yylval.Description=strdup(yytext); return DESCRIPTION; }
+[^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 ›{space}*\.?({space}*\n)*					{ D; DX(Separator); BEGIN(MAIN); return Separator; }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 }
@@ -836,7 +840,6 @@ int main(int argc, char **argv) {
 	file_pathpart = mtrac_strdup("-");
 	file_location = mtrac_strdup("-");
 	file_fileptr = null;
-	file_dirptr = null;
 
 	/* (**) dynamic allocation of command line arg defaults, so they can be blindly freed */
 	opt_include_path = mtrac_strdup(opt_include_path);
@@ -1511,11 +1514,9 @@ void parsargs(int argc, char **argv) {
 	file_pathpart = mtrac_strdup(dirname(tmp));
 	mtrac_free(tmp);
 
-	/* for a possible later switch back (e.g. -Sf or -B) to the original dir, get file pointer to directory */
-	assert(file_homeptr == null);
-	file_homeptr = fopen(".", "r");
-	if(file_homeptr == NULL) { //..
-		perror("could not open home directory (to note path to come back to)");
+	/* for switching back to the directory that the program was started in */
+	if(getcwd(name_homedir, sizeof(name_homedir)) == NULL) {
+		perror("could not get home directory");
 		exit(15);
 	}
 
@@ -1527,20 +1528,11 @@ void parsargs(int argc, char **argv) {
 		exit(16);
 	}
 
-	/* record absolute path of source directory */
-	file_location = getcwd(null, 0);
-	if(file_location == NULL) { //..
+	/* record absolute path of source directory. Also for later switch back from includes. */
+	file_location = mtrac_malloc(PATH_MAX);
+	if(getcwd(file_location, PATH_MAX) == NULL) {
 		perror("could not read source file directory name");
 		exit(17);
-	}
-	file_location = mtrac_strdup(file_location);
-
-	/* for a later switch back from includes, get file pointer to directory */
-	assert(file_dirptr == null);
-	file_dirptr = fopen(".", "r");
-	if(file_dirptr == NULL) { //..
-		perror("could not open source file directory (to note path to come back to)");
-		exit(18);
 	}
 
 	/* open the source file, from its home directory */
@@ -1741,7 +1733,8 @@ void lineno() {
 void geninfo() {
 	char* buf = mtrac_strdup("{ \"names\" = [\n");
 	// use .serial to go by original order of appearance
-	for(int i = 1; i <= name_count; i++) {
+	int i;
+	for(i = 1; i <= name_count; i++) {
 		node *cur = symbols;
 		assert(i<=name_count);
 		while(cur->serial != i)
@@ -1754,7 +1747,8 @@ void geninfo() {
 }
 
 void dump_name_list() {
-	for(int i = 1; i <= name_count; i++) {
+	int i;
+	for(i = 1; i <= name_count; i++) {
 		node *cur = symbols;
 		assert(i<=name_count);
 		while(cur->serial != i)
@@ -1849,7 +1843,7 @@ void include(char *scanned) {
 
 	/* The parsed term may be a full path, a base name or a pretty-written name */
 	char *clearname, *namepart, *pathpart, *location, *fullpath;
-	FILE *fileptr, *dirptr;
+	FILE *fileptr;
 
 	/* pretty representation */
  	clearname = null;
@@ -1927,13 +1921,6 @@ void include(char *scanned) {
 	}
 	location = mtrac_strdup(getcwd(null, 0));
 
-	/* for the switch back, get file pointer to directory */
-	dirptr = fopen(".", "r");
-	if(dirptr == NULL) { //..
-		perror("could not open include file directory");
-		exit(28);
-	}
-
 	/* open the include file, from its home directory */
 	if(!(fileptr = fopen(namepart, "r"))) {
 		fprintf(stderr, "Failed to open include file '%s' expected in directory '%s'.\n", namepart, pathpart);
@@ -1946,11 +1933,11 @@ void include(char *scanned) {
 
 	/* keep track of include files ever used */
 	include_trace *trace = mtrac_malloc(sizeof(include_trace));
-	trace->from_namepart = mtrac_strdup(file_namepart); // never free'd
-	trace->from_clearname = mtrac_strdup(file_clearname); // ditto
+	trace->from_namepart = mtrac_strdup(file_namepart);          // never free'd
+	trace->from_clearname = mtrac_strdup(file_clearname);        // ditto
 	trace->from_line = line;
-	trace->include_namepart = mtrac_strdup(namepart); // ditto
-	trace->include_clearname = mtrac_strdup(clearname); // ditto
+	trace->include_namepart = mtrac_strdup(namepart);            // ditto
+	trace->include_clearname = mtrac_strdup(clearname);          // ditto
 	include_count++;
 	trace->next = null;
 	if(!include_trace_start) include_trace_start = trace;
@@ -1960,11 +1947,10 @@ void include(char *scanned) {
 	/* keep track of include files nesting depth */
 	include_stack[include_stack_ptr].buffer = YY_CURRENT_BUFFER; // gift
 	include_stack[include_stack_ptr].clearname = file_clearname; // gift
-	include_stack[include_stack_ptr].namepart = file_namepart; // gift
-	include_stack[include_stack_ptr].pathpart = file_pathpart; // gift
-	include_stack[include_stack_ptr].location = file_location; // gift
-	include_stack[include_stack_ptr].dirptr = file_dirptr; // gift
-	include_stack[include_stack_ptr].fileptr = file_fileptr; // gift
+	include_stack[include_stack_ptr].namepart = file_namepart;   // gift
+	include_stack[include_stack_ptr].pathpart = file_pathpart;   // gift
+	include_stack[include_stack_ptr].location = file_location;   // gift
+	include_stack[include_stack_ptr].fileptr = file_fileptr;     // gift
 	include_stack[include_stack_ptr].line = line;
 	include_stack_ptr++;
 
@@ -1973,7 +1959,6 @@ void include(char *scanned) {
 	file_namepart = null;
 	file_pathpart = null;
 	file_location = null;
-	file_dirptr = null;
 	file_fileptr = null;
 
 	/* now the switch-over starts, regarding Lex and the file_* variables. */
@@ -1981,7 +1966,6 @@ void include(char *scanned) {
 	file_namepart = namepart;
 	file_pathpart = pathpart;
 	file_location = location;
-	file_dirptr = dirptr;
 	file_fileptr = fileptr;
 	line = 1;
 
@@ -2008,7 +1992,6 @@ int include_done() {
 	mtrac_free(file_pathpart);
 	mtrac_free(file_namepart);
 	mtrac_free(file_location);
-	fclose(file_dirptr);
 	fclose(file_fileptr); //.. is this duplicating yy_delete_buffer's action?
 	yy_delete_buffer(YY_CURRENT_BUFFER);
 
@@ -2017,12 +2000,11 @@ int include_done() {
 	file_pathpart = include_stack[include_stack_ptr].pathpart;
 	file_namepart = include_stack[include_stack_ptr].namepart;
 	file_location = include_stack[include_stack_ptr].location;
-	file_dirptr = include_stack[include_stack_ptr].dirptr;
 	file_fileptr = include_stack[include_stack_ptr].fileptr;
 	line = include_stack[include_stack_ptr].line;
 	line++; // the \n was consumed with the path but progress only now.
 
-	// fchdir(fileno(file_dirptr)); missing ??
+	///// chdir(file_location) missing ??
 
 	yy_switch_to_buffer(include_stack[include_stack_ptr].buffer);
 
@@ -2413,7 +2395,7 @@ void margin() {
 	}
 }
 
-void inline freeline() {
+void freeline() {
 	if(strlen(buf) > 1 && strcmp(buf + strlen(buf) -2, "\n\n"))
 		concat(&buf, "\n");
 	if(strcmp(buf + strlen(buf) -2, "\n\n"))
@@ -2742,7 +2724,7 @@ void produce_grammar(struct definition *definition) {
 		"#include <string.h>\n\n"
 		"int yylex(void);\n"
 		"void yyerror(const char *);\n\n"
-		"void mtrac_gross(void *);\n\n"
+		"void *mtrac_gross(void *);\n\n"
 		"#define NEW(type, literal) \\\n"
 		"	if(opt_debug_tokens) fprintf(stderr, \"tokens : creating node for \" #type \"'%s'\\n\", literal); \\\n"
 		"	type *type = mtrac_malloc(sizeof(struct type)); \\\n"
@@ -3142,7 +3124,7 @@ void produce_grammar(struct definition *definition) {
 	while(token) {
 		if(strchr(token->string, '"'))
 			concat(&lex, token->string, strlen(token->string)<10?"\t":"",
-				"\t\t\t\t\t\t\t{ D; *((char **)&yylval) = strdup(yytext); return ", literal_symbol(token->string), "; }\n");
+				"\t\t\t\t\t\t\t{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ", literal_symbol(token->string), "; }\n");
 		token = token->next;
 	}
 	concat(&lex, "{termpart} /* no space to not erron. make it longest match */"
@@ -3225,7 +3207,7 @@ void produce_grammar(struct definition *definition) {
 		concat(&req, include, /* enu, "\n", */ stru, "\n", root, "\n", /* uni, "\n", */ fdecl, "}");
 		FILE *out = stdout;
 		if(strlen(opt_yacc)) {
-			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+			chdir(name_homedir); // assume path to open as relative to dir at program start
 			if(!(out = fopen(opt_yacc, "w"))) { perror(opt_yacc); exit(1); }
 		}
 		if(strlen(opt_yacc) || !opt_quiet)
@@ -3237,7 +3219,7 @@ void produce_grammar(struct definition *definition) {
 				prol, req, decl, bnf, yacc_stub(), funcs);
 		if(strlen(opt_yacc)) {
 			fclose(out);
-			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+			chdir(file_location); // back to source file's absolute location
 		}
 		mtrac_free(include);
 		mtrac_free(root);
@@ -3262,7 +3244,7 @@ void produce_grammar(struct definition *definition) {
 
 		FILE *out = stdout;
 		if(strlen(opt_template)) {
-			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+			chdir(name_homedir); // assume path to open as relative to dir at program start
 			if(strcmp(opt_template, "core.c") && access(opt_template, F_OK ) != -1 ) {
 				fprintf(stderr, "walk function file '%s' exists. Please move or delete and try again."
 					" (Only 'core.c' is not protected this way.)\n", opt_template); exit(1);
@@ -3276,7 +3258,7 @@ void produce_grammar(struct definition *definition) {
 		}
 		if(strlen(opt_template)) {
 			fclose(out);
-			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+			chdir(file_location); // back to source file's absolute location
 		}
 		mtrac_free(stub);
 	}
@@ -3501,7 +3483,7 @@ void write_examples(stringlist *example, int count) {
 	}} else if (strlen(opt_samples)) {
 		int size = 1 + width + snprintf(null, 0, "%s%0*d.lex", opt_samples, width, 0);
 		char *filename = news(filename, size);
-		if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+		chdir(name_homedir); // assume path to open as relative to dir at program start
 		if(opt_wipe) {
 			if(opt_verbose || opt_debug)
 				printf("  deleting files %s%0*d.lex - %s%0*d.lex\n", opt_samples, width, 1, opt_samples, width, count);
@@ -3522,7 +3504,7 @@ void write_examples(stringlist *example, int count) {
 			example = example->next;
 		}
 		mtrac_free(filename);
-		if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+		chdir(file_location); // back to source file's absolute location
 	}
 }
 
@@ -3980,7 +3962,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	}
 
 	/* go to directory from which the invocation started (we are presently, possibly in the source file's dir) */
-	if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -o (or its default) relative to program start's cwd
+	chdir(name_homedir);
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
@@ -4023,7 +4005,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	fclose(fp);
 
 	/* back to source file's absolute location */
-	if(file_dirptr) fchdir(fileno(file_dirptr));
+	chdir(file_location);
 
 	mtrac_free(include);
 	mtrac_free(src);
@@ -4324,11 +4306,12 @@ char **_mtrac_concat(char *file, int line, int down, int right, char **buf, ...)
 }
 
  /* add to the gross list of memory allocations to be eventually freed */
-void mtrac_gross(void *rec) {
+void *mtrac_gross(void *rec) {
 	element *e = mtrac_malloc(sizeof (element));
 	e->payload = rec;
 	e->previous = mtrac_gross_list;
 	mtrac_gross_list = e;
+	return rec;
 }
 
  /* freeing the gross list of memory allocations */

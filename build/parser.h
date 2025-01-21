@@ -51,7 +51,7 @@ extern int yydebug;
 int yylex(void);
 void yyerror(const char *);
 
-void mtrac_gross(void *);
+void *mtrac_gross(void *);
 
 #define NEW(type, literal) \
 	if(opt_debug_tokens) fprintf(stderr, "tokens : creating node for " #type "'%s'\n", literal); \

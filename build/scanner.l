@@ -30,13 +30,12 @@
  **	generation. The last part are the C functions that handle LGF, LXF and
  **	Lexon parsing. The parts are separated by %% as Flex requires.
  */
-
+%{
 
 /* part I: declarations --------------------------------------------------- */
 
-
-%{
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <getopt.h>
 #include <stdarg.h>
@@ -47,7 +46,11 @@
 #include <limits.h>
 #include <math.h>
 
-#define program_vers "0.3 alpha 93 U" // unified 0.3 + experimental 0.4
+#ifndef PATH_MAX
+#define PATH_MAX 1000
+#endif
+
+#define program_vers "0.3 alpha 94 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "0.2.20 / subset 0.3.8 alpha 79 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -78,7 +81,9 @@ char *grammar_version = grammar_vers;
 	if(!var) { fprintf(stderr, "out of memory %s %d", __FILE__, __LINE__); exit(137); } \
 	memset(var, 0, size);
 
+#ifndef CYCLE_2
 typedef int bool;
+#endif
 #define false 0
 #define true 1
 #define null (void *)0
@@ -146,13 +151,12 @@ void setlaw(char *);
 void emulaws();
 void dump_laws();
 
+char name_homedir[PATH_MAX];
 char *file_clearname = null;
 char *file_namepart = null;
 char *file_pathpart = null;
 char *file_location = null;
 FILE *file_fileptr = null;
-FILE *file_dirptr = null;
-FILE *file_homeptr = null;
 
 /* The currently selected jurisdiction (can be none). */
 char *law_name = null;
@@ -298,7 +302,6 @@ struct _include_stack {
 	char *namepart;
 	char *pathpart;
 	char *location;
-	FILE *dirptr;
 	FILE *fileptr;
 	int line;
 };
@@ -459,20 +462,22 @@ bool bracket_just_closed = false;
 
 /* alternate memory management */
 void *(*system_malloc)(size_t) = &malloc;
-char *(*system_strdup)(const char *) = &strdup;
 void (*system_free)(void *) = &free;
 #define MEMORY_CHECKS
 #ifdef MEMORY_CHECKS
 #define mtrac_malloc(size_) _mtrac_malloc(size_, "[unknown]", __FILE__, __LINE__)
 #define mtrac_strdup(string_) _mtrac_strdup(string_, "[unknown]", __FILE__, __LINE__)
+#define mtrac_strdup_gross(string_) mtrac_gross(_mtrac_strdup(string_, "[unknown]", __FILE__, __LINE__))
 #define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)
 #define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)
 #else
 #define mtrac_malloc(size_) malloc(size_)
 #define mtrac_strdup(string_) strdup(string_)
+#define mtrac_strdup_gross(string_) strdup(string_)
 #define mtrac_concat(var_, ...) _concat(0, 0, var_, __VA_ARGS__, null)
 #define mtrac_free(var_) free(var_)
 #endif
+
 #define add_token(tokens_, string_, only_, ignores_, keep_order_) \
 	_add_token(tokens_, string_, only_, ignores_, keep_order_, #tokens_, __FILE__, __LINE__)
 void *_mtrac_malloc(size_t size, char *name, char *file, int line);
@@ -488,7 +493,7 @@ bool mtrac_really_free = true;
 bool mtrac_verbose = false;
 bool mtrac_blank_pointers = false;
 char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
-void mtrac_gross(void *rec);
+void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
 /* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
@@ -547,14 +552,13 @@ YYSTYPE yylval;
 int yyparse (void);
 
 #endif /* !YY_YY_LEXC_TAB_H_INCLUDED  */
-
 %}
 
 
- /* part II: scanner ------------------------------------------------------ */
+/* part II: scanner ------------------------------------------------------ */
 
 
- // speed-up:
+/* speed-up: */
 %option never-interactive
 
 %option case-insensitive
@@ -579,7 +583,7 @@ brackets [\[\]]
 space	 [ \t]
 white	 [ \t\n]
 
- /* two compiler passes (PRE, MAIN), multiple sub scan states */
+/* two compiler passes (PRE, MAIN), multiple sub scan states */
 %x BOFTRIM
 %x PRE
 %s MAIN
@@ -713,140 +717,140 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 {white}+							{ D; }
 «								{ D; BEGIN(NAME_); }
 ‹								{ D; BEGIN(DESCRIPTION_); }
-{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=strdup(yytext); return SCALAR; }
- /* //# {hex}								{ D; DX(HEX); yylval.Hex=strdup(yytext); return HEX; } */
+{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
+ /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
   /* Keywords (generated from LGF) */
-"AUTHOR"								{ D; *((char **)&yylval) = strdup(yytext); return AUTHOR; }
-"AUTHORS"								{ D; *((char **)&yylval) = strdup(yytext); return AUTHORS; }
-"CLAUSE"								{ D; *((char **)&yylval) = strdup(yytext); return CLAUSE; }
-"COMMENT"								{ D; *((char **)&yylval) = strdup(yytext); return COMMENT; }
-"COMMENTS"							{ D; *((char **)&yylval) = strdup(yytext); return COMMENTS; }
-"GENERAL"								{ D; *((char **)&yylval) = strdup(yytext); return GENERAL; }
-"LEX"								{ D; *((char **)&yylval) = strdup(yytext); return LEX; }
-"LEXON"								{ D; *((char **)&yylval) = strdup(yytext); return LEXON; }
-"PER"								{ D; *((char **)&yylval) = strdup(yytext); return PER; }
-"PREAMBLE"							{ D; *((char **)&yylval) = strdup(yytext); return PREAMBLE; }
-"TERMS"								{ D; *((char **)&yylval) = strdup(yytext); return TERMS; }
-"a"								{ D; *((char **)&yylval) = strdup(yytext); return A; }
-"after"								{ D; *((char **)&yylval) = strdup(yytext); return AFTER; }
-"afterwards"							{ D; *((char **)&yylval) = strdup(yytext); return AFTERWARDS; }
-"all"								{ D; *((char **)&yylval) = strdup(yytext); return ALL; }
-"also"								{ D; *((char **)&yylval) = strdup(yytext); return ALSO; }
-"amount"								{ D; *((char **)&yylval) = strdup(yytext); return AMOUNT; }
-"an"								{ D; *((char **)&yylval) = strdup(yytext); return AN; }
-"and"								{ D; *((char **)&yylval) = strdup(yytext); return AND; }
-"announced"							{ D; *((char **)&yylval) = strdup(yytext); return ANNOUNCED; }
-"appoint"								{ D; *((char **)&yylval) = strdup(yytext); return APPOINT; }
-"appoints"							{ D; *((char **)&yylval) = strdup(yytext); return APPOINTS; }
-"as"								{ D; *((char **)&yylval) = strdup(yytext); return AS; }
-"at"								{ D; *((char **)&yylval) = strdup(yytext); return AT; }
-"be"								{ D; *((char **)&yylval) = strdup(yytext); return BE; }
-"been"								{ D; *((char **)&yylval) = strdup(yytext); return BEEN; }
-"being"								{ D; *((char **)&yylval) = strdup(yytext); return BEING; }
-"binary"								{ D; *((char **)&yylval) = strdup(yytext); return BINARY; }
-"certified"							{ D; *((char **)&yylval) = strdup(yytext); return CERTIFIED; }
-"certifies"							{ D; *((char **)&yylval) = strdup(yytext); return CERTIFIES; }
-"certify"								{ D; *((char **)&yylval) = strdup(yytext); return CERTIFY; }
-"contract"							{ D; *((char **)&yylval) = strdup(yytext); return CONTRACT; }
-"contracts"							{ D; *((char **)&yylval) = strdup(yytext); return CONTRACTS; }
-"current"								{ D; *((char **)&yylval) = strdup(yytext); return CURRENT; }
-"data"								{ D; *((char **)&yylval) = strdup(yytext); return DATA; }
-"day"								{ D; *((char **)&yylval) = strdup(yytext); return DAY; }
-"days"								{ D; *((char **)&yylval) = strdup(yytext); return DAYS; }
-"declare"								{ D; *((char **)&yylval) = strdup(yytext); return DECLARE; }
-"declared"							{ D; *((char **)&yylval) = strdup(yytext); return DECLARED; }
-"declares"							{ D; *((char **)&yylval) = strdup(yytext); return DECLARES; }
-"defined"								{ D; *((char **)&yylval) = strdup(yytext); return DEFINED; }
-"equal"								{ D; *((char **)&yylval) = strdup(yytext); return EQUAL; }
-"equaling"							{ D; *((char **)&yylval) = strdup(yytext); return EQUALING; }
-"escrow"								{ D; *((char **)&yylval) = strdup(yytext); return ESCROW; }
-"file"								{ D; *((char **)&yylval) = strdup(yytext); return FILE_; }
-"filed"								{ D; *((char **)&yylval) = strdup(yytext); return FILED; }
-"files"								{ D; *((char **)&yylval) = strdup(yytext); return FILES; }
-"fix"								{ D; *((char **)&yylval) = strdup(yytext); return FIX; }
-"fixed"								{ D; *((char **)&yylval) = strdup(yytext); return FIXED; }
-"fixes"								{ D; *((char **)&yylval) = strdup(yytext); return FIXES; }
-"for"								{ D; *((char **)&yylval) = strdup(yytext); return FOR; }
-"from"								{ D; *((char **)&yylval) = strdup(yytext); return FROM; }
-"given"								{ D; *((char **)&yylval) = strdup(yytext); return GIVEN; }
-"grant"								{ D; *((char **)&yylval) = strdup(yytext); return GRANT; }
-"grants"								{ D; *((char **)&yylval) = strdup(yytext); return GRANTS; }
-"has"								{ D; *((char **)&yylval) = strdup(yytext); return HAS; }
-"herself"								{ D; *((char **)&yylval) = strdup(yytext); return HERSELF; }
-"himself"								{ D; *((char **)&yylval) = strdup(yytext); return HIMSELF; }
-"hour"								{ D; *((char **)&yylval) = strdup(yytext); return HOUR; }
-"hours"								{ D; *((char **)&yylval) = strdup(yytext); return HOURS; }
-"if"								{ D; *((char **)&yylval) = strdup(yytext); return IF; }
-"in"								{ D; *((char **)&yylval) = strdup(yytext); return IN; }
-"into"								{ D; *((char **)&yylval) = strdup(yytext); return INTO; }
-"is"								{ D; *((char **)&yylval) = strdup(yytext); return IS; }
-"itself"								{ D; *((char **)&yylval) = strdup(yytext); return ITSELF; }
-"least"								{ D; *((char **)&yylval) = strdup(yytext); return LEAST; }
-"lies"								{ D; *((char **)&yylval) = strdup(yytext); return LIES; }
-"may"								{ D; *((char **)&yylval) = strdup(yytext); return MAY; }
-"millisecond"							{ D; *((char **)&yylval) = strdup(yytext); return MILLISECOND; }
-"milliseconds"							{ D; *((char **)&yylval) = strdup(yytext); return MILLISECONDS; }
-"minute"								{ D; *((char **)&yylval) = strdup(yytext); return MINUTE; }
-"minutes"								{ D; *((char **)&yylval) = strdup(yytext); return MINUTES; }
-"month"								{ D; *((char **)&yylval) = strdup(yytext); return MONTH; }
-"months"								{ D; *((char **)&yylval) = strdup(yytext); return MONTHS; }
-"myself"								{ D; *((char **)&yylval) = strdup(yytext); return MYSELF; }
-"neither"								{ D; *((char **)&yylval) = strdup(yytext); return NEITHER; }
-"no"								{ D; *((char **)&yylval) = strdup(yytext); return NO; }
-"nor"								{ D; *((char **)&yylval) = strdup(yytext); return NOR; }
-"not"								{ D; *((char **)&yylval) = strdup(yytext); return NOT; }
-"notifies"							{ D; *((char **)&yylval) = strdup(yytext); return NOTIFIES; }
-"notify"								{ D; *((char **)&yylval) = strdup(yytext); return NOTIFY; }
-"now"								{ D; *((char **)&yylval) = strdup(yytext); return NOW; }
-"of"								{ D; *((char **)&yylval) = strdup(yytext); return OF; }
-"off"								{ D; *((char **)&yylval) = strdup(yytext); return OFF; }
-"on"								{ D; *((char **)&yylval) = strdup(yytext); return ON; }
-"oneself"								{ D; *((char **)&yylval) = strdup(yytext); return ONESELF; }
-"or"								{ D; *((char **)&yylval) = strdup(yytext); return OR; }
-"ourselves"							{ D; *((char **)&yylval) = strdup(yytext); return OURSELVES; }
-"passed"								{ D; *((char **)&yylval) = strdup(yytext); return PASSED; }
-"past"								{ D; *((char **)&yylval) = strdup(yytext); return PAST; }
-"pay"								{ D; *((char **)&yylval) = strdup(yytext); return PAY; }
-"pays"								{ D; *((char **)&yylval) = strdup(yytext); return PAYS; }
-"person"								{ D; *((char **)&yylval) = strdup(yytext); return PERSON; }
-"provided"							{ D; *((char **)&yylval) = strdup(yytext); return PROVIDED; }
-"register"							{ D; *((char **)&yylval) = strdup(yytext); return REGISTER; }
-"registers"							{ D; *((char **)&yylval) = strdup(yytext); return REGISTERS; }
-"remainder"							{ D; *((char **)&yylval) = strdup(yytext); return REMAINDER; }
-"respective"							{ D; *((char **)&yylval) = strdup(yytext); return RESPECTIVE; }
-"return"								{ D; *((char **)&yylval) = strdup(yytext); return RETURN; }
-"returns"								{ D; *((char **)&yylval) = strdup(yytext); return RETURNS; }
-"second"								{ D; *((char **)&yylval) = strdup(yytext); return SECOND; }
-"seconds"								{ D; *((char **)&yylval) = strdup(yytext); return SECONDS; }
-"send"								{ D; *((char **)&yylval) = strdup(yytext); return SEND; }
-"sends"								{ D; *((char **)&yylval) = strdup(yytext); return SENDS; }
-"signed"								{ D; *((char **)&yylval) = strdup(yytext); return SIGNED; }
-"so"								{ D; *((char **)&yylval) = strdup(yytext); return SO; }
-"terminate"							{ D; *((char **)&yylval) = strdup(yytext); return TERMINATE; }
-"terminates"							{ D; *((char **)&yylval) = strdup(yytext); return TERMINATES; }
-"text"								{ D; *((char **)&yylval) = strdup(yytext); return TEXT; }
-"that"								{ D; *((char **)&yylval) = strdup(yytext); return THAT; }
-"the"								{ D; *((char **)&yylval) = strdup(yytext); return THE; }
-"themself"							{ D; *((char **)&yylval) = strdup(yytext); return THEMSELF; }
-"themselves"							{ D; *((char **)&yylval) = strdup(yytext); return THEMSELVES; }
-"then"								{ D; *((char **)&yylval) = strdup(yytext); return THEN; }
-"there"								{ D; *((char **)&yylval) = strdup(yytext); return THERE; }
-"therefor"							{ D; *((char **)&yylval) = strdup(yytext); return THEREFOR; }
-"therefore"							{ D; *((char **)&yylval) = strdup(yytext); return THEREFORE; }
-"these"								{ D; *((char **)&yylval) = strdup(yytext); return THESE; }
-"this"								{ D; *((char **)&yylval) = strdup(yytext); return THIS; }
-"time"								{ D; *((char **)&yylval) = strdup(yytext); return TIME; }
-"to"								{ D; *((char **)&yylval) = strdup(yytext); return TO; }
-"true"								{ D; *((char **)&yylval) = strdup(yytext); return TRUE; }
-"was"								{ D; *((char **)&yylval) = strdup(yytext); return WAS; }
-"week"								{ D; *((char **)&yylval) = strdup(yytext); return WEEK; }
-"weeks"								{ D; *((char **)&yylval) = strdup(yytext); return WEEKS; }
-"with"								{ D; *((char **)&yylval) = strdup(yytext); return WITH; }
-"year"								{ D; *((char **)&yylval) = strdup(yytext); return YEAR; }
-"years"								{ D; *((char **)&yylval) = strdup(yytext); return YEARS; }
-"yes"								{ D; *((char **)&yylval) = strdup(yytext); return YES; }
-"yourself"							{ D; *((char **)&yylval) = strdup(yytext); return YOURSELF; }
-"yourselves"							{ D; *((char **)&yylval) = strdup(yytext); return YOURSELVES; }
+"AUTHOR"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AUTHOR; }
+"AUTHORS"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AUTHORS; }
+"CLAUSE"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CLAUSE; }
+"COMMENT"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return COMMENT; }
+"COMMENTS"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return COMMENTS; }
+"GENERAL"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GENERAL; }
+"LEX"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEX; }
+"LEXON"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEXON; }
+"PER"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PER; }
+"PREAMBLE"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PREAMBLE; }
+"TERMS"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMS; }
+"a"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return A; }
+"after"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AFTER; }
+"afterwards"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AFTERWARDS; }
+"all"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ALL; }
+"also"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ALSO; }
+"amount"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AMOUNT; }
+"an"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AN; }
+"and"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AND; }
+"announced"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ANNOUNCED; }
+"appoint"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINT; }
+"appoints"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINTS; }
+"as"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AS; }
+"at"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AT; }
+"be"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BE; }
+"been"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEEN; }
+"being"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEING; }
+"binary"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BINARY; }
+"certified"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFIED; }
+"certifies"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFIES; }
+"certify"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFY; }
+"contract"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CONTRACT; }
+"contracts"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CONTRACTS; }
+"current"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CURRENT; }
+"data"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DATA; }
+"day"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DAY; }
+"days"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DAYS; }
+"declare"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARE; }
+"declared"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARED; }
+"declares"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARES; }
+"defined"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DEFINED; }
+"equal"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return EQUAL; }
+"equaling"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return EQUALING; }
+"escrow"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ESCROW; }
+"file"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILE_; }
+"filed"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILED; }
+"files"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILES; }
+"fix"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIX; }
+"fixed"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIXED; }
+"fixes"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIXES; }
+"for"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FOR; }
+"from"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FROM; }
+"given"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GIVEN; }
+"grant"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GRANT; }
+"grants"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GRANTS; }
+"has"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HAS; }
+"herself"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HERSELF; }
+"himself"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HIMSELF; }
+"hour"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HOUR; }
+"hours"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HOURS; }
+"if"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IF; }
+"in"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IN; }
+"into"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return INTO; }
+"is"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IS; }
+"itself"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ITSELF; }
+"least"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEAST; }
+"lies"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LIES; }
+"may"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MAY; }
+"millisecond"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MILLISECOND; }
+"milliseconds"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MILLISECONDS; }
+"minute"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MINUTE; }
+"minutes"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MINUTES; }
+"month"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MONTH; }
+"months"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MONTHS; }
+"myself"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MYSELF; }
+"neither"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NEITHER; }
+"no"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NO; }
+"nor"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOR; }
+"not"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOT; }
+"notifies"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOTIFIES; }
+"notify"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOTIFY; }
+"now"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOW; }
+"of"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OF; }
+"off"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OFF; }
+"on"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ON; }
+"oneself"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ONESELF; }
+"or"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OR; }
+"ourselves"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OURSELVES; }
+"passed"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PASSED; }
+"past"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAST; }
+"pay"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAY; }
+"pays"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAYS; }
+"person"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PERSON; }
+"provided"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PROVIDED; }
+"register"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REGISTER; }
+"registers"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REGISTERS; }
+"remainder"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REMAINDER; }
+"respective"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RESPECTIVE; }
+"return"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RETURN; }
+"returns"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RETURNS; }
+"second"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECOND; }
+"seconds"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECONDS; }
+"send"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SEND; }
+"sends"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SENDS; }
+"signed"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SIGNED; }
+"so"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SO; }
+"terminate"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMINATE; }
+"terminates"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMINATES; }
+"text"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TEXT; }
+"that"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THAT; }
+"the"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THE; }
+"themself"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEMSELF; }
+"themselves"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEMSELVES; }
+"then"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEN; }
+"there"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THERE; }
+"therefor"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEREFOR; }
+"therefore"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEREFORE; }
+"these"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THESE; }
+"this"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THIS; }
+"time"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TIME; }
+"to"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TO; }
+"true"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TRUE; }
+"was"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WAS; }
+"week"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WEEK; }
+"weeks"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WEEKS; }
+"with"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WITH; }
+"year"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YEAR; }
+"years"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YEARS; }
+"yes"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YES; }
+"yourself"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YOURSELF; }
+"yourselves"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YOURSELVES; }
 {termpart} /* no space to not erron. make it longest match */ { D; syntax("unexpected word (after precompilation, use -P to check)", yytext); }
 .								{ D; syntax("unexpected character", yytext); }
 }
@@ -861,13 +865,13 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 }
 
 <NAME_>{
-[^»]+								{ D; DX(NAME); yylval.Name=strdup(yytext); return NAME; }
+[^»]+								{ D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }
 »								{ D; BEGIN(MAIN); }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler name quote error", yytext); }
 }
 
 <DESCRIPTION_>{
-[^›]+								{ D; DX(DESCRIPTION); yylval.Description=strdup(yytext); return DESCRIPTION; }
+[^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 ›{space}*\.?({space}*\n)*					{ D; DX(Separator); BEGIN(MAIN); return Separator; }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 }
@@ -968,7 +972,6 @@ int main(int argc, char **argv) {
 	file_pathpart = mtrac_strdup("-");
 	file_location = mtrac_strdup("-");
 	file_fileptr = null;
-	file_dirptr = null;
 
 	/* (**) dynamic allocation of command line arg defaults, so they can be blindly freed */
 	opt_include_path = mtrac_strdup(opt_include_path);
@@ -1643,11 +1646,9 @@ void parsargs(int argc, char **argv) {
 	file_pathpart = mtrac_strdup(dirname(tmp));
 	mtrac_free(tmp);
 
-	/* for a possible later switch back (e.g. -Sf or -B) to the original dir, get file pointer to directory */
-	assert(file_homeptr == null);
-	file_homeptr = fopen(".", "r");
-	if(file_homeptr == NULL) { //..
-		perror("could not open home directory (to note path to come back to)");
+	/* for switching back to the directory that the program was started in */
+	if(getcwd(name_homedir, sizeof(name_homedir)) == NULL) {
+		perror("could not get home directory");
 		exit(15);
 	}
 
@@ -1659,20 +1660,11 @@ void parsargs(int argc, char **argv) {
 		exit(16);
 	}
 
-	/* record absolute path of source directory */
-	file_location = getcwd(null, 0);
-	if(file_location == NULL) { //..
+	/* record absolute path of source directory. Also for later switch back from includes. */
+	file_location = mtrac_malloc(PATH_MAX);
+	if(getcwd(file_location, PATH_MAX) == NULL) {
 		perror("could not read source file directory name");
 		exit(17);
-	}
-	file_location = mtrac_strdup(file_location);
-
-	/* for a later switch back from includes, get file pointer to directory */
-	assert(file_dirptr == null);
-	file_dirptr = fopen(".", "r");
-	if(file_dirptr == NULL) { //..
-		perror("could not open source file directory (to note path to come back to)");
-		exit(18);
 	}
 
 	/* open the source file, from its home directory */
@@ -1873,7 +1865,8 @@ void lineno() {
 void geninfo() {
 	char* buf = mtrac_strdup("{ \"names\" = [\n");
 	// use .serial to go by original order of appearance
-	for(int i = 1; i <= name_count; i++) {
+	int i;
+	for(i = 1; i <= name_count; i++) {
 		node *cur = symbols;
 		assert(i<=name_count);
 		while(cur->serial != i)
@@ -1886,7 +1879,8 @@ void geninfo() {
 }
 
 void dump_name_list() {
-	for(int i = 1; i <= name_count; i++) {
+	int i;
+	for(i = 1; i <= name_count; i++) {
 		node *cur = symbols;
 		assert(i<=name_count);
 		while(cur->serial != i)
@@ -1981,7 +1975,7 @@ void include(char *scanned) {
 
 	/* The parsed term may be a full path, a base name or a pretty-written name */
 	char *clearname, *namepart, *pathpart, *location, *fullpath;
-	FILE *fileptr, *dirptr;
+	FILE *fileptr;
 
 	/* pretty representation */
  	clearname = null;
@@ -2059,13 +2053,6 @@ void include(char *scanned) {
 	}
 	location = mtrac_strdup(getcwd(null, 0));
 
-	/* for the switch back, get file pointer to directory */
-	dirptr = fopen(".", "r");
-	if(dirptr == NULL) { //..
-		perror("could not open include file directory");
-		exit(28);
-	}
-
 	/* open the include file, from its home directory */
 	if(!(fileptr = fopen(namepart, "r"))) {
 		fprintf(stderr, "Failed to open include file '%s' expected in directory '%s'.\n", namepart, pathpart);
@@ -2078,11 +2065,11 @@ void include(char *scanned) {
 
 	/* keep track of include files ever used */
 	include_trace *trace = mtrac_malloc(sizeof(include_trace));
-	trace->from_namepart = mtrac_strdup(file_namepart); // never free'd
-	trace->from_clearname = mtrac_strdup(file_clearname); // ditto
+	trace->from_namepart = mtrac_strdup(file_namepart);          // never free'd
+	trace->from_clearname = mtrac_strdup(file_clearname);        // ditto
 	trace->from_line = line;
-	trace->include_namepart = mtrac_strdup(namepart); // ditto
-	trace->include_clearname = mtrac_strdup(clearname); // ditto
+	trace->include_namepart = mtrac_strdup(namepart);            // ditto
+	trace->include_clearname = mtrac_strdup(clearname);          // ditto
 	include_count++;
 	trace->next = null;
 	if(!include_trace_start) include_trace_start = trace;
@@ -2092,11 +2079,10 @@ void include(char *scanned) {
 	/* keep track of include files nesting depth */
 	include_stack[include_stack_ptr].buffer = YY_CURRENT_BUFFER; // gift
 	include_stack[include_stack_ptr].clearname = file_clearname; // gift
-	include_stack[include_stack_ptr].namepart = file_namepart; // gift
-	include_stack[include_stack_ptr].pathpart = file_pathpart; // gift
-	include_stack[include_stack_ptr].location = file_location; // gift
-	include_stack[include_stack_ptr].dirptr = file_dirptr; // gift
-	include_stack[include_stack_ptr].fileptr = file_fileptr; // gift
+	include_stack[include_stack_ptr].namepart = file_namepart;   // gift
+	include_stack[include_stack_ptr].pathpart = file_pathpart;   // gift
+	include_stack[include_stack_ptr].location = file_location;   // gift
+	include_stack[include_stack_ptr].fileptr = file_fileptr;     // gift
 	include_stack[include_stack_ptr].line = line;
 	include_stack_ptr++;
 
@@ -2105,7 +2091,6 @@ void include(char *scanned) {
 	file_namepart = null;
 	file_pathpart = null;
 	file_location = null;
-	file_dirptr = null;
 	file_fileptr = null;
 
 	/* now the switch-over starts, regarding Lex and the file_* variables. */
@@ -2113,7 +2098,6 @@ void include(char *scanned) {
 	file_namepart = namepart;
 	file_pathpart = pathpart;
 	file_location = location;
-	file_dirptr = dirptr;
 	file_fileptr = fileptr;
 	line = 1;
 
@@ -2140,7 +2124,6 @@ int include_done() {
 	mtrac_free(file_pathpart);
 	mtrac_free(file_namepart);
 	mtrac_free(file_location);
-	fclose(file_dirptr);
 	fclose(file_fileptr); //.. is this duplicating yy_delete_buffer's action?
 	yy_delete_buffer(YY_CURRENT_BUFFER);
 
@@ -2149,12 +2132,11 @@ int include_done() {
 	file_pathpart = include_stack[include_stack_ptr].pathpart;
 	file_namepart = include_stack[include_stack_ptr].namepart;
 	file_location = include_stack[include_stack_ptr].location;
-	file_dirptr = include_stack[include_stack_ptr].dirptr;
 	file_fileptr = include_stack[include_stack_ptr].fileptr;
 	line = include_stack[include_stack_ptr].line;
 	line++; // the \n was consumed with the path but progress only now.
 
-	// fchdir(fileno(file_dirptr)); missing ??
+	///// chdir(file_location) missing ??
 
 	yy_switch_to_buffer(include_stack[include_stack_ptr].buffer);
 
@@ -2545,7 +2527,7 @@ void margin() {
 	}
 }
 
-void inline freeline() {
+void freeline() {
 	if(strlen(buf) > 1 && strcmp(buf + strlen(buf) -2, "\n\n"))
 		concat(&buf, "\n");
 	if(strcmp(buf + strlen(buf) -2, "\n\n"))
@@ -2874,7 +2856,7 @@ void produce_grammar(struct definition *definition) {
 		"#include <string.h>\n\n"
 		"int yylex(void);\n"
 		"void yyerror(const char *);\n\n"
-		"void mtrac_gross(void *);\n\n"
+		"void *mtrac_gross(void *);\n\n"
 		"#define NEW(type, literal) \\\n"
 		"	if(opt_debug_tokens) fprintf(stderr, \"tokens : creating node for \" #type \"'%s'\\n\", literal); \\\n"
 		"	type *type = mtrac_malloc(sizeof(struct type)); \\\n"
@@ -3274,7 +3256,7 @@ void produce_grammar(struct definition *definition) {
 	while(token) {
 		if(strchr(token->string, '"'))
 			concat(&lex, token->string, strlen(token->string)<10?"\t":"",
-				"\t\t\t\t\t\t\t{ D; *((char **)&yylval) = strdup(yytext); return ", literal_symbol(token->string), "; }\n");
+				"\t\t\t\t\t\t\t{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ", literal_symbol(token->string), "; }\n");
 		token = token->next;
 	}
 	concat(&lex, "{termpart} /* no space to not erron. make it longest match */"
@@ -3357,7 +3339,7 @@ void produce_grammar(struct definition *definition) {
 		concat(&req, include, /* enu, "\n", */ stru, "\n", root, "\n", /* uni, "\n", */ fdecl, "}");
 		FILE *out = stdout;
 		if(strlen(opt_yacc)) {
-			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+			chdir(name_homedir); // assume path to open as relative to dir at program start
 			if(!(out = fopen(opt_yacc, "w"))) { perror(opt_yacc); exit(1); }
 		}
 		if(strlen(opt_yacc) || !opt_quiet)
@@ -3369,7 +3351,7 @@ void produce_grammar(struct definition *definition) {
 				prol, req, decl, bnf, yacc_stub(), funcs);
 		if(strlen(opt_yacc)) {
 			fclose(out);
-			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+			chdir(file_location); // back to source file's absolute location
 		}
 		mtrac_free(include);
 		mtrac_free(root);
@@ -3394,7 +3376,7 @@ void produce_grammar(struct definition *definition) {
 
 		FILE *out = stdout;
 		if(strlen(opt_template)) {
-			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+			chdir(name_homedir); // assume path to open as relative to dir at program start
 			if(strcmp(opt_template, "core.c") && access(opt_template, F_OK ) != -1 ) {
 				fprintf(stderr, "walk function file '%s' exists. Please move or delete and try again."
 					" (Only 'core.c' is not protected this way.)\n", opt_template); exit(1);
@@ -3408,7 +3390,7 @@ void produce_grammar(struct definition *definition) {
 		}
 		if(strlen(opt_template)) {
 			fclose(out);
-			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+			chdir(file_location); // back to source file's absolute location
 		}
 		mtrac_free(stub);
 	}
@@ -3633,7 +3615,7 @@ void write_examples(stringlist *example, int count) {
 	}} else if (strlen(opt_samples)) {
 		int size = 1 + width + snprintf(null, 0, "%s%0*d.lex", opt_samples, width, 0);
 		char *filename = news(filename, size);
-		if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+		chdir(name_homedir); // assume path to open as relative to dir at program start
 		if(opt_wipe) {
 			if(opt_verbose || opt_debug)
 				printf("  deleting files %s%0*d.lex - %s%0*d.lex\n", opt_samples, width, 1, opt_samples, width, count);
@@ -3654,7 +3636,7 @@ void write_examples(stringlist *example, int count) {
 			example = example->next;
 		}
 		mtrac_free(filename);
-		if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+		chdir(file_location); // back to source file's absolute location
 	}
 }
 
@@ -4112,7 +4094,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	}
 
 	/* go to directory from which the invocation started (we are presently, possibly in the source file's dir) */
-	if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -o (or its default) relative to program start's cwd
+	chdir(name_homedir);
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
@@ -4155,7 +4137,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	fclose(fp);
 
 	/* back to source file's absolute location */
-	if(file_dirptr) fchdir(fileno(file_dirptr));
+	chdir(file_location);
 
 	mtrac_free(include);
 	mtrac_free(src);
@@ -4456,11 +4438,12 @@ char **_mtrac_concat(char *file, int line, int down, int right, char **buf, ...)
 }
 
  /* add to the gross list of memory allocations to be eventually freed */
-void mtrac_gross(void *rec) {
+void *mtrac_gross(void *rec) {
 	element *e = mtrac_malloc(sizeof (element));
 	e->payload = rec;
 	e->previous = mtrac_gross_list;
 	mtrac_gross_list = e;
+	return rec;
 }
 
  /* freeing the gross list of memory allocations */
@@ -4508,13 +4491,12 @@ const char *own =
 	" **	generation. The last part are the C functions that handle LGF, LXF and\n"
 	" **	Lexon parsing. The parts are separated by %% as Flex requires.\n"
 	" */\n"
-	"\n"
+	"%{\n"
 	"\n"
 	"/* part I: declarations --------------------------------------------------- */\n"
 	"\n"
-	"\n"
-	"%{\n"
 	"#include <stdlib.h>\n"
+	"#include <stdio.h>\n"
 	"#include <assert.h>\n"
 	"#include <getopt.h>\n"
 	"#include <stdarg.h>\n"
@@ -4525,7 +4507,11 @@ const char *own =
 	"#include <limits.h>\n"
 	"#include <math.h>\n"
 	"\n"
-	"#define program_vers \"0.3 alpha 93 U\" // unified 0.3 + experimental 0.4\n"
+	"#ifndef PATH_MAX\n"
+	"#define PATH_MAX 1000\n"
+	"#endif\n"
+	"\n"
+	"#define program_vers \"0.3 alpha 94 U\" // unified 0.3 + experimental 0.4\n"
 	"#define grammar_vers \"0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
@@ -4556,7 +4542,9 @@ const char *own =
 	"	if(!var) { fprintf(stderr, \"out of memory %s %d\", __FILE__, __LINE__); exit(137); } \\\n"
 	"	memset(var, 0, size);\n"
 	"\n"
+	"#ifndef CYCLE_2\n"
 	"typedef int bool;\n"
+	"#endif\n"
 	"#define false 0\n"
 	"#define true 1\n"
 	"#define null (void *)0\n"
@@ -4624,13 +4612,12 @@ const char *own =
 	"void emulaws();\n"
 	"void dump_laws();\n"
 	"\n"
+	"char name_homedir[PATH_MAX];\n"
 	"char *file_clearname = null;\n"
 	"char *file_namepart = null;\n"
 	"char *file_pathpart = null;\n"
 	"char *file_location = null;\n"
 	"FILE *file_fileptr = null;\n"
-	"FILE *file_dirptr = null;\n"
-	"FILE *file_homeptr = null;\n"
 	"\n"
 	"/* The currently selected jurisdiction (can be none). */\n"
 	"char *law_name = null;\n"
@@ -4776,7 +4763,6 @@ const char *own =
 	"	char *namepart;\n"
 	"	char *pathpart;\n"
 	"	char *location;\n"
-	"	FILE *dirptr;\n"
 	"	FILE *fileptr;\n"
 	"	int line;\n"
 	"};\n"
@@ -4937,20 +4923,22 @@ const char *own =
 	"\n"
 	"/* alternate memory management */\n"
 	"void *(*system_malloc)(size_t) = &malloc;\n"
-	"char *(*system_strdup)(const char *) = &strdup;\n"
 	"void (*system_free)(void *) = &free;\n"
 	"#define MEMORY_CHECKS\n"
 	"#ifdef MEMORY_CHECKS\n"
 	"#define mtrac_malloc(size_) _mtrac_malloc(size_, \"[unknown]\", __FILE__, __LINE__)\n"
 	"#define mtrac_strdup(string_) _mtrac_strdup(string_, \"[unknown]\", __FILE__, __LINE__)\n"
+	"#define mtrac_strdup_gross(string_) mtrac_gross(_mtrac_strdup(string_, \"[unknown]\", __FILE__, __LINE__))\n"
 	"#define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)\n"
 	"#define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)\n"
 	"#else\n"
 	"#define mtrac_malloc(size_) malloc(size_)\n"
 	"#define mtrac_strdup(string_) strdup(string_)\n"
+	"#define mtrac_strdup_gross(string_) strdup(string_)\n"
 	"#define mtrac_concat(var_, ...) _concat(0, 0, var_, __VA_ARGS__, null)\n"
 	"#define mtrac_free(var_) free(var_)\n"
 	"#endif\n"
+	"\n"
 	"#define add_token(tokens_, string_, only_, ignores_, keep_order_) \\\n"
 	"	_add_token(tokens_, string_, only_, ignores_, keep_order_, #tokens_, __FILE__, __LINE__)\n"
 	"void *_mtrac_malloc(size_t size, char *name, char *file, int line);\n"
@@ -4966,7 +4954,7 @@ const char *own =
 	"bool mtrac_verbose = false;\n"
 	"bool mtrac_blank_pointers = false;\n"
 	"char *mtrac_printable = \"*stringlist,*word,*alternation,*definition\";\n"
-	"void mtrac_gross(void *rec);\n"
+	"void *mtrac_gross(void *rec);\n"
 	"void mtrac_free_gross();\n"
 	"\n"
 	"/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */\n"
@@ -5025,14 +5013,13 @@ const char *own =
 	"int yyparse (void);\n"
 	"\n"
 	"#endif /* !YY_YY_LEXC_TAB_H_INCLUDED  */\n"
-	"\n"
 	"%}\n"
 	"\n"
 	"\n"
-	" /* part II: scanner ------------------------------------------------------ */\n"
+	"/* part II: scanner ------------------------------------------------------ */\n"
 	"\n"
 	"\n"
-	" // speed-up:\n"
+	"/* speed-up: */\n"
 	"%option never-interactive\n"
 	"\n"
 	"%option case-insensitive\n"
@@ -5057,7 +5044,7 @@ const char *own =
 	"space	 [ \\t]\n"
 	"white	 [ \\t\\n]\n"
 	"\n"
-	" /* two compiler passes (PRE, MAIN), multiple sub scan states */\n"
+	"/* two compiler passes (PRE, MAIN), multiple sub scan states */\n"
 	"%x BOFTRIM\n"
 	"%x PRE\n"
 	"%s MAIN\n"
@@ -5193,8 +5180,8 @@ const char *own =
 	"{white}+							{ D; }\n"
 	"«								{ D; BEGIN(NAME_); }\n"
 	"‹								{ D; BEGIN(DESCRIPTION_); }\n"
-	"{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=strdup(yytext); return SCALAR; }\n"
-	" /* //# {hex}								{ D; DX(HEX); yylval.Hex=strdup(yytext); return HEX; } */\n"
+	"{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }\n"
+	" /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */\n"
 	" /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */\n"
 	"{term}                                                          { D; printf(\" %s\", yytext); }\n"
 	" /* <-- TO HERE <-- */\n"
@@ -5211,13 +5198,13 @@ const char *own =
 	"}\n"
 	"\n"
 	"<NAME_>{\n"
-	"[^»]+								{ D; DX(NAME); yylval.Name=strdup(yytext); return NAME; }\n"
+	"[^»]+								{ D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }\n"
 	"»								{ D; BEGIN(MAIN); }\n"
 	"<<EOF>>								{ D; syntax(\"unexpected end of file - precompiler name quote error\", yytext); }\n"
 	"}\n"
 	"\n"
 	"<DESCRIPTION_>{\n"
-	"[^›]+								{ D; DX(DESCRIPTION); yylval.Description=strdup(yytext); return DESCRIPTION; }\n"
+	"[^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }\n"
 	"›{space}*\\.?({space}*\\n)*					{ D; DX(Separator); BEGIN(MAIN); return Separator; }\n"
 	"<<EOF>>								{ D; syntax(\"unexpected end of file - precompiler description quote error\", yytext); }\n"
 	"}\n"
@@ -5318,7 +5305,6 @@ const char *own =
 	"	file_pathpart = mtrac_strdup(\"-\");\n"
 	"	file_location = mtrac_strdup(\"-\");\n"
 	"	file_fileptr = null;\n"
-	"	file_dirptr = null;\n"
 	"\n"
 	"	/* (**) dynamic allocation of command line arg defaults, so they can be blindly freed */\n"
 	"	opt_include_path = mtrac_strdup(opt_include_path);\n"
@@ -5993,11 +5979,9 @@ const char *own =
 	"	file_pathpart = mtrac_strdup(dirname(tmp));\n"
 	"	mtrac_free(tmp);\n"
 	"\n"
-	"	/* for a possible later switch back (e.g. -Sf or -B) to the original dir, get file pointer to directory */\n"
-	"	assert(file_homeptr == null);\n"
-	"	file_homeptr = fopen(\".\", \"r\");\n"
-	"	if(file_homeptr == NULL) { //..\n"
-	"		perror(\"could not open home directory (to note path to come back to)\");\n"
+	"	/* for switching back to the directory that the program was started in */\n"
+	"	if(getcwd(name_homedir, sizeof(name_homedir)) == NULL) {\n"
+	"		perror(\"could not get home directory\");\n"
 	"		exit(15);\n"
 	"	}\n"
 	"\n"
@@ -6009,20 +5993,11 @@ const char *own =
 	"		exit(16);\n"
 	"	}\n"
 	"\n"
-	"	/* record absolute path of source directory */\n"
-	"	file_location = getcwd(null, 0);\n"
-	"	if(file_location == NULL) { //..\n"
+	"	/* record absolute path of source directory. Also for later switch back from includes. */\n"
+	"	file_location = mtrac_malloc(PATH_MAX);\n"
+	"	if(getcwd(file_location, PATH_MAX) == NULL) {\n"
 	"		perror(\"could not read source file directory name\");\n"
 	"		exit(17);\n"
-	"	}\n"
-	"	file_location = mtrac_strdup(file_location);\n"
-	"\n"
-	"	/* for a later switch back from includes, get file pointer to directory */\n"
-	"	assert(file_dirptr == null);\n"
-	"	file_dirptr = fopen(\".\", \"r\");\n"
-	"	if(file_dirptr == NULL) { //..\n"
-	"		perror(\"could not open source file directory (to note path to come back to)\");\n"
-	"		exit(18);\n"
 	"	}\n"
 	"\n"
 	"	/* open the source file, from its home directory */\n"
@@ -6223,7 +6198,8 @@ const char *own =
 	"void geninfo() {\n"
 	"	char* buf = mtrac_strdup(\"{ \\\"names\\\" = [\\n\");\n"
 	"	// use .serial to go by original order of appearance\n"
-	"	for(int i = 1; i <= name_count; i++) {\n"
+	"	int i;\n"
+	"	for(i = 1; i <= name_count; i++) {\n"
 	"		node *cur = symbols;\n"
 	"		assert(i<=name_count);\n"
 	"		while(cur->serial != i)\n"
@@ -6236,7 +6212,8 @@ const char *own =
 	"}\n"
 	"\n"
 	"void dump_name_list() {\n"
-	"	for(int i = 1; i <= name_count; i++) {\n"
+	"	int i;\n"
+	"	for(i = 1; i <= name_count; i++) {\n"
 	"		node *cur = symbols;\n"
 	"		assert(i<=name_count);\n"
 	"		while(cur->serial != i)\n"
@@ -6331,7 +6308,7 @@ const char *own =
 	"\n"
 	"	/* The parsed term may be a full path, a base name or a pretty-written name */\n"
 	"	char *clearname, *namepart, *pathpart, *location, *fullpath;\n"
-	"	FILE *fileptr, *dirptr;\n"
+	"	FILE *fileptr;\n"
 	"\n"
 	"	/* pretty representation */\n"
 	" 	clearname = null;\n"
@@ -6409,13 +6386,6 @@ const char *own =
 	"	}\n"
 	"	location = mtrac_strdup(getcwd(null, 0));\n"
 	"\n"
-	"	/* for the switch back, get file pointer to directory */\n"
-	"	dirptr = fopen(\".\", \"r\");\n"
-	"	if(dirptr == NULL) { //..\n"
-	"		perror(\"could not open include file directory\");\n"
-	"		exit(28);\n"
-	"	}\n"
-	"\n"
 	"	/* open the include file, from its home directory */\n"
 	"	if(!(fileptr = fopen(namepart, \"r\"))) {\n"
 	"		fprintf(stderr, \"Failed to open include file '%s' expected in directory '%s'.\\n\", namepart, pathpart);\n"
@@ -6428,11 +6398,11 @@ const char *own =
 	"\n"
 	"	/* keep track of include files ever used */\n"
 	"	include_trace *trace = mtrac_malloc(sizeof(include_trace));\n"
-	"	trace->from_namepart = mtrac_strdup(file_namepart); // never free'd\n"
-	"	trace->from_clearname = mtrac_strdup(file_clearname); // ditto\n"
+	"	trace->from_namepart = mtrac_strdup(file_namepart);          // never free'd\n"
+	"	trace->from_clearname = mtrac_strdup(file_clearname);        // ditto\n"
 	"	trace->from_line = line;\n"
-	"	trace->include_namepart = mtrac_strdup(namepart); // ditto\n"
-	"	trace->include_clearname = mtrac_strdup(clearname); // ditto\n"
+	"	trace->include_namepart = mtrac_strdup(namepart);            // ditto\n"
+	"	trace->include_clearname = mtrac_strdup(clearname);          // ditto\n"
 	"	include_count++;\n"
 	"	trace->next = null;\n"
 	"	if(!include_trace_start) include_trace_start = trace;\n"
@@ -6442,11 +6412,10 @@ const char *own =
 	"	/* keep track of include files nesting depth */\n"
 	"	include_stack[include_stack_ptr].buffer = YY_CURRENT_BUFFER; // gift\n"
 	"	include_stack[include_stack_ptr].clearname = file_clearname; // gift\n"
-	"	include_stack[include_stack_ptr].namepart = file_namepart; // gift\n"
-	"	include_stack[include_stack_ptr].pathpart = file_pathpart; // gift\n"
-	"	include_stack[include_stack_ptr].location = file_location; // gift\n"
-	"	include_stack[include_stack_ptr].dirptr = file_dirptr; // gift\n"
-	"	include_stack[include_stack_ptr].fileptr = file_fileptr; // gift\n"
+	"	include_stack[include_stack_ptr].namepart = file_namepart;   // gift\n"
+	"	include_stack[include_stack_ptr].pathpart = file_pathpart;   // gift\n"
+	"	include_stack[include_stack_ptr].location = file_location;   // gift\n"
+	"	include_stack[include_stack_ptr].fileptr = file_fileptr;     // gift\n"
 	"	include_stack[include_stack_ptr].line = line;\n"
 	"	include_stack_ptr++;\n"
 	"\n"
@@ -6455,7 +6424,6 @@ const char *own =
 	"	file_namepart = null;\n"
 	"	file_pathpart = null;\n"
 	"	file_location = null;\n"
-	"	file_dirptr = null;\n"
 	"	file_fileptr = null;\n"
 	"\n"
 	"	/* now the switch-over starts, regarding Lex and the file_* variables. */\n"
@@ -6463,7 +6431,6 @@ const char *own =
 	"	file_namepart = namepart;\n"
 	"	file_pathpart = pathpart;\n"
 	"	file_location = location;\n"
-	"	file_dirptr = dirptr;\n"
 	"	file_fileptr = fileptr;\n"
 	"	line = 1;\n"
 	"\n"
@@ -6490,7 +6457,6 @@ const char *own =
 	"	mtrac_free(file_pathpart);\n"
 	"	mtrac_free(file_namepart);\n"
 	"	mtrac_free(file_location);\n"
-	"	fclose(file_dirptr);\n"
 	"	fclose(file_fileptr); //.. is this duplicating yy_delete_buffer's action?\n"
 	"	yy_delete_buffer(YY_CURRENT_BUFFER);\n"
 	"\n"
@@ -6499,12 +6465,11 @@ const char *own =
 	"	file_pathpart = include_stack[include_stack_ptr].pathpart;\n"
 	"	file_namepart = include_stack[include_stack_ptr].namepart;\n"
 	"	file_location = include_stack[include_stack_ptr].location;\n"
-	"	file_dirptr = include_stack[include_stack_ptr].dirptr;\n"
 	"	file_fileptr = include_stack[include_stack_ptr].fileptr;\n"
 	"	line = include_stack[include_stack_ptr].line;\n"
 	"	line++; // the \\n was consumed with the path but progress only now.\n"
 	"\n"
-	"	// fchdir(fileno(file_dirptr)); missing ??\n"
+	"	///// chdir(file_location) missing ??\n"
 	"\n"
 	"	yy_switch_to_buffer(include_stack[include_stack_ptr].buffer);\n"
 	"\n"
@@ -6895,7 +6860,7 @@ const char *own =
 	"	}\n"
 	"}\n"
 	"\n"
-	"void inline freeline() {\n"
+	"void freeline() {\n"
 	"	if(strlen(buf) > 1 && strcmp(buf + strlen(buf) -2, \"\\n\\n\"))\n"
 	"		concat(&buf, \"\\n\");\n"
 	"	if(strcmp(buf + strlen(buf) -2, \"\\n\\n\"))\n"
@@ -7224,7 +7189,7 @@ const char *own =
 	"		\"#include <string.h>\\n\\n\"\n"
 	"		\"int yylex(void);\\n\"\n"
 	"		\"void yyerror(const char *);\\n\\n\"\n"
-	"		\"void mtrac_gross(void *);\\n\\n\"\n"
+	"		\"void *mtrac_gross(void *);\\n\\n\"\n"
 	"		\"#define NEW(type, literal) \\\\\\n\"\n"
 	"		\"	if(opt_debug_tokens) fprintf(stderr, \\\"tokens : creating node for \\\" #type \\\"'%s'\\\\n\\\", literal); \\\\\\n\"\n"
 	"		\"	type *type = mtrac_malloc(sizeof(struct type)); \\\\\\n\"\n"
@@ -7624,7 +7589,7 @@ const char *own =
 	"	while(token) {\n"
 	"		if(strchr(token->string, '\"'))\n"
 	"			concat(&lex, token->string, strlen(token->string)<10?\"\\t\":\"\",\n"
-	"				\"\\t\\t\\t\\t\\t\\t\\t{ D; *((char **)&yylval) = strdup(yytext); return \", literal_symbol(token->string), \"; }\\n\");\n"
+	"				\"\\t\\t\\t\\t\\t\\t\\t{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return \", literal_symbol(token->string), \"; }\\n\");\n"
 	"		token = token->next;\n"
 	"	}\n"
 	"	concat(&lex, \"{termpart} /* no space to not erron. make it longest match */\"\n"
@@ -7707,7 +7672,7 @@ const char *own =
 	"		concat(&req, include, /* enu, \"\\n\", */ stru, \"\\n\", root, \"\\n\", /* uni, \"\\n\", */ fdecl, \"}\");\n"
 	"		FILE *out = stdout;\n"
 	"		if(strlen(opt_yacc)) {\n"
-	"			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd\n"
+	"			chdir(name_homedir); // assume path to open as relative to dir at program start\n"
 	"			if(!(out = fopen(opt_yacc, \"w\"))) { perror(opt_yacc); exit(1); }\n"
 	"		}\n"
 	"		if(strlen(opt_yacc) || !opt_quiet)\n"
@@ -7719,7 +7684,7 @@ const char *own =
 	"				prol, req, decl, bnf, yacc_stub(), funcs);\n"
 	"		if(strlen(opt_yacc)) {\n"
 	"			fclose(out);\n"
-	"			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location\n"
+	"			chdir(file_location); // back to source file's absolute location\n"
 	"		}\n"
 	"		mtrac_free(include);\n"
 	"		mtrac_free(root);\n"
@@ -7744,7 +7709,7 @@ const char *own =
 	"\n"
 	"		FILE *out = stdout;\n"
 	"		if(strlen(opt_template)) {\n"
-	"			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd\n"
+	"			chdir(name_homedir); // assume path to open as relative to dir at program start\n"
 	"			if(strcmp(opt_template, \"core.c\") && access(opt_template, F_OK ) != -1 ) {\n"
 	"				fprintf(stderr, \"walk function file '%s' exists. Please move or delete and try again.\"\n"
 	"					\" (Only 'core.c' is not protected this way.)\\n\", opt_template); exit(1);\n"
@@ -7758,7 +7723,7 @@ const char *own =
 	"		}\n"
 	"		if(strlen(opt_template)) {\n"
 	"			fclose(out);\n"
-	"			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location\n"
+	"			chdir(file_location); // back to source file's absolute location\n"
 	"		}\n"
 	"		mtrac_free(stub);\n"
 	"	}\n"
@@ -7983,7 +7948,7 @@ const char *own =
 	"	}} else if (strlen(opt_samples)) {\n"
 	"		int size = 1 + width + snprintf(null, 0, \"%s%0*d.lex\", opt_samples, width, 0);\n"
 	"		char *filename = news(filename, size);\n"
-	"		if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd\n"
+	"		chdir(name_homedir); // assume path to open as relative to dir at program start\n"
 	"		if(opt_wipe) {\n"
 	"			if(opt_verbose || opt_debug)\n"
 	"				printf(\"  deleting files %s%0*d.lex - %s%0*d.lex\\n\", opt_samples, width, 1, opt_samples, width, count);\n"
@@ -8004,7 +7969,7 @@ const char *own =
 	"			example = example->next;\n"
 	"		}\n"
 	"		mtrac_free(filename);\n"
-	"		if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location\n"
+	"		chdir(file_location); // back to source file's absolute location\n"
 	"	}\n"
 	"}\n"
 	"\n"
@@ -8462,7 +8427,7 @@ const char *own =
 	"	}\n"
 	"\n"
 	"	/* go to directory from which the invocation started (we are presently, possibly in the source file's dir) */\n"
-	"	if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -o (or its default) relative to program start's cwd\n"
+	"	chdir(name_homedir);\n"
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
@@ -8505,7 +8470,7 @@ const char *own =
 	"	fclose(fp);\n"
 	"\n"
 	"	/* back to source file's absolute location */\n"
-	"	if(file_dirptr) fchdir(fileno(file_dirptr));\n"
+	"	chdir(file_location);\n"
 	"\n"
 	"	mtrac_free(include);\n"
 	"	mtrac_free(src);\n"
@@ -8806,11 +8771,12 @@ const char *own =
 	"}\n"
 	"\n"
 	" /* add to the gross list of memory allocations to be eventually freed */\n"
-	"void mtrac_gross(void *rec) {\n"
+	"void *mtrac_gross(void *rec) {\n"
 	"	element *e = mtrac_malloc(sizeof (element));\n"
 	"	e->payload = rec;\n"
 	"	e->previous = mtrac_gross_list;\n"
 	"	mtrac_gross_list = e;\n"
+	"	return rec;\n"
 	"}\n"
 	"\n"
 	" /* freeing the gross list of memory allocations */\n"
@@ -9220,7 +9186,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 93 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\n"
+	"	0.3 alpha 94 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
@@ -9370,10 +9336,10 @@ const char *manual =
 	"	src             C and Flex compiler sources / cycle 1\n"
 	"	build           intermediary C sources / cycle 2\n"
 	"	Makefile        build scripts\n"
-	"	tests           compiler self-tests*\n"
+	"	tests           compiler self-tests (*)\n"
 	"	CREDITS         contributors and supporters\n"
 	"\n"
-	"Note * that github will omit relevant files and sub folders of the `test/` directory.\n"
+	"(*) Note that github will omit relevant files and sub folders of the `tests/` directory.\n"
 	"\n"
 	"\n"
 	"## Stack\n"
@@ -9414,17 +9380,18 @@ const char *manual =
 	"\n"
 	"## Portability\n"
 	"\n"
-	"Because of its low number of dependencies, the content of this repository should\n"
-	"remain usable for an extended amount of time. In essence it\n"
-	"needs but a (slighlty tolerant) C99 compiler.\n"
+	"Because of its low number of dependencies, the content of this repository\n"
+	"should remain usable for an extended amount of time, on a wide array of current\n"
+	"and future platforms.  It should be immediately portable to all 60 hardware\n"
+	"platforms that GCC supports, and with slight formal adaptions, beyond. In\n"
+	"essence it needs but a C99 compiler.\n"
 	"\n"
-	"It should be immediately portable to all 60 hardware platforms that GCC\n"
-	"supports, and with slight formal adaptions, beyond.\n"
-	"\n"
-	"Because of its small footprint and fast pace, it can be embedded in web sites\n"
-	"and run on smart phones. Compilation of medium size texts takes milliseconds,\n"
-	"with virtually no overhead for start up and wind down. The size of the compiler\n"
-	"executable is roughly 1MB.\n"
+	"Because of its small footprint and fast pace, the compiler can be embedded in\n"
+	"web sites and run on smart phones. Compilation of medium size texts takes\n"
+	"milliseconds on a normal machine, with virtually no overhead for start up and\n"
+	"wind down. The size of the compiler executable is roughly 1MB. Building the\n"
+	"compiler itself from source takes seconds. This makes all kinds of nimble edge\n"
+	"devices possible hosts.\n"
 	"\n"
 	"To use Lexon on your own machine——to create your own workflows and be protected\n"
 	"from bitrot——you don't have to build it yourself but can use the binaries for\n"
@@ -9432,7 +9399,6 @@ const char *manual =
 	"master branch. You can also download the\n"
 	"[binaries](https://www.lexon.org/download.html) from the Lexon site. That page\n"
 	"also has a step-by-step installation instruction.\n"
-	"\n"
 	"\n"
 	"\n"
 	"\n"
@@ -9459,8 +9425,8 @@ const char *manual =
 	"\n"
 	"#### Tested With\n"
 	"\n"
-	"	gcc 7.5.0\n"
-	"	clang 12.0.5\n"
+	"	gcc 7.5.0 / c99\n"
+	"	clang 12.0.5 / c99\n"
 	"	make 3.81 and 4.1\n"
 	"\n"
 	"\n"
@@ -9497,8 +9463,8 @@ const char *manual =
 	"\n"
 	"#### Tested With\n"
 	"\n"
-	"	gcc 7.5.0\n"
-	"	clang 12.0.5\n"
+	"	gcc 7.5.0 / c99\n"
+	"	clang 12.0.5 / c99\n"
 	"	bison 3.8\n"
 	"	flex 2.5.35 and 2.6.4\n"
 	"	make 3.81 and 4.1\n"
@@ -9601,22 +9567,27 @@ const char *manual =
 	"\n"
 	"	$ make <rules>\n"
 	"\n"
-	"	all             build compiler and run an example\n"
+	"	all             build compiler and run an example (default)\n"
 	"	build           build compiler\n"
-	"	install         install compiler\n"
-	"	lexcc           [a build part:] build lexccc compiler compiler\n"
-	"	lexon           [a build part:] build lexon compiler\n"
+	"	install         install compiler (run with sudo)\n"
 	"	sample          build escrow example to solidity\n"
 	"	check           compiler tests: deeptest, focustest, sample\n"
 	"	devcheck        all tests: envtest, deeptest, grammarcheck, focustest, sample\n"
+	"	testlog         dump the 100 last lines of the test log\n"
 	"	clean           delete all built files, except pre-built binaries\n"
+	"	ls              show the source and build directories\n"
+	"	license         show the license agreement\n"
+	"	help            this list\n"
+	"\n"
+	"**dev support**\n"
+	"\n"
+	"	lexcc           a build part: build lexccc compiler compiler\n"
+	"	lexon           a build part: build lexon compiler\n"
 	"	distclean       clean and pre-build cycle 2 sources for master branch\n"
 	"	diffclean       clean and pre-build backend modules (targets branch)\n"
 	"	devclean        clean and delete pre-build binaries (dev branch)\n"
 	"	srcclean        devclean and delete test expectations (sources branch)\n"
-	"	ls              show the source and build directories\n"
-	"	license         show the license agreement\n"
-	"	help            this list\n"
+	"	rulecheck       test of different repository clean state transitions\n"
 	"\n"
 	"**3rd level of tests: grammar**\n"
 	"\n"

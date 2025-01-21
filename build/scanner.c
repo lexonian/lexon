@@ -4726,34 +4726,34 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[253] =
     {   0,
-      615,  616,  617,  618,  619,  620,  621,  622,  623,  624,
-      626,  628,  631,  632,  633,  634,  635,  636,  637,  638,
-      639,  640,  650,  651,  652,  657,  658,  659,  660,  670,
-      671,  672,  677,  678,  679,  680,  684,  685,  686,  689,
-      690,  691,  694,  695,  696,  703,  705,  706,  707,  708,
-      709,  710,  711,  712,  713,  714,  715,  716,  719,  720,
-      721,  722,  723,  724,  725,  726,  727,  728,  729,  730,
-      731,  732,  733,  734,  735,  736,  737,  738,  739,  740,
-      741,  742,  743,  744,  745,  746,  747,  748,  749,  750,
-      751,  752,  753,  754,  755,  756,  757,  758,  759,  760,
+      619,  620,  621,  622,  623,  624,  625,  626,  627,  628,
+      630,  632,  635,  636,  637,  638,  639,  640,  641,  642,
+      643,  644,  654,  655,  656,  661,  662,  663,  664,  674,
+      675,  676,  681,  682,  683,  684,  688,  689,  690,  693,
+      694,  695,  698,  699,  700,  707,  709,  710,  711,  712,
+      713,  714,  715,  716,  717,  718,  719,  720,  723,  724,
+      725,  726,  727,  728,  729,  730,  731,  732,  733,  734,
+      735,  736,  737,  738,  739,  740,  741,  742,  743,  744,
+      745,  746,  747,  748,  749,  750,  751,  752,  753,  754,
+      755,  756,  757,  758,  759,  760,  761,  762,  763,  764,
 
-      761,  762,  763,  764,  765,  766,  767,  768,  769,  770,
-      771,  772,  773,  774,  775,  776,  777,  778,  779,  780,
-      781,  782,  783,  784,  785,  786,  787,  788,  789,  790,
-      791,  792,  793,  794,  795,  796,  797,  798,  799,  800,
-      801,  802,  803,  804,  805,  806,  807,  808,  809,  810,
-      811,  812,  813,  814,  815,  816,  817,  818,  819,  820,
-      821,  822,  823,  824,  825,  826,  827,  828,  829,  830,
-      831,  832,  833,  834,  835,  836,  837,  838,  839,  840,
-      841,  842,  843,  844,  845,  846,  847,  848,  849,  850,
-      851,  855,  856,  857,  864,  865,  870,  871,  878,  879,
+      765,  766,  767,  768,  769,  770,  771,  772,  773,  774,
+      775,  776,  777,  778,  779,  780,  781,  782,  783,  784,
+      785,  786,  787,  788,  789,  790,  791,  792,  793,  794,
+      795,  796,  797,  798,  799,  800,  801,  802,  803,  804,
+      805,  806,  807,  808,  809,  810,  811,  812,  813,  814,
+      815,  816,  817,  818,  819,  820,  821,  822,  823,  824,
+      825,  826,  827,  828,  829,  830,  831,  832,  833,  834,
+      835,  836,  837,  838,  839,  840,  841,  842,  843,  844,
+      845,  846,  847,  848,  849,  850,  851,  852,  853,  854,
+      855,  859,  860,  861,  868,  869,  874,  875,  882,  883,
 
-      880,  881,  882,  883,  884,  885,  886,  887,  888,  889,
-      890,  891,  892,  893,  894,  895,  896,  897,  898,  899,
-      900,  901,  902,  903,  907,  908,  914,  916,  917,  918,
-      919,  920,  921,  922,  923,  924,  925,  926,  927,  928,
-      929,  930,  931,  932,  933,  934,  935,  936,  937,  938,
-      939,  940
+      884,  885,  886,  887,  888,  889,  890,  891,  892,  893,
+      894,  895,  896,  897,  898,  899,  900,  901,  902,  903,
+      904,  905,  906,  907,  911,  912,  918,  920,  921,  922,
+      923,  924,  925,  926,  927,  928,  929,  930,  931,  932,
+      933,  934,  935,  936,  937,  938,  939,  940,  941,  942,
+      943,  944
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -4795,9 +4795,12 @@ char *yytext;
 **	generation. The last part are the C functions that handle LGF, LXF and
 **	Lexon parsing. The parts are separated by %% as Flex requires.
 */
+#line 34 "scanner.l"
+
 /* part I: declarations --------------------------------------------------- */
-#line 39 "scanner.l"
+
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <getopt.h>
 #include <stdarg.h>
@@ -4808,7 +4811,11 @@ char *yytext;
 #include <limits.h>
 #include <math.h>
 
-#define program_vers "0.3 alpha 93 U" // unified 0.3 + experimental 0.4
+#ifndef PATH_MAX
+#define PATH_MAX 1000
+#endif
+
+#define program_vers "0.3 alpha 94 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "0.2.20 / subset 0.3.8 alpha 79 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -4839,7 +4846,9 @@ char *grammar_version = grammar_vers;
 	if(!var) { fprintf(stderr, "out of memory %s %d", __FILE__, __LINE__); exit(137); } \
 	memset(var, 0, size);
 
+#ifndef CYCLE_2
 typedef int bool;
+#endif
 #define false 0
 #define true 1
 #define null (void *)0
@@ -4907,13 +4916,12 @@ void setlaw(char *);
 void emulaws();
 void dump_laws();
 
+char name_homedir[PATH_MAX];
 char *file_clearname = null;
 char *file_namepart = null;
 char *file_pathpart = null;
 char *file_location = null;
 FILE *file_fileptr = null;
-FILE *file_dirptr = null;
-FILE *file_homeptr = null;
 
 /* The currently selected jurisdiction (can be none). */
 char *law_name = null;
@@ -5059,7 +5067,6 @@ struct _include_stack {
 	char *namepart;
 	char *pathpart;
 	char *location;
-	FILE *dirptr;
 	FILE *fileptr;
 	int line;
 };
@@ -5220,20 +5227,22 @@ bool bracket_just_closed = false;
 
 /* alternate memory management */
 void *(*system_malloc)(size_t) = &malloc;
-char *(*system_strdup)(const char *) = &strdup;
 void (*system_free)(void *) = &free;
 #define MEMORY_CHECKS
 #ifdef MEMORY_CHECKS
 #define mtrac_malloc(size_) _mtrac_malloc(size_, "[unknown]", __FILE__, __LINE__)
 #define mtrac_strdup(string_) _mtrac_strdup(string_, "[unknown]", __FILE__, __LINE__)
+#define mtrac_strdup_gross(string_) mtrac_gross(_mtrac_strdup(string_, "[unknown]", __FILE__, __LINE__))
 #define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)
 #define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)
 #else
 #define mtrac_malloc(size_) malloc(size_)
 #define mtrac_strdup(string_) strdup(string_)
+#define mtrac_strdup_gross(string_) strdup(string_)
 #define mtrac_concat(var_, ...) _concat(0, 0, var_, __VA_ARGS__, null)
 #define mtrac_free(var_) free(var_)
 #endif
+
 #define add_token(tokens_, string_, only_, ignores_, keep_order_) \
 	_add_token(tokens_, string_, only_, ignores_, keep_order_, #tokens_, __FILE__, __LINE__)
 void *_mtrac_malloc(size_t size, char *name, char *file, int line);
@@ -5249,7 +5258,7 @@ bool mtrac_really_free = true;
 bool mtrac_verbose = false;
 bool mtrac_blank_pointers = false;
 char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
-void mtrac_gross(void *rec);
+void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
 /* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
@@ -5308,9 +5317,8 @@ YYSTYPE yylval;
 int yyparse (void);
 
 #endif /* !YY_YY_LEXC_TAB_H_INCLUDED  */
-
 /* part II: scanner ------------------------------------------------------ */
-// speed-up:
+/* speed-up: */
 /* parse character patterns */
 /* two compiler passes (PRE, MAIN), multiple sub scan states */
 
@@ -5331,7 +5339,7 @@ int yyparse (void);
 /* extension parsing */
 
 
-#line 5335 "scanner.c"
+#line 5343 "scanner.c"
 
 #define INITIAL 0
 #define BOFTRIM 1
@@ -5592,7 +5600,7 @@ YY_DECL
 	register int yy_act;
     
 /* %% [7.0] user's declarations go here */
-#line 606 "scanner.l"
+#line 610 "scanner.l"
 
 
  if(YY_START==INITIAL) BEGIN ((opt_bnf || opt_yacc || opt_keywords || opt_template || opt_bootstrap || opt_samples ? LGF : BOFTRIM));
@@ -5601,7 +5609,7 @@ YY_DECL
     for the liberal use of tabs and newlines even within variable names.
     At the ocassion, double newline (which semantically equal '.') is also normalized. */
 
-#line 5605 "scanner.c"
+#line 5613 "scanner.c"
 
 	if ( !(yy_init) )
 		{
@@ -5714,127 +5722,127 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 615 "scanner.l"
+#line 619 "scanner.l"
 { D; BEGIN(LXF); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 616 "scanner.l"
+#line 620 "scanner.l"
 { D; BEGIN(LGF); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 617 "scanner.l"
+#line 621 "scanner.l"
 { D; lineno(); concat(&buf, "\n\n"); line+=2; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 618 "scanner.l"
+#line 622 "scanner.l"
 { D; lineno(); concat(&buf, ".\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 619 "scanner.l"
+#line 623 "scanner.l"
 { D; lineno(); concat(&buf, ",\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 620 "scanner.l"
+#line 624 "scanner.l"
 { D; lineno(); concat(&buf, ";\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 621 "scanner.l"
+#line 625 "scanner.l"
 { D; lineno(); concat(&buf, ":\n"); line++; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 622 "scanner.l"
+#line 626 "scanner.l"
 /* under, after include */				{ D;           concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 623 "scanner.l"
+#line 627 "scanner.l"
 { D;           concat(&buf, " "); _lastline=++line; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 624 "scanner.l"
+#line 628 "scanner.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 626 "scanner.l"
+#line 630 "scanner.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 628 "scanner.l"
+#line 632 "scanner.l"
 { D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
 									 concat(&buf, yytext); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 631 "scanner.l"
+#line 635 "scanner.l"
 { D; freeline(); BEGIN(INCLUDE); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 632 "scanner.l"
+#line 636 "scanner.l"
 { D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 633 "scanner.l"
+#line 637 "scanner.l"
 { D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 634 "scanner.l"
+#line 638 "scanner.l"
 { D; lineno(); concat(&buf, trim(yytext), " ‹"); BEGIN(LONGQUOTE); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 635 "scanner.l"
+#line 639 "scanner.l"
 { D; lineno(); concat(&buf, trim(yytext), " "); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 636 "scanner.l"
+#line 640 "scanner.l"
 { D; lineno(); process("\"“”", "", "", yytext, "\"“”"); concat(&buf, yytext); lhd=true; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 637 "scanner.l"
+#line 641 "scanner.l"
 { D; concat(&buf, " "); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 638 "scanner.l"
+#line 642 "scanner.l"
 /* these 2 lines emulate ^[^"“”]: */			{ D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 639 "scanner.l"
+#line 643 "scanner.l"
 { D0; yyless(0); if(plhd && pretty) freeline(); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 640 "scanner.l"
+#line 644 "scanner.l"
 { D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case YY_STATE_EOF(PRE):
-#line 641 "scanner.l"
+#line 645 "scanner.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done()) BEGIN(PRE);
 									else { precompile();
@@ -5846,49 +5854,49 @@ case YY_STATE_EOF(PRE):
 
 case 23:
 YY_RULE_SETUP
-#line 650 "scanner.l"
+#line 654 "scanner.l"
 { D; }
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 651 "scanner.l"
+#line 655 "scanner.l"
 { D; line++; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 652 "scanner.l"
+#line 656 "scanner.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(BOFTRIM):
-#line 653 "scanner.l"
+#line 657 "scanner.l"
 { D; syntax("empty file (or only whitespace)", yytext); }
 	YY_BREAK
 
 
 case 26:
 YY_RULE_SETUP
-#line 657 "scanner.l"
+#line 661 "scanner.l"
 { D; }
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 658 "scanner.l"
+#line 662 "scanner.l"
 { D; if(!pretty) concat(&buf, "\n"); line++; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 659 "scanner.l"
+#line 663 "scanner.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 660 "scanner.l"
+#line 664 "scanner.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(TRIM):
-#line 661 "scanner.l"
+#line 665 "scanner.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done()) BEGIN(PRE);
 									else { precompile();
@@ -5900,64 +5908,64 @@ case YY_STATE_EOF(TRIM):
 ///// refactor. Only used by LEX tag
 case 30:
 YY_RULE_SETUP
-#line 670 "scanner.l"
+#line 674 "scanner.l"
 { D; process2(yytext, ". \t", "«", "»"); concat(&buf, yytext); BEGIN(PRE); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 671 "scanner.l"
+#line 675 "scanner.l"
 { D; syntax("unexpected character in name", yytext); }
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 672 "scanner.l"
+#line 676 "scanner.l"
 { D; syntax("unexpected end of line instead of name", ""); }
 	YY_BREAK
 case YY_STATE_EOF(NAMEQUOTE):
-#line 673 "scanner.l"
+#line 677 "scanner.l"
 { D; syntax("unexpected end of file instead of name", yytext); }
 	YY_BREAK
 
 
 case 33:
 YY_RULE_SETUP
-#line 677 "scanner.l"
+#line 681 "scanner.l"
 { D; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 678 "scanner.l"
+#line 682 "scanner.l"
 { D; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 679 "scanner.l"
+#line 683 "scanner.l"
 { D; concat(&buf, "‹", yytext, "›."); }
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 680 "scanner.l"
+#line 684 "scanner.l"
 /* used to be \.*{space}*\n */		{ D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
 
 case 37:
 YY_RULE_SETUP
-#line 684 "scanner.l"
+#line 688 "scanner.l"
 { D; concat(&buf, yytext); }
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 685 "scanner.l"
+#line 689 "scanner.l"
 { D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 686 "scanner.l"
+#line 690 "scanner.l"
 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
@@ -5967,22 +5975,22 @@ case 40:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 689 "scanner.l"
+#line 693 "scanner.l"
 { D; input(); include(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 690 "scanner.l"
+#line 694 "scanner.l"
 { D; syntax("unexpected character in include filename and path", yytext); }
 	YY_BREAK
 case 42:
 /* rule 42 can match eol */
 YY_RULE_SETUP
-#line 691 "scanner.l"
+#line 695 "scanner.l"
 { D; syntax("unexpected end of line instead of include filename and path", ""); }
 	YY_BREAK
 case YY_STATE_EOF(INCLUDE):
-#line 692 "scanner.l"
+#line 696 "scanner.l"
 { D; syntax("unexpected end of file instead of include filename and path", yytext); }
 	YY_BREAK
 case 43:
@@ -5991,22 +5999,22 @@ case 43:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 694 "scanner.l"
+#line 698 "scanner.l"
 { D; input(); concat(&buf, yytext); setlaw(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 695 "scanner.l"
+#line 699 "scanner.l"
 { D; syntax("unexpected character in jurisdiction tag", yytext); }
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 696 "scanner.l"
+#line 700 "scanner.l"
 { D; syntax("unexpected end of line instead of jurisdiction tag", ""); }
 	YY_BREAK
 case YY_STATE_EOF(LAW):
-#line 697 "scanner.l"
+#line 701 "scanner.l"
 { D; syntax("unexpected end of file in jurisdiction tag", yytext); }
 	YY_BREAK
 /* MAIN */
@@ -6016,738 +6024,738 @@ case 46:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 703 "scanner.l"
+#line 707 "scanner.l"
 { D; mtrac_free(prec_file); prec_file = trim(mtrac_strdup(yytext));
 									if(opt_debug_mainscan) printf("file %s ", yytext); BEGIN(LINENO); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 705 "scanner.l"
+#line 709 "scanner.l"
 { D; DX(Colon); return Colon; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 706 "scanner.l"
+#line 710 "scanner.l"
 { D; DX(Comma); return Comma; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 707 "scanner.l"
+#line 711 "scanner.l"
 { D; DX(Semicolon); return Semicolon; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 708 "scanner.l"
+#line 712 "scanner.l"
 { D; DX(Dash); return Dash; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 709 "scanner.l"
+#line 713 "scanner.l"
 { D; DX(Percent); return Percent; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 710 "scanner.l"
+#line 714 "scanner.l"
 { D; DX(Quote); return Quote; }
 	YY_BREAK
 case 53:
 /* rule 53 can match eol */
 YY_RULE_SETUP
-#line 711 "scanner.l"
+#line 715 "scanner.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 712 "scanner.l"
+#line 716 "scanner.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 713 "scanner.l"
+#line 717 "scanner.l"
 { D; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 714 "scanner.l"
+#line 718 "scanner.l"
 { D; BEGIN(NAME_); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 715 "scanner.l"
+#line 719 "scanner.l"
 { D; BEGIN(DESCRIPTION_); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 716 "scanner.l"
-{ D; DX(SCALAR); yylval.Scalar=strdup(yytext); return SCALAR; }
+#line 720 "scanner.l"
+{ D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
 	YY_BREAK
-/* //# {hex}								{ D; DX(HEX); yylval.Hex=strdup(yytext); return HEX; } */
+/* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
 /* Keywords (generated from LGF) */
 case 59:
 YY_RULE_SETUP
-#line 719 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AUTHOR; }
+#line 723 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AUTHOR; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 720 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AUTHORS; }
+#line 724 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AUTHORS; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 721 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CLAUSE; }
+#line 725 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CLAUSE; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 722 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return COMMENT; }
+#line 726 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return COMMENT; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 723 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return COMMENTS; }
+#line 727 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return COMMENTS; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 724 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return GENERAL; }
+#line 728 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GENERAL; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 725 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return LEX; }
+#line 729 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEX; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 726 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return LEXON; }
+#line 730 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEXON; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 727 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PER; }
+#line 731 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PER; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 728 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PREAMBLE; }
+#line 732 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PREAMBLE; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 729 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TERMS; }
+#line 733 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMS; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 730 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return A; }
+#line 734 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return A; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 731 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AFTER; }
+#line 735 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AFTER; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 732 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AFTERWARDS; }
+#line 736 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AFTERWARDS; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 733 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ALL; }
+#line 737 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ALL; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 734 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ALSO; }
+#line 738 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ALSO; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 735 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AMOUNT; }
+#line 739 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AMOUNT; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 736 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AN; }
+#line 740 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AN; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 737 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AND; }
+#line 741 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AND; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 738 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ANNOUNCED; }
+#line 742 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ANNOUNCED; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 739 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return APPOINT; }
+#line 743 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINT; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 740 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return APPOINTS; }
+#line 744 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINTS; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 741 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AS; }
+#line 745 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AS; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 742 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return AT; }
+#line 746 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AT; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 743 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return BE; }
+#line 747 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BE; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 744 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return BEEN; }
+#line 748 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEEN; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 745 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return BEING; }
+#line 749 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEING; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 746 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return BINARY; }
+#line 750 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BINARY; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 747 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CERTIFIED; }
+#line 751 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFIED; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 748 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CERTIFIES; }
+#line 752 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFIES; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 749 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CERTIFY; }
+#line 753 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFY; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 750 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CONTRACT; }
+#line 754 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CONTRACT; }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 751 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CONTRACTS; }
+#line 755 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CONTRACTS; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 752 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return CURRENT; }
+#line 756 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CURRENT; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 753 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DATA; }
+#line 757 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DATA; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 754 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DAY; }
+#line 758 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DAY; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 755 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DAYS; }
+#line 759 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DAYS; }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 756 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DECLARE; }
+#line 760 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARE; }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 757 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DECLARED; }
+#line 761 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARED; }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 758 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DECLARES; }
+#line 762 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARES; }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 759 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return DEFINED; }
+#line 763 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DEFINED; }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 760 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return EQUAL; }
+#line 764 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return EQUAL; }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 761 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return EQUALING; }
+#line 765 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return EQUALING; }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 762 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ESCROW; }
+#line 766 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ESCROW; }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 763 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FILE_; }
+#line 767 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILE_; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 764 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FILED; }
+#line 768 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILED; }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 765 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FILES; }
+#line 769 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILES; }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 766 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FIX; }
+#line 770 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIX; }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 767 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FIXED; }
+#line 771 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIXED; }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 768 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FIXES; }
+#line 772 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIXES; }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 769 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FOR; }
+#line 773 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FOR; }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 770 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return FROM; }
+#line 774 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FROM; }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 771 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return GIVEN; }
+#line 775 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GIVEN; }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 772 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return GRANT; }
+#line 776 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GRANT; }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 773 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return GRANTS; }
+#line 777 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GRANTS; }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 774 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return HAS; }
+#line 778 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HAS; }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 775 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return HERSELF; }
+#line 779 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HERSELF; }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 776 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return HIMSELF; }
+#line 780 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HIMSELF; }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 777 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return HOUR; }
+#line 781 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HOUR; }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 778 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return HOURS; }
+#line 782 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HOURS; }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 779 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return IF; }
+#line 783 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IF; }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 780 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return IN; }
+#line 784 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IN; }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 781 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return INTO; }
+#line 785 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return INTO; }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 782 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return IS; }
+#line 786 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IS; }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 783 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ITSELF; }
+#line 787 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ITSELF; }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 784 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return LEAST; }
+#line 788 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEAST; }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 785 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return LIES; }
+#line 789 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LIES; }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 786 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MAY; }
+#line 790 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MAY; }
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 787 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MILLISECOND; }
+#line 791 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MILLISECOND; }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 788 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MILLISECONDS; }
+#line 792 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MILLISECONDS; }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 789 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MINUTE; }
+#line 793 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MINUTE; }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 790 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MINUTES; }
+#line 794 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MINUTES; }
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 791 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MONTH; }
+#line 795 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MONTH; }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 792 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MONTHS; }
+#line 796 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MONTHS; }
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 793 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return MYSELF; }
+#line 797 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MYSELF; }
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 794 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NEITHER; }
+#line 798 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NEITHER; }
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 795 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NO; }
+#line 799 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NO; }
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 796 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NOR; }
+#line 800 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOR; }
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 797 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NOT; }
+#line 801 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOT; }
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 798 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NOTIFIES; }
+#line 802 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOTIFIES; }
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 799 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NOTIFY; }
+#line 803 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOTIFY; }
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 800 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return NOW; }
+#line 804 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOW; }
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 801 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return OF; }
+#line 805 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OF; }
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 802 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return OFF; }
+#line 806 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OFF; }
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 803 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ON; }
+#line 807 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ON; }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 804 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return ONESELF; }
+#line 808 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ONESELF; }
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 805 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return OR; }
+#line 809 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OR; }
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 806 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return OURSELVES; }
+#line 810 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OURSELVES; }
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 807 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PASSED; }
+#line 811 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PASSED; }
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 808 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PAST; }
+#line 812 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAST; }
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 809 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PAY; }
+#line 813 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAY; }
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 810 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PAYS; }
+#line 814 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAYS; }
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 811 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PERSON; }
+#line 815 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PERSON; }
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 812 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return PROVIDED; }
+#line 816 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PROVIDED; }
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 813 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return REGISTER; }
+#line 817 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REGISTER; }
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 814 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return REGISTERS; }
+#line 818 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REGISTERS; }
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-#line 815 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return REMAINDER; }
+#line 819 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REMAINDER; }
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-#line 816 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return RESPECTIVE; }
+#line 820 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RESPECTIVE; }
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-#line 817 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return RETURN; }
+#line 821 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RETURN; }
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-#line 818 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return RETURNS; }
+#line 822 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RETURNS; }
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-#line 819 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return SECOND; }
+#line 823 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECOND; }
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-#line 820 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return SECONDS; }
+#line 824 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECONDS; }
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-#line 821 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return SEND; }
+#line 825 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SEND; }
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-#line 822 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return SENDS; }
+#line 826 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SENDS; }
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-#line 823 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return SIGNED; }
+#line 827 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SIGNED; }
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-#line 824 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return SO; }
+#line 828 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SO; }
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-#line 825 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TERMINATE; }
+#line 829 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMINATE; }
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-#line 826 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TERMINATES; }
+#line 830 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMINATES; }
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-#line 827 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TEXT; }
+#line 831 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TEXT; }
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-#line 828 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THAT; }
+#line 832 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THAT; }
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-#line 829 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THE; }
+#line 833 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THE; }
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-#line 830 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THEMSELF; }
+#line 834 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEMSELF; }
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-#line 831 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THEMSELVES; }
+#line 835 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEMSELVES; }
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-#line 832 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THEN; }
+#line 836 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEN; }
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-#line 833 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THERE; }
+#line 837 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THERE; }
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-#line 834 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THEREFOR; }
+#line 838 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEREFOR; }
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-#line 835 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THEREFORE; }
+#line 839 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEREFORE; }
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-#line 836 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THESE; }
+#line 840 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THESE; }
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-#line 837 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return THIS; }
+#line 841 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THIS; }
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-#line 838 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TIME; }
+#line 842 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TIME; }
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-#line 839 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TO; }
+#line 843 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TO; }
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
-#line 840 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return TRUE; }
+#line 844 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TRUE; }
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-#line 841 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return WAS; }
+#line 845 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WAS; }
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-#line 842 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return WEEK; }
+#line 846 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WEEK; }
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-#line 843 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return WEEKS; }
+#line 847 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WEEKS; }
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-#line 844 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return WITH; }
+#line 848 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WITH; }
 	YY_BREAK
 case 185:
 YY_RULE_SETUP
-#line 845 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return YEAR; }
+#line 849 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YEAR; }
 	YY_BREAK
 case 186:
 YY_RULE_SETUP
-#line 846 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return YEARS; }
+#line 850 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YEARS; }
 	YY_BREAK
 case 187:
 YY_RULE_SETUP
-#line 847 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return YES; }
+#line 851 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YES; }
 	YY_BREAK
 case 188:
 YY_RULE_SETUP
-#line 848 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return YOURSELF; }
+#line 852 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YOURSELF; }
 	YY_BREAK
 case 189:
 YY_RULE_SETUP
-#line 849 "scanner.l"
-{ D; *((char **)&yylval) = strdup(yytext); return YOURSELVES; }
+#line 853 "scanner.l"
+{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YOURSELVES; }
 	YY_BREAK
 case 190:
 YY_RULE_SETUP
-#line 850 "scanner.l"
+#line 854 "scanner.l"
 /* no space to not erron. make it longest match */ { D; syntax("unexpected word (after precompilation, use -P to check)", yytext); }
 	YY_BREAK
 case 191:
 YY_RULE_SETUP
-#line 851 "scanner.l"
+#line 855 "scanner.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 
@@ -6757,22 +6765,22 @@ case 192:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 855 "scanner.l"
+#line 859 "scanner.l"
 { D; prec_line = atoi(yytext); if(opt_debug_mainscan) printf("line %s: ", yytext); }
 	YY_BREAK
 case 193:
 YY_RULE_SETUP
-#line 856 "scanner.l"
+#line 860 "scanner.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-#line 857 "scanner.l"
+#line 861 "scanner.l"
 { D; syntax("unexpected character in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LINENO):
-#line 859 "scanner.l"
+#line 863 "scanner.l"
 { D; syntax("unexpected end of file in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
@@ -6781,16 +6789,16 @@ case YY_STATE_EOF(LINENO):
 case 195:
 /* rule 195 can match eol */
 YY_RULE_SETUP
-#line 864 "scanner.l"
-{ D; DX(NAME); yylval.Name=strdup(yytext); return NAME; }
+#line 868 "scanner.l"
+{ D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }
 	YY_BREAK
 case 196:
 YY_RULE_SETUP
-#line 865 "scanner.l"
+#line 869 "scanner.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case YY_STATE_EOF(NAME_):
-#line 866 "scanner.l"
+#line 870 "scanner.l"
 { D; syntax("unexpected end of file - precompiler name quote error", yytext); }
 	YY_BREAK
 
@@ -6798,17 +6806,17 @@ case YY_STATE_EOF(NAME_):
 case 197:
 /* rule 197 can match eol */
 YY_RULE_SETUP
-#line 870 "scanner.l"
-{ D; DX(DESCRIPTION); yylval.Description=strdup(yytext); return DESCRIPTION; }
+#line 874 "scanner.l"
+{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 	YY_BREAK
 case 198:
 /* rule 198 can match eol */
 YY_RULE_SETUP
-#line 871 "scanner.l"
+#line 875 "scanner.l"
 { D; DX(Separator); BEGIN(MAIN); return Separator; }
 	YY_BREAK
 case YY_STATE_EOF(DESCRIPTION_):
-#line 872 "scanner.l"
+#line 876 "scanner.l"
 { D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 	YY_BREAK
 
@@ -6820,7 +6828,7 @@ case 199:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 878 "scanner.l"
+#line 882 "scanner.l"
 { D; }
 	YY_BREAK
 case 200:
@@ -6829,7 +6837,7 @@ case 200:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 879 "scanner.l"
+#line 883 "scanner.l"
 { D; }
 	YY_BREAK
 case 201:
@@ -6838,7 +6846,7 @@ case 201:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 880 "scanner.l"
+#line 884 "scanner.l"
 { D; }
 	YY_BREAK
 case 202:
@@ -6847,7 +6855,7 @@ case 202:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 881 "scanner.l"
+#line 885 "scanner.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 203:
@@ -6856,7 +6864,7 @@ case 203:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 882 "scanner.l"
+#line 886 "scanner.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 204:
@@ -6865,7 +6873,7 @@ case 204:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 883 "scanner.l"
+#line 887 "scanner.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 205:
@@ -6874,47 +6882,47 @@ case 205:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 884 "scanner.l"
+#line 888 "scanner.l"
 { D; start_definition(yytext); }
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-#line 885 "scanner.l"
+#line 889 "scanner.l"
 { D; start_alternation(yytext); start_alternate(); }
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-#line 886 "scanner.l"
+#line 890 "scanner.l"
 { D; start_rule(active, personal); }
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-#line 887 "scanner.l"
+#line 891 "scanner.l"
 { D; start_rule(passive, personal); }
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-#line 888 "scanner.l"
+#line 892 "scanner.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-#line 889 "scanner.l"
+#line 893 "scanner.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 890 "scanner.l"
+#line 894 "scanner.l"
 { D; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-#line 891 "scanner.l"
+#line 895 "scanner.l"
 { D; start_option(spaced); }
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-#line 892 "scanner.l"
+#line 896 "scanner.l"
 { D; start_option(unspaced); }
 	YY_BREAK
 case 214:
@@ -6923,76 +6931,76 @@ case 214:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 893 "scanner.l"
+#line 897 "scanner.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 215:
 YY_RULE_SETUP
-#line 894 "scanner.l"
+#line 898 "scanner.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-#line 895 "scanner.l"
+#line 899 "scanner.l"
 { D; end_option(unspaced); }
 	YY_BREAK
 case 217:
 YY_RULE_SETUP
-#line 896 "scanner.l"
+#line 900 "scanner.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 218:
 YY_RULE_SETUP
-#line 897 "scanner.l"
+#line 901 "scanner.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 219:
 YY_RULE_SETUP
-#line 898 "scanner.l"
+#line 902 "scanner.l"
 { D; add_word(yytext); }
 	YY_BREAK
 case 220:
 YY_RULE_SETUP
-#line 899 "scanner.l"
+#line 903 "scanner.l"
 { D; start_alternate(); }
 	YY_BREAK
 case 221:
 /* rule 221 can match eol */
 YY_RULE_SETUP
-#line 900 "scanner.l"
+#line 904 "scanner.l"
 { D; line++; /* end_rule(); */ }
 	YY_BREAK
 case 222:
 YY_RULE_SETUP
-#line 901 "scanner.l"
+#line 905 "scanner.l"
 { D; }
 	YY_BREAK
 case 223:
 /* rule 223 can match eol */
 YY_RULE_SETUP
-#line 902 "scanner.l"
+#line 906 "scanner.l"
 { D; line++; }
 	YY_BREAK
 case 224:
 YY_RULE_SETUP
-#line 903 "scanner.l"
+#line 907 "scanner.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LXF):
 case YY_STATE_EOF(EMBED):
-#line 904 "scanner.l"
+#line 908 "scanner.l"
 { D; produce_extension(grammar); exit(0); yyterminate(); return 0; }
 	YY_BREAK
 
 case 225:
 YY_RULE_SETUP
-#line 907 "scanner.l"
+#line 911 "scanner.l"
 { D; add_embed(yytext); }
 	YY_BREAK
 case 226:
 /* rule 226 can match eol */
 YY_RULE_SETUP
-#line 908 "scanner.l"
+#line 912 "scanner.l"
 { D; lineno(); add_embed(yytext); }
 	YY_BREAK
 /* Lexon Grammar Form: precompiling LGF to BNF */
@@ -7003,7 +7011,7 @@ case 227:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 914 "scanner.l"
+#line 918 "scanner.l"
 /* grammar version */		{ D; S; mtrac_free(grammar_version);
 									grammar_version = trim(mtrac_strdup(strstr(yytext, "Version") + 7)); }
 	YY_BREAK
@@ -7013,7 +7021,7 @@ case 228:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 916 "scanner.l"
+#line 920 "scanner.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 229:
@@ -7022,7 +7030,7 @@ case 229:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 917 "scanner.l"
+#line 921 "scanner.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 230:
@@ -7031,22 +7039,22 @@ case 230:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 918 "scanner.l"
+#line 922 "scanner.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 231:
 YY_RULE_SETUP
-#line 919 "scanner.l"
+#line 923 "scanner.l"
 /* spaces make it longest pattern */	{ D; S; start_rule(none, neutral); }
 	YY_BREAK
 case 232:
 YY_RULE_SETUP
-#line 920 "scanner.l"
+#line 924 "scanner.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 233:
 YY_RULE_SETUP
-#line 921 "scanner.l"
+#line 925 "scanner.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 234:
@@ -7054,7 +7062,7 @@ case 234:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 922 "scanner.l"
+#line 926 "scanner.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 235:
@@ -7062,62 +7070,62 @@ case 235:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 923 "scanner.l"
+#line 927 "scanner.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 236:
 YY_RULE_SETUP
-#line 924 "scanner.l"
+#line 928 "scanner.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 237:
 YY_RULE_SETUP
-#line 925 "scanner.l"
+#line 929 "scanner.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 238:
 YY_RULE_SETUP
-#line 926 "scanner.l"
+#line 930 "scanner.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 239:
 YY_RULE_SETUP
-#line 927 "scanner.l"
+#line 931 "scanner.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 240:
 YY_RULE_SETUP
-#line 928 "scanner.l"
+#line 932 "scanner.l"
 { D; S; continue_rule(); add_word("colon"); }
 	YY_BREAK
 case 241:
 YY_RULE_SETUP
-#line 929 "scanner.l"
+#line 933 "scanner.l"
 { D; S; continue_rule(); add_word("comma"); }
 	YY_BREAK
 case 242:
 YY_RULE_SETUP
-#line 930 "scanner.l"
+#line 934 "scanner.l"
 { D; S; continue_rule(); add_word("percent"); }
 	YY_BREAK
 case 243:
 YY_RULE_SETUP
-#line 931 "scanner.l"
+#line 935 "scanner.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 244:
 YY_RULE_SETUP
-#line 932 "scanner.l"
+#line 936 "scanner.l"
 { D; S; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 245:
 YY_RULE_SETUP
-#line 933 "scanner.l"
+#line 937 "scanner.l"
 { D; S; start_option(spaced); }
 	YY_BREAK
 case 246:
 YY_RULE_SETUP
-#line 934 "scanner.l"
+#line 938 "scanner.l"
 { D; S; start_option(unspaced); }
 	YY_BREAK
 case 247:
@@ -7126,46 +7134,46 @@ case 247:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 935 "scanner.l"
+#line 939 "scanner.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 248:
 YY_RULE_SETUP
-#line 936 "scanner.l"
+#line 940 "scanner.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 249:
 YY_RULE_SETUP
-#line 937 "scanner.l"
+#line 941 "scanner.l"
 { D; S; end_option(unspaced); }
 	YY_BREAK
 case 250:
 YY_RULE_SETUP
-#line 938 "scanner.l"
+#line 942 "scanner.l"
 { D; S; }
 	YY_BREAK
 case 251:
 /* rule 251 can match eol */
 YY_RULE_SETUP
-#line 939 "scanner.l"
+#line 943 "scanner.l"
 { D; S; line++; }
 	YY_BREAK
 case 252:
 YY_RULE_SETUP
-#line 940 "scanner.l"
+#line 944 "scanner.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LGF):
-#line 941 "scanner.l"
+#line 945 "scanner.l"
 { D; produce_grammar(grammar); yyterminate(); }
 	YY_BREAK
 
 case 253:
 YY_RULE_SETUP
-#line 944 "scanner.l"
+#line 948 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 7169 "scanner.c"
+#line 7177 "scanner.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(MAIN):
 case YY_STATE_EOF(EXPLANATION_):
@@ -8302,7 +8310,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 944 "scanner.l"
+#line 948 "scanner.l"
 
 
 
@@ -8331,7 +8339,6 @@ int main(int argc, char **argv) {
 	file_pathpart = mtrac_strdup("-");
 	file_location = mtrac_strdup("-");
 	file_fileptr = null;
-	file_dirptr = null;
 
 	/* (**) dynamic allocation of command line arg defaults, so they can be blindly freed */
 	opt_include_path = mtrac_strdup(opt_include_path);
@@ -9006,11 +9013,9 @@ void parsargs(int argc, char **argv) {
 	file_pathpart = mtrac_strdup(dirname(tmp));
 	mtrac_free(tmp);
 
-	/* for a possible later switch back (e.g. -Sf or -B) to the original dir, get file pointer to directory */
-	assert(file_homeptr == null);
-	file_homeptr = fopen(".", "r");
-	if(file_homeptr == NULL) { //..
-		perror("could not open home directory (to note path to come back to)");
+	/* for switching back to the directory that the program was started in */
+	if(getcwd(name_homedir, sizeof(name_homedir)) == NULL) {
+		perror("could not get home directory");
 		exit(15);
 	}
 
@@ -9022,20 +9027,11 @@ void parsargs(int argc, char **argv) {
 		exit(16);
 	}
 
-	/* record absolute path of source directory */
-	file_location = getcwd(null, 0);
-	if(file_location == NULL) { //..
+	/* record absolute path of source directory. Also for later switch back from includes. */
+	file_location = mtrac_malloc(PATH_MAX);
+	if(getcwd(file_location, PATH_MAX) == NULL) {
 		perror("could not read source file directory name");
 		exit(17);
-	}
-	file_location = mtrac_strdup(file_location);
-
-	/* for a later switch back from includes, get file pointer to directory */
-	assert(file_dirptr == null);
-	file_dirptr = fopen(".", "r");
-	if(file_dirptr == NULL) { //..
-		perror("could not open source file directory (to note path to come back to)");
-		exit(18);
 	}
 
 	/* open the source file, from its home directory */
@@ -9236,7 +9232,8 @@ void lineno() {
 void geninfo() {
 	char* buf = mtrac_strdup("{ \"names\" = [\n");
 	// use .serial to go by original order of appearance
-	for(int i = 1; i <= name_count; i++) {
+	int i;
+	for(i = 1; i <= name_count; i++) {
 		node *cur = symbols;
 		assert(i<=name_count);
 		while(cur->serial != i)
@@ -9249,7 +9246,8 @@ void geninfo() {
 }
 
 void dump_name_list() {
-	for(int i = 1; i <= name_count; i++) {
+	int i;
+	for(i = 1; i <= name_count; i++) {
 		node *cur = symbols;
 		assert(i<=name_count);
 		while(cur->serial != i)
@@ -9344,7 +9342,7 @@ void include(char *scanned) {
 
 	/* The parsed term may be a full path, a base name or a pretty-written name */
 	char *clearname, *namepart, *pathpart, *location, *fullpath;
-	FILE *fileptr, *dirptr;
+	FILE *fileptr;
 
 	/* pretty representation */
  	clearname = null;
@@ -9422,13 +9420,6 @@ void include(char *scanned) {
 	}
 	location = mtrac_strdup(getcwd(null, 0));
 
-	/* for the switch back, get file pointer to directory */
-	dirptr = fopen(".", "r");
-	if(dirptr == NULL) { //..
-		perror("could not open include file directory");
-		exit(28);
-	}
-
 	/* open the include file, from its home directory */
 	if(!(fileptr = fopen(namepart, "r"))) {
 		fprintf(stderr, "Failed to open include file '%s' expected in directory '%s'.\n", namepart, pathpart);
@@ -9441,11 +9432,11 @@ void include(char *scanned) {
 
 	/* keep track of include files ever used */
 	include_trace *trace = mtrac_malloc(sizeof(include_trace));
-	trace->from_namepart = mtrac_strdup(file_namepart); // never free'd
-	trace->from_clearname = mtrac_strdup(file_clearname); // ditto
+	trace->from_namepart = mtrac_strdup(file_namepart);          // never free'd
+	trace->from_clearname = mtrac_strdup(file_clearname);        // ditto
 	trace->from_line = line;
-	trace->include_namepart = mtrac_strdup(namepart); // ditto
-	trace->include_clearname = mtrac_strdup(clearname); // ditto
+	trace->include_namepart = mtrac_strdup(namepart);            // ditto
+	trace->include_clearname = mtrac_strdup(clearname);          // ditto
 	include_count++;
 	trace->next = null;
 	if(!include_trace_start) include_trace_start = trace;
@@ -9455,11 +9446,10 @@ void include(char *scanned) {
 	/* keep track of include files nesting depth */
 	include_stack[include_stack_ptr].buffer = YY_CURRENT_BUFFER; // gift
 	include_stack[include_stack_ptr].clearname = file_clearname; // gift
-	include_stack[include_stack_ptr].namepart = file_namepart; // gift
-	include_stack[include_stack_ptr].pathpart = file_pathpart; // gift
-	include_stack[include_stack_ptr].location = file_location; // gift
-	include_stack[include_stack_ptr].dirptr = file_dirptr; // gift
-	include_stack[include_stack_ptr].fileptr = file_fileptr; // gift
+	include_stack[include_stack_ptr].namepart = file_namepart;   // gift
+	include_stack[include_stack_ptr].pathpart = file_pathpart;   // gift
+	include_stack[include_stack_ptr].location = file_location;   // gift
+	include_stack[include_stack_ptr].fileptr = file_fileptr;     // gift
 	include_stack[include_stack_ptr].line = line;
 	include_stack_ptr++;
 
@@ -9468,7 +9458,6 @@ void include(char *scanned) {
 	file_namepart = null;
 	file_pathpart = null;
 	file_location = null;
-	file_dirptr = null;
 	file_fileptr = null;
 
 	/* now the switch-over starts, regarding Lex and the file_* variables. */
@@ -9476,7 +9465,6 @@ void include(char *scanned) {
 	file_namepart = namepart;
 	file_pathpart = pathpart;
 	file_location = location;
-	file_dirptr = dirptr;
 	file_fileptr = fileptr;
 	line = 1;
 
@@ -9503,7 +9491,6 @@ int include_done() {
 	mtrac_free(file_pathpart);
 	mtrac_free(file_namepart);
 	mtrac_free(file_location);
-	fclose(file_dirptr);
 	fclose(file_fileptr); //.. is this duplicating yy_delete_buffer's action?
 	yy_delete_buffer(YY_CURRENT_BUFFER);
 
@@ -9512,12 +9499,11 @@ int include_done() {
 	file_pathpart = include_stack[include_stack_ptr].pathpart;
 	file_namepart = include_stack[include_stack_ptr].namepart;
 	file_location = include_stack[include_stack_ptr].location;
-	file_dirptr = include_stack[include_stack_ptr].dirptr;
 	file_fileptr = include_stack[include_stack_ptr].fileptr;
 	line = include_stack[include_stack_ptr].line;
 	line++; // the \n was consumed with the path but progress only now.
 
-	// fchdir(fileno(file_dirptr)); missing ??
+	///// chdir(file_location) missing ??
 
 	yy_switch_to_buffer(include_stack[include_stack_ptr].buffer);
 
@@ -9908,7 +9894,7 @@ void margin() {
 	}
 }
 
-void inline freeline() {
+void freeline() {
 	if(strlen(buf) > 1 && strcmp(buf + strlen(buf) -2, "\n\n"))
 		concat(&buf, "\n");
 	if(strcmp(buf + strlen(buf) -2, "\n\n"))
@@ -10237,7 +10223,7 @@ void produce_grammar(struct definition *definition) {
 		"#include <string.h>\n\n"
 		"int yylex(void);\n"
 		"void yyerror(const char *);\n\n"
-		"void mtrac_gross(void *);\n\n"
+		"void *mtrac_gross(void *);\n\n"
 		"#define NEW(type, literal) \\\n"
 		"	if(opt_debug_tokens) fprintf(stderr, \"tokens : creating node for \" #type \"'%s'\\n\", literal); \\\n"
 		"	type *type = mtrac_malloc(sizeof(struct type)); \\\n"
@@ -10637,7 +10623,7 @@ void produce_grammar(struct definition *definition) {
 	while(token) {
 		if(strchr(token->string, '"'))
 			concat(&lex, token->string, strlen(token->string)<10?"\t":"",
-				"\t\t\t\t\t\t\t{ D; *((char **)&yylval) = strdup(yytext); return ", literal_symbol(token->string), "; }\n");
+				"\t\t\t\t\t\t\t{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ", literal_symbol(token->string), "; }\n");
 		token = token->next;
 	}
 	concat(&lex, "{termpart} /* no space to not erron. make it longest match */"
@@ -10720,7 +10706,7 @@ void produce_grammar(struct definition *definition) {
 		concat(&req, include, /* enu, "\n", */ stru, "\n", root, "\n", /* uni, "\n", */ fdecl, "}");
 		FILE *out = stdout;
 		if(strlen(opt_yacc)) {
-			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+			chdir(name_homedir); // assume path to open as relative to dir at program start
 			if(!(out = fopen(opt_yacc, "w"))) { perror(opt_yacc); exit(1); }
 		}
 		if(strlen(opt_yacc) || !opt_quiet)
@@ -10732,7 +10718,7 @@ void produce_grammar(struct definition *definition) {
 				prol, req, decl, bnf, yacc_stub(), funcs);
 		if(strlen(opt_yacc)) {
 			fclose(out);
-			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+			chdir(file_location); // back to source file's absolute location
 		}
 		mtrac_free(include);
 		mtrac_free(root);
@@ -10757,7 +10743,7 @@ void produce_grammar(struct definition *definition) {
 
 		FILE *out = stdout;
 		if(strlen(opt_template)) {
-			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+			chdir(name_homedir); // assume path to open as relative to dir at program start
 			if(strcmp(opt_template, "core.c") && access(opt_template, F_OK ) != -1 ) {
 				fprintf(stderr, "walk function file '%s' exists. Please move or delete and try again."
 					" (Only 'core.c' is not protected this way.)\n", opt_template); exit(1);
@@ -10771,7 +10757,7 @@ void produce_grammar(struct definition *definition) {
 		}
 		if(strlen(opt_template)) {
 			fclose(out);
-			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+			chdir(file_location); // back to source file's absolute location
 		}
 		mtrac_free(stub);
 	}
@@ -10996,7 +10982,7 @@ void write_examples(stringlist *example, int count) {
 	}} else if (strlen(opt_samples)) {
 		int size = 1 + width + snprintf(null, 0, "%s%0*d.lex", opt_samples, width, 0);
 		char *filename = news(filename, size);
-		if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd
+		chdir(name_homedir); // assume path to open as relative to dir at program start
 		if(opt_wipe) {
 			if(opt_verbose || opt_debug)
 				printf("  deleting files %s%0*d.lex - %s%0*d.lex\n", opt_samples, width, 1, opt_samples, width, count);
@@ -11017,7 +11003,7 @@ void write_examples(stringlist *example, int count) {
 			example = example->next;
 		}
 		mtrac_free(filename);
-		if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location
+		chdir(file_location); // back to source file's absolute location
 	}
 }
 
@@ -11475,7 +11461,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	}
 
 	/* go to directory from which the invocation started (we are presently, possibly in the source file's dir) */
-	if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -o (or its default) relative to program start's cwd
+	chdir(name_homedir);
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
@@ -11518,7 +11504,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	fclose(fp);
 
 	/* back to source file's absolute location */
-	if(file_dirptr) fchdir(fileno(file_dirptr));
+	chdir(file_location);
 
 	mtrac_free(include);
 	mtrac_free(src);
@@ -11819,11 +11805,12 @@ char **_mtrac_concat(char *file, int line, int down, int right, char **buf, ...)
 }
 
  /* add to the gross list of memory allocations to be eventually freed */
-void mtrac_gross(void *rec) {
+void *mtrac_gross(void *rec) {
 	element *e = mtrac_malloc(sizeof (element));
 	e->payload = rec;
 	e->previous = mtrac_gross_list;
 	mtrac_gross_list = e;
+	return rec;
 }
 
  /* freeing the gross list of memory allocations */
@@ -11871,13 +11858,12 @@ const char *own =
 	" **	generation. The last part are the C functions that handle LGF, LXF and\n"
 	" **	Lexon parsing. The parts are separated by %% as Flex requires.\n"
 	" */\n"
-	"\n"
+	"%{\n"
 	"\n"
 	"/* part I: declarations --------------------------------------------------- */\n"
 	"\n"
-	"\n"
-	"%{\n"
 	"#include <stdlib.h>\n"
+	"#include <stdio.h>\n"
 	"#include <assert.h>\n"
 	"#include <getopt.h>\n"
 	"#include <stdarg.h>\n"
@@ -11888,7 +11874,11 @@ const char *own =
 	"#include <limits.h>\n"
 	"#include <math.h>\n"
 	"\n"
-	"#define program_vers \"0.3 alpha 93 U\" // unified 0.3 + experimental 0.4\n"
+	"#ifndef PATH_MAX\n"
+	"#define PATH_MAX 1000\n"
+	"#endif\n"
+	"\n"
+	"#define program_vers \"0.3 alpha 94 U\" // unified 0.3 + experimental 0.4\n"
 	"#define grammar_vers \"0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
@@ -11919,7 +11909,9 @@ const char *own =
 	"	if(!var) { fprintf(stderr, \"out of memory %s %d\", __FILE__, __LINE__); exit(137); } \\\n"
 	"	memset(var, 0, size);\n"
 	"\n"
+	"#ifndef CYCLE_2\n"
 	"typedef int bool;\n"
+	"#endif\n"
 	"#define false 0\n"
 	"#define true 1\n"
 	"#define null (void *)0\n"
@@ -11987,13 +11979,12 @@ const char *own =
 	"void emulaws();\n"
 	"void dump_laws();\n"
 	"\n"
+	"char name_homedir[PATH_MAX];\n"
 	"char *file_clearname = null;\n"
 	"char *file_namepart = null;\n"
 	"char *file_pathpart = null;\n"
 	"char *file_location = null;\n"
 	"FILE *file_fileptr = null;\n"
-	"FILE *file_dirptr = null;\n"
-	"FILE *file_homeptr = null;\n"
 	"\n"
 	"/* The currently selected jurisdiction (can be none). */\n"
 	"char *law_name = null;\n"
@@ -12139,7 +12130,6 @@ const char *own =
 	"	char *namepart;\n"
 	"	char *pathpart;\n"
 	"	char *location;\n"
-	"	FILE *dirptr;\n"
 	"	FILE *fileptr;\n"
 	"	int line;\n"
 	"};\n"
@@ -12300,20 +12290,22 @@ const char *own =
 	"\n"
 	"/* alternate memory management */\n"
 	"void *(*system_malloc)(size_t) = &malloc;\n"
-	"char *(*system_strdup)(const char *) = &strdup;\n"
 	"void (*system_free)(void *) = &free;\n"
 	"#define MEMORY_CHECKS\n"
 	"#ifdef MEMORY_CHECKS\n"
 	"#define mtrac_malloc(size_) _mtrac_malloc(size_, \"[unknown]\", __FILE__, __LINE__)\n"
 	"#define mtrac_strdup(string_) _mtrac_strdup(string_, \"[unknown]\", __FILE__, __LINE__)\n"
+	"#define mtrac_strdup_gross(string_) mtrac_gross(_mtrac_strdup(string_, \"[unknown]\", __FILE__, __LINE__))\n"
 	"#define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)\n"
 	"#define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)\n"
 	"#else\n"
 	"#define mtrac_malloc(size_) malloc(size_)\n"
 	"#define mtrac_strdup(string_) strdup(string_)\n"
+	"#define mtrac_strdup_gross(string_) strdup(string_)\n"
 	"#define mtrac_concat(var_, ...) _concat(0, 0, var_, __VA_ARGS__, null)\n"
 	"#define mtrac_free(var_) free(var_)\n"
 	"#endif\n"
+	"\n"
 	"#define add_token(tokens_, string_, only_, ignores_, keep_order_) \\\n"
 	"	_add_token(tokens_, string_, only_, ignores_, keep_order_, #tokens_, __FILE__, __LINE__)\n"
 	"void *_mtrac_malloc(size_t size, char *name, char *file, int line);\n"
@@ -12329,7 +12321,7 @@ const char *own =
 	"bool mtrac_verbose = false;\n"
 	"bool mtrac_blank_pointers = false;\n"
 	"char *mtrac_printable = \"*stringlist,*word,*alternation,*definition\";\n"
-	"void mtrac_gross(void *rec);\n"
+	"void *mtrac_gross(void *rec);\n"
 	"void mtrac_free_gross();\n"
 	"\n"
 	"/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */\n"
@@ -12388,14 +12380,13 @@ const char *own =
 	"int yyparse (void);\n"
 	"\n"
 	"#endif /* !YY_YY_LEXC_TAB_H_INCLUDED  */\n"
-	"\n"
 	"%}\n"
 	"\n"
 	"\n"
-	" /* part II: scanner ------------------------------------------------------ */\n"
+	"/* part II: scanner ------------------------------------------------------ */\n"
 	"\n"
 	"\n"
-	" // speed-up:\n"
+	"/* speed-up: */\n"
 	"%option never-interactive\n"
 	"\n"
 	"%option case-insensitive\n"
@@ -12420,7 +12411,7 @@ const char *own =
 	"space	 [ \\t]\n"
 	"white	 [ \\t\\n]\n"
 	"\n"
-	" /* two compiler passes (PRE, MAIN), multiple sub scan states */\n"
+	"/* two compiler passes (PRE, MAIN), multiple sub scan states */\n"
 	"%x BOFTRIM\n"
 	"%x PRE\n"
 	"%s MAIN\n"
@@ -12556,8 +12547,8 @@ const char *own =
 	"{white}+							{ D; }\n"
 	"«								{ D; BEGIN(NAME_); }\n"
 	"‹								{ D; BEGIN(DESCRIPTION_); }\n"
-	"{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=strdup(yytext); return SCALAR; }\n"
-	" /* //# {hex}								{ D; DX(HEX); yylval.Hex=strdup(yytext); return HEX; } */\n"
+	"{scalar}                                                        { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }\n"
+	" /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */\n"
 	" /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */\n"
 	"{term}                                                          { D; printf(\" %s\", yytext); }\n"
 	" /* <-- TO HERE <-- */\n"
@@ -12574,13 +12565,13 @@ const char *own =
 	"}\n"
 	"\n"
 	"<NAME_>{\n"
-	"[^»]+								{ D; DX(NAME); yylval.Name=strdup(yytext); return NAME; }\n"
+	"[^»]+								{ D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }\n"
 	"»								{ D; BEGIN(MAIN); }\n"
 	"<<EOF>>								{ D; syntax(\"unexpected end of file - precompiler name quote error\", yytext); }\n"
 	"}\n"
 	"\n"
 	"<DESCRIPTION_>{\n"
-	"[^›]+								{ D; DX(DESCRIPTION); yylval.Description=strdup(yytext); return DESCRIPTION; }\n"
+	"[^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }\n"
 	"›{space}*\\.?({space}*\\n)*					{ D; DX(Separator); BEGIN(MAIN); return Separator; }\n"
 	"<<EOF>>								{ D; syntax(\"unexpected end of file - precompiler description quote error\", yytext); }\n"
 	"}\n"
@@ -12681,7 +12672,6 @@ const char *own =
 	"	file_pathpart = mtrac_strdup(\"-\");\n"
 	"	file_location = mtrac_strdup(\"-\");\n"
 	"	file_fileptr = null;\n"
-	"	file_dirptr = null;\n"
 	"\n"
 	"	/* (**) dynamic allocation of command line arg defaults, so they can be blindly freed */\n"
 	"	opt_include_path = mtrac_strdup(opt_include_path);\n"
@@ -13356,11 +13346,9 @@ const char *own =
 	"	file_pathpart = mtrac_strdup(dirname(tmp));\n"
 	"	mtrac_free(tmp);\n"
 	"\n"
-	"	/* for a possible later switch back (e.g. -Sf or -B) to the original dir, get file pointer to directory */\n"
-	"	assert(file_homeptr == null);\n"
-	"	file_homeptr = fopen(\".\", \"r\");\n"
-	"	if(file_homeptr == NULL) { //..\n"
-	"		perror(\"could not open home directory (to note path to come back to)\");\n"
+	"	/* for switching back to the directory that the program was started in */\n"
+	"	if(getcwd(name_homedir, sizeof(name_homedir)) == NULL) {\n"
+	"		perror(\"could not get home directory\");\n"
 	"		exit(15);\n"
 	"	}\n"
 	"\n"
@@ -13372,20 +13360,11 @@ const char *own =
 	"		exit(16);\n"
 	"	}\n"
 	"\n"
-	"	/* record absolute path of source directory */\n"
-	"	file_location = getcwd(null, 0);\n"
-	"	if(file_location == NULL) { //..\n"
+	"	/* record absolute path of source directory. Also for later switch back from includes. */\n"
+	"	file_location = mtrac_malloc(PATH_MAX);\n"
+	"	if(getcwd(file_location, PATH_MAX) == NULL) {\n"
 	"		perror(\"could not read source file directory name\");\n"
 	"		exit(17);\n"
-	"	}\n"
-	"	file_location = mtrac_strdup(file_location);\n"
-	"\n"
-	"	/* for a later switch back from includes, get file pointer to directory */\n"
-	"	assert(file_dirptr == null);\n"
-	"	file_dirptr = fopen(\".\", \"r\");\n"
-	"	if(file_dirptr == NULL) { //..\n"
-	"		perror(\"could not open source file directory (to note path to come back to)\");\n"
-	"		exit(18);\n"
 	"	}\n"
 	"\n"
 	"	/* open the source file, from its home directory */\n"
@@ -13586,7 +13565,8 @@ const char *own =
 	"void geninfo() {\n"
 	"	char* buf = mtrac_strdup(\"{ \\\"names\\\" = [\\n\");\n"
 	"	// use .serial to go by original order of appearance\n"
-	"	for(int i = 1; i <= name_count; i++) {\n"
+	"	int i;\n"
+	"	for(i = 1; i <= name_count; i++) {\n"
 	"		node *cur = symbols;\n"
 	"		assert(i<=name_count);\n"
 	"		while(cur->serial != i)\n"
@@ -13599,7 +13579,8 @@ const char *own =
 	"}\n"
 	"\n"
 	"void dump_name_list() {\n"
-	"	for(int i = 1; i <= name_count; i++) {\n"
+	"	int i;\n"
+	"	for(i = 1; i <= name_count; i++) {\n"
 	"		node *cur = symbols;\n"
 	"		assert(i<=name_count);\n"
 	"		while(cur->serial != i)\n"
@@ -13694,7 +13675,7 @@ const char *own =
 	"\n"
 	"	/* The parsed term may be a full path, a base name or a pretty-written name */\n"
 	"	char *clearname, *namepart, *pathpart, *location, *fullpath;\n"
-	"	FILE *fileptr, *dirptr;\n"
+	"	FILE *fileptr;\n"
 	"\n"
 	"	/* pretty representation */\n"
 	" 	clearname = null;\n"
@@ -13772,13 +13753,6 @@ const char *own =
 	"	}\n"
 	"	location = mtrac_strdup(getcwd(null, 0));\n"
 	"\n"
-	"	/* for the switch back, get file pointer to directory */\n"
-	"	dirptr = fopen(\".\", \"r\");\n"
-	"	if(dirptr == NULL) { //..\n"
-	"		perror(\"could not open include file directory\");\n"
-	"		exit(28);\n"
-	"	}\n"
-	"\n"
 	"	/* open the include file, from its home directory */\n"
 	"	if(!(fileptr = fopen(namepart, \"r\"))) {\n"
 	"		fprintf(stderr, \"Failed to open include file '%s' expected in directory '%s'.\\n\", namepart, pathpart);\n"
@@ -13791,11 +13765,11 @@ const char *own =
 	"\n"
 	"	/* keep track of include files ever used */\n"
 	"	include_trace *trace = mtrac_malloc(sizeof(include_trace));\n"
-	"	trace->from_namepart = mtrac_strdup(file_namepart); // never free'd\n"
-	"	trace->from_clearname = mtrac_strdup(file_clearname); // ditto\n"
+	"	trace->from_namepart = mtrac_strdup(file_namepart);          // never free'd\n"
+	"	trace->from_clearname = mtrac_strdup(file_clearname);        // ditto\n"
 	"	trace->from_line = line;\n"
-	"	trace->include_namepart = mtrac_strdup(namepart); // ditto\n"
-	"	trace->include_clearname = mtrac_strdup(clearname); // ditto\n"
+	"	trace->include_namepart = mtrac_strdup(namepart);            // ditto\n"
+	"	trace->include_clearname = mtrac_strdup(clearname);          // ditto\n"
 	"	include_count++;\n"
 	"	trace->next = null;\n"
 	"	if(!include_trace_start) include_trace_start = trace;\n"
@@ -13805,11 +13779,10 @@ const char *own =
 	"	/* keep track of include files nesting depth */\n"
 	"	include_stack[include_stack_ptr].buffer = YY_CURRENT_BUFFER; // gift\n"
 	"	include_stack[include_stack_ptr].clearname = file_clearname; // gift\n"
-	"	include_stack[include_stack_ptr].namepart = file_namepart; // gift\n"
-	"	include_stack[include_stack_ptr].pathpart = file_pathpart; // gift\n"
-	"	include_stack[include_stack_ptr].location = file_location; // gift\n"
-	"	include_stack[include_stack_ptr].dirptr = file_dirptr; // gift\n"
-	"	include_stack[include_stack_ptr].fileptr = file_fileptr; // gift\n"
+	"	include_stack[include_stack_ptr].namepart = file_namepart;   // gift\n"
+	"	include_stack[include_stack_ptr].pathpart = file_pathpart;   // gift\n"
+	"	include_stack[include_stack_ptr].location = file_location;   // gift\n"
+	"	include_stack[include_stack_ptr].fileptr = file_fileptr;     // gift\n"
 	"	include_stack[include_stack_ptr].line = line;\n"
 	"	include_stack_ptr++;\n"
 	"\n"
@@ -13818,7 +13791,6 @@ const char *own =
 	"	file_namepart = null;\n"
 	"	file_pathpart = null;\n"
 	"	file_location = null;\n"
-	"	file_dirptr = null;\n"
 	"	file_fileptr = null;\n"
 	"\n"
 	"	/* now the switch-over starts, regarding Lex and the file_* variables. */\n"
@@ -13826,7 +13798,6 @@ const char *own =
 	"	file_namepart = namepart;\n"
 	"	file_pathpart = pathpart;\n"
 	"	file_location = location;\n"
-	"	file_dirptr = dirptr;\n"
 	"	file_fileptr = fileptr;\n"
 	"	line = 1;\n"
 	"\n"
@@ -13853,7 +13824,6 @@ const char *own =
 	"	mtrac_free(file_pathpart);\n"
 	"	mtrac_free(file_namepart);\n"
 	"	mtrac_free(file_location);\n"
-	"	fclose(file_dirptr);\n"
 	"	fclose(file_fileptr); //.. is this duplicating yy_delete_buffer's action?\n"
 	"	yy_delete_buffer(YY_CURRENT_BUFFER);\n"
 	"\n"
@@ -13862,12 +13832,11 @@ const char *own =
 	"	file_pathpart = include_stack[include_stack_ptr].pathpart;\n"
 	"	file_namepart = include_stack[include_stack_ptr].namepart;\n"
 	"	file_location = include_stack[include_stack_ptr].location;\n"
-	"	file_dirptr = include_stack[include_stack_ptr].dirptr;\n"
 	"	file_fileptr = include_stack[include_stack_ptr].fileptr;\n"
 	"	line = include_stack[include_stack_ptr].line;\n"
 	"	line++; // the \\n was consumed with the path but progress only now.\n"
 	"\n"
-	"	// fchdir(fileno(file_dirptr)); missing ??\n"
+	"	///// chdir(file_location) missing ??\n"
 	"\n"
 	"	yy_switch_to_buffer(include_stack[include_stack_ptr].buffer);\n"
 	"\n"
@@ -14258,7 +14227,7 @@ const char *own =
 	"	}\n"
 	"}\n"
 	"\n"
-	"void inline freeline() {\n"
+	"void freeline() {\n"
 	"	if(strlen(buf) > 1 && strcmp(buf + strlen(buf) -2, \"\\n\\n\"))\n"
 	"		concat(&buf, \"\\n\");\n"
 	"	if(strcmp(buf + strlen(buf) -2, \"\\n\\n\"))\n"
@@ -14587,7 +14556,7 @@ const char *own =
 	"		\"#include <string.h>\\n\\n\"\n"
 	"		\"int yylex(void);\\n\"\n"
 	"		\"void yyerror(const char *);\\n\\n\"\n"
-	"		\"void mtrac_gross(void *);\\n\\n\"\n"
+	"		\"void *mtrac_gross(void *);\\n\\n\"\n"
 	"		\"#define NEW(type, literal) \\\\\\n\"\n"
 	"		\"	if(opt_debug_tokens) fprintf(stderr, \\\"tokens : creating node for \\\" #type \\\"'%s'\\\\n\\\", literal); \\\\\\n\"\n"
 	"		\"	type *type = mtrac_malloc(sizeof(struct type)); \\\\\\n\"\n"
@@ -14987,7 +14956,7 @@ const char *own =
 	"	while(token) {\n"
 	"		if(strchr(token->string, '\"'))\n"
 	"			concat(&lex, token->string, strlen(token->string)<10?\"\\t\":\"\",\n"
-	"				\"\\t\\t\\t\\t\\t\\t\\t{ D; *((char **)&yylval) = strdup(yytext); return \", literal_symbol(token->string), \"; }\\n\");\n"
+	"				\"\\t\\t\\t\\t\\t\\t\\t{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return \", literal_symbol(token->string), \"; }\\n\");\n"
 	"		token = token->next;\n"
 	"	}\n"
 	"	concat(&lex, \"{termpart} /* no space to not erron. make it longest match */\"\n"
@@ -15070,7 +15039,7 @@ const char *own =
 	"		concat(&req, include, /* enu, \"\\n\", */ stru, \"\\n\", root, \"\\n\", /* uni, \"\\n\", */ fdecl, \"}\");\n"
 	"		FILE *out = stdout;\n"
 	"		if(strlen(opt_yacc)) {\n"
-	"			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd\n"
+	"			chdir(name_homedir); // assume path to open as relative to dir at program start\n"
 	"			if(!(out = fopen(opt_yacc, \"w\"))) { perror(opt_yacc); exit(1); }\n"
 	"		}\n"
 	"		if(strlen(opt_yacc) || !opt_quiet)\n"
@@ -15082,7 +15051,7 @@ const char *own =
 	"				prol, req, decl, bnf, yacc_stub(), funcs);\n"
 	"		if(strlen(opt_yacc)) {\n"
 	"			fclose(out);\n"
-	"			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location\n"
+	"			chdir(file_location); // back to source file's absolute location\n"
 	"		}\n"
 	"		mtrac_free(include);\n"
 	"		mtrac_free(root);\n"
@@ -15107,7 +15076,7 @@ const char *own =
 	"\n"
 	"		FILE *out = stdout;\n"
 	"		if(strlen(opt_template)) {\n"
-	"			if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd\n"
+	"			chdir(name_homedir); // assume path to open as relative to dir at program start\n"
 	"			if(strcmp(opt_template, \"core.c\") && access(opt_template, F_OK ) != -1 ) {\n"
 	"				fprintf(stderr, \"walk function file '%s' exists. Please move or delete and try again.\"\n"
 	"					\" (Only 'core.c' is not protected this way.)\\n\", opt_template); exit(1);\n"
@@ -15121,7 +15090,7 @@ const char *own =
 	"		}\n"
 	"		if(strlen(opt_template)) {\n"
 	"			fclose(out);\n"
-	"			if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location\n"
+	"			chdir(file_location); // back to source file's absolute location\n"
 	"		}\n"
 	"		mtrac_free(stub);\n"
 	"	}\n"
@@ -15346,7 +15315,7 @@ const char *own =
 	"	}} else if (strlen(opt_samples)) {\n"
 	"		int size = 1 + width + snprintf(null, 0, \"%s%0*d.lex\", opt_samples, width, 0);\n"
 	"		char *filename = news(filename, size);\n"
-	"		if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -f (or its default) relative to program start's cwd\n"
+	"		chdir(name_homedir); // assume path to open as relative to dir at program start\n"
 	"		if(opt_wipe) {\n"
 	"			if(opt_verbose || opt_debug)\n"
 	"				printf(\"  deleting files %s%0*d.lex - %s%0*d.lex\\n\", opt_samples, width, 1, opt_samples, width, count);\n"
@@ -15367,7 +15336,7 @@ const char *own =
 	"			example = example->next;\n"
 	"		}\n"
 	"		mtrac_free(filename);\n"
-	"		if(file_dirptr) fchdir(fileno(file_dirptr)); // back to source file's absolute location\n"
+	"		chdir(file_location); // back to source file's absolute location\n"
 	"	}\n"
 	"}\n"
 	"\n"
@@ -15825,7 +15794,7 @@ const char *own =
 	"	}\n"
 	"\n"
 	"	/* go to directory from which the invocation started (we are presently, possibly in the source file's dir) */\n"
-	"	if(file_homeptr) fchdir(fileno(file_homeptr)); // makes path of -o (or its default) relative to program start's cwd\n"
+	"	chdir(name_homedir);\n"
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
@@ -15868,7 +15837,7 @@ const char *own =
 	"	fclose(fp);\n"
 	"\n"
 	"	/* back to source file's absolute location */\n"
-	"	if(file_dirptr) fchdir(fileno(file_dirptr));\n"
+	"	chdir(file_location);\n"
 	"\n"
 	"	mtrac_free(include);\n"
 	"	mtrac_free(src);\n"
@@ -16169,11 +16138,12 @@ const char *own =
 	"}\n"
 	"\n"
 	" /* add to the gross list of memory allocations to be eventually freed */\n"
-	"void mtrac_gross(void *rec) {\n"
+	"void *mtrac_gross(void *rec) {\n"
 	"	element *e = mtrac_malloc(sizeof (element));\n"
 	"	e->payload = rec;\n"
 	"	e->previous = mtrac_gross_list;\n"
 	"	mtrac_gross_list = e;\n"
+	"	return rec;\n"
 	"}\n"
 	"\n"
 	" /* freeing the gross list of memory allocations */\n"
@@ -16583,7 +16553,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 93 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\n"
+	"	0.3 alpha 94 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
@@ -16733,10 +16703,10 @@ const char *manual =
 	"	src             C and Flex compiler sources / cycle 1\n"
 	"	build           intermediary C sources / cycle 2\n"
 	"	Makefile        build scripts\n"
-	"	tests           compiler self-tests*\n"
+	"	tests           compiler self-tests (*)\n"
 	"	CREDITS         contributors and supporters\n"
 	"\n"
-	"Note * that github will omit relevant files and sub folders of the `test/` directory.\n"
+	"(*) Note that github will omit relevant files and sub folders of the `tests/` directory.\n"
 	"\n"
 	"\n"
 	"## Stack\n"
@@ -16777,17 +16747,18 @@ const char *manual =
 	"\n"
 	"## Portability\n"
 	"\n"
-	"Because of its low number of dependencies, the content of this repository should\n"
-	"remain usable for an extended amount of time. In essence it\n"
-	"needs but a (slighlty tolerant) C99 compiler.\n"
+	"Because of its low number of dependencies, the content of this repository\n"
+	"should remain usable for an extended amount of time, on a wide array of current\n"
+	"and future platforms.  It should be immediately portable to all 60 hardware\n"
+	"platforms that GCC supports, and with slight formal adaptions, beyond. In\n"
+	"essence it needs but a C99 compiler.\n"
 	"\n"
-	"It should be immediately portable to all 60 hardware platforms that GCC\n"
-	"supports, and with slight formal adaptions, beyond.\n"
-	"\n"
-	"Because of its small footprint and fast pace, it can be embedded in web sites\n"
-	"and run on smart phones. Compilation of medium size texts takes milliseconds,\n"
-	"with virtually no overhead for start up and wind down. The size of the compiler\n"
-	"executable is roughly 1MB.\n"
+	"Because of its small footprint and fast pace, the compiler can be embedded in\n"
+	"web sites and run on smart phones. Compilation of medium size texts takes\n"
+	"milliseconds on a normal machine, with virtually no overhead for start up and\n"
+	"wind down. The size of the compiler executable is roughly 1MB. Building the\n"
+	"compiler itself from source takes seconds. This makes all kinds of nimble edge\n"
+	"devices possible hosts.\n"
 	"\n"
 	"To use Lexon on your own machine——to create your own workflows and be protected\n"
 	"from bitrot——you don't have to build it yourself but can use the binaries for\n"
@@ -16795,7 +16766,6 @@ const char *manual =
 	"master branch. You can also download the\n"
 	"[binaries](https://www.lexon.org/download.html) from the Lexon site. That page\n"
 	"also has a step-by-step installation instruction.\n"
-	"\n"
 	"\n"
 	"\n"
 	"\n"
@@ -16822,8 +16792,8 @@ const char *manual =
 	"\n"
 	"#### Tested With\n"
 	"\n"
-	"	gcc 7.5.0\n"
-	"	clang 12.0.5\n"
+	"	gcc 7.5.0 / c99\n"
+	"	clang 12.0.5 / c99\n"
 	"	make 3.81 and 4.1\n"
 	"\n"
 	"\n"
@@ -16860,8 +16830,8 @@ const char *manual =
 	"\n"
 	"#### Tested With\n"
 	"\n"
-	"	gcc 7.5.0\n"
-	"	clang 12.0.5\n"
+	"	gcc 7.5.0 / c99\n"
+	"	clang 12.0.5 / c99\n"
 	"	bison 3.8\n"
 	"	flex 2.5.35 and 2.6.4\n"
 	"	make 3.81 and 4.1\n"
@@ -16964,22 +16934,27 @@ const char *manual =
 	"\n"
 	"	$ make <rules>\n"
 	"\n"
-	"	all             build compiler and run an example\n"
+	"	all             build compiler and run an example (default)\n"
 	"	build           build compiler\n"
-	"	install         install compiler\n"
-	"	lexcc           [a build part:] build lexccc compiler compiler\n"
-	"	lexon           [a build part:] build lexon compiler\n"
+	"	install         install compiler (run with sudo)\n"
 	"	sample          build escrow example to solidity\n"
 	"	check           compiler tests: deeptest, focustest, sample\n"
 	"	devcheck        all tests: envtest, deeptest, grammarcheck, focustest, sample\n"
+	"	testlog         dump the 100 last lines of the test log\n"
 	"	clean           delete all built files, except pre-built binaries\n"
+	"	ls              show the source and build directories\n"
+	"	license         show the license agreement\n"
+	"	help            this list\n"
+	"\n"
+	"**dev support**\n"
+	"\n"
+	"	lexcc           a build part: build lexccc compiler compiler\n"
+	"	lexon           a build part: build lexon compiler\n"
 	"	distclean       clean and pre-build cycle 2 sources for master branch\n"
 	"	diffclean       clean and pre-build backend modules (targets branch)\n"
 	"	devclean        clean and delete pre-build binaries (dev branch)\n"
 	"	srcclean        devclean and delete test expectations (sources branch)\n"
-	"	ls              show the source and build directories\n"
-	"	license         show the license agreement\n"
-	"	help            this list\n"
+	"	rulecheck       test of different repository clean state transitions\n"
 	"\n"
 	"**3rd level of tests: grammar**\n"
 	"\n"

@@ -1,7 +1,27 @@
 # Lexon compiler Makefile
+#
+#	works with
+#
+#	gcc 7.5.0
+#	clang 12.0.5
+#	bison 3.8
+#	flex 2.5.35
+#	make 3.81
+#
+#	earlier versions may work
+#
+# This makefile is two in one as it takes care of two building cycles, with or
+# without generation of the required c sources on the way: if the c sources are
+# provided--as in the master branch--the build works without the requirement of
+# Flex and Bison allowing for easier building and better portability. If the
+# sources are not provided--as after cleaning--they are generated using lexccc,
+# Flex and Bison. This requires two different dependencies paths, essentially
+# one being content with all c sources, the other, building them when outdated.
+
 
 SHELL := /bin/bash
 VPATH = bin:grammar:src:build
+MAKEFLAGS += --no-print-directory
 
 # installation location
 ifeq ($(PREFIX),)
@@ -15,73 +35,67 @@ endif
 tmp = $(shell date "+%Y-%m-%d-%H-%M-%S")
 
 hi = \033[97m
+lo = \033[38m
 err = \033[91m
 warn = \033[38;5;214m
 ok = \033[36m
 off = \033[0m
-errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok)ok$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
 
 has_gindent = $(shell which gindent)
-
-ifeq (, $(shell which colordiff))
-        DIFF=diff
-else
-        DIFF=colordiff
-endif
 
 
 all: build
 
 help:
 	# make rules
-	#
-	# all		build compiler and run an example
-	# build		build compiler
-	# lexccc	[a build part] build lexccc compiler compiler
-	# lexon		[a build part] build lexon compiler
-	# sample	build escrow example to javascript
-	# check		compilation tests: deeptest, focustest, sample
-	# devcheck	all tests: envtest, deeptest, grammarcheck, focustest, sample
-	# clean		delete all built files
-	# distclean     clean and create backend modules
+	# 
+	# all           build compiler and run an example (default)
+	# build         build compiler
+	# install       install compiler (run with sudo)
+	# sample        compile escrow example to solidity
+	# check         compiler tests: deeptest, focustest, sample
+	# devcheck      all tests: envtest, deeptest, grammarcheck, focustest, sample
+	# testlog       dump the 100 last lines of the test log
+	# clean         delete all built files, except pre-built binaries
 	# ls            show the source and build directories
 	# license       show the license agreement
-	# help		this rules list
+	# help          this list
+	#
+	# ▫️  dev support
+	#
+	# lexccc        a build part: build lexccc compiler compiler
+	# lexon         a build part: build lexon compiler
+	# distclean     clean and pre-build cycle 2 sources for master branch
+	# devclean      clean and delete pre-build binaries (dev branch)
+	# diffclean     clean and pre-build backend modules (targets branch)
+	# srcclean      devclean and delete test expectations (sources branch)
+	# rulecheck     test of different repository clean state transitions
 	#
 	# ▫️  3rd level of tests: grammar
-	# grammarcheck	grammar checks with extended yacc grammar checks
-	# conflicts	grammar check that lists ambiguously used tokens
-	# counter	grammar check that lists examples for ambiguous code
-	# focusprep	build result references for future focustest runs
-	# focustest	grammar check compiling release-defining examples
+	# grammarcheck  grammar check with extended yacc grammar checks
+	# conflicts     grammar check that lists ambiguously used tokens (slow)
+	# counter       grammar check that lists examples for ambiguous code
+	# focustest     grammar check compiling release-defining examples
+	# focusprep     build result references for future focustest runs
 	#
 	# ▫️  2nd level of tests: components
-	# deeptest	memory handling, includes, language parser, compiler
-	# update	interactive, selective update of deeptest result references
-	# recheck	faster update, skipping successful tests of earlier deeptest
-	# expectations	full non-interactive update of deeptest result references
-	# new		creation of missing deeptest result references
+	# deeptest      memory handling, includes, language parser, compiler
+	# update        interactive, selective update of deeptest result references
+	# recheck       faster update, skipping successful tests of earlier deeptest
+	# expectations  full non-interactive update of deeptest result references
+	# new           creation only of missing deeptest result references
 	#
 	# ▫️  1st level of tests: build environment
-	# envtest	test of build environment, gcc, flex, mtrac memory checks
-
-
-# This makefile is two in one as it takes care of two building cycles with our
-# without generation of the required c sources on the way: if the c sources are
-# provided-as in the master branch-the build works without the requirement of
-# Flex and Bison allowing for easier building and better portability. If the
-# the sources are not provided-as after cleaning-they are generated using lexccc,
-# Flex and Bison. This requires two different dependencies paths, essentially
-# one being content with all c sources, the other, building them when outdated.
+	# envtest       test of build environment, gcc, flex, mtrac memory checks
 
 build:
-	@if (! make -q lexccc.c) ; \
+	@if (! $(MAKE) -q lexccc.c build/scanner.c build/parser.c) ; \
 		then printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
-		make lexccc ; \
+		$(MAKE) lexccc ; \
 	fi
-	@if (! make -o lexccc -q lexon) ; \
+	@if (! $(MAKE) -o lexccc -q lexon) ; \
 		then printf "\n$(hi)▫️  cycle 2: build compiler $(off)\n\n" ; \
-		make -o lexccc lexon ; \
+		$(MAKE) -o lexccc lexon ; \
 	fi
 	@if [[ ! -e build/.built ]] ; \
 		then printf "$(ok)build done: bin/lexon.$(off)\n\n" ; \
@@ -91,7 +105,7 @@ build:
 lexccc: lexccc.c
 
 	@mkdir -p bin
-	cd build ; gcc -o ../bin/lexccc lexccc.c
+	cd build ; gcc -std=c99 -o ../bin/lexccc lexccc.c
 	@echo
 
 lexccc.c: src/lexon.l
@@ -99,7 +113,7 @@ lexccc.c: src/lexon.l
 	@mkdir -p build
 	cd build ; lex -o lexccc.c ../src/lexon.l
 
-build/.parser: lexccc grammar/english.lgf
+build/.parser: lexccc src/lexon.l grammar/english.lgf
 	@printf "$(ok)» frontend $(off)\n\n"
 	@mkdir -p build
 	@rm -f build/.built
@@ -110,9 +124,9 @@ build/.parser: lexccc grammar/english.lgf
 	@touch build/.parser
 	@echo
 
-lexon: build/.targets
+lexon: build/.parser build/.targets
 	@printf "$(ok)» compiler $(off)\n\n"
-	cd build ; gcc -o ../bin/lexon scanner.c parser.c core.c javascript.c solidity.c sophia.c
+	cd build ; gcc -std=c99 -o ../bin/lexon scanner.c parser.c core.c javascript.c solidity.c sophia.c
 	@echo
 
 build/.targets: build/scanner.c build/parser.c build/.backend build/core.c build/javascript.c build/solidity.c build/sophia.c
@@ -198,140 +212,27 @@ devcheck: envtest grammarcheck deeptest focustest
 grammarcheck: build
 	@printf "\n$(hi)▫️  grammar checks $(off)\n\n"
 	@echo "» expected: 7 shift/reduce and 2 reduce/reduce conflicts .."
-	cd build ; bison -d -Wall -Wdangling-alias parser.y
+	cd build ; bison -d -Wall --color=yes -Wdangling-alias parser.y
 	@echo "» to run with -Wcounterexamples use 'make conflicts' (brief output) and 'make counter' (detailed output)."
 	@echo "» The temporary ambiguities reflected in these conflicts are intented."
 	@echo
 
 conflicts: build
 	@printf "\n$(hi)▫️  grammar ambiguity check: conflicting tokens $(off)\n\n"
+	@echo "» this test takes time"
 	cd build ; bison -d -Wcounterexamples parser.y 2>&1 | grep conflict | sed -e "s/parser.y: warning: //" -e "s/\[-W.*\]//" | awk '!x[$$0]++'
 	@echo
 
 counter: build
 	@printf "\n$(hi)▫️  grammar ambiguity check: details of any shift/reduce problems of the grammar $(off)\n\n"
-	cd build ; bison -d -Wcounterexamples parser.y
+	cd build ; bison -d -Wcounterexamples --color=yes parser.y
 	@echo
 
 focusprep: build
-	@printf "\n\n$(hi)▫️  preparation for the compiling and diffing of the focustest. $(off)\n\n"
-
-	@echo »»» escrow core
-	cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.lcc.exp
-
-	@echo »»» escrow 2 core
-	cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.lcc.exp
-
-	@echo »»» statement core
-	cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.lcc.exp
-
-	@echo »»» evaluation core
-	cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.lcc.exp
-
-	@echo »»» escrow javascript
-	cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.jsx.exp
-
-	@echo »»» escrow 2 javascript
-	cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.jsx.exp
-
-	@echo »»» statement javascript
-	cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.jsx.exp
-
-	@echo »»» evaluation javascript
-	cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.jsx.exp
-
-	@echo »»» escrow solidity
-	cd tests/focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol.exp
-
-	@echo »»» escrow 2 solidity
-	cd tests/focus ; ../../bin/lexon --solidity --comment escrow2.lex > escrow2.sol.exp
-
-	@echo »»» statement solidity
-	cd tests/focus ; ../../bin/lexon --solidity --comment statement.lex > statement.sol.exp
-
-	@echo »»» evaluation solidity
-	cd tests/focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol.exp
-
-	@echo »»» escrow sophia
-	cd tests/focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes.exp
-
-	@echo »»» escrow 2 sophia
-	cd tests/focus ; ../../bin/lexon --sophia --comment escrow2.lex > escrow2.aes.exp
-
-	@echo »»» statement sophia
-	cd tests/focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes.exp
-
-	@echo ---
-	@echo done
-	@echo
+	@cd tests ; $(MAKE) focusprep
 
 focustest: build
-	@printf "\n$(hi)▫️  focus test $(off)\n\n"
-	@echo compiling and diffing of distribution-defining example code.
-
-	@printf "$(ok)• escrow ⟶   core $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.lcc
-	@cd tests/focus ; $(DIFF) -wB escrow.lcc.exp escrow.lcc ; $(errtag)
-
-	@printf "$(ok)• escrow 2 ⟶   core $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.lcc
-	@cd tests/focus ; $(DIFF) -wB escrow2.lcc.exp escrow2.lcc ; $(errtag)
-
-	@printf "$(ok)• statement ⟶   core $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.lcc
-	@cd tests/focus ; $(DIFF) -wB statement.lcc.exp statement.lcc ; $(errtag)
-
-	@printf "$(ok)• evaluation ⟶   core $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.lcc
-	@cd tests/focus ; $(DIFF) -wB evaluation.lcc.exp evaluation.lcc ; $(errtag)
-
-	@printf "$(ok)• escrow ⟶   javascript $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.jsx
-	@cd tests/focus ; $(DIFF) -wB escrow.jsx.exp escrow.jsx ; $(errtag)
-
-	@printf "$(ok)• escrow 2 ⟶   javascript $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.jsx
-	@cd tests/focus ; $(DIFF) -wB escrow2.jsx.exp escrow2.jsx ; $(errtag)
-
-	@printf "$(ok)• statement ⟶   javascript $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.jsx
-	@cd tests/focus ; $(DIFF) -wB statement.jsx.exp statement.jsx ; $(errtag)
-
-	@printf "$(ok)• evaluation ⟶   javascript $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.jsx
-	@cd tests/focus ; $(DIFF) -wB evaluation.jsx.exp evaluation.jsx ; $(errtag)
-
-	@printf "$(ok)• escrow ⟶   solidity $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol
-	@cd tests/focus ; $(DIFF) -wB escrow.sol.exp escrow.sol ; $(errtag)
-
-	@printf "$(ok)• escrow 2 ⟶   solidity $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --solidity --comment escrow2.lex > escrow2.sol
-	@cd tests/focus ; $(DIFF) -wB escrow2.sol.exp escrow2.sol ; $(errtag)
-
-	@printf "$(ok)• statement ⟶   solidity $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --solidity --comment statement.lex > statement.sol
-	@cd tests/focus ; $(DIFF) -wB statement.sol.exp statement.sol ; $(errtag)
-
-	@printf "$(ok)• evaluation ⟶   solidity $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol
-	@cd tests/focus ; $(DIFF) -wB evaluation.sol.exp evaluation.sol ; $(errtag)
-
-	@printf "$(ok)• escrow ⟶   sophia $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes
-	@cd tests/focus ; $(DIFF) -wB escrow.aes.exp escrow.aes ; $(errtag)
-
-	@printf "$(ok)• escrow 2 ⟶   sophia $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --sophia --comment escrow2.lex > escrow2.aes
-	@cd tests/focus ; $(DIFF) -wB escrow2.aes.exp escrow2.aes ; $(errtag)
-
-	@printf "$(ok)• statement ⟶   sophia $(off)\n"
-	-cd tests/focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes
-	@cd tests/focus ; $(DIFF) -wB statement.aes.exp statement.aes ; $(errtag)
-
-	@echo ---
-	@printf "$(ok)done$(off)\n"
-	@echo
+	@cd tests ; $(MAKE) focustest
 
 expclean:
 	@cd tests ; $(MAKE) expclean
@@ -339,7 +240,7 @@ expclean:
 deeptest: build
 	@printf "\n$(hi)▫️  deep test $(off)\n"
 ifneq (,$(wildcard tests/tag.exp))
-	@cd tests ; $(MAKE) test
+	@cd tests ; $(MAKE) check
 	@echo
 else
 	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
@@ -375,18 +276,20 @@ new: build
 envtest:
 	@printf "\n$(hi)▫️  test build environment: flex, gcc, mtrac memory tracker $(off)\n\n"
 	cd tests ; flex -DWHITEBOX -o whitebox.c ../src/lexon.l
-	cd tests ; gcc -o test -include whitebox.c test-memory-14.c
+	cd tests ; gcc -std=c99 -o test -include whitebox.c test-memory-14.c
 	cd tests ; ./test
 	@echo "√ build environment tests passed ok." # otherwise would not reach here
 	@echo
 
+testlog:
+	@cd tests ; $(MAKE) testlog
+
 clean:
 	@printf "\n\n$(hi)▫️  clean built and generated files $(off)\n\n"
-	rm -rf build
-	rm -f bin/lexon
-	rm -f bin/lexccc
 	rm -f .????????
-	rm -f build/.backend
+	rm -f bin/lexccc
+	rm -f bin/lexon
+	rm -rf build
 	@echo
 	@cd tests ; $(MAKE) clean
 	@echo
@@ -401,9 +304,9 @@ clean:
 	@echo
 	@printf "$(ok)√ cleaned for building from cycle 1 $(off)\n\n"
 
-distclean:
+distclean: restore_binaries
 	@printf "\n\n$(hi)▫️  clean and pre-build for distribution $(off)\n\n"
-	@$(MAKE) binaries clean build expectations
+	@$(MAKE) binaries clean build
 	@printf "\n$(hi)▫️  clean build folder for distribution  $(off)\n\n"
 	rm -f bin/lexccc
 	rm -f bin/lexon
@@ -412,16 +315,33 @@ distclean:
 	rm -f build/README
 	@echo cd tests
 	@cd tests ; $(MAKE) clean
-	@echo
-	ls -A
-	@echo
-	ls -A bin
-	@echo
-	ls -A build
-	@echo
-	ls -A src
-	@echo
+	@$(MAKE) ls
 	@printf "$(ok)√ cleaned and pre-built for master branch $(off)\n\n"
+	@echo
+	@echo ls should look like this:
+	@printf "$(lo)\n\n"
+	@echo "ls -A"
+	@echo ".git		bin		LICENSE		README.MD	build		grammar		tests"
+	@echo ".gitignore	CREDITS		Makefile	examples	src		.bin.bak"
+	@echo ""
+	@echo "ls -A grammar"
+	@echo "english.lgf"
+	@echo ""
+	@echo "ls -A src"
+	@echo ".indent.pro	lexon.l		target.c"
+	@echo ""
+	@echo "ls -A build"
+	@echo ".backend	.targets	javascript.c	parser.c	parser.y	scanner.l	sophia.c"
+	@echo ".parser		core.c		lexccc.c	parser.h	scanner.c	solidity.c"
+	@echo ""
+	@echo "ls -A bin"
+	@echo "lexon_linux	lexon_mac"
+	@echo ""
+	@echo "ls -A examples"
+	@echo "escrow.lex	evaluation.lex	statement.lex"
+	@printf "$(off)\n"
+	@echo ""
+	git status
 
 binaries:
 	@echo "» checking that binaries are in place"
@@ -432,6 +352,10 @@ ifeq (,$(wildcard bin/lexon_linux))
 	$(error Linux binary bin/lexon_linux missing)
 endif
 
+restore_binaries:
+	@mkdir -p bin
+	-cp -n .bin.bak/lexon_* bin/
+
 diffclean:
 	@printf "\n\n$(hi)▫️  clean and pre-build for targets branch $(off)\n\n"
 	@$(MAKE) clean expclean build
@@ -440,6 +364,10 @@ diffclean:
 	@rm -rf bin
 	rm -f build/scanner.*
 	rm -f build/parser.*
+	rm -f build/.backend
+	rm -f build/.built
+	rm -f build/.parser
+	rm -f build/.targets
 	rm -f build/README
 	@echo
 	@echo .:
@@ -505,6 +433,9 @@ srcclean:
 ls:
 	@echo
 
+	-ls -A
+	@echo
+
 	-ls -A grammar
 	@echo
 
@@ -523,6 +454,57 @@ ls:
 license:
 	cat LICENSE
 
-.PHONY: all help build sample check devcheck grammarcheck conflicts counter focusprep focustest deeptest update recheck expectations new envtest clean distclean binaries devclean diffclean ls license 
+rulecheck:
+	echo 'n' | $(MAKE) distclean
+	$(MAKE) all
+	echo 'n' | $(MAKE) distclean
+	$(MAKE) build
+	$(MAKE) devclean
+	$(MAKE) all
+	$(MAKE) devclean
+	$(MAKE) build
+	$(MAKE) diffclean
+	$(MAKE) all
+	$(MAKE) diffclean
+	$(MAKE) build
+	$(MAKE) clean
+	$(MAKE) lexccc
+	$(MAKE) clean
+	$(MAKE) lexon
+	$(MAKE) clean
+	$(MAKE) all
+	$(MAKE) clean
+	$(MAKE) build
+	$(MAKE) srcclean
+	$(MAKE) all
+	$(MAKE) new
+	echo 'y' | $(MAKE) expectations
+	$(MAKE) new
+	$(MAKE) sample
+	$(MAKE) check
+	$(MAKE) devcheck
+	$(MAKE) envtest
+	$(MAKE) testlog
+	$(MAKE) ls
+	$(MAKE) license
+	$(MAKE) help
+	$(MAKE) check
+	$(MAKE) deeptest
+	$(MAKE) recheck
+	$(MAKE) update
+	$(MAKE) check
+	$(MAKE) grammarcheck
+	$(MAKE) conflicts
+	$(MAKE) counter
+	$(MAKE) focustest
+	$(MAKE) focusprep
+	$(MAKE) focustest
+	$(MAKE) clean
+	$(MAKE) restore_binaries
+	echo 'n' | $(MAKE) distclean
+	$(MAKE) ls
+	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-# (c) 2024 H. Diedrich, see LICENSE
+.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+
+# (c) 2025 H. Diedrich, see file LICENSE
