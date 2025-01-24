@@ -168,9 +168,10 @@ browser and blockchain VMs in a WASM build.
 
 To express its human-readable grammar, Lexon introduces a variation of the
 Bachus-Naur Form (BNF) called the Lexon Grammar Form (LGF) as demonstrated in
-[`grammar/english.lgf`](grammar/english.lgf#L26). LGF is compiled to BNF for use
-with Bison as part of the build process. The result can be seen in file
-[`build/parser.y`](build/parser.y#L1056) from tag `%%`.
+[`grammar/english.lgf`](grammar/english.lgf#L26). LGF is compiled to BNF for
+use with Bison as part of the build process (see use of `lexccc -Y` in the
+Makefile, in essence, `bin/lexccc -Y grammar/english.lgf`).  The result can be
+seen in file [`build/parser.y`](build/parser.y#L1056) from tag `%%`.
 
 BNF and Bison are preferred over RE-based compiler building suits because BNF
 is more versatile and Bison's GLR is more powerful for human language parsing
@@ -188,6 +189,21 @@ merely acknowledges that the era of optimization for the needs of the machine
 is over and programmer productivity has been firmly established as priority in
 programming; for which the unintended consequenes of path dependency in
 compiler building have to be addressed, and overcome.
+
+
+
+
+## Compile Cycles
+
+The Lexon compiler is created in two cycles: first, a lexon compiler compiler,
+`lexccc` is built that in the second cycle creates BNF from the Lexon grammar
+description `grammar/english.lgf`, and also produces other files that Flex and
+Bison need as input to create the Lexon compiler. Lexon domain extensions——fix
+grammar extensions——at this point.
+
+The Lexon compiler is built and ready to go after the end of this 2nd cycle.
+Any translation of a Lexon text——into other languages or to create a
+tree——comes after, arguably as the 3rd cycle.
 
 
 
@@ -212,7 +228,7 @@ from bitrot——you don't have to build it yourself but can use the binaries fo
 Mac or Linux that are located in the [`bin/`](bin/) folder of this repository's
 master branch. You can also download the
 [binaries](https://www.lexon.org/download.html) from the Lexon site. That page
-also has a step-by-step installation instruction.
+also has step-by-step installation instructions.
 
 
 
@@ -255,12 +271,13 @@ the [online](https://lexon.org/compiler.html) compiler.
 
 #### Alternative to `make`
 
-If you want or need to avoid `make`, you can just run the compiler:
+If you want or need to avoid `make`, you can just compile:
 
         cd build ; gcc -o ../bin/lexon scanner.c parser.c core.c javascript.c solidity.c sophia.c ; cd ..
 
-If you deleted the C sources in build/, e.g., using `make clean`, refresh the repo
-index.
+If you deleted the C sources in build/, e.g., using `make clean`, and don't
+have Flex and Bison availabe, get the sources needed for cycle 2 back by `git
+reset --hard` to be able to build again.
 
 
 ## Prerequisites for Complete Build
@@ -286,7 +303,7 @@ compilers:
 
 #### Optional Formatting
 
-Building skips the following automatically when not installed.
+Building skips the following automatically when not installed:
 
 To indent generated intermediary C code during build from cycle 1:
 
@@ -322,7 +339,7 @@ Install this library with:
 
 Note that no Javascript elements are needed when compiling a Lexon text, no
 matter to what language, even to Javascript. The above applies solely for
-executing the produced Javascript.
+executing the produced Javascript at a later time.
 
 
 
