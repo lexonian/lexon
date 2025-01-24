@@ -197,13 +197,29 @@ compiler building have to be addressed, and overcome.
 
 The Lexon compiler is created in two cycles: first, a lexon compiler compiler,
 `lexccc` is built that in the second cycle creates BNF from the Lexon grammar
-description `grammar/english.lgf`, and also produces other files that Flex and
-Bison need as input to create the Lexon compiler. Lexon domain extensions——fix
-grammar extensions——at this point.
+description `grammar/english.lgf` and produces all files that Flex and Bison
+need as input to create the Lexon compiler. See files in `build/`.
 
-The Lexon compiler is built and ready to go after the end of this 2nd cycle.
+The Lexon compiler is built and ready to go after the end of the 2nd cycle.
 Any translation of a Lexon text——into other languages or to create a
-tree——comes after, arguably as the 3rd cycle.
+tree——comes after this, aguably as the 3rd cycle.
+
+The use of the code that the compiler created——the application——is yet another
+separate program invocation, after the 3rd build cycle.
+
+This depth is sometimes visible in the code where generated code is spliced
+into code of the 1st cycle for the 2nd, or code is being created in the 1st
+that will generate code that will generate code in the 3rd cycle, as part of
+the actual compiler, e.g. the abstract syntax tree graphic.
+
+This degree of nested generation is not unusual for compilers. Lexon has a
+focus on supporting work on an incrementally evolving grammar that comes as a
+stand-alone, human-readable file, not mixed with target code. It also creates
+type-safe abstract syntax trees and template walk code for it (option `-T`).
+This makes the 2nd cycle the language development work phase, where the actual
+work happens, both in terms of iterating the grammar and adapting the code
+generation to it; with changes to `lexccc` and its code base being rare in
+comparison.
 
 
 
