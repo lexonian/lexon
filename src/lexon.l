@@ -642,10 +642,17 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 .								{ D; lineno(); concat(&buf, yytext); }
 <<EOF>>		        					{ D0; new_lexcom("_pre_", "");
 									if(include_done()) BEGIN(PRE);
-									else { precompile();
-										if(do_main_pass) { BEGIN(MAIN); yy_scan_string(buf); }
-										else return 0;
-									} } // (*)
+									else {
+										precompile();
+										if(do_main_pass) {
+											BEGIN(MAIN);
+											yy_delete_buffer(YY_CURRENT_BUFFER);
+											YY_CURRENT_BUFFER_LVALUE = NULL;
+											yy_scan_string(buf);
+										} else
+											return 0;
+									} 
+								} // (*)
 }
 
 <BOFTRIM>{
@@ -661,11 +668,20 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^.								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 .								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 <<EOF>>				  				{ D0; new_lexcom("_pre_", "");
-									if(include_done()) BEGIN(PRE);
-									else { precompile();
-										if(do_main_pass) { BEGIN(MAIN); yy_scan_string(buf); }
-										else return 0;
-									} } // (*)
+									if(include_done())
+										BEGIN(PRE);
+									else {
+										precompile();
+										if(do_main_pass) {
+											BEGIN(MAIN);
+											yy_delete_buffer(YY_CURRENT_BUFFER);
+											YY_CURRENT_BUFFER_LVALUE = NULL;
+											yy_scan_string(buf);
+										} else
+											return 0;
+									} 
+								} // (*)
+
 }
 
 <NAMEQUOTE>{							///// refactor. Only used by LEX tag
@@ -1005,6 +1021,7 @@ void clean_exit() {
 	mtrac_free(prec_file);
 	mtrac_free(context);
 	mtrac_free(keywords);
+	yylex_destroy(); // Flex scan buffer and stack
 
 	delete_stringlist(predef);
 	delete_stringlist(ignores);
