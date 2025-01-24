@@ -1063,6 +1063,7 @@ void clean_exit() {
 	mtrac_free(file_namepart);
 	mtrac_free(file_pathpart);
 	mtrac_free(file_location);
+	fclose(file_fileptr);
 
 	delete_include_trace();
 
