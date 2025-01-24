@@ -42,6 +42,7 @@ ok = \033[36m
 off = \033[0m
 
 has_gindent = $(shell which gindent)
+has_valgrind = $(shell which valgrind)
 
 
 all: build
@@ -280,6 +281,29 @@ envtest:
 	cd tests ; ./test
 	@echo "√ build environment tests passed ok." # otherwise would not reach here
 	@echo
+
+memtest:
+	@printf "\n$(hi)▫️  memory leak tests: valgrind and internal $(off)\n\n"
+
+	@printf "$(ok)» internal leak checks$(off)\n\n"
+	bin/lexon -M -Q --core examples/escrow.lex 
+	@echo
+	bin/lexon -M -Q --javascript examples/evaluation.lex 
+	@echo
+	bin/lexon -M -Q --solidity examples/statement.lex 
+	@echo
+
+ifeq (, $(has_valgrind))
+	@printf "$(warn)» skipping valgrind, not installed. $(off)\n\n"
+else
+	@printf "$(ok)» valgrind leak checks$(off)\n\n"
+	valgrind --leak-check=full bin/lexon -Q --core examples/escrow.lex 
+	@echo
+	valgrind --leak-check=full bin/lexon -Q --javascript examples/evaluation.lex 
+	@echo
+	valgrind --leak-check=full bin/lexon -Q --solidity examples/statement.lex 
+	@echo
+endif
 
 testlog:
 	@cd tests ; $(MAKE) testlog
