@@ -317,15 +317,23 @@ compilers:
 	make 3.81 and 4.1
 
 
-#### Optional Formatting
+#### Optional
 
 Building skips the following automatically when not installed:
 
-To indent generated intermediary C code during build from cycle 1:
+**To check for memory leaks:**
+
+* valgrind
+
+There is a thorrough internal check for memory leaks, without valgrind, that
+does not cover the interfacing to Bison and Flex. Valgrind does but may not
+be availaible on all platforms.
+
+**To indent generated intermediary C code during build from cycle 1:**
 
 * gindent
 
-To color diffs of failing tests during check:
+**To color diffs of failing tests during check:**
 
 * colordiff
 
@@ -447,6 +455,7 @@ options.
 **2nd level of tests: components**
 
 	deeptest        memory handling, includes, language parser, compiler
+	memtest         valgrind & internal memory leak tests
 	update          interactive, selective update of deeptest result references
 	recheck         faster update, skipping successful tests of earlier deeptest
 	expectations    full non-interactive update of deeptest result references

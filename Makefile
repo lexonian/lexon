@@ -55,7 +55,7 @@ help:
 	# install       install compiler (run with sudo)
 	# sample        compile escrow example to solidity
 	# check         compiler tests: deeptest, focustest, sample
-	# devcheck      all tests: envtest, deeptest, grammarcheck, focustest, sample
+	# devcheck      all tests: envtest, memtest, deeptest, grammarcheck, focustest, sample
 	# testlog       dump the 100 last lines of the test log
 	# clean         delete all built files, except pre-built binaries
 	# ls            show the source and build directories
@@ -81,6 +81,7 @@ help:
 	#
 	# ▫️  2nd level of tests: components
 	# deeptest      memory handling, includes, language parser, compiler
+	# memtest       valgrind & internal memory leak tests
 	# update        interactive, selective update of deeptest result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
 	# expectations  full non-interactive update of deeptest result references
@@ -208,7 +209,7 @@ sample: build
 
 check: deeptest focustest
 
-devcheck: envtest grammarcheck deeptest focustest
+devcheck: envtest grammarcheck memtest deeptest focustest
 
 grammarcheck: build
 	@printf "\n$(hi)▫️  grammar checks $(off)\n\n"
@@ -277,12 +278,12 @@ new: build
 envtest:
 	@printf "\n$(hi)▫️  test build environment: flex, gcc, mtrac memory tracker $(off)\n\n"
 	cd tests ; flex -DWHITEBOX -o whitebox.c ../src/lexon.l
-	cd tests ; gcc -std=c99 -o test -include whitebox.c test-memory-14.c
+	cd tests ; gcc -o test -include whitebox.c test-memory-14.c
 	cd tests ; ./test
 	@echo "√ build environment tests passed ok." # otherwise would not reach here
 	@echo
 
-memtest:
+memtest: build
 	@printf "\n$(hi)▫️  memory leak tests: valgrind and internal $(off)\n\n"
 
 	@printf "$(ok)» internal leak checks$(off)\n\n"
