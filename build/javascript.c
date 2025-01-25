@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.93/94 U"
+#define backend_version "javascript 0.3.93-95 U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true

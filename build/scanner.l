@@ -50,7 +50,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 94 U" // unified 0.3 + experimental 0.4
+#define program_vers "0.3 alpha 95 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "0.2.20 / subset 0.3.8 alpha 79 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -644,10 +644,17 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 .								{ D; lineno(); concat(&buf, yytext); }
 <<EOF>>		        					{ D0; new_lexcom("_pre_", "");
 									if(include_done()) BEGIN(PRE);
-									else { precompile();
-										if(do_main_pass) { BEGIN(MAIN); yy_scan_string(buf); }
-										else return 0;
-									} } // (*)
+									else {
+										precompile();
+										if(do_main_pass) {
+											BEGIN(MAIN);
+											yy_delete_buffer(YY_CURRENT_BUFFER);
+											YY_CURRENT_BUFFER_LVALUE = NULL;
+											yy_scan_string(buf);
+										} else
+											return 0;
+									} 
+								} // (*)
 }
 
 <BOFTRIM>{
@@ -663,11 +670,20 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^.								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 .								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 <<EOF>>				  				{ D0; new_lexcom("_pre_", "");
-									if(include_done()) BEGIN(PRE);
-									else { precompile();
-										if(do_main_pass) { BEGIN(MAIN); yy_scan_string(buf); }
-										else return 0;
-									} } // (*)
+									if(include_done())
+										BEGIN(PRE);
+									else {
+										precompile();
+										if(do_main_pass) {
+											BEGIN(MAIN);
+											yy_delete_buffer(YY_CURRENT_BUFFER);
+											YY_CURRENT_BUFFER_LVALUE = NULL;
+											yy_scan_string(buf);
+										} else
+											return 0;
+									} 
+								} // (*)
+
 }
 
 <NAMEQUOTE>{							///// refactor. Only used by LEX tag
@@ -1137,6 +1153,7 @@ void clean_exit() {
 	mtrac_free(prec_file);
 	mtrac_free(context);
 	mtrac_free(keywords);
+	yylex_destroy(); // Flex scan buffer and stack
 
 	delete_stringlist(predef);
 	delete_stringlist(ignores);
@@ -1178,6 +1195,7 @@ void clean_exit() {
 	mtrac_free(file_namepart);
 	mtrac_free(file_pathpart);
 	mtrac_free(file_location);
+	fclose(file_fileptr);
 
 	delete_include_trace();
 
@@ -4511,7 +4529,7 @@ const char *own =
 	"#define PATH_MAX 1000\n"
 	"#endif\n"
 	"\n"
-	"#define program_vers \"0.3 alpha 94 U\" // unified 0.3 + experimental 0.4\n"
+	"#define program_vers \"0.3 alpha 95 U\" // unified 0.3 + experimental 0.4\n"
 	"#define grammar_vers \"0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
@@ -5107,10 +5125,17 @@ const char *own =
 	".								{ D; lineno(); concat(&buf, yytext); }\n"
 	"<<EOF>>		        					{ D0; new_lexcom(\"_pre_\", \"\");\n"
 	"									if(include_done()) BEGIN(PRE);\n"
-	"									else { precompile();\n"
-	"										if(do_main_pass) { BEGIN(MAIN); yy_scan_string(buf); }\n"
-	"										else return 0;\n"
-	"									} } // (*)\n"
+	"									else {\n"
+	"										precompile();\n"
+	"										if(do_main_pass) {\n"
+	"											BEGIN(MAIN);\n"
+	"											yy_delete_buffer(YY_CURRENT_BUFFER);\n"
+	"											YY_CURRENT_BUFFER_LVALUE = NULL;\n"
+	"											yy_scan_string(buf);\n"
+	"										} else\n"
+	"											return 0;\n"
+	"									} \n"
+	"								} // (*)\n"
 	"}\n"
 	"\n"
 	"<BOFTRIM>{\n"
@@ -5126,11 +5151,20 @@ const char *own =
 	"^.								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }\n"
 	".								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }\n"
 	"<<EOF>>				  				{ D0; new_lexcom(\"_pre_\", \"\");\n"
-	"									if(include_done()) BEGIN(PRE);\n"
-	"									else { precompile();\n"
-	"										if(do_main_pass) { BEGIN(MAIN); yy_scan_string(buf); }\n"
-	"										else return 0;\n"
-	"									} } // (*)\n"
+	"									if(include_done())\n"
+	"										BEGIN(PRE);\n"
+	"									else {\n"
+	"										precompile();\n"
+	"										if(do_main_pass) {\n"
+	"											BEGIN(MAIN);\n"
+	"											yy_delete_buffer(YY_CURRENT_BUFFER);\n"
+	"											YY_CURRENT_BUFFER_LVALUE = NULL;\n"
+	"											yy_scan_string(buf);\n"
+	"										} else\n"
+	"											return 0;\n"
+	"									} \n"
+	"								} // (*)\n"
+	"\n"
 	"}\n"
 	"\n"
 	"<NAMEQUOTE>{							///// refactor. Only used by LEX tag\n"
@@ -5470,6 +5504,7 @@ const char *own =
 	"	mtrac_free(prec_file);\n"
 	"	mtrac_free(context);\n"
 	"	mtrac_free(keywords);\n"
+	"	yylex_destroy(); // Flex scan buffer and stack\n"
 	"\n"
 	"	delete_stringlist(predef);\n"
 	"	delete_stringlist(ignores);\n"
@@ -5511,6 +5546,7 @@ const char *own =
 	"	mtrac_free(file_namepart);\n"
 	"	mtrac_free(file_pathpart);\n"
 	"	mtrac_free(file_location);\n"
+	"	fclose(file_fileptr);\n"
 	"\n"
 	"	delete_include_trace();\n"
 	"\n"
@@ -9186,7 +9222,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 94 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\n"
+	"	0.3 alpha 95 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
@@ -9354,9 +9390,10 @@ const char *manual =
 	"\n"
 	"To express its human-readable grammar, Lexon introduces a variation of the\n"
 	"Bachus-Naur Form (BNF) called the Lexon Grammar Form (LGF) as demonstrated in\n"
-	"[`grammar/english.lgf`](grammar/english.lgf#L26). LGF is compiled to BNF for use\n"
-	"with Bison as part of the build process. The result can be seen in file\n"
-	"[`build/parser.y`](build/parser.y#L1056) from tag `%%`.\n"
+	"[`grammar/english.lgf`](grammar/english.lgf#L26). LGF is compiled to BNF for\n"
+	"use with Bison as part of the build process (see use of `lexccc -Y` in the\n"
+	"Makefile, in essence, `bin/lexccc -Y grammar/english.lgf`).  The result can be\n"
+	"seen in file [`build/parser.y`](build/parser.y#L1056) from tag `%%`.\n"
 	"\n"
 	"BNF and Bison are preferred over RE-based compiler building suits because BNF\n"
 	"is more versatile and Bison's GLR is more powerful for human language parsing\n"
@@ -9374,6 +9411,37 @@ const char *manual =
 	"is over and programmer productivity has been firmly established as priority in\n"
 	"programming; for which the unintended consequenes of path dependency in\n"
 	"compiler building have to be addressed, and overcome.\n"
+	"\n"
+	"\n"
+	"\n"
+	"\n"
+	"## Compile Cycles\n"
+	"\n"
+	"The Lexon compiler is created in two cycles: first, a lexon compiler compiler,\n"
+	"`lexccc` is built that in the second cycle creates BNF from the Lexon grammar\n"
+	"description `grammar/english.lgf` and produces all files that Flex and Bison\n"
+	"need as input to create the Lexon compiler. See files in `build/`.\n"
+	"\n"
+	"The Lexon compiler is built and ready to go after the end of the 2nd cycle.\n"
+	"Any translation of a Lexon text——into other languages or to create a\n"
+	"tree——comes after this, aguably as the 3rd cycle.\n"
+	"\n"
+	"The use of the code that the compiler created——the application——is yet another\n"
+	"separate program invocation, after the 3rd build cycle.\n"
+	"\n"
+	"This depth is sometimes visible in the code where generated code is spliced\n"
+	"into code of the 1st cycle for the 2nd, or code is being created in the 1st\n"
+	"that will generate code that will generate code in the 3rd cycle, as part of\n"
+	"the actual compiler, e.g. the abstract syntax tree graphic.\n"
+	"\n"
+	"This degree of nested generation is not unusual for compilers. Lexon has a\n"
+	"focus on supporting work on an incrementally evolving grammar that comes as a\n"
+	"stand-alone, human-readable file, not mixed with target code. It also creates\n"
+	"type-safe abstract syntax trees and template walk code for it (option `-T`).\n"
+	"This makes the 2nd cycle the language development work phase, where the actual\n"
+	"work happens, both in terms of iterating the grammar and adapting the code\n"
+	"generation to it; with changes to `lexccc` and its code base being rare in\n"
+	"comparison.\n"
 	"\n"
 	"\n"
 	"\n"
@@ -9398,7 +9466,7 @@ const char *manual =
 	"Mac or Linux that are located in the [`bin/`](bin/) folder of this repository's\n"
 	"master branch. You can also download the\n"
 	"[binaries](https://www.lexon.org/download.html) from the Lexon site. That page\n"
-	"also has a step-by-step installation instruction.\n"
+	"also has step-by-step installation instructions.\n"
 	"\n"
 	"\n"
 	"\n"
@@ -9441,12 +9509,13 @@ const char *manual =
 	"\n"
 	"#### Alternative to `make`\n"
 	"\n"
-	"If you want or need to avoid `make`, you can just run the compiler:\n"
+	"If you want or need to avoid `make`, you can just compile:\n"
 	"\n"
 	"        cd build ; gcc -o ../bin/lexon scanner.c parser.c core.c javascript.c solidity.c sophia.c ; cd ..\n"
 	"\n"
-	"If you deleted the C sources in build/, e.g., using `make clean`, refresh the repo\n"
-	"index.\n"
+	"If you deleted the C sources in build/, e.g., using `make clean`, and don't\n"
+	"have Flex and Bison availabe, get the sources needed for cycle 2 back by `git\n"
+	"reset --hard` to be able to build again.\n"
 	"\n"
 	"\n"
 	"## Prerequisites for Complete Build\n"
@@ -9470,15 +9539,23 @@ const char *manual =
 	"	make 3.81 and 4.1\n"
 	"\n"
 	"\n"
-	"#### Optional Formatting\n"
+	"#### Optional\n"
 	"\n"
-	"Building skips the following automatically when not installed.\n"
+	"Building skips the following automatically when not installed:\n"
 	"\n"
-	"To indent generated intermediary C code during build from cycle 1:\n"
+	"**To check for memory leaks:**\n"
+	"\n"
+	"* valgrind\n"
+	"\n"
+	"There is a thorrough internal check for memory leaks, without valgrind, that\n"
+	"does not cover the interfacing to Bison and Flex. Valgrind does but may not\n"
+	"be availaible on all platforms.\n"
+	"\n"
+	"**To indent generated intermediary C code during build from cycle 1:**\n"
 	"\n"
 	"* gindent\n"
 	"\n"
-	"To color diffs of failing tests during check:\n"
+	"**To color diffs of failing tests during check:**\n"
 	"\n"
 	"* colordiff\n"
 	"\n"
@@ -9508,7 +9585,7 @@ const char *manual =
 	"\n"
 	"Note that no Javascript elements are needed when compiling a Lexon text, no\n"
 	"matter to what language, even to Javascript. The above applies solely for\n"
-	"executing the produced Javascript.\n"
+	"executing the produced Javascript at a later time.\n"
 	"\n"
 	"\n"
 	"\n"
@@ -9600,6 +9677,7 @@ const char *manual =
 	"**2nd level of tests: components**\n"
 	"\n"
 	"	deeptest        memory handling, includes, language parser, compiler\n"
+	"	memtest         valgrind & internal memory leak tests\n"
 	"	update          interactive, selective update of deeptest result references\n"
 	"	recheck         faster update, skipping successful tests of earlier deeptest\n"
 	"	expectations    full non-interactive update of deeptest result references\n"
