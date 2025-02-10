@@ -53,10 +53,10 @@ contract License {
         paid = true;
     }
 
-    function commission(bool _commissioned) public {
+    function commission() public {
         check_termination();
         permit(licensor);
-        commissioned = _commissioned;
+        commissioned = true;
     }
 
     function comment(string memory _comment_text) public {
@@ -65,10 +65,10 @@ contract License {
         comment_text = _comment_text;
     }
 
-    function publication(bool _published) public {
+    function publication() public {
         check_termination();
         permit(license_taker);
-        published = _published;
+        published = true;
     }
 
     function grant_permission_to_comment() public {
@@ -91,7 +91,7 @@ contract License {
                  || (published && (!permission_to_comment && (notice_time <= (block.timestamp - (24 * 3600))))));
     }
 
-    function notice() public view {
+    function notice() public {
         check_termination();
         require(msg.sender == agent || msg.sender == licensor, "not permitted");
         notice_time = block.timestamp;

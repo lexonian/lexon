@@ -45,17 +45,19 @@ has_gindent = $(shell which gindent)
 has_valgrind = $(shell which valgrind)
 
 
-all: build
+all: build sample
 
 help:
 	# make rules
-	# 
+	#
 	# all           build compiler and run an example (default)
 	# build         build compiler
 	# install       install compiler (run with sudo)
+	# mac install   install pre-built mac binary and copy it as bin/lexon
+	# linux install install pre-built linux binary and copy it as bin/lexon
 	# sample        compile escrow example to solidity
-	# check         compiler tests: deeptest, focustest, sample
-	# devcheck      all tests: envtest, memtest, deeptest, grammarcheck, focustest, sample
+	# check         compiler tests: focustest, deeptest
+	# devcheck      all tests: envtest, grammarcheck, memtest, focustest, deeptest
 	# testlog       dump the 100 last lines of the test log
 	# clean         delete all built files, except pre-built binaries
 	# ls            show the source and build directories
@@ -91,7 +93,7 @@ help:
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
 
 build:
-	@if (! $(MAKE) -q lexccc.c build/scanner.c build/parser.c) ; \
+	@if (! $(MAKE) -q lexccc.c) ; \
 		then printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
 		$(MAKE) lexccc ; \
 	fi
@@ -197,9 +199,24 @@ build/sophia.c: src/target.c src/.indent.pro $(wildcard src/sophia.c)
 		sed -E -e "s/\/\*T\*\///" -e "s/\/\*Sop\*\/ ?//" -e "s/\/\*S\+S\*\/ ?//" -e "s/\/\*Sol.*//" -e "s/\/\*JS.*//" -e "s/\/\*J\+S.*//" -e "s/xxx_/sophia_/g" -e 's/ ##.*//g' ../src/target.c > sophia.c ; \
 	fi
 
-install: build
+install:
 	@install -d $(PREFIX)/bin/
 	install bin/lexon $(PREFIX)/bin/
+
+mac:
+ifeq (,$(wildcard bin/lexon_mac))
+	$(error Lexon binary for Mac not present in bin/. Try a fresh clone of the master branch.)
+endif
+	@touch -A-0100 bin/lexon_mac
+	cp -p bin/lexon_mac bin/lexon
+
+linux:
+ifeq (,$(wildcard bin/lexon_linux))
+	$(error Lexon binary for Linux not present in bin/. Try a fresh clone of the master branch.)
+endif
+	@touch -A-0100 bin/lexon_linux
+	cp -p bin/lexon_linux bin/lexon
+
 
 sample: build
 	@printf "\n$(hi)▫️  compile escrow example $(off)\n\n"
@@ -207,9 +224,9 @@ sample: build
 	@bin/lexon --solidity examples/escrow.lex
 	@echo
 
-check: deeptest focustest
+check: focustest deeptest
 
-devcheck: envtest grammarcheck memtest deeptest focustest
+devcheck: envtest grammarcheck memtest focustest deeptest
 
 grammarcheck: build
 	@printf "\n$(hi)▫️  grammar checks $(off)\n\n"

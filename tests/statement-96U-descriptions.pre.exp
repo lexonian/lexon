@@ -1,0 +1,85 @@
+
+precompilation:
+---------------
+
+statement 96U descriptions   1:   LEX: «UCC Financing Statement».
+
+statement 96U descriptions   3:   LEXON: ‹0.2.12›.
+
+statement 96U descriptions   5:   "«Financing Statement»" is this contract.
+statement 96U descriptions   6:   "«File Number»" is data.
+statement 96U descriptions   7:   "«Initial Statement Date»" is a time.
+statement 96U descriptions   8:   "«Filer»" is a person.
+statement 96U descriptions   9:   "«Debtor»" is a person.
+statement 96U descriptions  10:   "«Secured Party»" is a person.
+statement 96U descriptions  11:   "«Filing Office»" is a person.
+statement 96U descriptions  12:   "«Collateral»" is data.
+statement 96U descriptions  13:   "«Digital Asset Collateral»" is an amount.
+statement 96U descriptions  14:   "«Reminder Fee»" is an amount.
+statement 96U descriptions  15:   "«Continuation Window Start»" is a time.
+statement 96U descriptions  16:   "«Continuation Statement Date»" is a time.
+statement 96U descriptions  17:   "«Continuation Statement Filing Number»" is data.
+statement 96U descriptions  18:   "«Lapse Date»" is a time.
+statement 96U descriptions  19:   "«Default»" is a binary.
+statement 96U descriptions  20:   "«Continuation Statement»" is a binary.
+statement 96U descriptions  21:   "«Termination Statement»" is a binary.
+statement 96U descriptions  22:   "«Termination Statement Time»" is a time.
+statement 96U descriptions  23:   "«Notification Statement»" is a text.
+
+statement 96U descriptions  25:   The «Filer» fixes the «Filing Office», fixes the «Debtor», fixes the «Secured Party», and fixes the «Collateral».
+
+statement 96U descriptions  27:   Clause: «Certify».
+statement 96U descriptions  28:   The «Filing Office» may certify the «File Number».
+
+statement 96U descriptions  30:   Clause: «Set File Date».
+statement 96U descriptions  31:   The «Filing Office» may fix the «Initial Statement Date» as the current time.
+
+statement 96U descriptions  33:   Clause: «Set Lapse».
+statement 96U descriptions  34:   The «Filing Office» may fix the «Lapse Date».
+
+statement 96U descriptions  36:   Clause: «Set Continuation Start».
+statement 96U descriptions  37:   The «Filing Office» may fix the «Continuation Window Start».
+
+statement 96U descriptions  39:   Clause: «Pay Fee».
+statement 96U descriptions  40:   The «Secured Party» may pay a «Reminder Fee» into escrow.
+
+statement 96U descriptions  42:   Clause: «Standard Notice».
+statement 96U descriptions  43:   The «Filing Office» may register the «Notification Statement» as ‹Official Notice by the Filing Office›.
+
+statement 96U descriptions  45:   Clause: «Notice».
+statement 96U descriptions  46:   The «Filing Office» may fix the «Notification Statement».
+
+statement 96U descriptions  48:   Clause: «Notify».
+statement 96U descriptions  49:   The «Filing Office» may, if the «Continuation Window Start» has passed, send the «Notification Statement» to the «Secured Party».
+
+statement 96U descriptions  51:   Clause: «Pay Escrow In».
+statement 96U descriptions  52:   The «Debtor» may pay the «Digital Asset Collateral» into escrow.
+
+statement 96U descriptions  54:   Clause: «Fail to Pay».
+statement 96U descriptions  55:   The «Secured Party» may declare «Default».
+
+statement 96U descriptions  57:   Clause: «Take Possession».
+statement 96U descriptions  58:   The «Filing Office» may, if «Default» is declared, pay the «Digital Asset Collateral» to the «Secured Party».
+
+statement 96U descriptions  60:   Clause: «File Continuation».
+statement 96U descriptions  61:   The «Secured Party» may file the «Continuation Statement».
+
+statement 96U descriptions  63:   Clause: «Set Continuation Lapse».
+statement 96U descriptions  64:   The «Filing Office» may, if the «Continuation Statement» is filed, fix the «Continuation Statement Date».
+
+statement 96U descriptions  66:   Clause: «File Termination».
+statement 96U descriptions  67:   The «Secured Party» may file a «Termination Statement», and certify the «Termination Statement Time» as the then current time.
+
+statement 96U descriptions  69:   Clause: «Release Escrow».
+statement 96U descriptions  70:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Digital Asset Collateral» to the «Debtor».
+
+statement 96U descriptions  72:   Clause: «Release Reminder Fee».
+statement 96U descriptions  73:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Reminder Fee» to the «Secured Party».
+
+statement 96U descriptions  75:   Clause: «Termination Period».
+statement 96U descriptions  76:   "«Termination Period»" is defined as 365 days after the «Termination Statement Time».
+
+statement 96U descriptions  78:   Clause: «Terminate and Clear».
+statement 96U descriptions  79:   The «Filing Office» may, if the «Termination Period» has passed, terminate this contract.
+
+

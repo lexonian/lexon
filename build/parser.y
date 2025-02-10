@@ -540,6 +540,7 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	Description *Description;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -1733,6 +1734,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	Combinand:	
 		  Symbol                                          { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; $$=process_combinand(Combinand); }
 		| Symbol Expiration                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; Combinand->Expiration=$Expiration; $$=process_combinand(Combinand); }
+		| Description                                     { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=$Description; $$=process_combinand(Combinand); }
 		| Scalar_Comparison                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=$Scalar_Comparison; $$=process_combinand(Combinand); }
 		| Negation                                        { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=$Negation; $$=process_combinand(Combinand); }
 		| Existence                                       { NEW(Combinand, *((Literal **)&yylval)); Combinand->Existence=$Existence; $$=process_combinand(Combinand); }
@@ -2552,9 +2554,10 @@ Combinor *process_combinor(Combinor *Combinor) {
 }
 
 Combinand *process_combinand(Combinand *Combinand) {
-	if(opt_debug_actions) printf("actions: parsing Combinand '%s'\n", Combinand->Literal);
+	if(opt_debug_actions) printf("actions: parsing Combinand %s\n", Combinand->Description);
 	// Combinand->Symbol
 	// Combinand->Expiration
+	// Combinand->Description
 	// Combinand->Scalar_Comparison
 	// Combinand->Negation
 	// Combinand->Existence

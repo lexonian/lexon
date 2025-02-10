@@ -26,10 +26,10 @@ module.exports = class UCCFinancingStatement {
     }
 
 
-    certify(caller)  {
+    certify(caller, file_number)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
-            this.file_number = true;
+            this.file_number = file_number;
         } else {
             return 'not permitted.';
         }

@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.93-95 U"
+#define backend_version "javascript 0.3.93-96 U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -113,10 +113,11 @@ static char *quote_trimmed(const char *token);
 static char *dash_spaced(const char *token);
 extern char *snake_spaced(const char *token);
 extern char *camel_spaced(const char *token);
-extern char *LOW(const char *token);
+extern char *SNAKE(const char *token);
+extern char *snakedup(const char *token);
 extern char *UP(const char *token);
 
-static char *SAFE(const char *token);
+static char *safedup(const char *token);
 static const char *type(const char *varname, bool option_type, bool forpara);
 static const char *nullmap(const char *lex_type, bool defined_default);
 static const char *defaultmap(const char *lex_type);
@@ -128,22 +129,37 @@ static char *methods = null;
 static char *globals = null;
 static char *declarations = null;
 static char *initializations = null;
-static char *fixed = null;	       // list of variables that have been set in this function
+static char *fixed = null;	       // list of variables that have been set
 static char *declared = null;	       // list of variables that come in as paremeters
 static char *functions = null;
 static bool miller = false;
 
-static char _safe[1003];
-static char *SAFE(const char *name) {  ////// INCOMPLETE LIST: INCLUDE ALL LANGUAGE KEYWORDS
+static char *safedup(const char *name) {
 	assert(name);
-	assert(strlen(name) < 1000);
+	char *_safe = mtrac_malloc(strlen(name) + 3);
+
 	strcpy(_safe, " ");
 	strcat(_safe, name);
 	strcat(_safe, " ");
-	if (!strstr(" send terminate terminated default ", _safe))
-		return (char *)name;
-	strcpy(_safe, name);	       //X difference to S+S warranted? //////
-	strcat(_safe, "_");
+
+	if (!strstr(" send terminate terminated default "	// Lexon ◊
+		    " abstract arguments await boolean break byte case catch"
+		    " char class const continue debugger default delete do"
+		    " double else enum eval export extends false final"
+		    " finally float for function goto if implements import"
+		    " in instanceof int interface let long native new"
+		    " null package private protected public return short static"
+		    " super switch synchronized this throw throws transient true"
+		    " try typeof var void volatile while with yield ", _safe)) {
+
+		strcpy(_safe, name);
+
+	} else {
+		strcpy(_safe, name);
+		strcat(_safe, "_");
+
+	}
+
 	return _safe;
 }
 
@@ -414,15 +430,17 @@ typedef struct Definitions {
 
 typedef struct Definition {
 	Name *Name;
-	struct Placeholder *Placeholder;
+	struct Type_Term *Type_Term;
 	struct Article *Article;
 	struct This_Contract *This_Contract;
+	Literal *Literal;
 } Definition;
 
-typedef struct Placeholder {
+typedef struct Type_Term {
 	struct Type *Type;
 	struct Article *Article;
-} Placeholder;
+	Literal *Literal;
+} Type_Term;
 
 typedef struct Type {
 	struct Person *Person;
@@ -435,32 +453,41 @@ typedef struct Type {
 } Type;
 
 typedef struct Person {
+	Literal *Literal;
 } Person;
 
 typedef struct Amount {
+	Literal *Literal;
 } Amount;
 
 typedef struct Time {
+	Literal *Literal;
 } Time;
 
 typedef struct Binary {
+	Literal *Literal;
 } Binary;
 
 typedef struct Text {
+	Literal *Literal;
 } Text;
 
 typedef struct Data {
+	Literal *Literal;
 } Data;
 
 typedef struct This_Contract {
 	struct This *This;
 	Name *Name;
+	Literal *Literal;
 } This_Contract;
 
 typedef struct All_Contracts {
+	Literal *Literal;
 } All_Contracts;
 
 typedef struct This {
+	Literal *Literal;
 } This;
 
 typedef struct Clauses {
@@ -706,6 +733,7 @@ typedef struct If {
 
 typedef struct Expression {
 	struct Combination *Combination;
+	Literal *Literal;
 } Expression;
 
 typedef struct Scalar_Comparison {
@@ -752,6 +780,7 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	Description *Description;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -875,11 +904,11 @@ static Name *class = null;
 static bool main_constructor_body = true;
 static bool covenant_constructor_body = false;
 static bool recital_of_terms = false;
-bool js_name(char **production, Name *Name, int indent) {
+bool js_name(char **production, Name *Name, bool assign, int indent) {
 	if (!Name) return false;
 
-	/* put '_' to names that are target language keywords *////// incomplete list
-	char *safe = SAFE(LOW(snake_spaced(Name)));	///// don't store LOW buffer
+	/* put '_' to names that are target language keywords */
+	char *safe = safedup(SNAKE(Name));
 
 	if (!in(functions, Name)) {
 		padcat(0, 0, production, in(globals, Name)
@@ -891,6 +920,8 @@ bool js_name(char **production, Name *Name, int indent) {
 		       && !main_constructor_body ? "main." : "this.",
 		       bind->tag);
 	}
+	if (assign) padcat(0, 0, &fixed, ":", safe, ":");
+	mtrac_free(safe);
 	return true;
 }
 
@@ -929,15 +960,6 @@ bool js_covenant(char **production, Covenant * Covenant, int indent);
 bool js_provisions(char **production, Provisions * Provisions, int indent);
 bool js_definitions(char **production, Definitions * Definitions, int indent);
 bool js_definition(char **production, Definition * Definition, int indent);
-bool js_placeholder(char **production, Placeholder * Placeholder, int indent);
-bool js_type(char **production, Type * Type, int indent);
-bool js_person(char **production, Person * Person, int indent);
-bool js_amount(char **production, Amount * Amount, int indent);
-bool js_time(char **production, Time * Time, int indent);
-bool js_binary(char **production, Binary * Binary, int indent);
-bool js_text(char **production, Text * Text, int indent);
-bool js_data(char **production, Data * Data, int indent);
-bool js_this(char **production, This * This, int indent);
 bool js_clauses(char **production, Clauses * Clauses, int indent);
 bool js_clause(char **production, Clause * Clause, int indent);
 bool js_body(char **production, Body * Body, int indent);
@@ -948,12 +970,11 @@ bool js_actions(char **production, Actions * Actions, int indent);
 bool js_action(char **production, Action * Action, int indent);
 bool js_subject(char **production, Subject * Subject, int indent);
 bool js_symbols(char **production, Symbols * Symbols, int indent);
-bool js_symbol(char **production, Symbol * Symbol, int indent);
+bool js_symbol(char **production, Symbol * Symbol, bool assign, int indent);
 bool js_noun(char **production, Symbol * Symbol, int indent);
 bool js_catena(char **production, Catena * Catena, int indent);
 bool js_object(char **production, Object * Object, int indent);
 bool js_reflexive(char **production, Reflexive * Reflexive, int indent);
-bool js_contract(char **production, Contract * Contract, int indent);
 bool js_predicates(char **production, Predicates * Predicates, int indent);
 bool js_predicate(char **production, Predicate * Predicate, int indent);
 bool js_permission(char **production, Permission * Permission, int indent);
@@ -975,7 +996,6 @@ bool js_fixture(char **production, Fixture * Fixture, int indent);
 bool js_fix(char **production, Fix * Fix, int indent);
 bool js_setting(char **production, Setting * Setting, int indent);
 bool js_illocutor(char **production, Illocutor * Illocutor, int indent);
-bool js_be(char **production, Be * Be, int indent);
 bool js_payment(char **production, Payment * Payment, int indent);
 bool js_pay(char **production, Pay * Pay, int indent);
 bool js_preposition(char **production, Preposition * Preposition, int indent);
@@ -1233,7 +1253,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	paratag = strlen(*production);
 	if (!opt_bare) padcat(2, indent, production, "");
 	padcat(0, indent, production, "module.exports = class ", camel_spaced(module), " {%21%");	// %21%: member initialization by parameters
-	padcat(1, indent + 1, production, "constructor(%1%) {");	// sic not C
+	padcat(1, indent + 1, production, "constructor(%1%) {");	// sic not C. %1%: constructor parameters
 	padcat(1, 0, production, "%20%");	// %20%: closure 'main = this'
 
 	main_constructor_body = true;
@@ -1243,17 +1263,10 @@ bool js_document(char **production, Document *Document, int indent) {
 	main_constructor_body = false;
 	enforce_same_subject = false;
 
-	/* inject catch of non-permissioned caller in constructor wrapper ///// what happened to this case
-	 * char *perm = mtrac_strdup("");
-	 * char *close = mtrac_strdup("");
-	 * produce_access_conditions(1, indent, &perm, active_subjects);
-	 * if(strlen(perm)) padcat(1, indent, &close, "}");
-	 * replace(production, "%15%", perm);
-	 * replace(production, "%16%", close);
-	 * mtrac_free(perm);
-	 * mtrac_free(close);
-	 */ delete_list(active_subjects);
+	delete_list(active_subjects);
 	active_subjects = null;
+
+	replace(production, "%1%", parameters);
 
 	/* covenants
 	 * js: like all non-covenant clauses, the entire covenant class definition including all their clauses,
@@ -1595,8 +1608,6 @@ bool js_document(char **production, Document *Document, int indent) {
 	/* js: end of main class */
 	padcat(1, indent, production, "}");
 
-	replace(production, "%1%", parameters);
-
 	/* end of file */
 	if (!opt_bare) padcat(2, indent, production, "/* end */\n");
 
@@ -1760,7 +1771,7 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 
 	paratag = strlen(*production);
 	class = mtrac_strdup(UP(camel_spaced(Covenant->Name)));
-	instance = mtrac_strdup(LOW(snake_spaced(Covenant->Name)));
+	instance = snakedup(Covenant->Name);
 	has_subclasses = true;
 	char *functions_shelve = mtrac_strdup(functions);
 	char *fixed_shelve = mtrac_strdup(fixed);
@@ -1796,7 +1807,7 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 				" covenant class");
 	if (opt_comment) padcat(1, indent, production, " **/");
 
-	/*
+	/* //// clean up
 	 * if(opt_lexon_comments) {
 	 * char *c = mtrac_strdup(get_lexcom("start"));
 	 * replace(&c, "\n", "\n *\t");
@@ -1876,8 +1887,7 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 	if (opt_comment) padcat(2, 1, &adders, "/* create new instance of ",
 				Covenant->Name,
 				" covenant, and register it with main */");
-	padcat(C, 1, &adders, "add_", LOW(snake_spaced(Covenant->Name)),
-	       "(%2%) {");
+	padcat(C, 1, &adders, "add_", SNAKE(Covenant->Name), "(%2%) {");
 	if (uses_termination) padcat(1, 2, &adders, "if (this.already_terminated()) return undefined;");	// this == main
 	padcat(1, 2, &adders, "return this.", list, "[this.", count,
 	       " += 1] = this.", class, "(%2b%);");
@@ -1903,7 +1913,7 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 	replace(&instructions, "%2%", parameta);
 
 	/* function modifier */
-	// needed here?
+	// needed here? ◊ 
 
 	/* cleanup & stack ('shelve') popping */
 	delete_list(active_subjects);
@@ -1945,8 +1955,6 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 				   "/* object members: skip for restoring serialized object */");
 	if (opt_persistence) padcat(1 + (opt_comment ? 0 : 1), indent++, production, "if(typeof ", main_constructor_body ? "%7%" : "caller", " !== 'undefined') {");	// (*)
 
-	if (current_function) current_function->uses_caller |= !main_constructor_body;	// for clarity. Really main_constructor_body -> !current_function
-
 	if (main_constructor_body) padcat(1, indent, production,
 					  "this._escrow = 0;");
 	if (!global_definitions) global_definitions = Provisions->Definitions;
@@ -1976,8 +1984,6 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	/* end of constructor body */
 	if (opt_persistence) padcat(1, --indent, production, "}");
 	if (!main_constructor_body) padcat(1, --indent, production, "}");	// end of constructor
-	/* the above line does anyting only during main_constructor_body==true,
-	 * which implies current_function==null => irrelevant for uses_caller *////// < ???
 
 	/* insert caller argumnet and 'payable' modifier */
 	replace(production, "%7%", caller ? caller : "caller");	// ! caller is not yet set at (*) above.
@@ -2030,16 +2036,10 @@ bool js_definition(char **production, Definition *Definition, int indent) {
 			error("do not re-use the same name in multiple definitions", Definition->Name);
 	}
 	padcat(1, indent, production, "");
-	js_name(production, Definition->Name, indent);
+	js_name(production, Definition->Name, false, indent);
 	padcat(0, 0, production, " = null;");
 
-	padcat(0, 0, &declared, ":", LOW(snake_spaced(Definition->Name)), ":");	// declared: write #1
-	return true;
-}
-
-bool js_placeholder(char **production, Placeholder *Placeholder, int indent) {
-	if (!Placeholder) return false;
-	js_type(production, Placeholder->Type, indent + 1);
+	padcat(0, 0, &declared, ":", SNAKE(Definition->Name), ":");	// declared: write #1
 	return true;
 }
 
@@ -2064,12 +2064,13 @@ const char *nullmap(const char *lex_type, bool defined_default) {
 const char *lexsymtype(Symbol *symbol) {
 	char *pretty_varname;
 
-	if (symbol->Name) pretty_varname = LOW(snake_spaced(symbol->Name));	///// don't store LOW buffer
-	else if (symbol->Type) pretty_varname = LOW(snake_spaced(symbol->Type->Literal));	///// don't store LOW buffer
+	if (symbol->Name) pretty_varname = snakedup(symbol->Name);
+	else if (symbol->Type) pretty_varname = snakedup(symbol->Type->Literal);
 	assert(pretty_varname);
 	const char *lt = lextype(pretty_varname);
 
-	if (!strcmp(lt, "[ ERROR: UNKNOWN CATEGORY ]")) return null;
+	mtrac_free(pretty_varname);
+	if (!strcmp(lt, "[ ERROR: UNKNOWN CATEGORY ]")) return null;	// assert ◊
 	return lt;
 }
 
@@ -2081,141 +2082,70 @@ const char *lextype(const char *name) {
 		return "person";
 	if (!strcmp(name, "amount") || !strcmp(name, "Amount"))
 		return "amount";
-	char *_name = mtrac_strdup(name);	// to get out of LOW buffer, if nec. /// optimize ///// does not work when it kills LOW for caller
-
 	while (d && d->Definition) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return d->Definition->Placeholder->Type->Literal;
+		if (!strcmp(name, SNAKE(d->Definition->Name))) {
+			return d->Definition->Type_Term->Type->Literal;
 		}
 		d = d->Definitions;
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	mtrac_free(_name);
-	return "[ ERROR: UNKNOWN CATEGORY ]";
+	return "[ ERROR: UNKNOWN CATEGORY ]";	// assert ◊
 }
 
 const char *type(const char *name, bool option_type, bool forpara) {
 	Definitions *d = global_definitions;
 	bool covenants = false;	       // loop goes global first, then local covenant definitions
-	char *_name = mtrac_strdup(name);	// to get out of LOW buffer, if nec. /// optimize
 
 	while (d && d->Definition) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return typemap(d->Definition->Placeholder->Type->
-				       Literal, option_type, forpara);
+		if (!strcmp(name, SNAKE(d->Definition->Name))) {
+			return typemap(d->Definition->Type_Term->Type->Literal,
+				       option_type, forpara);
 		}
 		d = d->Definitions;
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	mtrac_free(_name);
-	return "[ ERROR: UNKNOWN TYPE ]";
+	return "[ ERROR: UNKNOWN TYPE ]";	// assert ◊
 }
 
 const char *nullvalue(const char *name, bool defined_default) {
 	assert(global_definitions);
-	char *_name = mtrac_strdup(name);	// to get out of LOW buffer, if nec. /// optimize
+	char *snakename = snakedup(name);
 	Definitions *d = global_definitions;
 
 	while (d) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return nullmap(d->Definition->Placeholder->Type->
-				       Literal, defined_default);
+		if (!strcmp(snakename, SNAKE(d->Definition->Name))) {
+			mtrac_free(snakename);
+			return nullmap(d->Definition->Type_Term->Type->Literal,
+				       defined_default);
 		}
 		d = d->Definitions;
 	}
 	d = covenant_definitions;
 	while (d) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return nullmap(d->Definition->Placeholder->Type->
-				       Literal, defined_default);
+		if (!strcmp(snakename, SNAKE(d->Definition->Name))) {
+			mtrac_free(snakename);
+			return nullmap(d->Definition->Type_Term->Type->Literal,
+				       defined_default);
 		}
 		d = d->Definitions;
 	}
-	mtrac_free(_name);
-	return "[ ERROR: UNKNOWN NAME ]";
+	mtrac_free(snakename);
+	return "[ ERROR: UNKNOWN NAME ]";	// assert ◊
 }
 
-bool js_type(char **production, Type *Type, int indent) {
-	if (!Type) return false;
-	if (opt_debug) printf("producing Type\n");
-
-	js_person(production, Type->Person, indent + 1);
-	js_amount(production, Type->Amount, indent + 1);
-	js_time(production, Type->Time, indent + 1);
-	js_binary(production, Type->Binary, indent + 1);
-	js_text(production, Type->Text, indent + 1);
-	js_data(production, Type->Data, indent + 1);
-
-	padcat(0, 0, production, ") ");
-
-	return true;
-}
-
-bool js_person(char **production, Person *Person, int indent) {
-	if (!Person) return false;
-	if (opt_debug) printf("producing Person\n");
-	return true;
-}
-
-bool js_amount(char **production, Amount *Amount, int indent) {
-	if (!Amount) return false;
-	if (opt_debug) printf("producing Amount\n");
-	return true;
-}
-
-bool js_time(char **production, Time *Time, int indent) {
-	if (!Time) return false;
-	if (opt_debug) printf("producing Time\n");
-	return true;
-}
-
-bool js_binary(char **production, Binary *Binary, int indent) {
-	if (!Binary) return false;
-	if (opt_debug) printf("producing Binary\n");
-
-	return true;
-}
-
-bool js_text(char **production, Text *Text, int indent) {
-	if (!Text) return false;
-	if (opt_debug) printf("producing Text\n");
-
-	return true;
-}
-
-bool js_data(char **production, Data *Data, int indent) {
-	if (!Data) return false;
-	if (opt_debug) printf("producing Data\n");
-
-	return true;
-}
-
-bool js_this_contract(char **production, This_Contract *This_Contract,
-		      int indent) {
+bool js_this_contract(char **production, This_Contract *This_Contract, int indent) {	// unclear concept ◊
 	if (!This_Contract) return false;
 	padcat(0, 0, production, "this.");
-
+	// intentionally empty
 	return true;
 }
 
-bool js_all_contracts(char **production, All_Contracts *All_Contracts,
-		      int indent) {
+bool js_all_contracts(char **production, All_Contracts *All_Contracts, int indent) {	// unclear concept ◊
 	if (!All_Contracts) return false;
-	padcat(0, 0, production, "main.");	// JS/Sol/Sop? //////
-	return true;
-}
-
-bool js_this(char **production, This *This, int indent) {
-	if (!This) return false;
-	if (opt_debug) printf("producing This\n");
-	padcat(1, indent, production, "( this ");
-	padcat(0, 0, production, ") ");
+	// intentionally empty
+	padcat(0, 0, production, "main.");
 	return true;
 }
 
@@ -2238,9 +2168,12 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 	bool is_payable_stack = is_payable;
 
 	/* track which function calls which other functions */
-	bind *bind = register_bind(SAFE(LOW(snake_spaced(Clause->Name))));	///// don't call with LOW buffer
+	char *low = SNAKE(Clause->Name);
+	char *safe = safedup(low);
+	bind *bind = register_bind(safe);
 
-	padcat(0, 0, &declared, ":", LOW(snake_spaced(Clause->Name)), ":");	// declared: write #2
+	mtrac_free(safe);
+	padcat(0, 0, &declared, ":", low, ":");	// declared: write #2
 	current_function = bind;
 
 	paratag = strlen(*production);
@@ -2248,8 +2181,10 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 				" clause */");
 
 	if (opt_lexon_comments) {
-		char *c = mtrac_strdup(get_lexcom(LOW(snake_spaced(Clause->Name))));	///// don't call with LOW buffer
+		char *clause = snakedup(Clause->Name);
+		char *c = mtrac_strdup(get_lexcom(clause));
 
+		mtrac_free(clause);
 		assert(c);
 		replace(&c, "\n", "\n     *  ");
 		padcat(2, 0, production, "    /*\n     *  ", c, "\n     */");
@@ -2288,7 +2223,7 @@ bool js_body(char **production, Body *Body, int indent) {
 
 	js_function(production, Body->Function, indent + 1);
 	if (opt_feedback && !Body->Function)
-		padcat(1, indent + 1, production, "return 'done.';");	// this.", LOW(snake_spaced(class)), EOL);
+		padcat(1, indent + 1, production, "return 'done.';");	// this.", SNAKE(class), EOL);
 
 	padcat(1, indent, production, "}");
 	return true;
@@ -2351,7 +2286,7 @@ bool js_action(char **production, Action *Action, int indent) {
 		/* this takes care of the subject person 1) becoming a parameter and 2) an object member that 3) gets the parameter assigned */
 		insert_parameter_and_set_member(production, null, Action->Subject->Symbols->Symbol, payment, paratag, indent, __LINE__);	// call #1
 		/* the function we are in, if it had no caller set yet, the subject will be used as the caller, LITERALLY. */
-		if (!caller) caller = mtrac_strdup(LOW(snake_spaced(Action->Subject->Symbols->Symbol->Name)));	// ...
+		if (!caller) caller = snakedup(Action->Subject->Symbols->Symbol->Name);	// ...
 	}
 
 	/* for main_constructor_bodys, enforce that if there are multiple sentences, they all use the same subjects */
@@ -2428,7 +2363,7 @@ bool js_action(char **production, Action *Action, int indent) {
 		while (Symbols && Symbols->Symbol) {
 			if (i++) padcat(0, 0, production, " || ");
 			padcat(0, 0, production, "caller == ");
-			js_symbol(production, Symbols->Symbol, 0);
+			js_symbol(production, Symbols->Symbol, false, 0);
 			if (current_function) current_function->uses_caller =
 					true;
 			Symbols = Symbols->Symbols;
@@ -2477,7 +2412,7 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 		 * (which's literal may be in Literal but Name after parsing) */
 		if (s->Symbol->Name) {
 
-			char *varname = LOW(snake_spaced(s->Symbol->Name));	///// don't store LOW buffer
+			char *varname = snakedup(s->Symbol->Name);
 			char *lexname = s->Symbol->Name;
 			char *scope = (!in(globals, s->Symbol->Name) && class) ? "this." : "main.";	////// unite with usual 'main_constructor_body?' ?
 
@@ -2485,23 +2420,25 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 
 			/* binding of unbound person variable to caller parameter */
 			if (!main_constructor_body) {
+				char *safe = safedup(varname);
+
 				/* precondition that caller and all of the subjects cannot be the same */
 				if (first) padcat(2, indent, &subjnonmatch,
-						  "if(caller != ", scope,
-						  SAFE(varname));
+						  "if(caller != ", scope, safe);
 				else padcat(0, 0, &subjnonmatch,
-					    " && caller != ", scope,
-					    SAFE(varname));
+					    " && caller != ", scope, safe);
 				/* produce bind code. Person in question must still be null, i.e., unbound */
 				if (!in(fixed, varname)) {
 					padcat(1, indent + 1, &subjlatebind,
 					       !any ? "" : "else ", "if(",
-					       scope, SAFE(varname),
-					       " == null) ", scope,
-					       SAFE(varname), " = caller;");
+					       scope, safe, " == null) ", scope,
+					       safe, " = caller;");
 					any = true;
+					padcat(0, 0, &fixed, ":", safe, ":");	// right? ◊
 				}
+				mtrac_free(safe);
 			}
+			mtrac_free(varname);
 		}
 		s = s->Symbols;
 		first = false;
@@ -2521,33 +2458,40 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 
 bool js_symbols(char **production, Symbols *Symbols, int indent) {
 	if (!Symbols) return false;
-	js_symbol(production, Symbols->Symbol, indent);
+	js_symbol(production, Symbols->Symbol, false, indent);
 	js_catena(production, Symbols->Catena, indent);
 	js_symbols(production, Symbols->Symbols, indent);
 	return true;
 }
 
-bool js_symbol(char **production, Symbol *Symbol, int indent) {
+bool js_symbol(char **production, Symbol *Symbol, bool assign, int indent) {
 	if (!Symbol) return false;
 
-	/* produce the name literal. Note that js_name adds 'this.' or 'main.', which makes for a global scope,
-	 * while the cases that a type name is itself used as variable name, it is use unprefixed, for a local scope. */
-	if (Symbol->Name) js_name(production, Symbol->Name, indent);
-	else if (Symbol->Type) {
+	/* produce the name literal. Note that js_name adds 'this.'
+	 * or 'main.', which makes for a global scope, while the cases
+	 * that a type name is itself used as variable name, it is use
+	 * unprefixed, for a local scope. */
+	if (Symbol->Name)
+		js_name(production, Symbol->Name, assign, indent);
+	else {
+		assert(Symbol->Type);
+		char *safe = safedup(SNAKE(Symbol->Type->Literal));
 
-		padcat(0, 0, production,
-		       SAFE(LOW(snake_spaced(Symbol->Type->Literal))));
-	} else {
-		padcat(0, 0, production, "[ UNDEFINED ]");
-	}			       ///// or assert
+		padcat(0, 0, production, safe);
+		if (assign) padcat(0, 0, &fixed, ":", safe, ":");
+		mtrac_free(safe);
+	}
 	return true;
 }
 
 bool js_noun(char **production, Symbol *Symbol, int indent) {
 	if (!Symbol) return false;
-	if (Symbol->Name) padcat(0, 0, production, Symbol->Name);
-	else if (Symbol->Type) padcat(0, 0, production, Symbol->Type->Literal);
-	else padcat(0, 0, production, "[ UNKNOWN ]");
+	if (Symbol->Name)
+		padcat(0, 0, production, Symbol->Name);
+	else {
+		assert(Symbol->Type);
+		padcat(0, 0, production, Symbol->Type->Literal);
+	}
 	return true;
 }
 
@@ -2561,7 +2505,7 @@ bool js_object(char **production, Object *Object, int indent) {
 	if (opt_debug) printf("producing Object\n");
 	if (Object->Symbol) {
 
-		js_symbol(production, Object->Symbol, indent + 1);
+		js_symbol(production, Object->Symbol, false, indent + 1);
 
 	} else if (Object->Reflexive)
 		js_reflexive(production, Object->Reflexive, indent + 1);
@@ -2581,20 +2525,8 @@ bool js_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	if (action->Subject->Symbols->Symbols)
 		error("don't use multiple subjects with a reflexive pronoun",
 		      action->Subject->Symbols->Symbol->Name);
-	js_symbol(production, action->Subject->Symbols->Symbol, indent + 1);
-
-	return true;
-}
-
-bool js_contract(char **production, Contract *Contract, int indent) {
-	if (!Contract) return false;
-	if (opt_debug) printf("producing Contract\n");
-	padcat(1, indent, production, "( contract ");
-
-	js_this_contract(production, Contract->This_Contract, indent + 1);
-	js_all_contracts(production, Contract->All_Contracts, indent + 1);
-
-	padcat(0, 0, production, ") ");
+	js_symbol(production, action->Subject->Symbols->Symbol, false,
+		  indent + 1);
 
 	return true;
 }
@@ -2634,12 +2566,14 @@ bool js_permission(char **production, Permission *Permission, int indent) {
 	if (opt_debug) printf("producing Permission\n");
 	return true;
 }
+
+	/* assign a symbol an expression */
 static void assign(char **production, int indent, Symbol *symbol,
 		   Expression *expression) {
 	padcat(1, indent, production, "");
 
 	miller = true;
-	js_symbol(production, symbol, indent);
+	js_symbol(production, symbol, true, indent);	// true --> assign flag
 	miller = false;
 
 	padcat(0, 0, production, " = ");
@@ -2656,18 +2590,19 @@ bool js_certification(char **production, Certification *Certification,
 	if (!Certification) return false;
 	if (opt_debug) printf("producing Certification\n");
 
-	assert(!strstr(*production, "%preassign%"));	//X is all of the following dated and should be rolled into Sop/assign ?
+	assert(!strstr(*production, "%preassign%"));	//////X is all of the following dated and should be rolled into Sop/assign ?
 	padcat(0, 0, production, "%preassign%");
 	preass_indent = indent;
-	padcat(1, indent, production, "");
-	js_symbol(production, Certification->Symbol, indent);
-	padcat(0, 0, production, " = ");
-	if (Certification->Expression)
-		js_expression(production, Certification->Expression,
-			      indent + 1);
-	else			       // contract or nothing
-		padcat(0, 0, production, "true");
-	padcat(0, 0, production, ";");
+
+	if (Certification->Contract) { // 'certify contract as ..'
+		assign(production, indent, Certification->Symbol, null);
+	} else if (Certification->Expression) {
+		assign(production, indent, Certification->Symbol,
+		       Certification->Expression);
+	} else {		       // nothing -> create a parameter
+		insert_parameter_and_set_member(production, &instructions, Certification->Symbol, false, paratag, indent, __LINE__);	// call #2a
+		// cf. evaluation.lex commissioned() / statement.lex certify() ◊
+	}
 
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
@@ -2678,7 +2613,7 @@ bool js_certification(char **production, Certification *Certification,
 				|| !strcmp(caller, "caller");
 	}
 	replace(production, "%preassign%", "");
-	///// cf. evaluation.lex commissioned() / statement.lex certify()
+
 	return true;
 }
 
@@ -2694,15 +2629,7 @@ bool js_declaration(char **production, Declaration *Declaration, int indent) {
 	assert(!strstr(*production, "%preassign%"));	//X new after javascript.c was finished
 	padcat(0, 0, production, "%preassign%");
 	preass_indent = indent;
-	padcat(1, indent, production, "");	//X sollte das Folgende komplett, wie oben mit assign() behandelt werden?
-	js_symbol(production, Declaration->Symbol, indent);
-	padcat(0, 0, production, " = ");
-
-	if (Declaration->Expression)
-		js_expression(production, Declaration->Expression, indent + 1);
-	else
-		padcat(0, 0, production, "true");
-	padcat(0, 0, production, ";");
+	assign(production, indent, Declaration->Symbol, Declaration->Expression);	//X new after javascript.c was finished //////
 
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
@@ -2711,6 +2638,7 @@ bool js_declaration(char **production, Declaration *Declaration, int indent) {
 		if (current_function) current_function->uses_caller |= class
 				|| !strcmp(caller, "caller");
 	}
+
 	replace(production, "%preassign%", "");
 
 	return true;
@@ -2723,24 +2651,16 @@ bool js_declare(char **production, Declare *Declare, int indent) {
 	return true;
 }
 
+	/* e.g. The Secured Party may file the Continuation Statement. (only example currently) */
 bool js_filing(char **production, Filing *Filing, int indent) {
 	if (!Filing) return false;
 	if (opt_debug) printf("producing Filing\n");
 
-	if (Filing->Symbol) {
-		/* e.g. The Secured Party may file the Continuation Statement. (only example currently) */
+	if (Filing->Expression)
+		assign(production, indent, Filing->Symbol, Filing->Expression);
+	else
 		insert_parameter_and_set_member(production, &instructions, Filing->Symbol, false, paratag, indent, __LINE__);	// call #3
-	} else {
-		padcat(1, indent, production, "");
-		js_symbol(production, Filing->Symbol, indent);	///// can't have any effect?
-		padcat(0, 0, production, " = ");
-		if (Filing->Expression)
-			js_expression(production, Filing->Expression,
-				      indent + 1);
-		else
-			padcat(0, 0, production, "true");
-		padcat(0, 0, production, EOL);
-	}
+
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
 		       ".log(", recital_of_terms ? caller : "caller",
@@ -2758,24 +2678,17 @@ bool js_file(char **production, File *File, int indent) {
 	return true;
 }
 
+	/* e.g., The Licensee may register a Comment Text. (only example) */
 bool js_registration(char **production, Registration *Registration, int indent) {
 	if (!Registration) return false;
 	if (opt_debug) printf("producing registration\n");
 
-	if (Registration->Symbol) {
-		/* e.g., The Licensee may register a Comment Text. (only example) */
+	if (Registration->Expression)
+		assign(production, indent, Registration->Symbol,
+		       Registration->Expression);
+	else
 		insert_parameter_and_set_member(production, &instructions, Registration->Symbol, false, paratag, indent, __LINE__);	// call #4
-	} else {
-		padcat(1, indent, production, "");
-		js_symbol(production, Registration->Symbol, indent);	////// can't have any effect?
-		padcat(0, 0, production, " = ");
-		if (Registration->Expression)
-			js_expression(production, Registration->Expression,
-				      indent + 1);
-		else
-			padcat(0, 0, production, "true");
-		padcat(0, 0, production, EOL);
-	}
+
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
 		       ".log(", recital_of_terms ? caller : "caller",
@@ -2784,6 +2697,7 @@ bool js_registration(char **production, Registration *Registration, int indent) 
 		if (current_function) current_function->uses_caller |= class
 				|| !strcmp(caller, "caller");
 	}
+
 	return true;
 }
 
@@ -2797,10 +2711,8 @@ bool js_grantment(char **production, Grantment *Grantment, int indent) {
 	if (!Grantment) return false;
 	if (opt_debug) printf("producing Grantment\n");
 
-	padcat(1, indent, production, "");
-	js_symbol(production, Grantment->Symbol, indent + 1);
+	assign(production, indent, Grantment->Symbol, null);	// sets true
 
-	padcat(0, 0, production, " = true;");	// 'grant' instead of 'true'
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
 		       ".log(", recital_of_terms ? caller : "caller",
@@ -2808,6 +2720,7 @@ bool js_grantment(char **production, Grantment *Grantment, int indent) {
 		if (current_function) current_function->uses_caller |= class
 				|| !strcmp(caller, "caller");
 	}
+
 	return true;
 }
 
@@ -2822,6 +2735,7 @@ bool js_appointment(char **production, Appointment *Appointment, int indent) {
 
 	/* produce person code: take care that they 1) become parameters, and 2) object elements with 3) that parameter assigned to */
 	insert_parameter_and_set_member(production, &instructions, Appointment->Symbol, false, paratag, indent, __LINE__);	// call #5
+
 	if (opt_log || opt_feedback) {
 		if (opt_feedback)
 			padcat(1, indent, production,
@@ -2840,26 +2754,18 @@ bool js_appoint(char **production, Appoint *Appoint, int indent) {
 	return true;
 }
 
+	/* The Licensor or the Arbiter may fix the Notice Time as the respective current time.
+	 * The Licensor [..] fixes the Description of Goods. */
 bool js_fixture(char **production, Fixture *Fixture, int indent) {
 	if (!Fixture) return false;
 	if (opt_debug) printf("producing Fixture\n");
 
-	if (Fixture->Expression) {
-		/* An object member is declared and defined on the fly by an expression and NOT by parameter:
-		 * e.g., The Licensor or the Arbiter may fix the Notice Time as the respective current time. */
-		///// will not work in constructor?
-
-		padcat(1, indent, production, "");
-		js_symbol(production, Fixture->Symbol, indent + 1);
-		padcat(0, 0, production, " = ");
-		js_expression(production, Fixture->Expression, indent);
-		padcat(0, 0, production, ";");	// 'fix' instead of ';'
-	} else {
-		/* produce amounts/texts etc variables: take care that they 1) become parameters 2) object elements with that parameter assigned
-		 * e.g., The Licensor [..] fixes the Description of Goods. */
+	if (Fixture->Expression)
+		assign(production, indent, Fixture->Symbol,
+		       Fixture->Expression);
+	else
 		insert_parameter_and_set_member(production, &instructions, Fixture->Symbol, false, paratag, indent, __LINE__);	// call #6
 
-	}
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
 		       ".log(", recital_of_terms ? caller : "caller",
@@ -2867,6 +2773,7 @@ bool js_fixture(char **production, Fixture *Fixture, int indent) {
 		if (current_function) current_function->uses_caller |= class
 				|| !strcmp(caller, "caller");
 	}
+
 	return true;
 }
 bool js_fix(char **production, Fix *Fix, int indent) {
@@ -2878,7 +2785,7 @@ bool js_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 	padcat(1, indent, production, "");
-	js_symbol(production, Setting->Symbol, indent + 1);
+	js_symbol(production, Setting->Symbol, false, indent + 1);
 	padcat(0, 0, production, " = true;");	// set");
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
@@ -2893,20 +2800,9 @@ bool js_setting(char **production, Setting *Setting, int indent) {
 bool js_illocutor(char **production, Illocutor *Illocutor, int indent) {
 	if (!Illocutor) return false;
 	if (opt_debug) printf("producing Illocutor\n");
-	padcat(1, indent, production, "( illocutor ");
 
-	js_be(production, Illocutor->Be, indent + 1);
+	padcat(0, 0, production, " = ");
 
-	padcat(0, 0, production, ") ");
-
-	return true;
-}
-
-bool js_be(char **production, Be *Be, int indent) {
-	if (!Be) return false;
-	if (opt_debug) printf("producing Be\n");
-	padcat(1, indent, production, "( be ");
-	padcat(0, 0, production, ") ");
 	return true;
 }
 
@@ -2932,7 +2828,7 @@ bool js_payment(char **production, Payment *Payment, int indent) {
 	else if (Payment->From_Escrow)
 		js_from_escrow(production, Payment->From_Escrow, 0);
 	else
-		js_name(production, (Name *) subject, 0);
+		js_name(production, (Name *) subject, false, 0);
 
 	padcat(0, 0, production, ", ");
 	/* receiver */
@@ -2998,7 +2894,7 @@ bool js_sending(char **production, Sending *Sending, int indent) {
 	js_send(production, Sending->Send, indent);
 
 	// sender
-	js_name(production, (Name *) subject, 0);
+	js_name(production, (Name *) subject, false, 0);
 	padcat(0, 0, production, ", ");
 
 	// receiver
@@ -3076,7 +2972,7 @@ bool js_flagging(char **production, Flagging *Flagging, int indent) {
 	if (!Flagging) return false;
 	if (opt_debug) printf("producing Flagging\n");
 	padcat(1, indent, production, "");
-	js_symbol(production, Flagging->Symbol, indent + 1);
+	js_symbol(production, Flagging->Symbol, true, indent + 1);
 	padcat(0, 0, production, " = true;");	////////
 	return true;
 }
@@ -3169,7 +3065,7 @@ bool js_scalar_expression(char **production,
 	if (!Scalar_Expression) return false;
 	if (opt_debug) printf("producing Scalar_Expression %s\n",
 			      Scalar_Expression->Scalar);
-	js_symbol(production, Scalar_Expression->Symbol, indent + 1);
+	js_symbol(production, Scalar_Expression->Symbol, false, indent + 1);
 	js_scalar(production, Scalar_Expression->Scalar, indent + 1);
 	js_point_in_time(production, Scalar_Expression->Point_In_Time,
 			 indent + 1);
@@ -3182,7 +3078,7 @@ bool js_hex_expression(char **production, Hex_Expression *Hex_Expression,
 	if (!Hex_Expression) return false;
 	if (opt_debug) printf("producing Hex_Expression %s\n",
 			      Hex_Expression->Hex);
-	js_symbol(production, Hex_Expression->Symbol, indent + 1);
+	js_symbol(production, Hex_Expression->Symbol, false, indent + 1);
 	js_hex(production, Hex_Expression->Hex, indent + 1);
 	// js_point_in_time(production, Hex_Expression->Point_In_Time, indent+1);
 	inference = "uint";
@@ -3229,22 +3125,26 @@ bool js_combinand(char **production, Combinand *Combinand, int indent) {
 
 		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
 		assert(funcname);
-		char *varname = LOW(snake_spaced(funcname));	///// don't store LOW buffer
+		char *varname = snakedup(funcname);
 
-		if (!in(fixed, varname) && !in(functions, funcname)) {
+		if (!in(fixed, varname) && !in(functions, funcname)) {	// incomplete, depends on order ◊
 			/* produce amounts/texts etc variables: take care that they
 			 * 1) become parameters, and 2) object elements with that parameter assigned
 			 * e.g., The Secured Party may pay a Reminder Fee into escrow. */
-			insert_parameter_and_set_member(production, &instructions, Combinand->Symbol, false, paratag, indent + 1, __LINE__);	////// call #7
+			insert_parameter_and_set_member(production, &instructions, Combinand->Symbol, false, paratag, indent + 4, __LINE__);	////// call #7
 		}
 		/* produce the literal (name or type name for variables that are named verbatim a type) */
+
 		if (!no_literal) {
 
-			js_symbol(production, Combinand->Symbol, indent + 1);
+			js_symbol(production, Combinand->Symbol, false,
+				  indent + 1);
 
 		}
+		mtrac_free(varname);
 	}
 	js_expiration(production, Combinand->Expiration, indent + 1);
+	js_description(production, Combinand->Description, indent + 1);
 	js_scalar_comparison(production, Combinand->Scalar_Comparison,
 			     indent + 1);
 	js_negation(production, Combinand->Negation, indent + 1);
@@ -3306,7 +3206,7 @@ bool js_existence(char **production, Existence *Existence, int indent) {
 	padcat(0, 0, production, "");
 
 	assert(Existence->Symbol->Name);	// should never need Existance->Symbol->Type->Literal
-	js_symbol(production, Existence->Symbol, indent + 1);
+	js_symbol(production, Existence->Symbol, false, indent + 1);
 	inference = "bool";
 	return true;
 }
@@ -3315,7 +3215,7 @@ bool js_negation(char **production, Negation *Negation, int indent) {
 	if (!Negation) return false;
 	if (opt_debug) printf("producing Negation\n");
 	js_negator(production, Negation->Negator, indent + 1);
-	js_symbol(production, Negation->Symbol, indent + 1);
+	js_symbol(production, Negation->Symbol, false, indent + 1);
 	assert(Negation->Symbol->Name);	// should never need Negation->Symbol->Type->Literal (?)
 	inference = "bool";
 	return true;
@@ -3371,7 +3271,7 @@ bool js_relative_time(char **production, Relative_Time *Relative_Time,
 	if (opt_debug) printf("producing Relative_Time\n");
 	if (Relative_Time->Symbol) {
 		padcat(0, 0, production, opt_harden ? "Some" : "", "(");
-		js_symbol(production, Relative_Time->Symbol, indent + 1);
+		js_symbol(production, Relative_Time->Symbol, false, indent + 1);
 		padcat(0, 0, production, " + ");
 	} else {
 		padcat(0, 0, production, "(Date.now() - ");
@@ -3501,10 +3401,8 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 
 	char *pretty_varname;
 
-	if (symbol->Name) pretty_varname =
-			mtrac_strdup(LOW(snake_spaced(symbol->Name)));
-	else if (symbol->Type) pretty_varname =
-			mtrac_strdup(LOW(snake_spaced(symbol->Type->Literal)));
+	if (symbol->Name) pretty_varname = snakedup(symbol->Name);
+	else if (symbol->Type) pretty_varname = snakedup(symbol->Type->Literal);
 	else assert(false);
 
 	char *symbol_name;
@@ -3517,9 +3415,7 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	if (opt_debug) printf("producing parameter %s\n", pretty_varname);
 
 	// protect keywords
-	char *varname = mtrac_strdup("");
-
-	concat(&varname, SAFE(pretty_varname));
+	char *varname = safedup(pretty_varname);
 
 	// protect parameters with leading underscore (sol),
 	// or not because this. or main or state. will be prefixed (js, sop).
@@ -3539,23 +3435,29 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	concat(&typed_parameter_varname, parameter_varname);	// not type added for js
 
 	/* binding to msg.sender and msg.value */
-	///////// printf("msgval %s %d ", msg_value, payment);
+
 	/* 1: Add to the parameters and arguments list. In the produced code as well as (parameta) the instructions */
 
 	if (!current_function) {
 		/* outside a function (constructor?/////) */
-		padcat(0, 0, &parameters, *parameters ? ", " : "", typed_parameter_varname);	////// js was SAFE(varname)
+		padcat(0, 0, &parameters, *parameters ? ", " : "",
+		       typed_parameter_varname);
 		padcat(0, 0, &arguments, *arguments ? ", " : "",
 		       parameter_varname);
-		if (instructions) padcat(0, 0, &parameta, *parameta ? ", " : "", "<", pretty_typed_varname, ">");	///// js was varname
+		if (instructions) padcat(0, 0, &parameta, *parameta ? ", " : "",
+					 "<", pretty_typed_varname, ">");
 		//////// padcat(0, 0, &declared, ":", parameter_varname, ":"); // declared: write #4  ///// js was varname
 		//////// note: changed to include underscore in some case
 	} else {
 		/* inside a function (clause) */
-		padcat(0, 0, &current_function->parameters, *current_function->parameters ? ", " : "", typed_parameter_varname);	///// js was SAFE(varname)
+		padcat(0, 0, &current_function->parameters,
+		       *current_function->parameters ? ", " : "",
+		       typed_parameter_varname);
 		// arguments don't happen in this case
 		if (instructions)
-			padcat(0, 0, &current_function->parameta, *current_function->parameta ? ", " : "", "<", pretty_typed_varname, ">");	///// js was varname
+			padcat(0, 0, &current_function->parameta,
+			       *current_function->parameta ? ", " : "", "<",
+			       pretty_typed_varname, ">");
 	}
 	/* 2: Set the member to the parameter.  It's a member only if it's not a variable named for a type
 	 * (then found at Symbol->Type->Literal) */
@@ -3626,8 +3528,8 @@ void produce_access_conditions(int down, int indent, char **production,
 	while (s) {
 		if (i++) padcat(0, 0, production, " || ");
 		padcat(0, 0, production, "caller == ");
-		js_name(production, (char *)s->item, 0);
-		//.// if(current_function) current_function->uses_caller = true;
+		js_name(production, (char *)s->item, false, 0);
+		//.// if(current_function) current_function->uses_caller = true; ◊
 		s = s->next;
 	}
 	padcat(0, 0, production, ") {");

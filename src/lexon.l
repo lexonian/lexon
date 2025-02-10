@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 95 U" // unified 0.3 + experimental 0.4
+#define program_vers "0.3 alpha 96 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -88,10 +88,10 @@ typedef int bool;
 #define concat(var_, ...) _concat(#var_, __FILE__, __LINE__, 0, 0, var_, __VA_ARGS__, null)
 #define precat(...) _precat(__VA_ARGS__, null)
 #define padcat(down_, right_, var_, ...) _concat(#var_, __FILE__, __LINE__, down_, right_, var_, __VA_ARGS__, null)
-#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, #orig_, __FILE__, __LINE__)
-#define replace_whole_words(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, true, #orig_, __FILE__, __LINE__)
-#define replace_first(orig_, rep_, with_) _replace(orig_, rep_, with_, false, null, false, #orig_, __FILE__, __LINE__)
-#define replace_first_from(orig_, rep_, with_, from_) _replace(orig_, rep_, with_, false, from_, false, #orig_, __FILE__, __LINE__)
+#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, null, null, #orig_, __FILE__, __LINE__)
+#define replace_whole_words(orig_, rep_, with_, quote_, unquote_) _replace(orig_, rep_, with_, true, null, true, quote_, unquote_, #orig_, __FILE__, __LINE__)
+#define replace_first(orig_, rep_, with_) _replace(orig_, rep_, with_, false, null, false, null, null, #orig_, __FILE__, __LINE__)
+#define replace_first_from(orig_, rep_, with_, from_) _replace(orig_, rep_, with_, false, from_, false, null, null, #orig_, __FILE__, __LINE__)
 
 /* prepending Flex' debug output with 'scanner: ' -- this is Flex' own and the above D macro's */
 #define fprintf(out_, ...) repchr(yytext, '\n', '$'), fprintf(out_, "scanner: " __VA_ARGS__), repchr(yytext, '$', '\n')
@@ -114,7 +114,8 @@ char **_concat(char *varname, char *file, int line, int down, int right, char **
 char **_concatnum(char **buf, char *prefix, int number, char *postfix);
 void _precat(char **buf, ...);
 char *catdup(char *string, char *append, int(*func)(int));
-int _replace(char **orig, const char *rep, const char *with, int all, char *from, bool whole, char *origname, char *file, int line);
+int _replace(char **orig, const char *rep, const char *with, int all, char *from,
+	bool whole, char *quote, char *unquote, char *origname, char *file, int line);
 int repchr(char *hay, char s, char r) { char *c = hay; while(*c) { if(*c==s) *c = r; c++; } return 0; }
 char *filedup(const char *path, const char *dflt);
 char *str_escape(const char *src, const char *varname);
@@ -123,7 +124,12 @@ const char *literal_symbol(char *token);
 char *UP(const char *token);
 char *up(char *token);
 char *LOW(const char *token);
+char *SNAKE(const char *token);
 char *lowdup(const char *token);
+char *snakedup(const char *token);
+char *dash_spaced(const char *token);
+char *snake_spaced(const char *token);
+char *camel_spaced(const char *token);
 void lineno();
 void rump(char **dest, char *filename);
 char *cutbuf(char *src, char *cut);
@@ -132,9 +138,6 @@ char *trim(char *s);
 char *contract(char *s);
 char *unspace(char *s);
 char *quote_trimmed(const char *token);
-char *dash_spaced(const char *token);
-char *snake_spaced(const char *token);
-char *camel_spaced(const char *token);
 char **pad(char **s, int to);
 char *xcr(char *);
 int chrcnt(char *hay, char needle);
@@ -1705,15 +1708,16 @@ void precompile() {
 	replace(&buf, "«", "\\«");
 	replace(&buf, "»", "\\»");
 
-	/* unicode chars are not processed correctly by Flex, it takes the bytes apert, specifically the negative calls notquote can't work */
+	/* unicode chars are not processed correctly by Flex, it takes the bytes
+	   apert, specifically the negative calls notquote can't work */
 
 	/* list presorted for length, descending two steps: replace by tag [n] first */
 	node *cur = symbols;
-	char tag[40];
+	char tag[40]; // safeguard ◊
 	int i = 0;
 	while(cur) {
 		snprintf(tag, 40, "«[%d]»", ++i);
-		replace_whole_words(&buf, cur->find, tag);
+		replace_whole_words(&buf, cur->find, tag, "‹", "›");
 		cur->tag = mtrac_strdup(tag);
 		cur = cur->prev;
 	}
@@ -1839,12 +1843,56 @@ char *LOW(const char *token) {
 
 char *lowdup(const char *s) {
 	char *buf = mtrac_strdup(s);
-	strcpy(buf, s);
+	////// strcpy(buf, s);
 	char *c = buf -1;
 	while(*++c) *c = tolower(*c);
 	return buf;
 }
 
+char _snake[1001];
+char *SNAKE(const char *token) {
+	strncpy(_snake, token, 1000);
+	char *c = _snake -1;
+	while(*++c) if(*c == ' ' || *c == '-') *c = '_'; else *c = tolower(*c);
+	return _snake;
+}
+
+char *snakedup(const char *s) {
+	char *dup = mtrac_strdup(s);
+	char *c = dup -1;
+	while(*++c) if(*c == ' ' || *c == '-') *c = '_'; else *c = tolower(*c);
+	return dup;
+}
+
+char _dsp[1001];
+char *dash_spaced(const char *token) {
+	assert(token);
+	strncpy(_dsp, token, 1000);
+	char *p = _dsp -1;
+	while(*++p) if(*p == ' ' || *p == '_') *p = '-';
+	return _dsp;
+}
+
+char _ssp[1001];
+char *snake_spaced(const char *token) {
+	//assert(token); ◊
+	if(!token) token = "[undefined]";
+	strncpy(_ssp, token, 1000);
+	char *p = _ssp -1;
+	while(*++p) if(*p == ' ' || *p == '-') *p = '_';
+	return _ssp;
+}
+
+char _csp[1001];
+char *camel_spaced(const char *token) {
+	assert(token);
+	strncpy(_csp, token, 1000);
+	char *p = _csp -1;
+	bool gap = false;
+	while(*++p) { if(gap) *p = toupper(*p); gap = *p == ' ' || *p == '-' || *p == '_'; }
+	contract(_csp);
+	return _csp;
+}
 
 void rump(char **buf, char *filename) {
 	char *copy = mtrac_strdup(filename); // as per namepart doc
@@ -2190,7 +2238,8 @@ char *catdup(char *string, char *append, int(*func)(int))  {
 
 // Frees input and replaces with result. Result must later be freed.
 // courtesy J Mucchiello https://stackoverflow.com/questions/779875/what-is-the-function-to-replace-string-in-c#
-int _replace(char **orig, const char *rep, const char *with, int all, char *from, bool whole, char *origname, char *file, int line) {
+int _replace(char **orig, const char *rep, const char *with, int all, char *from,
+	bool whole, char *quote, char *unquote, char *origname, char *file, int line) {
 	char *result;
 	char *start;
 	char *ins; // next insert point
@@ -2243,13 +2292,23 @@ int _replace(char **orig, const char *rep, const char *with, int all, char *from
 	//    ins points to the next occurrence of rep in orig
 	//    start points to the remainder of orig after "end of rep"
 	counter = count;
+	bool inquote = false;
 	while (counter--) {
 		ins = strstr(start, rep);
+		if(quote && unquote) {
+			char *but, *tub = start;
+			do {
+				but = strstr(tub, quote);
+				tub = but ? strstr(but, unquote) : null;
+			} while(tub && tub < ins) ;
+			inquote = but && tub && but < ins && tub > ins;
+		}
+		//////// printf("> > > %s 	%d %p %p %p\n", with, inquote, but, ins, tub);
 		len_front = ins - start;
 		tmp = strncpy(tmp, start, len_front) + len_front;
 		const char *border = " \t\r\n\".,;:?!()[]{}&%$#@~+/\\“”";
 		const char *border_special = " \t\r\n\".,;:?!()[]{}&%$#@~+/\\“”";
-		if(!whole || ((ins == *orig || strchr(border, *(ins-1))) && (!*(ins+len_rep) || strchr(border, *(ins+len_rep)))))
+		if(!inquote && (!whole || ((ins == *orig || strchr(border, *(ins-1))) && (!*(ins+len_rep) || strchr(border, *(ins+len_rep))))))
 			tmp = strcpy(tmp, with) + len_with;
 		else
 			tmp = strcpy(tmp, rep) + len_rep;
@@ -2314,36 +2373,6 @@ char *quote_trimmed(const char *token) {
 	}
 
 	return p;
-}
-
-char _dsp[1001];
-char *dash_spaced(const char *token) {
-	assert(token);
-	strncpy(_dsp, token, 1000);
-	char *p = _dsp -1;
-	while(*++p) if(*p == ' ' || *p == '_') *p = '-';
-	return _dsp;
-}
-
-char _ssp[1001];
-char *snake_spaced(const char *token) {
-	//assert(token);
-	if(!token) token = "[undefined]";
-	strncpy(_ssp, token, 1000);
-	char *p = _ssp -1;
-	while(*++p) if(*p == ' ' || *p == '-') *p = '_';
-	return _ssp;
-}
-
-char _csp[1001];
-char *camel_spaced(const char *token) {
-	assert(token);
-	strncpy(_csp, token, 1000);
-	char *p = _csp -1;
-	bool gap = false;
-	while(*++p) { if(gap) *p = toupper(*p); gap = *p == ' ' || *p == '-' || *p == '_'; }
-	contract(_csp);
-	return _csp;
 }
 
 char **pad(char **s, int to) {

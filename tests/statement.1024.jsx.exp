@@ -6,11 +6,11 @@
 
    code tagged: 0.2.12
 
-   compiler:    lexon 0.3 alpha 93 U
+   compiler:    lexon 0.3 alpha 96 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
 
-   backend:     javascript 0.3.93 U
+   backend:     javascript 0.3.93-96 U
 
    target:      node 14.1+
 
@@ -61,7 +61,7 @@
 
    These are the state progress functions that allow to interact with the contract:
 
-   > statement.certify(<<filing_office>>)
+   > statement.certify(<<filing_office>>, <file_number>)
    > statement.set_file_date(<<filing_office>>)
    > statement.set_lapse(<<filing_office>>, <lapse_date>)
    > statement.set_continuation_start(<<filing_office>>, <continuation_window_start>)
@@ -227,10 +227,10 @@ module.exports = class UCCFinancingStatement {
      *  
      *  The Filing Office may certify the File Number
      */
-    certify(caller)  {
+    certify(caller, file_number)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
-            this.file_number = true;
+            this.file_number = file_number;
             this.log(caller, "✓ File Number certified");
         } else {
             return 'not permitted.';

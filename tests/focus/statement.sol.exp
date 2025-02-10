@@ -10,11 +10,11 @@ pragma solidity ^0.8.17;
 
    code tagged: 0.2.12
 
-   compiler:    lexon 0.3 alpha 93 U
+   compiler:    lexon 0.3 alpha 96 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8 alpha 80 - English / Reyes
 
-   backend:     solidity 0.3.93 U
+   backend:     solidity 0.3.93-96 U
 
    target:      solidity 0.8+
 
@@ -136,7 +136,7 @@ contract UCCFinancingStatement {
      *  Clause: Set File Date.
      *  The Filing Office may fix the Initial Statement Date as the current time.
      */
-    function set_file_date() public view {
+    function set_file_date() public {
         check_termination();
         permit(filing_office);
         initial_statement_date = block.timestamp;

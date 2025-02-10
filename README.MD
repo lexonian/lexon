@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 alpha 95 U, grammar 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+	0.3 alpha 96 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**
@@ -15,7 +15,7 @@ writing or reading Lexon texts.**
 	cd lexon ; make && sudo make install
 	lexon --solidity examples/escrow.lex
 
-
+Also see **Install Pre-built Binaries**, below.
 
 
 ## Introduction
@@ -248,7 +248,7 @@ also has step-by-step installation instructions.
 
 
 
-## Pre-Builds
+## Pre-Built Sources
 
 This repository's master branch is primed for ease of use and code browsing.
 Besides the pre-built binaries in the [`bin/`](bin/) folder (`lexon_mac` and
@@ -268,6 +268,10 @@ is tested on Linux and Mac. The `dev` branch starts from this stage.
 * C
 * make
 
+Build by
+
+	$ make
+
 
 #### Tested With
 
@@ -276,16 +280,30 @@ is tested on Linux and Mac. The `dev` branch starts from this stage.
 	make 3.81 and 4.1
 
 
-#### Alternatives to Building
+### Alternatives to Building
 
-You can use the binaries `lexon_mac` or `lexon_linux` in [`bin/`](bin/) to skip
-building. Rename one of them to `lexon` and run `make install`.
+
+#### Pre-built Binaries
+
+You can use the pre-built binaries `lexon_mac` or `lexon_linux` in
+[`bin/`](bin/) to skip building. The following installs the pre-built binaries
+from `bin/`. It also copies them over `bin/lexon`. (The latter is undone buy
+running `make` again, which will build a new `bin/lexon` from source.)
+
+	$ sudo make mac install
+
+or
+
+	$ sudo make linux install
+
+
+#### Download Binaries
 
 You can also [download](https://lexon.org/download.html) the binaries, or use
 the [online](https://lexon.org/compiler.html) compiler.
 
 
-#### Alternative to `make`
+### Alternative to `make`
 
 If you want or need to avoid `make`, you can just compile:
 
@@ -425,9 +443,11 @@ options.
 	all             build compiler and run an example (default)
 	build           build compiler
 	install         install compiler (run with sudo)
+	mac install     install pre-built mac binary and copy it as bin/lexon
+	linux install   install pre-built linux binary and copy it as bin/lexon
 	sample          build escrow example to solidity
-	check           compiler tests: deeptest, focustest, sample
-	devcheck        all tests: envtest, deeptest, grammarcheck, focustest, sample
+	check           compiler tests: focustest, deeptest
+	devcheck        all tests: envtest, grammarcheck, memtest, focustest, deeptest
 	testlog         dump the 100 last lines of the test log
 	clean           delete all built files, except pre-built binaries
 	ls              show the source and build directories
@@ -615,7 +635,7 @@ See [`src/target.c`](src/target.c) for more details.
 
 ## License
 
-Copyright (C) 2016-24 Henning Diedrich.  
+Copyright (C) 2016-25 Henning Diedrich.
 
 Licensed under AGPL3 subject to the conditions described in the file
 [LICENSE](LICENSE).

@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.93-95 U"
+#define backend_version "solidity 0.3.93-96 U"
 #define target_version "solidity 0.8+"
 #define CYCLE_2 true
 
@@ -109,10 +109,11 @@ static char *quote_trimmed(const char *token);
 static char *dash_spaced(const char *token);
 extern char *snake_spaced(const char *token);
 extern char *camel_spaced(const char *token);
-extern char *LOW(const char *token);
+extern char *SNAKE(const char *token);
+extern char *snakedup(const char *token);
 extern char *UP(const char *token);
 
-static char *SAFE(const char *token);
+static char *safedup(const char *token);
 static const char *type(const char *varname, bool option_type, bool forpara);
 static const char *nullmap(const char *lex_type, bool defined_default);
 static const char *defaultmap(const char *lex_type);
@@ -124,25 +125,50 @@ static char *methods = null;
 static char *globals = null;
 static char *declarations = null;
 static char *initializations = null;
-static char *fixed = null;	       // list of variables that have been set in this function
+static char *fixed = null;	       // list of variables that have been set
 static char *declared = null;	       // list of variables that come in as paremeters
 static char *functions = null;
 static bool miller = false;
 
-static char _safe[1003];
-static char *SAFE(const char *name) {  ////// INCOMPLETE LIST: INCLUDE ALL LANGUAGE KEYWORDS
+static char *safedup(const char *name) {
 	assert(name);
-	assert(strlen(name) < 1000);
+	char *_safe = mtrac_malloc(strlen(name) + 3);
+
 	strcpy(_safe, " ");
 	strcat(_safe, name);
 	strcat(_safe, " ");
 
-	if (!strstr
-	    (" Message permit send terminate terminated default contract constructor function transfer call check_termination ",
-	     _safe))
-		return (char *)name;
-	strcpy(_safe, "_");
-	strcat(_safe, name);	       // haystack limits lenght of possible needles
+	if (!strstr(" Message permit send terminate terminated transfer call check_termination "	// Lexon ◊
+		    " after alias apply auto byte case copyof default define final"
+		    " implements in inline let macro match mutable null of partial"
+		    " promise reference relocatable sealed sizeof static supports switch typedef typeof"
+		    " var abstract address anonymous as assembly bool break bytes calldata"
+		    " catch constant constructor continue contract delete do else emit enum"
+		    " error event external fallback false fixed fixed x bytes1 bytes2"
+		    " bytes3 bytes4 bytes5 bytes6 bytes7 bytes8 bytes9 bytes10 bytes11 bytes12"
+		    " bytes13 bytes14 bytes15 bytes16 bytes17 bytes18 bytes19 bytes20 bytes21 bytes22"
+		    " bytes23 bytes24 bytes25 bytes26 bytes27 bytes28 bytes29 bytes30 bytes31 bytes32"
+		    " for from function global hex if immutable import indexed interface"
+		    " internal is library mapping memory modifier new wei gwei ether"
+		    " seconds minutes hours days weeks years override payable pragma private"
+		    " public pure receive return returns revert int int8 int16 int24"
+		    " int32 int40 int48 int56 int64 int72 int80 int88 int96 int104"
+		    " int112 int120 int128 int136 int144 int152 int160 int168 int176 int184"
+		    " int192 int200 int208 int216 int224 int232 int240 int248 int256 storage"
+		    " string struct transient true try type ufixed ufixed x unchecked"
+		    " unicode uint uint8 uint16 uint24 uint32 uint40 uint48 uint56 uint64"
+		    " uint72 uint80 uint88 uint96 uint104 uint112 uint120 uint128 uint136 uint144"
+		    " uint152 uint160 uint168 uint176 uint184 uint192 uint200 uint208 uint216 uint224"
+		    " uint232 uint240 uint248 uint256 using view virtual while ",
+		    _safe)) {
+		strcpy(_safe, name);
+
+	} else {
+
+		strcpy(_safe, "_");
+		strcat(_safe, name);
+	}
+
 	return _safe;
 }
 
@@ -401,15 +427,17 @@ typedef struct Definitions {
 
 typedef struct Definition {
 	Name *Name;
-	struct Placeholder *Placeholder;
+	struct Type_Term *Type_Term;
 	struct Article *Article;
 	struct This_Contract *This_Contract;
+	Literal *Literal;
 } Definition;
 
-typedef struct Placeholder {
+typedef struct Type_Term {
 	struct Type *Type;
 	struct Article *Article;
-} Placeholder;
+	Literal *Literal;
+} Type_Term;
 
 typedef struct Type {
 	struct Person *Person;
@@ -422,32 +450,41 @@ typedef struct Type {
 } Type;
 
 typedef struct Person {
+	Literal *Literal;
 } Person;
 
 typedef struct Amount {
+	Literal *Literal;
 } Amount;
 
 typedef struct Time {
+	Literal *Literal;
 } Time;
 
 typedef struct Binary {
+	Literal *Literal;
 } Binary;
 
 typedef struct Text {
+	Literal *Literal;
 } Text;
 
 typedef struct Data {
+	Literal *Literal;
 } Data;
 
 typedef struct This_Contract {
 	struct This *This;
 	Name *Name;
+	Literal *Literal;
 } This_Contract;
 
 typedef struct All_Contracts {
+	Literal *Literal;
 } All_Contracts;
 
 typedef struct This {
+	Literal *Literal;
 } This;
 
 typedef struct Clauses {
@@ -693,6 +730,7 @@ typedef struct If {
 
 typedef struct Expression {
 	struct Combination *Combination;
+	Literal *Literal;
 } Expression;
 
 typedef struct Scalar_Comparison {
@@ -739,6 +777,7 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	Description *Description;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -862,11 +901,11 @@ static Name *class = null;
 static bool main_constructor_body = true;
 static bool covenant_constructor_body = false;
 static bool recital_of_terms = false;
-bool sol_name(char **production, Name *Name, int indent) {
+bool sol_name(char **production, Name *Name, bool assign, int indent) {
 	if (!Name) return false;
 
-	/* put '_' to names that are target language keywords *////// incomplete list
-	char *safe = SAFE(LOW(snake_spaced(Name)));	///// don't store LOW buffer
+	/* put '_' to names that are target language keywords */
+	char *safe = safedup(SNAKE(Name));
 
 	if (!in(functions, Name)) {
 
@@ -878,6 +917,8 @@ bool sol_name(char **production, Name *Name, int indent) {
 		padcat(0, 0, production, bind->tag);
 
 	}
+	if (assign) padcat(0, 0, &fixed, ":", safe, ":");
+	mtrac_free(safe);
 	return true;
 }
 
@@ -916,15 +957,6 @@ bool sol_covenant(char **production, Covenant * Covenant, int indent);
 bool sol_provisions(char **production, Provisions * Provisions, int indent);
 bool sol_definitions(char **production, Definitions * Definitions, int indent);
 bool sol_definition(char **production, Definition * Definition, int indent);
-bool sol_placeholder(char **production, Placeholder * Placeholder, int indent);
-bool sol_type(char **production, Type * Type, int indent);
-bool sol_person(char **production, Person * Person, int indent);
-bool sol_amount(char **production, Amount * Amount, int indent);
-bool sol_time(char **production, Time * Time, int indent);
-bool sol_binary(char **production, Binary * Binary, int indent);
-bool sol_text(char **production, Text * Text, int indent);
-bool sol_data(char **production, Data * Data, int indent);
-bool sol_this(char **production, This * This, int indent);
 bool sol_clauses(char **production, Clauses * Clauses, int indent);
 bool sol_clause(char **production, Clause * Clause, int indent);
 bool sol_body(char **production, Body * Body, int indent);
@@ -935,12 +967,11 @@ bool sol_actions(char **production, Actions * Actions, int indent);
 bool sol_action(char **production, Action * Action, int indent);
 bool sol_subject(char **production, Subject * Subject, int indent);
 bool sol_symbols(char **production, Symbols * Symbols, int indent);
-bool sol_symbol(char **production, Symbol * Symbol, int indent);
+bool sol_symbol(char **production, Symbol * Symbol, bool assign, int indent);
 bool sol_noun(char **production, Symbol * Symbol, int indent);
 bool sol_catena(char **production, Catena * Catena, int indent);
 bool sol_object(char **production, Object * Object, int indent);
 bool sol_reflexive(char **production, Reflexive * Reflexive, int indent);
-bool sol_contract(char **production, Contract * Contract, int indent);
 bool sol_predicates(char **production, Predicates * Predicates, int indent);
 bool sol_predicate(char **production, Predicate * Predicate, int indent);
 bool sol_permission(char **production, Permission * Permission, int indent);
@@ -962,7 +993,6 @@ bool sol_fixture(char **production, Fixture * Fixture, int indent);
 bool sol_fix(char **production, Fix * Fix, int indent);
 bool sol_setting(char **production, Setting * Setting, int indent);
 bool sol_illocutor(char **production, Illocutor * Illocutor, int indent);
-bool sol_be(char **production, Be * Be, int indent);
 bool sol_payment(char **production, Payment * Payment, int indent);
 bool sol_pay(char **production, Pay * Pay, int indent);
 bool sol_preposition(char **production, Preposition * Preposition, int indent);
@@ -1200,21 +1230,12 @@ bool sol_document(char **production, Document *Document, int indent) {
 	main_constructor_body = false;
 	enforce_same_subject = false;
 
-	/* inject catch of non-permissioned caller in constructor wrapper ///// what happened to this case
-	 * char *perm = mtrac_strdup("");
-	 * char *close = mtrac_strdup("");
-	 * produce_access_conditions(1, indent, &perm, active_subjects);
-	 * if(strlen(perm)) padcat(1, indent, &close, "}");
-	 * replace(production, "%15%", perm);
-	 * replace(production, "%16%", close);
-	 * mtrac_free(perm);
-	 * mtrac_free(close);
-	 */ delete_list(active_subjects);
+	delete_list(active_subjects);
 	active_subjects = null;
 
 	/* sol, sop: end of main constructor */
 	padcat(1, indent + 1, production, "}%34%");	// %34% adders
-	replace(production, "%1%", parameters);	////// can this line go?
+	replace(production, "%1%", parameters);
 
 	padcat(0, 0, production, "%31%");	// %31%: auxiliary functions
 
@@ -1298,8 +1319,6 @@ bool sol_document(char **production, Document *Document, int indent) {
 
 	replace(production, "%31%", auxfuncs);
 	mtrac_free(auxfuncs);
-	replace(production, "%1%", parameters);
-
 	/* end of file */
 	if (!opt_bare) padcat(2, indent, production, "/* end */\n");
 
@@ -1445,7 +1464,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 
 	paratag = strlen(*production);
 	class = mtrac_strdup(UP(camel_spaced(Covenant->Name)));
-	instance = mtrac_strdup(LOW(snake_spaced(Covenant->Name)));
+	instance = snakedup(Covenant->Name);
 	has_subclasses = true;
 	char *functions_shelve = mtrac_strdup(functions);
 	char *fixed_shelve = mtrac_strdup(fixed);
@@ -1481,7 +1500,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 				" covenant class");
 	if (opt_comment) padcat(1, indent, production, " **/");
 
-	/*
+	/* //// clean up
 	 * if(opt_lexon_comments) {
 	 * char *c = mtrac_strdup(get_lexcom("start"));
 	 * replace(&c, "\n", "\n *\t");
@@ -1545,26 +1564,12 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 				Covenant->Name,
 				" covenant, and register it with main */");
 
-	padcat(C, 1, &adders, "function add_",
-	       LOW(snake_spaced(Covenant->Name)), "(%2%) returns(",
-	       Covenant->Name, ") {");
+	padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name),
+	       "(%2%) returns(", Covenant->Name, ") {");
 	if (uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
 	padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ",
 	       class, "(%2b%);");
 	padcat(1, 1, &adders, "}");
-
-	/* inject catch of non-permissioned caller in constructor wrapper */
-	char *perm = mtrac_strdup("");
-	char *close = mtrac_strdup("");
-
-	assert(active_subjects);
-	produce_access_conditions(1, indent + 1, &perm, active_subjects);
-	if (strlen(perm)) padcat(1, indent + 1, &close, "}");
-	replace(production, "%15%", perm);
-	replace(production, "%16%", close);
-	mtrac_free(perm);
-	mtrac_free(close);
-
 	/* inject parameter lists */
 	replace(production, "%2%", parameters);
 	replace(&adders, "%2%", parameters);
@@ -1572,7 +1577,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	replace(&instructions, "%2%", parameta);
 
 	/* function modifier */
-	// needed here?
+	// needed here? ◊ 
 	replace(production, "%33%", !is_stateful ? " view" : "");
 	/* sol+sop: insert declaration of member variables into constructor (sol)/contract (sop) head */
 	replace(production, "%27C%", declarations);
@@ -1611,8 +1616,6 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 	if (opt_debug) printf("producing Provisions\n");
 
 	/* definitions */
-
-	if (current_function) current_function->uses_caller |= !main_constructor_body;	// for clarity. Really main_constructor_body -> !current_function
 	if (!global_definitions) global_definitions = Provisions->Definitions;
 	else covenant_definitions = Provisions->Definitions;	// (sic)
 	sol_definitions(production, Provisions->Definitions, indent);
@@ -1633,8 +1636,6 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 	/* end of constructor body */
 
 	if (!main_constructor_body) padcat(1, --indent, production, "}");	// end of constructor
-	/* the above line does anyting only during main_constructor_body==true,
-	 * which implies current_function==null => irrelevant for uses_caller *////// < ???
 
 	/* insert caller argumnet and 'payable' modifier */
 
@@ -1680,24 +1681,15 @@ bool sol_definition(char **production, Definition *Definition, int indent) {
 			error("do not re-use the same name in multiple definitions", Definition->Name);
 	}
 
-	char *lowsnake_safe_name =
-		mtrac_strdup(SAFE(LOW(snake_spaced(Definition->Name))));
+	char *lowsnake_safe_name = safedup(SNAKE(Definition->Name));
 	char *lowsnake_literal =
-		mtrac_strdup(LOW
-			     (snake_spaced
-			      (Definition->Placeholder->Type->Literal)));
+		safedup(SNAKE(Definition->Type_Term->Type->Literal));
 	padcat(1, indent - 1, &declarations,
 	       typemap(lowsnake_literal, opt_harden, false), " ",
 	       lowsnake_safe_name, EOL);
 	mtrac_free(lowsnake_safe_name);
 	mtrac_free(lowsnake_literal);
-	padcat(0, 0, &declared, ":", LOW(snake_spaced(Definition->Name)), ":");	// declared: write #1
-	return true;
-}
-
-bool sol_placeholder(char **production, Placeholder *Placeholder, int indent) {
-	if (!Placeholder) return false;
-	sol_type(production, Placeholder->Type, indent + 1);
+	padcat(0, 0, &declared, ":", SNAKE(Definition->Name), ":");	// declared: write #1
 	return true;
 }
 
@@ -1734,12 +1726,13 @@ const char *nullmap(const char *lex_type, bool defined_default) {
 const char *lexsymtype(Symbol *symbol) {
 	char *pretty_varname;
 
-	if (symbol->Name) pretty_varname = LOW(snake_spaced(symbol->Name));	///// don't store LOW buffer
-	else if (symbol->Type) pretty_varname = LOW(snake_spaced(symbol->Type->Literal));	///// don't store LOW buffer
+	if (symbol->Name) pretty_varname = snakedup(symbol->Name);
+	else if (symbol->Type) pretty_varname = snakedup(symbol->Type->Literal);
 	assert(pretty_varname);
 	const char *lt = lextype(pretty_varname);
 
-	if (!strcmp(lt, "[ ERROR: UNKNOWN CATEGORY ]")) return null;
+	mtrac_free(pretty_varname);
+	if (!strcmp(lt, "[ ERROR: UNKNOWN CATEGORY ]")) return null;	// assert ◊
 	return lt;
 }
 
@@ -1751,147 +1744,70 @@ const char *lextype(const char *name) {
 		return "person";
 	if (!strcmp(name, "amount") || !strcmp(name, "Amount"))
 		return "amount";
-	char *_name = mtrac_strdup(name);	// to get out of LOW buffer, if nec. /// optimize ///// does not work when it kills LOW for caller
-
 	while (d && d->Definition) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return d->Definition->Placeholder->Type->Literal;
+		if (!strcmp(name, SNAKE(d->Definition->Name))) {
+			return d->Definition->Type_Term->Type->Literal;
 		}
 		d = d->Definitions;
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	mtrac_free(_name);
-	return "[ ERROR: UNKNOWN CATEGORY ]";
+	return "[ ERROR: UNKNOWN CATEGORY ]";	// assert ◊
 }
 
 const char *type(const char *name, bool option_type, bool forpara) {
 	Definitions *d = global_definitions;
 	bool covenants = false;	       // loop goes global first, then local covenant definitions
-	char *_name = mtrac_strdup(name);	// to get out of LOW buffer, if nec. /// optimize
 
 	while (d && d->Definition) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return typemap(d->Definition->Placeholder->Type->
-				       Literal, option_type, forpara);
+		if (!strcmp(name, SNAKE(d->Definition->Name))) {
+			return typemap(d->Definition->Type_Term->Type->Literal,
+				       option_type, forpara);
 		}
 		d = d->Definitions;
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	mtrac_free(_name);
-	return "[ ERROR: UNKNOWN TYPE ]";
+	return "[ ERROR: UNKNOWN TYPE ]";	// assert ◊
 }
 
 const char *nullvalue(const char *name, bool defined_default) {
 	assert(global_definitions);
-	char *_name = mtrac_strdup(name);	// to get out of LOW buffer, if nec. /// optimize
+	char *snakename = snakedup(name);
 	Definitions *d = global_definitions;
 
 	while (d) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return nullmap(d->Definition->Placeholder->Type->
-				       Literal, defined_default);
+		if (!strcmp(snakename, SNAKE(d->Definition->Name))) {
+			mtrac_free(snakename);
+			return nullmap(d->Definition->Type_Term->Type->Literal,
+				       defined_default);
 		}
 		d = d->Definitions;
 	}
 	d = covenant_definitions;
 	while (d) {
-		if (!strcmp(_name, LOW(snake_spaced(d->Definition->Name)))) {
-			mtrac_free(_name);
-			return nullmap(d->Definition->Placeholder->Type->
-				       Literal, defined_default);
+		if (!strcmp(snakename, SNAKE(d->Definition->Name))) {
+			mtrac_free(snakename);
+			return nullmap(d->Definition->Type_Term->Type->Literal,
+				       defined_default);
 		}
 		d = d->Definitions;
 	}
-	mtrac_free(_name);
-	return "[ ERROR: UNKNOWN NAME ]";
+	mtrac_free(snakename);
+	return "[ ERROR: UNKNOWN NAME ]";	// assert ◊
 }
 
-bool sol_type(char **production, Type *Type, int indent) {
-	if (!Type) return false;
-	if (opt_debug) printf("producing Type\n");
-
-	sol_person(production, Type->Person, indent + 1);
-	sol_amount(production, Type->Amount, indent + 1);
-	sol_time(production, Type->Time, indent + 1);
-	sol_binary(production, Type->Binary, indent + 1);
-	sol_text(production, Type->Text, indent + 1);
-	sol_data(production, Type->Data, indent + 1);
-
-	padcat(0, 0, production, ") ");
-
-	return true;
-}
-
-bool sol_person(char **production, Person *Person, int indent) {
-	if (!Person) return false;
-	if (opt_debug) printf("producing Person\n");
-	padcat(0, 0, production, "address payable");
-
-	return true;
-}
-
-bool sol_amount(char **production, Amount *Amount, int indent) {
-	if (!Amount) return false;
-	if (opt_debug) printf("producing Amount\n");
-	padcat(0, 0, production, "uint");
-
-	return true;
-}
-
-bool sol_time(char **production, Time *Time, int indent) {
-	if (!Time) return false;
-	if (opt_debug) printf("producing Time\n");
-	padcat(0, 0, production, "uint");
-
-	return true;
-}
-
-bool sol_binary(char **production, Binary *Binary, int indent) {
-	if (!Binary) return false;
-	if (opt_debug) printf("producing Binary\n");
-	padcat(0, 0, production, "bool");
-	return true;
-}
-
-bool sol_text(char **production, Text *Text, int indent) {
-	if (!Text) return false;
-	if (opt_debug) printf("producing Text\n");
-	padcat(0, 0, production, "string");
-	return true;
-}
-
-bool sol_data(char **production, Data *Data, int indent) {
-	if (!Data) return false;
-	if (opt_debug) printf("producing Data\n");
-	padcat(0, 0, production, "string");
-	return true;
-}
-
-bool sol_this_contract(char **production, This_Contract *This_Contract,
-		       int indent) {
+bool sol_this_contract(char **production, This_Contract *This_Contract, int indent) {	// unclear concept ◊
 	if (!This_Contract) return false;
 
-	// padcat(0, 0, production, "address(this)."); ? //////
+	// intentionally empty
 	return true;
 }
 
-bool sol_all_contracts(char **production, All_Contracts *All_Contracts,
-		       int indent) {
+bool sol_all_contracts(char **production, All_Contracts *All_Contracts, int indent) {	// unclear concept ◊
 	if (!All_Contracts) return false;
-	padcat(0, 0, production, "main.");	// JS/Sol/Sop? //////
-	return true;
-}
+	// intentionally empty
 
-bool sol_this(char **production, This *This, int indent) {
-	if (!This) return false;
-	if (opt_debug) printf("producing This\n");
-	padcat(1, indent, production, "( this ");
-	padcat(0, 0, production, ") ");
 	return true;
 }
 
@@ -1915,9 +1831,12 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	bool is_stateful_stack = is_stateful;
 
 	/* track which function calls which other functions */
-	bind *bind = register_bind(SAFE(LOW(snake_spaced(Clause->Name))));	///// don't call with LOW buffer
+	char *low = SNAKE(Clause->Name);
+	char *safe = safedup(low);
+	bind *bind = register_bind(safe);
 
-	padcat(0, 0, &declared, ":", LOW(snake_spaced(Clause->Name)), ":");	// declared: write #2
+	mtrac_free(safe);
+	padcat(0, 0, &declared, ":", low, ":");	// declared: write #2
 	current_function = bind;
 
 	paratag = strlen(*production);
@@ -1925,8 +1844,10 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 				" clause */");
 
 	if (opt_lexon_comments) {
-		char *c = mtrac_strdup(get_lexcom(LOW(snake_spaced(Clause->Name))));	///// don't call with LOW buffer
+		char *clause = snakedup(Clause->Name);
+		char *c = mtrac_strdup(get_lexcom(clause));
 
+		mtrac_free(clause);
 		assert(c);
 		replace(&c, "\n", "\n     *  ");
 		padcat(2, 0, production, "    /*\n     *  ", c, "\n     */");
@@ -2043,7 +1964,7 @@ bool sol_action(char **production, Action *Action, int indent) {
 		/* this takes care of the subject person 1) becoming a parameter and 2) an object member that 3) gets the parameter assigned */
 		insert_parameter_and_set_member(production, null, Action->Subject->Symbols->Symbol, payment, paratag, indent, __LINE__);	// call #1
 		/* the function we are in, if it had no caller set yet, the subject will be used as the caller, LITERALLY. */
-		if (!caller) caller = mtrac_strdup(LOW(snake_spaced(Action->Subject->Symbols->Symbol->Name)));	// ...
+		if (!caller) caller = snakedup(Action->Subject->Symbols->Symbol->Name);	// ...
 	}
 
 	/* for main_constructor_bodys, enforce that if there are multiple sentences, they all use the same subjects */
@@ -2119,7 +2040,7 @@ bool sol_action(char **production, Action *Action, int indent) {
 		if (single_sentence_clause && single_subject) {
 			padcat(1, indent, production, "permit(");
 			sol_symbol(production, Action->Subject->Symbols->Symbol,
-				   0);
+				   false, 0);
 
 			padcat(0, 0, production, ")" EOL);
 			uses_permit = true;
@@ -2138,7 +2059,8 @@ bool sol_action(char **production, Action *Action, int indent) {
 
 				padcat(0, 0, production, "msg.sender == ");
 
-				sol_symbol(production, Symbols->Symbol, 0);
+				sol_symbol(production, Symbols->Symbol, false,
+					   0);
 				if (current_function) current_function->
 						uses_caller = true;
 				Symbols = Symbols->Symbols;
@@ -2190,30 +2112,32 @@ bool sol_subject(char **production, Subject *Subject, int indent) {
 		 * (which's literal may be in Literal but Name after parsing) */
 		if (s->Symbol->Name) {
 
-			char *varname = LOW(snake_spaced(s->Symbol->Name));	///// don't store LOW buffer
+			char *varname = snakedup(s->Symbol->Name);
 			char *lexname = s->Symbol->Name;
 			char *scope = (!in(globals, s->Symbol->Name) && class) ? "this." : "main.";	////// unite with usual 'main_constructor_body?' ?
 
 			padcat(0, 0, para, first ? "<<" : " or ", lexname);
 			/* binding of unbound person variable to caller parameter */
 			if (!main_constructor_body) {
+				char *safe = safedup(varname);
+
 				/* precondition that caller and all of the subjects cannot be the same */
 				if (first) padcat(2, indent, &subjnonmatch,
-						  "if(caller != ", scope,
-						  SAFE(varname));
+						  "if(caller != ", scope, safe);
 				else padcat(0, 0, &subjnonmatch,
-					    " && caller != ", scope,
-					    SAFE(varname));
+					    " && caller != ", scope, safe);
 				/* produce bind code. Person in question must still be null, i.e., unbound */
 				if (!in(fixed, varname)) {
 					padcat(1, indent + 1, &subjlatebind,
 					       !any ? "" : "else ", "if(",
-					       scope, SAFE(varname),
-					       " == null) ", scope,
-					       SAFE(varname), " = caller;");
+					       scope, safe, " == null) ", scope,
+					       safe, " = caller;");
 					any = true;
+					padcat(0, 0, &fixed, ":", safe, ":");	// right? ◊
 				}
+				mtrac_free(safe);
 			}
+			mtrac_free(varname);
 		}
 		s = s->Symbols;
 		first = false;
@@ -2237,32 +2161,40 @@ bool sol_subject(char **production, Subject *Subject, int indent) {
 
 bool sol_symbols(char **production, Symbols *Symbols, int indent) {
 	if (!Symbols) return false;
-	sol_symbol(production, Symbols->Symbol, indent);
+	sol_symbol(production, Symbols->Symbol, false, indent);
 	sol_catena(production, Symbols->Catena, indent);
 	sol_symbols(production, Symbols->Symbols, indent);
 	return true;
 }
 
-bool sol_symbol(char **production, Symbol *Symbol, int indent) {
+bool sol_symbol(char **production, Symbol *Symbol, bool assign, int indent) {
 	if (!Symbol) return false;
 
-	/* produce the name literal. Note that sol_name adds 'this.' or 'main.', which makes for a global scope,
-	 * while the cases that a type name is itself used as variable name, it is use unprefixed, for a local scope. */
-	if (Symbol->Name) sol_name(production, Symbol->Name, indent);
-	else if (Symbol->Type) {
-		padcat(0, 0, production, Symbol->Type->Literal);	//X change to JS SAFE etc? v
+	/* produce the name literal. Note that sol_name adds 'this.'
+	 * or 'main.', which makes for a global scope, while the cases
+	 * that a type name is itself used as variable name, it is use
+	 * unprefixed, for a local scope. */
+	if (Symbol->Name)
+		sol_name(production, Symbol->Name, assign, indent);
+	else {
+		assert(Symbol->Type);
+		char *safe = safedup(SNAKE(Symbol->Type->Literal));
 
-	} else {
-		padcat(0, 0, production, "[ UNDEFINED ]");
-	}			       ///// or assert
+		padcat(0, 0, production, safe);
+		if (assign) padcat(0, 0, &fixed, ":", safe, ":");
+		mtrac_free(safe);
+	}
 	return true;
 }
 
 bool sol_noun(char **production, Symbol *Symbol, int indent) {
 	if (!Symbol) return false;
-	if (Symbol->Name) padcat(0, 0, production, Symbol->Name);
-	else if (Symbol->Type) padcat(0, 0, production, Symbol->Type->Literal);
-	else padcat(0, 0, production, "[ UNKNOWN ]");
+	if (Symbol->Name)
+		padcat(0, 0, production, Symbol->Name);
+	else {
+		assert(Symbol->Type);
+		padcat(0, 0, production, Symbol->Type->Literal);
+	}
 	return true;
 }
 
@@ -2276,7 +2208,7 @@ bool sol_object(char **production, Object *Object, int indent) {
 	if (opt_debug) printf("producing Object\n");
 	if (Object->Symbol) {
 
-		sol_symbol(production, Object->Symbol, indent + 1);
+		sol_symbol(production, Object->Symbol, false, indent + 1);
 
 	} else if (Object->Reflexive)
 		sol_reflexive(production, Object->Reflexive, indent + 1);
@@ -2296,20 +2228,8 @@ bool sol_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	if (action->Subject->Symbols->Symbols)
 		error("don't use multiple subjects with a reflexive pronoun",
 		      action->Subject->Symbols->Symbol->Name);
-	sol_symbol(production, action->Subject->Symbols->Symbol, indent + 1);
-
-	return true;
-}
-
-bool sol_contract(char **production, Contract *Contract, int indent) {
-	if (!Contract) return false;
-	if (opt_debug) printf("producing Contract\n");
-	padcat(1, indent, production, "( contract ");
-
-	sol_this_contract(production, Contract->This_Contract, indent + 1);
-	sol_all_contracts(production, Contract->All_Contracts, indent + 1);
-
-	padcat(0, 0, production, ") ");
+	sol_symbol(production, action->Subject->Symbols->Symbol, false,
+		   indent + 1);
 
 	return true;
 }
@@ -2349,20 +2269,22 @@ bool sol_permission(char **production, Permission *Permission, int indent) {
 	if (opt_debug) printf("producing Permission\n");
 	return true;
 }
+
+	/* assign a symbol an expression */
 static void assign(char **production, int indent, Symbol *symbol,
 		   Expression *expression) {
 	padcat(1, indent, production, "");
 
 	miller = true;
-	sol_symbol(production, symbol, indent);
+	sol_symbol(production, symbol, true, indent);	// true --> assign flag
 	miller = false;
-	is_stateful = true;	       // note the tag is useless for sol, assign() is yet only used by Sop
+	is_stateful = true;	       // clean up where set outside assign ◊
 	padcat(0, 0, production, " = ");
 	if (expression)
 		sol_expression(production, expression, indent + 1);
 	else
 		padcat(0, 0, production, "true");
-	padcat(0, 0, production, "})");	// note this is hypothetical, assign() is not used yet by Sol (only Sop)
+
 	padcat(0, 0, production, EOL);
 }
 
@@ -2370,20 +2292,15 @@ bool sol_certification(char **production, Certification *Certification,
 		       int indent) {
 	if (!Certification) return false;
 	if (opt_debug) printf("producing Certification\n");
-	if (Certification->Expression) {
-		padcat(1, indent, production, "");
-		sol_symbol(production, Certification->Symbol, indent);
-		padcat(0, 0, production, " = ");
-		sol_expression(production, Certification->Expression,
-			       indent + 1);
-		padcat(0, 0, production, ";");
-	} else {		       // contract or nothing
-		insert_parameter_and_set_member(production, &instructions, Certification->Symbol, false, paratag, indent, __LINE__);	// call #2
-		///// padcat(1, indent, production, "");
-		///// sol_symbol(production, Certification->Symbol, indent);
-		///// padcat(0, 0, production, "= true;");
-		///// cf. evaluation.lex commissioned() / statement.lex certify()
-		is_stateful = true;
+
+	if (Certification->Contract) { // 'certify contract as ..'
+		assign(production, indent, Certification->Symbol, null);
+	} else if (Certification->Expression) {
+		assign(production, indent, Certification->Symbol,
+		       Certification->Expression);
+	} else {		       // nothing -> create a parameter
+		insert_parameter_and_set_member(production, &instructions, Certification->Symbol, false, paratag, indent, __LINE__);	// call #2a
+		// cf. evaluation.lex commissioned() / statement.lex certify() ◊
 	}
 	return true;
 }
@@ -2400,15 +2317,8 @@ bool sol_declaration(char **production, Declaration *Declaration, int indent) {
 	assert(!strstr(*production, "%preassign%"));	//X new after javascript.c was finished
 	padcat(0, 0, production, "%preassign%");
 	preass_indent = indent;
-	padcat(1, indent, production, "");	//X sollte das Folgende komplett, wie oben mit assign() behandelt werden?
-	sol_symbol(production, Declaration->Symbol, indent);
-	padcat(0, 0, production, " = ");
-	is_stateful = true;
-	if (Declaration->Expression)
-		sol_expression(production, Declaration->Expression, indent + 1);
-	else
-		padcat(0, 0, production, "true");
-	padcat(0, 0, production, ";");
+	assign(production, indent, Declaration->Symbol, Declaration->Expression);	//X new after javascript.c was finished //////
+
 	replace(production, "%preassign%", "");
 
 	return true;
@@ -2421,24 +2331,16 @@ bool sol_declare(char **production, Declare *Declare, int indent) {
 	return true;
 }
 
+	/* e.g. The Secured Party may file the Continuation Statement. (only example currently) */
 bool sol_filing(char **production, Filing *Filing, int indent) {
 	if (!Filing) return false;
 	if (opt_debug) printf("producing Filing\n");
 
-	if (Filing->Symbol) {
-		/* e.g. The Secured Party may file the Continuation Statement. (only example currently) */
+	if (Filing->Expression)
+		assign(production, indent, Filing->Symbol, Filing->Expression);
+	else
 		insert_parameter_and_set_member(production, &instructions, Filing->Symbol, false, paratag, indent, __LINE__);	// call #3
-	} else {
-		padcat(1, indent, production, "");
-		sol_symbol(production, Filing->Symbol, indent);	///// can't have any effect?
-		padcat(0, 0, production, " = ");
-		if (Filing->Expression)
-			sol_expression(production, Filing->Expression,
-				       indent + 1);
-		else
-			padcat(0, 0, production, "true");
-		padcat(0, 0, production, EOL);
-	}
+
 	return true;
 }
 
@@ -2448,24 +2350,16 @@ bool sol_file(char **production, File *File, int indent) {
 	return true;
 }
 
+	/* e.g., The Licensee may register a Comment Text. (only example) */
 bool sol_registration(char **production, Registration *Registration, int indent) {
 	if (!Registration) return false;
 	if (opt_debug) printf("producing registration\n");
 
-	if (Registration->Symbol) {
-		/* e.g., The Licensee may register a Comment Text. (only example) */
+	if (Registration->Expression)
+		assign(production, indent, Registration->Symbol,
+		       Registration->Expression);
+	else
 		insert_parameter_and_set_member(production, &instructions, Registration->Symbol, false, paratag, indent, __LINE__);	// call #4
-	} else {
-		padcat(1, indent, production, "");
-		sol_symbol(production, Registration->Symbol, indent);	////// can't have any effect?
-		padcat(0, 0, production, " = ");
-		if (Registration->Expression)
-			sol_expression(production, Registration->Expression,
-				       indent + 1);
-		else
-			padcat(0, 0, production, "true");
-		padcat(0, 0, production, EOL);
-	}
 
 	return true;
 }
@@ -2480,10 +2374,7 @@ bool sol_grantment(char **production, Grantment *Grantment, int indent) {
 	if (!Grantment) return false;
 	if (opt_debug) printf("producing Grantment\n");
 
-	padcat(1, indent, production, "");
-	sol_symbol(production, Grantment->Symbol, indent + 1);
-	is_stateful = true;
-	padcat(0, 0, production, " = true;");	// 'grant' instead of 'true'
+	assign(production, indent, Grantment->Symbol, null);	// sets true
 
 	return true;
 }
@@ -2499,7 +2390,6 @@ bool sol_appointment(char **production, Appointment *Appointment, int indent) {
 
 	/* produce person code: take care that they 1) become parameters, and 2) object elements with 3) that parameter assigned to */
 	insert_parameter_and_set_member(production, &instructions, Appointment->Symbol, false, paratag, indent, __LINE__);	// call #5
-
 	return true;
 }
 
@@ -2508,26 +2398,17 @@ bool sol_appoint(char **production, Appoint *Appoint, int indent) {
 	return true;
 }
 
+	/* The Licensor or the Arbiter may fix the Notice Time as the respective current time.
+	 * The Licensor [..] fixes the Description of Goods. */
 bool sol_fixture(char **production, Fixture *Fixture, int indent) {
 	if (!Fixture) return false;
 	if (opt_debug) printf("producing Fixture\n");
 
-	if (Fixture->Expression) {
-		/* An object member is declared and defined on the fly by an expression and NOT by parameter:
-		 * e.g., The Licensor or the Arbiter may fix the Notice Time as the respective current time. */
-		///// will not work in constructor?
-
-		padcat(1, indent, production, "");
-		sol_symbol(production, Fixture->Symbol, indent + 1);
-		padcat(0, 0, production, " = ");
-		sol_expression(production, Fixture->Expression, indent);
-		padcat(0, 0, production, ";");	// 'fix' instead of ';'
-	} else {
-		/* produce amounts/texts etc variables: take care that they 1) become parameters 2) object elements with that parameter assigned
-		 * e.g., The Licensor [..] fixes the Description of Goods. */
+	if (Fixture->Expression)
+		assign(production, indent, Fixture->Symbol,
+		       Fixture->Expression);
+	else
 		insert_parameter_and_set_member(production, &instructions, Fixture->Symbol, false, paratag, indent, __LINE__);	// call #6
-		is_stateful = true;
-	}
 
 	return true;
 }
@@ -2540,7 +2421,7 @@ bool sol_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 	padcat(1, indent, production, "");
-	sol_symbol(production, Setting->Symbol, indent + 1);
+	sol_symbol(production, Setting->Symbol, false, indent + 1);
 	padcat(0, 0, production, " = true;");	// set");
 
 	return true;
@@ -2549,20 +2430,9 @@ bool sol_setting(char **production, Setting *Setting, int indent) {
 bool sol_illocutor(char **production, Illocutor *Illocutor, int indent) {
 	if (!Illocutor) return false;
 	if (opt_debug) printf("producing Illocutor\n");
-	padcat(1, indent, production, "( illocutor ");
 
-	sol_be(production, Illocutor->Be, indent + 1);
+	padcat(0, 0, production, " = ");
 
-	padcat(0, 0, production, ") ");
-
-	return true;
-}
-
-bool sol_be(char **production, Be *Be, int indent) {
-	if (!Be) return false;
-	if (opt_debug) printf("producing Be\n");
-	padcat(1, indent, production, "( be ");
-	padcat(0, 0, production, ") ");
 	return true;
 }
 
@@ -2740,7 +2610,7 @@ bool sol_flagging(char **production, Flagging *Flagging, int indent) {
 	if (!Flagging) return false;
 	if (opt_debug) printf("producing Flagging\n");
 	padcat(1, indent, production, "");
-	sol_symbol(production, Flagging->Symbol, indent + 1);
+	sol_symbol(production, Flagging->Symbol, true, indent + 1);
 	padcat(0, 0, production, " = true;");	////////
 	return true;
 }
@@ -2833,7 +2703,7 @@ bool sol_scalar_expression(char **production,
 	if (!Scalar_Expression) return false;
 	if (opt_debug) printf("producing Scalar_Expression %s\n",
 			      Scalar_Expression->Scalar);
-	sol_symbol(production, Scalar_Expression->Symbol, indent + 1);
+	sol_symbol(production, Scalar_Expression->Symbol, false, indent + 1);
 	sol_scalar(production, Scalar_Expression->Scalar, indent + 1);
 	sol_point_in_time(production, Scalar_Expression->Point_In_Time,
 			  indent + 1);
@@ -2846,7 +2716,7 @@ bool sol_hex_expression(char **production, Hex_Expression *Hex_Expression,
 	if (!Hex_Expression) return false;
 	if (opt_debug) printf("producing Hex_Expression %s\n",
 			      Hex_Expression->Hex);
-	sol_symbol(production, Hex_Expression->Symbol, indent + 1);
+	sol_symbol(production, Hex_Expression->Symbol, false, indent + 1);
 	sol_hex(production, Hex_Expression->Hex, indent + 1);
 	// sol_point_in_time(production, Hex_Expression->Point_In_Time, indent+1);
 	inference = "uint";
@@ -2893,22 +2763,26 @@ bool sol_combinand(char **production, Combinand *Combinand, int indent) {
 
 		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
 		assert(funcname);
-		char *varname = LOW(snake_spaced(funcname));	///// don't store LOW buffer
+		char *varname = snakedup(funcname);
 
-		if (!in(fixed, varname) && !in(functions, funcname)) {
+		if (!in(fixed, varname) && !in(functions, funcname)) {	// incomplete, depends on order ◊
 			/* produce amounts/texts etc variables: take care that they
 			 * 1) become parameters, and 2) object elements with that parameter assigned
 			 * e.g., The Secured Party may pay a Reminder Fee into escrow. */
-			insert_parameter_and_set_member(production, &instructions, Combinand->Symbol, false, paratag, indent + 1, __LINE__);	////// call #7
+			insert_parameter_and_set_member(production, &instructions, Combinand->Symbol, false, paratag, indent + 4, __LINE__);	////// call #7
 		}
 		/* produce the literal (name or type name for variables that are named verbatim a type) */
+
 		if (!no_literal) {
 
-			sol_symbol(production, Combinand->Symbol, indent + 1);
+			sol_symbol(production, Combinand->Symbol, false,
+				   indent + 1);
 
 		}
+		mtrac_free(varname);
 	}
 	sol_expiration(production, Combinand->Expiration, indent + 1);
+	sol_description(production, Combinand->Description, indent + 1);
 	sol_scalar_comparison(production, Combinand->Scalar_Comparison,
 			      indent + 1);
 	sol_negation(production, Combinand->Negation, indent + 1);
@@ -2970,13 +2844,14 @@ bool sol_existence(char **production, Existence *Existence, int indent) {
 	padcat(0, 0, production, "");
 
 	assert(Existence->Symbol->Name);	// should never need Existance->Symbol->Type->Literal
-	sol_symbol(production, Existence->Symbol, indent + 1);
+	sol_symbol(production, Existence->Symbol, false, indent + 1);
 	const char *lst = lexsymtype(Existence->Symbol);
 
 	if (!lst || !strcmp(lst, "binary")) {
 
 	} else {
-		padcat(0, 0, production, " != ", nullvalue(LOW(snake_spaced(Existence->Symbol->Name)), !opt_harden));	///// don't call with LOW buffer
+		padcat(0, 0, production, " != ",
+		       nullvalue(Existence->Symbol->Name, !opt_harden));
 	}
 	inference = "bool";
 	return true;
@@ -2992,10 +2867,11 @@ bool sol_negation(char **production, Negation *Negation, int indent) {
 	if (!lst || !strcmp(lst, "binary")) {
 
 		padcat(0, 0, production, "!");
-		sol_symbol(production, Negation->Symbol, indent + 1);
+		sol_symbol(production, Negation->Symbol, false, indent + 1);
 	} else {
-		sol_symbol(production, Negation->Symbol, indent + 1);
-		padcat(0, 0, production, " == ", nullvalue(LOW(snake_spaced(Negation->Symbol->Name)), !opt_harden));	///// don't call with LOW buffer
+		sol_symbol(production, Negation->Symbol, false, indent + 1);
+		padcat(0, 0, production, " == ",
+		       nullvalue(Negation->Symbol->Name, !opt_harden));
 	}
 	inference = "bool";
 	return true;
@@ -3053,7 +2929,8 @@ bool sol_relative_time(char **production, Relative_Time *Relative_Time,
 	if (opt_debug) printf("producing Relative_Time\n");
 	if (Relative_Time->Symbol) {
 		padcat(0, 0, production, opt_harden ? "Some" : "", "(");
-		sol_symbol(production, Relative_Time->Symbol, indent + 1);
+		sol_symbol(production, Relative_Time->Symbol, false,
+			   indent + 1);
 		padcat(0, 0, production, " + ");
 	} else {
 
@@ -3203,10 +3080,8 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 
 	char *pretty_varname;
 
-	if (symbol->Name) pretty_varname =
-			mtrac_strdup(LOW(snake_spaced(symbol->Name)));
-	else if (symbol->Type) pretty_varname =
-			mtrac_strdup(LOW(snake_spaced(symbol->Type->Literal)));
+	if (symbol->Name) pretty_varname = snakedup(symbol->Name);
+	else if (symbol->Type) pretty_varname = snakedup(symbol->Type->Literal);
 	else assert(false);
 
 	char *symbol_name;
@@ -3219,15 +3094,13 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	if (opt_debug) printf("producing parameter %s\n", pretty_varname);
 
 	// protect keywords
-	char *varname = mtrac_strdup("");
-
-	concat(&varname, SAFE(pretty_varname));
+	char *varname = safedup(pretty_varname);
 
 	// protect parameters with leading underscore (sol),
 	// or not because this. or main or state. will be prefixed (js, sop).
 	char *parameter_varname = mtrac_strdup("");
 
-	concat(&parameter_varname, "_", varname);	// with SAFE() above can lead to double underscore
+	concat(&parameter_varname, "_", varname);	// with safedup() above can lead to double underscore
 	// prepend type (sol, sop)
 	char *typed_varname = mtrac_strdup("");
 
@@ -3247,30 +3120,35 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	bool use_sender = !active_subjects && !msg_sender
 		&& !strcmp("person", lextype(pretty_varname));
 	if (use_sender) msg_sender = mtrac_strdup(pretty_varname);
-	///////// printf("msgval %s %d ", msg_value, payment);
 	bool use_value = !msg_value && !strcmp("amount", lextype(pretty_varname));	///// unclear, wip?: && payment;
 
 	if (use_value) msg_value = mtrac_strdup(pretty_varname);
 	is_payable |= !!use_value;
 	is_stateful = true;
-	///////// printf("%s: %d (%s)\n", pretty_varname, use_value, lextype(pretty_varname));
 
 	/* 1: Add to the parameters and arguments list. In the produced code as well as (parameta) the instructions */
 	if (!use_sender && !use_value) {
 		if (!current_function) {
 			/* outside a function (constructor?/////) */
-			padcat(0, 0, &parameters, *parameters ? ", " : "", typed_parameter_varname);	////// js was SAFE(varname)
+			padcat(0, 0, &parameters, *parameters ? ", " : "",
+			       typed_parameter_varname);
 			padcat(0, 0, &arguments, *arguments ? ", " : "",
 			       parameter_varname);
-			if (instructions) padcat(0, 0, &parameta, *parameta ? ", " : "", "<", pretty_typed_varname, ">");	///// js was varname
+			if (instructions) padcat(0, 0, &parameta,
+						 *parameta ? ", " : "", "<",
+						 pretty_typed_varname, ">");
 			//////// padcat(0, 0, &declared, ":", parameter_varname, ":"); // declared: write #4  ///// js was varname
 			//////// note: changed to include underscore in some case
 		} else {
 			/* inside a function (clause) */
-			padcat(0, 0, &current_function->parameters, *current_function->parameters ? ", " : "", typed_parameter_varname);	///// js was SAFE(varname)
+			padcat(0, 0, &current_function->parameters,
+			       *current_function->parameters ? ", " : "",
+			       typed_parameter_varname);
 			// arguments don't happen in this case
 			if (instructions)
-				padcat(0, 0, &current_function->parameta, *current_function->parameta ? ", " : "", "<", pretty_typed_varname, ">");	///// js was varname
+				padcat(0, 0, &current_function->parameta,
+				       *current_function->parameta ? ", " : "",
+				       "<", pretty_typed_varname, ">");
 		}
 	}
 
@@ -3317,7 +3195,6 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 			padcat(linebreak, setting_indent, &setting, varname,
 			       " = ", parameter_varname, EOL);
 		}
-
 		/* 2b: set member immediately before the use of the value:
 		 * within functions (instead within the constructor) when a parameter's value is to be used,
 		 * and a member set to this value on the fly. The setting is inserted before the start of the
@@ -3360,8 +3237,8 @@ void produce_access_conditions(int down, int indent, char **production,
 	while (s) {
 		if (i++) padcat(0, 0, production, " || ");
 		padcat(0, 0, production, "caller == ");
-		sol_name(production, (char *)s->item, 0);
-		//.// if(current_function) current_function->uses_caller = true;
+		sol_name(production, (char *)s->item, false, 0);
+		//.// if(current_function) current_function->uses_caller = true; ◊
 		s = s->next;
 	}
 	padcat(0, 0, production, ") {");

@@ -3187,7 +3187,7 @@ char *yytext;
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 95 U" // unified 0.3 + experimental 0.4
+#define program_vers "0.3 alpha 96 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -3229,10 +3229,10 @@ typedef int bool;
 #define concat(var_, ...) _concat(#var_, __FILE__, __LINE__, 0, 0, var_, __VA_ARGS__, null)
 #define precat(...) _precat(__VA_ARGS__, null)
 #define padcat(down_, right_, var_, ...) _concat(#var_, __FILE__, __LINE__, down_, right_, var_, __VA_ARGS__, null)
-#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, #orig_, __FILE__, __LINE__)
-#define replace_whole_words(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, true, #orig_, __FILE__, __LINE__)
-#define replace_first(orig_, rep_, with_) _replace(orig_, rep_, with_, false, null, false, #orig_, __FILE__, __LINE__)
-#define replace_first_from(orig_, rep_, with_, from_) _replace(orig_, rep_, with_, false, from_, false, #orig_, __FILE__, __LINE__)
+#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, null, null, #orig_, __FILE__, __LINE__)
+#define replace_whole_words(orig_, rep_, with_, quote_, unquote_) _replace(orig_, rep_, with_, true, null, true, quote_, unquote_, #orig_, __FILE__, __LINE__)
+#define replace_first(orig_, rep_, with_) _replace(orig_, rep_, with_, false, null, false, null, null, #orig_, __FILE__, __LINE__)
+#define replace_first_from(orig_, rep_, with_, from_) _replace(orig_, rep_, with_, false, from_, false, null, null, #orig_, __FILE__, __LINE__)
 
 /* prepending Flex' debug output with 'scanner: ' -- this is Flex' own and the above D macro's */
 #define fprintf(out_, ...) repchr(yytext, '\n', '$'), fprintf(out_, "scanner: " __VA_ARGS__), repchr(yytext, '$', '\n')
@@ -3255,7 +3255,8 @@ char **_concat(char *varname, char *file, int line, int down, int right, char **
 char **_concatnum(char **buf, char *prefix, int number, char *postfix);
 void _precat(char **buf, ...);
 char *catdup(char *string, char *append, int(*func)(int));
-int _replace(char **orig, const char *rep, const char *with, int all, char *from, bool whole, char *origname, char *file, int line);
+int _replace(char **orig, const char *rep, const char *with, int all, char *from,
+	bool whole, char *quote, char *unquote, char *origname, char *file, int line);
 int repchr(char *hay, char s, char r) { char *c = hay; while(*c) { if(*c==s) *c = r; c++; } return 0; }
 char *filedup(const char *path, const char *dflt);
 char *str_escape(const char *src, const char *varname);
@@ -3264,7 +3265,12 @@ const char *literal_symbol(char *token);
 char *UP(const char *token);
 char *up(char *token);
 char *LOW(const char *token);
+char *SNAKE(const char *token);
 char *lowdup(const char *token);
+char *snakedup(const char *token);
+char *dash_spaced(const char *token);
+char *snake_spaced(const char *token);
+char *camel_spaced(const char *token);
 void lineno();
 void rump(char **dest, char *filename);
 char *cutbuf(char *src, char *cut);
@@ -3273,9 +3279,6 @@ char *trim(char *s);
 char *contract(char *s);
 char *unspace(char *s);
 char *quote_trimmed(const char *token);
-char *dash_spaced(const char *token);
-char *snake_spaced(const char *token);
-char *camel_spaced(const char *token);
 char **pad(char **s, int to);
 char *xcr(char *);
 int chrcnt(char *hay, char needle);
@@ -3711,7 +3714,7 @@ int yyparse (void);
 /* extension parsing */
 
 
-#line 3715 "lexccc.c"
+#line 3718 "lexccc.c"
 
 #define INITIAL 0
 #define BOFTRIM 1
@@ -3912,7 +3915,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 606 "../src/lexon.l"
+#line 609 "../src/lexon.l"
 
 
  if(YY_START==INITIAL) BEGIN ((opt_bnf || opt_yacc || opt_keywords || opt_template || opt_bootstrap || opt_samples ? LGF : BOFTRIM));
@@ -3921,7 +3924,7 @@ YY_DECL
     for the liberal use of tabs and newlines even within variable names.
     At the ocassion, double newline (which semantically equal '.') is also normalized. */
 
-#line 3925 "lexccc.c"
+#line 3928 "lexccc.c"
 
 	if ( !(yy_init) )
 		{
@@ -4003,129 +4006,129 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 615 "../src/lexon.l"
+#line 618 "../src/lexon.l"
 { D; BEGIN(LXF); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 616 "../src/lexon.l"
+#line 619 "../src/lexon.l"
 { D; BEGIN(LGF); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 617 "../src/lexon.l"
+#line 620 "../src/lexon.l"
 { D; lineno(); concat(&buf, "\n\n"); line+=2; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 618 "../src/lexon.l"
+#line 621 "../src/lexon.l"
 { D; lineno(); concat(&buf, ".\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 619 "../src/lexon.l"
+#line 622 "../src/lexon.l"
 { D; lineno(); concat(&buf, ",\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 620 "../src/lexon.l"
+#line 623 "../src/lexon.l"
 { D; lineno(); concat(&buf, ";\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 621 "../src/lexon.l"
+#line 624 "../src/lexon.l"
 { D; lineno(); concat(&buf, ":\n"); line++; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 622 "../src/lexon.l"
+#line 625 "../src/lexon.l"
 /* under, after include */				{ D;           concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 623 "../src/lexon.l"
+#line 626 "../src/lexon.l"
 { D;           concat(&buf, " "); _lastline=++line; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 624 "../src/lexon.l"
+#line 627 "../src/lexon.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 626 "../src/lexon.l"
+#line 629 "../src/lexon.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 628 "../src/lexon.l"
+#line 631 "../src/lexon.l"
 { D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
 									 concat(&buf, yytext); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 631 "../src/lexon.l"
+#line 634 "../src/lexon.l"
 { D; freeline(); BEGIN(INCLUDE); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 632 "../src/lexon.l"
+#line 635 "../src/lexon.l"
 { D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
 	YY_BREAK
 /* ---> 2ND CYCLE LGF GENERATED TYPE NAMES HERE ---> */
 /* <--- TO HERE <--- */
 case 15:
 YY_RULE_SETUP
-#line 635 "../src/lexon.l"
+#line 638 "../src/lexon.l"
 { D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 636 "../src/lexon.l"
+#line 639 "../src/lexon.l"
 { D; lineno(); concat(&buf, trim(yytext), " ‹"); BEGIN(LONGQUOTE); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 637 "../src/lexon.l"
+#line 640 "../src/lexon.l"
 { D; lineno(); concat(&buf, trim(yytext), " "); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 638 "../src/lexon.l"
+#line 641 "../src/lexon.l"
 { D; lineno(); process("\"“”", "", "", yytext, "\"“”"); concat(&buf, yytext); lhd=true; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 639 "../src/lexon.l"
+#line 642 "../src/lexon.l"
 { D; concat(&buf, " "); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 640 "../src/lexon.l"
+#line 643 "../src/lexon.l"
 /* these 2 lines emulate ^[^"“”]: */			{ D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 641 "../src/lexon.l"
+#line 644 "../src/lexon.l"
 { D0; yyless(0); if(plhd && pretty) freeline(); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 642 "../src/lexon.l"
+#line 645 "../src/lexon.l"
 { D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case YY_STATE_EOF(PRE):
-#line 643 "../src/lexon.l"
+#line 646 "../src/lexon.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done()) BEGIN(PRE);
 									else {
@@ -4144,49 +4147,49 @@ case YY_STATE_EOF(PRE):
 
 case 23:
 YY_RULE_SETUP
-#line 659 "../src/lexon.l"
+#line 662 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 660 "../src/lexon.l"
+#line 663 "../src/lexon.l"
 { D; line++; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 661 "../src/lexon.l"
+#line 664 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(BOFTRIM):
-#line 662 "../src/lexon.l"
+#line 665 "../src/lexon.l"
 { D; syntax("empty file (or only whitespace)", yytext); }
 	YY_BREAK
 
 
 case 26:
 YY_RULE_SETUP
-#line 666 "../src/lexon.l"
+#line 669 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 667 "../src/lexon.l"
+#line 670 "../src/lexon.l"
 { D; if(!pretty) concat(&buf, "\n"); line++; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 668 "../src/lexon.l"
+#line 671 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 669 "../src/lexon.l"
+#line 672 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(TRIM):
-#line 670 "../src/lexon.l"
+#line 673 "../src/lexon.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done())
 										BEGIN(PRE);
@@ -4206,64 +4209,64 @@ case YY_STATE_EOF(TRIM):
 ///// refactor. Only used by LEX tag
 case 30:
 YY_RULE_SETUP
-#line 688 "../src/lexon.l"
+#line 691 "../src/lexon.l"
 { D; process2(yytext, ". \t", "«", "»"); concat(&buf, yytext); BEGIN(PRE); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 689 "../src/lexon.l"
+#line 692 "../src/lexon.l"
 { D; syntax("unexpected character in name", yytext); }
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 690 "../src/lexon.l"
+#line 693 "../src/lexon.l"
 { D; syntax("unexpected end of line instead of name", ""); }
 	YY_BREAK
 case YY_STATE_EOF(NAMEQUOTE):
-#line 691 "../src/lexon.l"
+#line 694 "../src/lexon.l"
 { D; syntax("unexpected end of file instead of name", yytext); }
 	YY_BREAK
 
 
 case 33:
 YY_RULE_SETUP
-#line 695 "../src/lexon.l"
+#line 698 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 696 "../src/lexon.l"
+#line 699 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 697 "../src/lexon.l"
+#line 700 "../src/lexon.l"
 { D; concat(&buf, "‹", yytext, "›."); }
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 698 "../src/lexon.l"
+#line 701 "../src/lexon.l"
 /* used to be \.*{space}*\n */		{ D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
 
 case 37:
 YY_RULE_SETUP
-#line 702 "../src/lexon.l"
+#line 705 "../src/lexon.l"
 { D; concat(&buf, yytext); }
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 703 "../src/lexon.l"
+#line 706 "../src/lexon.l"
 { D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 704 "../src/lexon.l"
+#line 707 "../src/lexon.l"
 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
@@ -4273,22 +4276,22 @@ case 40:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 707 "../src/lexon.l"
+#line 710 "../src/lexon.l"
 { D; input(); include(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 708 "../src/lexon.l"
+#line 711 "../src/lexon.l"
 { D; syntax("unexpected character in include filename and path", yytext); }
 	YY_BREAK
 case 42:
 /* rule 42 can match eol */
 YY_RULE_SETUP
-#line 709 "../src/lexon.l"
+#line 712 "../src/lexon.l"
 { D; syntax("unexpected end of line instead of include filename and path", ""); }
 	YY_BREAK
 case YY_STATE_EOF(INCLUDE):
-#line 710 "../src/lexon.l"
+#line 713 "../src/lexon.l"
 { D; syntax("unexpected end of file instead of include filename and path", yytext); }
 	YY_BREAK
 case 43:
@@ -4297,22 +4300,22 @@ case 43:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 712 "../src/lexon.l"
+#line 715 "../src/lexon.l"
 { D; input(); concat(&buf, yytext); setlaw(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 713 "../src/lexon.l"
+#line 716 "../src/lexon.l"
 { D; syntax("unexpected character in jurisdiction tag", yytext); }
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 714 "../src/lexon.l"
+#line 717 "../src/lexon.l"
 { D; syntax("unexpected end of line instead of jurisdiction tag", ""); }
 	YY_BREAK
 case YY_STATE_EOF(LAW):
-#line 715 "../src/lexon.l"
+#line 718 "../src/lexon.l"
 { D; syntax("unexpected end of file in jurisdiction tag", yytext); }
 	YY_BREAK
 /* MAIN */
@@ -4322,84 +4325,84 @@ case 46:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 721 "../src/lexon.l"
+#line 724 "../src/lexon.l"
 { D; mtrac_free(prec_file); prec_file = trim(mtrac_strdup(yytext));
 									if(opt_debug_mainscan) printf("file %s ", yytext); BEGIN(LINENO); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 723 "../src/lexon.l"
+#line 726 "../src/lexon.l"
 { D; DX(Colon); return Colon; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 724 "../src/lexon.l"
+#line 727 "../src/lexon.l"
 { D; DX(Comma); return Comma; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 725 "../src/lexon.l"
+#line 728 "../src/lexon.l"
 { D; DX(Semicolon); return Semicolon; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 726 "../src/lexon.l"
+#line 729 "../src/lexon.l"
 { D; DX(Dash); return Dash; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 727 "../src/lexon.l"
+#line 730 "../src/lexon.l"
 { D; DX(Percent); return Percent; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 728 "../src/lexon.l"
+#line 731 "../src/lexon.l"
 { D; DX(Quote); return Quote; }
 	YY_BREAK
 case 53:
 /* rule 53 can match eol */
 YY_RULE_SETUP
-#line 729 "../src/lexon.l"
+#line 732 "../src/lexon.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 730 "../src/lexon.l"
+#line 733 "../src/lexon.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 731 "../src/lexon.l"
+#line 734 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 732 "../src/lexon.l"
+#line 735 "../src/lexon.l"
 { D; BEGIN(NAME_); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 733 "../src/lexon.l"
+#line 736 "../src/lexon.l"
 { D; BEGIN(DESCRIPTION_); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 734 "../src/lexon.l"
+#line 737 "../src/lexon.l"
 { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
 	YY_BREAK
 /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
 /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */
 case 59:
 YY_RULE_SETUP
-#line 737 "../src/lexon.l"
+#line 740 "../src/lexon.l"
 { D; printf(" %s", yytext); }
 	YY_BREAK
 /* <-- TO HERE <-- */
 case 60:
 YY_RULE_SETUP
-#line 739 "../src/lexon.l"
+#line 742 "../src/lexon.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 
@@ -4409,22 +4412,22 @@ case 61:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 743 "../src/lexon.l"
+#line 746 "../src/lexon.l"
 { D; prec_line = atoi(yytext); if(opt_debug_mainscan) printf("line %s: ", yytext); }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 744 "../src/lexon.l"
+#line 747 "../src/lexon.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 745 "../src/lexon.l"
+#line 748 "../src/lexon.l"
 { D; syntax("unexpected character in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LINENO):
-#line 747 "../src/lexon.l"
+#line 750 "../src/lexon.l"
 { D; syntax("unexpected end of file in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
@@ -4433,16 +4436,16 @@ case YY_STATE_EOF(LINENO):
 case 64:
 /* rule 64 can match eol */
 YY_RULE_SETUP
-#line 752 "../src/lexon.l"
+#line 755 "../src/lexon.l"
 { D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 753 "../src/lexon.l"
+#line 756 "../src/lexon.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case YY_STATE_EOF(NAME_):
-#line 754 "../src/lexon.l"
+#line 757 "../src/lexon.l"
 { D; syntax("unexpected end of file - precompiler name quote error", yytext); }
 	YY_BREAK
 
@@ -4450,17 +4453,17 @@ case YY_STATE_EOF(NAME_):
 case 66:
 /* rule 66 can match eol */
 YY_RULE_SETUP
-#line 758 "../src/lexon.l"
+#line 761 "../src/lexon.l"
 { D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 	YY_BREAK
 case 67:
 /* rule 67 can match eol */
 YY_RULE_SETUP
-#line 759 "../src/lexon.l"
+#line 762 "../src/lexon.l"
 { D; DX(Separator); BEGIN(MAIN); return Separator; }
 	YY_BREAK
 case YY_STATE_EOF(DESCRIPTION_):
-#line 760 "../src/lexon.l"
+#line 763 "../src/lexon.l"
 { D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 	YY_BREAK
 
@@ -4472,7 +4475,7 @@ case 68:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 766 "../src/lexon.l"
+#line 769 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 69:
@@ -4481,7 +4484,7 @@ case 69:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 767 "../src/lexon.l"
+#line 770 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 70:
@@ -4490,7 +4493,7 @@ case 70:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 768 "../src/lexon.l"
+#line 771 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 71:
@@ -4499,7 +4502,7 @@ case 71:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 769 "../src/lexon.l"
+#line 772 "../src/lexon.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 72:
@@ -4508,7 +4511,7 @@ case 72:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 770 "../src/lexon.l"
+#line 773 "../src/lexon.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 73:
@@ -4517,7 +4520,7 @@ case 73:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 771 "../src/lexon.l"
+#line 774 "../src/lexon.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 74:
@@ -4526,47 +4529,47 @@ case 74:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 772 "../src/lexon.l"
+#line 775 "../src/lexon.l"
 { D; start_definition(yytext); }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 773 "../src/lexon.l"
+#line 776 "../src/lexon.l"
 { D; start_alternation(yytext); start_alternate(); }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 774 "../src/lexon.l"
+#line 777 "../src/lexon.l"
 { D; start_rule(active, personal); }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 775 "../src/lexon.l"
+#line 778 "../src/lexon.l"
 { D; start_rule(passive, personal); }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 776 "../src/lexon.l"
+#line 779 "../src/lexon.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 777 "../src/lexon.l"
+#line 780 "../src/lexon.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 778 "../src/lexon.l"
+#line 781 "../src/lexon.l"
 { D; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 779 "../src/lexon.l"
+#line 782 "../src/lexon.l"
 { D; start_option(spaced); }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 780 "../src/lexon.l"
+#line 783 "../src/lexon.l"
 { D; start_option(unspaced); }
 	YY_BREAK
 case 83:
@@ -4575,76 +4578,76 @@ case 83:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 781 "../src/lexon.l"
+#line 784 "../src/lexon.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 782 "../src/lexon.l"
+#line 785 "../src/lexon.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 783 "../src/lexon.l"
+#line 786 "../src/lexon.l"
 { D; end_option(unspaced); }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 784 "../src/lexon.l"
+#line 787 "../src/lexon.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 785 "../src/lexon.l"
+#line 788 "../src/lexon.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 786 "../src/lexon.l"
+#line 789 "../src/lexon.l"
 { D; add_word(yytext); }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 787 "../src/lexon.l"
+#line 790 "../src/lexon.l"
 { D; start_alternate(); }
 	YY_BREAK
 case 90:
 /* rule 90 can match eol */
 YY_RULE_SETUP
-#line 788 "../src/lexon.l"
+#line 791 "../src/lexon.l"
 { D; line++; /* end_rule(); */ }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 789 "../src/lexon.l"
+#line 792 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 92:
 /* rule 92 can match eol */
 YY_RULE_SETUP
-#line 790 "../src/lexon.l"
+#line 793 "../src/lexon.l"
 { D; line++; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 791 "../src/lexon.l"
+#line 794 "../src/lexon.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LXF):
 case YY_STATE_EOF(EMBED):
-#line 792 "../src/lexon.l"
+#line 795 "../src/lexon.l"
 { D; produce_extension(grammar); exit(0); yyterminate(); return 0; }
 	YY_BREAK
 
 case 94:
 YY_RULE_SETUP
-#line 795 "../src/lexon.l"
+#line 798 "../src/lexon.l"
 { D; add_embed(yytext); }
 	YY_BREAK
 case 95:
 /* rule 95 can match eol */
 YY_RULE_SETUP
-#line 796 "../src/lexon.l"
+#line 799 "../src/lexon.l"
 { D; lineno(); add_embed(yytext); }
 	YY_BREAK
 /* Lexon Grammar Form: precompiling LGF to BNF */
@@ -4655,7 +4658,7 @@ case 96:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 802 "../src/lexon.l"
+#line 805 "../src/lexon.l"
 /* grammar version */		{ D; S; mtrac_free(grammar_version);
 									grammar_version = trim(mtrac_strdup(strstr(yytext, "Version") + 7)); }
 	YY_BREAK
@@ -4665,7 +4668,7 @@ case 97:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 804 "../src/lexon.l"
+#line 807 "../src/lexon.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 98:
@@ -4674,7 +4677,7 @@ case 98:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 805 "../src/lexon.l"
+#line 808 "../src/lexon.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 99:
@@ -4683,22 +4686,22 @@ case 99:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 806 "../src/lexon.l"
+#line 809 "../src/lexon.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 807 "../src/lexon.l"
+#line 810 "../src/lexon.l"
 /* spaces make it longest pattern */	{ D; S; start_rule(none, neutral); }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 808 "../src/lexon.l"
+#line 811 "../src/lexon.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 809 "../src/lexon.l"
+#line 812 "../src/lexon.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 103:
@@ -4706,7 +4709,7 @@ case 103:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 810 "../src/lexon.l"
+#line 813 "../src/lexon.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 104:
@@ -4714,62 +4717,62 @@ case 104:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 811 "../src/lexon.l"
+#line 814 "../src/lexon.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 812 "../src/lexon.l"
+#line 815 "../src/lexon.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 813 "../src/lexon.l"
+#line 816 "../src/lexon.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 814 "../src/lexon.l"
+#line 817 "../src/lexon.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 815 "../src/lexon.l"
+#line 818 "../src/lexon.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 816 "../src/lexon.l"
+#line 819 "../src/lexon.l"
 { D; S; continue_rule(); add_word("colon"); }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 817 "../src/lexon.l"
+#line 820 "../src/lexon.l"
 { D; S; continue_rule(); add_word("comma"); }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 818 "../src/lexon.l"
+#line 821 "../src/lexon.l"
 { D; S; continue_rule(); add_word("percent"); }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 819 "../src/lexon.l"
+#line 822 "../src/lexon.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 820 "../src/lexon.l"
+#line 823 "../src/lexon.l"
 { D; S; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 821 "../src/lexon.l"
+#line 824 "../src/lexon.l"
 { D; S; start_option(spaced); }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 822 "../src/lexon.l"
+#line 825 "../src/lexon.l"
 { D; S; start_option(unspaced); }
 	YY_BREAK
 case 116:
@@ -4778,46 +4781,46 @@ case 116:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 823 "../src/lexon.l"
+#line 826 "../src/lexon.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 824 "../src/lexon.l"
+#line 827 "../src/lexon.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 825 "../src/lexon.l"
+#line 828 "../src/lexon.l"
 { D; S; end_option(unspaced); }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 826 "../src/lexon.l"
+#line 829 "../src/lexon.l"
 { D; S; }
 	YY_BREAK
 case 120:
 /* rule 120 can match eol */
 YY_RULE_SETUP
-#line 827 "../src/lexon.l"
+#line 830 "../src/lexon.l"
 { D; S; line++; }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 828 "../src/lexon.l"
+#line 831 "../src/lexon.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LGF):
-#line 829 "../src/lexon.l"
+#line 832 "../src/lexon.l"
 { D; produce_grammar(grammar); yyterminate(); }
 	YY_BREAK
 
 case 122:
 YY_RULE_SETUP
-#line 832 "../src/lexon.l"
+#line 835 "../src/lexon.l"
 ECHO;
 	YY_BREAK
-#line 4821 "lexccc.c"
+#line 4824 "lexccc.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(MAIN):
 case YY_STATE_EOF(EXPLANATION_):
@@ -5818,7 +5821,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 832 "../src/lexon.l"
+#line 835 "../src/lexon.l"
 
 
 
@@ -6696,15 +6699,16 @@ void precompile() {
 	replace(&buf, "«", "\\«");
 	replace(&buf, "»", "\\»");
 
-	/* unicode chars are not processed correctly by Flex, it takes the bytes apert, specifically the negative calls notquote can't work */
+	/* unicode chars are not processed correctly by Flex, it takes the bytes
+	   apert, specifically the negative calls notquote can't work */
 
 	/* list presorted for length, descending two steps: replace by tag [n] first */
 	node *cur = symbols;
-	char tag[40];
+	char tag[40]; // safeguard ◊
 	int i = 0;
 	while(cur) {
 		snprintf(tag, 40, "«[%d]»", ++i);
-		replace_whole_words(&buf, cur->find, tag);
+		replace_whole_words(&buf, cur->find, tag, "‹", "›");
 		cur->tag = mtrac_strdup(tag);
 		cur = cur->prev;
 	}
@@ -6830,12 +6834,56 @@ char *LOW(const char *token) {
 
 char *lowdup(const char *s) {
 	char *buf = mtrac_strdup(s);
-	strcpy(buf, s);
+	////// strcpy(buf, s);
 	char *c = buf -1;
 	while(*++c) *c = tolower(*c);
 	return buf;
 }
 
+char _snake[1001];
+char *SNAKE(const char *token) {
+	strncpy(_snake, token, 1000);
+	char *c = _snake -1;
+	while(*++c) if(*c == ' ' || *c == '-') *c = '_'; else *c = tolower(*c);
+	return _snake;
+}
+
+char *snakedup(const char *s) {
+	char *dup = mtrac_strdup(s);
+	char *c = dup -1;
+	while(*++c) if(*c == ' ' || *c == '-') *c = '_'; else *c = tolower(*c);
+	return dup;
+}
+
+char _dsp[1001];
+char *dash_spaced(const char *token) {
+	assert(token);
+	strncpy(_dsp, token, 1000);
+	char *p = _dsp -1;
+	while(*++p) if(*p == ' ' || *p == '_') *p = '-';
+	return _dsp;
+}
+
+char _ssp[1001];
+char *snake_spaced(const char *token) {
+	//assert(token); ◊
+	if(!token) token = "[undefined]";
+	strncpy(_ssp, token, 1000);
+	char *p = _ssp -1;
+	while(*++p) if(*p == ' ' || *p == '-') *p = '_';
+	return _ssp;
+}
+
+char _csp[1001];
+char *camel_spaced(const char *token) {
+	assert(token);
+	strncpy(_csp, token, 1000);
+	char *p = _csp -1;
+	bool gap = false;
+	while(*++p) { if(gap) *p = toupper(*p); gap = *p == ' ' || *p == '-' || *p == '_'; }
+	contract(_csp);
+	return _csp;
+}
 
 void rump(char **buf, char *filename) {
 	char *copy = mtrac_strdup(filename); // as per namepart doc
@@ -7181,7 +7229,8 @@ char *catdup(char *string, char *append, int(*func)(int))  {
 
 // Frees input and replaces with result. Result must later be freed.
 // courtesy J Mucchiello https://stackoverflow.com/questions/779875/what-is-the-function-to-replace-string-in-c#
-int _replace(char **orig, const char *rep, const char *with, int all, char *from, bool whole, char *origname, char *file, int line) {
+int _replace(char **orig, const char *rep, const char *with, int all, char *from,
+	bool whole, char *quote, char *unquote, char *origname, char *file, int line) {
 	char *result;
 	char *start;
 	char *ins; // next insert point
@@ -7234,13 +7283,23 @@ int _replace(char **orig, const char *rep, const char *with, int all, char *from
 	//    ins points to the next occurrence of rep in orig
 	//    start points to the remainder of orig after "end of rep"
 	counter = count;
+	bool inquote = false;
 	while (counter--) {
 		ins = strstr(start, rep);
+		if(quote && unquote) {
+			char *but, *tub = start;
+			do {
+				but = strstr(tub, quote);
+				tub = but ? strstr(but, unquote) : null;
+			} while(tub && tub < ins) ;
+			inquote = but && tub && but < ins && tub > ins;
+		}
+		//////// printf("> > > %s 	%d %p %p %p\n", with, inquote, but, ins, tub);
 		len_front = ins - start;
 		tmp = strncpy(tmp, start, len_front) + len_front;
 		const char *border = " \t\r\n\".,;:?!()[]{}&%$#@~+/\\“”";
 		const char *border_special = " \t\r\n\".,;:?!()[]{}&%$#@~+/\\“”";
-		if(!whole || ((ins == *orig || strchr(border, *(ins-1))) && (!*(ins+len_rep) || strchr(border, *(ins+len_rep)))))
+		if(!inquote && (!whole || ((ins == *orig || strchr(border, *(ins-1))) && (!*(ins+len_rep) || strchr(border, *(ins+len_rep))))))
 			tmp = strcpy(tmp, with) + len_with;
 		else
 			tmp = strcpy(tmp, rep) + len_rep;
@@ -7305,36 +7364,6 @@ char *quote_trimmed(const char *token) {
 	}
 
 	return p;
-}
-
-char _dsp[1001];
-char *dash_spaced(const char *token) {
-	assert(token);
-	strncpy(_dsp, token, 1000);
-	char *p = _dsp -1;
-	while(*++p) if(*p == ' ' || *p == '_') *p = '-';
-	return _dsp;
-}
-
-char _ssp[1001];
-char *snake_spaced(const char *token) {
-	//assert(token);
-	if(!token) token = "[undefined]";
-	strncpy(_ssp, token, 1000);
-	char *p = _ssp -1;
-	while(*++p) if(*p == ' ' || *p == '-') *p = '_';
-	return _ssp;
-}
-
-char _csp[1001];
-char *camel_spaced(const char *token) {
-	assert(token);
-	strncpy(_csp, token, 1000);
-	char *p = _csp -1;
-	bool gap = false;
-	while(*++p) { if(gap) *p = toupper(*p); gap = *p == ' ' || *p == '-' || *p == '_'; }
-	contract(_csp);
-	return _csp;
 }
 
 char **pad(char **s, int to) {

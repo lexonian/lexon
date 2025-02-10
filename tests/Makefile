@@ -276,6 +276,11 @@ _test:
 	@rm -f *.tmp
 	$(call init)
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
+	@$(call testrun,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
+	@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
+	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
+	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
 	@$(call testrun,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
 	@$(call testrun,precompile,:,../bin/lexon,-P,:,grep -l %PRE $(files),.pre.exp,%PREERR)
 	@$(call testrun,gui generator info,:,../bin/lexon,-U,:,grep -l %GEN $(files),.gen.exp,%GENERR)
@@ -318,9 +323,9 @@ _test:
 			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
 		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
 			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
-		if [[ ! -f perfect ]] ; then \
+		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
 			echo ; \
-			printf "Regarding the failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
+			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
 			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
 			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
 			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
@@ -363,6 +368,11 @@ _expects:
 	@echo =======================
 	$(call init)
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
+	$(call buildexp,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
+	$(call buildexp,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
+	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
+	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	$(call buildexp,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
 	$(call buildexp,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
 	$(call buildexp,precompile,:,../bin/lexon,-P,:,grep -l %PRE test-*.lex,.pre.exp,%PREERR)
 	$(call buildexp,gui generator info,:,../bin/lexon,-U,:,grep -l %GEN test-*.lex,.gen.exp,%GENERR)
@@ -613,5 +623,7 @@ list_sources:
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' english/test-*.lex
 	@printf "\n$(hi)▫️  LEXON COMPILATION TESTS $(off)\n"
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' lexon/*.lex
+	@printf "\n$(hi)▫️  LEXON COVERAGE TESTS $(off)\n"
+	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' cover/*.lex
 
 .PHONY: all one clean expclean check update recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 
