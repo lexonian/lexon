@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.97d U"
+/*JS */ #define backend_version "javascript 0.3.97e U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.97d U"
+/*Sol*/ #define backend_version "solidity 0.3.97e U"
 /*Sol*/ #define target_version "solidity 0.8+"
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.97d U"
+/*Sop*/ #define backend_version "sophia 0.3.97e U"
 /*Sop*/ #define target_version "sophia 6+"
 
 #define CYCLE_2 true
@@ -371,9 +371,6 @@ static void replace_bind_tags(char **production, char **instructions, bind *b) {
 	while(b) {
 		char *head = mtrac_strdup("");
 		char *ihead = mtrac_strdup("");
-
-//		if(!b->uses_permission && b->changes_state) ///// replace by logic 'has subject'
-//			mtrac_concat(&head, "#");
 
 		mtrac_concat(&head, b->name);
 		mtrac_concat(&ihead, b->name);
@@ -1780,8 +1777,7 @@ static bool is_payment(Predicates *predicates) {
 			padcat(2, indent, production, "   grammar:     ", grammar_version);
 			padcat(2, indent, production, "   backend:     ", backend_version);
 			padcat(2, indent, production, "   target:      ", target_version);
-/*Sop*/			padcat(2, indent, production, "   options:     ", opt_summarized);
-/*J+S*/			padcat(2, indent, production, "   parameters:  ", opt_summarized); /////// unify
+			padcat(2, indent, production, "   options:     ", opt_summarized);
 			padcat(1, indent, production, "%0%\n*/");
 		}
 

@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.97d U"
+#define backend_version "sophia 0.3.97e U"
 #define target_version "sophia 6+"
 
 #define CYCLE_2 true
@@ -290,9 +290,6 @@ static void replace_bind_tags(char **production, char **instructions, bind *b) {
 	while (b) {
 		char *head = mtrac_strdup("");
 		char *ihead = mtrac_strdup("");
-
-//              if(!b->uses_permission && b->changes_state) ///// replace by logic 'has subject'
-//                      mtrac_concat(&head, "#");
 
 		mtrac_concat(&head, b->name);
 		mtrac_concat(&ihead, b->name);
@@ -1416,7 +1413,6 @@ bool sophia_head(char **production, Head *Head, int indent) {
 		       target_version);
 		padcat(2, indent, production, "   options:     ",
 		       opt_summarized);
-
 		padcat(1, indent, production, "%0%\n*/");
 	}
 

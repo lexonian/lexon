@@ -16,11 +16,11 @@ pragma solidity ^0.8.17;
 
    grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.97c U
+   backend:     solidity 0.3.97e U
 
    target:      solidity 0.8+
 
-   parameters:  --solidity  --all-auxiliaries 
+   options:     --solidity  --all-auxiliaries 
 
 
    INSTRUCTIONS FOR USE:
