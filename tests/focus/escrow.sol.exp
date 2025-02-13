@@ -8,11 +8,11 @@ pragma solidity ^0.8.17;
 
    file:        escrow.lex
 
-   compiler:    lexon 0.3 alpha 93 U
+   compiler:    lexon 0.3 alpha 97 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.93 U
+   backend:     solidity 0.3.97c U
 
    target:      solidity 0.8+
 
@@ -50,13 +50,15 @@ contract Escrow {
         fee = _fee;
     }
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
 
     /* built-in caller assertion */
+
     function permit(address _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
     }
@@ -68,11 +70,13 @@ contract Escrow {
      *  CLAUSE: Pay Out.
      *  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
      */
+
     function pay_out() public {
         permit(arbiter);
         transfer(arbiter, fee);
         transfer(payee, address(this).balance);
     }
+
 
     /* Pay Back clause */
 
@@ -80,6 +84,7 @@ contract Escrow {
      *  CLAUSE: Pay Back.
      *  The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
      */
+
     function pay_back() public {
         permit(arbiter);
         transfer(arbiter, fee);

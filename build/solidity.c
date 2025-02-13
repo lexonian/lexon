@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.97a U"
+#define backend_version "solidity 0.3.97b U"
 #define target_version "solidity 0.8+"
 #define CYCLE_2 true
 
@@ -1278,9 +1278,8 @@ bool sol_document(char **production, Document *Document, int indent) {
 	/* pay() */
 	if (uses_pay) {
 
-		// ◊◊◊ if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in safe transfer */");
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* safe transfer */");
+					"/* built-in safe transfer */");
 
 		padcat(C, indent + 1, &auxfuncs,
 		       "function transfer(address _to, uint _amount) internal {");

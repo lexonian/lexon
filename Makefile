@@ -279,6 +279,11 @@ update: build
 	@cd tests ; $(MAKE) update
 	@echo
 
+autoupdate: build
+	@printf "\n$(hi)▫️  auto-update of deeptest reference results $(off)\n\n"
+	@cd tests ; $(MAKE) autoupdate
+	@echo
+
 recheck: build
 	@printf "\n$(hi)▫️  interactive update of deeptest reference results,  skipping successful tests of last test run $(off)\n\n"
 	@cd tests ; $(MAKE) recheck
@@ -549,6 +554,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update autoupdate recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

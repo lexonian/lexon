@@ -119,7 +119,7 @@ define testrun
 		; echo -n "testing " >> test.log ; cat now.tmp | tr '\n' ' ' >> test.log \
 		; expfile=$$(basename "$$filename" .lex)$(7) \
 		; testfile=$$(basename "$$expfile" .exp).now \
-		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/.lex//g' -e 's/-/ /g'`" \
+		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/.lex//g' -e 's/-/ /g' -e 's/\// /g' -e 's/\./ #/g'`" \
 		; if [[ ! -f concise ]] ; then printf "test #%03d $$testname .. " $$testnumber ; fi \
 		; if [ -n "$(8)" ] ; then \
 			failer=`grep -c -E "%ERR|$(8)" $$filename` \
@@ -158,6 +158,10 @@ define testrun
 		    ; if (( $$dret == 2 )) ; then echo "can't perform test -> skip" ; $(call count,skip) ; fi \
 		    ; if (( $$dret == 1 )) ; then echo "failed: $(3) $(4) $$filename #< exp | got >#" ;  $(call count,err) ; $(call sep,#,132) ; cat diff.tmp ; $(call sep,#,132) ; \
 			if [[ ! -f noupdate ]] ; then \
+			  if [[ -f autoupdate ]] ; then \
+					mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ; $(call count,update) ; $(call discount,err) \
+			  		; printf "$(ok)› updated √$(off)\n" \
+			  ; else \
 			    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
@@ -176,6 +180,7 @@ define testrun
 				; elif [[ $$REPLY =~ ^[Qq]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; fi ; quit=1 ; break 2 \
 				; fi \
 			    ; done \
+			  ; fi \
 			; else if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi \
 			; fi \
 		  ; fi \
@@ -241,14 +246,25 @@ check:
 	@touch concise
 	@touch noupdate
 	@rm -f lastfail
+	@rm -f autoupdate
 	@$(MAKE) _test
 
 update:
-	@$(call log,UPDATE FAILED TESTS)
+	@$(call log,INTERACTIVE UPDATE OF FAILING TESTS)
+	@rm -f concise
+	@rm -f noupdate
+	@rm -f autoupdate
+	@rm -f lastfail
+	@$(MAKE) _test
+
+autoupdate:
+	@$(call log,AUTO UPDATE OF FAILING TESTS)
+	@touch autoupdate
 	@rm -f concise
 	@rm -f noupdate
 	@rm -f lastfail
 	@$(MAKE) _test
+	@rm -f autoupdate
 
 recheck:
 	@if [[ ! -f lastfail ]] ; then \
@@ -261,6 +277,7 @@ _recheck:
 	@$(call log,RECHECK FAILED TESTS)
 	@rm -f concise
 	@rm -f noupdate
+	@rm -f autoupdate
 	@rm -f nopickup
 	@$(MAKE) _test
 
@@ -626,4 +643,4 @@ list_sources:
 	@printf "\n$(hi)▫️  LEXON COVERAGE TESTS $(off)\n"
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' cover/*.lex
 
-.PHONY: all one clean expclean check update recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 
+.PHONY: all one clean expclean check update autoupdate recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 

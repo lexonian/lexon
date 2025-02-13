@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.97a U"
+/*JS */ #define backend_version "javascript 0.3.97b U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.97a U"
+/*Sol*/ #define backend_version "solidity 0.3.97b U"
 /*Sol*/ #define target_version "solidity 0.8+"
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.97a U"
+/*Sop*/ #define backend_version "sophia 0.3.97b U"
 /*Sop*/ #define target_version "sophia 6+"
 
 #define CYCLE_2 true
@@ -1614,8 +1614,7 @@ static bool is_payment(Predicates *predicates) {
 		/* pay() */
 		if(uses_pay) {
 /*JS */			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in pay message */");
-/*S+S*/			// ◊◊◊ if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in safe transfer */");
-/*S+S*/			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* safe transfer */");
+/*S+S*/			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in safe transfer */");
 /*JS */			padcat(C, indent+1, &auxfuncs, "_pay(", (opt_log)?"caller, ":"", "from, to, amount) {"); ////// harmonize to 'transfer'
 /*Sol*/			padcat(C, indent+1, &auxfuncs, "function transfer(address _to, uint _amount) internal {");
 /*Sop*/			padcat(C, indent+1, &auxfuncs, "stateful function transfer(to : address, amount : int) =");

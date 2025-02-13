@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.97a U"
+#define backend_version "sophia 0.3.97b U"
 #define target_version "sophia 6+"
 
 #define CYCLE_2 true
@@ -1275,9 +1275,8 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	/* pay() */
 	if (uses_pay) {
 
-		// ◊◊◊ if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in safe transfer */");
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* safe transfer */");
+					"/* built-in safe transfer */");
 		padcat(C, indent + 1, &auxfuncs,
 		       "stateful function transfer(to : address, amount : int) =");
 		padcat(1, indent + 2, &auxfuncs, "Chain.spend(to, amount)");

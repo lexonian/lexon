@@ -18,7 +18,7 @@ pragma solidity ^0.8.17;
 
    grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.97a U
+   backend:     solidity 0.3.97b U
 
    target:      solidity 0.8+
 
@@ -128,7 +128,7 @@ contract EvaluationLicenseSystem {
         return _license_list[_license_count += 1] = new License(_license_taker, _description_of_goods);
     }
 
-    /* safe transfer */
+    /* built-in safe transfer */
 
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");

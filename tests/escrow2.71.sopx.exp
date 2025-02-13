@@ -4,11 +4,11 @@
 
    file:        lexon/escrow2.71.lex
 
-   compiler:    lexon 0.3 alpha 93 U
+   compiler:    lexon 0.3 alpha 97 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     sophia 0.3.93 U
+   backend:     sophia 0.3.97b U
 
    target:      sophia 6+
 
@@ -87,15 +87,18 @@ main contract Escrow =
         }
 
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
 
     /* built-in caller assertion */
+
     function permit(authorized : option(address), name : string) =
         require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
 
     /* built-in option type force function */
+
     function force(o : option('a), name : string) : 'a =
         switch(o)
             None => abort(StringInternal.concat(name, " not fixed"))
@@ -108,10 +111,12 @@ main contract Escrow =
      *  CLAUSE: Pay Out.
      *  The Agent may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Seller.
      */
+
     stateful entrypoint pay_out() =
         permit(state.agent, "Agent")
         transfer(state.agent, force(state.fee, "Fee"))
         transfer(force(state.seller, "Seller"), Contract.balance)
+
 
     /* Pay Back clause */
 
@@ -119,6 +124,7 @@ main contract Escrow =
      *  CLAUSE: Pay Back.
      *  The Agent may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Buyer.
      */
+
     stateful entrypoint pay_back() =
         permit(state.agent, "Agent")
         transfer(state.agent, force(state.fee, "Fee"))

@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.97a U"
+#define backend_version "javascript 0.3.97b U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -1580,6 +1580,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	if (uses_pay) {
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
 					"/* built-in pay message */");
+
 		padcat(C, indent + 1, &auxfuncs, "_pay(", (opt_log) ? "caller, " : "", "from, to, amount) {");	////// harmonize to 'transfer'
 		if (opt_log) padcat(1, indent + 2, &auxfuncs,
 				    (!class ? "this" : "main"),

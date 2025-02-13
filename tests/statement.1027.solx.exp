@@ -10,11 +10,11 @@ pragma solidity ^0.8.17;
 
    code tagged: 0.2.12
 
-   compiler:    lexon 0.3 alpha 96 U
+   compiler:    lexon 0.3 alpha 97 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 80 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.93-96 U
+   backend:     solidity 0.3.97b U
 
    target:      solidity 0.8+
 
@@ -152,7 +152,9 @@ contract UCCFinancingStatement {
         collateral = _collateral;
     }
 
+
     /* built-in termination of the entire contract system */
+
     function termination() internal {
         terminated = true;
     }
@@ -161,18 +163,21 @@ contract UCCFinancingStatement {
         require(!terminated, "contract system terminated before");
     }
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
 
     /* built-in send message */
+
     function send(address _to, string storage _message) internal {
         emit Message(msg.sender, _to, _message);
     }
 
     /* built-in caller assertion */
+
     function permit(address _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
     }
@@ -185,11 +190,13 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may certify the File Number
      */
+
     function certify(string memory _file_number) public {
         check_termination();
         permit(filing_office);
         file_number = _file_number;
     }
+
 
     /* Set File Date clause */
 
@@ -198,11 +205,13 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may fix the Initial Statement Date as the current time.
      */
+
     function set_file_date() public {
         check_termination();
         permit(filing_office);
         initial_statement_date = block.timestamp;
     }
+
 
     /* Set Lapse clause */
 
@@ -211,11 +220,13 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may fix the Lapse Date
      */
+
     function set_lapse(uint _lapse_date) public {
         check_termination();
         permit(filing_office);
         lapse_date = _lapse_date;
     }
+
 
     /* Set Continuation Start clause */
 
@@ -224,11 +235,13 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may fix the Continuation Window Start
      */
+
     function set_continuation_start(uint _continuation_window_start) public {
         check_termination();
         permit(filing_office);
         continuation_window_start = _continuation_window_start;
     }
+
 
     /* Pay Service Fee clause */
 
@@ -237,12 +250,14 @@ contract UCCFinancingStatement {
      *  
      *  The Secured Party may pay Reminder Service Fee into escrow.
      */
+
     function pay_service_fee() public payable {
         check_termination();
         permit(secured_party);
         reminder_service_fee = msg.value;
         reminder_service_fee__set = true;
     }
+
 
     /* Notice clause */
 
@@ -251,11 +266,13 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may fix the Notification Statement
      */
+
     function notice(string memory _notification_statement) public {
         check_termination();
         permit(filing_office);
         notification_statement = _notification_statement;
     }
+
 
     /* Notify clause */
 
@@ -264,6 +281,7 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party
      */
+
     function notify() public view {
         check_termination();
         permit(filing_office);
@@ -272,6 +290,7 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* Pay Escrow In clause */
 
     /*
@@ -279,12 +298,14 @@ contract UCCFinancingStatement {
      *  
      *  The Debtor may pay the Digital Asset Collateral into escrow
      */
+
     function pay_escrow_in() public payable {
         check_termination();
         permit(debtor);
         digital_asset_collateral = msg.value;
         digital_asset_collateral__set = true;
     }
+
 
     /* Fail to Pay clause */
 
@@ -293,11 +314,13 @@ contract UCCFinancingStatement {
      *  
      *  The Secured Party may declare Default
      */
+
     function fail_to_pay() public {
         check_termination();
         permit(secured_party);
         _default = true;
     }
+
 
     /* Take Possession clause */
 
@@ -306,6 +329,7 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party
      */
+
     function take_possession() public {
         check_termination();
         permit(filing_office);
@@ -314,6 +338,7 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* File Continuation clause */
 
     /*
@@ -321,11 +346,13 @@ contract UCCFinancingStatement {
      *  
      *  The Secured Party may file the Continuation Statement
      */
+
     function file_continuation(bool _continuation_statement) public {
         check_termination();
         permit(secured_party);
         continuation_statement = _continuation_statement;
     }
+
 
     /* Set Continuation Lapse clause */
 
@@ -334,6 +361,7 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may, if the Continuation Statement is filed, fix the Continuation Statement Date
      */
+
     function set_continuation_lapse(uint _continuation_statement_date) public {
         check_termination();
         permit(filing_office);
@@ -342,6 +370,7 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* File Termination clause */
 
     /*
@@ -349,12 +378,14 @@ contract UCCFinancingStatement {
      *  
      *  The Secured Party may file Termination Statement, and certify the Termination Statement Time as the then current time
      */
+
     function file_termination(bool _termination_statement) public {
         check_termination();
         permit(secured_party);
         termination_statement = _termination_statement;
         termination_statement_time = block.timestamp;
     }
+
 
     /* Release Escrow clause */
 
@@ -363,6 +394,7 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may, if the Termination Statement is filed, return the Digital Asset Collateral to the Debtor
      */
+
     function release_escrow() public {
         check_termination();
         permit(filing_office);
@@ -371,6 +403,7 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* Release Reminder Service Fee clause */
 
     /*
@@ -378,6 +411,7 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may, if the Termination Statement is filed, return the Reminder Service Fee to the Secured Party
      */
+
     function release_reminder_service_fee() public {
         check_termination();
         permit(filing_office);
@@ -386,6 +420,7 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* Termination Period clause */
 
     /*
@@ -393,9 +428,11 @@ contract UCCFinancingStatement {
      *  
      *  "Termination Period" is defined as 365 days after the Termination Statement Time
      */
+
     function termination_period() public view returns(uint) {
         return Some(termination_statement_time + (365 * 86400));
     }
+
 
     /* Terminate and Clear clause */
 
@@ -404,6 +441,7 @@ contract UCCFinancingStatement {
      *  
      *  The Filing Office may, if the Termination Period has passed, terminate this contract
      */
+
     function terminate_and_clear() public {
         check_termination();
         permit(filing_office);
