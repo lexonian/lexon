@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.97c U"
+#define backend_version "sophia 0.3.97d U"
 #define target_version "sophia 6+"
 
 #define CYCLE_2 true
