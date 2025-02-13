@@ -50,8 +50,8 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 96 U" // unified 0.3 + experimental 0.4
-#define grammar_vers "0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes"
+#define program_vers "0.3 alpha 97 U" // unified 0.3 + experimental 0.4
+#define grammar_vers "0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
 #define slug program_name " " program_vers
@@ -4145,7 +4145,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
-	replace(&src, "0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes", grammar_version);
+	replace(&src, "0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes", grammar_version);
 	char *src_imbue = str_escape(src, "own");
 
 	/* read grammer file */
@@ -4558,8 +4558,8 @@ const char *own =
 	"#define PATH_MAX 1000\n"
 	"#endif\n"
 	"\n"
-	"#define program_vers \"0.3 alpha 96 U\" // unified 0.3 + experimental 0.4\n"
-	"#define grammar_vers \"0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\"\n"
+	"#define program_vers \"0.3 alpha 97 U\" // unified 0.3 + experimental 0.4\n"
+	"#define grammar_vers \"0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
 	"#define slug program_name \" \" program_vers\n"
@@ -8525,7 +8525,7 @@ const char *own =
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
-	"	replace(&src, \"0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\", grammar_version);\n"
+	"	replace(&src, \"0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\", grammar_version);\n"
 	"	char *src_imbue = str_escape(src, \"own\");\n"
 	"\n"
 	"	/* read grammer file */\n"
@@ -8907,7 +8907,7 @@ const char *owngrm =
 	"##\n"
 	"##	english.lgf — Lexon controlled English grammar\n"
 	"##\n"
-	"##	Version 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
+	"##	Version 0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\n"
 	"##\n"
 	"##	This document is in Lexon Grammar Form, a variation of BNF.\n"
 	"##	Square brackets indicate optionality, 'or' separates variants.\n"
@@ -9094,7 +9094,7 @@ const char *owngrm =
 	"\n"
 	"## APPOINTMENT PREDICATE\n"
 	"\n"
-	"   appointment:	appoint symbol\n"
+	"   appointment:	appoint symbol [[\"as\"] expression]\n"
 	"\n"
 	"   appoint:	\"appoint\" or \"appoints\"\n"
 	"\n"
@@ -9126,7 +9126,7 @@ const char *owngrm =
 	"\n"
 	"   pay:		\"pay\" or \"pays\" or \"return\" or \"returns\"\n"
 	"\n"
-	"   preposition:	\"to\" or \"into\"\n"
+	"   preposition:	\"to\" or \"into\" or \"of\"\n"
 	"\n"
 	"   escrow:	[\"the\"] [\"remainder\" \"of\" \"the\"] \"escrow\"\n"
 	"\n"
@@ -9142,7 +9142,7 @@ const char *owngrm =
 	"\n"
 	"## NOTIFICATION PREDICATE\n"
 	"\n"
-	"   notification: notify object preposition expression\n"
+	"   notification: notify object [preposition expression]\n"
 	"\n"
 	"   notify:	\"notify\" or \"notifies\"\n"
 	"\n"
@@ -9200,6 +9200,7 @@ const char *owngrm =
 	"   combinor:	combinand [combinator combinor]\n"
 	"\n"
 	"   combinand:	symbol [expiration]\n"
+	"   		or reflexive\n"
 	"   		or description\n"
 	"		or scalar_comparison\n"
 	"		or negation\n"

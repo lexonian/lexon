@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.93-96 U"
+#define backend_version "solidity 0.3.97a U"
 #define target_version "solidity 0.8+"
 #define CYCLE_2 true
 
@@ -92,7 +92,7 @@ extern char *opt_summarized;
 extern const char *get_lexcom(const char *);
 
 /* optical convenience */
-#define C (1 + (opt_comment?0:1))
+#define C (2 + (opt_comment?0:1))
 
 /* extern calls from lexon.l */
 const char *str(int line);
@@ -114,11 +114,13 @@ extern char *snakedup(const char *token);
 extern char *UP(const char *token);
 
 static char *safedup(const char *token);
-static const char *type(const char *varname, bool option_type, bool forpara);
+static const char *type(const char *varname, bool option_type, bool forpara,
+			int);
 static const char *nullmap(const char *lex_type, bool defined_default);
 static const char *defaultmap(const char *lex_type);
 static const char *lextype(const char *varname);
-static const char *typemap(const char *lextype, bool option_type, bool forpara);
+static const char *typemap(const char *lextype, bool option_type, bool forpara,
+			   int);
 static const char *nullvalue(const char *name, bool defined_default);
 
 static char *methods = null;
@@ -637,6 +639,7 @@ typedef struct Grant {
 typedef struct Appointment {
 	struct Appoint *Appoint;
 	struct Symbol *Symbol;
+	struct Expression *Expression;
 } Appointment;
 
 typedef struct Appoint {
@@ -777,6 +780,7 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	struct Reflexive *Reflexive;
 	Description *Description;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
@@ -899,7 +903,9 @@ bool sol_walk(char **production) {
 
 static Name *class = null;
 static bool main_constructor_body = true;
+static bool main_contract = true;
 static bool covenant_constructor_body = false;
+static bool terms_body = true;
 static bool recital_of_terms = false;
 bool sol_name(char **production, Name *Name, bool assign, int indent) {
 	if (!Name) return false;
@@ -1066,10 +1072,12 @@ static char *requires = "";
 static char *module = null;
 static bind *current_function = null;
 static bool single_sentence_clause = true;
+static bool multi_sentence_clause = false;
 static bool no_literal = false;
 static char *msg_sender = null;
 static char *msg_value = null;
 static bool is_payable = false;
+static bool payment_expression = false;
 static char *inference = null;
 static bool is_stateful = false;
 static char *parameters = null;
@@ -1105,6 +1113,7 @@ static char *instructions =
 	"   These are the state progress functions that allow to interact with the contract:\n";
 static bool enforce_same_subject = false;
 static list *active_subjects = null;
+static list *covenant_subjects = null;
 static bool no_action_in_group_yet = true;
 static bool uses_termination = false;
 static bool uses_pay = false;
@@ -1224,13 +1233,13 @@ bool sol_document(char **production, Document *Document, int indent) {
 	padcat(1, indent + 1, production, "%29%constructor(%1%) %28%{");	// %29%: emits, %1%: constructor parameters, sol %28%: payable
 
 	main_constructor_body = true;
-	enforce_same_subject = true;
+	main_contract = true;
 	assert(active_subjects == null);
 	sol_terms(production, Document->Terms, indent + 2);	// sets caller, uses methods variable for production string
-	main_constructor_body = false;
-	enforce_same_subject = false;
-
-	delete_list(active_subjects);
+	main_constructor_body = false; // off for non-JS? ◊ //////
+	main_contract = false;
+	assert(!active_subjects || active_subjects != covenant_subjects);
+	if (active_subjects) delete_list(active_subjects);
 	active_subjects = null;
 
 	/* sol, sop: end of main constructor */
@@ -1240,7 +1249,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 	padcat(0, 0, production, "%31%");	// %31%: auxiliary functions
 
 	/* sol,sop: add the general terms methods beneath the constructor */
-	padcat(1, 0, production, methods);
+	padcat(0, 0, production, methods);
 
 	/* sol, sop: end of main class (sop: by indent) */
 	padcat(1, indent, production, "}");
@@ -1254,7 +1263,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 
 	/* #terminate() - contract termination */
 	if (uses_termination) {
-		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
+		if (opt_comment) padcat(3, indent + 1, &auxfuncs,
 					"/* built-in termination of the entire contract system */");
 		padcat(C, indent + 1, &auxfuncs,
 		       "function termination() internal {");
@@ -1269,6 +1278,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 	/* pay() */
 	if (uses_pay) {
 
+		// ◊◊◊ if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in safe transfer */");
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
 					"/* safe transfer */");
 
@@ -1442,7 +1452,7 @@ bool sol_preamble(char **production, Preamble *Preamble, int indent) {
 	return true;
 }
 
-	/* the general terms */
+	/* the general terms, definition and clauses */
 bool sol_terms(char **production, Terms *Terms, int indent) {
 	if (!Terms) return false;
 	if (opt_debug) printf("producing Terms\n");
@@ -1500,7 +1510,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 				" covenant class");
 	if (opt_comment) padcat(1, indent, production, " **/");
 
-	/* //// clean up
+	/* ///// clean up
 	 * if(opt_lexon_comments) {
 	 * char *c = mtrac_strdup(get_lexcom("start"));
 	 * replace(&c, "\n", "\n *\t");
@@ -1537,11 +1547,12 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	enforce_same_subject = true;
 	covenant_constructor_body = true;
 	sol_provisions(production, Covenant->Provisions, indent + 2);
+
 	covenant_constructor_body = false;
 	enforce_same_subject = false;
 
 	if (uses_termination) {
-		if (opt_comment) padcat(2, indent + 1, production,
+		if (opt_comment) padcat(3, indent + 1, production,
 					"/* built-in termination of this covenant */");
 		padcat(C, indent + 1, production,
 		       "function termination() internal {");
@@ -1559,7 +1570,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	/* end of covenant class definition */
 	padcat(1, indent, production, "}");
 
-	/* user api to the hidden classes constructor (must appear after main's (top level) constructor */
+	/* wrapper for the covenant constructor: user api to the hidden classes constructor (must appear after main's (top level) constructor */
 	if (opt_comment) padcat(2, 1, &adders, "/* create new instance of ",
 				Covenant->Name,
 				" covenant, and register it with main */");
@@ -1577,12 +1588,14 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	replace(&instructions, "%2%", parameta);
 
 	/* function modifier */
-	// needed here? ◊ 
+	// needed here? ◊
 	replace(production, "%33%", !is_stateful ? " view" : "");
 	/* sol+sop: insert declaration of member variables into constructor (sol)/contract (sop) head */
 	replace(production, "%27C%", declarations);
 	/* cleanup & stack ('shelve') popping */
-	delete_list(active_subjects);
+	if (covenant_subjects) delete_list(covenant_subjects);
+	covenant_subjects = null;
+	assert(!!!active_subjects);
 	active_subjects = null;
 	mtrac_free(parameters);
 	mtrac_free(arguments);
@@ -1620,10 +1633,14 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 	else covenant_definitions = Provisions->Definitions;	// (sic)
 	sol_definitions(production, Provisions->Definitions, indent);
 	/* statements */
-
 	recital_of_terms = main_constructor_body;
 	no_action_in_group_yet = true;
-	single_sentence_clause = Provisions->Statements && !Provisions->Statements->Statements;	// untested ////
+	enforce_same_subject = true;
+	single_sentence_clause = Provisions->Statements
+		&& !Provisions->Statements->Statements;
+	multi_sentence_clause = Provisions->Statements
+		&& Provisions->Statements->Statements;
+
 	msg_sender = null;
 	msg_value = null;
 	is_payable = false;
@@ -1632,8 +1649,9 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 	if (msg_sender) mtrac_free(msg_sender);
 	if (msg_value) mtrac_free(msg_value);
 	recital_of_terms = false;
+	enforce_same_subject = false;
 
-	/* end of constructor body */
+	/* end of constructor code */
 
 	if (!main_constructor_body) padcat(1, --indent, production, "}");	// end of constructor
 
@@ -1685,7 +1703,7 @@ bool sol_definition(char **production, Definition *Definition, int indent) {
 	char *lowsnake_literal =
 		safedup(SNAKE(Definition->Type_Term->Type->Literal));
 	padcat(1, indent - 1, &declarations,
-	       typemap(lowsnake_literal, opt_harden, false), " ",
+	       typemap(lowsnake_literal, opt_harden, false, __LINE__), " ",
 	       lowsnake_safe_name, EOL);
 	mtrac_free(lowsnake_safe_name);
 	mtrac_free(lowsnake_literal);
@@ -1693,10 +1711,12 @@ bool sol_definition(char **production, Definition *Definition, int indent) {
 	return true;
 }
 
-const char *typemap(const char *lex_type, bool option_type, bool forpara) {
-	if (!lex_type) return "undefined";
+const char *typemap(const char *lex_type, bool option_type, bool forpara,
+		    int line) {
+	if (!lex_type) return "undefined";	// assert ◊
 	if (!strcmp(lex_type, "person")) return "address payable";
 	if (!strcmp(lex_type, "number")) return "uint";
+	if (!strcmp(lex_type, "amount")) return "uint";
 	if (!strcmp(lex_type, "amount")) return "uint";
 	if (!strcmp(lex_type, "time")) return "uint";
 	if (!strcmp(lex_type, "text")) return forpara ? "string memory" :
@@ -1705,6 +1725,8 @@ const char *typemap(const char *lex_type, bool option_type, bool forpara) {
 			"string";
 	if (!strcmp(lex_type, "binary")) return "bool";
 
+	printf("Unknown type at %d\n", line);
+	exit(1);
 	return "[ ERROR: UNKNOWN TYPE ]";
 }
 
@@ -1755,20 +1777,25 @@ const char *lextype(const char *name) {
 	return "[ ERROR: UNKNOWN CATEGORY ]";	// assert ◊
 }
 
-const char *type(const char *name, bool option_type, bool forpara) {
+const char *type(const char *name, bool option_type, bool forpara, int line) {
 	Definitions *d = global_definitions;
 	bool covenants = false;	       // loop goes global first, then local covenant definitions
 
+	if (!strcmp(name, "person") || !strcmp(name, "Person"))
+		return typemap("person", option_type, forpara, __LINE__);
+	if (!strcmp(name, "amount") || !strcmp(name, "Amount"))
+		return typemap("amount", option_type, forpara, __LINE__);
 	while (d && d->Definition) {
 		if (!strcmp(name, SNAKE(d->Definition->Name))) {
 			return typemap(d->Definition->Type_Term->Type->Literal,
-				       option_type, forpara);
+				       option_type, forpara, __LINE__);
 		}
 		d = d->Definitions;
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	return "[ ERROR: UNKNOWN TYPE ]";	// assert ◊
+	printf("Unknown type for %s\n", name);
+	exit(1);
 }
 
 const char *nullvalue(const char *name, bool defined_default) {
@@ -1840,7 +1867,7 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	current_function = bind;
 
 	paratag = strlen(*production);
-	if (opt_comment) padcat(2, indent, production, "/* ", Clause->Name,
+	if (opt_comment) padcat(3, indent, production, "/* ", Clause->Name,
 				" clause */");
 
 	if (opt_lexon_comments) {
@@ -1849,8 +1876,15 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 
 		mtrac_free(clause);
 		assert(c);
-		replace(&c, "\n", "\n     *  ");
-		padcat(2, 0, production, "    /*\n     *  ", c, "\n     */");
+		if (main_constructor_body) {
+			replace(&c, "\n", "\n     *  ");
+			padcat(2, 0, production, "    /*\n     *  ", c,
+			       "\n     */");
+		} else {
+			replace(&c, "\n", "\n     *  ");
+			padcat(2, 0, production, "    /*\n     *  ", c,
+			       "\n     */");
+		}
 		mtrac_free(c);
 	}
 	padcat(C, indent, production, "function ", bind->tag, " public%30%%33%%35%");	// %30%: payable, %33%: view %35%: inference
@@ -1869,7 +1903,8 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	paratag = -1;
 	current_function = null;       // not used in recitals
 
-	delete_list(active_subjects);
+	assert(!active_subjects || active_subjects != covenant_subjects);
+	if (active_subjects) delete_list(active_subjects);
 	active_subjects = active_subjects_stack;
 	is_payable = is_payable_stack;
 	is_stateful = is_stateful_stack;
@@ -1877,6 +1912,8 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	return true;
 }
 
+char *courtesy;			       // courtesy warning if no subject of a multi-sentence clause could access.
+char *courtesy_track;
 bool sol_body(char **production, Body *Body, int indent) {
 	if (!Body) return false;
 	if (opt_debug) printf("producing Body\n");
@@ -1886,7 +1923,19 @@ bool sol_body(char **production, Body *Body, int indent) {
 				     main_constructor_body ? "%24%" : "%25%");
 
 	no_action_in_group_yet = true;
-	single_sentence_clause = Body->Statements && !Body->Statements->Statements;	// untested ////
+	single_sentence_clause = Body->Statements
+		&& !Body->Statements->Statements;
+	multi_sentence_clause = Body->Statements
+		&& Body->Statements->Statements;
+
+	if (multi_sentence_clause) {
+
+/*ΩΩΩ*/ courtesy = mtrac_strdup("");
+
+		courtesy_track = mtrac_strdup("");
+
+	}
+
 	msg_sender = null;
 	msg_value = null;
 	is_payable = false;
@@ -1894,6 +1943,11 @@ bool sol_body(char **production, Body *Body, int indent) {
 	sol_statements(production, Body->Statements, indent + 1);
 	if (msg_sender) mtrac_free(msg_sender);
 	if (msg_value) mtrac_free(msg_value);
+
+	if (multi_sentence_clause) {
+		mtrac_free(courtesy);
+		mtrac_free(courtesy_track);
+	}
 
 	sol_function(production, Body->Function, indent + 1);
 
@@ -1940,15 +1994,6 @@ bool sol_statement(char **production, Statement *Statement, int indent) {
 	return true;
 }
 
-bool sol_actions(char **production, Actions *Actions, int indent) {
-	if (!Actions) return false;
-
-	sol_actions(production, Actions->Actions, indent);
-	sol_action(production, Actions->Action, indent);
-
-	return true;
-}
-
 static Name *subject = null;
 static bool ever = false;
 bool sol_action(char **production, Action *Action, int indent) {
@@ -1970,35 +2015,28 @@ bool sol_action(char **production, Action *Action, int indent) {
 	/* for main_constructor_bodys, enforce that if there are multiple sentences, they all use the same subjects */
 	if (!Action->Subject->Symbols->Symbols && !Action->Subject->Symbols->Symbol->Name) ;	// "this contract"
 	else if (!no_action_in_group_yet && enforce_same_subject) {
-		list *checks = shallow_clone(active_subjects);
+		bool good = true;
 		Symbols *symbols = Action->Subject->Symbols;
 
 		while (symbols && symbols->Symbol) {
-			if (symbols->Symbol->Name) {
-				printf("testing %s\n", symbols->Symbol->Name);
-				list *c = checks;
+			assert(symbols->Symbol->Name);
+			printf("testing %s\n", symbols->Symbol->Name);	// ◊◊
+			list *c = active_subjects;
 
-				while (c) {
-					printf("    vs %s\n", (char *)c->item);
-					if (!strcmp
-					    ((char *)c->item,
-					     symbols->Symbol->Name)) {
-						drop_item(&checks, c);
-						break;
-					}
-					c = c->next;
-				}
-				if (c) error("In terms, the active subjects of all sentences must match", symbols->Symbol->Name);
+			while (c) {
+				printf("    vs %s\n", (char *)c->item);	// ◊◊
+				if (strcmp
+				    ((char *)c->item, symbols->Symbol->Name))
+					good = false;
+				c = c->next;
 			}
-			symbols = symbols->Symbols;	// i.e. next
+			symbols = symbols->Symbols;	// i.e., next
 		}
-		if (checks) error("In terms, the active subjects of all sentences must match", (char *)checks->item);	//..
-		delete_list(checks);
+		if (!good) error("In terms, the active subjects of all sentences must match", (char *)active_subjects->item);	//..
 	}
 	/* if not first sentence OR not in constructor: just collect the ones of this sentence */
 	else {
 		assert(!active_subjects);
-		if (active_subjects) delete_list(active_subjects);
 		Symbols *symbols = Action->Subject->Symbols;
 
 		while (symbols && symbols->Symbol) {
@@ -2008,10 +2046,11 @@ bool sol_action(char **production, Action *Action, int indent) {
 			    ) {
 				list_add(&active_subjects,
 					 symbols->Symbol->Name);
-				assert(active_subjects);
 			}
-			symbols = symbols->Symbols;	// i.e. next
+			symbols = symbols->Symbols;	// i.e., next
 		}
+		if (!covenant_subjects && covenant_constructor_body)
+			covenant_subjects = active_subjects;
 	}
 	no_action_in_group_yet = false;
 	ever = true;
@@ -2032,45 +2071,77 @@ bool sol_action(char **production, Action *Action, int indent) {
 	mtrac_free(subjlatebind), subjlatebind = null;
 
 	/* check binding of the subject */
+	bool single_subject = !Action->Subject->Symbols->Symbols;
+
 	if (current_function) {
 		current_function->uses_permission = !!Action->Permission;
-		bool single_subject = !Action->Subject->Symbols->Symbols;
 
-		// optimized
 		if (single_sentence_clause && single_subject) {
 			padcat(1, indent, production, "permit(");
+			if (current_function) current_function->uses_caller =
+					true;
 			sol_symbol(production, Action->Subject->Symbols->Symbol,
 				   false, 0);
 
 			padcat(0, 0, production, ")" EOL);
 			uses_permit = true;
-			// not optimized
-		} else {
 
-			if (single_sentence_clause)
+			// multi-subject and/or multi-sentence
+		} else {
+			if (single_sentence_clause) {
 				padcat(1, indent, production, "require(");
-			else
+			} else
 				padcat(1, indent, production, "if(");
 			Symbols *Symbols = Action->Subject->Symbols;
 			int i = 0;
 
 			while (Symbols && Symbols->Symbol) {
+				char *symbol = mtrac_strdup("");
+
+				sol_symbol(&symbol, Symbols->Symbol, false, 0);
 				if (i++) padcat(0, 0, production, " || ");
 
-				padcat(0, 0, production, "msg.sender == ");
+				padcat(0, 0, production, "msg.sender == ",
+				       symbol);
 
-				sol_symbol(production, Symbols->Symbol, false,
-					   0);
 				if (current_function) current_function->
 						uses_caller = true;
+
+				/* aggregated, potentially shortened access condition for revert message */
+				if (multi_sentence_clause) {
+					char *search = mtrac_strdup("");
+
+					padcat(0, 0, &search, ":", symbol, ":");
+					if (!strstr(courtesy_track, search)) {
+						if (strlen(courtesy_track))
+								padcat(0, 0,
+								       &courtesy,
+								       " || ");
+						padcat(0, 0, &courtesy_track,
+						       search);
+
+						padcat(0, 0, &courtesy,
+						       "msg.sender == ",
+						       symbol);
+
+						if (current_function)
+								current_function->
+								uses_caller =
+								true;
+					}
+					mtrac_free(search);
+				}
+				mtrac_free(symbol);
 				Symbols = Symbols->Symbols;
 			}
 			// either close the require phrase or open the block which's else is the revert with 'not permitted' at [2]
-			if (single_sentence_clause)
+			if (single_sentence_clause) {
 				padcat(0, 0, production,
 				       ", \"not permitted\")" EOL);
-			else {
+				// multi sentence
+			} else {
 				padcat(0, 0, production, ") {");
+
 				indent++;
 			}
 		}
@@ -2083,16 +2154,22 @@ bool sol_action(char **production, Action *Action, int indent) {
 
 	if (Action->Condition) padcat(1, --indent, production, "}");
 
-	/* for multiple sentences, add the closing, reverting else */
+	// ◊◊◊ /* for multiple sentences, add the closing, reverting else */
 	if (current_function && !single_sentence_clause) {
-
-		padcat(1, indent - 1, production, "} else {");
-		padcat(1, indent, production, "revert(\"not permitted\");");	// [2]
-
-		padcat(1, --indent, production, "}");
+		// ◊◊◊ padcat(1, --indent, production, "}");
 	}
 
+	if (current_function && !single_sentence_clause) {	// ◊◊◊
+		padcat(1, --indent, production, "} else {");	// ◊◊◊
+		padcat(1, indent + 1, production, "revert(\"not permitted\");");	// ◊◊◊
+		padcat(1, indent--, production, "}");	// ◊◊◊
+	}			       // ◊◊◊
+
 	action = null;
+	if (active_subjects
+	    && active_subjects !=
+	    covenant_subjects) delete_list(active_subjects);
+	active_subjects = null;
 	return true;
 }
 
@@ -2417,7 +2494,7 @@ bool sol_fix(char **production, Fix *Fix, int indent) {
 	return true;
 }
 
-bool sol_setting(char **production, Setting *Setting, int indent) {
+bool sol_setting(char **production, Setting *Setting, int indent) {	// dysfunctional ◊
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 	padcat(1, indent, production, "");
@@ -2465,7 +2542,9 @@ bool sol_payment(char **production, Payment *Payment, int indent) {
 			assert(Payment->Expression->Combination->Combinor->
 			       Combinand->Symbol);
 			no_literal = true;
+			payment_expression = true;
 			sol_expression(production, Payment->Expression, 0);
+			payment_expression = false;
 			no_literal = false;
 		}
 		replace(production, "%preassign%", "");
@@ -2538,7 +2617,6 @@ bool sol_sending(char **production, Sending *Sending, int indent) {
 	// receiver
 	assert(Sending->Object->Symbol || Sending->Object->Reflexive);
 	sol_object(production, Sending->Object, 0);
-
 	padcat(0, 0, production, ", ");
 
 	// message
@@ -2558,17 +2636,23 @@ bool sol_send(char **production, Send *Send, int indent) {
 	return true;
 }
 
-bool sol_notification(char **production, Notification *Notification, int indent) {
+bool sol_notification(char **production, Notification *Notification, int indent) {	// document it ◊
 	if (!Notification) return false;
 	if (opt_debug) printf("producing Notification\n");
-	padcat(1, indent, production, "( notification ");
 
-	sol_notify(production, Notification->Notify, indent + 1);
-	sol_object(production, Notification->Object, indent + 1);
-	sol_preposition(production, Notification->Preposition, indent + 1);
-	sol_expression(production, Notification->Expression, indent + 1);
+	sol_notify(production, Notification->Notify, indent);
 
-	padcat(0, 0, production, ") ");
+	// receiver
+	assert(Notification->Object->Symbol || Notification->Object->Reflexive);
+	sol_object(production, Notification->Object, 0);
+	padcat(0, 0, production, ", ");
+
+	// message
+	if (Notification->Expression)
+		sol_expression(production, Notification->Expression, 0);
+	else
+		padcat(0, 0, production, "\"NOTIFICATION\"", EOL);
+	padcat(0, 0, production, ")", EOL);
 
 	return true;
 }
@@ -2576,10 +2660,12 @@ bool sol_notification(char **production, Notification *Notification, int indent)
 bool sol_notify(char **production, Notify *Notify, int indent) {
 	if (!Notify) return false;
 	if (opt_debug) printf("producing Notify\n");
-	padcat(1, indent, production, "( notify ");
-	///////
 
-	padcat(0, 0, production, ") ");
+	uses_send = true;
+
+	padcat(1, indent, production, "send(");
+	if (current_function) current_function->uses_caller |= opt_log
+			|| opt_feedback;
 
 	return true;
 }
@@ -2769,7 +2855,7 @@ bool sol_combinand(char **production, Combinand *Combinand, int indent) {
 			/* produce amounts/texts etc variables: take care that they
 			 * 1) become parameters, and 2) object elements with that parameter assigned
 			 * e.g., The Secured Party may pay a Reminder Fee into escrow. */
-			insert_parameter_and_set_member(production, &instructions, Combinand->Symbol, false, paratag, indent + 4, __LINE__);	////// call #7
+			insert_parameter_and_set_member(production, &instructions, Combinand->Symbol, payment_expression, paratag, indent + 4, __LINE__);	////// call #7
 		}
 		/* produce the literal (name or type name for variables that are named verbatim a type) */
 
@@ -3104,24 +3190,26 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	// prepend type (sol, sop)
 	char *typed_varname = mtrac_strdup("");
 
-	concat(&typed_varname, type(pretty_varname, opt_harden, false), " ",
-	       varname);
+	concat(&typed_varname,
+	       type(pretty_varname, opt_harden, false, __LINE__), " ", varname);
 
 	char *pretty_typed_varname = mtrac_strdup("");
 
 	concat(&pretty_typed_varname, pretty_varname, " : ",
-	       type(pretty_varname, opt_harden, false));
+	       type(pretty_varname, opt_harden, false, __LINE__));
 
 	char *typed_parameter_varname = mtrac_strdup("");
 
-	concat(&typed_parameter_varname, type(pretty_varname, false, true), " ",
+	concat(&typed_parameter_varname,
+	       type(pretty_varname, false, true, __LINE__), " ",
 	       parameter_varname);
 	/* binding to msg.sender and msg.value */
 	bool use_sender = !active_subjects && !msg_sender
 		&& !strcmp("person", lextype(pretty_varname));
 	if (use_sender) msg_sender = mtrac_strdup(pretty_varname);
-	bool use_value = !msg_value && !strcmp("amount", lextype(pretty_varname));	///// unclear, wip?: && payment;
-
+	bool use_value = payment && !msg_value
+		&& !strcmp("amount", lextype(pretty_varname));
+	// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
 	if (use_value) msg_value = mtrac_strdup(pretty_varname);
 	is_payable |= !!use_value;
 	is_stateful = true;

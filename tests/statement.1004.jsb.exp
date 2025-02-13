@@ -22,8 +22,9 @@ module.exports = class UCCFinancingStatement {
         this.termination_statement = null;
         this.termination_statement_time = null;
         this.notification_statement = null;
-            this.terminated = false;
+        this.terminated = false;
     }
+
 
 
     certify(caller, file_number)  {
@@ -35,6 +36,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     set_file_date(caller)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
@@ -43,6 +45,7 @@ module.exports = class UCCFinancingStatement {
             return 'not permitted.';
         }
     }
+
 
     set_lapse(caller, lapse_date)  {
         if(this.already_terminated()) return undefined;
@@ -53,6 +56,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     set_continuation_start(caller, continuation_window_start)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
@@ -61,6 +65,7 @@ module.exports = class UCCFinancingStatement {
             return 'not permitted.';
         }
     }
+
 
     pay_fee(caller, reminder_fee)  {
         if(this.already_terminated()) return undefined;
@@ -72,6 +77,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     notice(caller, notification_statement)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
@@ -81,16 +87,18 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     notify(caller)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
             if(this.continuation_window_start <= Date.now()) {
-                this_send(this.filing_office, this.secured_party, this.notification_statement);
+                this._send(this.filing_office, this.secured_party, this.notification_statement);
             }
         } else {
             return 'not permitted.';
         }
     }
+
 
     pay_escrow_in(caller, digital_asset_collateral)  {
         if(this.already_terminated()) return undefined;
@@ -102,6 +110,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     fail_to_pay(caller)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.secured_party) {
@@ -110,6 +119,7 @@ module.exports = class UCCFinancingStatement {
             return 'not permitted.';
         }
     }
+
 
     take_possession(caller)  {
         if(this.already_terminated()) return undefined;
@@ -122,6 +132,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     file_continuation(caller, continuation_statement)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.secured_party) {
@@ -130,6 +141,7 @@ module.exports = class UCCFinancingStatement {
             return 'not permitted.';
         }
     }
+
 
     set_continuation_lapse(caller, continuation_statement_date)  {
         if(this.already_terminated()) return undefined;
@@ -142,6 +154,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     file_termination(caller, termination_statement)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.secured_party) {
@@ -151,6 +164,7 @@ module.exports = class UCCFinancingStatement {
             return 'not permitted.';
         }
     }
+
 
     release_escrow(caller)  {
         if(this.already_terminated()) return undefined;
@@ -163,6 +177,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     release_reminder_fee(caller)  {
         if(this.already_terminated()) return undefined;
         if(caller == this.filing_office) {
@@ -174,9 +189,11 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     termination_period()  {
         return (this.termination_statement_time + (365 * 86400000));
     }
+
 
     terminate_and_clear(caller)  {
         if(this.already_terminated()) return undefined;
@@ -189,6 +206,7 @@ module.exports = class UCCFinancingStatement {
         }
     }
 
+
     termination() {
         this.terminated = true;
     }
@@ -198,11 +216,13 @@ module.exports = class UCCFinancingStatement {
         return true;
     }
 
+
     _pay(from, to, amount) {
         console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }
+
 
     _send(from, to, message) {
         console.log(`➠ system message: send message «${message}» from ${from} to ${to}.`);

@@ -93,11 +93,11 @@ help:
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
 
 build:
-	@if (! $(MAKE) -q lexccc.c) ; \
+	@if (! $(MAKE) -s -o lexccc -q lexccc.c build/.parser & ! $(MAKE) -s lexccc) ; \
 		then printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
 		$(MAKE) lexccc ; \
 	fi
-	@if (! $(MAKE) -o lexccc -q lexon) ; \
+	@if (! $(MAKE) -s -o lexccc -q lexon) ; \
 		then printf "\n$(hi)▫️  cycle 2: build compiler $(off)\n\n" ; \
 		$(MAKE) -o lexccc lexon ; \
 	fi
@@ -219,10 +219,12 @@ endif
 
 
 sample: build
+ifeq (,$(wildcard nosample))
 	@printf "\n$(hi)▫️  compile escrow example $(off)\n\n"
 	@printf "$(ok)bin/lexon --solidity examples/escrow.lex$(off)\n\n"
 	@bin/lexon --solidity examples/escrow.lex
 	@echo
+endif
 
 check: focustest deeptest
 

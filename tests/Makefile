@@ -104,7 +104,7 @@ define testrun
 	    for filename in `$(6)`; do \
 		testnumber=$$(($$testnumber+1)) \
 		; echo "$(3) $(4) $$filename" > now.tmp \
-		; if [[ -f lastfail ]] &&  [[ ! -f nopickup ]]; then diff now.tmp lastfail > tmp ; rret=$$? \
+		; if [[ -f lastfail ]] &&  [[ ! -f nopickup ]]; then diff -B -b -w now.tmp lastfail > tmp ; rret=$$? \
 			; if (( $$rret == 0 )) ; then \
 				echo " picking up:" \
 				; echo -n " picking up at " >> test.log ; cat lastfail >> test.log \
@@ -141,7 +141,7 @@ define testrun
 		; echo $$((`cat explines.tmp` + `cat $$expfile | wc -l`)) > explines.tmp \
 		; cat $$expfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.exp \
 		; cat $$testfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.tmp \
-		; diff -d -y --suppress-common-lines unvers.exp unvers.tmp > diff.tmp \
+		; diff -B -b -w -d -y --suppress-common-lines unvers.exp unvers.tmp > diff.tmp \
 		; dret=$$? \
 		; if (( $$dret == 0 )) ; then printf "  √\n" >> test.log ; fi \
 		; if (( $$dret == 1 )) ; then printf "  #  failed\n" >> test.log ; fi \
@@ -166,11 +166,11 @@ define testrun
 				; elif [[ $$REPLY =~ ^[Ss]$$ ]] ; then echo "Source code ($$filename):" ; $(call sep,=•,66) ; cat $$filename ; $(call sep,=•,66) \
 				; elif [[ $$REPLY =~ ^[Pp]$$ ]] ; then echo "Precompiled source code ($$filename):" ; $(call sep,«»,66) ; $(3) $(4) -p $$filename ; $(call sep,«»,66) \
 				; elif [[ $$REPLY =~ ^[Ff]$$ ]] ; then echo "Difference #< exp | got ># (version tags are ignored):" \
-					; diff -y $$expfile $$testfile | sed -e "s/»/»  /g" | sed -e "s/.*|.*/`printf "\033[33m&\033[0m"`/" -e "s/.*<.*/`printf "\033[31m&\033[0m"`/" -e "s/.*>.*/`printf "\033[36m&\033[0m"`/" \
+					; diff -B -b -w -y $$expfile $$testfile | sed -e "s/»/»  /g" | sed -e "s/.*|.*/`printf "\033[33m&\033[0m"`/" -e "s/.*<.*/`printf "\033[31m&\033[0m"`/" -e "s/.*>.*/`printf "\033[36m&\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Dd]$$ ]] ; then echo "Difference from expectation (version tags are ignored):" \
-					; diff -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
+					; diff -B -b -u -w  $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Ww]$$ ]] ; then echo "Difference from expectation, ignoring whitespace (and version tags):" \
-					; diff -b -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
+					; diff -b -B -u -w $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Kk]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; break \
 				; elif [[ $$REPLY =~ ^[Ii]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; touch noupdate ; break \
 				; elif [[ $$REPLY =~ ^[Qq]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; fi ; quit=1 ; break 2 \
@@ -336,7 +336,7 @@ _test:
 %.try: %.lex
 	../bin/lexon $*
 	@echo $^ $@
-	diff $^ $@
+	diff -w -B -b $^ $@
 	if (( $? == 0 )) ; then echo ok ; fi
 	if (( $? == 1 )) ; then echo not ; fi
 	if (( $? == 2 )) ; then echo worse ; fi
@@ -368,10 +368,10 @@ _expects:
 	@echo =======================
 	$(call init)
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
-	$(call buildexp,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
-	$(call buildexp,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
-	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	$(call buildexp,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,%PREERR)
+	$(call buildexp,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,%ERR)
+	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,%ERR)
+	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,%ERR)
 	$(call buildexp,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
 	$(call buildexp,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
 	$(call buildexp,precompile,:,../bin/lexon,-P,:,grep -l %PRE test-*.lex,.pre.exp,%PREERR)

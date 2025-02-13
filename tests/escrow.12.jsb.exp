@@ -13,6 +13,7 @@ module.exports = class Escrow {
     }
 
 
+
     pay_out(caller)  {
         if(caller == this.arbiter) {
             this._pay('escrow', this.arbiter, this.service_fee);
@@ -22,6 +23,7 @@ module.exports = class Escrow {
         }
     }
 
+
     pay_back(caller)  {
         if(caller == this.arbiter) {
             this._pay('escrow', this.arbiter, this.service_fee);
@@ -30,6 +32,7 @@ module.exports = class Escrow {
             return 'not permitted.';
         }
     }
+
 
     _pay(from, to, amount) {
         console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);

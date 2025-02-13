@@ -7,34 +7,34 @@ contract EvaluationLicenseSystem {
     address payable arbiter;
     uint licensing_service_fee;
     uint breach_service_fee;
-    bool licensing_service_fee__set = false;
 
-    constructor(address payable _arbiter, uint _breach_service_fee) payable {
+    constructor(address payable _arbiter, uint _licensing_service_fee, uint _breach_service_fee) {
         licensor = payable(msg.sender);
         arbiter = _arbiter;
-        
-        licensing_service_fee = msg.value;
-        licensing_service_fee__set = true;
+        licensing_service_fee = _licensing_service_fee;
         breach_service_fee = _breach_service_fee;
     }
 
+
     mapping(uint => contract) public _license_list;
     uint _license_count = 0;
+
 
     function add_license(address payable _license_taker, string memory _description_of_goods) returns(License) {
         check_termination();
         return _license_list[_license_count += 1] = new License(_license_taker, _description_of_goods);
     }
 
+
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
 
+
     function permit(address _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
     }
-
 }
 
 contract License {
@@ -42,6 +42,7 @@ contract License {
         license_taker = _license_taker;
         description_of_goods = _description_of_goods;
     }
+
 
     function pay() public {
         check_termination();
@@ -53,11 +54,13 @@ contract License {
         paid = true;
     }
 
+
     function commission() public {
         check_termination();
         permit(licensor);
         commissioned = true;
     }
+
 
     function comment(string memory _comment_text) public {
         check_termination();
@@ -65,17 +68,20 @@ contract License {
         comment_text = _comment_text;
     }
 
+
     function publication() public {
         check_termination();
         permit(license_taker);
         published = true;
     }
 
+
     function grant_permission_to_comment() public {
         check_termination();
         permit(license_taker);
         permission_to_comment = true;
     }
+
 
     function declare_breach() public {
         check_termination();
@@ -86,10 +92,12 @@ contract License {
         }
     }
 
+
     function factually_breached() public view returns(bool) {
         return ((commissioned && comment_text == "")
                  || (published && (!permission_to_comment && (notice_time <= (block.timestamp - (24 * 3600))))));
     }
+
 
     function notice() public {
         check_termination();
@@ -97,9 +105,11 @@ contract License {
         notice_time = block.timestamp;
     }
 
+
     function noticed() public view returns(bool) {
         return notice_time != 0;
     }
+
 
     function termination() internal {
         terminated = true;

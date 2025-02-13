@@ -14,11 +14,11 @@ pragma solidity ^0.8.17;
 
    code tagged: 0.2.1
 
-   compiler:    lexon 0.3 alpha 96 U
+   compiler:    lexon 0.3 alpha 97 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 80 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.93-96 U
+   backend:     solidity 0.3.97a U
 
    target:      solidity 0.8+
 
@@ -46,7 +46,7 @@ pragma solidity ^0.8.17;
 
    These are the constructor parameters for deployment:
 
-   <agent : address payable>, <breach_service_fee : uint>
+   <agent : address payable>, <licensing_service_fee : uint>, <breach_service_fee : uint>
 
    These are the state progress functions that allow to interact with the contract:
 
@@ -124,38 +124,38 @@ contract EvaluationLicenseSystem {
     address payable agent;
     uint licensing_service_fee;
     uint breach_service_fee;
-    bool licensing_service_fee__set = false;
 
-    constructor(address payable _agent, uint _breach_service_fee) payable {
+    constructor(address payable _agent, uint _licensing_service_fee, uint _breach_service_fee) {
         licensor = payable(msg.sender);
         agent = _agent;
-        
-        licensing_service_fee = msg.value;
-        licensing_service_fee__set = true;
+        licensing_service_fee = _licensing_service_fee;
         breach_service_fee = _breach_service_fee;
     }
 
     /* aggregation of covenants for folds and serialization */
+
     mapping(uint => contract) public _license_list;
     uint _license_count = 0;
 
     /* create new instance of License covenant, and register it with main */
+
     function add_license(address payable _licensee, string memory _description_of_goods) returns(License) {
         check_termination();
         return _license_list[_license_count += 1] = new License(_licensee, _description_of_goods);
     }
 
     /* safe transfer */
+
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
 
     /* built-in caller assertion */
+
     function permit(address _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
     }
-
 }
 
 /**
@@ -168,6 +168,7 @@ contract License {
         description_of_goods = _description_of_goods;
     }
 
+
     /* Pay clause */
 
     /*
@@ -178,6 +179,7 @@ contract License {
      *  
      *  This License is therefore Paid
      */
+
     function pay() public {
         check_termination();
         if(msg.sender == licensee) {
@@ -188,6 +190,7 @@ contract License {
         paid = true;
     }
 
+
     /* Commission clause */
 
     /*
@@ -195,11 +198,13 @@ contract License {
      *  
      *  The Licensor may certify this License as Commissioned
      */
+
     function commission() public {
         check_termination();
         permit(licensor);
         commissioned = true;
     }
+
 
     /* Comment clause */
 
@@ -208,11 +213,13 @@ contract License {
      *  
      *  The Licensee may register Comment Text.
      */
+
     function comment(string memory _comment_text) public {
         check_termination();
         permit(licensee);
         comment_text = _comment_text;
     }
+
 
     /* Publication clause */
 
@@ -221,11 +228,13 @@ contract License {
      *  
      *  The Licensee may certify this License as Published
      */
+
     function publication() public {
         check_termination();
         permit(licensee);
         published = true;
     }
+
 
     /* Grant Permission to Comment clause */
 
@@ -234,11 +243,13 @@ contract License {
      *  
      *  The Licensee may grant the Permission to Comment
      */
+
     function grant_permission_to_comment() public {
         check_termination();
         permit(licensee);
         permission_to_comment = true;
     }
+
 
     /* Declare Breach clause */
 
@@ -249,6 +260,7 @@ contract License {
      *  pay the Breach Service Fee to the Licensor,
      *  and afterwards terminate this License
      */
+
     function declare_breach() public {
         check_termination();
         permit(agent);
@@ -257,6 +269,7 @@ contract License {
             termination();
         }
     }
+
 
     /* Factually Breached clause */
 
@@ -267,10 +280,12 @@ contract License {
      *  this License is Commissioned and the Comment Text is not fixed,
      *  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past
      */
+
     function factually_breached() public view returns(bool) {
         return ((commissioned && comment_text == "")
                  || (published && (!permission_to_comment && (notice_time <= (block.timestamp - (24 * 3600))))));
     }
+
 
     /* Notice clause */
 
@@ -279,11 +294,13 @@ contract License {
      *  
      *  The Licensor or the Agent may fix the Notice Time as the respective current time
      */
+
     function notice() public {
         check_termination();
         require(msg.sender == agent || msg.sender == licensor, "not permitted");
         notice_time = block.timestamp;
     }
+
 
     /* Noticed clause */
 
@@ -292,11 +309,14 @@ contract License {
      *  
      *  "Noticed" is defined as Notice Time being fixed
      */
+
     function noticed() public view returns(bool) {
         return notice_time != 0;
     }
 
+
     /* built-in termination of this covenant */
+
     function termination() internal {
         terminated = true;
     }
