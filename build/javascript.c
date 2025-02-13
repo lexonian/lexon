@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.97b U"
+#define backend_version "javascript 0.3.97c U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -2262,20 +2262,18 @@ bool js_body(char **production, Body *Body, int indent) {
 		&& Body->Statements->Statements;
 
 	if (multi_sentence_clause) {
-		// ◊◊◊ courtesy = mtrac_strdup("if(!(");
-		// ΩΩΩ courtesy = mtrac_strdup("if("); // ◊◊◊◊
-
-/*ΩΩΩ*/ courtesy = mtrac_strdup("");
+		courtesy = mtrac_strdup("if(!(");
 
 		courtesy_track = mtrac_strdup("");
-
+		padcat(1, indent + 1, production, "%36%");	// 36: courtesy multi-sentence access warning
 	}
 
 	js_statements(production, Body->Statements, indent + 1);
 
 	if (multi_sentence_clause) {
-		// ◊◊◊ padcat(0, indent, &courtesy, ")) return 'not permitted';");
-		// ΩΩΩ padcat(0, indent, &courtesy, ") {"); // ◊◊◊◊
+		padcat(0, indent, &courtesy, ")) return 'not permitted';");
+
+		replace(production, "%36%", courtesy);
 		mtrac_free(courtesy);
 		mtrac_free(courtesy_track);
 	}
@@ -2404,22 +2402,19 @@ bool js_action(char **production, Action *Action, int indent) {
 		current_function->uses_permission = !!Action->Permission;
 
 		if (single_sentence_clause && single_subject) {
-			// ◊◊◊ padcat(1, indent, production, "if(caller != ");
-			padcat(1, indent++, production, "if(caller == ");	// ◊◊◊
+			padcat(1, indent, production, "if(caller != ");
 
 			if (current_function) current_function->uses_caller =
 					true;
 			js_symbol(production, Action->Subject->Symbols->Symbol,
 				  false, 0);
 
-			// ◊◊◊ padcat(0, 0, production, ") return 'not permitted';");
-			padcat(0, 0, production, ") {");	// ◊◊◊
+			padcat(0, 0, production, ") return 'not permitted';");
 
 			// multi-subject and/or multi-sentence
 		} else {
 			if (single_sentence_clause) {
-				// ◊◊◊ padcat(1, indent, production, "if(!(");
-				padcat(1, indent, production, "if(");	// ◊◊◊
+				padcat(1, indent, production, "if(!(");
 
 			} else
 				padcat(1, indent, production, "if(");
@@ -2461,8 +2456,8 @@ bool js_action(char **production, Action *Action, int indent) {
 			}
 			// either close the require phrase or open the block which's else is the revert with 'not permitted' at [2]
 			if (single_sentence_clause) {
-				// ◊◊◊ padcat(0, 0, production, ")) return 'not permitted';");
-				padcat(0, 0, production, ") {");	// ◊◊◊
+				padcat(0, 0, production,
+				       ")) return 'not permitted';");
 
 				// multi sentence
 			} else {
@@ -2480,16 +2475,10 @@ bool js_action(char **production, Action *Action, int indent) {
 
 	if (Action->Condition) padcat(1, --indent, production, "}");
 
-	// ◊◊◊ /* for multiple sentences, add the closing, reverting else */
+	/* for multiple sentences, add the closing, reverting else */
 	if (current_function && !single_sentence_clause) {
-		// ◊◊◊ padcat(1, --indent, production, "}");
+		padcat(1, --indent, production, "}");
 	}
-
-	if (current_function) {	       // ◊◊◊
-		padcat(1, --indent, production, "} else {");	// ◊◊◊
-		padcat(1, indent + 1, production, "return 'not permitted.';");	// ◊◊◊
-		padcat(1, indent, production, "}");	// ◊◊◊
-	}			       // ◊◊◊
 
 	action = null;
 	if (active_subjects

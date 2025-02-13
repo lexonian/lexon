@@ -15,22 +15,16 @@ module.exports = class Escrow {
 
 
     pay_out(caller)  {
-        if(caller == this.arbiter) {
-            this._pay('escrow', this.arbiter, this.fee);
-            this._pay('escrow', this.seller, this._escrow);
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.arbiter) return 'not permitted';
+        this._pay('escrow', this.arbiter, this.fee);
+        this._pay('escrow', this.seller, this._escrow);
     }
 
 
     pay_back(caller)  {
-        if(caller == this.arbiter) {
-            this._pay('escrow', this.arbiter, this.fee);
-            this._pay('escrow', this.payer, this._escrow);
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.arbiter) return 'not permitted';
+        this._pay('escrow', this.arbiter, this.fee);
+        this._pay('escrow', this.payer, this._escrow);
     }
 
 

@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.97b U"
+/*JS */ #define backend_version "javascript 0.3.97c U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.97b U"
+/*Sol*/ #define backend_version "solidity 0.3.97c U"
 /*Sol*/ #define target_version "solidity 0.8+"
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.97b U"
+/*Sop*/ #define backend_version "sophia 0.3.97c U"
 /*Sop*/ #define target_version "sophia 6+"
 
 #define CYCLE_2 true
@@ -2384,12 +2384,10 @@ static bool is_payment(Predicates *predicates) {
 		multi_sentence_clause = Body->Statements && Body->Statements->Statements;
 
 		if(multi_sentence_clause) {
-/*JS */			// ◊◊◊ courtesy = mtrac_strdup("if(!(");
-/*JS */			// ΩΩΩ courtesy = mtrac_strdup("if("); // ◊◊◊◊
-/*J+S*//*ΩΩΩ*/		courtesy = mtrac_strdup("");
-/*Sop*/			courtesy = mtrac_strdup("require("); // Ω, originally was S+S
+/*JS */			courtesy = mtrac_strdup("if(!(");
+/*S+S*/			courtesy = mtrac_strdup("require(");
 			courtesy_track = mtrac_strdup("");
-/*Sop*//*ΩΩΩ*/		padcat(1, indent+1, production, "%36%"); // 36: courtesy multi-sentence access warning
+			padcat(1, indent+1, production, "%36%"); // 36: courtesy multi-sentence access warning
 		}
 
 /*S+S*/		msg_sender = null;
@@ -2401,10 +2399,9 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		if(msg_value) mtrac_free(msg_value);
 
 		if(multi_sentence_clause) {
-/*JS */			// ◊◊◊ padcat(0, indent, &courtesy, ")) return 'not permitted';");
-/*JS */			// ΩΩΩ padcat(0, indent, &courtesy, ") {"); // ◊◊◊◊
-/*Sop*/			padcat(0, indent, &courtesy, ", \"not permitted\")" EOL); // Ω, ..
-/*Sop*//*ΩΩΩ*/		replace(production, "%36%", courtesy);
+/*JS */			padcat(0, indent, &courtesy, ")) return 'not permitted';");
+/*S+S*/			padcat(0, indent, &courtesy, ", \"not permitted\")" EOL);
+			replace(production, "%36%", courtesy);
 			mtrac_free(courtesy);
 			mtrac_free(courtesy_track);
 		}
@@ -2528,8 +2525,7 @@ static bool is_payment(Predicates *predicates) {
 			current_function->uses_permission = !!Action->Permission;
 
 			if(single_sentence_clause && single_subject) {
-/*JS */				// ◊◊◊ padcat(1, indent, production, "if(caller != ");
-/*JS */				padcat(1, indent++, production, "if(caller == "); // ◊◊◊
+/*JS */				padcat(1, indent, production, "if(caller != ");
 /*S+S*/				padcat(1, indent, production, "permit(");
 				if(current_function) current_function->uses_caller = true;
 				xxx_symbol(production, Action->Subject->Symbols->Symbol, false, 0);
@@ -2538,16 +2534,14 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/					xxx_noun(production, Action->Subject->Symbols->Symbol, 0);
 /*Sop*/					padcat(0,0, production, "\"");
 /*Sop*/				}
-/*JS */				// ◊◊◊ padcat(0, 0, production, ") return 'not permitted';");
-/*JS */				padcat(0, 0, production, ") {"); // ◊◊◊
+/*JS */				padcat(0, 0, production, ") return 'not permitted';");
 /*S+S*/				padcat(0, 0, production, ")" EOL);
 /*S+S*/				uses_permit = true;
 
 			// multi-subject and/or multi-sentence
 			} else {
 				if(single_sentence_clause) {
-/*JS */					// ◊◊◊ padcat(1, indent, production, "if(!(");
-/*JS */					padcat(1, indent, production, "if("); // ◊◊◊
+/*JS */					padcat(1, indent, production, "if(!(");
 /*S+S*/					padcat(1, indent, production, "require(");
 				} else
 					padcat(1, indent, production, "if(");
@@ -2581,8 +2575,7 @@ static bool is_payment(Predicates *predicates) {
 				}
 				// either close the require phrase or open the block which's else is the revert with 'not permitted' at [2]
 				if(single_sentence_clause) {
-/*JS */					// ◊◊◊ padcat(0, 0, production, ")) return 'not permitted';");
-/*JS */					padcat(0, 0, production, ") {"); // ◊◊◊
+/*JS */					padcat(0, 0, production, ")) return 'not permitted';");
 /*S+S*/					padcat(0, 0, production, ", \"not permitted\")" EOL);
 				// multi sentence
 				} else {
@@ -2600,22 +2593,10 @@ static bool is_payment(Predicates *predicates) {
 
 /*J+S*/		if(Action->Condition) padcat(1, --indent, production, "}");
 
-		// ◊◊◊ /* for multiple sentences, add the closing, reverting else */
+		/* for multiple sentences, add the closing, reverting else */
 /*J+S*/		if(current_function && !single_sentence_clause) {
-/*J+S*/			// ◊◊◊ padcat(1, --indent, production, "}");
+/*J+S*/			padcat(1, --indent, production, "}");
 /*J+S*/		}
-
-/*Sol*/		if(current_function && !single_sentence_clause) { // ◊◊◊
-/*Sol*/			padcat(1, --indent, production, "} else {"); // ◊◊◊
-/*Sol*/			padcat(1, indent+1, production, "revert(\"not permitted\");"); // ◊◊◊
-/*Sol*/			padcat(1, indent--, production, "}"); // ◊◊◊
-/*Sol*/		} // ◊◊◊
-
-/*JS */		if(current_function) { // ◊◊◊
-/*JS */			padcat(1, --indent, production, "} else {"); // ◊◊◊
-/*JS */			padcat(1, indent+1, production, "return 'not permitted.';"); // ◊◊◊
-/*JS */			padcat(1, indent, production, "}"); // ◊◊◊
-/*JS */		} // ◊◊◊
 
 		action = null;
 		if(active_subjects && active_subjects != covenant_subjects) delete_list(active_subjects);

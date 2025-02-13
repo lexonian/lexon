@@ -4,11 +4,11 @@
 
    file:        lexon/escrow3.807.lex
 
-   compiler:    lexon 0.3 alpha 93 U
+   compiler:    lexon 0.3 alpha 97 U
 
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
+   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     javascript 0.3.93 U
+   backend:     javascript 0.3.97c U
 
    target:      node 14.1+
 
@@ -142,6 +142,7 @@ module.exports = class Escrow {
             this.logname = 'log';
 
             /* start log - overwrites previous by same name */
+
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
             this._pay(caller, this.buyer, 'escrow', this.amount);
             this.log(buyer, "✓ Payee appointed");
@@ -149,6 +150,7 @@ module.exports = class Escrow {
         }
 
         /* restore object from file - must be below class definition */
+
         if(typeof buyer === 'undefined') {
             console.log("> restore from file 'state'");
             var data = fs.readFileSync('state', ()=>{});
@@ -158,6 +160,7 @@ module.exports = class Escrow {
     }
 
 
+
     /* Pay Out clause */
 
     /*
@@ -165,14 +168,13 @@ module.exports = class Escrow {
      *  
      *  The Agent may pay the escrow to the Payee
      */
+
     pay_out(caller)  {
-        if(caller == this.agent) {
-            this._pay(caller, 'escrow', this.payee, this._escrow);
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.agent) return 'not permitted';
+        this._pay(caller, 'escrow', this.payee, this._escrow);
         return 'done.';
     }
+
 
     /* Pay Back clause */
 
@@ -181,21 +183,21 @@ module.exports = class Escrow {
      *  
      *  The Agent may pay the escrow to the Buyer
      */
+
     pay_back(caller)  {
-        if(caller == this.agent) {
-            this._pay(caller, 'escrow', this.buyer, this._escrow);
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.agent) return 'not permitted';
+        this._pay(caller, 'escrow', this.buyer, this._escrow);
         return 'done.';
     }
 
     /* built-in convenience function to view state change log. */
+
     history() {
         fs.readFile(this.logname, (e,d)=>{console.log(d.toString())});
     }
 
     /* built-in serialization and storage of entire contract system state. */
+
     persist() {
         console.log('> persisting');
         var data = serialize(this, {space: 4});
@@ -203,23 +205,27 @@ module.exports = class Escrow {
     }
 
     /* re-instate entire contract system from serialized file store */
+
     static load() {
         return new Escrow();
     }
 
     /* built-in tar-balling of code, log and state. */
+
     bundle() {
         console.log('> bundling into contract.tgz');
         tar.create({gzip:true, file:'contract.tgz'}, ['lexon/escrow3.807.lex', 'lexon/escrow3.807.jsx', 'state', 'log', 'INSTRUCTIONS.TXT']);
     }
 
     /* built-in untar-balling of code, log and state. */
+
     static unbundle() {
         console.log('> unbundling contract.tgz');
         tar.extract('contract.tgz');
     }
 
     /* built-in email sending of code, log and state. */
+
     send() {
 
         this.persist();
@@ -251,6 +257,7 @@ module.exports = class Escrow {
     }
 
     /* built-in logging of state changes. */
+
     log(caller, msg) {
         console.log(msg);
         let stamp = (new Date()).toLocaleString('en-US');
@@ -268,6 +275,7 @@ module.exports = class Escrow {
     }
 
     /* built-in password query for private key file, with cache. */
+
     sync_passphrase(caller) {
         if(!caller) process.exit('no caller information');
         if(caller == last_caller) return last_passphrase;
@@ -276,6 +284,7 @@ module.exports = class Escrow {
     }
 
     /* built-in convenience function to create keys for users. */
+
     static create_key(name, passphrase) {
         const { publicKey, privateKey } =
             crypto.generateKeyPairSync('rsa',
@@ -289,6 +298,7 @@ module.exports = class Escrow {
     }
 
     /* built-in pay message */
+
     _pay(caller, from, to, amount) {
         this.log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;

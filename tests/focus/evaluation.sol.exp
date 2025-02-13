@@ -18,7 +18,7 @@ pragma solidity ^0.8.17;
 
    grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.97c U
+   backend:     solidity 0.3.97d U
 
    target:      solidity 0.8+
 
@@ -125,10 +125,9 @@ contract License {
 
     function pay() public {
         check_termination();
+        require(msg.sender == licensee, "not permitted");
         if(msg.sender == licensee) {
             transfer(licensor, licensing_fee);
-        } else {
-            revert("not permitted");
         }
         paid = true;
     }

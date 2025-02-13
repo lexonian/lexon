@@ -16,7 +16,7 @@ pragma solidity ^0.8.17;
 
    grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     solidity 0.3.97b U
+   backend:     solidity 0.3.97c U
 
    target:      solidity 0.8+
 
@@ -167,15 +167,12 @@ contract UCCFinancingStatement {
 
     function certify(string memory _file_number, address payable _filing_office) public {
         check_termination();
+        require(msg.sender == filing_office || msg.sender == filer, "not permitted");
         if(msg.sender == filing_office || msg.sender == filer) {
             file_number = _file_number;
-        } else {
-            revert("not permitted");
         }
         if(msg.sender == filing_office || msg.sender == filer) {
             filing_office = _filing_office;
-        } else {
-            revert("not permitted");
         }
     }
 

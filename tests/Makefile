@@ -119,7 +119,7 @@ define testrun
 		; echo -n "testing " >> test.log ; cat now.tmp | tr '\n' ' ' >> test.log \
 		; expfile=$$(basename "$$filename" .lex)$(7) \
 		; testfile=$$(basename "$$expfile" .exp).now \
-		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/.lex//g' -e 's/-/ /g' -e 's/\// /g' -e 's/\./ #/g'`" \
+		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/\.lex//g' -e 's/\.c//g' -e 's/\.lgf//g' -e 's/-/ /g' -e 's/\// /g' -e 's/\./ /g'`" \
 		; if [[ ! -f concise ]] ; then printf "test #%03d $$testname .. " $$testnumber ; fi \
 		; if [ -n "$(8)" ] ; then \
 			failer=`grep -c -E "%ERR|$(8)" $$filename` \
@@ -160,7 +160,7 @@ define testrun
 			if [[ ! -f noupdate ]] ; then \
 			  if [[ -f autoupdate ]] ; then \
 					mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ; $(call count,update) ; $(call discount,err) \
-			  		; printf "$(ok)› updated √$(off)\n" \
+			  		; printf "$(ok)› updated √$(off)\n\n" \
 			  ; else \
 			    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \

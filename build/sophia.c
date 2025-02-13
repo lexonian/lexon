@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.97b U"
+#define backend_version "sophia 0.3.97c U"
 #define target_version "sophia 6+"
 
 #define CYCLE_2 true
@@ -1969,11 +1969,9 @@ bool sophia_body(char **production, Body *Body, int indent) {
 
 	if (multi_sentence_clause) {
 
-		courtesy = mtrac_strdup("require(");	// Ω, originally was S+S
+		courtesy = mtrac_strdup("require(");
 		courtesy_track = mtrac_strdup("");
-
-									/*ΩΩΩ*/ padcat(1, indent + 1, production, "%36%");
-									// 36: courtesy multi-sentence access warning
+		padcat(1, indent + 1, production, "%36%");	// 36: courtesy multi-sentence access warning
 	}
 
 	msg_sender = null;
@@ -1985,9 +1983,9 @@ bool sophia_body(char **production, Body *Body, int indent) {
 	if (msg_value) mtrac_free(msg_value);
 
 	if (multi_sentence_clause) {
-		padcat(0, indent, &courtesy, ", \"not permitted\")" EOL);	// Ω, ..
 
-/*ΩΩΩ*/ replace(production, "%36%", courtesy);
+		padcat(0, indent, &courtesy, ", \"not permitted\")" EOL);
+		replace(production, "%36%", courtesy);
 		mtrac_free(courtesy);
 		mtrac_free(courtesy_track);
 	}
@@ -2112,6 +2110,7 @@ bool sophia_action(char **production, Action *Action, int indent) {
 		current_function->uses_permission = !!Action->Permission;
 
 		if (single_sentence_clause && single_subject) {
+
 			padcat(1, indent, production, "permit(");
 			if (current_function) current_function->uses_caller =
 					true;
@@ -2125,12 +2124,14 @@ bool sophia_action(char **production, Action *Action, int indent) {
 					    0);
 				padcat(0, 0, production, "\"");
 			}
+
 			padcat(0, 0, production, ")" EOL);
 			uses_permit = true;
 
 			// multi-subject and/or multi-sentence
 		} else {
 			if (single_sentence_clause) {
+
 				padcat(1, indent, production, "require(");
 			} else
 				padcat(1, indent, production, "if(");
@@ -2175,6 +2176,7 @@ bool sophia_action(char **production, Action *Action, int indent) {
 			}
 			// either close the require phrase or open the block which's else is the revert with 'not permitted' at [2]
 			if (single_sentence_clause) {
+
 				padcat(0, 0, production,
 				       ", \"not permitted\")" EOL);
 				// multi sentence
@@ -2191,7 +2193,7 @@ bool sophia_action(char **production, Action *Action, int indent) {
 
 	sophia_predicates(production, Action->Predicates, indent);
 
-	// ◊◊◊ /* for multiple sentences, add the closing, reverting else */
+	/* for multiple sentences, add the closing, reverting else */
 	action = null;
 	if (active_subjects
 	    && active_subjects !=

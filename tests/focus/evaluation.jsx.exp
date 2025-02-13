@@ -14,7 +14,7 @@
 
    grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 
-   backend:     javascript 0.3.97c U
+   backend:     javascript 0.3.97d U
 
    target:      node 14.1+
 
@@ -140,11 +140,10 @@ module.exports = class EvaluationLicenseSystem {
 
             pay(caller)  {
                 if(this.already_terminated()) return undefined;
+                if(!(caller == this.licensee)) return 'not permitted';
                 if(caller == this.licensee) {
                     main._pay(caller, this.licensee, main.licensor, main.licensing_fee);
                     main._pay(caller, this.licensee, 'escrow', main.breach_fee);
-                } else {
-                    return 'not permitted.';
                 }
                 this.paid = true;
                 return 'done.';
@@ -160,12 +159,9 @@ module.exports = class EvaluationLicenseSystem {
 
             commission(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.licensor) {
-                    this.commissioned = true;
-                    main.log(caller, "✓ Commissioned certified");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != main.licensor) return 'not permitted';
+                this.commissioned = true;
+                main.log(caller, "✓ Commissioned certified");
                 return 'done.';
             }
 
@@ -179,12 +175,9 @@ module.exports = class EvaluationLicenseSystem {
 
             comment(caller, comment_text)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.comment_text = comment_text;
-                    main.log(caller, "✓ Comment Text registered");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.comment_text = comment_text;
+                main.log(caller, "✓ Comment Text registered");
                 return 'done.';
             }
 
@@ -198,12 +191,9 @@ module.exports = class EvaluationLicenseSystem {
 
             publication(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.published = true;
-                    main.log(caller, "✓ Published certified");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.published = true;
+                main.log(caller, "✓ Published certified");
                 return 'done.';
             }
 
@@ -217,12 +207,9 @@ module.exports = class EvaluationLicenseSystem {
 
             grant_permission_to_comment(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.permission_to_comment = true;
-                    main.log(caller, "✓ Permission to Comment granted");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.permission_to_comment = true;
+                main.log(caller, "✓ Permission to Comment granted");
                 return 'done.';
             }
 
@@ -238,13 +225,10 @@ module.exports = class EvaluationLicenseSystem {
 
             declare_breach(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.arbiter) {
-                    if(this.factually_breached()) {
-                        main._pay(caller, main.arbiter, main.licensor, main.breach_fee);
-                        this.termination(caller);
-                    }
-                } else {
-                    return 'not permitted.';
+                if(caller != main.arbiter) return 'not permitted';
+                if(this.factually_breached()) {
+                    main._pay(caller, main.arbiter, main.licensor, main.breach_fee);
+                    this.termination(caller);
                 }
                 return 'done.';
             }
@@ -274,12 +258,9 @@ module.exports = class EvaluationLicenseSystem {
 
             notice(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.arbiter || caller == main.licensor) {
+                if(!(caller == main.arbiter || caller == main.licensor)) return 'not permitted';
                 this.notice_time = Date.now();
                 main.log(caller, "✓ Notice Time fixed");
-            } else {
-                return 'not permitted.';
-            }
                 return 'done.';
             }
 

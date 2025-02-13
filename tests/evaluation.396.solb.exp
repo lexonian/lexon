@@ -46,10 +46,9 @@ contract License {
 
     function pay() public {
         check_termination();
+        require(msg.sender == license_taker, "not permitted");
         if(msg.sender == license_taker) {
             transfer(licensor, licensing_fee);
-        } else {
-            revert("not permitted");
         }
         paid = true;
     }
