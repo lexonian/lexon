@@ -1,18 +1,19 @@
-/* Lexon-generated Sophia code
-
-   code:        Escrow
-
-   file:        lexon/escrow.636.lex
-
-   compiler:    lexon 0.3 alpha 97 U
-
-   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
-
-   backend:     sophia 0.3.97b U
-
-   target:      sophia 6+
-
-   options:     --sophia  --all-auxiliaries 
+/** Lexon-generated Sophia code
+ **
+ **	code:        Escrow
+ **
+ **	file:        lexon/escrow.636.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     sophia 0.3.97f U
+ **
+ **	target:      sophia 6+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -46,7 +47,7 @@
 
    • <<Arbiter>> ⟶  pay_out()
    • <<Arbiter>> ⟶  pay_back()
-*/
+ */
 
 @compiler >=6
 
@@ -54,26 +55,27 @@ include "Option.aes"
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow
- *
- *	
- *	"Buyer" is a person
- *
- *	"Payee" is a person
- *
- *	"Arbiter" is a person
- *
- *	"Amount" is an amount
- *
- *	"Fee" is an amount
- *
- *	
- *	The Buyer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee
-**/
+/*
+ | 	LEX Escrow
+ | 
+ | 	
+ | 	"Buyer" is a person
+ | 
+ | 	"Payee" is a person
+ | 
+ | 	"Arbiter" is a person
+ | 
+ | 	"Amount" is an amount
+ | 
+ | 	"Fee" is an amount
+ | 
+ | 	
+ | 	The Buyer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee
+ */
 
 
 
@@ -117,9 +119,9 @@ main contract Escrow =
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out
-     *  
-     *  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee
+     |  CLAUSE: Pay Out
+     |  
+     |  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee
      */
 
     stateful entrypoint pay_out() =
@@ -131,9 +133,9 @@ main contract Escrow =
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back
-     *  
-     *  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Buyer
+     |  CLAUSE: Pay Back
+     |  
+     |  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Buyer
      */
 
     stateful entrypoint pay_back() =

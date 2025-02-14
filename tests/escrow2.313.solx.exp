@@ -1,22 +1,23 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-/* Lexon-generated Solidity code
+/** Lexon-generated Solidity code
 
-
-   code:        Escrow
-
-   file:        lexon/escrow2.313.lex
-
-   compiler:    lexon 0.3 alpha 97 U
-
-   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
-
-   backend:     solidity 0.3.97e U
-
-   target:      solidity 0.8+
-
-   options:     --solidity  --all-auxiliaries 
+ **
+ **	code:        Escrow
+ **
+ **	file:        lexon/escrow2.313.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     solidity 0.3.97f U
+ **
+ **	target:      solidity 0.8+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -46,23 +47,24 @@ pragma solidity ^0.8.17;
 
    • <<Arbiter>> ⟶  pay_out()
    • <<Arbiter>> ⟶  pay_back()
-*/
+ */
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow.
- *
- *	"Buyer" is	 person.
- *	"Payee" is person.
- *	"Arbiter" is  person.
- *	"Fee" is	aN  amount.
- *
- *	The Buyer pays amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
-**/
+/*
+ | 	LEX Escrow.
+ | 
+ | 	"Buyer" is	 person.
+ | 	"Payee" is person.
+ | 	"Arbiter" is  person.
+ | 	"Fee" is	aN  amount.
+ | 
+ | 	The Buyer pays amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+ */
 
 contract Escrow {
 
@@ -95,7 +97,7 @@ contract Escrow {
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out.
+     |  CLAUSE: Pay Out.
      *  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
      */
 
@@ -109,7 +111,7 @@ contract Escrow {
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back.
+     |  CLAUSE: Pay Back.
      *  The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Buyer.
      */
 

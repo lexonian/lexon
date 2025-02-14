@@ -64,18 +64,18 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.97e U"
+/*JS */ #define backend_version "javascript 0.3.97f U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.97e U"
+/*Sol*/ #define backend_version "solidity 0.3.97f U"
 /*Sol*/ #define target_version "solidity 0.8+"
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.97e U"
-/*Sop*/ #define target_version "sophia 6+"
+/*Sop*/ #define backend_version "sophia 0.3.97f U"
+/*Sop*/ #define target_version "sophia 6+" ///// update, ◊ tie to [5] 
 
 #define CYCLE_2 true
 
@@ -87,6 +87,10 @@
 /*JS */ #define EOL ";"
 /*Sol*/ #define EOL ";"
 /*Sop*/ #define EOL ""
+
+#define LEXCOM0 "/*"
+#define LEXCOM1 " | "
+#define LEXCOM2 " */"
 
 int yylex(void);
 void yyerror(const char *);
@@ -1238,11 +1242,12 @@ static bool is_payment(Predicates *predicates) {
 		_concat_trace = opt_debug_production;
 
 		/* source code head */
-/*JS */		if(!opt_bare) padcat(0, indent, production, "/* Lexon-generated Javascript ");
-/*Sol*/		padcat(0, indent, production, "// SPDX-License-Identifier: UNLICENSED\n");
-/*Sol*/		padcat(0, indent, production, "pragma solidity ^0.8.17;\n\n");
-/*Sol*/		if(!opt_bare) padcat(0, indent, production, "/* Lexon-generated Solidity code\n");
-/*Sop*/		if(!opt_bare) padcat(0, indent, production, "/* Lexon-generated Sophia code");
+/*JS */		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Javascript ");
+/*Sol*/		padcat(0, indent, production, "// SPDX-License-Identifier: UNLICENSED\n"); // make parameter ◊
+/*Sol*/		padcat(0, indent, production, "pragma solidity ^0.8.17;\n\n"); // tie to [5]
+/*Sol*/		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Solidity code\n");
+/*Sop*/		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Sophia code");
+		if(!opt_bare) padcat(1, indent, production, " **");
 
 		assert(!parameters);
 		assert(!arguments);
@@ -1316,20 +1321,20 @@ static bool is_payment(Predicates *predicates) {
 		if(opt_comment) {
 			padcat(2, indent, production, "/**");
 			padcat(1, indent, production, " **");
-			padcat(1, indent, production, " ** Main ", module, " contract system");
+			padcat(1, indent, production, " **\tMain ", module, " contract system");
 			padcat(1, indent, production, " **");
 			padcat(1, indent, production, " **/");
 		}
 
-		if(opt_comment || opt_lexon_comments) {
+		if(opt_comment || opt_lexon_comments)
 			padcat(1, 0, production, "");
-		}
 
+		/* lexon text head as extended code comment */
 		if(opt_lexon_comments) {
 			char *c = mtrac_strdup(get_lexcom("start"));
-			replace(&c, "\n", "\n *\t");
-			replace(&c, "\n *\t\n", "\n *\n");
-			padcat(1, 0, production, "/** ", c, "\n**/");
+			replace(&c, "\n", "\n" LEXCOM1 "\t");
+			replace(&c, "\n" LEXCOM1 "\t\n", "\n" LEXCOM1 "\n");
+			padcat(1, 0, production, LEXCOM0 "\n" LEXCOM1 "\t", c, "\n" LEXCOM2);
 			mtrac_free(c);
 		}
 
@@ -1727,6 +1732,7 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		replace(&instructions, "%00%", strlen(requires) ? "   These node modules have to be installed once:\n%000%\n\n" : "");
 /*JS */		replace(&instructions, "%000%", requires);
 		replace(&instructions, "%contract%", instance_var_name);
+		concat(&instructions, "\n");
 		replace(production, "%0%", opt_instructions ? instructions : "");
 
 /*Sop*/		/* add option casts */
@@ -1771,14 +1777,20 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		xxx_comment(production, Head->Comment, indent);
 /*T*/		xxx_authors(production, Head->Authors, indent);
 		if(!opt_bare) {
-			padcat(2, indent, production, "   file:        ", opt_source);
+			padcat(1, 0, production, " **	file:        ", opt_source);
+			padcat(1, 0, production, " **");
 /*T*/			xxx_lexon(production, Head->Lexon, indent);
-			padcat(2, indent, production, "   compiler:    lexon ", program_version);
-			padcat(2, indent, production, "   grammar:     ", grammar_version);
-			padcat(2, indent, production, "   backend:     ", backend_version);
-			padcat(2, indent, production, "   target:      ", target_version);
-			padcat(2, indent, production, "   options:     ", opt_summarized);
-			padcat(1, indent, production, "%0%\n*/");
+			padcat(1, 0, production, " **	compiler:    lexon ", program_version);
+			padcat(1, 0, production, " **");
+			padcat(1, 0, production, " **	grammar:     ", grammar_version);
+			padcat(1, 0, production, " **");
+			padcat(1, 0, production, " **	backend:     ", backend_version);
+			padcat(1, 0, production, " **");
+			padcat(1, 0, production, " **	target:      ", target_version);
+			padcat(1, 0, production, " **");
+			padcat(1, 0, production, " **	options:     ", opt_summarized);
+			padcat(1, 0, production, " **");
+			padcat(1, 0, production, "%0% */");
 		}
 
 /*T*/		return true;
@@ -1787,7 +1799,10 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_lex(char **production, Lex *Lex, int indent) {
 /*T*/		if(!Lex) return false;
 /*T*/		if(opt_debug) printf("producing Lex %s\n", Lex->Name);
-		if(!opt_bare) padcat(2, indent, production, "   code:        ", Lex->Name);
+		if(!opt_bare) {
+			padcat(1, 0, production, " **	code:        ", Lex->Name);
+			padcat(1, 0, production, " **");
+		}
 		module = Lex->Name;
 /*T*/		return true;
 /*T*/	}
@@ -1796,7 +1811,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Lexon) return false;
 /*T*/		if(opt_debug) printf("producing Lexon %s\n", Lexon->Description);
 		if(!opt_bare) {
-			padcat(2, indent, production, "   code tagged: ", Lexon->Description);
+			padcat(1, 0, production, " **	code tagged: ", Lexon->Description);
+			padcat(1, 0, production, " **");
 		}
 /*T*/		return true;
 /*T*/	}
@@ -1805,8 +1821,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Authors) return false;
 /*T*/		if(opt_debug) printf("producing Authors %s\n", Authors->Description);
 		if(!opt_bare) {
-			padcat(2, indent, production, "   authors:     ", Authors->Description);
-			padcat(0, 0, production, "");
+			padcat(1, 0, production, " **	authors:     ", Authors->Description);
+			padcat(1, 0, production, " **");
 		}
 /*T*/		return true;
 /*T*/	}
@@ -1815,9 +1831,9 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Comment) return false;
 /*T*/		if(opt_debug) printf("producing comment %s\n", Comment->Description);
 		if(!opt_bare) {
-			padcat(2, indent, production, "   comment:     ");
+			padcat(1, 0, production, " **	comment:     ");
 /*T*/			xxx_description(production, Comment->Description, indent+1);
-			padcat(0, 0, production, "");
+			padcat(1, 0, production, " **");
 		}
 /*T*/		return true;
 /*T*/	}
@@ -1826,7 +1842,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Preamble) return false;
 /*T*/		if(opt_debug) printf("producing Preamble %s\n", Preamble->Description);
 		if(!opt_bare) {
-			padcat(2, indent, production, "   preamble:    ", Preamble->Description);
+			padcat(1, 0, production, " **	preamble:    ", Preamble->Description);
+			padcat(1, 0, production, " **");
 		}
 /*T*/		return true;
 /*T*/	}
@@ -1887,17 +1904,25 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/		padcat(1, indent, production, "this.", count, " = 0;");
 
 		if(opt_comment) padcat(2, indent, production, "/**");
-		if(opt_comment) padcat(1, indent, production, " ** ", class, " covenant class");
+		if(opt_comment) padcat(1, indent, production, " **");
+		if(opt_comment) padcat(1, indent, production, " **\t", class, " covenant class");
+		if(opt_comment) padcat(1, indent, production, " **");
 		if(opt_comment) padcat(1, indent, production, " **/");
 
-		/* ///// clean up
+		if(opt_comment || opt_lexon_comments)
+			padcat(1, 0, production, "");
+
+		/* lexon text of covenant definitions and terms as extended code comment */
 		if(opt_lexon_comments) {
-			char *c = mtrac_strdup(get_lexcom("start"));
-			replace(&c, "\n", "\n *\t");
-			padcat(1, 0, production, "/ ** ", c, "\n** /");
+			char *c = mtrac_strdup(get_lexcom(instance));
+/*JS */			replace(&c, "\n", "\n\t" LEXCOM1 "\t");
+/*JS */			replace(&c, "\n\t" LEXCOM1 "\t\n", "\n\t" LEXCOM1 "\n");
+/*JS */			padcat(1, 2, production, LEXCOM0 "\n\t" LEXCOM1 "\t", c, "\n\t" LEXCOM2);
+/*S+S*/			replace(&c, "\n", "\n" LEXCOM1 "\t");
+/*S+S*/			replace(&c, "\n" LEXCOM1 "\t\n", "\n" LEXCOM1 "\n");
+/*S+S*/			padcat(1, 0, production, LEXCOM0 "\n" LEXCOM1 "\t", c, "\n" LEXCOM2);
 			mtrac_free(c);
 		}
-		*/
 
 /*JS */		if(opt_comment) padcat(2, indent, production, "/* this closure exports the covenant's constructor to the scope of the main */");
 /*JS */		padcat(C, indent  , production, "this.", class, " = (%2%) => {%15%"); // %15%: access permissions
@@ -2317,19 +2342,20 @@ static bool is_payment(Predicates *predicates) {
 		paratag = strlen(*production);
 		if(opt_comment) padcat(3, indent, production, "/* ", Clause->Name, " clause */");
 
+		/* lexon clause text as extended code comment */
 	    	if(opt_lexon_comments) {
 			char *clause = snakedup(Clause->Name);
 			char *c = mtrac_strdup(get_lexcom(clause));
 			mtrac_free(clause);
 			assert(c);
 			if(main_constructor_body) {
-				replace(&c, "\n", "\n     *  ");
-				padcat(2, 0, production, "    /*\n     *  ", c, "\n     */");
+				replace(&c, "\n", "\n     *  "); // ◊◊◊
+				padcat(2, 0, production, "    " LEXCOM0 "\n    " LEXCOM1 " ", c, "\n    " LEXCOM2);
 			} else {
-/*JS */				replace(&c, "\n", "\n             *  ");
-/*JS */				padcat(2, 2, production, "    /*\n             *  ", c, "\n             */");
-/*S+S*/				replace(&c, "\n", "\n     *  ");
-/*S+S*/				padcat(2, 0, production, "    /*\n     *  ", c, "\n     */");
+/*JS */				replace(&c, "\n", "\n            " LEXCOM1 " ");
+/*JS */				padcat(2, 2, production, "    " LEXCOM0 "\n            " LEXCOM1 " ", c, "\n            " LEXCOM2);
+/*S+S*/				replace(&c, "\n", "\n    " LEXCOM1 " ");
+/*S+S*/				padcat(2, 0, production, "    " LEXCOM0 "\n    " LEXCOM1 " ", c, "\n    " LEXCOM2);
 			}
 			mtrac_free(c);
 		}

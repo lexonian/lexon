@@ -1,18 +1,19 @@
-/* Lexon-generated Javascript 
-
-   code:        Escrow
-
-   file:        lexon/escrow2.668.lex
-
-   compiler:    lexon 0.3 alpha 97 U
-
-   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
-
-   backend:     javascript 0.3.97e U
-
-   target:      node 14.1+
-
-   options:     --javascript  --all-auxiliaries 
+/** Lexon-generated Javascript 
+ **
+ **	code:        Escrow
+ **
+ **	file:        lexon/escrow2.668.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     javascript 0.3.97f U
+ **
+ **	target:      node 14.1+
+ **
+ **	options:     --javascript  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -94,7 +95,7 @@
    created using this utility function:
 
    > escrow.create_key(name, passphrase)
-*/
+ */
 
 var fs = require('fs');
 var crypto = require('crypto');
@@ -107,24 +108,25 @@ var last_passphrase;
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow
- *
- *	
- *	"Buyer" is	 a person
- *
- *	"Payee" is A person
- *
- *	"Arbiter" is  a person
- *
- *	"Service Fee" is	aN  amount
- *
- *	
- *	The Buyer pays an amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Service Fee
-**/
+/*
+ | 	LEX Escrow
+ | 
+ | 	
+ | 	"Buyer" is	 a person
+ | 
+ | 	"Payee" is A person
+ | 
+ | 	"Arbiter" is  a person
+ | 
+ | 	"Service Fee" is	aN  amount
+ | 
+ | 	
+ | 	The Buyer pays an amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Service Fee
+ */
 
 module.exports = class Escrow {
 
@@ -165,7 +167,7 @@ module.exports = class Escrow {
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out
+     |  CLAUSE: Pay Out
      *  
      *  The Arbiter may pay from escrow the Service Fee to themselves, and afterwards pay the remainder of the escrow to the Payee
      */
@@ -181,7 +183,7 @@ module.exports = class Escrow {
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back
+     |  CLAUSE: Pay Back
      *  
      *  The Arbiter may pay from escrow the Service Fee to themselves, and afterwards return the remainder of the escrow to the Buyer
      */

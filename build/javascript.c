@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.97e U"
+#define backend_version "javascript 0.3.97f U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -29,6 +29,10 @@
 #include <assert.h>
 
 #define EOL ";"
+
+#define LEXCOM0 "/*"
+#define LEXCOM1 " | "
+#define LEXCOM2 " */"
 
 int yylex(void);
 void yyerror(const char *);
@@ -1141,7 +1145,8 @@ bool js_document(char **production, Document *Document, int indent) {
 
 	/* source code head */
 	if (!opt_bare) padcat(0, indent, production,
-			      "/* Lexon-generated Javascript ");
+			      "/** Lexon-generated Javascript ");
+	if (!opt_bare) padcat(1, indent, production, " **");
 
 	assert(!parameters);
 	assert(!arguments);
@@ -1237,22 +1242,23 @@ bool js_document(char **production, Document *Document, int indent) {
 	if (opt_comment) {
 		padcat(2, indent, production, "/**");
 		padcat(1, indent, production, " **");
-		padcat(1, indent, production, " ** Main ", module,
+		padcat(1, indent, production, " **\tMain ", module,
 		       " contract system");
 		padcat(1, indent, production, " **");
 		padcat(1, indent, production, " **/");
 	}
 
-	if (opt_comment || opt_lexon_comments) {
+	if (opt_comment || opt_lexon_comments)
 		padcat(1, 0, production, "");
-	}
 
+	/* lexon text head as extended code comment */
 	if (opt_lexon_comments) {
 		char *c = mtrac_strdup(get_lexcom("start"));
 
-		replace(&c, "\n", "\n *\t");
-		replace(&c, "\n *\t\n", "\n *\n");
-		padcat(1, 0, production, "/** ", c, "\n**/");
+		replace(&c, "\n", "\n" LEXCOM1 "\t");
+		replace(&c, "\n" LEXCOM1 "\t\n", "\n" LEXCOM1 "\n");
+		padcat(1, 0, production, LEXCOM0 "\n" LEXCOM1 "\t", c,
+		       "\n" LEXCOM2);
 		mtrac_free(c);
 	}
 
@@ -1650,6 +1656,7 @@ bool js_document(char **production, Document *Document, int indent) {
 		"");
 	replace(&instructions, "%000%", requires);
 	replace(&instructions, "%contract%", instance_var_name);
+	concat(&instructions, "\n");
 	replace(production, "%0%", opt_instructions ? instructions : "");
 	/* memory clean up */
 	delete_bind_tree(binds);
@@ -1686,19 +1693,23 @@ bool js_head(char **production, Head *Head, int indent) {
 	js_comment(production, Head->Comment, indent);
 	js_authors(production, Head->Authors, indent);
 	if (!opt_bare) {
-		padcat(2, indent, production, "   file:        ", opt_source);
+		padcat(1, 0, production, " **	file:        ", opt_source);
+		padcat(1, 0, production, " **");
 		js_lexon(production, Head->Lexon, indent);
-		padcat(2, indent, production, "   compiler:    lexon ",
+		padcat(1, 0, production, " **	compiler:    lexon ",
 		       program_version);
-		padcat(2, indent, production, "   grammar:     ",
+		padcat(1, 0, production, " **");
+		padcat(1, 0, production, " **	grammar:     ",
 		       grammar_version);
-		padcat(2, indent, production, "   backend:     ",
+		padcat(1, 0, production, " **");
+		padcat(1, 0, production, " **	backend:     ",
 		       backend_version);
-		padcat(2, indent, production, "   target:      ",
-		       target_version);
-		padcat(2, indent, production, "   options:     ",
-		       opt_summarized);
-		padcat(1, indent, production, "%0%\n*/");
+		padcat(1, 0, production, " **");
+		padcat(1, 0, production, " **	target:      ", target_version);
+		padcat(1, 0, production, " **");
+		padcat(1, 0, production, " **	options:     ", opt_summarized);
+		padcat(1, 0, production, " **");
+		padcat(1, 0, production, "%0% */");
 	}
 
 	return true;
@@ -1707,8 +1718,10 @@ bool js_head(char **production, Head *Head, int indent) {
 bool js_lex(char **production, Lex *Lex, int indent) {
 	if (!Lex) return false;
 	if (opt_debug) printf("producing Lex %s\n", Lex->Name);
-	if (!opt_bare) padcat(2, indent, production, "   code:        ",
-			      Lex->Name);
+	if (!opt_bare) {
+		padcat(1, 0, production, " **	code:        ", Lex->Name);
+		padcat(1, 0, production, " **");
+	}
 	module = Lex->Name;
 	return true;
 }
@@ -1717,8 +1730,9 @@ bool js_lexon(char **production, Lexon *Lexon, int indent) {
 	if (!Lexon) return false;
 	if (opt_debug) printf("producing Lexon %s\n", Lexon->Description);
 	if (!opt_bare) {
-		padcat(2, indent, production, "   code tagged: ",
+		padcat(1, 0, production, " **	code tagged: ",
 		       Lexon->Description);
+		padcat(1, 0, production, " **");
 	}
 	return true;
 }
@@ -1727,9 +1741,9 @@ bool js_authors(char **production, Authors *Authors, int indent) {
 	if (!Authors) return false;
 	if (opt_debug) printf("producing Authors %s\n", Authors->Description);
 	if (!opt_bare) {
-		padcat(2, indent, production, "   authors:     ",
+		padcat(1, 0, production, " **	authors:     ",
 		       Authors->Description);
-		padcat(0, 0, production, "");
+		padcat(1, 0, production, " **");
 	}
 	return true;
 }
@@ -1738,9 +1752,9 @@ bool js_comment(char **production, Comment *Comment, int indent) {
 	if (!Comment) return false;
 	if (opt_debug) printf("producing comment %s\n", Comment->Description);
 	if (!opt_bare) {
-		padcat(2, indent, production, "   comment:     ");
+		padcat(1, 0, production, " **	comment:     ");
 		js_description(production, Comment->Description, indent + 1);
-		padcat(0, 0, production, "");
+		padcat(1, 0, production, " **");
 	}
 	return true;
 }
@@ -1749,8 +1763,9 @@ bool js_preamble(char **production, Preamble *Preamble, int indent) {
 	if (!Preamble) return false;
 	if (opt_debug) printf("producing Preamble %s\n", Preamble->Description);
 	if (!opt_bare) {
-		padcat(2, indent, production, "   preamble:    ",
+		padcat(1, 0, production, " **	preamble:    ",
 		       Preamble->Description);
+		padcat(1, 0, production, " **");
 	}
 	return true;
 }
@@ -1809,18 +1824,26 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 	padcat(1, indent, production, "this.", count, " = 0;");
 
 	if (opt_comment) padcat(2, indent, production, "/**");
-	if (opt_comment) padcat(1, indent, production, " ** ", class,
+	if (opt_comment) padcat(1, indent, production, " **");
+	if (opt_comment) padcat(1, indent, production, " **\t", class,
 				" covenant class");
+	if (opt_comment) padcat(1, indent, production, " **");
 	if (opt_comment) padcat(1, indent, production, " **/");
 
-	/* ///// clean up
-	 * if(opt_lexon_comments) {
-	 * char *c = mtrac_strdup(get_lexcom("start"));
-	 * replace(&c, "\n", "\n *\t");
-	 * padcat(1, 0, production, "/ ** ", c, "\n** /");
-	 * mtrac_free(c);
-	 * }
-	 */
+	if (opt_comment || opt_lexon_comments)
+		padcat(1, 0, production, "");
+
+	/* lexon text of covenant definitions and terms as extended code comment */
+	if (opt_lexon_comments) {
+		char *c = mtrac_strdup(get_lexcom(instance));
+
+		replace(&c, "\n", "\n\t" LEXCOM1 "\t");
+		replace(&c, "\n\t" LEXCOM1 "\t\n", "\n\t" LEXCOM1 "\n");
+		padcat(1, 2, production, LEXCOM0 "\n\t" LEXCOM1 "\t", c,
+		       "\n\t" LEXCOM2);
+
+		mtrac_free(c);
+	}
 
 	if (opt_comment) padcat(2, indent, production,
 				"/* this closure exports the covenant's constructor to the scope of the main */");
@@ -2205,6 +2228,7 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 	if (opt_comment) padcat(3, indent, production, "/* ", Clause->Name,
 				" clause */");
 
+	/* lexon clause text as extended code comment */
 	if (opt_lexon_comments) {
 		char *clause = snakedup(Clause->Name);
 		char *c = mtrac_strdup(get_lexcom(clause));
@@ -2212,13 +2236,15 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 		mtrac_free(clause);
 		assert(c);
 		if (main_constructor_body) {
-			replace(&c, "\n", "\n     *  ");
-			padcat(2, 0, production, "    /*\n     *  ", c,
-			       "\n     */");
+			replace(&c, "\n", "\n     *  ");	// ◊◊◊
+			padcat(2, 0, production,
+			       "    " LEXCOM0 "\n    " LEXCOM1 " ", c,
+			       "\n    " LEXCOM2);
 		} else {
-			replace(&c, "\n", "\n             *  ");
-			padcat(2, 2, production, "    /*\n             *  ", c,
-			       "\n             */");
+			replace(&c, "\n", "\n            " LEXCOM1 " ");
+			padcat(2, 2, production,
+			       "    " LEXCOM0 "\n            " LEXCOM1 " ", c,
+			       "\n            " LEXCOM2);
 		}
 		mtrac_free(c);
 	}

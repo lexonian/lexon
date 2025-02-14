@@ -1,18 +1,19 @@
-/* Lexon-generated Sophia code
-
-   code:        Escrow
-
-   file:        lexon/escrow3.798.lex
-
-   compiler:    lexon 0.3 alpha 97 U
-
-   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
-
-   backend:     sophia 0.3.97b U
-
-   target:      sophia 6+
-
-   options:     --sophia  --all-auxiliaries 
+/** Lexon-generated Sophia code
+ **
+ **	code:        Escrow
+ **
+ **	file:        lexon/escrow3.798.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     sophia 0.3.97f U
+ **
+ **	target:      sophia 6+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -46,7 +47,7 @@
 
    • <<Arbiter>> ⟶  pay_out()
    • <<Arbiter>> ⟶  pay_back()
-*/
+ */
 
 @compiler >=6
 
@@ -54,24 +55,25 @@ include "Option.aes"
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow
- *
- *	
- *	"Buyer" is person
- *
- *	"Seller" is person
- *
- *	"Arbiter" is person
- *
- *	"Amount" is amount
- *
- *	
- *	Buyer pays Amount into escrow, appoints Seller, appoints Arbiter
-**/
+/*
+ | 	LEX Escrow
+ | 
+ | 	
+ | 	"Buyer" is person
+ | 
+ | 	"Seller" is person
+ | 
+ | 	"Arbiter" is person
+ | 
+ | 	"Amount" is amount
+ | 
+ | 	
+ | 	Buyer pays Amount into escrow, appoints Seller, appoints Arbiter
+ */
 
 
 
@@ -113,9 +115,9 @@ main contract Escrow =
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out
-     *  
-     *  Arbiter may pay escrow to Seller
+     |  CLAUSE: Pay Out
+     |  
+     |  Arbiter may pay escrow to Seller
      */
 
     stateful entrypoint pay_out() =
@@ -126,9 +128,9 @@ main contract Escrow =
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back
-     *  
-     *  Arbiter may pay escrow to Buyer
+     |  CLAUSE: Pay Back
+     |  
+     |  Arbiter may pay escrow to Buyer
      */
 
     stateful entrypoint pay_back() =

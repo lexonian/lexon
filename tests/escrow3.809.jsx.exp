@@ -1,18 +1,19 @@
-/* Lexon-generated Javascript 
-
-   code:        Escrow
-
-   file:        lexon/escrow3.809.lex
-
-   compiler:    lexon 0.3 alpha 97 U
-
-   grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
-
-   backend:     javascript 0.3.97e U
-
-   target:      node 14.1+
-
-   options:     --javascript  --all-auxiliaries 
+/** Lexon-generated Javascript 
+ **
+ **	code:        Escrow
+ **
+ **	file:        lexon/escrow3.809.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     javascript 0.3.97f U
+ **
+ **	target:      node 14.1+
+ **
+ **	options:     --javascript  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -94,7 +95,7 @@
    created using this utility function:
 
    > escrow.create_key(name, passphrase)
-*/
+ */
 
 var fs = require('fs');
 var crypto = require('crypto');
@@ -107,24 +108,25 @@ var last_passphrase;
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow
- *
- *	
- *	"Buyer" is a person
- *
- *	"Seller" is a person
- *
- *	"Agent" is a person
- *
- *	"Amount" is an amount
- *
- *	
- *	The Buyer pays an Amount into escrow, appoints the Seller, appoints the Agent
-**/
+/*
+ | 	LEX Escrow
+ | 
+ | 	
+ | 	"Buyer" is a person
+ | 
+ | 	"Seller" is a person
+ | 
+ | 	"Agent" is a person
+ | 
+ | 	"Amount" is an amount
+ | 
+ | 	
+ | 	The Buyer pays an Amount into escrow, appoints the Seller, appoints the Agent
+ */
 
 module.exports = class Escrow {
 
@@ -164,7 +166,7 @@ module.exports = class Escrow {
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out
+     |  CLAUSE: Pay Out
      *  
      *  The Agent may pay the escrow to the Seller
      */
@@ -179,7 +181,7 @@ module.exports = class Escrow {
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back
+     |  CLAUSE: Pay Back
      *  
      *  The Agent may pay the escrow to the Buyer
      */

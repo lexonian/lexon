@@ -277,6 +277,7 @@ bool opt_debug_production = false;
 bool _concat_trace = false;
 bool opt_debug_time = false;
 bool opt_help = false;
+bool opt_debug_allow_double_names = false;
 bool do_main_pass = true;
 
 //# bool opt_run_spheres = false; // #spheres
@@ -632,6 +633,10 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 ^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
+^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
+									 process(" \t", "TERMS PER", " \t", yytext, ": \t"); // make TERMS optional for process ◊
+									 concat(&buf, yytext); 
+									 concat(&buf, ":"); } // why is the : lost in the scan? (and needs re-adding here)  ◊
 ^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
 									 concat(&buf, yytext); }
@@ -1514,7 +1519,7 @@ void parsargs(int argc, char **argv) {
 	    opt_debug = true;
 	    break;
 	case 'D':
-	    printf ("specifc modules debug output: %s\n", optarg?optarg:"all on");
+	    if(opt_verbose) printf ("specific modules debug output: %s\n", optarg?optarg:"all on");
      	    opt_debug_regex = !optarg || strstr(optarg, "regex");
 	    opt_debug_scanner = !optarg || strstr(optarg, "scanner");
 	    opt_debug_mainscan = !optarg || strstr(optarg, "mainscan");
@@ -1527,9 +1532,10 @@ void parsargs(int argc, char **argv) {
 	    opt_debug_production = !optarg || strstr(optarg, "production");
 	    opt_debug_time = !optarg || strstr(optarg, "time");
 	    opt_debug_dev = !optarg || strstr(optarg, "dev");
+	    opt_debug_allow_double_names = !optarg || strstr(optarg, "allow_double_names");
 	    bool fail = optarg && !opt_debug_regex && !opt_debug_scanner && !opt_debug_mainscan && !opt_debug_actions && !opt_debug_tokens && !opt_debug_parser
-		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev;
-	    if(opt_verbose || opt_debug || fail || (optarg && !strcmp(optarg, "h"))) {
+		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev && !opt_debug_allow_double_names;
+	    if(opt_verbose || fail || (optarg && !strcmp(optarg, "h"))) {
 		    printf ("module debug regex     : %s   scanned regex pattern results of the scanner (Flex) tokenizing input\n",
 		    	opt_debug_regex     ?"yes":"no ");
 		    printf ("module debug scanner   : %s   scanner (Flex) live process trace during input scan (LGF, LXF, LEX)\n",
@@ -1554,6 +1560,8 @@ void parsargs(int argc, char **argv) {
 		    	opt_debug_time      ?"yes":"no ");
 		    printf ("module debug dev       : %s   varying hot spots (use opt_debug_dev during development)\n",
 		    	opt_debug_dev       ?"yes":"no ");
+		    printf ("allow double names     : %s   for grammar test parsing of generated code\n",
+		    	opt_debug_allow_double_names?"yes":"no ");
 	    }
        	    if(fail) {
 		if(strcmp(optarg, "h")) fprintf(stderr, "no module selected by string '%s'. ", optarg);
@@ -2798,21 +2806,35 @@ void new_lexcom(const char *name, const char *value) {
 
 	// cut leading 'clause: '
 	assert(name);
-	if(!strncmp(LOW(name), "clause", 6)) name += 6;
-	while(*name && (*name == ' ' || *name == ':')) name++;
+	while(*name == ' ') name++;
+	if(!strncmp(LOW(name), "clause", 6)) {
+		name += 6;
+		while(*name == ' ') name++;
+		while(*name == ':') name++;
+		while(*name == ' ') name++;
+	} else if(!strncmp(LOW(name), "terms", 5)) {
+		name += 5;
+		while(*name == ' ') name++;
+		if(!strncmp(LOW(name), "per", 3)) name += 3;
+		while(*name == ' ') name++;
+	}
+	if(strchr(name, ':'))
+		*strchr(name, ':') = 0;
 
-	// prevent double use of clause name
 	map *m = lexcoms;
-	while(m) {
-		if(!strcmp(LOW(snake_spaced(name)), m->key)) {
-			// except, allow multiple _pre_ entries
-			//// _pre_ entries, if any, are never used.
-			if(strcmp(name, "_pre_")) {
-				fprintf(stderr, "clause name used twice: %s", name);
-				exit(1);
+	// prevent double use of clause or covenant name (◊ sort elsewhere)
+	if(!opt_debug_allow_double_names) {
+		while(m) {
+			if(!strcmp(LOW(snake_spaced(name)), m->key)) {
+				// except, allow multiple _pre_ entries
+				//// _pre_ entries, if any, are never used.
+				if(strcmp(name, "_pre_")) {
+					fprintf(stderr, "clause or covenant name used twice: %s", name);
+					exit(1);
+				}
 			}
+			m = m->next;
 		}
-		m = m->next;
 	}
 
 	// trim previous (sic) entry's value
@@ -4785,6 +4807,7 @@ const char *own =
 	"bool _concat_trace = false;\n"
 	"bool opt_debug_time = false;\n"
 	"bool opt_help = false;\n"
+	"bool opt_debug_allow_double_names = false;\n"
 	"bool do_main_pass = true;\n"
 	"\n"
 	"//# bool opt_run_spheres = false; // #spheres\n"
@@ -5140,6 +5163,10 @@ const char *own =
 	"								     freeline(); lineno(); concat(&buf, trim(yytext), \": \"); BEGIN(NAMEQUOTE); }\n"
 	"^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;\n"
 	"								     freeline(); lineno(); concat(&buf, trim(yytext), \": \"); BEGIN(NAMEQUOTE); }\n"
+	"^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);\n"
+	"									 process(\" \\t\", \"TERMS PER\", \" \\t\", yytext, \": \\t\"); // make TERMS optional for process ◊\n"
+	"									 concat(&buf, yytext); \n"
+	"									 concat(&buf, \":\"); } // why is the : lost in the scan? (and needs re-adding here)  ◊\n"
 	"^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);\n"
 	"									 concat(&funclist, \":\", yytext, \":\"); process(\" \\t\", \"CLAUSE\", \": \\t\", yytext, \". \\t\");\n"
 	"									 concat(&buf, yytext); }\n"
@@ -5894,7 +5921,7 @@ const char *own =
 	"	    opt_debug = true;\n"
 	"	    break;\n"
 	"	case 'D':\n"
-	"	    printf (\"specifc modules debug output: %s\\n\", optarg?optarg:\"all on\");\n"
+	"	    if(opt_verbose) printf (\"specific modules debug output: %s\\n\", optarg?optarg:\"all on\");\n"
 	"     	    opt_debug_regex = !optarg || strstr(optarg, \"regex\");\n"
 	"	    opt_debug_scanner = !optarg || strstr(optarg, \"scanner\");\n"
 	"	    opt_debug_mainscan = !optarg || strstr(optarg, \"mainscan\");\n"
@@ -5907,9 +5934,10 @@ const char *own =
 	"	    opt_debug_production = !optarg || strstr(optarg, \"production\");\n"
 	"	    opt_debug_time = !optarg || strstr(optarg, \"time\");\n"
 	"	    opt_debug_dev = !optarg || strstr(optarg, \"dev\");\n"
+	"	    opt_debug_allow_double_names = !optarg || strstr(optarg, \"allow_double_names\");\n"
 	"	    bool fail = optarg && !opt_debug_regex && !opt_debug_scanner && !opt_debug_mainscan && !opt_debug_actions && !opt_debug_tokens && !opt_debug_parser\n"
-	"		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev;\n"
-	"	    if(opt_verbose || opt_debug || fail || (optarg && !strcmp(optarg, \"h\"))) {\n"
+	"		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev && !opt_debug_allow_double_names;\n"
+	"	    if(opt_verbose || fail || (optarg && !strcmp(optarg, \"h\"))) {\n"
 	"		    printf (\"module debug regex     : %s   scanned regex pattern results of the scanner (Flex) tokenizing input\\n\",\n"
 	"		    	opt_debug_regex     ?\"yes\":\"no \");\n"
 	"		    printf (\"module debug scanner   : %s   scanner (Flex) live process trace during input scan (LGF, LXF, LEX)\\n\",\n"
@@ -5934,6 +5962,8 @@ const char *own =
 	"		    	opt_debug_time      ?\"yes\":\"no \");\n"
 	"		    printf (\"module debug dev       : %s   varying hot spots (use opt_debug_dev during development)\\n\",\n"
 	"		    	opt_debug_dev       ?\"yes\":\"no \");\n"
+	"		    printf (\"allow double names     : %s   for grammar test parsing of generated code\\n\",\n"
+	"		    	opt_debug_allow_double_names?\"yes\":\"no \");\n"
 	"	    }\n"
 	"       	    if(fail) {\n"
 	"		if(strcmp(optarg, \"h\")) fprintf(stderr, \"no module selected by string '%s'. \", optarg);\n"
@@ -7178,21 +7208,35 @@ const char *own =
 	"\n"
 	"	// cut leading 'clause: '\n"
 	"	assert(name);\n"
-	"	if(!strncmp(LOW(name), \"clause\", 6)) name += 6;\n"
-	"	while(*name && (*name == ' ' || *name == ':')) name++;\n"
+	"	while(*name == ' ') name++;\n"
+	"	if(!strncmp(LOW(name), \"clause\", 6)) {\n"
+	"		name += 6;\n"
+	"		while(*name == ' ') name++;\n"
+	"		while(*name == ':') name++;\n"
+	"		while(*name == ' ') name++;\n"
+	"	} else if(!strncmp(LOW(name), \"terms\", 5)) {\n"
+	"		name += 5;\n"
+	"		while(*name == ' ') name++;\n"
+	"		if(!strncmp(LOW(name), \"per\", 3)) name += 3;\n"
+	"		while(*name == ' ') name++;\n"
+	"	}\n"
+	"	if(strchr(name, ':'))\n"
+	"		*strchr(name, ':') = 0;\n"
 	"\n"
-	"	// prevent double use of clause name\n"
 	"	map *m = lexcoms;\n"
-	"	while(m) {\n"
-	"		if(!strcmp(LOW(snake_spaced(name)), m->key)) {\n"
-	"			// except, allow multiple _pre_ entries\n"
-	"			//// _pre_ entries, if any, are never used.\n"
-	"			if(strcmp(name, \"_pre_\")) {\n"
-	"				fprintf(stderr, \"clause name used twice: %s\", name);\n"
-	"				exit(1);\n"
+	"	// prevent double use of clause or covenant name (◊ sort elsewhere)\n"
+	"	if(!opt_debug_allow_double_names) {\n"
+	"		while(m) {\n"
+	"			if(!strcmp(LOW(snake_spaced(name)), m->key)) {\n"
+	"				// except, allow multiple _pre_ entries\n"
+	"				//// _pre_ entries, if any, are never used.\n"
+	"				if(strcmp(name, \"_pre_\")) {\n"
+	"					fprintf(stderr, \"clause or covenant name used twice: %s\", name);\n"
+	"					exit(1);\n"
+	"				}\n"
 	"			}\n"
+	"			m = m->next;\n"
 	"		}\n"
-	"		m = m->next;\n"
 	"	}\n"
 	"\n"
 	"	// trim previous (sic) entry's value\n"
@@ -9282,7 +9326,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 96 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
+	"	0.3 alpha 97 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
