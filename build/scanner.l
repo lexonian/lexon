@@ -500,10 +500,12 @@ char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
 void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
-/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
+/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by
+   the yacc-generated header for the 2nd (full lexon compiler). */
 
 #ifndef YY_YY_LEXC_TAB_H_INCLUDED
 # define YY_YY_LEXC_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -512,27 +514,26 @@ void mtrac_free_gross();
 extern int yydebug;
 #endif
 
-/* Token kinds. ////// sort enums  */
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
   enum yytokentype
   {
     YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
+    YYEOF = 0,
+    YYerror = 256,
+    YYUNDEF = 257,
     Colon = 258,
-    Period = 259,
-    Comma =10002,
-    Quote= 10001,
-    Semicolon = 10000,
-    Dash = 10001,
-    Percent = 10002,
-    NAME = 259,
-    Separator = 260,
-    DESCRIPTION = 261,
-    SCALAR = 10003,
-    HEX = 10004
+    Comma = 259,
+    Dash = 260,
+    Percent = 261,
+    Period = 262,
+    Quote = 263,
+    Semicolon = 264,
+    Separator = 265,
+    DESCRIPTION = 266,
+    HEX = 267,
+    NAME = 268,
+    SCALAR = 269
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -5030,10 +5031,12 @@ const char *own =
 	"void *mtrac_gross(void *rec);\n"
 	"void mtrac_free_gross();\n"
 	"\n"
-	"/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */\n"
+	"/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by\n"
+	"   the yacc-generated header for the 2nd (full lexon compiler). */\n"
 	"\n"
 	"#ifndef YY_YY_LEXC_TAB_H_INCLUDED\n"
 	"# define YY_YY_LEXC_TAB_H_INCLUDED\n"
+	"\n"
 	"/* Debug traces.  */\n"
 	"#ifndef YYDEBUG\n"
 	"# define YYDEBUG 0\n"
@@ -5042,27 +5045,26 @@ const char *own =
 	"extern int yydebug;\n"
 	"#endif\n"
 	"\n"
-	"/* Token kinds. ////// sort enums  */\n"
 	"#ifndef YYTOKENTYPE\n"
 	"#define YYTOKENTYPE\n"
 	"  enum yytokentype\n"
 	"  {\n"
 	"    YYEMPTY = -2,\n"
-	"    YYEOF = 0,                     /* \"end of file\"  */\n"
-	"    YYerror = 256,                 /* error  */\n"
-	"    YYUNDEF = 257,                 /* \"invalid token\"  */\n"
+	"    YYEOF = 0,\n"
+	"    YYerror = 256,\n"
+	"    YYUNDEF = 257,\n"
 	"    Colon = 258,\n"
-	"    Period = 259,\n"
-	"    Comma =10002,\n"
-	"    Quote= 10001,\n"
-	"    Semicolon = 10000,\n"
-	"    Dash = 10001,\n"
-	"    Percent = 10002,\n"
-	"    NAME = 259,\n"
-	"    Separator = 260,\n"
-	"    DESCRIPTION = 261,\n"
-	"    SCALAR = 10003,\n"
-	"    HEX = 10004\n"
+	"    Comma = 259,\n"
+	"    Dash = 260,\n"
+	"    Percent = 261,\n"
+	"    Period = 262,\n"
+	"    Quote = 263,\n"
+	"    Semicolon = 264,\n"
+	"    Separator = 265,\n"
+	"    DESCRIPTION = 266,\n"
+	"    HEX = 267,\n"
+	"    NAME = 268,\n"
+	"    SCALAR = 269\n"
 	"  };\n"
 	"  typedef enum yytokentype yytoken_kind_t;\n"
 	"#endif\n"
@@ -9326,7 +9328,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 97 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
+	"	0.3 alpha 98 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
@@ -9802,10 +9804,11 @@ const char *manual =
 	"\n"
 	"	deeptest        memory handling, includes, language parser, compiler\n"
 	"	memtest         valgrind & internal memory leak tests\n"
-	"	update          interactive, selective update of deeptest result references\n"
+	"	update          interactive update of failing deeptests's result references\n"
 	"	recheck         faster update, skipping successful tests of earlier deeptest\n"
-	"	expectations    full non-interactive update of deeptest result references\n"
-	"	new             creation only of missing deeptest result references\n"
+	"	autoupdate      automatic update of failing deeptests's result references\n"
+	"	expectations    full non-interactive update of all deeptest result references\n"
+	"	new             creation of missing deeptest result references\n"
 	"\n"
 	"**1st level of tests: build environment**\n"
 	"\n"

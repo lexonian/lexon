@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.97g U"
+#define backend_version "solidity 0.3.97 U"
 #define target_version "solidity 0.8.17+"	// sync w/[5]
 #define CYCLE_2 true
 

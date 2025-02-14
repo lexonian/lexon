@@ -84,10 +84,11 @@ help:
 	# ▫️  2nd level of tests: components
 	# deeptest      memory handling, includes, language parser, compiler
 	# memtest       valgrind & internal memory leak tests
-	# update        interactive, selective update of deeptest result references
+	# update        interactive update of failing deeptests's result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
-	# expectations  full non-interactive update of deeptest result references
-	# new           creation only of missing deeptest result references
+	# autoupdate    automatic update of failing deeptests's result references
+	# expectations  full non-interactive update of all deeptest result references
+	# new           creation of missing deeptest result references
 	#
 	# ▫️  1st level of tests: build environment
 	# envtest       test of build environment, gcc, flex, mtrac memory checks

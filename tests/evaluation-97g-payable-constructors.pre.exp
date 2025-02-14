@@ -1,0 +1,40 @@
+
+precompilation:
+---------------
+
+evaluation 97g payable constructors   1:   LEX: «Evaluation License System».
+evaluation 97g payable constructors   2:   LEXON: ‹0.2.1›.
+evaluation 97g payable constructors   3:   AUTHORS: ‹FLORIAN IDELBERGER, HENNING DIEDRICH›.
+evaluation 97g payable constructors   4:   PREAMBLE: ‹This is a licensing contract for a software evaluation.›.
+
+evaluation 97g payable constructors   6:   TERMS: 
+
+evaluation 97g payable constructors   8:   "«Licensor»" is a person.
+evaluation 97g payable constructors   9:   "«Arbiter»" is a person.
+evaluation 97g payable constructors  10:   "«Licensing Fee»" is an amount.
+evaluation 97g payable constructors  11:   "«Breach Fee»" is an amount.
+
+evaluation 97g payable constructors  13:   The «Licensor» appoints the «Arbiter»,
+evaluation 97g payable constructors  14:   pays the «Licensing Fee» into escrow,
+evaluation 97g payable constructors  15:   and fixes the «Breach Fee».
+
+evaluation 97g payable constructors  17:   TERMS PER «License»:
+
+evaluation 97g payable constructors  19:   "«Description of Goods»" is a text.
+evaluation 97g payable constructors  20:   "«Licensee»" is a person.
+evaluation 97g payable constructors  21:   "«Paid»" is a binary.
+evaluation 97g payable constructors  22:   "«Commissioned»" is a binary.
+evaluation 97g payable constructors  23:   "«Comment Text»" is a text.
+evaluation 97g payable constructors  24:   "«Published»" is a binary.
+evaluation 97g payable constructors  25:   "«Permission to Comment»" is a binary.
+evaluation 97g payable constructors  26:   "«Notice Time»" is a time.
+evaluation 97g payable constructors  27:   "«License»" is this contract.
+evaluation 97g payable constructors  28:   "«Creation Fee»" is an amount.
+
+evaluation 97g payable constructors  30:   The «Licensor» pays the «Creation Fee» into escrow, appoints the «Licensee», and fixes the «Description of Goods».
+
+evaluation 97g payable constructors  32:   CLAUSE: «Pay».
+evaluation 97g payable constructors  33:   The «Licensee» pays the «Licensing Fee» to the «Licensor»,
+evaluation 97g payable constructors  34:   and pays the «Breach Fee» into escrow.
+evaluation 97g payable constructors  35:   This «License» is therefore «Paid».
+

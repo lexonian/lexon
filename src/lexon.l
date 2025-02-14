@@ -496,10 +496,12 @@ char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
 void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
-/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
+/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by
+   the yacc-generated header for the 2nd (full lexon compiler). */
 
 #ifndef YY_YY_LEXC_TAB_H_INCLUDED
 # define YY_YY_LEXC_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -508,27 +510,26 @@ void mtrac_free_gross();
 extern int yydebug;
 #endif
 
-/* Token kinds. ////// sort enums  */
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
   enum yytokentype
   {
     YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
+    YYEOF = 0,
+    YYerror = 256,
+    YYUNDEF = 257,
     Colon = 258,
-    Period = 259,
-    Comma =10002,
-    Quote= 10001,
-    Semicolon = 10000,
-    Dash = 10001,
-    Percent = 10002,
-    NAME = 259,
-    Separator = 260,
-    DESCRIPTION = 261,
-    SCALAR = 10003,
-    HEX = 10004
+    Comma = 259,
+    Dash = 260,
+    Percent = 261,
+    Period = 262,
+    Quote = 263,
+    Semicolon = 264,
+    Separator = 265,
+    DESCRIPTION = 266,
+    HEX = 267,
+    NAME = 268,
+    SCALAR = 269
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

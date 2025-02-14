@@ -4785,34 +4785,34 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[254] =
     {   0,
-      623,  624,  625,  626,  627,  628,  629,  630,  631,  632,
-      634,  636,  640,  643,  644,  645,  646,  647,  648,  649,
-      650,  651,  652,  669,  670,  671,  676,  677,  678,  679,
-      698,  699,  700,  705,  706,  707,  708,  712,  713,  714,
-      717,  718,  719,  722,  723,  724,  731,  733,  734,  735,
-      736,  737,  738,  739,  740,  741,  742,  743,  744,  747,
-      748,  749,  750,  751,  752,  753,  754,  755,  756,  757,
-      758,  759,  760,  761,  762,  763,  764,  765,  766,  767,
-      768,  769,  770,  771,  772,  773,  774,  775,  776,  777,
-      778,  779,  780,  781,  782,  783,  784,  785,  786,  787,
+      624,  625,  626,  627,  628,  629,  630,  631,  632,  633,
+      635,  637,  641,  644,  645,  646,  647,  648,  649,  650,
+      651,  652,  653,  670,  671,  672,  677,  678,  679,  680,
+      699,  700,  701,  706,  707,  708,  709,  713,  714,  715,
+      718,  719,  720,  723,  724,  725,  732,  734,  735,  736,
+      737,  738,  739,  740,  741,  742,  743,  744,  745,  748,
+      749,  750,  751,  752,  753,  754,  755,  756,  757,  758,
+      759,  760,  761,  762,  763,  764,  765,  766,  767,  768,
+      769,  770,  771,  772,  773,  774,  775,  776,  777,  778,
+      779,  780,  781,  782,  783,  784,  785,  786,  787,  788,
 
-      788,  789,  790,  791,  792,  793,  794,  795,  796,  797,
-      798,  799,  800,  801,  802,  803,  804,  805,  806,  807,
-      808,  809,  810,  811,  812,  813,  814,  815,  816,  817,
-      818,  819,  820,  821,  822,  823,  824,  825,  826,  827,
-      828,  829,  830,  831,  832,  833,  834,  835,  836,  837,
-      838,  839,  840,  841,  842,  843,  844,  845,  846,  847,
-      848,  849,  850,  851,  852,  853,  854,  855,  856,  857,
-      858,  859,  860,  861,  862,  863,  864,  865,  866,  867,
-      868,  869,  870,  871,  872,  873,  874,  875,  876,  877,
-      878,  879,  883,  884,  885,  892,  893,  898,  899,  906,
+      789,  790,  791,  792,  793,  794,  795,  796,  797,  798,
+      799,  800,  801,  802,  803,  804,  805,  806,  807,  808,
+      809,  810,  811,  812,  813,  814,  815,  816,  817,  818,
+      819,  820,  821,  822,  823,  824,  825,  826,  827,  828,
+      829,  830,  831,  832,  833,  834,  835,  836,  837,  838,
+      839,  840,  841,  842,  843,  844,  845,  846,  847,  848,
+      849,  850,  851,  852,  853,  854,  855,  856,  857,  858,
+      859,  860,  861,  862,  863,  864,  865,  866,  867,  868,
+      869,  870,  871,  872,  873,  874,  875,  876,  877,  878,
+      879,  880,  884,  885,  886,  893,  894,  899,  900,  907,
 
-      907,  908,  909,  910,  911,  912,  913,  914,  915,  916,
-      917,  918,  919,  920,  921,  922,  923,  924,  925,  926,
-      927,  928,  929,  930,  931,  935,  936,  942,  944,  945,
-      946,  947,  948,  949,  950,  951,  952,  953,  954,  955,
-      956,  957,  958,  959,  960,  961,  962,  963,  964,  965,
-      966,  967,  968
+      908,  909,  910,  911,  912,  913,  914,  915,  916,  917,
+      918,  919,  920,  921,  922,  923,  924,  925,  926,  927,
+      928,  929,  930,  931,  932,  936,  937,  943,  945,  946,
+      947,  948,  949,  950,  951,  952,  953,  954,  955,  956,
+      957,  958,  959,  960,  961,  962,  963,  964,  965,  966,
+      967,  968,  969
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -5324,10 +5324,12 @@ char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
 void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
-/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
+/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by
+   the yacc-generated header for the 2nd (full lexon compiler). */
 
 #ifndef YY_YY_LEXC_TAB_H_INCLUDED
 # define YY_YY_LEXC_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -5336,27 +5338,26 @@ void mtrac_free_gross();
 extern int yydebug;
 #endif
 
-/* Token kinds. ////// sort enums  */
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
   enum yytokentype
   {
     YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
+    YYEOF = 0,
+    YYerror = 256,
+    YYUNDEF = 257,
     Colon = 258,
-    Period = 259,
-    Comma =10002,
-    Quote= 10001,
-    Semicolon = 10000,
-    Dash = 10001,
-    Percent = 10002,
-    NAME = 259,
-    Separator = 260,
-    DESCRIPTION = 261,
-    SCALAR = 10003,
-    HEX = 10004
+    Comma = 259,
+    Dash = 260,
+    Percent = 261,
+    Period = 262,
+    Quote = 263,
+    Semicolon = 264,
+    Separator = 265,
+    DESCRIPTION = 266,
+    HEX = 267,
+    NAME = 268,
+    SCALAR = 269
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -5402,7 +5403,7 @@ int yyparse (void);
 /* extension parsing */
 
 
-#line 5406 "scanner.c"
+#line 5407 "scanner.c"
 
 #define INITIAL 0
 #define BOFTRIM 1
@@ -5663,7 +5664,7 @@ YY_DECL
 	register int yy_act;
     
 /* %% [7.0] user's declarations go here */
-#line 614 "scanner.l"
+#line 615 "scanner.l"
 
 
  if(YY_START==INITIAL) BEGIN ((opt_bnf || opt_yacc || opt_keywords || opt_template || opt_bootstrap || opt_samples ? LGF : BOFTRIM));
@@ -5672,7 +5673,7 @@ YY_DECL
     for the liberal use of tabs and newlines even within variable names.
     At the ocassion, double newline (which semantically equal '.') is also normalized. */
 
-#line 5676 "scanner.c"
+#line 5677 "scanner.c"
 
 	if ( !(yy_init) )
 		{
@@ -5785,71 +5786,71 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 623 "scanner.l"
+#line 624 "scanner.l"
 { D; BEGIN(LXF); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 624 "scanner.l"
+#line 625 "scanner.l"
 { D; BEGIN(LGF); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 625 "scanner.l"
+#line 626 "scanner.l"
 { D; lineno(); concat(&buf, "\n\n"); line+=2; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 626 "scanner.l"
+#line 627 "scanner.l"
 { D; lineno(); concat(&buf, ".\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 627 "scanner.l"
+#line 628 "scanner.l"
 { D; lineno(); concat(&buf, ",\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 628 "scanner.l"
+#line 629 "scanner.l"
 { D; lineno(); concat(&buf, ";\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 629 "scanner.l"
+#line 630 "scanner.l"
 { D; lineno(); concat(&buf, ":\n"); line++; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 630 "scanner.l"
+#line 631 "scanner.l"
 /* under, after include */				{ D;           concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 631 "scanner.l"
+#line 632 "scanner.l"
 { D;           concat(&buf, " "); _lastline=++line; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 632 "scanner.l"
+#line 633 "scanner.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 634 "scanner.l"
+#line 635 "scanner.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 636 "scanner.l"
+#line 637 "scanner.l"
 { D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 process(" \t", "TERMS PER", " \t", yytext, ": \t"); // make TERMS optional for process ◊
 									 concat(&buf, yytext); 
@@ -5857,63 +5858,63 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 640 "scanner.l"
+#line 641 "scanner.l"
 { D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
 									 concat(&buf, yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 643 "scanner.l"
+#line 644 "scanner.l"
 { D; freeline(); BEGIN(INCLUDE); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 644 "scanner.l"
+#line 645 "scanner.l"
 { D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 645 "scanner.l"
+#line 646 "scanner.l"
 { D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 646 "scanner.l"
+#line 647 "scanner.l"
 { D; lineno(); concat(&buf, trim(yytext), " ‹"); BEGIN(LONGQUOTE); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 647 "scanner.l"
+#line 648 "scanner.l"
 { D; lineno(); concat(&buf, trim(yytext), " "); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 648 "scanner.l"
+#line 649 "scanner.l"
 { D; lineno(); process("\"“”", "", "", yytext, "\"“”"); concat(&buf, yytext); lhd=true; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 649 "scanner.l"
+#line 650 "scanner.l"
 { D; concat(&buf, " "); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 650 "scanner.l"
+#line 651 "scanner.l"
 /* these 2 lines emulate ^[^"“”]: */			{ D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 651 "scanner.l"
+#line 652 "scanner.l"
 { D0; yyless(0); if(plhd && pretty) freeline(); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 652 "scanner.l"
+#line 653 "scanner.l"
 { D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case YY_STATE_EOF(PRE):
-#line 653 "scanner.l"
+#line 654 "scanner.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done()) BEGIN(PRE);
 									else {
@@ -5932,49 +5933,49 @@ case YY_STATE_EOF(PRE):
 
 case 24:
 YY_RULE_SETUP
-#line 669 "scanner.l"
+#line 670 "scanner.l"
 { D; }
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 670 "scanner.l"
+#line 671 "scanner.l"
 { D; line++; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 671 "scanner.l"
+#line 672 "scanner.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(BOFTRIM):
-#line 672 "scanner.l"
+#line 673 "scanner.l"
 { D; syntax("empty file (or only whitespace)", yytext); }
 	YY_BREAK
 
 
 case 27:
 YY_RULE_SETUP
-#line 676 "scanner.l"
+#line 677 "scanner.l"
 { D; }
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 677 "scanner.l"
+#line 678 "scanner.l"
 { D; if(!pretty) concat(&buf, "\n"); line++; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 678 "scanner.l"
+#line 679 "scanner.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 679 "scanner.l"
+#line 680 "scanner.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(TRIM):
-#line 680 "scanner.l"
+#line 681 "scanner.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done())
 										BEGIN(PRE);
@@ -5994,64 +5995,64 @@ case YY_STATE_EOF(TRIM):
 ///// refactor. Only used by LEX tag
 case 31:
 YY_RULE_SETUP
-#line 698 "scanner.l"
+#line 699 "scanner.l"
 { D; process2(yytext, ". \t", "«", "»"); concat(&buf, yytext); BEGIN(PRE); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 699 "scanner.l"
+#line 700 "scanner.l"
 { D; syntax("unexpected character in name", yytext); }
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 700 "scanner.l"
+#line 701 "scanner.l"
 { D; syntax("unexpected end of line instead of name", ""); }
 	YY_BREAK
 case YY_STATE_EOF(NAMEQUOTE):
-#line 701 "scanner.l"
+#line 702 "scanner.l"
 { D; syntax("unexpected end of file instead of name", yytext); }
 	YY_BREAK
 
 
 case 34:
 YY_RULE_SETUP
-#line 705 "scanner.l"
+#line 706 "scanner.l"
 { D; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 706 "scanner.l"
+#line 707 "scanner.l"
 { D; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 707 "scanner.l"
+#line 708 "scanner.l"
 { D; concat(&buf, "‹", yytext, "›."); }
 	YY_BREAK
 case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
-#line 708 "scanner.l"
+#line 709 "scanner.l"
 /* used to be \.*{space}*\n */		{ D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
 
 case 38:
 YY_RULE_SETUP
-#line 712 "scanner.l"
+#line 713 "scanner.l"
 { D; concat(&buf, yytext); }
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 713 "scanner.l"
+#line 714 "scanner.l"
 { D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 714 "scanner.l"
+#line 715 "scanner.l"
 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
@@ -6061,22 +6062,22 @@ case 41:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 717 "scanner.l"
+#line 718 "scanner.l"
 { D; input(); include(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 718 "scanner.l"
+#line 719 "scanner.l"
 { D; syntax("unexpected character in include filename and path", yytext); }
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 719 "scanner.l"
+#line 720 "scanner.l"
 { D; syntax("unexpected end of line instead of include filename and path", ""); }
 	YY_BREAK
 case YY_STATE_EOF(INCLUDE):
-#line 720 "scanner.l"
+#line 721 "scanner.l"
 { D; syntax("unexpected end of file instead of include filename and path", yytext); }
 	YY_BREAK
 case 44:
@@ -6085,22 +6086,22 @@ case 44:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 722 "scanner.l"
+#line 723 "scanner.l"
 { D; input(); concat(&buf, yytext); setlaw(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 723 "scanner.l"
+#line 724 "scanner.l"
 { D; syntax("unexpected character in jurisdiction tag", yytext); }
 	YY_BREAK
 case 46:
 /* rule 46 can match eol */
 YY_RULE_SETUP
-#line 724 "scanner.l"
+#line 725 "scanner.l"
 { D; syntax("unexpected end of line instead of jurisdiction tag", ""); }
 	YY_BREAK
 case YY_STATE_EOF(LAW):
-#line 725 "scanner.l"
+#line 726 "scanner.l"
 { D; syntax("unexpected end of file in jurisdiction tag", yytext); }
 	YY_BREAK
 /* MAIN */
@@ -6110,738 +6111,738 @@ case 47:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 731 "scanner.l"
+#line 732 "scanner.l"
 { D; mtrac_free(prec_file); prec_file = trim(mtrac_strdup(yytext));
 									if(opt_debug_mainscan) printf("file %s ", yytext); BEGIN(LINENO); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 733 "scanner.l"
+#line 734 "scanner.l"
 { D; DX(Colon); return Colon; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 734 "scanner.l"
+#line 735 "scanner.l"
 { D; DX(Comma); return Comma; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 735 "scanner.l"
+#line 736 "scanner.l"
 { D; DX(Semicolon); return Semicolon; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 736 "scanner.l"
+#line 737 "scanner.l"
 { D; DX(Dash); return Dash; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 737 "scanner.l"
+#line 738 "scanner.l"
 { D; DX(Percent); return Percent; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 738 "scanner.l"
+#line 739 "scanner.l"
 { D; DX(Quote); return Quote; }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 739 "scanner.l"
+#line 740 "scanner.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 740 "scanner.l"
+#line 741 "scanner.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
 YY_RULE_SETUP
-#line 741 "scanner.l"
+#line 742 "scanner.l"
 { D; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 742 "scanner.l"
+#line 743 "scanner.l"
 { D; BEGIN(NAME_); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 743 "scanner.l"
+#line 744 "scanner.l"
 { D; BEGIN(DESCRIPTION_); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 744 "scanner.l"
+#line 745 "scanner.l"
 { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
 	YY_BREAK
 /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
 /* Keywords (generated from LGF) */
 case 60:
 YY_RULE_SETUP
-#line 747 "scanner.l"
+#line 748 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AUTHOR; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 748 "scanner.l"
+#line 749 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AUTHORS; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 749 "scanner.l"
+#line 750 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CLAUSE; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 750 "scanner.l"
+#line 751 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return COMMENT; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 751 "scanner.l"
+#line 752 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return COMMENTS; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 752 "scanner.l"
+#line 753 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GENERAL; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 753 "scanner.l"
+#line 754 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEX; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 754 "scanner.l"
+#line 755 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEXON; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 755 "scanner.l"
+#line 756 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PER; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 756 "scanner.l"
+#line 757 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PREAMBLE; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 757 "scanner.l"
+#line 758 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMS; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 758 "scanner.l"
+#line 759 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return A; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 759 "scanner.l"
+#line 760 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AFTER; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 760 "scanner.l"
+#line 761 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AFTERWARDS; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 761 "scanner.l"
+#line 762 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ALL; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 762 "scanner.l"
+#line 763 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ALSO; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 763 "scanner.l"
+#line 764 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AMOUNT; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 764 "scanner.l"
+#line 765 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AN; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 765 "scanner.l"
+#line 766 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AND; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 766 "scanner.l"
+#line 767 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ANNOUNCED; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 767 "scanner.l"
+#line 768 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINT; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 768 "scanner.l"
+#line 769 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINTS; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 769 "scanner.l"
+#line 770 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AS; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 770 "scanner.l"
+#line 771 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AT; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 771 "scanner.l"
+#line 772 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BE; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 772 "scanner.l"
+#line 773 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEEN; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 773 "scanner.l"
+#line 774 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEING; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 774 "scanner.l"
+#line 775 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BINARY; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 775 "scanner.l"
+#line 776 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFIED; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 776 "scanner.l"
+#line 777 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFIES; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 777 "scanner.l"
+#line 778 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CERTIFY; }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 778 "scanner.l"
+#line 779 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CONTRACT; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 779 "scanner.l"
+#line 780 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CONTRACTS; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 780 "scanner.l"
+#line 781 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return CURRENT; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 781 "scanner.l"
+#line 782 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DATA; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 782 "scanner.l"
+#line 783 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DAY; }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 783 "scanner.l"
+#line 784 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DAYS; }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 784 "scanner.l"
+#line 785 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARE; }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 785 "scanner.l"
+#line 786 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARED; }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 786 "scanner.l"
+#line 787 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DECLARES; }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 787 "scanner.l"
+#line 788 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return DEFINED; }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 788 "scanner.l"
+#line 789 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return EQUAL; }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 789 "scanner.l"
+#line 790 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return EQUALING; }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 790 "scanner.l"
+#line 791 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ESCROW; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 791 "scanner.l"
+#line 792 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILE_; }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 792 "scanner.l"
+#line 793 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILED; }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 793 "scanner.l"
+#line 794 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FILES; }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 794 "scanner.l"
+#line 795 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIX; }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 795 "scanner.l"
+#line 796 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIXED; }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 796 "scanner.l"
+#line 797 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FIXES; }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 797 "scanner.l"
+#line 798 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FOR; }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 798 "scanner.l"
+#line 799 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return FROM; }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 799 "scanner.l"
+#line 800 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GIVEN; }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 800 "scanner.l"
+#line 801 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GRANT; }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 801 "scanner.l"
+#line 802 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return GRANTS; }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 802 "scanner.l"
+#line 803 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HAS; }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 803 "scanner.l"
+#line 804 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HERSELF; }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 804 "scanner.l"
+#line 805 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HIMSELF; }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 805 "scanner.l"
+#line 806 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HOUR; }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 806 "scanner.l"
+#line 807 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return HOURS; }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 807 "scanner.l"
+#line 808 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IF; }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 808 "scanner.l"
+#line 809 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IN; }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 809 "scanner.l"
+#line 810 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return INTO; }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 810 "scanner.l"
+#line 811 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return IS; }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 811 "scanner.l"
+#line 812 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ITSELF; }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 812 "scanner.l"
+#line 813 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LEAST; }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 813 "scanner.l"
+#line 814 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return LIES; }
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 814 "scanner.l"
+#line 815 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MAY; }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 815 "scanner.l"
+#line 816 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MILLISECOND; }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 816 "scanner.l"
+#line 817 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MILLISECONDS; }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 817 "scanner.l"
+#line 818 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MINUTE; }
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 818 "scanner.l"
+#line 819 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MINUTES; }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 819 "scanner.l"
+#line 820 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MONTH; }
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 820 "scanner.l"
+#line 821 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MONTHS; }
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 821 "scanner.l"
+#line 822 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return MYSELF; }
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 822 "scanner.l"
+#line 823 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NEITHER; }
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 823 "scanner.l"
+#line 824 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NO; }
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 824 "scanner.l"
+#line 825 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOR; }
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 825 "scanner.l"
+#line 826 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOT; }
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 826 "scanner.l"
+#line 827 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOTIFIES; }
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 827 "scanner.l"
+#line 828 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOTIFY; }
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 828 "scanner.l"
+#line 829 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return NOW; }
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 829 "scanner.l"
+#line 830 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OF; }
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 830 "scanner.l"
+#line 831 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OFF; }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 831 "scanner.l"
+#line 832 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ON; }
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 832 "scanner.l"
+#line 833 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ONESELF; }
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 833 "scanner.l"
+#line 834 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OR; }
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 834 "scanner.l"
+#line 835 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return OURSELVES; }
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 835 "scanner.l"
+#line 836 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PASSED; }
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 836 "scanner.l"
+#line 837 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAST; }
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 837 "scanner.l"
+#line 838 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAY; }
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 838 "scanner.l"
+#line 839 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PAYS; }
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 839 "scanner.l"
+#line 840 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PERSON; }
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 840 "scanner.l"
+#line 841 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return PROVIDED; }
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 841 "scanner.l"
+#line 842 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REGISTER; }
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-#line 842 "scanner.l"
+#line 843 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REGISTERS; }
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-#line 843 "scanner.l"
+#line 844 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return REMAINDER; }
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-#line 844 "scanner.l"
+#line 845 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RESPECTIVE; }
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-#line 845 "scanner.l"
+#line 846 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RETURN; }
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-#line 846 "scanner.l"
+#line 847 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return RETURNS; }
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-#line 847 "scanner.l"
+#line 848 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECOND; }
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-#line 848 "scanner.l"
+#line 849 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECONDS; }
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-#line 849 "scanner.l"
+#line 850 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SEND; }
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-#line 850 "scanner.l"
+#line 851 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SENDS; }
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-#line 851 "scanner.l"
+#line 852 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SIGNED; }
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-#line 852 "scanner.l"
+#line 853 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SO; }
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-#line 853 "scanner.l"
+#line 854 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMINATE; }
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-#line 854 "scanner.l"
+#line 855 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TERMINATES; }
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-#line 855 "scanner.l"
+#line 856 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TEXT; }
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-#line 856 "scanner.l"
+#line 857 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THAT; }
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-#line 857 "scanner.l"
+#line 858 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THE; }
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-#line 858 "scanner.l"
+#line 859 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEMSELF; }
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-#line 859 "scanner.l"
+#line 860 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEMSELVES; }
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-#line 860 "scanner.l"
+#line 861 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEN; }
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-#line 861 "scanner.l"
+#line 862 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THERE; }
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-#line 862 "scanner.l"
+#line 863 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEREFOR; }
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-#line 863 "scanner.l"
+#line 864 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THEREFORE; }
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-#line 864 "scanner.l"
+#line 865 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THESE; }
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-#line 865 "scanner.l"
+#line 866 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return THIS; }
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-#line 866 "scanner.l"
+#line 867 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TIME; }
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
-#line 867 "scanner.l"
+#line 868 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TO; }
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-#line 868 "scanner.l"
+#line 869 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return TRUE; }
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-#line 869 "scanner.l"
+#line 870 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WAS; }
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-#line 870 "scanner.l"
+#line 871 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WEEK; }
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-#line 871 "scanner.l"
+#line 872 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WEEKS; }
 	YY_BREAK
 case 185:
 YY_RULE_SETUP
-#line 872 "scanner.l"
+#line 873 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return WITH; }
 	YY_BREAK
 case 186:
 YY_RULE_SETUP
-#line 873 "scanner.l"
+#line 874 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YEAR; }
 	YY_BREAK
 case 187:
 YY_RULE_SETUP
-#line 874 "scanner.l"
+#line 875 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YEARS; }
 	YY_BREAK
 case 188:
 YY_RULE_SETUP
-#line 875 "scanner.l"
+#line 876 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YES; }
 	YY_BREAK
 case 189:
 YY_RULE_SETUP
-#line 876 "scanner.l"
+#line 877 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YOURSELF; }
 	YY_BREAK
 case 190:
 YY_RULE_SETUP
-#line 877 "scanner.l"
+#line 878 "scanner.l"
 { D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return YOURSELVES; }
 	YY_BREAK
 case 191:
 YY_RULE_SETUP
-#line 878 "scanner.l"
+#line 879 "scanner.l"
 /* no space to not erron. make it longest match */ { D; syntax("unexpected word (after precompilation, use -P to check)", yytext); }
 	YY_BREAK
 case 192:
 YY_RULE_SETUP
-#line 879 "scanner.l"
+#line 880 "scanner.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 
@@ -6851,22 +6852,22 @@ case 193:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 883 "scanner.l"
+#line 884 "scanner.l"
 { D; prec_line = atoi(yytext); if(opt_debug_mainscan) printf("line %s: ", yytext); }
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-#line 884 "scanner.l"
+#line 885 "scanner.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case 195:
 YY_RULE_SETUP
-#line 885 "scanner.l"
+#line 886 "scanner.l"
 { D; syntax("unexpected character in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LINENO):
-#line 887 "scanner.l"
+#line 888 "scanner.l"
 { D; syntax("unexpected end of file in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
@@ -6875,16 +6876,16 @@ case YY_STATE_EOF(LINENO):
 case 196:
 /* rule 196 can match eol */
 YY_RULE_SETUP
-#line 892 "scanner.l"
+#line 893 "scanner.l"
 { D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }
 	YY_BREAK
 case 197:
 YY_RULE_SETUP
-#line 893 "scanner.l"
+#line 894 "scanner.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case YY_STATE_EOF(NAME_):
-#line 894 "scanner.l"
+#line 895 "scanner.l"
 { D; syntax("unexpected end of file - precompiler name quote error", yytext); }
 	YY_BREAK
 
@@ -6892,17 +6893,17 @@ case YY_STATE_EOF(NAME_):
 case 198:
 /* rule 198 can match eol */
 YY_RULE_SETUP
-#line 898 "scanner.l"
+#line 899 "scanner.l"
 { D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 	YY_BREAK
 case 199:
 /* rule 199 can match eol */
 YY_RULE_SETUP
-#line 899 "scanner.l"
+#line 900 "scanner.l"
 { D; DX(Separator); BEGIN(MAIN); return Separator; }
 	YY_BREAK
 case YY_STATE_EOF(DESCRIPTION_):
-#line 900 "scanner.l"
+#line 901 "scanner.l"
 { D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 	YY_BREAK
 
@@ -6914,7 +6915,7 @@ case 200:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 906 "scanner.l"
+#line 907 "scanner.l"
 { D; }
 	YY_BREAK
 case 201:
@@ -6923,7 +6924,7 @@ case 201:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 907 "scanner.l"
+#line 908 "scanner.l"
 { D; }
 	YY_BREAK
 case 202:
@@ -6932,7 +6933,7 @@ case 202:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 908 "scanner.l"
+#line 909 "scanner.l"
 { D; }
 	YY_BREAK
 case 203:
@@ -6941,7 +6942,7 @@ case 203:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 909 "scanner.l"
+#line 910 "scanner.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 204:
@@ -6950,7 +6951,7 @@ case 204:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 910 "scanner.l"
+#line 911 "scanner.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 205:
@@ -6959,7 +6960,7 @@ case 205:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 911 "scanner.l"
+#line 912 "scanner.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 206:
@@ -6968,47 +6969,47 @@ case 206:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 912 "scanner.l"
+#line 913 "scanner.l"
 { D; start_definition(yytext); }
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-#line 913 "scanner.l"
+#line 914 "scanner.l"
 { D; start_alternation(yytext); start_alternate(); }
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-#line 914 "scanner.l"
+#line 915 "scanner.l"
 { D; start_rule(active, personal); }
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-#line 915 "scanner.l"
+#line 916 "scanner.l"
 { D; start_rule(passive, personal); }
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-#line 916 "scanner.l"
+#line 917 "scanner.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 917 "scanner.l"
+#line 918 "scanner.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-#line 918 "scanner.l"
+#line 919 "scanner.l"
 { D; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-#line 919 "scanner.l"
+#line 920 "scanner.l"
 { D; start_option(spaced); }
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-#line 920 "scanner.l"
+#line 921 "scanner.l"
 { D; start_option(unspaced); }
 	YY_BREAK
 case 215:
@@ -7017,76 +7018,76 @@ case 215:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 921 "scanner.l"
+#line 922 "scanner.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-#line 922 "scanner.l"
+#line 923 "scanner.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 217:
 YY_RULE_SETUP
-#line 923 "scanner.l"
+#line 924 "scanner.l"
 { D; end_option(unspaced); }
 	YY_BREAK
 case 218:
 YY_RULE_SETUP
-#line 924 "scanner.l"
+#line 925 "scanner.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 219:
 YY_RULE_SETUP
-#line 925 "scanner.l"
+#line 926 "scanner.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 220:
 YY_RULE_SETUP
-#line 926 "scanner.l"
+#line 927 "scanner.l"
 { D; add_word(yytext); }
 	YY_BREAK
 case 221:
 YY_RULE_SETUP
-#line 927 "scanner.l"
+#line 928 "scanner.l"
 { D; start_alternate(); }
 	YY_BREAK
 case 222:
 /* rule 222 can match eol */
 YY_RULE_SETUP
-#line 928 "scanner.l"
+#line 929 "scanner.l"
 { D; line++; /* end_rule(); */ }
 	YY_BREAK
 case 223:
 YY_RULE_SETUP
-#line 929 "scanner.l"
+#line 930 "scanner.l"
 { D; }
 	YY_BREAK
 case 224:
 /* rule 224 can match eol */
 YY_RULE_SETUP
-#line 930 "scanner.l"
+#line 931 "scanner.l"
 { D; line++; }
 	YY_BREAK
 case 225:
 YY_RULE_SETUP
-#line 931 "scanner.l"
+#line 932 "scanner.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LXF):
 case YY_STATE_EOF(EMBED):
-#line 932 "scanner.l"
+#line 933 "scanner.l"
 { D; produce_extension(grammar); exit(0); yyterminate(); return 0; }
 	YY_BREAK
 
 case 226:
 YY_RULE_SETUP
-#line 935 "scanner.l"
+#line 936 "scanner.l"
 { D; add_embed(yytext); }
 	YY_BREAK
 case 227:
 /* rule 227 can match eol */
 YY_RULE_SETUP
-#line 936 "scanner.l"
+#line 937 "scanner.l"
 { D; lineno(); add_embed(yytext); }
 	YY_BREAK
 /* Lexon Grammar Form: precompiling LGF to BNF */
@@ -7097,7 +7098,7 @@ case 228:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 942 "scanner.l"
+#line 943 "scanner.l"
 /* grammar version */		{ D; S; mtrac_free(grammar_version);
 									grammar_version = trim(mtrac_strdup(strstr(yytext, "Version") + 7)); }
 	YY_BREAK
@@ -7107,7 +7108,7 @@ case 229:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 944 "scanner.l"
+#line 945 "scanner.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 230:
@@ -7116,7 +7117,7 @@ case 230:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 945 "scanner.l"
+#line 946 "scanner.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 231:
@@ -7125,22 +7126,22 @@ case 231:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 946 "scanner.l"
+#line 947 "scanner.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 232:
 YY_RULE_SETUP
-#line 947 "scanner.l"
+#line 948 "scanner.l"
 /* spaces make it longest pattern */	{ D; S; start_rule(none, neutral); }
 	YY_BREAK
 case 233:
 YY_RULE_SETUP
-#line 948 "scanner.l"
+#line 949 "scanner.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 234:
 YY_RULE_SETUP
-#line 949 "scanner.l"
+#line 950 "scanner.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 235:
@@ -7148,7 +7149,7 @@ case 235:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 950 "scanner.l"
+#line 951 "scanner.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 236:
@@ -7156,62 +7157,62 @@ case 236:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 951 "scanner.l"
+#line 952 "scanner.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 237:
 YY_RULE_SETUP
-#line 952 "scanner.l"
+#line 953 "scanner.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 238:
 YY_RULE_SETUP
-#line 953 "scanner.l"
+#line 954 "scanner.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 239:
 YY_RULE_SETUP
-#line 954 "scanner.l"
+#line 955 "scanner.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 240:
 YY_RULE_SETUP
-#line 955 "scanner.l"
+#line 956 "scanner.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 241:
 YY_RULE_SETUP
-#line 956 "scanner.l"
+#line 957 "scanner.l"
 { D; S; continue_rule(); add_word("colon"); }
 	YY_BREAK
 case 242:
 YY_RULE_SETUP
-#line 957 "scanner.l"
+#line 958 "scanner.l"
 { D; S; continue_rule(); add_word("comma"); }
 	YY_BREAK
 case 243:
 YY_RULE_SETUP
-#line 958 "scanner.l"
+#line 959 "scanner.l"
 { D; S; continue_rule(); add_word("percent"); }
 	YY_BREAK
 case 244:
 YY_RULE_SETUP
-#line 959 "scanner.l"
+#line 960 "scanner.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 245:
 YY_RULE_SETUP
-#line 960 "scanner.l"
+#line 961 "scanner.l"
 { D; S; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 246:
 YY_RULE_SETUP
-#line 961 "scanner.l"
+#line 962 "scanner.l"
 { D; S; start_option(spaced); }
 	YY_BREAK
 case 247:
 YY_RULE_SETUP
-#line 962 "scanner.l"
+#line 963 "scanner.l"
 { D; S; start_option(unspaced); }
 	YY_BREAK
 case 248:
@@ -7220,46 +7221,46 @@ case 248:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 963 "scanner.l"
+#line 964 "scanner.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 249:
 YY_RULE_SETUP
-#line 964 "scanner.l"
+#line 965 "scanner.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 250:
 YY_RULE_SETUP
-#line 965 "scanner.l"
+#line 966 "scanner.l"
 { D; S; end_option(unspaced); }
 	YY_BREAK
 case 251:
 YY_RULE_SETUP
-#line 966 "scanner.l"
+#line 967 "scanner.l"
 { D; S; }
 	YY_BREAK
 case 252:
 /* rule 252 can match eol */
 YY_RULE_SETUP
-#line 967 "scanner.l"
+#line 968 "scanner.l"
 { D; S; line++; }
 	YY_BREAK
 case 253:
 YY_RULE_SETUP
-#line 968 "scanner.l"
+#line 969 "scanner.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LGF):
-#line 969 "scanner.l"
+#line 970 "scanner.l"
 { D; produce_grammar(grammar); yyterminate(); }
 	YY_BREAK
 
 case 254:
 YY_RULE_SETUP
-#line 972 "scanner.l"
+#line 973 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 7263 "scanner.c"
+#line 7264 "scanner.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(MAIN):
 case YY_STATE_EOF(EXPLANATION_):
@@ -8396,7 +8397,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 972 "scanner.l"
+#line 973 "scanner.l"
 
 
 
@@ -12459,10 +12460,12 @@ const char *own =
 	"void *mtrac_gross(void *rec);\n"
 	"void mtrac_free_gross();\n"
 	"\n"
-	"/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */\n"
+	"/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by\n"
+	"   the yacc-generated header for the 2nd (full lexon compiler). */\n"
 	"\n"
 	"#ifndef YY_YY_LEXC_TAB_H_INCLUDED\n"
 	"# define YY_YY_LEXC_TAB_H_INCLUDED\n"
+	"\n"
 	"/* Debug traces.  */\n"
 	"#ifndef YYDEBUG\n"
 	"# define YYDEBUG 0\n"
@@ -12471,27 +12474,26 @@ const char *own =
 	"extern int yydebug;\n"
 	"#endif\n"
 	"\n"
-	"/* Token kinds. ////// sort enums  */\n"
 	"#ifndef YYTOKENTYPE\n"
 	"#define YYTOKENTYPE\n"
 	"  enum yytokentype\n"
 	"  {\n"
 	"    YYEMPTY = -2,\n"
-	"    YYEOF = 0,                     /* \"end of file\"  */\n"
-	"    YYerror = 256,                 /* error  */\n"
-	"    YYUNDEF = 257,                 /* \"invalid token\"  */\n"
+	"    YYEOF = 0,\n"
+	"    YYerror = 256,\n"
+	"    YYUNDEF = 257,\n"
 	"    Colon = 258,\n"
-	"    Period = 259,\n"
-	"    Comma =10002,\n"
-	"    Quote= 10001,\n"
-	"    Semicolon = 10000,\n"
-	"    Dash = 10001,\n"
-	"    Percent = 10002,\n"
-	"    NAME = 259,\n"
-	"    Separator = 260,\n"
-	"    DESCRIPTION = 261,\n"
-	"    SCALAR = 10003,\n"
-	"    HEX = 10004\n"
+	"    Comma = 259,\n"
+	"    Dash = 260,\n"
+	"    Percent = 261,\n"
+	"    Period = 262,\n"
+	"    Quote = 263,\n"
+	"    Semicolon = 264,\n"
+	"    Separator = 265,\n"
+	"    DESCRIPTION = 266,\n"
+	"    HEX = 267,\n"
+	"    NAME = 268,\n"
+	"    SCALAR = 269\n"
 	"  };\n"
 	"  typedef enum yytokentype yytoken_kind_t;\n"
 	"#endif\n"
@@ -16755,7 +16757,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 97 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
+	"	0.3 alpha 98 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
@@ -17231,10 +17233,11 @@ const char *manual =
 	"\n"
 	"	deeptest        memory handling, includes, language parser, compiler\n"
 	"	memtest         valgrind & internal memory leak tests\n"
-	"	update          interactive, selective update of deeptest result references\n"
+	"	update          interactive update of failing deeptests's result references\n"
 	"	recheck         faster update, skipping successful tests of earlier deeptest\n"
-	"	expectations    full non-interactive update of deeptest result references\n"
-	"	new             creation only of missing deeptest result references\n"
+	"	autoupdate      automatic update of failing deeptests's result references\n"
+	"	expectations    full non-interactive update of all deeptest result references\n"
+	"	new             creation of missing deeptest result references\n"
 	"\n"
 	"**1st level of tests: build environment**\n"
 	"\n"

@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 /** Lexon-generated Solidity code
-
  **
  **	code:        Evaluation License System
  **
@@ -18,9 +17,9 @@ pragma solidity ^0.8.17;
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     solidity 0.3.97f U
+ **	backend:     solidity 0.3.97 U
  **
- **	target:      solidity 0.8+
+ **	target:      solidity 0.8.17+
  **
  **	options:     --solidity  --comment 
  **
@@ -113,6 +112,7 @@ contract EvaluationLicenseSystem {
  */
 
 contract License {
+
     constructor(address payable _licensee, string memory _description_of_goods) {
         licensee = _licensee;
         description_of_goods = _description_of_goods;

@@ -6,7 +6,7 @@
  **
  **	authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
  **
- **	file:        evaluation.lex
+ **	file:        cover/evaluation-97g-payable-constructors.lex
  **
  **	code tagged: 0.2.1
  **
@@ -14,18 +14,104 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     javascript 0.3.97 U
+ **	backend:     javascript 0.3.97g U
  **
  **	target:      node 14.1+
  **
- **	options:     --javascript  --feedback  --log  --chaining  --signatures  --persistence  --comment 
+ **	options:     --javascript  --all-auxiliaries 
  **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Execute this program using node. Replace the <parameters> with literal values.
+
+   Running this program as-is requires beginners programmer knowledge. This phase is
+   yet not covered by lexon's mission to make code readable and useful for non-coders.
+   In the future, an interface will be generated to complete this last mile. However,
+   embedding this code into a self-explanatory user interface is a straight forward
+   task for a full-stack programmer.
+
+   Note that the instructions below reflect your lexon code as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input. Some functions are 'built-in' but only appear when needed as
+   per compiled-in features – a list of which is available with lexon -h. The functions
+   are not given in a specific order of execution but as listed in the lexon source.
+
+   These node modules have to be installed once:
+
+   $ npm install serialize-javascript
+   $ npm install tar
+   $ npm install nodemailer
+   $ npm install prompt-sync
+
+   Parameters below are marked with double angle brackets << >> for the respective
+   required caller. If the role is defined earlier, it can only be performed by this
+   person. (But remember that this entire setup is trustful: anyone can manipulate
+   anything about this contract. Though they cannot sign it or change the signed log.)
+   If the role is not defined earlier, the call makes the role be assigned to the
+   person named for the call. Some functions can be called without naming a caller.
+   Some clauses of the original lexon source will not appear below. Namely, those
+   that have no permission phrase, wherefore they are regarded as internal.
+
+   The main contract system is initialized by loading the module and instantiating:
+
+   $ node
+   > contract = require("./cover/evaluation-97g-payable-constructors.jsx");
+   > evaluation = new contract(<<licensor>>, <arbiter>, <licensing_fee>, <breach_fee>);
+
+   Remember to reset node's module cache each time you edit and recompile your code:
+
+   > delete require.cache[require.resolve('./cover/evaluation-97g-payable-constructors.jsx')];
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per License.
+
+   > license = evaluation.add_license(<<licensor>>, <creation_fee>, <licensee>, <description_of_goods>)
+   > license.pay(<<licensee>>)
+
+   state changes of the contract can be listed, e.g. actions performed by
+   a party to it, or agents who are assigned privileges. In case hash chains
+   or signatures are used, they are visible in this log. The log is stored in
+   in the file 'log'.
+
+   > evaluation.history()
+
+   The complete contract state can be saved to disk and re-loaded at a
+   later point in time. This serves to continue work after stopping and
+   restarting node; or to send the entire contract system and its current
+   state - which can include hashes and signatures - to another party,
+   who may perform the next steps.
+
+   > evaluation.persist()
+   > evaluation.load()
+
+   The contract code, state and log can be bundled into one file to exchange
+   or archive it:
+
+   > evaluation.bundle()
+   > evaluation.unbundle()
+
+   The contract code, state and log can be sent to a counterparty. This
+   requires configuring an email account in the file 'config'.
+
+   > evaluation.send()
+
+   Keys for signing log entries are expected on-file, by default named after
+   the actor, with the extension .key. For demo purposes, key files can be
+   created using this utility function:
+
+   > evaluation.create_key(name, passphrase)
  */
 
 var fs = require('fs');
 var crypto = require('crypto');
 var serialize = require('serialize-javascript');
 var prompt = require('prompt-sync')();
+var tar = require('tar');
+var nodemailer = require('nodemailer');
 var last_caller;
 var last_passphrase;
 
@@ -49,7 +135,7 @@ var last_passphrase;
  | 	"Breach Fee" is an amount.
  | 
  | 	The Licensor appoints the Arbiter,
- | 	fixes the Licensing Fee,
+ | 	pays the Licensing Fee into escrow,
  | 	and fixes the Breach Fee.
  */
 
@@ -74,7 +160,7 @@ module.exports = class EvaluationLicenseSystem {
 
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
             this.log(licensor, "✓ Arbiter appointed");
-            this.log(licensor, "✓ Licensing Fee fixed");
+            this.transfer(caller, this.licensor, 'escrow', this.licensing_fee);
             this.log(licensor, "✓ Breach Fee fixed");
         }
 
@@ -101,21 +187,22 @@ module.exports = class EvaluationLicenseSystem {
 	 | 	"Permission to Comment" is a binary.
 	 | 	"Notice Time" is a time.
 	 | 	"License" is this contract.
+	 | 	"Creation Fee" is an amount.
 	 | 
-	 | 	The Licensor appoints the Licensee, and fixes the Description of Goods.
+	 | 	The Licensor pays the Creation Fee into escrow, appoints the Licensee, and fixes the Description of Goods.
 	 */
 
         /* this closure exports the covenant's constructor to the scope of the main */
 
-        this.License = (caller, licensee, description_of_goods) => {
+        this.License = (caller, creation_fee, licensee, description_of_goods) => {
             if(caller == main.licensor) {
-                return new License(caller, licensee, description_of_goods);
+                return new License(caller, creation_fee, licensee, description_of_goods);
             }
         };
 
         class License {
 
-            constructor(caller, licensee, description_of_goods) {
+            constructor(caller, creation_fee, licensee, description_of_goods) {
 
                 /* object members: skip for restoring serialized object */
                 if(typeof caller !== 'undefined') {
@@ -127,7 +214,8 @@ module.exports = class EvaluationLicenseSystem {
                     this.published = null;
                     this.permission_to_comment = null;
                     this.notice_time = null;
-                    this.terminated = false;
+                    this.creation_fee = creation_fee;
+                    main.transfer(caller, main.licensor, 'escrow', this.creation_fee);
                     main.log(caller, "✓ Licensee appointed");
                     main.log(caller, "✓ Description of Goods fixed");
                 }
@@ -144,7 +232,6 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             pay(caller)  {
-                if(this.already_terminated()) return undefined;
                 if(!(caller == this.licensee)) return 'not permitted';
                 if(caller == this.licensee) {
                     main.transfer(caller, this.licensee, main.licensor, main.licensing_fee);
@@ -152,147 +239,6 @@ module.exports = class EvaluationLicenseSystem {
                 }
                 this.paid = true;
                 return 'done.';
-            }
-
-
-            /* Commission clause */
-
-            /*
-             |  CLAUSE: Commission.
-             |  The Licensor may certify this License as Commissioned.
-             */
-
-            commission(caller)  {
-                if(this.already_terminated()) return undefined;
-                if(caller != main.licensor) return 'not permitted';
-                this.commissioned = true;
-                main.log(caller, "✓ Commissioned certified");
-                return 'done.';
-            }
-
-
-            /* Comment clause */
-
-            /*
-             |  CLAUSE: Comment.
-             |  The Licensee may register a Comment Text.
-             */
-
-            comment(caller, comment_text)  {
-                if(this.already_terminated()) return undefined;
-                if(caller != this.licensee) return 'not permitted';
-                this.comment_text = comment_text;
-                main.log(caller, "✓ Comment Text registered");
-                return 'done.';
-            }
-
-
-            /* Publication clause */
-
-            /*
-             |  CLAUSE: Publication.
-             |  The Licensee may certify this License as Published.
-             */
-
-            publication(caller)  {
-                if(this.already_terminated()) return undefined;
-                if(caller != this.licensee) return 'not permitted';
-                this.published = true;
-                main.log(caller, "✓ Published certified");
-                return 'done.';
-            }
-
-
-            /* Grant Permission to Comment clause */
-
-            /*
-             |  CLAUSE: Grant Permission to Comment.
-             |  The Licensee may grant the Permission to Comment.
-             */
-
-            grant_permission_to_comment(caller)  {
-                if(this.already_terminated()) return undefined;
-                if(caller != this.licensee) return 'not permitted';
-                this.permission_to_comment = true;
-                main.log(caller, "✓ Permission to Comment granted");
-                return 'done.';
-            }
-
-
-            /* Declare Breach clause */
-
-            /*
-             |  CLAUSE: Declare Breach.
-             |  The Arbiter may, if this License is Factually Breached:
-             |  pay the Breach Fee to the Licensor,
-             |  and afterwards terminate this License.
-             */
-
-            declare_breach(caller)  {
-                if(this.already_terminated()) return undefined;
-                if(caller != main.arbiter) return 'not permitted';
-                if(this.factually_breached()) {
-                    main.transfer(caller, main.arbiter, main.licensor, main.breach_fee);
-                    this.termination(caller);
-                }
-                return 'done.';
-            }
-
-
-            /* Factually Breached clause */
-
-            /*
-             |  CLAUSE: Factually Breached.
-             |  "Factually Breached" is defined as:
-             |  this License is Commissioned and the Comment Text is not fixed,
-             |  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
-             */
-
-            factually_breached()  {
-                return ((this.commissioned && !this.comment_text)
-                         || (this.published && (!this.permission_to_comment && (this.notice_time <= (Date.now() - (24 * 3600000))))));
-            }
-
-
-            /* Notice clause */
-
-            /*
-             |  CLAUSE: Notice.
-             |  The Licensor or the Arbiter may fix the Notice Time as the respective current time.
-             */
-
-            notice(caller)  {
-                if(this.already_terminated()) return undefined;
-                if(!(caller == main.arbiter || caller == main.licensor)) return 'not permitted';
-                this.notice_time = Date.now();
-                main.log(caller, "✓ Notice Time fixed");
-                return 'done.';
-            }
-
-
-            /* Noticed clause */
-
-            /*
-             |  CLAUSE: Noticed.
-             |  "Noticed" is defined as a Notice Time being fixed.
-             */
-
-            noticed()  {
-                return this.notice_time;
-            }
-
-
-            /* built-in termination of this covenant */
-
-            termination(caller) {
-                this.terminated = true;
-                main.log(caller, '■ covenant terminated');
-            }
-
-            already_terminated() {
-                if(!this.terminated) return false;
-                console.log('✕ covenant previously terminated');
-                return true;
             }
         }
 
@@ -316,9 +262,8 @@ module.exports = class EvaluationLicenseSystem {
 
     /* create new instance of License covenant, and register it with main */
 
-    add_license(caller, licensee, description_of_goods) {
-        if (this.already_terminated()) return undefined;
-        return this._license_list[this._license_count += 1] = this.License(caller, licensee, description_of_goods);
+    add_license(caller, creation_fee, licensee, description_of_goods) {
+        return this._license_list[this._license_count += 1] = this.License(caller, creation_fee, licensee, description_of_goods);
     }
 
 
@@ -340,6 +285,52 @@ module.exports = class EvaluationLicenseSystem {
 
     static load() {
         return new EvaluationLicenseSystem();
+    }
+
+    /* built-in tar-balling of code, log and state. */
+
+    bundle() {
+        console.log('> bundling into contract.tgz');
+        tar.create({gzip:true, file:'contract.tgz'}, ['cover/evaluation-97g-payable-constructors.lex', 'cover/evaluation-97g-payable-constructors.jsx', 'state', 'log', 'INSTRUCTIONS.TXT']);
+    }
+
+    /* built-in untar-balling of code, log and state. */
+
+    static unbundle() {
+        console.log('> unbundling contract.tgz');
+        tar.extract('contract.tgz');
+    }
+
+    /* built-in email sending of code, log and state. */
+
+    send() {
+
+        this.persist();
+        this.bundle();
+
+        console.log('> sending via email');
+        var receiver = prompt('enter receiver address: ');
+
+        var config = fs.readFileSync('config', ()=>{});
+        var email = eval('(' + config + ')').email;
+        console.log(email);
+
+        var transporter = nodemailer.createTransport({
+            service: email.service,
+            auth: { user: email.user, pass: email.pass }});
+
+        var mailOptions = {
+            from: email.from,
+            to: receiver,
+            subject: email.subject,
+            text: email.text,
+            attachments: { path: './contract.tgz', contentType: 'application/gzip' }};
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('> email sent: ' + info.response); }});
     }
 
     /* built-in logging of state changes. */
