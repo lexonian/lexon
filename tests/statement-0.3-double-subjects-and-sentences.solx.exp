@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 /** Lexon-generated Solidity code
-
  **
  **	code:        UCC Financing Statement
  **
@@ -14,9 +13,9 @@ pragma solidity ^0.8.17;
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     solidity 0.3.97f U
+ **	backend:     solidity 0.3.97g U
  **
- **	target:      solidity 0.8+
+ **	target:      solidity 0.8.17+
  **
  **	options:     --solidity  --all-auxiliaries 
  **
@@ -47,26 +46,26 @@ pragma solidity ^0.8.17;
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Filing Office or Filer>> ⟶  multi_certify(<file_number : string>, <filing_office : address payable>)
-   • <<Secured Party or Filing Office or Filer>> ⟶  triple_certify(<file_number : string>, <filing_office : address payable>, <reminder_fee : uint>)
-   • <<Filing Office>> ⟶  value_certify(<reminder_fee : uint>)
-   • <<Filer>> ⟶  alternate_certify(<file_number : string>, <filing_office : address payable>)
-   • <<Filing Office or Filer>> ⟶  super_certify(<file_number : string>, <filing_office : address payable>, <file_number : string>, <filer : address payable>, <filing_office : address payable>)
-   • <<Filing Office>> ⟶  set_file_date()
-   • <<Filing Office>> ⟶  set_lapse(<lapse_date : uint>)
-   • <<Filing Office>> ⟶  set_continuation_start(<continuation_window_start : uint>)
-   • <<Secured Party>> ⟶  pay_fee()
-   • <<Filing Office>> ⟶  notice(<notification_statement : string>)
-   • <<Debtor>> ⟶  pay_escrow_in()
-   • <<Secured Party>> ⟶  fail_to_pay()
-   • <<Filing Office>> ⟶  take_possession()
-   • <<Secured Party>> ⟶  file_continuation(<continuation_statement : bool>)
-   • <<Filing Office>> ⟶  set_continuation_lapse(<continuation_statement_date : uint>)
-   • <<Secured Party>> ⟶  file_termination(<termination_statement : bool>)
-   • <<Filing Office>> ⟶  release_escrow()
-   • <<Filing Office>> ⟶  release_reminder_fee()
-   • <<Filing Office>> ⟶  termination_period()
-   • <<Filing Office>> ⟶  terminate_and_clear()
+   • <<Filing Office or Filer>> ⟶   multi_certify(<file_number : string>, <filing_office : address payable>)
+   • <<Secured Party or Filing Office or Filer>> ⟶   triple_certify(<file_number : string>, <filing_office : address payable>, <reminder_fee : uint>)
+   • <<Filing Office>> ⟶   value_certify(<reminder_fee : uint>)
+   • <<Filer>> ⟶   alternate_certify(<file_number : string>, <filing_office : address payable>)
+   • <<Filing Office or Filer>> ⟶   super_certify(<file_number : string>, <filing_office : address payable>, <file_number : string>, <filer : address payable>, <filing_office : address payable>)
+   • <<Filing Office>> ⟶   set_file_date()
+   • <<Filing Office>> ⟶   set_lapse(<lapse_date : uint>)
+   • <<Filing Office>> ⟶   set_continuation_start(<continuation_window_start : uint>)
+   • <<Secured Party>> ⟶   pay_fee()
+   • <<Filing Office>> ⟶   notice(<notification_statement : string>)
+   • <<Debtor>> ⟶   pay_escrow_in()
+   • <<Secured Party>> ⟶   fail_to_pay()
+   • <<Filing Office>> ⟶   take_possession()
+   • <<Secured Party>> ⟶   file_continuation(<continuation_statement : bool>)
+   • <<Filing Office>> ⟶   set_continuation_lapse(<continuation_statement_date : uint>)
+   • <<Secured Party>> ⟶   file_termination(<termination_statement : bool>)
+   • <<Filing Office>> ⟶   release_escrow()
+   • <<Filing Office>> ⟶   release_reminder_fee()
+   • anyone ⟶   termination_period()
+   • <<Filing Office>> ⟶   terminate_and_clear()
  */
 
 /**
@@ -163,8 +162,8 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Multi Certify.
-     *  The Filer or the Filing Office may certify the File Number.
-     *  The Filer or the Filing Office may appoint a Filing Office.
+     |  The Filer or the Filing Office may certify the File Number.
+     |  The Filer or the Filing Office may appoint a Filing Office.
      */
 
     function multi_certify(string memory _file_number, address payable _filing_office) public {
@@ -183,9 +182,9 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Triple Certify.
-     *  The Filer or the Filing Office or the Secured Party may certify the File Number.
-     *  The Filer or the Filing Office may appoint a Filing Office.
-     *  The Filing Office may fix the Reminder Fee.
+     |  The Filer or the Filing Office or the Secured Party may certify the File Number.
+     |  The Filer or the Filing Office may appoint a Filing Office.
+     |  The Filing Office may fix the Reminder Fee.
      */
 
     function triple_certify(string memory _file_number, address payable _filing_office, uint _reminder_fee) public {
@@ -207,7 +206,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Value Certify.
-     *  The Filing Office may fix the Reminder Fee.
+     |  The Filing Office may fix the Reminder Fee.
      */
 
     function value_certify(uint _reminder_fee) public {
@@ -221,8 +220,8 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Alternate Certify.
-     *  The Filer may certify the File Number.
-     *  The Filing Office may appoint a Filing Office.
+     |  The Filer may certify the File Number.
+     |  The Filing Office may appoint a Filing Office.
      */
 
     function alternate_certify(string memory _file_number, address payable _filing_office) public {
@@ -241,11 +240,11 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Super Certify.
-     *  The Filer or the Filing Office may certify the File Number.
-     *  The Filer or the Filer may appoint the Filing Office as themselves. 
-     *  The Filer may certify the File Number.
-     *  The Filer may certify the Filer.
-     *  The Filing Office may appoint a Filing Office.
+     |  The Filer or the Filing Office may certify the File Number.
+     |  The Filer or the Filer may appoint the Filing Office as themselves. 
+     |  The Filer may certify the File Number.
+     |  The Filer may certify the Filer.
+     |  The Filing Office may appoint a Filing Office.
      */
 
     function super_certify(string memory _file_number, address payable _filing_office, string memory _file_number, address payable _filer, address payable _filing_office) public {
@@ -273,7 +272,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Set File Date.
-     *  The Filing Office may fix the Initial Statement Date as the current time.
+     |  The Filing Office may fix the Initial Statement Date as the current time.
      */
 
     function set_file_date() public {
@@ -287,7 +286,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Set Lapse.
-     *  The Filing Office may fix the Lapse Date.
+     |  The Filing Office may fix the Lapse Date.
      */
 
     function set_lapse(uint _lapse_date) public {
@@ -301,7 +300,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Set Continuation Start.
-     *  The Filing Office may fix the Continuation Window Start.
+     |  The Filing Office may fix the Continuation Window Start.
      */
 
     function set_continuation_start(uint _continuation_window_start) public {
@@ -315,7 +314,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Pay Fee.
-     *  The Secured Party may pay a Reminder Fee into escrow.
+     |  The Secured Party may pay a Reminder Fee into escrow.
      */
 
     function pay_fee() public view {
@@ -328,7 +327,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Notice.
-     *  The Filing Office may fix the Notification Statement.
+     |  The Filing Office may fix the Notification Statement.
      */
 
     function notice(string memory _notification_statement) public {
@@ -342,7 +341,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Pay Escrow In.
-     *  The Debtor may pay the Digital Asset Collateral into escrow.
+     |  The Debtor may pay the Digital Asset Collateral into escrow.
      */
 
     function pay_escrow_in() public payable {
@@ -357,7 +356,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Fail to Pay.
-     *  The Secured Party may declare Default.
+     |  The Secured Party may declare Default.
      */
 
     function fail_to_pay() public {
@@ -371,7 +370,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Take Possession.
-     *  The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party.
+     |  The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party.
      */
 
     function take_possession() public {
@@ -387,7 +386,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: File Continuation.
-     *  The Secured Party may file the Continuation Statement.
+     |  The Secured Party may file the Continuation Statement.
      */
 
     function file_continuation(bool _continuation_statement) public {
@@ -401,7 +400,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Set Continuation Lapse.
-     *  The Filing Office may, if the Continuation Statement is filed, fix the Continuation Statement Date.
+     |  The Filing Office may, if the Continuation Statement is filed, fix the Continuation Statement Date.
      */
 
     function set_continuation_lapse(uint _continuation_statement_date) public {
@@ -417,7 +416,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: File Termination.
-     *  The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time.
+     |  The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time.
      */
 
     function file_termination(bool _termination_statement) public {
@@ -432,7 +431,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Release Escrow.
-     *  The Filing Office may, if the Termination Statement is filed, return the Digital Asset Collateral to the Debtor.
+     |  The Filing Office may, if the Termination Statement is filed, return the Digital Asset Collateral to the Debtor.
      */
 
     function release_escrow() public {
@@ -448,7 +447,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Release Reminder Fee.
-     *  The Filing Office may, if the Termination Statement is filed, return the Reminder Fee to the Secured Party.
+     |  The Filing Office may, if the Termination Statement is filed, return the Reminder Fee to the Secured Party.
      */
 
     function release_reminder_fee() public {
@@ -464,7 +463,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Termination Period.
-     *  "Termination Period" is defined as 365 days after the Termination Statement Time.
+     |  "Termination Period" is defined as 365 days after the Termination Statement Time.
      */
 
     function termination_period() public view returns(uint) {
@@ -476,7 +475,7 @@ contract UCCFinancingStatement {
 
     /*
      |  Clause: Terminate and Clear.
-     *  The Filing Office may, if the Termination Period has passed, terminate this contract.
+     |  The Filing Office may, if the Termination Period has passed, terminate this contract.
      */
 
     function terminate_and_clear() public {

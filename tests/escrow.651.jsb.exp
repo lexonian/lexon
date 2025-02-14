@@ -9,27 +9,27 @@ module.exports = class Escrow {
         this.arbiter = arbiter;
         this.amount = amount;
         this.fee = fee;
-        this._pay(this.buyer, 'escrow', this.amount);
+        this.transfer(this.buyer, 'escrow', this.amount);
     }
 
 
 
     pay_out(caller)  {
         if(caller != this.arbiter) return 'not permitted';
-        this._pay('escrow', this.arbiter, this.fee);
-        this._pay('escrow', this.seller, this._escrow);
+        this.transfer('escrow', this.arbiter, this.fee);
+        this.transfer('escrow', this.seller, this._escrow);
     }
 
 
     pay_back(caller)  {
         if(caller != this.arbiter) return 'not permitted';
-        this._pay('escrow', this.arbiter, this.fee);
-        this._pay('escrow', this.buyer, this._escrow);
+        this.transfer('escrow', this.arbiter, this.fee);
+        this.transfer('escrow', this.buyer, this._escrow);
     }
 
 
-    _pay(from, to, amount) {
-        console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);
+    transfer(from, to, amount) {
+        console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }

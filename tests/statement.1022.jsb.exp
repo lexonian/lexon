@@ -59,7 +59,7 @@ module.exports = class UCCFinancingStatement {
         if(this.already_terminated()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.reminder_fee = reminder_fee;
-        this._pay(this.secured_party, 'escrow', this.reminder_fee);
+        this.transfer(this.secured_party, 'escrow', this.reminder_fee);
     }
 
 
@@ -83,7 +83,7 @@ module.exports = class UCCFinancingStatement {
         if(this.already_terminated()) return undefined;
         if(caller != this.debtor) return 'not permitted';
         this.digital_asset_collateral = digital_asset_collateral;
-        this._pay(this.debtor, 'escrow', this.digital_asset_collateral);
+        this.transfer(this.debtor, 'escrow', this.digital_asset_collateral);
     }
 
 
@@ -98,7 +98,7 @@ module.exports = class UCCFinancingStatement {
         if(this.already_terminated()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.default_) {
-            this._pay(this.filing_office, this.secured_party, this.digital_asset_collateral);
+            this.transfer(this.filing_office, this.secured_party, this.digital_asset_collateral);
         }
     }
 
@@ -131,7 +131,7 @@ module.exports = class UCCFinancingStatement {
         if(this.already_terminated()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_statement) {
-            this._pay(this.filing_office, this.debtor, this.digital_asset_collateral);
+            this.transfer(this.filing_office, this.debtor, this.digital_asset_collateral);
         }
     }
 
@@ -140,7 +140,7 @@ module.exports = class UCCFinancingStatement {
         if(this.already_terminated()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_statement) {
-            this._pay(this.filing_office, this.secured_party, this.reminder_fee);
+            this.transfer(this.filing_office, this.secured_party, this.reminder_fee);
         }
     }
 
@@ -169,8 +169,8 @@ module.exports = class UCCFinancingStatement {
     }
 
 
-    _pay(from, to, amount) {
-        console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);
+    transfer(from, to, amount) {
+        console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }

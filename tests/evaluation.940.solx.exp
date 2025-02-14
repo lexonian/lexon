@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 /** Lexon-generated Solidity code
-
  **
  **	code:        Evaluation License System
  **
@@ -18,9 +17,9 @@ pragma solidity ^0.8.17;
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     solidity 0.3.97f U
+ **	backend:     solidity 0.3.97g U
  **
- **	target:      solidity 0.8+
+ **	target:      solidity 0.8.17+
  **
  **	options:     --solidity  --all-auxiliaries 
  **
@@ -55,15 +54,15 @@ pragma solidity ^0.8.17;
    The following are actions that can be performed per License.
 
    > license = evaluation.add_license(<licensee : address payable>, <description_of_goods : string>)
-   • <<Licensee>> ⟶  pay()
-   • <<Licensor>> ⟶  commission()
-   • <<Licensee>> ⟶  comment(<comment_text : string>)
-   • <<Licensee>> ⟶  publication()
-   • <<Licensee>> ⟶  grant_permission_to_comment()
-   • <<Agent>> ⟶  declare_breach()
-   • <<Agent or Licensor>> ⟶  factually_breached()
-   • <<Agent or Licensor>> ⟶  notice()
-   • %26%noticed()
+   • <<Licensee>> ⟶   pay()
+   • <<Licensor>> ⟶   commission()
+   • <<Licensee>> ⟶   comment(<comment_text : string>)
+   • <<Licensee>> ⟶   publication()
+   • <<Licensee>> ⟶   grant_permission_to_comment()
+   • <<Agent>> ⟶   declare_breach()
+   • anyone ⟶   factually_breached()
+   • <<Agent or Licensor>> ⟶   notice()
+   • anyone ⟶   noticed()
  */
 
 /**

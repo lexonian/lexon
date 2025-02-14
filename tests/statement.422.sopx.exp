@@ -10,9 +10,9 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     sophia 0.3.97f U
+ **	backend:     sophia 0.3.97g U
  **
- **	target:      sophia 6+
+ **	target:      sophia 7.1+
  **
  **	options:     --sophia  --all-auxiliaries 
  **
@@ -47,23 +47,23 @@
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Filing Office>> ⟶  certify(<file_number : option(string)>)
-   • <<Filing Office>> ⟶  set_file_date()
-   • <<Filing Office>> ⟶  set_lapse(<lapse_date : option(int)>)
-   • <<Filing Office>> ⟶  set_continuation_start(<continuation_window_start : option(int)>)
-   • <<Secured Party>> ⟶  pay_fee()
-   • <<Filing Office>> ⟶  notice(<notification_statement : option(string)>)
-   • <<Filing Office>> ⟶  notify()
-   • <<Debtor>> ⟶  pay_escrow_in()
-   • <<Secured Party>> ⟶  fail_to_pay()
-   • <<Filing Office>> ⟶  take_possession()
-   • <<Secured Party>> ⟶  file_continuation(<continuation_statement : option(bool)>)
-   • <<Filing Office>> ⟶  set_continuation_lapse(<continuation_statement_date : option(int)>)
-   • <<Secured Party>> ⟶  file_termination(<termination_statement : option(bool)>)
-   • <<Filing Office>> ⟶  release_escrow()
-   • <<Filing Office>> ⟶  release_reminder_fee()
-   • <<Filing Office>> ⟶  termination_period()
-   • <<Filing Office>> ⟶  terminate_and_clear()
+   • <<Filing Office>> ⟶   certify(<file_number : option(string)>)
+   • <<Filing Office>> ⟶   set_file_date()
+   • <<Filing Office>> ⟶   set_lapse(<lapse_date : option(int)>)
+   • <<Filing Office>> ⟶   set_continuation_start(<continuation_window_start : option(int)>)
+   • <<Secured Party>> ⟶   pay_fee()
+   • <<Filing Office>> ⟶   notice(<notification_statement : option(string)>)
+   • <<Filing Office>> ⟶   notify()
+   • <<Debtor>> ⟶   pay_escrow_in()
+   • <<Secured Party>> ⟶   fail_to_pay()
+   • <<Filing Office>> ⟶   take_possession()
+   • <<Secured Party>> ⟶   file_continuation(<continuation_statement : option(bool)>)
+   • <<Filing Office>> ⟶   set_continuation_lapse(<continuation_statement_date : option(int)>)
+   • <<Secured Party>> ⟶   file_termination(<termination_statement : option(bool)>)
+   • <<Filing Office>> ⟶   release_escrow()
+   • <<Filing Office>> ⟶   release_reminder_fee()
+   • anyone ⟶   termination_period()
+   • <<Filing Office>> ⟶   terminate_and_clear()
  */
 
 @compiler >=6

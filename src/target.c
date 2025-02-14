@@ -64,18 +64,18 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.97f U"
+/*JS */ #define backend_version "javascript 0.3.97g U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.97f U"
-/*Sol*/ #define target_version "solidity 0.8+"
+/*Sol*/ #define backend_version "solidity 0.3.97g U"
+/*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.97f U"
-/*Sop*/ #define target_version "sophia 6+" ///// update, ◊ tie to [5] 
+/*Sop*/ #define backend_version "sophia 0.3.97g U"
+/*Sop*/ #define target_version "sophia 7.1+"
 
 #define CYCLE_2 true
 
@@ -1244,8 +1244,8 @@ static bool is_payment(Predicates *predicates) {
 		/* source code head */
 /*JS */		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Javascript ");
 /*Sol*/		padcat(0, indent, production, "// SPDX-License-Identifier: UNLICENSED\n"); // make parameter ◊
-/*Sol*/		padcat(0, indent, production, "pragma solidity ^0.8.17;\n\n"); // tie to [5]
-/*Sol*/		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Solidity code\n");
+/*Sol*/		padcat(0, indent, production, "pragma solidity ^0.8.17;\n\n"); // sync w/[5]
+/*Sol*/		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Solidity code");
 /*Sop*/		if(!opt_bare) padcat(0, indent, production, "/** Lexon-generated Sophia code");
 		if(!opt_bare) padcat(1, indent, production, " **");
 
@@ -1343,14 +1343,14 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		padcat(0, indent, production, "module.exports = class ", camel_spaced(module), " {%21%"); // %21%: member initialization by parameters
 /*JS */		padcat(1, indent+1, production, "constructor(%1%) {"); // sic not C. %1%: constructor parameters
 /*JS */		padcat(1, 0, production, "%20%"); // %20%: closure 'main = this'
-/*Sol*/		padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%\n"); // %27%: member declaration
-/*Sol*/		padcat(1, indent+1, production, "%29%constructor(%1%) %28%{"); // %29%: emits, %1%: constructor parameters, sol %28%: payable
+/*Sol*/		padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%"); // %27%: member declaration
+/*Sol*/		padcat(2, indent+1, production, "%29%constructor(%1%) %28%{"); // %29%: emits, %1%: constructor parameters, %28%: payable
 /*Sop*/		padcat(2, indent, production, "main contract ", camel_spaced(module), " =");
 /*Sop*/		padcat(2, indent+1, production, "record state = {");
 /*Sop*/		padcat(0, indent  , production, "%27%"); // %27%: member declaration
 /*Sop*/		padcat(1, indent+2, production, "}\n");
-/*Sop*/		padcat(1, indent+1, production, "%29%entrypoint init(%1%) = {%32%"); // %29%: emits, %1%: constructor parameters, %32%: initializations
-/*Sop*/		padcat(1, indent+2, production, "}\n");
+/*Sop*/		padcat(1, indent+1, production, "%29%%28%entrypoint init(%1%) = {%32%"); // %29%: emits, %28% payable, %1%: paras, %32%: initializations
+/*Sop*/		padcat(1, indent+2, production, "}\n"); // ^ ◊ payable ?
 
 		main_constructor_body = true;
 		main_contract = true;
@@ -1541,12 +1541,12 @@ static bool is_payment(Predicates *predicates) {
 		}
 
 /*JS */		/* log() - log function, with optionally hash chain and signatures */
-/*JS */		if(opt_log /* /////// || opt_feedback */) {
+/*JS */		if(opt_log /* // ◊ || opt_feedback */) {
 /*JS */			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in logging of state changes. */");
 /*JS */			padcat(C, indent+1, &auxfuncs, "log(caller, msg) {");
 /*JS */		}
 
-/*JS */		/////// should be unnecesary. log() is not used but console.log is produced everywhere if !opt_log
+/*JS */		// ◊ should be unnecesary. log() is not used but console.log is produced everywhere if !opt_log
 /*JS */		if(opt_feedback)
 /*JS */			/* to console */
 /*JS */			padcat(1, indent+2, &auxfuncs, "console.log(msg);");
@@ -1615,13 +1615,13 @@ static bool is_payment(Predicates *predicates) {
 
 		/* pay() */
 		if(uses_pay) {
-/*JS */			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in pay message */");
+/*JS */			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in transfer message */");
 /*S+S*/			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in safe transfer */");
-/*JS */			padcat(C, indent+1, &auxfuncs, "_pay(", (opt_log)?"caller, ":"", "from, to, amount) {"); ////// harmonize to 'transfer'
+/*JS */			padcat(C, indent+1, &auxfuncs, "transfer(", (opt_log)?"caller, ":"", "from, to, amount) {");
 /*Sol*/			padcat(C, indent+1, &auxfuncs, "function transfer(address _to, uint _amount) internal {");
 /*Sop*/			padcat(C, indent+1, &auxfuncs, "stateful function transfer(to : address, amount : int) =");
-/*JS */			if(opt_log) padcat(1, indent+2, &auxfuncs, (!class?"this":"main"), ".log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);");
-/*JS */			else padcat(1, indent+2, &auxfuncs, "console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);");
+/*JS */			if(opt_log) padcat(1, indent+2, &auxfuncs, (!class?"this":"main"), ".log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);");
+/*JS */			else padcat(1, indent+2, &auxfuncs, "console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);");
 /*Sol*/			padcat(1, indent+2, &auxfuncs, "(bool _success, ) = _to.call{value:_amount}(\"\");");
 /*Sol*/			padcat(1, indent+2, &auxfuncs, "require(_success, \"transfer failed on receiver side\");");
 /*Sop*/			padcat(1, indent+2, &auxfuncs, "Chain.spend(to, amount)");
@@ -1655,7 +1655,7 @@ static bool is_payment(Predicates *predicates) {
 		}
 
 /*S+S*/		/* place message structure definitions (emits) */
-/*S+S*/		replace(production, "%29%", emits); ///// correct for S+S?
+/*S+S*/		replace(production, "%29%", emits); // ◊ correct for S+S?
 
 /*S+S*/		/* sol+sop: permit - optimized require() */
 /*S+S*/		if(uses_permit) {
@@ -1933,12 +1933,12 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		padcat(2, indent  , production, "class ", class, " {");
 /*JS */		padcat(2, indent+1, production, "constructor(%2%) {");
 /*Sol*/		padcat(2, indent  , production, "contract ", class, " {");
-/*Sol*/         padcat(1, indent+1, production, "constructor(%2%) {"); // %2%: constructor parameters, ////// payable
+/*Sol*/         padcat(2, indent+1, production, "constructor(%2%) %28%{"); // %2%: constructor parameters, %28%: payable
 /*Sop*/		padcat(2, indent  , production, "contract ", class, " =");
 /*Sop*/		padcat(2, indent+1, production, "record state = {");
 /*Sop*/		padcat(0, indent  , production, "%27C%"); // %27C%: covenant member declaration
 /*Sop*/		padcat(1, indent+2, production, "}\n");
-/*Sop*/		padcat(1, indent+1, production, "%29%entrypoint init(%2%) = {%32C%"); // %29%: emits, %1%: constructor parameters, %32C%: covenant initializations
+/*Sop*/		padcat(1, indent+1, production, "%29%%28%entrypoint init(%2%) = {%32C%"); // %29%: emits, %28%: payable, %1%: paras, %32C%: initializations
 /*Sop*/		padcat(1, indent+2, production, "}");
 
 
@@ -2121,7 +2121,7 @@ static bool is_payment(Predicates *predicates) {
 
 		/* insert caller argumnet and 'payable' modifier */
 /*JS */		replace(production, "%7%", caller?caller:"caller"); // ! caller is not yet set at (*) above.
-/*Sol*/		replace(production, "%28%", is_payable?"payable ":"");
+/*S+S*/		replace(production, "%28%", is_payable?"payable ":"");
 
 		/* clauses */
 /*T*/		xxx_clauses(instance ? production : &methods, Provisions->Clauses, indent - (instance ? 0 : 1));
@@ -2349,7 +2349,7 @@ static bool is_payment(Predicates *predicates) {
 			mtrac_free(clause);
 			assert(c);
 			if(main_constructor_body) {
-				replace(&c, "\n", "\n     *  "); // ◊◊◊
+				replace(&c, "\n", "\n    " LEXCOM1 " ");
 				padcat(2, 0, production, "    " LEXCOM0 "\n    " LEXCOM1 " ", c, "\n    " LEXCOM2);
 			} else {
 /*JS */				replace(&c, "\n", "\n            " LEXCOM1 " ");
@@ -2377,6 +2377,7 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/		replace(production, "%33%", !is_stateful ? " view" : "");
 /*Sop*/		replace(production, "%30%", is_payable ? "payable " : "");
 /*Sop*/		replace(production, "%33%", is_stateful ? "stateful " : "");
+/*S+S*/		replace(&instructions, "%26%", "anyone ⟶   "); // in case no subject
 
 		paratag = -1;
 		current_function = null; // not used in recitals
@@ -2390,8 +2391,14 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		return true;
 /*T*/	}
 /*T*/
-	char *courtesy; // courtesy warning if no subject of a multi-sentence clause could access.
+	/* Early catch if no subject of a multi-sentence clause could access.
+	   It's not really a courtesy only, for multi-sentence clauses
+	   where one sentence has NO subject. This summary access control
+	   protects the subject-less sentences. They are only reachable when
+	   any of the other sentences that has a subject is. */
+	char *courtesy;
 	char *courtesy_track;
+
 /*T*/	bool xxx_body(char **production, Body *Body, int indent) {
 /*T*/		if(!Body) return false;
 /*T*/		if(opt_debug) printf("producing Body\n");
@@ -2671,8 +2678,8 @@ static bool is_payment(Predicates *predicates) {
 			s = s->Symbols;
 			first = false;
 		}
-		if(strlen(*para)) padcat(0, 0, para, ">>"); // .. sometimes produces >>>>
-/*S+S*/		if(strlen(*para)) concat(para, " ⟶  ");
+		if(strlen(*para)) padcat(0, 0, para, ">>"); /// .. sometimes produces >>>>
+/*S+S*/		if(strlen(*para)) concat(para, " ⟶   ");
 /*S+S*/		replace(&instructions, "%26%", *para);
 /*S+S*/		mtrac_free(_para);
 
@@ -3090,7 +3097,7 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(opt_debug) printf("producing Pay\n");
 		uses_pay = true;
 /*S+S*/		is_stateful = true;
-/*JS */		padcat(1, indent, production, (class?"main":"this"), "._pay(", (opt_log)?"caller, ":"");
+/*JS */		padcat(1, indent, production, (class?"main":"this"), ".transfer(", (opt_log)?"caller, ":"");
 /*S+S*/		padcat(1, indent, production, "transfer(");
 		if(current_function) current_function->uses_caller |= opt_log || opt_feedback;
 /*T*/		return true;
@@ -3709,7 +3716,7 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		bool use_sender = !active_subjects && !msg_sender && !strcmp("person", lextype(pretty_varname));
 /*S+S*/		if(use_sender) msg_sender = mtrac_strdup(pretty_varname);
 /*S+S*/		bool use_value = payment && !msg_value && !strcmp("amount", lextype(pretty_varname));
-		// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
+		/// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
 /*S+S*/		if(use_value) msg_value = mtrac_strdup(pretty_varname);
 /*S+S*/		is_payable |= !!use_value;
 /*S+S*/		is_stateful = true;

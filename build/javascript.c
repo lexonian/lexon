@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.97f U"
+#define backend_version "javascript 0.3.97g U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -1479,13 +1479,13 @@ bool js_document(char **production, Document *Document, int indent) {
 	}
 
 	/* log() - log function, with optionally hash chain and signatures */
-	if (opt_log /* /////// || opt_feedback */ ) {
+	if (opt_log /* // ◊ || opt_feedback */ ) {
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
 					"/* built-in logging of state changes. */");
 		padcat(C, indent + 1, &auxfuncs, "log(caller, msg) {");
 	}
 
-	/////// should be unnecesary. log() is not used but console.log is produced everywhere if !opt_log
+	// ◊ should be unnecesary. log() is not used but console.log is produced everywhere if !opt_log
 	if (opt_feedback)
 		/* to console */
 		padcat(1, indent + 2, &auxfuncs, "console.log(msg);");
@@ -1582,14 +1582,15 @@ bool js_document(char **production, Document *Document, int indent) {
 	/* pay() */
 	if (uses_pay) {
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* built-in pay message */");
+					"/* built-in transfer message */");
 
-		padcat(C, indent + 1, &auxfuncs, "_pay(", (opt_log) ? "caller, " : "", "from, to, amount) {");	////// harmonize to 'transfer'
+		padcat(C, indent + 1, &auxfuncs, "transfer(",
+		       (opt_log) ? "caller, " : "", "from, to, amount) {");
 		if (opt_log) padcat(1, indent + 2, &auxfuncs,
 				    (!class ? "this" : "main"),
-				    ".log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);");
+				    ".log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);");
 		else padcat(1, indent + 2, &auxfuncs,
-			    "console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);");
+			    "console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);");
 		/* track escrow balance */
 		padcat(1, indent + 2, &auxfuncs,
 		       "if(from == 'escrow') main._escrow -= amount;");
@@ -2236,7 +2237,7 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 		mtrac_free(clause);
 		assert(c);
 		if (main_constructor_body) {
-			replace(&c, "\n", "\n     *  ");	// ◊◊◊
+			replace(&c, "\n", "\n    " LEXCOM1 " ");
 			padcat(2, 0, production,
 			       "    " LEXCOM0 "\n    " LEXCOM1 " ", c,
 			       "\n    " LEXCOM2);
@@ -2257,7 +2258,6 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 	if (Clause->Name) mtrac_concat(&functions, ":", Clause->Name, ":");
 
 	js_body(production, Clause->Body, indent);
-
 	paratag = -1;
 	current_function = null;       // not used in recitals
 
@@ -2268,8 +2268,14 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 	return true;
 }
 
-char *courtesy;			       // courtesy warning if no subject of a multi-sentence clause could access.
+	/* Early catch if no subject of a multi-sentence clause could access.
+	 * It's not really a courtesy only, for multi-sentence clauses
+	 * where one sentence has NO subject. This summary access control
+	 * protects the subject-less sentences. They are only reachable when
+	 * any of the other sentences that has a subject is. */
+char *courtesy;
 char *courtesy_track;
+
 bool js_body(char **production, Body *Body, int indent) {
 	if (!Body) return false;
 	if (opt_debug) printf("producing Body\n");
@@ -2559,7 +2565,7 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 		s = s->Symbols;
 		first = false;
 	}
-	if (strlen(*para)) padcat(0, 0, para, ">>");	// .. sometimes produces >>>>
+	if (strlen(*para)) padcat(0, 0, para, ">>");	/// .. sometimes produces >>>>
 	if (any)
 		padcat(0, 0, &subjnonmatch, ") {"), padcat(1, indent,
 							   &subjlatebind,
@@ -2973,7 +2979,7 @@ bool js_pay(char **production, Pay *Pay, int indent) {
 	if (opt_debug) printf("producing Pay\n");
 	uses_pay = true;
 
-	padcat(1, indent, production, (class ? "main" : "this"), "._pay(",
+	padcat(1, indent, production, (class ? "main" : "this"), ".transfer(",
 	       (opt_log) ? "caller, " : "");
 
 	if (current_function) current_function->uses_caller |= opt_log
@@ -3564,7 +3570,7 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 
 	/* binding to msg.sender and msg.value */
 
-	// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
+	/// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
 	/* 1: Add to the parameters and arguments list. In the produced code as well as (parameta) the instructions */
 
 	if (!current_function) {

@@ -39,8 +39,8 @@ module.exports = class EvaluationLicenseSystem {
                 if(this.already_terminated()) return undefined;
                 if(!(caller == this.licensee)) return 'not permitted';
                 if(caller == this.licensee) {
-                    main._pay(this.licensee, main.licensor, main.licensing_fee);
-                    main._pay(this.licensee, 'escrow', main.breach_fee);
+                    main.transfer(this.licensee, main.licensor, main.licensing_fee);
+                    main.transfer(this.licensee, 'escrow', main.breach_fee);
                 }
                 this.paid = true;
             }
@@ -78,7 +78,7 @@ module.exports = class EvaluationLicenseSystem {
                 if(this.already_terminated()) return undefined;
                 if(caller != main.agent) return 'not permitted';
                 if(this.factually_breached()) {
-                    main._pay(main.agent, main.licensor, main.breach_fee);
+                    main.transfer(main.agent, main.licensor, main.breach_fee);
                     this.termination();
                 }
             }
@@ -122,8 +122,8 @@ module.exports = class EvaluationLicenseSystem {
 
 
 
-    _pay(from, to, amount) {
-        console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);
+    transfer(from, to, amount) {
+        console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }

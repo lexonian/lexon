@@ -17,8 +17,8 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.97f U"
-#define target_version "solidity 0.8+"
+#define backend_version "solidity 0.3.97g U"
+#define target_version "solidity 0.8.17+"	// sync w/[5]
 #define CYCLE_2 true
 
 #include <stdlib.h>
@@ -1132,9 +1132,9 @@ bool sol_document(char **production, Document *Document, int indent) {
 	/* source code head */
 
 	padcat(0, indent, production, "// SPDX-License-Identifier: UNLICENSED\n");	// make parameter ◊
-	padcat(0, indent, production, "pragma solidity ^0.8.17;\n\n");	// tie to [5]
+	padcat(0, indent, production, "pragma solidity ^0.8.17;\n\n");	// sync w/[5]
 	if (!opt_bare) padcat(0, indent, production,
-			      "/** Lexon-generated Solidity code\n");
+			      "/** Lexon-generated Solidity code");
 
 	if (!opt_bare) padcat(1, indent, production, " **");
 
@@ -1233,8 +1233,8 @@ bool sol_document(char **production, Document *Document, int indent) {
 	paratag = strlen(*production);
 	if (!opt_bare) padcat(2, indent, production, "");
 
-	padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%\n");	// %27%: member declaration
-	padcat(1, indent + 1, production, "%29%constructor(%1%) %28%{");	// %29%: emits, %1%: constructor parameters, sol %28%: payable
+	padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%");	// %27%: member declaration
+	padcat(2, indent + 1, production, "%29%constructor(%1%) %28%{");	// %29%: emits, %1%: constructor parameters, %28%: payable
 
 	main_constructor_body = true;
 	main_contract = true;
@@ -1314,7 +1314,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 	}
 
 	/* place message structure definitions (emits) */
-	replace(production, "%29%", emits);	///// correct for S+S?
+	replace(production, "%29%", emits);	// ◊ correct for S+S?
 
 	/* sol+sop: permit - optimized require() */
 	if (uses_permit) {
@@ -1539,7 +1539,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	}
 
 	padcat(2, indent, production, "contract ", class, " {");
-	padcat(1, indent + 1, production, "constructor(%2%) {");	// %2%: constructor parameters, ////// payable
+	padcat(2, indent + 1, production, "constructor(%2%) %28%{");	// %2%: constructor parameters, %28%: payable
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
@@ -1897,7 +1897,7 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 		mtrac_free(clause);
 		assert(c);
 		if (main_constructor_body) {
-			replace(&c, "\n", "\n     *  ");	// ◊◊◊
+			replace(&c, "\n", "\n    " LEXCOM1 " ");
 			padcat(2, 0, production,
 			       "    " LEXCOM0 "\n    " LEXCOM1 " ", c,
 			       "\n    " LEXCOM2);
@@ -1921,6 +1921,7 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	replace(production, "%30%", is_payable ? " payable" : "");
 	replace(production, "%35%", "");	// take out if not used
 	replace(production, "%33%", !is_stateful ? " view" : "");
+	replace(&instructions, "%26%", "anyone ⟶   ");	// in case no subject
 
 	paratag = -1;
 	current_function = null;       // not used in recitals
@@ -1934,8 +1935,14 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	return true;
 }
 
-char *courtesy;			       // courtesy warning if no subject of a multi-sentence clause could access.
+	/* Early catch if no subject of a multi-sentence clause could access.
+	 * It's not really a courtesy only, for multi-sentence clauses
+	 * where one sentence has NO subject. This summary access control
+	 * protects the subject-less sentences. They are only reachable when
+	 * any of the other sentences that has a subject is. */
+char *courtesy;
 char *courtesy_track;
+
 bool sol_body(char **production, Body *Body, int indent) {
 	if (!Body) return false;
 	if (opt_debug) printf("producing Body\n");
@@ -2239,8 +2246,8 @@ bool sol_subject(char **production, Subject *Subject, int indent) {
 		s = s->Symbols;
 		first = false;
 	}
-	if (strlen(*para)) padcat(0, 0, para, ">>");	// .. sometimes produces >>>>
-	if (strlen(*para)) concat(para, " ⟶  ");
+	if (strlen(*para)) padcat(0, 0, para, ">>");	/// .. sometimes produces >>>>
+	if (strlen(*para)) concat(para, " ⟶   ");
 	replace(&instructions, "%26%", *para);
 	mtrac_free(_para);
 
@@ -3229,7 +3236,7 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	if (use_sender) msg_sender = mtrac_strdup(pretty_varname);
 	bool use_value = payment && !msg_value
 		&& !strcmp("amount", lextype(pretty_varname));
-	// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
+	/// trace printf("payment %d -- msg_value %s -- pretty varname %s -- lextype %s\n", payment, msg_value, pretty_varname, lextype(pretty_varname));
 	if (use_value) msg_value = mtrac_strdup(pretty_varname);
 	is_payable |= !!use_value;
 	is_stateful = true;

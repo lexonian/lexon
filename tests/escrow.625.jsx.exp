@@ -8,7 +8,7 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     javascript 0.3.97f U
+ **	backend:     javascript 0.3.97g U
  **
  **	target:      node 14.1+
  **
@@ -149,7 +149,7 @@ module.exports = class Escrow {
             /* start log - overwrites previous by same name */
 
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
-            this._pay(caller, this.payer, 'escrow', this.amount);
+            this.transfer(caller, this.payer, 'escrow', this.amount);
             this.log(payer, "✓ Payee appointed");
             this.log(payer, "✓ Agent appointed");
             this.log(payer, "✓ Service Fee fixed");
@@ -171,14 +171,14 @@ module.exports = class Escrow {
 
     /*
      |  CLAUSE: Pay Out
-     *  
-     *  The Agent may pay from escrow the Service Fee to themselves, and afterwards pay the remainder of the escrow to the Payee
+     |  
+     |  The Agent may pay from escrow the Service Fee to themselves, and afterwards pay the remainder of the escrow to the Payee
      */
 
     pay_out(caller)  {
         if(caller != this.agent) return 'not permitted';
-        this._pay(caller, 'escrow', this.agent, this.service_fee);
-        this._pay(caller, 'escrow', this.payee, this._escrow);
+        this.transfer(caller, 'escrow', this.agent, this.service_fee);
+        this.transfer(caller, 'escrow', this.payee, this._escrow);
         return 'done.';
     }
 
@@ -187,14 +187,14 @@ module.exports = class Escrow {
 
     /*
      |  CLAUSE: Pay Back
-     *  
-     *  The Agent may pay from escrow the Service Fee to themselves, and afterwards pay the remainder of the escrow to the Payer
+     |  
+     |  The Agent may pay from escrow the Service Fee to themselves, and afterwards pay the remainder of the escrow to the Payer
      */
 
     pay_back(caller)  {
         if(caller != this.agent) return 'not permitted';
-        this._pay(caller, 'escrow', this.agent, this.service_fee);
-        this._pay(caller, 'escrow', this.payer, this._escrow);
+        this.transfer(caller, 'escrow', this.agent, this.service_fee);
+        this.transfer(caller, 'escrow', this.payer, this._escrow);
         return 'done.';
     }
 
@@ -305,10 +305,10 @@ module.exports = class Escrow {
         return true;
     }
 
-    /* built-in pay message */
+    /* built-in transfer message */
 
-    _pay(caller, from, to, amount) {
-        this.log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }

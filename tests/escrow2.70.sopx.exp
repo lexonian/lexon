@@ -8,9 +8,9 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     sophia 0.3.97f U
+ **	backend:     sophia 0.3.97g U
  **
- **	target:      sophia 6+
+ **	target:      sophia 7.1+
  **
  **	options:     --sophia  --all-auxiliaries 
  **
@@ -45,8 +45,8 @@
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Agent>> ⟶  pay_out()
-   • <<Agent>> ⟶  pay_back()
+   • <<Agent>> ⟶   pay_out()
+   • <<Agent>> ⟶   pay_back()
  */
 
 @compiler >=6
@@ -81,7 +81,7 @@ main contract Escrow =
             fee : option(int)
         }
 
-    entrypoint init(seller : address, agent : address, fee : int) = {
+    payable entrypoint init(seller : address, agent : address, fee : int) = {
             payer = Some(Call.caller),
             seller = Some(seller),
             agent = Some(agent),

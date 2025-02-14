@@ -14,9 +14,9 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     sophia 0.3.97f U
+ **	backend:     sophia 0.3.97g U
  **
- **	target:      sophia 6+
+ **	target:      sophia 7.1+
  **
  **	options:     --sophia  --all-auxiliaries 
  **
@@ -55,15 +55,15 @@
    The following are actions that can be performed per License.
 
    > license = evaluation.add_license(<licensee : option(address)>, <description_of_goods : option(string)>)
-   • <<Licensee>> ⟶  pay()
-   • <<Licensor>> ⟶  commission()
-   • <<Licensee>> ⟶  comment(<comment_text : option(string)>)
-   • <<Licensee>> ⟶  publication()
-   • <<Licensee>> ⟶  grant_permission_to_comment()
-   • <<Agent>> ⟶  declare_breach()
-   • <<Agent or Licensor>> ⟶  factually_breached()
-   • <<Agent or Licensor>> ⟶  notice()
-   • %26%noticed()
+   • <<Licensee>> ⟶   pay()
+   • <<Licensor>> ⟶   commission()
+   • <<Licensee>> ⟶   comment(<comment_text : option(string)>)
+   • <<Licensee>> ⟶   publication()
+   • <<Licensee>> ⟶   grant_permission_to_comment()
+   • <<Agent>> ⟶   declare_breach()
+   • anyone ⟶   factually_breached()
+   • <<Agent or Licensor>> ⟶   notice()
+   • anyone ⟶   noticed()
  */
 
 @compiler >=6
