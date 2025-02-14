@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 alpha 96 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
+	0.3 alpha 98 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**
@@ -476,10 +476,11 @@ options.
 
 	deeptest        memory handling, includes, language parser, compiler
 	memtest         valgrind & internal memory leak tests
-	update          interactive, selective update of deeptest result references
+	update          interactive update of failing deeptests's result references
 	recheck         faster update, skipping successful tests of earlier deeptest
-	expectations    full non-interactive update of deeptest result references
-	new             creation only of missing deeptest result references
+	autoupdate      automatic update of failing deeptests's result references
+	expectations    full non-interactive update of all deeptest result references
+	new             creation of missing deeptest result references
 
 **1st level of tests: build environment**
 

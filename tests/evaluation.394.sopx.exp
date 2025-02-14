@@ -1,24 +1,25 @@
-/* Lexon-generated Sophia code
-
-   code:        Evaluation License System
-
-   preamble:    This is licensing contract for software evaluation.
-
-   authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
-
-   file:        lexon/evaluation.394.lex
-
-   code tagged: 0.2.1
-
-   compiler:    lexon 0.3 alpha 93 U
-
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
-
-   backend:     sophia 0.3.93 U
-
-   target:      sophia 6+
-
-   options:     --sophia  --all-auxiliaries 
+/** Lexon-generated Sophia code
+ **
+ **	code:        Evaluation License System
+ **
+ **	preamble:    This is licensing contract for software evaluation.
+ **
+ **	authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+ **
+ **	file:        lexon/evaluation.394.lex
+ **
+ **	code tagged: 0.2.1
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     sophia 0.3.97g U
+ **
+ **	target:      sophia 7.1+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -46,7 +47,7 @@
    These are the constructor parameters for deployment. If you are using Aestudio, the
    fields under the deploy button are where your values for them go before deploying.
 
-   <agent : option(address)>, <breach_service_fee : option(int)>
+   <agent : option(address)>, <licensing_service_fee : option(int)>, <breach_service_fee : option(int)>
 
    These are the state progress functions that allow to interact with the contract:
 
@@ -54,16 +55,16 @@
    The following are actions that can be performed per License.
 
    > license = evaluation.add_license(<licensee : option(address)>, <description_of_goods : option(string)>)
-   • <<Licensee>> ⟶  pay()
-   • <<Licensor>> ⟶  commission()
-   • <<Licensee>> ⟶  comment(<comment_text : option(string)>)
-   • <<Licensee>> ⟶  publication()
-   • <<Licensee>> ⟶  grant_permission_to_comment()
-   • <<Agent>> ⟶  declare_breach()
-   • <<Agent or Licensor>> ⟶  factually_breached()
-   • <<Agent or Licensor>> ⟶  notice()
-   • %26%noticed()
-*/
+   • <<Licensee>> ⟶   pay()
+   • <<Licensor>> ⟶   commission()
+   • <<Licensee>> ⟶   comment(<comment_text : option(string)>)
+   • <<Licensee>> ⟶   publication()
+   • <<Licensee>> ⟶   grant_permission_to_comment()
+   • <<Agent>> ⟶   declare_breach()
+   • anyone ⟶   factually_breached()
+   • <<Agent or Licensor>> ⟶   notice()
+   • anyone ⟶   noticed()
+ */
 
 @compiler >=6
 
@@ -71,40 +72,27 @@ include "Option.aes"
 
 /**
  **
- ** Main Evaluation License System contract system
+ **	Main Evaluation License System contract system
  **
  **/
 
-/** LEX: Evaluation License System.
- *	LEXON: 0.2.1
- *	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
- *	PREAMBLE: This is licensing contract for software evaluation.
- *
- *	TERMS:
- *
- *	"Licensor" is person.
- *	"Agent" is person.
- *	"Licensing Service Fee" is amount.
- *	"Breach Service Fee" is amount.
- *
- *	The Licensor appoints the Agent,
- *	fixes the Licensing Service Fee,
- *	and fixes the Breach Service Fee.
- *
- *	TERMS PER License:
- *
- *	"Description of Goods" is text.
- *	"Licensee" is person.
- *	"Paid" is binary.
- *	"Commissioned" is binary.
- *	"Comment Text" is text.
- *	"Published" is binary.
- *	"Permission to Comment" is binary.
- *	"Notice Time" is time.
- *	"License" is this contract.
- *
- *	The Licensor appoints the Licensee, and fixes the Description of Goods.
-**/
+/*
+ | 	LEX: Evaluation License System.
+ | 	LEXON: 0.2.1
+ | 	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ | 	PREAMBLE: This is licensing contract for software evaluation.
+ | 
+ | 	TERMS:
+ | 
+ | 	"Licensor" is person.
+ | 	"Agent" is person.
+ | 	"Licensing Service Fee" is amount.
+ | 	"Breach Service Fee" is amount.
+ | 
+ | 	The Licensor appoints the Agent,
+ | 	fixes the Licensing Service Fee,
+ | 	and fixes the Breach Service Fee.
+ */
 
 
 
@@ -117,170 +105,209 @@ main contract EvaluationLicenseSystem =
             breach_service_fee : option(int)
         }
 
-    entrypoint init(agent : address, breach_service_fee : int) = {
+    entrypoint init(agent : address, licensing_service_fee : int, breach_service_fee : int) = {
             licensor = Some(Call.caller),
             agent = Some(agent),
-            licensing_service_fee = Some(Call.value),
+            licensing_service_fee = Some(licensing_service_fee),
             breach_service_fee = Some(breach_service_fee)
         }
 
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
 
     /* built-in caller assertion */
+
     function permit(authorized : option(address), name : string) =
         require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
 
     /* built-in option type force function */
+
     function force(o : option('a), name : string) : 'a =
         switch(o)
             None => abort(StringInternal.concat(name, " not fixed"))
             Some(a) => a
 
-
 /* aggregation of covenants for folds and serialization */
+
 this._license_list = {};
 this._license_count = 0;
 
 /**
- ** License covenant class
+ **
+ **	License covenant class
+ **
  **/
+
+/*
+ | 	TERMS PER License
+ | 
+ | 	"Description of Goods" is text.
+ | 	"Licensee" is person.
+ | 	"Paid" is binary.
+ | 	"Commissioned" is binary.
+ | 	"Comment Text" is text.
+ | 	"Published" is binary.
+ | 	"Permission to Comment" is binary.
+ | 	"Notice Time" is time.
+ | 	"License" is this contract.
+ | 
+ | 	The Licensor appoints the Licensee, and fixes the Description of Goods.
+ */
 
 contract License =
 
     record state = {
-            description_of_goods : option(string),
-            licensee : option(address),
-            paid : option(bool),
-            commissioned : option(bool),
-            comment_text : option(string),
-            published : option(bool),
-            permission_to_comment : option(bool),
-            notice_time : option(int)
+        description_of_goods : option(string),
+        licensee : option(address),
+        paid : option(bool),
+        commissioned : option(bool),
+        comment_text : option(string),
+        published : option(bool),
+        permission_to_comment : option(bool),
+        notice_time : option(int)
         }
 
     entrypoint init(licensee : address, description_of_goods : string) = {
-            description_of_goods = Some(description_of_goods),
-            licensee = Some(licensee),
-            paid = None,
-            commissioned = None,
-            comment_text = None,
-            published = None,
-            permission_to_comment = None,
-            notice_time = None
+        description_of_goods = Some(description_of_goods),
+        licensee = Some(licensee),
+        paid = None,
+        commissioned = None,
+        comment_text = None,
+        published = None,
+        permission_to_comment = None,
+        notice_time = None
         }
 
 
-        /* Pay clause */
+    /* Pay clause */
 
     /*
-     *  CLAUSE: Pay.
-     *  The Licensee pays the Licensing Service Fee to the Licensor,
-     *  and pays the Breach Service Fee into escrow.
-     *  This License is therefore Paid.
+     |  CLAUSE: Pay.
+     |  The Licensee pays the Licensing Service Fee to the Licensor,
+     |  and pays the Breach Service Fee into escrow.
+     |  This License is therefore Paid.
      */
-        stateful entrypoint pay() =
-            check_termination()
-            if(Some(Call.caller) == licensee
-                transfer(force(state.licensor, "Licensor"), force(state.licensing_service_fee, "Licensing Service Fee"))
-            else
-                abort("not permitted")
-            paid = true;
 
-        /* Commission clause */
+    stateful entrypoint pay() =
+        check_termination()
+        require(Some(Call.caller) == licensee, "not permitted")
+        if(Some(Call.caller) == licensee)
+            transfer(force(state.licensor, "Licensor"), force(state.licensing_service_fee, "Licensing Service Fee"))
+        paid = true;
+
+
+    /* Commission clause */
 
     /*
-     *  CLAUSE: Commission.
-     *  The Licensor may certify this License as Commissioned.
+     |  CLAUSE: Commission.
+     |  The Licensor may certify this License as Commissioned.
      */
-        stateful entrypoint commission() =
-            check_termination()
-            permit(state.licensor, "Licensor")
-            put(state{commissioned = true})
 
-        /* Comment clause */
+    stateful entrypoint commission() =
+        check_termination()
+        permit(state.licensor, "Licensor")
+        put(state{commissioned = true})
+
+
+    /* Comment clause */
 
     /*
-     *  CLAUSE: Comment.
-     *  The Licensee may register Comment Text.
+     |  CLAUSE: Comment.
+     |  The Licensee may register Comment Text.
      */
-        stateful entrypoint comment(comment_text : string) =
-            check_termination()
-            permit(licensee, "Licensee")
-            put(state{comment_text = Some(comment_text)})
 
-        /* Publication clause */
+    stateful entrypoint comment(comment_text : string) =
+        check_termination()
+        permit(licensee, "Licensee")
+        put(state{comment_text = Some(comment_text)})
+
+
+    /* Publication clause */
 
     /*
-     *  CLAUSE: Publication.
-     *  The Licensee may certify this License as Published.
+     |  CLAUSE: Publication.
+     |  The Licensee may certify this License as Published.
      */
-        stateful entrypoint publication() =
-            check_termination()
-            permit(licensee, "Licensee")
-            put(state{published = true})
 
-        /* Grant Permission to Comment clause */
+    stateful entrypoint publication() =
+        check_termination()
+        permit(licensee, "Licensee")
+        put(state{published = true})
+
+
+    /* Grant Permission to Comment clause */
 
     /*
-     *  CLAUSE: Grant Permission to Comment.
-     *  The Licensee may grant the Permission to Comment.
+     |  CLAUSE: Grant Permission to Comment.
+     |  The Licensee may grant the Permission to Comment.
      */
-        stateful entrypoint grant_permission_to_comment() =
-            check_termination()
-            permit(licensee, "Licensee")
-            put(state{permission_to_comment = true})
 
-        /* Declare Breach clause */
+    stateful entrypoint grant_permission_to_comment() =
+        check_termination()
+        permit(licensee, "Licensee")
+        put(state{permission_to_comment = true})
+
+
+    /* Declare Breach clause */
 
     /*
-     *  CLAUSE: Declare Breach.
-     *  The Agent may, provided this License is Factually Breached:
-     *  pay the Breach Service Fee to the Licensor,
-     *  and afterwards terminate this License.
+     |  CLAUSE: Declare Breach.
+     |  The Agent may, provided this License is Factually Breached:
+     |  pay the Breach Service Fee to the Licensor,
+     |  and afterwards terminate this License.
      */
-        stateful entrypoint declare_breach() =
-            check_termination()
-            permit(state.agent, "Agent")
-            if(factually_breached() == Some(true))
-                transfer(force(state.licensor, "Licensor"), force(state.breach_service_fee, "Breach Service Fee"))
-                termination()
 
-        /* Factually Breached clause */
+    stateful entrypoint declare_breach() =
+        check_termination()
+        permit(state.agent, "Agent")
+        if(factually_breached() == Some(true))
+            transfer(force(state.licensor, "Licensor"), force(state.breach_service_fee, "Breach Service Fee"))
+            termination()
+
+
+    /* Factually Breached clause */
 
     /*
-     *  CLAUSE: Factually Breached.
-     *  "Factually Breached" is defined as:
-     *  this License is Commissioned and the Comment Text is not fixed,
-     *  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+     |  CLAUSE: Factually Breached.
+     |  "Factually Breached" is defined as:
+     |  this License is Commissioned and the Comment Text is not fixed,
+     |  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
      */
-        entrypoint factually_breached() =
-            ((commissioned == Some(true) && comment_text == None)
-                     || (published == Some(true) && (permission_to_comment == Some(false) && (notice_time =< (Chain.timestamp - (24 * 3600000))))))
 
-        /* Notice clause */
+    entrypoint factually_breached() =
+        ((commissioned == Some(true) && comment_text == None)
+                 || (published == Some(true) && (permission_to_comment == Some(false) && (notice_time =< (Chain.timestamp - (24 * 3600000))))))
+
+
+    /* Notice clause */
 
     /*
-     *  CLAUSE: Notice.
-     *  The Licensor or the Agent may fix the Notice Time as the respective current time.
+     |  CLAUSE: Notice.
+     |  The Licensor or the Agent may fix the Notice Time as the respective current time.
      */
-        stateful entrypoint notice() =
-            check_termination()
-            require(Some(Call.caller) == state.agent || Some(Call.caller) == state.licensor, "not permitted")
-            put(state{notice_time = Chain.timestamp})
 
-        /* Noticed clause */
+    stateful entrypoint notice() =
+        check_termination()
+        require(Some(Call.caller) == state.agent || Some(Call.caller) == state.licensor, "not permitted")
+        put(state{notice_time = Chain.timestamp})
+
+
+    /* Noticed clause */
 
     /*
-     *  CLAUSE: Noticed.
-     *  "Noticed" is defined as Notice Time being fixed.
+     |  CLAUSE: Noticed.
+     |  "Noticed" is defined as Notice Time being fixed.
      */
-        entrypoint noticed() =
-            notice_time != None
+
+    entrypoint noticed() =
+        notice_time != None
+
 
     /* built-in termination of this covenant */
+
     stateful function termination() =
         put(state{terminated = true})
 

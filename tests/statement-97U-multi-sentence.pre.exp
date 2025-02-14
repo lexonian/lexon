@@ -1,0 +1,81 @@
+
+precompilation:
+---------------
+
+statement 97U multi sentence   1:   LEX: «UCC Financing Statement».
+
+statement 97U multi sentence   3:   LEXON: ‹0.2.12›.
+
+statement 97U multi sentence   5:   "«Financing Statement»" is this contract.
+statement 97U multi sentence   6:   "«File Number»" is data.
+statement 97U multi sentence   7:   "«Initial Statement Date»" is a time.
+statement 97U multi sentence   8:   "«Filer»" is a person.
+statement 97U multi sentence   9:   "«Debtor»" is a person.
+statement 97U multi sentence  10:   "«Secured Party»" is a person.
+statement 97U multi sentence  11:   "«Filing Office»" is a person.
+statement 97U multi sentence  12:   "«Collateral»" is data.
+statement 97U multi sentence  13:   "«Digital Asset Collateral»" is an amount.
+statement 97U multi sentence  14:   "«Reminder Fee»" is an amount.
+statement 97U multi sentence  15:   "«Continuation Window Start»" is a time.
+statement 97U multi sentence  16:   "«Continuation Statement Date»" is a time.
+statement 97U multi sentence  17:   "«Continuation Statement Filing Number»" is data.
+statement 97U multi sentence  18:   "«Lapse Date»" is a time.
+statement 97U multi sentence  19:   "«Default»" is a binary.
+statement 97U multi sentence  20:   "«Continuation Statement»" is a binary.
+statement 97U multi sentence  21:   "«Termination Statement»" is a binary.
+statement 97U multi sentence  22:   "«Termination Statement Time»" is a time.
+statement 97U multi sentence  23:   "«Notification Statement»" is a text.
+
+statement 97U multi sentence  25:   The «Filer» fixes the «Filing Office».
+statement 97U multi sentence  26:   The «Filer» fixes the «Debtor».
+statement 97U multi sentence  27:   The «Filer» fixes the «Secured Party», and fixes the «Collateral».
+
+statement 97U multi sentence  29:   Clause: «Certify».
+statement 97U multi sentence  30:   The «Filing Office» may certify the «File Number».
+
+statement 97U multi sentence  32:   Clause: «Set File Date».
+statement 97U multi sentence  33:   The «Filing Office» may fix the «Initial Statement Date» as the current time.
+
+statement 97U multi sentence  35:   Clause: «Set Lapse».
+statement 97U multi sentence  36:   The «Filing Office» may fix the «Lapse Date».
+
+statement 97U multi sentence  38:   Clause: «Set Continuation Start».
+statement 97U multi sentence  39:   The «Filing Office» may fix the «Continuation Window Start».
+
+statement 97U multi sentence  41:   Clause: «Pay Fee».
+statement 97U multi sentence  42:   The «Secured Party» may pay a «Reminder Fee» into escrow.
+
+statement 97U multi sentence  44:   Clause: «Notice».
+statement 97U multi sentence  45:   The «Filing Office» may fix the «Notification Statement».
+
+statement 97U multi sentence  47:   Clause: «Pay Escrow In».
+statement 97U multi sentence  48:   The «Debtor» may pay the «Digital Asset Collateral» into escrow.
+
+statement 97U multi sentence  50:   Clause: «Fail to Pay».
+statement 97U multi sentence  51:   The «Secured Party» may declare «Default».
+
+statement 97U multi sentence  53:   Clause: «Take Possession».
+statement 97U multi sentence  54:   The «Filing Office» may, if «Default» is declared, pay the «Digital Asset Collateral» to the «Secured Party».
+
+statement 97U multi sentence  56:   Clause: «File Continuation».
+statement 97U multi sentence  57:   The «Secured Party» may file the «Continuation Statement».
+
+statement 97U multi sentence  59:   Clause: «Set Continuation Lapse».
+statement 97U multi sentence  60:   The «Filing Office» may, if the «Continuation Statement» is filed, fix the «Continuation Statement Date».
+
+statement 97U multi sentence  62:   Clause: «File Termination».
+statement 97U multi sentence  63:   The «Secured Party» may file a «Termination Statement», and certify the «Termination Statement Time» as the then current time.
+
+statement 97U multi sentence  65:   Clause: «Release Escrow».
+statement 97U multi sentence  66:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Digital Asset Collateral» to the «Debtor».
+
+statement 97U multi sentence  68:   Clause: «Release Reminder Fee».
+statement 97U multi sentence  69:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Reminder Fee» to the «Secured Party».
+
+statement 97U multi sentence  71:   Clause: «Termination Period».
+statement 97U multi sentence  72:   "«Termination Period»" is defined as 365 days after the «Termination Statement Time».
+
+statement 97U multi sentence  74:   Clause: «Terminate and Clear».
+statement 97U multi sentence  75:   The «Filing Office» may, if the «Termination Period» has passed, terminate this contract.
+
+

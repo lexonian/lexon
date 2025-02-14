@@ -1,0 +1,170 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+/** Lexon-generated Solidity code
+ **
+ **	code:        Evaluation License System
+ **
+ **	preamble:    This is a licensing contract for a software evaluation.
+ **
+ **	authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+ **
+ **	file:        cover/evaluation-97g-payable-constructors.lex
+ **
+ **	code tagged: 0.2.1
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     solidity 0.3.97g U
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Ethereum blockchain or Goerli testchain.  Replace
+   the <parameters> with literal values to interact with the contract via terminal.
+
+   Note that the instructions below reflect your lexon code, as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used during compilation  –  a list of which, is available with
+   lexon -h.  The functions are given in the order of appearance, in the lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an address for it for
+   the first time. This will require for the same address to be used for the same role
+   after this point. Else, the call will revert.
+
+   Some clauses of the original lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment:
+
+   <arbiter : address payable>, <breach_fee : uint>
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per License.
+
+   > license = evaluation.add_license(<licensee : address payable>, <description_of_goods : string>)
+   • <<Licensee>> ⟶   pay()
+ */
+
+/**
+ **
+ **	Main Evaluation License System contract system
+ **
+ **/
+
+/*
+ | 	LEX: Evaluation License System.
+ | 	LEXON: 0.2.1
+ | 	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ | 	PREAMBLE: This is a licensing contract for a software evaluation.
+ | 
+ | 	TERMS:
+ | 
+ | 	"Licensor" is a person.
+ | 	"Arbiter" is a person.
+ | 	"Licensing Fee" is an amount.
+ | 	"Breach Fee" is an amount.
+ | 
+ | 	The Licensor appoints the Arbiter,
+ | 	pays the Licensing Fee into escrow,
+ | 	and fixes the Breach Fee.
+ */
+
+contract EvaluationLicenseSystem {
+
+    address payable licensor;
+    address payable arbiter;
+    uint licensing_fee;
+    uint breach_fee;
+    bool licensing_fee__set = false;
+
+    constructor(address payable _arbiter, uint _breach_fee) payable {
+        licensor = payable(msg.sender);
+        arbiter = _arbiter;
+        licensing_fee = msg.value;
+        licensing_fee__set = true;
+        breach_fee = _breach_fee;
+    }
+
+    /* aggregation of covenants for folds and serialization */
+
+    mapping(uint => contract) public _license_list;
+    uint _license_count = 0;
+
+    /* create new instance of License covenant, and register it with main */
+
+    function add_license(address payable _licensee, string memory _description_of_goods) returns(License) {
+        return _license_list[_license_count += 1] = new License(_licensee, _description_of_goods);
+    }
+
+    /* built-in safe transfer */
+
+    function transfer(address _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+}
+
+/**
+ **
+ **	License covenant class
+ **
+ **/
+
+/*
+ | 	TERMS PER License
+ | 
+ | 	"Description of Goods" is a text.
+ | 	"Licensee" is a person.
+ | 	"Paid" is a binary.
+ | 	"Commissioned" is a binary.
+ | 	"Comment Text" is a text.
+ | 	"Published" is a binary.
+ | 	"Permission to Comment" is a binary.
+ | 	"Notice Time" is a time.
+ | 	"License" is this contract.
+ | 	"Creation Fee" is an amount.
+ | 
+ | 	The Licensor pays the Creation Fee into escrow, appoints the Licensee, and fixes the Description of Goods.
+ */
+
+contract License {
+
+    constructor(address payable _licensee, string memory _description_of_goods) payable {
+        creation_fee = msg.value;
+        creation_fee__set = true;
+        licensee = _licensee;
+        description_of_goods = _description_of_goods;
+    }
+
+
+    /* Pay clause */
+
+    /*
+     |  CLAUSE: Pay.
+     |  The Licensee pays the Licensing Fee to the Licensor,
+     |  and pays the Breach Fee into escrow.
+     |  This License is therefore Paid.
+     */
+
+    function pay() public {
+        require(msg.sender == licensee, "not permitted");
+        if(msg.sender == licensee) {
+            transfer(licensor, licensing_fee);
+        }
+        paid = true;
+    }
+}
+
+/* end */

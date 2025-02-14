@@ -84,20 +84,21 @@ help:
 	# ▫️  2nd level of tests: components
 	# deeptest      memory handling, includes, language parser, compiler
 	# memtest       valgrind & internal memory leak tests
-	# update        interactive, selective update of deeptest result references
+	# update        interactive update of failing deeptests's result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
-	# expectations  full non-interactive update of deeptest result references
-	# new           creation only of missing deeptest result references
+	# autoupdate    automatic update of failing deeptests's result references
+	# expectations  full non-interactive update of all deeptest result references
+	# new           creation of missing deeptest result references
 	#
 	# ▫️  1st level of tests: build environment
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
 
 build:
-	@if (! $(MAKE) -q lexccc.c) ; \
+	@if (! $(MAKE) -s -o lexccc -q lexccc.c build/.parser & ! $(MAKE) -s lexccc) ; \
 		then printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
 		$(MAKE) lexccc ; \
 	fi
-	@if (! $(MAKE) -o lexccc -q lexon) ; \
+	@if (! $(MAKE) -s -o lexccc -q lexon) ; \
 		then printf "\n$(hi)▫️  cycle 2: build compiler $(off)\n\n" ; \
 		$(MAKE) -o lexccc lexon ; \
 	fi
@@ -219,10 +220,12 @@ endif
 
 
 sample: build
+ifeq (,$(wildcard nosample))
 	@printf "\n$(hi)▫️  compile escrow example $(off)\n\n"
 	@printf "$(ok)bin/lexon --solidity examples/escrow.lex$(off)\n\n"
 	@bin/lexon --solidity examples/escrow.lex
 	@echo
+endif
 
 check: focustest deeptest
 
@@ -275,6 +278,11 @@ endif
 update: build
 	@printf "\n$(hi)▫️  interactive update of deeptest reference results $(off)\n\n"
 	@cd tests ; $(MAKE) update
+	@echo
+
+autoupdate: build
+	@printf "\n$(hi)▫️  auto-update of deeptest reference results $(off)\n\n"
+	@cd tests ; $(MAKE) autoupdate
 	@echo
 
 recheck: build
@@ -547,6 +555,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update autoupdate recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

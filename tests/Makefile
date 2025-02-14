@@ -104,7 +104,7 @@ define testrun
 	    for filename in `$(6)`; do \
 		testnumber=$$(($$testnumber+1)) \
 		; echo "$(3) $(4) $$filename" > now.tmp \
-		; if [[ -f lastfail ]] &&  [[ ! -f nopickup ]]; then diff now.tmp lastfail > tmp ; rret=$$? \
+		; if [[ -f lastfail ]] &&  [[ ! -f nopickup ]]; then diff -B now.tmp lastfail > tmp ; rret=$$? \
 			; if (( $$rret == 0 )) ; then \
 				echo " picking up:" \
 				; echo -n " picking up at " >> test.log ; cat lastfail >> test.log \
@@ -119,7 +119,7 @@ define testrun
 		; echo -n "testing " >> test.log ; cat now.tmp | tr '\n' ' ' >> test.log \
 		; expfile=$$(basename "$$filename" .lex)$(7) \
 		; testfile=$$(basename "$$expfile" .exp).now \
-		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/.lex//g' -e 's/-/ /g'`" \
+		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/\.lex//g' -e 's/\.c//g' -e 's/\.lgf//g' -e 's/-/ /g' -e 's/\// /g' -e 's/\./ /g'`" \
 		; if [[ ! -f concise ]] ; then printf "test #%03d $$testname .. " $$testnumber ; fi \
 		; if [ -n "$(8)" ] ; then \
 			failer=`grep -c -E "%ERR|$(8)" $$filename` \
@@ -141,7 +141,7 @@ define testrun
 		; echo $$((`cat explines.tmp` + `cat $$expfile | wc -l`)) > explines.tmp \
 		; cat $$expfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.exp \
 		; cat $$testfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.tmp \
-		; diff -d -y --suppress-common-lines unvers.exp unvers.tmp > diff.tmp \
+		; diff -B -d -y --suppress-common-lines unvers.exp unvers.tmp > diff.tmp \
 		; dret=$$? \
 		; if (( $$dret == 0 )) ; then printf "  √\n" >> test.log ; fi \
 		; if (( $$dret == 1 )) ; then printf "  #  failed\n" >> test.log ; fi \
@@ -158,6 +158,10 @@ define testrun
 		    ; if (( $$dret == 2 )) ; then echo "can't perform test -> skip" ; $(call count,skip) ; fi \
 		    ; if (( $$dret == 1 )) ; then echo "failed: $(3) $(4) $$filename #< exp | got >#" ;  $(call count,err) ; $(call sep,#,132) ; cat diff.tmp ; $(call sep,#,132) ; \
 			if [[ ! -f noupdate ]] ; then \
+			  if [[ -f autoupdate ]] ; then \
+					mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ; $(call count,update) ; $(call discount,err) \
+			  		; printf "$(ok)› updated √$(off)\n\n" \
+			  ; else \
 			    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
@@ -166,16 +170,17 @@ define testrun
 				; elif [[ $$REPLY =~ ^[Ss]$$ ]] ; then echo "Source code ($$filename):" ; $(call sep,=•,66) ; cat $$filename ; $(call sep,=•,66) \
 				; elif [[ $$REPLY =~ ^[Pp]$$ ]] ; then echo "Precompiled source code ($$filename):" ; $(call sep,«»,66) ; $(3) $(4) -p $$filename ; $(call sep,«»,66) \
 				; elif [[ $$REPLY =~ ^[Ff]$$ ]] ; then echo "Difference #< exp | got ># (version tags are ignored):" \
-					; diff -y $$expfile $$testfile | sed -e "s/»/»  /g" | sed -e "s/.*|.*/`printf "\033[33m&\033[0m"`/" -e "s/.*<.*/`printf "\033[31m&\033[0m"`/" -e "s/.*>.*/`printf "\033[36m&\033[0m"`/" \
+					; diff -B -y $$expfile $$testfile | sed -e "s/»/»  /g" | sed -e "s/.*|.*/`printf "\033[33m&\033[0m"`/" -e "s/.*<.*/`printf "\033[31m&\033[0m"`/" -e "s/.*>.*/`printf "\033[36m&\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Dd]$$ ]] ; then echo "Difference from expectation (version tags are ignored):" \
-					; diff -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
+					; diff -B -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Ww]$$ ]] ; then echo "Difference from expectation, ignoring whitespace (and version tags):" \
-					; diff -b -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
+					; diff -w -b -B -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Kk]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; break \
 				; elif [[ $$REPLY =~ ^[Ii]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; touch noupdate ; break \
 				; elif [[ $$REPLY =~ ^[Qq]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; fi ; quit=1 ; break 2 \
 				; fi \
 			    ; done \
+			  ; fi \
 			; else if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi \
 			; fi \
 		  ; fi \
@@ -241,14 +246,25 @@ check:
 	@touch concise
 	@touch noupdate
 	@rm -f lastfail
+	@rm -f autoupdate
 	@$(MAKE) _test
 
 update:
-	@$(call log,UPDATE FAILED TESTS)
+	@$(call log,INTERACTIVE UPDATE OF FAILING TESTS)
+	@rm -f concise
+	@rm -f noupdate
+	@rm -f autoupdate
+	@rm -f lastfail
+	@$(MAKE) _test
+
+autoupdate:
+	@$(call log,AUTO UPDATE OF FAILING TESTS)
+	@touch autoupdate
 	@rm -f concise
 	@rm -f noupdate
 	@rm -f lastfail
 	@$(MAKE) _test
+	@rm -f autoupdate
 
 recheck:
 	@if [[ ! -f lastfail ]] ; then \
@@ -261,6 +277,7 @@ _recheck:
 	@$(call log,RECHECK FAILED TESTS)
 	@rm -f concise
 	@rm -f noupdate
+	@rm -f autoupdate
 	@rm -f nopickup
 	@$(MAKE) _test
 
@@ -291,7 +308,7 @@ _test:
 	@$(call testrun,jurisdiction parsing,:,../bin/lexon,-P,:,grep -l %JUR test-*.lex,.jur.exp,)
 	@$(call testrun,lxf extension grammar production,:,../bin/lexon,,:,grep -l %LXF test-*.lex,.lxf.exp,%LXFERR)
 	@$(call testrun,lgf lexon grammar production,:,../bin/lexon,-B,:,ls -1 test-*.lgf,.lgf.exp,%LGFERR)
-	@$(call testrun,english grammar parsing,:,../bin/lexon,,:,ls -1 english/test-*.lex,.eng.exp,)
+	@$(call testrun,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,)
 	@$(call testrun,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
 	@$(call testrun,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
 	@$(call testrun,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
@@ -336,7 +353,7 @@ _test:
 %.try: %.lex
 	../bin/lexon $*
 	@echo $^ $@
-	diff $^ $@
+	diff -w -B $^ $@
 	if (( $? == 0 )) ; then echo ok ; fi
 	if (( $? == 1 )) ; then echo not ; fi
 	if (( $? == 2 )) ; then echo worse ; fi
@@ -368,10 +385,10 @@ _expects:
 	@echo =======================
 	$(call init)
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
-	$(call buildexp,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
-	$(call buildexp,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
-	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	$(call buildexp,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,%PREERR)
+	$(call buildexp,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,%ERR)
+	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,%ERR)
+	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,%ERR)
 	$(call buildexp,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
 	$(call buildexp,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
 	$(call buildexp,precompile,:,../bin/lexon,-P,:,grep -l %PRE test-*.lex,.pre.exp,%PREERR)
@@ -626,4 +643,4 @@ list_sources:
 	@printf "\n$(hi)▫️  LEXON COVERAGE TESTS $(off)\n"
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' cover/*.lex
 
-.PHONY: all one clean expclean check update recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 
+.PHONY: all one clean expclean check update autoupdate recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 

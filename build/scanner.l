@@ -50,8 +50,8 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 96 U" // unified 0.3 + experimental 0.4
-#define grammar_vers "0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes"
+#define program_vers "0.3 alpha 97 U" // unified 0.3 + experimental 0.4
+#define grammar_vers "0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
 #define slug program_name " " program_vers
@@ -277,6 +277,7 @@ bool opt_debug_production = false;
 bool _concat_trace = false;
 bool opt_debug_time = false;
 bool opt_help = false;
+bool opt_debug_allow_double_names = false;
 bool do_main_pass = true;
 
 //# bool opt_run_spheres = false; // #spheres
@@ -499,10 +500,12 @@ char *mtrac_printable = "*stringlist,*word,*alternation,*definition";
 void *mtrac_gross(void *rec);
 void mtrac_free_gross();
 
-/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */
+/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by
+   the yacc-generated header for the 2nd (full lexon compiler). */
 
 #ifndef YY_YY_LEXC_TAB_H_INCLUDED
 # define YY_YY_LEXC_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -511,27 +514,26 @@ void mtrac_free_gross();
 extern int yydebug;
 #endif
 
-/* Token kinds. ////// sort enums  */
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
   enum yytokentype
   {
     YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
+    YYEOF = 0,
+    YYerror = 256,
+    YYUNDEF = 257,
     Colon = 258,
-    Period = 259,
-    Comma =10002,
-    Quote= 10001,
-    Semicolon = 10000,
-    Dash = 10001,
-    Percent = 10002,
-    NAME = 259,
-    Separator = 260,
-    DESCRIPTION = 261,
-    SCALAR = 10003,
-    HEX = 10004
+    Comma = 259,
+    Dash = 260,
+    Percent = 261,
+    Period = 262,
+    Quote = 263,
+    Semicolon = 264,
+    Separator = 265,
+    DESCRIPTION = 266,
+    HEX = 267,
+    NAME = 268,
+    SCALAR = 269
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -632,6 +634,10 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 ^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
+^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
+									 process(" \t", "TERMS PER", " \t", yytext, ": \t"); // make TERMS optional for process ◊
+									 concat(&buf, yytext); 
+									 concat(&buf, ":"); } // why is the : lost in the scan? (and needs re-adding here)  ◊
 ^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
 									 concat(&buf, yytext); }
@@ -1514,7 +1520,7 @@ void parsargs(int argc, char **argv) {
 	    opt_debug = true;
 	    break;
 	case 'D':
-	    printf ("specifc modules debug output: %s\n", optarg?optarg:"all on");
+	    if(opt_verbose) printf ("specific modules debug output: %s\n", optarg?optarg:"all on");
      	    opt_debug_regex = !optarg || strstr(optarg, "regex");
 	    opt_debug_scanner = !optarg || strstr(optarg, "scanner");
 	    opt_debug_mainscan = !optarg || strstr(optarg, "mainscan");
@@ -1527,9 +1533,10 @@ void parsargs(int argc, char **argv) {
 	    opt_debug_production = !optarg || strstr(optarg, "production");
 	    opt_debug_time = !optarg || strstr(optarg, "time");
 	    opt_debug_dev = !optarg || strstr(optarg, "dev");
+	    opt_debug_allow_double_names = !optarg || strstr(optarg, "allow_double_names");
 	    bool fail = optarg && !opt_debug_regex && !opt_debug_scanner && !opt_debug_mainscan && !opt_debug_actions && !opt_debug_tokens && !opt_debug_parser
-		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev;
-	    if(opt_verbose || opt_debug || fail || (optarg && !strcmp(optarg, "h"))) {
+		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev && !opt_debug_allow_double_names;
+	    if(opt_verbose || fail || (optarg && !strcmp(optarg, "h"))) {
 		    printf ("module debug regex     : %s   scanned regex pattern results of the scanner (Flex) tokenizing input\n",
 		    	opt_debug_regex     ?"yes":"no ");
 		    printf ("module debug scanner   : %s   scanner (Flex) live process trace during input scan (LGF, LXF, LEX)\n",
@@ -1554,6 +1561,8 @@ void parsargs(int argc, char **argv) {
 		    	opt_debug_time      ?"yes":"no ");
 		    printf ("module debug dev       : %s   varying hot spots (use opt_debug_dev during development)\n",
 		    	opt_debug_dev       ?"yes":"no ");
+		    printf ("allow double names     : %s   for grammar test parsing of generated code\n",
+		    	opt_debug_allow_double_names?"yes":"no ");
 	    }
        	    if(fail) {
 		if(strcmp(optarg, "h")) fprintf(stderr, "no module selected by string '%s'. ", optarg);
@@ -2798,21 +2807,35 @@ void new_lexcom(const char *name, const char *value) {
 
 	// cut leading 'clause: '
 	assert(name);
-	if(!strncmp(LOW(name), "clause", 6)) name += 6;
-	while(*name && (*name == ' ' || *name == ':')) name++;
+	while(*name == ' ') name++;
+	if(!strncmp(LOW(name), "clause", 6)) {
+		name += 6;
+		while(*name == ' ') name++;
+		while(*name == ':') name++;
+		while(*name == ' ') name++;
+	} else if(!strncmp(LOW(name), "terms", 5)) {
+		name += 5;
+		while(*name == ' ') name++;
+		if(!strncmp(LOW(name), "per", 3)) name += 3;
+		while(*name == ' ') name++;
+	}
+	if(strchr(name, ':'))
+		*strchr(name, ':') = 0;
 
-	// prevent double use of clause name
 	map *m = lexcoms;
-	while(m) {
-		if(!strcmp(LOW(snake_spaced(name)), m->key)) {
-			// except, allow multiple _pre_ entries
-			//// _pre_ entries, if any, are never used.
-			if(strcmp(name, "_pre_")) {
-				fprintf(stderr, "clause name used twice: %s", name);
-				exit(1);
+	// prevent double use of clause or covenant name (◊ sort elsewhere)
+	if(!opt_debug_allow_double_names) {
+		while(m) {
+			if(!strcmp(LOW(snake_spaced(name)), m->key)) {
+				// except, allow multiple _pre_ entries
+				//// _pre_ entries, if any, are never used.
+				if(strcmp(name, "_pre_")) {
+					fprintf(stderr, "clause or covenant name used twice: %s", name);
+					exit(1);
+				}
 			}
+			m = m->next;
 		}
-		m = m->next;
 	}
 
 	// trim previous (sic) entry's value
@@ -4145,7 +4168,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
-	replace(&src, "0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes", grammar_version);
+	replace(&src, "0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes", grammar_version);
 	char *src_imbue = str_escape(src, "own");
 
 	/* read grammer file */
@@ -4558,8 +4581,8 @@ const char *own =
 	"#define PATH_MAX 1000\n"
 	"#endif\n"
 	"\n"
-	"#define program_vers \"0.3 alpha 96 U\" // unified 0.3 + experimental 0.4\n"
-	"#define grammar_vers \"0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\"\n"
+	"#define program_vers \"0.3 alpha 97 U\" // unified 0.3 + experimental 0.4\n"
+	"#define grammar_vers \"0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
 	"#define slug program_name \" \" program_vers\n"
@@ -4785,6 +4808,7 @@ const char *own =
 	"bool _concat_trace = false;\n"
 	"bool opt_debug_time = false;\n"
 	"bool opt_help = false;\n"
+	"bool opt_debug_allow_double_names = false;\n"
 	"bool do_main_pass = true;\n"
 	"\n"
 	"//# bool opt_run_spheres = false; // #spheres\n"
@@ -5007,10 +5031,12 @@ const char *own =
 	"void *mtrac_gross(void *rec);\n"
 	"void mtrac_free_gross();\n"
 	"\n"
-	"/* stub tokens for 1st cycle. They are replaced through the yacc-generated header for the 2nd. */\n"
+	"/* stub tokens for 1st cycle (lexccc compiler compiler). They are replaced by\n"
+	"   the yacc-generated header for the 2nd (full lexon compiler). */\n"
 	"\n"
 	"#ifndef YY_YY_LEXC_TAB_H_INCLUDED\n"
 	"# define YY_YY_LEXC_TAB_H_INCLUDED\n"
+	"\n"
 	"/* Debug traces.  */\n"
 	"#ifndef YYDEBUG\n"
 	"# define YYDEBUG 0\n"
@@ -5019,27 +5045,26 @@ const char *own =
 	"extern int yydebug;\n"
 	"#endif\n"
 	"\n"
-	"/* Token kinds. ////// sort enums  */\n"
 	"#ifndef YYTOKENTYPE\n"
 	"#define YYTOKENTYPE\n"
 	"  enum yytokentype\n"
 	"  {\n"
 	"    YYEMPTY = -2,\n"
-	"    YYEOF = 0,                     /* \"end of file\"  */\n"
-	"    YYerror = 256,                 /* error  */\n"
-	"    YYUNDEF = 257,                 /* \"invalid token\"  */\n"
+	"    YYEOF = 0,\n"
+	"    YYerror = 256,\n"
+	"    YYUNDEF = 257,\n"
 	"    Colon = 258,\n"
-	"    Period = 259,\n"
-	"    Comma =10002,\n"
-	"    Quote= 10001,\n"
-	"    Semicolon = 10000,\n"
-	"    Dash = 10001,\n"
-	"    Percent = 10002,\n"
-	"    NAME = 259,\n"
-	"    Separator = 260,\n"
-	"    DESCRIPTION = 261,\n"
-	"    SCALAR = 10003,\n"
-	"    HEX = 10004\n"
+	"    Comma = 259,\n"
+	"    Dash = 260,\n"
+	"    Percent = 261,\n"
+	"    Period = 262,\n"
+	"    Quote = 263,\n"
+	"    Semicolon = 264,\n"
+	"    Separator = 265,\n"
+	"    DESCRIPTION = 266,\n"
+	"    HEX = 267,\n"
+	"    NAME = 268,\n"
+	"    SCALAR = 269\n"
 	"  };\n"
 	"  typedef enum yytokentype yytoken_kind_t;\n"
 	"#endif\n"
@@ -5140,6 +5165,10 @@ const char *own =
 	"								     freeline(); lineno(); concat(&buf, trim(yytext), \": \"); BEGIN(NAMEQUOTE); }\n"
 	"^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;\n"
 	"								     freeline(); lineno(); concat(&buf, trim(yytext), \": \"); BEGIN(NAMEQUOTE); }\n"
+	"^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);\n"
+	"									 process(\" \\t\", \"TERMS PER\", \" \\t\", yytext, \": \\t\"); // make TERMS optional for process ◊\n"
+	"									 concat(&buf, yytext); \n"
+	"									 concat(&buf, \":\"); } // why is the : lost in the scan? (and needs re-adding here)  ◊\n"
 	"^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);\n"
 	"									 concat(&funclist, \":\", yytext, \":\"); process(\" \\t\", \"CLAUSE\", \": \\t\", yytext, \". \\t\");\n"
 	"									 concat(&buf, yytext); }\n"
@@ -5894,7 +5923,7 @@ const char *own =
 	"	    opt_debug = true;\n"
 	"	    break;\n"
 	"	case 'D':\n"
-	"	    printf (\"specifc modules debug output: %s\\n\", optarg?optarg:\"all on\");\n"
+	"	    if(opt_verbose) printf (\"specific modules debug output: %s\\n\", optarg?optarg:\"all on\");\n"
 	"     	    opt_debug_regex = !optarg || strstr(optarg, \"regex\");\n"
 	"	    opt_debug_scanner = !optarg || strstr(optarg, \"scanner\");\n"
 	"	    opt_debug_mainscan = !optarg || strstr(optarg, \"mainscan\");\n"
@@ -5907,9 +5936,10 @@ const char *own =
 	"	    opt_debug_production = !optarg || strstr(optarg, \"production\");\n"
 	"	    opt_debug_time = !optarg || strstr(optarg, \"time\");\n"
 	"	    opt_debug_dev = !optarg || strstr(optarg, \"dev\");\n"
+	"	    opt_debug_allow_double_names = !optarg || strstr(optarg, \"allow_double_names\");\n"
 	"	    bool fail = optarg && !opt_debug_regex && !opt_debug_scanner && !opt_debug_mainscan && !opt_debug_actions && !opt_debug_tokens && !opt_debug_parser\n"
-	"		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev;\n"
-	"	    if(opt_verbose || opt_debug || fail || (optarg && !strcmp(optarg, \"h\"))) {\n"
+	"		&& !opt_debug_generator && !opt_debug_examples && !opt_debug_lists && !opt_debug_production && !opt_debug_time && !opt_debug_dev && !opt_debug_allow_double_names;\n"
+	"	    if(opt_verbose || fail || (optarg && !strcmp(optarg, \"h\"))) {\n"
 	"		    printf (\"module debug regex     : %s   scanned regex pattern results of the scanner (Flex) tokenizing input\\n\",\n"
 	"		    	opt_debug_regex     ?\"yes\":\"no \");\n"
 	"		    printf (\"module debug scanner   : %s   scanner (Flex) live process trace during input scan (LGF, LXF, LEX)\\n\",\n"
@@ -5934,6 +5964,8 @@ const char *own =
 	"		    	opt_debug_time      ?\"yes\":\"no \");\n"
 	"		    printf (\"module debug dev       : %s   varying hot spots (use opt_debug_dev during development)\\n\",\n"
 	"		    	opt_debug_dev       ?\"yes\":\"no \");\n"
+	"		    printf (\"allow double names     : %s   for grammar test parsing of generated code\\n\",\n"
+	"		    	opt_debug_allow_double_names?\"yes\":\"no \");\n"
 	"	    }\n"
 	"       	    if(fail) {\n"
 	"		if(strcmp(optarg, \"h\")) fprintf(stderr, \"no module selected by string '%s'. \", optarg);\n"
@@ -7178,21 +7210,35 @@ const char *own =
 	"\n"
 	"	// cut leading 'clause: '\n"
 	"	assert(name);\n"
-	"	if(!strncmp(LOW(name), \"clause\", 6)) name += 6;\n"
-	"	while(*name && (*name == ' ' || *name == ':')) name++;\n"
+	"	while(*name == ' ') name++;\n"
+	"	if(!strncmp(LOW(name), \"clause\", 6)) {\n"
+	"		name += 6;\n"
+	"		while(*name == ' ') name++;\n"
+	"		while(*name == ':') name++;\n"
+	"		while(*name == ' ') name++;\n"
+	"	} else if(!strncmp(LOW(name), \"terms\", 5)) {\n"
+	"		name += 5;\n"
+	"		while(*name == ' ') name++;\n"
+	"		if(!strncmp(LOW(name), \"per\", 3)) name += 3;\n"
+	"		while(*name == ' ') name++;\n"
+	"	}\n"
+	"	if(strchr(name, ':'))\n"
+	"		*strchr(name, ':') = 0;\n"
 	"\n"
-	"	// prevent double use of clause name\n"
 	"	map *m = lexcoms;\n"
-	"	while(m) {\n"
-	"		if(!strcmp(LOW(snake_spaced(name)), m->key)) {\n"
-	"			// except, allow multiple _pre_ entries\n"
-	"			//// _pre_ entries, if any, are never used.\n"
-	"			if(strcmp(name, \"_pre_\")) {\n"
-	"				fprintf(stderr, \"clause name used twice: %s\", name);\n"
-	"				exit(1);\n"
+	"	// prevent double use of clause or covenant name (◊ sort elsewhere)\n"
+	"	if(!opt_debug_allow_double_names) {\n"
+	"		while(m) {\n"
+	"			if(!strcmp(LOW(snake_spaced(name)), m->key)) {\n"
+	"				// except, allow multiple _pre_ entries\n"
+	"				//// _pre_ entries, if any, are never used.\n"
+	"				if(strcmp(name, \"_pre_\")) {\n"
+	"					fprintf(stderr, \"clause or covenant name used twice: %s\", name);\n"
+	"					exit(1);\n"
+	"				}\n"
 	"			}\n"
+	"			m = m->next;\n"
 	"		}\n"
-	"		m = m->next;\n"
 	"	}\n"
 	"\n"
 	"	// trim previous (sic) entry's value\n"
@@ -8525,7 +8571,7 @@ const char *own =
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
-	"	replace(&src, \"0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\", grammar_version);\n"
+	"	replace(&src, \"0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\", grammar_version);\n"
 	"	char *src_imbue = str_escape(src, \"own\");\n"
 	"\n"
 	"	/* read grammer file */\n"
@@ -8907,7 +8953,7 @@ const char *owngrm =
 	"##\n"
 	"##	english.lgf — Lexon controlled English grammar\n"
 	"##\n"
-	"##	Version 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
+	"##	Version 0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\n"
 	"##\n"
 	"##	This document is in Lexon Grammar Form, a variation of BNF.\n"
 	"##	Square brackets indicate optionality, 'or' separates variants.\n"
@@ -9094,7 +9140,7 @@ const char *owngrm =
 	"\n"
 	"## APPOINTMENT PREDICATE\n"
 	"\n"
-	"   appointment:	appoint symbol\n"
+	"   appointment:	appoint symbol [[\"as\"] expression]\n"
 	"\n"
 	"   appoint:	\"appoint\" or \"appoints\"\n"
 	"\n"
@@ -9126,7 +9172,7 @@ const char *owngrm =
 	"\n"
 	"   pay:		\"pay\" or \"pays\" or \"return\" or \"returns\"\n"
 	"\n"
-	"   preposition:	\"to\" or \"into\"\n"
+	"   preposition:	\"to\" or \"into\" or \"of\"\n"
 	"\n"
 	"   escrow:	[\"the\"] [\"remainder\" \"of\" \"the\"] \"escrow\"\n"
 	"\n"
@@ -9142,7 +9188,7 @@ const char *owngrm =
 	"\n"
 	"## NOTIFICATION PREDICATE\n"
 	"\n"
-	"   notification: notify object preposition expression\n"
+	"   notification: notify object [preposition expression]\n"
 	"\n"
 	"   notify:	\"notify\" or \"notifies\"\n"
 	"\n"
@@ -9200,6 +9246,7 @@ const char *owngrm =
 	"   combinor:	combinand [combinator combinor]\n"
 	"\n"
 	"   combinand:	symbol [expiration]\n"
+	"   		or reflexive\n"
 	"   		or description\n"
 	"		or scalar_comparison\n"
 	"		or negation\n"
@@ -9281,7 +9328,7 @@ const char *manual =
 
 	"# Lexon Compiler 0.3\n"
 	"\n"
-	"	0.3 alpha 96 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
+	"	0.3 alpha 98 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes\n"
 	"\n"
 	"**This is about developing the Lexon grammar and compiler, not about\n"
 	"writing or reading Lexon texts.**\n"
@@ -9757,10 +9804,11 @@ const char *manual =
 	"\n"
 	"	deeptest        memory handling, includes, language parser, compiler\n"
 	"	memtest         valgrind & internal memory leak tests\n"
-	"	update          interactive, selective update of deeptest result references\n"
+	"	update          interactive update of failing deeptests's result references\n"
 	"	recheck         faster update, skipping successful tests of earlier deeptest\n"
-	"	expectations    full non-interactive update of deeptest result references\n"
-	"	new             creation only of missing deeptest result references\n"
+	"	autoupdate      automatic update of failing deeptests's result references\n"
+	"	expectations    full non-interactive update of all deeptest result references\n"
+	"	new             creation of missing deeptest result references\n"
 	"\n"
 	"**1st level of tests: build environment**\n"
 	"\n"

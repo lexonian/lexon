@@ -9,8 +9,10 @@ module.exports = class EvaluationLicenseSystem {
         this.licensing_fee = licensing_fee;
         this.breach_fee = breach_fee;
 
+
         this._license_list = {};
         this._license_count = 0;
+
 
         this.License = (caller, licensee, description_of_goods) => {
             if(caller == main.licensor) {
@@ -32,82 +34,73 @@ module.exports = class EvaluationLicenseSystem {
                     this.terminated = false;
             }
 
+
             pay(caller)  {
                 if(this.already_terminated()) return undefined;
+                if(!(caller == this.licensee)) return 'not permitted';
                 if(caller == this.licensee) {
-                    main._pay(this.licensee, main.licensor, main.licensing_fee);
-                    main._pay(this.licensee, 'escrow', main.breach_fee);
-                } else {
-                    return 'not permitted.';
+                    main.transfer(this.licensee, main.licensor, main.licensing_fee);
+                    main.transfer(this.licensee, 'escrow', main.breach_fee);
                 }
                 this.paid = true;
             }
 
+
             commission(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.licensor) {
-                    this.commissioned = true;
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != main.licensor) return 'not permitted';
+                this.commissioned = true;
             }
+
 
             comment(caller, comment_text)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.comment_text = comment_text;
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.comment_text = comment_text;
             }
+
 
             publication(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.published = true;
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.published = true;
             }
+
 
             grant_permission_to_comment(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.permission_to_comment = true;
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.permission_to_comment = true;
             }
+
 
             declare_breach(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.arbiter) {
-                    if(this.factually_breached()) {
-                        main._pay(main.arbiter, main.licensor, main.breach_fee);
-                        this.termination();
-                    }
-                } else {
-                    return 'not permitted.';
+                if(caller != main.arbiter) return 'not permitted';
+                if(this.factually_breached()) {
+                    main.transfer(main.arbiter, main.licensor, main.breach_fee);
+                    this.termination();
                 }
             }
+
 
             factually_breached()  {
                 return ((this.commissioned && !this.comment_text)
                          || (this.published && (!this.permission_to_comment && (this.notice_time <= (Date.now() - (24 * 3600000))))));
             }
 
+
             notice(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.arbiter || caller == main.licensor) {
-                    this.notice_time = Date.now();
-                } else {
-                    return 'not permitted.';
-                }
+                if(!(caller == main.arbiter || caller == main.licensor)) return 'not permitted';
+                this.notice_time = Date.now();
             }
+
 
             noticed()  {
                 return this.notice_time;
             }
+
 
             termination() {
                 this.terminated = true;
@@ -121,14 +114,16 @@ module.exports = class EvaluationLicenseSystem {
         }
     }
 
+
     add_license(caller, licensee, description_of_goods) {
         if (this.already_terminated()) return undefined;
         return this._license_list[this._license_count += 1] = this.License(caller, licensee, description_of_goods);
     }
 
 
-    _pay(from, to, amount) {
-        console.log(`➠ system message: pay ${amount} from ${from} to ${to}.`);
+
+    transfer(from, to, amount) {
+        console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }

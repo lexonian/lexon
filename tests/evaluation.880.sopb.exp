@@ -11,16 +11,18 @@ main contract EvaluationLicenseSystem =
             breach_service_fee : int
         }
 
-    entrypoint init(arbiter : address, breach_service_fee : int) = {
+    entrypoint init(arbiter : address, licensing_service_fee : int, breach_service_fee : int) = {
             licensor = Call.caller,
             arbiter = arbiter,
-            licensing_service_fee = Call.value,
+            licensing_service_fee = licensing_service_fee,
             breach_service_fee = breach_service_fee
         }
 
 
+
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
+
 
     function permit(authorized : address) =
         require(Call.caller == authorized, "access")
@@ -32,74 +34,82 @@ this._license_count = 0;
 contract License =
 
     record state = {
-            description_of_goods : string,
-            license_taker : address,
-            paid : bool,
-            commissioned : bool,
-            comment_text : string,
-            published : bool,
-            permission_to_comment : bool,
-            notice_time : int
+        description_of_goods : string,
+        license_taker : address,
+        paid : bool,
+        commissioned : bool,
+        comment_text : string,
+        published : bool,
+        permission_to_comment : bool,
+        notice_time : int
         }
 
     entrypoint init(license_taker : address, description_of_goods : string) = {
-            description_of_goods = description_of_goods,
-            license_taker = license_taker,
-            paid = false,
-            commissioned = false,
-            comment_text = "",
-            published = false,
-            permission_to_comment = false,
-            notice_time = 0
+        description_of_goods = description_of_goods,
+        license_taker = license_taker,
+        paid = false,
+        commissioned = false,
+        comment_text = "",
+        published = false,
+        permission_to_comment = false,
+        notice_time = 0
         }
 
 
-        stateful entrypoint pay() =
-            check_termination()
-            if(Call.caller == license_taker
-                transfer(state.licensor, state.licensing_service_fee)
-            else
-                abort("not permitted")
-            paid = true;
+    stateful entrypoint pay() =
+        check_termination()
+        require(Call.caller == license_taker, "not permitted")
+        if(Call.caller == license_taker)
+            transfer(state.licensor, state.licensing_service_fee)
+        paid = true;
 
-        stateful entrypoint commission() =
-            check_termination()
-            permit(state.licensor)
-            put(state{commissioned = true})
 
-        stateful entrypoint comment(comment_text : string) =
-            check_termination()
-            permit(license_taker)
-            put(state{comment_text = comment_text})
+    stateful entrypoint commission() =
+        check_termination()
+        permit(state.licensor)
+        put(state{commissioned = true})
 
-        stateful entrypoint publication() =
-            check_termination()
-            permit(license_taker)
-            put(state{published = true})
 
-        stateful entrypoint grant_permission_to_comment() =
-            check_termination()
-            permit(license_taker)
-            put(state{permission_to_comment = true})
+    stateful entrypoint comment(comment_text : string) =
+        check_termination()
+        permit(license_taker)
+        put(state{comment_text = comment_text})
 
-        stateful entrypoint declare_breach() =
-            check_termination()
-            permit(state.arbiter)
-            if(factually_breached())
-                transfer(state.licensor, state.breach_service_fee)
-                termination()
 
-        entrypoint factually_breached() =
-            ((commissioned && comment_text == "")
-                     || (published && (!permission_to_comment && (notice_time =< (Chain.timestamp - (24 * 3600000))))))
+    stateful entrypoint publication() =
+        check_termination()
+        permit(license_taker)
+        put(state{published = true})
 
-        stateful entrypoint notice() =
-            check_termination()
-            require(Call.caller == state.arbiter || Call.caller == state.licensor, "not permitted")
-            put(state{notice_time = Chain.timestamp})
 
-        entrypoint noticed() =
-            notice_time != 0
+    stateful entrypoint grant_permission_to_comment() =
+        check_termination()
+        permit(license_taker)
+        put(state{permission_to_comment = true})
+
+
+    stateful entrypoint declare_breach() =
+        check_termination()
+        permit(state.arbiter)
+        if(factually_breached())
+            transfer(state.licensor, state.breach_service_fee)
+            termination()
+
+
+    entrypoint factually_breached() =
+        ((commissioned && comment_text == "")
+                 || (published && (!permission_to_comment && (notice_time =< (Chain.timestamp - (24 * 3600000))))))
+
+
+    stateful entrypoint notice() =
+        check_termination()
+        require(Call.caller == state.arbiter || Call.caller == state.licensor, "not permitted")
+        put(state{notice_time = Chain.timestamp})
+
+
+    entrypoint noticed() =
+        notice_time != 0
+
 
     stateful function termination() =
         put(state{terminated = true})

@@ -1,24 +1,24 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-/* Lexon-generated Solidity code
-
-
-   code:        UCC Financing Statement
-
-   file:        lexon/statement.406.lex
-
-   code tagged: 0.2.12
-
-   compiler:    lexon 0.3 alpha 96 U
-
-   grammar:     0.2.20 / subset 0.3.8 alpha 80 - English / Reyes
-
-   backend:     solidity 0.3.93-96 U
-
-   target:      solidity 0.8+
-
-   parameters:  --solidity  --all-auxiliaries 
+/** Lexon-generated Solidity code
+ **
+ **	code:        UCC Financing Statement
+ **
+ **	file:        lexon/statement.406.lex
+ **
+ **	code tagged: 0.2.12
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     solidity 0.3.97g U
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -46,57 +46,58 @@ pragma solidity ^0.8.17;
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Filing Office>> ⟶  certify(<file_number : string>)
-   • <<Filing Office>> ⟶  set_file_date()
-   • <<Filing Office>> ⟶  set_lapse(<lapse_date : uint>)
-   • <<Filing Office>> ⟶  set_continuation_start(<continuation_window_start : uint>)
-   • <<Secured Party>> ⟶  pay_fee()
-   • <<Filing Office>> ⟶  notice(<notification_statement : string>)
-   • <<Filing Office>> ⟶  notify()
-   • <<Debtor>> ⟶  pay_escrow_in()
-   • <<Secured Party>> ⟶  fail_to_pay()
-   • <<Filing Office>> ⟶  take_possession()
-   • <<Secured Party>> ⟶  file_continuation(<continuation_statement : bool>)
-   • <<Filing Office>> ⟶  set_continuation_lapse(<continuation_statement_date : uint>)
-   • <<Secured Party>> ⟶  file_termination(<termination_statement : bool>)
-   • <<Filing Office>> ⟶  release_escrow()
-   • <<Filing Office>> ⟶  release_reminder_fee()
-   • <<Filing Office>> ⟶  termination_period()
-   • <<Filing Office>> ⟶  terminate_and_clear()
-*/
+   • <<Filing Office>> ⟶   certify(<file_number : string>)
+   • <<Filing Office>> ⟶   set_file_date()
+   • <<Filing Office>> ⟶   set_lapse(<lapse_date : uint>)
+   • <<Filing Office>> ⟶   set_continuation_start(<continuation_window_start : uint>)
+   • <<Secured Party>> ⟶   pay_fee()
+   • <<Filing Office>> ⟶   notice(<notification_statement : string>)
+   • <<Filing Office>> ⟶   notify()
+   • <<Debtor>> ⟶   pay_escrow_in()
+   • <<Secured Party>> ⟶   fail_to_pay()
+   • <<Filing Office>> ⟶   take_possession()
+   • <<Secured Party>> ⟶   file_continuation(<continuation_statement : bool>)
+   • <<Filing Office>> ⟶   set_continuation_lapse(<continuation_statement_date : uint>)
+   • <<Secured Party>> ⟶   file_termination(<termination_statement : bool>)
+   • <<Filing Office>> ⟶   release_escrow()
+   • <<Filing Office>> ⟶   release_reminder_fee()
+   • anyone ⟶   termination_period()
+   • <<Filing Office>> ⟶   terminate_and_clear()
+ */
 
 /**
  **
- ** Main UCC Financing Statement contract system
+ **	Main UCC Financing Statement contract system
  **
  **/
 
-/** LEX UCC Financing Statement.
- *
- *	LEXON: 0.2.12
- *
- *	"Financing Statement" is this contract. 
- *	"File Number" is data.
- *	"Initial Statement Date" is time.
- *	"Filer" is person. 
- *	"Debtor" is person.
- *	"Secured Party" is person.
- *	"Filing Office" is person.
- *	"Collateral" is data.
- *	"Digital Asset Collateral" is amount.
- *	"Reminder Fee" is amount.
- *	"Continuation Window Start" is time.
- *	"Continuation Statement Date" is time.
- *	"Continuation Statement Filing Number" is data.
- *	"Lapse Date" is time.
- *	"Default" is binary.
- *	"Continuation Statement" is binary.
- *	"Termination Statement" is binary.
- *	"Termination Statement Time" is time.
- *	"Notification Statement" is text. 
- *
- *	The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral.
-**/
+/*
+ | 	LEX UCC Financing Statement.
+ | 
+ | 	LEXON: 0.2.12
+ | 
+ | 	"Financing Statement" is this contract. 
+ | 	"File Number" is data.
+ | 	"Initial Statement Date" is time.
+ | 	"Filer" is person. 
+ | 	"Debtor" is person.
+ | 	"Secured Party" is person.
+ | 	"Filing Office" is person.
+ | 	"Collateral" is data.
+ | 	"Digital Asset Collateral" is amount.
+ | 	"Reminder Fee" is amount.
+ | 	"Continuation Window Start" is time.
+ | 	"Continuation Statement Date" is time.
+ | 	"Continuation Statement Filing Number" is data.
+ | 	"Lapse Date" is time.
+ | 	"Default" is binary.
+ | 	"Continuation Statement" is binary.
+ | 	"Termination Statement" is binary.
+ | 	"Termination Statement Time" is time.
+ | 	"Notification Statement" is text. 
+ | 
+ | 	The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral.
+ */
 
 contract UCCFinancingStatement {
 
@@ -135,7 +136,9 @@ contract UCCFinancingStatement {
         collateral = _collateral;
     }
 
+
     /* built-in termination of the entire contract system */
+
     function termination() internal {
         terminated = true;
     }
@@ -144,18 +147,21 @@ contract UCCFinancingStatement {
         require(!terminated, "contract system terminated before");
     }
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
 
     /* built-in send message */
+
     function send(address _to, string storage _message) internal {
         emit Message(msg.sender, _to, _message);
     }
 
     /* built-in caller assertion */
+
     function permit(address _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
     }
@@ -164,57 +170,66 @@ contract UCCFinancingStatement {
     /* Certify clause */
 
     /*
-     *  Clause: Certify.
-     *  The Filing Office may certify the File Number.
+     |  Clause: Certify.
+     |  The Filing Office may certify the File Number.
      */
+
     function certify(string memory _file_number) public {
         check_termination();
         permit(filing_office);
         file_number = _file_number;
     }
 
+
     /* Set File Date clause */
 
     /*
-     *  Clause: Set File Date.
-     *  The Filing Office may fix the Initial Statement Date as the current time.
+     |  Clause: Set File Date.
+     |  The Filing Office may fix the Initial Statement Date as the current time.
      */
+
     function set_file_date() public {
         check_termination();
         permit(filing_office);
         initial_statement_date = block.timestamp;
     }
 
+
     /* Set Lapse clause */
 
     /*
-     *  Clause: Set Lapse.
-     *  The Filing Office may fix the Lapse Date.
+     |  Clause: Set Lapse.
+     |  The Filing Office may fix the Lapse Date.
      */
+
     function set_lapse(uint _lapse_date) public {
         check_termination();
         permit(filing_office);
         lapse_date = _lapse_date;
     }
 
+
     /* Set Continuation Start clause */
 
     /*
-     *  Clause: Set Continuation Start.
-     *  The Filing Office may fix the Continuation Window Start.
+     |  Clause: Set Continuation Start.
+     |  The Filing Office may fix the Continuation Window Start.
      */
+
     function set_continuation_start(uint _continuation_window_start) public {
         check_termination();
         permit(filing_office);
         continuation_window_start = _continuation_window_start;
     }
 
+
     /* Pay Fee clause */
 
     /*
-     *  Clause: Pay Fee.
-     *  The Secured Party may pay Reminder Fee into escrow.
+     |  Clause: Pay Fee.
+     |  The Secured Party may pay Reminder Fee into escrow.
      */
+
     function pay_fee() public payable {
         check_termination();
         permit(secured_party);
@@ -222,24 +237,28 @@ contract UCCFinancingStatement {
         reminder_fee__set = true;
     }
 
+
     /* Notice clause */
 
     /*
-     *  Clause: Notice.
-     *  The Filing Office may fix the Notification Statement.
+     |  Clause: Notice.
+     |  The Filing Office may fix the Notification Statement.
      */
+
     function notice(string memory _notification_statement) public {
         check_termination();
         permit(filing_office);
         notification_statement = _notification_statement;
     }
 
+
     /* Notify clause */
 
     /*
-     *  Clause: Notify.
-     *  The Filing Office may, given that the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+     |  Clause: Notify.
+     |  The Filing Office may, given that the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
      */
+
     function notify() public view {
         check_termination();
         permit(filing_office);
@@ -248,12 +267,14 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* Pay Escrow In clause */
 
     /*
-     *  Clause: Pay Escrow In.
-     *  The Debtor may pay the Digital Asset Collateral into escrow.
+     |  Clause: Pay Escrow In.
+     |  The Debtor may pay the Digital Asset Collateral into escrow.
      */
+
     function pay_escrow_in() public payable {
         check_termination();
         permit(debtor);
@@ -261,24 +282,28 @@ contract UCCFinancingStatement {
         digital_asset_collateral__set = true;
     }
 
+
     /* Fail to Pay clause */
 
     /*
-     *  Clause: Fail to Pay.
-     *  The Secured Party may declare Default.
+     |  Clause: Fail to Pay.
+     |  The Secured Party may declare Default.
      */
+
     function fail_to_pay() public {
         check_termination();
         permit(secured_party);
         _default = true;
     }
 
+
     /* Take Possession clause */
 
     /*
-     *  Clause: Take Possession.
-     *  The Filing Office may, given that Default is declared, pay the Digital Asset Collateral to the Secured Party.
+     |  Clause: Take Possession.
+     |  The Filing Office may, given that Default is declared, pay the Digital Asset Collateral to the Secured Party.
      */
+
     function take_possession() public {
         check_termination();
         permit(filing_office);
@@ -287,24 +312,28 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* File Continuation clause */
 
     /*
-     *  Clause: File Continuation.
-     *  The Secured Party may file the Continuation Statement.
+     |  Clause: File Continuation.
+     |  The Secured Party may file the Continuation Statement.
      */
+
     function file_continuation(bool _continuation_statement) public {
         check_termination();
         permit(secured_party);
         continuation_statement = _continuation_statement;
     }
 
+
     /* Set Continuation Lapse clause */
 
     /*
-     *  Clause: Set Continuation Lapse.
-     *  The Filing Office may, given that the Continuation Statement is filed, fix the Continuation Statement Date.
+     |  Clause: Set Continuation Lapse.
+     |  The Filing Office may, given that the Continuation Statement is filed, fix the Continuation Statement Date.
      */
+
     function set_continuation_lapse(uint _continuation_statement_date) public {
         check_termination();
         permit(filing_office);
@@ -313,12 +342,14 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* File Termination clause */
 
     /*
-     *  Clause: File Termination.
-     *  The Secured Party may file Termination Statement, and certify the Termination Statement Time as the then current time.
+     |  Clause: File Termination.
+     |  The Secured Party may file Termination Statement, and certify the Termination Statement Time as the then current time.
      */
+
     function file_termination(bool _termination_statement) public {
         check_termination();
         permit(secured_party);
@@ -326,12 +357,14 @@ contract UCCFinancingStatement {
         termination_statement_time = block.timestamp;
     }
 
+
     /* Release Escrow clause */
 
     /*
-     *  Clause: Release Escrow.
-     *  The Filing Office may, given that the Termination Statement is filed, pay the Digital Asset Collateral to the Debtor.
+     |  Clause: Release Escrow.
+     |  The Filing Office may, given that the Termination Statement is filed, pay the Digital Asset Collateral to the Debtor.
      */
+
     function release_escrow() public {
         check_termination();
         permit(filing_office);
@@ -340,12 +373,14 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* Release Reminder Fee clause */
 
     /*
-     *  Clause: Release Reminder Fee.
-     *  The Filing Office may, given that the Termination Statement is filed, pay the Reminder Fee to the Secured Party.
+     |  Clause: Release Reminder Fee.
+     |  The Filing Office may, given that the Termination Statement is filed, pay the Reminder Fee to the Secured Party.
      */
+
     function release_reminder_fee() public {
         check_termination();
         permit(filing_office);
@@ -354,22 +389,26 @@ contract UCCFinancingStatement {
         }
     }
 
+
     /* Termination Period clause */
 
     /*
-     *  Clause: Termination Period.
-     *  "Termination Period" is defined as 365 days after the Termination Statement Time.
+     |  Clause: Termination Period.
+     |  "Termination Period" is defined as 365 days after the Termination Statement Time.
      */
+
     function termination_period() public view returns(uint) {
         return Some(termination_statement_time + (365 * 86400));
     }
 
+
     /* Terminate and Clear clause */
 
     /*
-     *  Clause: Terminate and Clear.
-     *  The Filing Office may, given that the Termination Period has passed, terminate this contract.
+     |  Clause: Terminate and Clear.
+     |  The Filing Office may, given that the Termination Period has passed, terminate this contract.
      */
+
     function terminate_and_clear() public {
         check_termination();
         permit(filing_office);

@@ -408,6 +408,7 @@ typedef struct Grant {
 typedef struct Appointment {
 	struct Appoint *Appoint;
 	struct Symbol *Symbol;
+	struct Expression *Expression;
 	Literal *Literal;
 } Appointment;
 
@@ -574,6 +575,7 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	struct Reflexive *Reflexive;
 	Description *Description;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
@@ -823,7 +825,7 @@ Seconds *process_seconds(Seconds *Seconds);
 Milliseconds *process_milliseconds(Milliseconds *Milliseconds);
 Expiration *process_expiration(Expiration *Expiration);
 
-#line 827 "parser.h"
+#line 829 "parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -1097,7 +1099,7 @@ union YYSTYPE
   Weeks * Weeks;                           /* Weeks  */
   Years * Years;                           /* Years  */
 
-#line 1101 "parser.h"
+#line 1103 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

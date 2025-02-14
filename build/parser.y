@@ -374,6 +374,7 @@ typedef struct Grant {
 typedef struct Appointment {
 	struct Appoint *Appoint;
 	struct Symbol *Symbol;
+	struct Expression *Expression;
 	Literal *Literal;
 } Appointment;
 
@@ -540,6 +541,7 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	struct Reflexive *Reflexive;
 	Description *Description;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
@@ -1495,6 +1497,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	
 	Appointment:	
 		  Appoint Symbol                                  { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; $$=process_appointment(Appointment); }
+		| Appoint Symbol Expression                       { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
+		| Appoint Symbol AS Expression                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
 		;
 
 
@@ -1575,6 +1579,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	Preposition:	
 		  TO                                              { NEW(Preposition, *((Literal **)&yylval)); $$=process_preposition(Preposition); }
 		| INTO                                            { NEW(Preposition, *((Literal **)&yylval)); $$=process_preposition(Preposition); }
+		| OF                                              { NEW(Preposition, *((Literal **)&yylval)); $$=process_preposition(Preposition); }
 		;
 
 
@@ -1611,7 +1616,8 @@ Expiration *process_expiration(Expiration *Expiration);
 
 	
 	Notification:	
-		  Notify Object Preposition Expression            { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=$Notify; Notification->Object=$Object; Notification->Preposition=$Preposition; Notification->Expression=$Expression; $$=process_notification(Notification); }
+		  Notify Object                                   { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=$Notify; Notification->Object=$Object; $$=process_notification(Notification); }
+		| Notify Object Preposition Expression            { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=$Notify; Notification->Object=$Object; Notification->Preposition=$Preposition; Notification->Expression=$Expression; $$=process_notification(Notification); }
 		;
 
 
@@ -1734,6 +1740,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	Combinand:	
 		  Symbol                                          { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; $$=process_combinand(Combinand); }
 		| Symbol Expiration                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; Combinand->Expiration=$Expiration; $$=process_combinand(Combinand); }
+		| Reflexive                                       { NEW(Combinand, *((Literal **)&yylval)); Combinand->Reflexive=$Reflexive; $$=process_combinand(Combinand); }
 		| Description                                     { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=$Description; $$=process_combinand(Combinand); }
 		| Scalar_Comparison                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=$Scalar_Comparison; $$=process_combinand(Combinand); }
 		| Negation                                        { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=$Negation; $$=process_combinand(Combinand); }
@@ -2361,6 +2368,7 @@ Appointment *process_appointment(Appointment *Appointment) {
 	if(opt_debug_actions) printf("actions: parsing Appointment '%s'\n", Appointment->Literal);
 	// Appointment->Appoint
 	// Appointment->Symbol
+	// Appointment->Expression
 	return Appointment;
 }
 
@@ -2557,6 +2565,7 @@ Combinand *process_combinand(Combinand *Combinand) {
 	if(opt_debug_actions) printf("actions: parsing Combinand %s\n", Combinand->Description);
 	// Combinand->Symbol
 	// Combinand->Expiration
+	// Combinand->Reflexive
 	// Combinand->Description
 	// Combinand->Scalar_Comparison
 	// Combinand->Negation

@@ -1,40 +1,40 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-/* Lexon-generated Solidity code
-
-
-   code:        Escrow
-
-   file:        escrow2.lex
-
-   compiler:    lexon 0.3 alpha 93 U
-
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
-
-   backend:     solidity 0.3.93 U
-
-   target:      solidity 0.8+
-
-   parameters:  --solidity  --comment 
-
-*/
+/** Lexon-generated Solidity code
+ **
+ **	code:        Escrow
+ **
+ **	file:        escrow2.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     solidity 0.3.97 U
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --comment 
+ **
+ */
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow.
- *
- *	"Payer" is	 a person.
- *	"Payee" is A person.
- *	"Arbiter" is  a person.
- *	"Fee" is	aN  amount.
- *
- *	The Payer pays an amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
-**/
+/*
+ | 	LEX Escrow.
+ | 
+ | 	"Payer" is	 a person.
+ | 	"Payee" is A person.
+ | 	"Arbiter" is  a person.
+ | 	"Fee" is	aN  amount.
+ | 
+ | 	The Payer pays an amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+ */
 
 contract Escrow {
 
@@ -50,13 +50,15 @@ contract Escrow {
         fee = _fee;
     }
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     function transfer(address _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
 
     /* built-in caller assertion */
+
     function permit(address _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
     }
@@ -65,21 +67,24 @@ contract Escrow {
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out.
-     *  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+     |  CLAUSE: Pay Out.
+     |  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
      */
+
     function pay_out() public {
         permit(arbiter);
         transfer(arbiter, fee);
         transfer(payee, address(this).balance);
     }
 
+
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back.
-     *  The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
+     |  CLAUSE: Pay Back.
+     |  The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
      */
+
     function pay_back() public {
         permit(arbiter);
         transfer(arbiter, fee);

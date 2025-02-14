@@ -1,0 +1,190 @@
+/** Lexon-generated Sophia code
+ **
+ **	code:        Evaluation License System
+ **
+ **	preamble:    This is a licensing contract for a software evaluation.
+ **
+ **	authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+ **
+ **	file:        cover/evaluation-97g-payable-constructors.lex
+ **
+ **	code tagged: 0.2.1
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     sophia 0.3.97g U
+ **
+ **	target:      sophia 7.1+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <arbiter : option(address)>, <breach_fee : option(int)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per License.
+
+   > license = evaluation.add_license(<licensee : option(address)>, <description_of_goods : option(string)>)
+   • <<Licensee>> ⟶   pay()
+ */
+
+@compiler >=6
+
+include "Option.aes"
+
+/**
+ **
+ **	Main Evaluation License System contract system
+ **
+ **/
+
+/*
+ | 	LEX: Evaluation License System.
+ | 	LEXON: 0.2.1
+ | 	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ | 	PREAMBLE: This is a licensing contract for a software evaluation.
+ | 
+ | 	TERMS:
+ | 
+ | 	"Licensor" is a person.
+ | 	"Arbiter" is a person.
+ | 	"Licensing Fee" is an amount.
+ | 	"Breach Fee" is an amount.
+ | 
+ | 	The Licensor appoints the Arbiter,
+ | 	pays the Licensing Fee into escrow,
+ | 	and fixes the Breach Fee.
+ */
+
+
+
+main contract EvaluationLicenseSystem =
+
+    record state = {
+            licensor : option(address),
+            arbiter : option(address),
+            licensing_fee : option(int),
+            breach_fee : option(int)
+        }
+
+    payable entrypoint init(arbiter : address, breach_fee : int) = {
+            licensor = Some(Call.caller),
+            arbiter = Some(arbiter),
+            licensing_fee = Some(Call.value),
+            breach_fee = Some(breach_fee)
+        }
+
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+    /* built-in option type force function */
+
+    function force(o : option('a), name : string) : 'a =
+        switch(o)
+            None => abort(StringInternal.concat(name, " not fixed"))
+            Some(a) => a
+
+/* aggregation of covenants for folds and serialization */
+
+this._license_list = {};
+this._license_count = 0;
+
+/**
+ **
+ **	License covenant class
+ **
+ **/
+
+/*
+ | 	TERMS PER License
+ | 
+ | 	"Description of Goods" is a text.
+ | 	"Licensee" is a person.
+ | 	"Paid" is a binary.
+ | 	"Commissioned" is a binary.
+ | 	"Comment Text" is a text.
+ | 	"Published" is a binary.
+ | 	"Permission to Comment" is a binary.
+ | 	"Notice Time" is a time.
+ | 	"License" is this contract.
+ | 	"Creation Fee" is an amount.
+ | 
+ | 	The Licensor pays the Creation Fee into escrow, appoints the Licensee, and fixes the Description of Goods.
+ */
+
+contract License =
+
+    record state = {
+        description_of_goods : option(string),
+        licensee : option(address),
+        paid : option(bool),
+        commissioned : option(bool),
+        comment_text : option(string),
+        published : option(bool),
+        permission_to_comment : option(bool),
+        notice_time : option(int),
+        creation_fee : option(int)
+        }
+
+    payable entrypoint init(licensee : address, description_of_goods : string) = {
+        description_of_goods = Some(description_of_goods),
+        licensee = Some(licensee),
+        paid = None,
+        commissioned = None,
+        comment_text = None,
+        published = None,
+        permission_to_comment = None,
+        notice_time = None,
+        creation_fee = Some(Call.value)
+        }
+
+
+    /* Pay clause */
+
+    /*
+     |  CLAUSE: Pay.
+     |  The Licensee pays the Licensing Fee to the Licensor,
+     |  and pays the Breach Fee into escrow.
+     |  This License is therefore Paid.
+     */
+
+    stateful entrypoint pay() =
+        require(Some(Call.caller) == licensee, "not permitted")
+        if(Some(Call.caller) == licensee)
+            transfer(force(state.licensor, "Licensor"), force(state.licensing_fee, "Licensing Fee"))
+        paid = true;
+
+/* end */

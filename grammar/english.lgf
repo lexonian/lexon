@@ -15,7 +15,7 @@
 ##
 ##	english.lgf — Lexon controlled English grammar
 ##
-##	Version 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
+##	Version 0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
 ##
 ##	This document is in Lexon Grammar Form, a variation of BNF.
 ##	Square brackets indicate optionality, 'or' separates variants.
@@ -202,7 +202,7 @@
 
 ## APPOINTMENT PREDICATE
 
-   appointment:	appoint symbol
+   appointment:	appoint symbol [["as"] expression]
 
    appoint:	"appoint" or "appoints"
 
@@ -234,7 +234,7 @@
 
    pay:		"pay" or "pays" or "return" or "returns"
 
-   preposition:	"to" or "into"
+   preposition:	"to" or "into" or "of"
 
    escrow:	["the"] ["remainder" "of" "the"] "escrow"
 
@@ -250,7 +250,7 @@
 
 ## NOTIFICATION PREDICATE
 
-   notification: notify object preposition expression
+   notification: notify object [preposition expression]
 
    notify:	"notify" or "notifies"
 
@@ -308,6 +308,7 @@
    combinor:	combinand [combinator combinor]
 
    combinand:	symbol [expiration]
+   		or reflexive
    		or description
 		or scalar_comparison
 		or negation

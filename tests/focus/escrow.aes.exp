@@ -1,38 +1,39 @@
-/* Lexon-generated Sophia code
-
-   code:        Escrow
-
-   file:        escrow.lex
-
-   compiler:    lexon 0.3 alpha 93 U
-
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
-
-   backend:     sophia 0.3.93 U
-
-   target:      sophia 6+
-
-   options:     --sophia  --comment 
-
-*/
+/** Lexon-generated Sophia code
+ **
+ **	code:        Escrow
+ **
+ **	file:        escrow.lex
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     sophia 0.3.97 U
+ **
+ **	target:      sophia 7.1+
+ **
+ **	options:     --sophia  --comment 
+ **
+ */
 
 @compiler >=6
 
 /**
  **
- ** Main Escrow contract system
+ **	Main Escrow contract system
  **
  **/
 
-/** LEX Escrow.
- *
- *	"Payer" is a person.
- *	"Payee" is a person.
- *	"Arbiter" is a person.
- *	"Fee" is an amount.
- *
- *	The Payer pays an amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
-**/
+/*
+ | 	LEX Escrow.
+ | 
+ | 	"Payer" is a person.
+ | 	"Payee" is a person.
+ | 	"Arbiter" is a person.
+ | 	"Fee" is an amount.
+ | 
+ | 	The Payer pays an amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+ */
 
 
 
@@ -45,7 +46,7 @@ main contract Escrow =
             fee : int
         }
 
-    entrypoint init(payee : address, arbiter : address, fee : int) = {
+    payable entrypoint init(payee : address, arbiter : address, fee : int) = {
             payer = Call.caller,
             payee = payee,
             arbiter = arbiter,
@@ -53,11 +54,13 @@ main contract Escrow =
         }
 
 
-    /* safe transfer */
+    /* built-in safe transfer */
+
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
 
     /* built-in caller assertion */
+
     function permit(authorized : address) =
         require(Call.caller == authorized, "access")
 
@@ -65,20 +68,23 @@ main contract Escrow =
     /* Pay Out clause */
 
     /*
-     *  CLAUSE: Pay Out.
-     *  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+     |  CLAUSE: Pay Out.
+     |  The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
      */
+
     stateful entrypoint pay_out() =
         permit(state.arbiter)
         transfer(state.arbiter, state.fee)
         transfer(state.payee, Contract.balance)
 
+
     /* Pay Back clause */
 
     /*
-     *  CLAUSE: Pay Back.
-     *  The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
+     |  CLAUSE: Pay Back.
+     |  The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
      */
+
     stateful entrypoint pay_back() =
         permit(state.arbiter)
         transfer(state.arbiter, state.fee)

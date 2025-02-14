@@ -1,24 +1,25 @@
-/* Lexon-generated Javascript 
-
-   code:        Evaluation License System
-
-   preamble:    This is licensing contract for software evaluation
-
-   authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
-
-   file:        lexon/evaluation.946.lex
-
-   code tagged: 0.2.1
-
-   compiler:    lexon 0.3 alpha 93 U
-
-   grammar:     0.2.20 / subset 0.3.8 alpha 79 - English / Reyes
-
-   backend:     javascript 0.3.93 U
-
-   target:      node 14.1+
-
-   parameters:  --javascript  --all-auxiliaries 
+/** Lexon-generated Javascript 
+ **
+ **	code:        Evaluation License System
+ **
+ **	preamble:    This is licensing contract for software evaluation
+ **
+ **	authors:     FLORIAN IDELBERGER, HENNING DIEDRICH
+ **
+ **	file:        lexon/evaluation.946.lex
+ **
+ **	code tagged: 0.2.1
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     javascript 0.3.97g U
+ **
+ **	target:      node 14.1+
+ **
+ **	options:     --javascript  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -111,7 +112,7 @@
    created using this utility function:
 
    > evaluation.create_key(name, passphrase)
-*/
+ */
 
 var fs = require('fs');
 var crypto = require('crypto');
@@ -124,56 +125,33 @@ var last_passphrase;
 
 /**
  **
- ** Main Evaluation License System contract system
+ **	Main Evaluation License System contract system
  **
  **/
 
-/** LEX: Evaluation License System
- *
- *	LEXON: 0.2.1
- *	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
- *	PREAMBLE: This is licensing contract for software evaluation
- *
- *	
- *	TERMS:
- *
- *	"Licensor" is person
- *
- *	"Arbiter" is person
- *
- *	"Licensing Fee" is amount
- *
- *	"Breach Fee" is amount
- *
- *	
- *	The Licensor appoints the Arbiter,
- *	fixes the Licensing Fee,
- *	and fixes the Breach Fee
- *
- *	
- *	TERMS PER License:
- *
- *	"Description of Goods" is text
- *
- *	"Licensee" is person
- *
- *	"Paid" is binary
- *
- *	"Commissioned" is binary
- *
- *	"Comment Text" is text
- *
- *	"Published" is binary
- *
- *	"Permission to Comment" is binary
- *
- *	"Notice Time" is time
- *
- *	"License" is this contract
- *
- *	
- *	The Licensor appoints the Licensee, and fixes the Description of Goods
-**/
+/*
+ | 	LEX: Evaluation License System
+ | 
+ | 	LEXON: 0.2.1
+ | 	AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+ | 	PREAMBLE: This is licensing contract for software evaluation
+ | 
+ | 	
+ | 	TERMS:
+ | 
+ | 	"Licensor" is person
+ | 
+ | 	"Arbiter" is person
+ | 
+ | 	"Licensing Fee" is amount
+ | 
+ | 	"Breach Fee" is amount
+ | 
+ | 	
+ | 	The Licensor appoints the Arbiter,
+ | 	fixes the Licensing Fee,
+ | 	and fixes the Breach Fee
+ */
 
 module.exports = class EvaluationLicenseSystem {
 
@@ -193,6 +171,7 @@ module.exports = class EvaluationLicenseSystem {
             this.logname = 'log';
 
             /* start log - overwrites previous by same name */
+
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
             this.log(licensor, "✓ Arbiter appointed");
             this.log(licensor, "✓ Licensing Fee fixed");
@@ -200,14 +179,43 @@ module.exports = class EvaluationLicenseSystem {
         }
 
         /* aggregation of covenants for folds and serialization */
+
         this._license_list = {};
         this._license_count = 0;
 
         /**
-         ** License covenant class
+         **
+         **	License covenant class
+         **
          **/
 
+        /*
+	 | 	TERMS PER License
+	 | 
+	 | 	"Description of Goods" is text
+	 | 
+	 | 	"Licensee" is person
+	 | 
+	 | 	"Paid" is binary
+	 | 
+	 | 	"Commissioned" is binary
+	 | 
+	 | 	"Comment Text" is text
+	 | 
+	 | 	"Published" is binary
+	 | 
+	 | 	"Permission to Comment" is binary
+	 | 
+	 | 	"Notice Time" is time
+	 | 
+	 | 	"License" is this contract
+	 | 
+	 | 	
+	 | 	The Licensor appoints the Licensee, and fixes the Description of Goods
+	 */
+
         /* this closure exports the covenant's constructor to the scope of the main */
+
         this.License = (caller, licensee, description_of_goods) => {
             if(caller == main.licensor) {
                 return new License(caller, licensee, description_of_goods);
@@ -234,166 +242,167 @@ module.exports = class EvaluationLicenseSystem {
                 }
             }
 
+
             /* Pay clause */
 
-    /*
-     *  CLAUSE: Pay
-     *  
-     *  The Licensee pays the Licensing Fee to the Licensor,
-     *  and pays the Breach Fee into escrow
-     *  
-     *  This License is therefore Paid
-     */
+            /*
+             |  CLAUSE: Pay
+             |  
+             |  The Licensee pays the Licensing Fee to the Licensor,
+             |  and pays the Breach Fee into escrow
+             |  
+             |  This License is therefore Paid
+             */
+
             pay(caller)  {
                 if(this.already_terminated()) return undefined;
+                if(!(caller == this.licensee)) return 'not permitted';
                 if(caller == this.licensee) {
-                    main._pay(caller, this.licensee, main.licensor, main.licensing_fee);
-                    main._pay(caller, this.licensee, 'escrow', main.breach_fee);
-                } else {
-                    return 'not permitted.';
+                    main.transfer(caller, this.licensee, main.licensor, main.licensing_fee);
+                    main.transfer(caller, this.licensee, 'escrow', main.breach_fee);
                 }
                 this.paid = true;
                 return 'done.';
             }
 
+
             /* Commission clause */
 
-    /*
-     *  CLAUSE: Commission
-     *  
-     *  The Licensor may certify this License as Commissioned
-     */
+            /*
+             |  CLAUSE: Commission
+             |  
+             |  The Licensor may certify this License as Commissioned
+             */
+
             commission(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.licensor) {
-                    this.commissioned = true;
-                    main.log(caller, "✓ Commissioned certified");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != main.licensor) return 'not permitted';
+                this.commissioned = true;
+                main.log(caller, "✓ Commissioned certified");
                 return 'done.';
             }
+
 
             /* Comment clause */
 
-    /*
-     *  CLAUSE: Comment
-     *  
-     *  The Licensee may register Comment Text.
-     */
+            /*
+             |  CLAUSE: Comment
+             |  
+             |  The Licensee may register Comment Text.
+             */
+
             comment(caller, comment_text)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.comment_text = comment_text;
-                    main.log(caller, "✓ Comment Text registered");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.comment_text = comment_text;
+                main.log(caller, "✓ Comment Text registered");
                 return 'done.';
             }
+
 
             /* Publication clause */
 
-    /*
-     *  CLAUSE: Publication
-     *  
-     *  The Licensee may certify this License as Published
-     */
+            /*
+             |  CLAUSE: Publication
+             |  
+             |  The Licensee may certify this License as Published
+             */
+
             publication(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.published = true;
-                    main.log(caller, "✓ Published certified");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.published = true;
+                main.log(caller, "✓ Published certified");
                 return 'done.';
             }
+
 
             /* Grant Permission to Comment clause */
 
-    /*
-     *  CLAUSE: Grant Permission to Comment
-     *  
-     *  The Licensee may grant the Permission to Comment
-     */
+            /*
+             |  CLAUSE: Grant Permission to Comment
+             |  
+             |  The Licensee may grant the Permission to Comment
+             */
+
             grant_permission_to_comment(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == this.licensee) {
-                    this.permission_to_comment = true;
-                    main.log(caller, "✓ Permission to Comment granted");
-                } else {
-                    return 'not permitted.';
-                }
+                if(caller != this.licensee) return 'not permitted';
+                this.permission_to_comment = true;
+                main.log(caller, "✓ Permission to Comment granted");
                 return 'done.';
             }
+
 
             /* Declare Breach clause */
 
-    /*
-     *  CLAUSE: Declare Breach
-     *  
-     *  The Arbiter may, provided this License is Factually Breached:
-     *  pay the Breach Fee to the Licensor,
-     *  and afterwards terminate this License
-     */
+            /*
+             |  CLAUSE: Declare Breach
+             |  
+             |  The Arbiter may, provided this License is Factually Breached:
+             |  pay the Breach Fee to the Licensor,
+             |  and afterwards terminate this License
+             */
+
             declare_breach(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.arbiter) {
-                    if(this.factually_breached()) {
-                        main._pay(caller, main.arbiter, main.licensor, main.breach_fee);
-                        this.termination(caller);
-                    }
-                } else {
-                    return 'not permitted.';
+                if(caller != main.arbiter) return 'not permitted';
+                if(this.factually_breached()) {
+                    main.transfer(caller, main.arbiter, main.licensor, main.breach_fee);
+                    this.termination(caller);
                 }
                 return 'done.';
             }
 
+
             /* Factually Breached clause */
 
-    /*
-     *  CLAUSE: Factually Breached
-     *  
-     *  "Factually Breached" is defined as:
-     *  this License is Commissioned and the Comment Text is not fixed,
-     *  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past
-     */
+            /*
+             |  CLAUSE: Factually Breached
+             |  
+             |  "Factually Breached" is defined as:
+             |  this License is Commissioned and the Comment Text is not fixed,
+             |  or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past
+             */
+
             factually_breached()  {
                 return ((this.commissioned && !this.comment_text)
                          || (this.published && (!this.permission_to_comment && (this.notice_time <= (Date.now() - (24 * 3600000))))));
             }
 
+
             /* Notice clause */
 
-    /*
-     *  CLAUSE: Notice
-     *  
-     *  The Licensor or the Arbiter may fix the Notice Time as the respective current time
-     */
+            /*
+             |  CLAUSE: Notice
+             |  
+             |  The Licensor or the Arbiter may fix the Notice Time as the respective current time
+             */
+
             notice(caller)  {
                 if(this.already_terminated()) return undefined;
-                if(caller == main.arbiter || caller == main.licensor) {
-                    this.notice_time = Date.now();
-                    main.log(caller, "✓ Notice Time fixed");
-                } else {
-                    return 'not permitted.';
-                }
+                if(!(caller == main.arbiter || caller == main.licensor)) return 'not permitted';
+                this.notice_time = Date.now();
+                main.log(caller, "✓ Notice Time fixed");
                 return 'done.';
             }
 
+
             /* Noticed clause */
 
-    /*
-     *  CLAUSE: Noticed
-     *  
-     *  "Noticed" is defined as Notice Time being fixed
-     */
+            /*
+             |  CLAUSE: Noticed
+             |  
+             |  "Noticed" is defined as Notice Time being fixed
+             */
+
             noticed()  {
                 return this.notice_time;
             }
 
+
             /* built-in termination of this covenant */
+
             termination(caller) {
                 this.terminated = true;
                 main.log(caller, '■ covenant terminated');
@@ -407,6 +416,7 @@ module.exports = class EvaluationLicenseSystem {
         }
 
         /* restore object from file - must be below class definition */
+
         if(typeof licensor === 'undefined') {
             console.log("> restore from file 'state'");
             var data = fs.readFileSync('state', ()=>{});
@@ -424,6 +434,7 @@ module.exports = class EvaluationLicenseSystem {
     }
 
     /* create new instance of License covenant, and register it with main */
+
     add_license(caller, licensee, description_of_goods) {
         if (this.already_terminated()) return undefined;
         return this._license_list[this._license_count += 1] = this.License(caller, licensee, description_of_goods);
@@ -431,11 +442,13 @@ module.exports = class EvaluationLicenseSystem {
 
 
     /* built-in convenience function to view state change log. */
+
     history() {
         fs.readFile(this.logname, (e,d)=>{console.log(d.toString())});
     }
 
     /* built-in serialization and storage of entire contract system state. */
+
     persist() {
         console.log('> persisting');
         var data = serialize(this, {space: 4});
@@ -443,23 +456,27 @@ module.exports = class EvaluationLicenseSystem {
     }
 
     /* re-instate entire contract system from serialized file store */
+
     static load() {
         return new EvaluationLicenseSystem();
     }
 
     /* built-in tar-balling of code, log and state. */
+
     bundle() {
         console.log('> bundling into contract.tgz');
         tar.create({gzip:true, file:'contract.tgz'}, ['lexon/evaluation.946.lex', 'lexon/evaluation.946.jsx', 'state', 'log', 'INSTRUCTIONS.TXT']);
     }
 
     /* built-in untar-balling of code, log and state. */
+
     static unbundle() {
         console.log('> unbundling contract.tgz');
         tar.extract('contract.tgz');
     }
 
     /* built-in email sending of code, log and state. */
+
     send() {
 
         this.persist();
@@ -491,6 +508,7 @@ module.exports = class EvaluationLicenseSystem {
     }
 
     /* built-in logging of state changes. */
+
     log(caller, msg) {
         console.log(msg);
         let stamp = (new Date()).toLocaleString('en-US');
@@ -508,6 +526,7 @@ module.exports = class EvaluationLicenseSystem {
     }
 
     /* built-in password query for private key file, with cache. */
+
     sync_passphrase(caller) {
         if(!caller) process.exit('no caller information');
         if(caller == last_caller) return last_passphrase;
@@ -516,6 +535,7 @@ module.exports = class EvaluationLicenseSystem {
     }
 
     /* built-in convenience function to create keys for users. */
+
     static create_key(name, passphrase) {
         const { publicKey, privateKey } =
             crypto.generateKeyPairSync('rsa',
@@ -528,9 +548,10 @@ module.exports = class EvaluationLicenseSystem {
         return true;
     }
 
-    /* built-in pay message */
-    _pay(caller, from, to, amount) {
-        this.log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);
+    /* built-in transfer message */
+
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }

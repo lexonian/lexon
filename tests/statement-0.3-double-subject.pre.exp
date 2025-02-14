@@ -1,0 +1,80 @@
+
+precompilation:
+---------------
+
+statement 0.3 double subject   1:   LEX: «UCC Financing Statement».
+
+statement 0.3 double subject   3:   LEXON: ‹0.3 alpha 97›.
+statement 0.3 double subject   4:   COMMENT: ‹%ERR›.
+
+statement 0.3 double subject   6:   "«Financing Statement»" is this contract.
+statement 0.3 double subject   7:   "«File Number»" is data.
+statement 0.3 double subject   8:   "«Initial Statement Date»" is a time.
+statement 0.3 double subject   9:   "«Filer»" is a person.
+statement 0.3 double subject  10:   "«Debtor»" is a person.
+statement 0.3 double subject  11:   "«Secured Party»" is a person.
+statement 0.3 double subject  12:   "«Filing Office»" is a person.
+statement 0.3 double subject  13:   "«Collateral»" is data.
+statement 0.3 double subject  14:   "«Digital Asset Collateral»" is an amount.
+statement 0.3 double subject  15:   "«Reminder Fee»" is an amount.
+statement 0.3 double subject  16:   "«Continuation Window Start»" is a time.
+statement 0.3 double subject  17:   "«Continuation Statement Date»" is a time.
+statement 0.3 double subject  18:   "«Continuation Statement Filing Number»" is data.
+statement 0.3 double subject  19:   "«Lapse Date»" is a time.
+statement 0.3 double subject  20:   "«Default»" is a binary.
+statement 0.3 double subject  21:   "«Continuation Statement»" is a binary.
+statement 0.3 double subject  22:   "«Termination Statement»" is a binary.
+statement 0.3 double subject  23:   "«Termination Statement Time»" is a time.
+statement 0.3 double subject  24:   "«Notification Statement»" is a text.
+
+statement 0.3 double subject  26:   The «Filer» fixes the «Filing Office», fixes the «Debtor», fixes the «Secured Party», and fixes the «Collateral».
+
+statement 0.3 double subject  28:   Clause: «Certify».
+statement 0.3 double subject  29:   The «Filer» or the «Filing Office» may certify the «File Number».
+
+statement 0.3 double subject  31:   Clause: «Set File Date».
+statement 0.3 double subject  32:   The «Filing Office» may fix the «Initial Statement Date» as the current time.
+
+statement 0.3 double subject  34:   Clause: «Set Lapse».
+statement 0.3 double subject  35:   The «Filing Office» may fix the «Lapse Date».
+
+statement 0.3 double subject  37:   Clause: «Set Continuation Start».
+statement 0.3 double subject  38:   The «Filing Office» may fix the «Continuation Window Start».
+
+statement 0.3 double subject  40:   Clause: «Pay Fee».
+statement 0.3 double subject  41:   The «Secured Party» may pay a «Reminder Fee» into escrow.
+
+statement 0.3 double subject  43:   Clause: «Notice».
+statement 0.3 double subject  44:   The «Filing Office» may fix the «Notification Statement».
+
+statement 0.3 double subject  46:   Clause: «Pay Escrow In».
+statement 0.3 double subject  47:   The «Debtor» may pay the «Digital Asset Collateral» into escrow.
+
+statement 0.3 double subject  49:   Clause: «Fail to Pay».
+statement 0.3 double subject  50:   The «Secured Party» may declare «Default».
+
+statement 0.3 double subject  52:   Clause: «Take Possession».
+statement 0.3 double subject  53:   The «Filing Office» may, if «Default» is declared, pay the «Digital Asset Collateral» to the «Secured Party».
+
+statement 0.3 double subject  55:   Clause: «File Continuation».
+statement 0.3 double subject  56:   The «Secured Party» may file the «Continuation Statement».
+
+statement 0.3 double subject  58:   Clause: «Set Continuation Lapse».
+statement 0.3 double subject  59:   The «Filing Office» may, if the «Continuation Statement» is filed, fix the «Continuation Statement Date».
+
+statement 0.3 double subject  61:   Clause: «File Termination».
+statement 0.3 double subject  62:   The «Secured Party» may file a «Termination Statement», and certify the «Termination Statement Time» as the then current time.
+
+statement 0.3 double subject  64:   Clause: «Release Escrow».
+statement 0.3 double subject  65:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Digital Asset Collateral» to the «Debtor».
+
+statement 0.3 double subject  67:   Clause: «Release Reminder Fee».
+statement 0.3 double subject  68:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Reminder Fee» to the «Secured Party».
+
+statement 0.3 double subject  70:   Clause: «Termination Period».
+statement 0.3 double subject  71:   "«Termination Period»" is defined as 365 days after the «Termination Statement Time».
+
+statement 0.3 double subject  73:   Clause: «Terminate and Clear».
+statement 0.3 double subject  74:   The «Filing Office» may, if the «Termination Period» has passed, terminate this contract.
+
+

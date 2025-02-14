@@ -11,7 +11,7 @@ main contract Escrow =
             amount : int
         }
 
-    entrypoint init(seller : address, agent : address) = {
+    payable entrypoint init(seller : address, agent : address) = {
             buyer = Call.caller,
             seller = seller,
             agent = agent,
@@ -19,8 +19,10 @@ main contract Escrow =
         }
 
 
+
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
+
 
     function permit(authorized : address) =
         require(Call.caller == authorized, "access")
@@ -29,6 +31,7 @@ main contract Escrow =
     stateful entrypoint pay_out() =
         permit(state.agent)
         transfer(state.seller, Contract.balance)
+
 
     stateful entrypoint pay_back() =
         permit(state.agent)

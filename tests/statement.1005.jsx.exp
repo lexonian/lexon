@@ -1,20 +1,21 @@
-/* Lexon-generated Javascript 
-
-   code:        UCC Financing Statement
-
-   file:        lexon/statement.1005.lex
-
-   code tagged: 0.2.12
-
-   compiler:    lexon 0.3 alpha 96 U
-
-   grammar:     0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
-
-   backend:     javascript 0.3.93-96 U
-
-   target:      node 14.1+
-
-   parameters:  --javascript  --all-auxiliaries 
+/** Lexon-generated Javascript 
+ **
+ **	code:        UCC Financing Statement
+ **
+ **	file:        lexon/statement.1005.lex
+ **
+ **	code tagged: 0.2.12
+ **
+ **	compiler:    lexon 0.3 alpha 97 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **
+ **	backend:     javascript 0.3.97g U
+ **
+ **	target:      node 14.1+
+ **
+ **	options:     --javascript  --all-auxiliaries 
+ **
 
 
    INSTRUCTIONS FOR USE:
@@ -111,7 +112,7 @@
    created using this utility function:
 
    > statement.create_key(name, passphrase)
-*/
+ */
 
 var fs = require('fs');
 var crypto = require('crypto');
@@ -124,53 +125,54 @@ var last_passphrase;
 
 /**
  **
- ** Main UCC Financing Statement contract system
+ **	Main UCC Financing Statement contract system
  **
  **/
 
-/** LEX UCC Financing Statement
- *
- *	
- *	LEXON: 0.2.12
- *
- *	"Financing Statement" is this contract. 
- *	"File Number" is data
- *
- *	"Initial Statement Date" is a time
- *
- *	"Filer" is a person. 
- *	"Debtor" is a person
- *
- *	"Secured Party" is a person
- *
- *	"Filing Office" is a person
- *
- *	"Collateral" is data
- *
- *	"Digital Asset Collateral" is an amount
- *
- *	"Reminder Fee" is an amount
- *
- *	"Continuation Window Start" is a time
- *
- *	"Continuation Statement Date" is a time
- *
- *	"Continuation Statement Filing Number" is data
- *
- *	"Lapse Date" is a time
- *
- *	"Default" is a binary
- *
- *	"Continuation Statement" is a binary
- *
- *	"Termination Statement" is a binary
- *
- *	"Termination Statement Time" is a time
- *
- *	"Notification Statement" is a text. 
- *
- *	The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral
-**/
+/*
+ | 	LEX UCC Financing Statement
+ | 
+ | 	
+ | 	LEXON: 0.2.12
+ | 
+ | 	"Financing Statement" is this contract. 
+ | 	"File Number" is data
+ | 
+ | 	"Initial Statement Date" is a time
+ | 
+ | 	"Filer" is a person. 
+ | 	"Debtor" is a person
+ | 
+ | 	"Secured Party" is a person
+ | 
+ | 	"Filing Office" is a person
+ | 
+ | 	"Collateral" is data
+ | 
+ | 	"Digital Asset Collateral" is an amount
+ | 
+ | 	"Reminder Fee" is an amount
+ | 
+ | 	"Continuation Window Start" is a time
+ | 
+ | 	"Continuation Statement Date" is a time
+ | 
+ | 	"Continuation Statement Filing Number" is data
+ | 
+ | 	"Lapse Date" is a time
+ | 
+ | 	"Default" is a binary
+ | 
+ | 	"Continuation Statement" is a binary
+ | 
+ | 	"Termination Statement" is a binary
+ | 
+ | 	"Termination Statement Time" is a time
+ | 
+ | 	"Notification Statement" is a text. 
+ | 
+ | 	The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral
+ */
 
 module.exports = class UCCFinancingStatement {
 
@@ -199,10 +201,11 @@ module.exports = class UCCFinancingStatement {
             this.termination_statement = null;
             this.termination_statement_time = null;
             this.notification_statement = null;
-            this.terminated = false;
+        this.terminated = false;
             this.logname = 'log';
 
             /* start log - overwrites previous by same name */
+
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
             this.log(filer, "✓ Filing Office fixed");
             this.log(filer, "✓ Debtor fixed");
@@ -211,6 +214,7 @@ module.exports = class UCCFinancingStatement {
         }
 
         /* restore object from file - must be below class definition */
+
         if(typeof filer === 'undefined') {
             console.log("> restore from file 'state'");
             var data = fs.readFileSync('state', ()=>{});
@@ -220,320 +224,308 @@ module.exports = class UCCFinancingStatement {
     }
 
 
+
     /* Certify clause */
 
     /*
-     *  Clause: Certify
-     *  
-     *  The Filing Office may certify the File Number
+     |  Clause: Certify
+     |  
+     |  The Filing Office may certify the File Number
      */
+
     certify(caller, file_number)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            this.file_number = file_number;
-            this.log(caller, "✓ File Number certified");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.filing_office) return 'not permitted';
+        this.file_number = file_number;
+        this.log(caller, "✓ File Number certified");
         return 'done.';
     }
+
 
     /* Set File Date clause */
 
     /*
-     *  Clause: Set File Date
-     *  
-     *  The Filing Office may fix the Initial Statement Date as the current time.
+     |  Clause: Set File Date
+     |  
+     |  The Filing Office may fix the Initial Statement Date as the current time.
      */
+
     set_file_date(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            this.initial_statement_date = Date.now();
-            this.log(caller, "✓ Initial Statement Date fixed");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.filing_office) return 'not permitted';
+        this.initial_statement_date = Date.now();
+        this.log(caller, "✓ Initial Statement Date fixed");
         return 'done.';
     }
+
 
     /* Set Lapse clause */
 
     /*
-     *  Clause: Set Lapse
-     *  
-     *  The Filing Office may fix the Lapse Date
+     |  Clause: Set Lapse
+     |  
+     |  The Filing Office may fix the Lapse Date
      */
+
     set_lapse(caller, lapse_date)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            this.lapse_date = lapse_date;
-            this.log(caller, "✓ Lapse Date fixed");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.filing_office) return 'not permitted';
+        this.lapse_date = lapse_date;
+        this.log(caller, "✓ Lapse Date fixed");
         return 'done.';
     }
+
 
     /* Set Continuation Start clause */
 
     /*
-     *  Clause: Set Continuation Start
-     *  
-     *  The Filing Office may fix the Continuation Window Start
+     |  Clause: Set Continuation Start
+     |  
+     |  The Filing Office may fix the Continuation Window Start
      */
+
     set_continuation_start(caller, continuation_window_start)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            this.continuation_window_start = continuation_window_start;
-            this.log(caller, "✓ Continuation Window Start fixed");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.filing_office) return 'not permitted';
+        this.continuation_window_start = continuation_window_start;
+        this.log(caller, "✓ Continuation Window Start fixed");
         return 'done.';
     }
+
 
     /* Pay Fee clause */
 
     /*
-     *  Clause: Pay Fee
-     *  
-     *  The Secured Party may pay a Reminder Fee into escrow.
+     |  Clause: Pay Fee
+     |  
+     |  The Secured Party may pay a Reminder Fee into escrow.
      */
+
     pay_fee(caller, reminder_fee)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.secured_party) {
-            this.reminder_fee = reminder_fee;
-            this._pay(caller, this.secured_party, 'escrow', this.reminder_fee);
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.secured_party) return 'not permitted';
+        this.reminder_fee = reminder_fee;
+        this.transfer(caller, this.secured_party, 'escrow', this.reminder_fee);
         return 'done.';
     }
+
 
     /* Notice clause */
 
     /*
-     *  Clause: Notice
-     *  
-     *  The Filing Office may fix the Notification Statement
+     |  Clause: Notice
+     |  
+     |  The Filing Office may fix the Notification Statement
      */
+
     notice(caller, notification_statement)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            this.notification_statement = notification_statement;
-            this.log(caller, "✓ Notification Statement fixed");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.filing_office) return 'not permitted';
+        this.notification_statement = notification_statement;
+        this.log(caller, "✓ Notification Statement fixed");
         return 'done.';
     }
+
 
     /* Notify clause */
 
     /*
-     *  Clause: Notify
-     *  
-     *  The Filing Office may, provided the Continuation Window Start has passed, send the Notification Statement to the Secured Party
+     |  Clause: Notify
+     |  
+     |  The Filing Office may, provided the Continuation Window Start has passed, send the Notification Statement to the Secured Party
      */
+
     notify(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            if(this.continuation_window_start <= Date.now()) {
-                this_send(caller, this.filing_office, this.secured_party, this.notification_statement);
-            }
-        } else {
-            return 'not permitted.';
+        if(caller != this.filing_office) return 'not permitted';
+        if(this.continuation_window_start <= Date.now()) {
+            this._send(caller, this.filing_office, this.secured_party, this.notification_statement);
         }
         return 'done.';
     }
+
 
     /* Pay Escrow In clause */
 
     /*
-     *  Clause: Pay Escrow In
-     *  
-     *  The Debtor may pay the Digital Asset Collateral into escrow
+     |  Clause: Pay Escrow In
+     |  
+     |  The Debtor may pay the Digital Asset Collateral into escrow
      */
+
     pay_escrow_in(caller, digital_asset_collateral)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.debtor) {
-            this.digital_asset_collateral = digital_asset_collateral;
-            this._pay(caller, this.debtor, 'escrow', this.digital_asset_collateral);
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.debtor) return 'not permitted';
+        this.digital_asset_collateral = digital_asset_collateral;
+        this.transfer(caller, this.debtor, 'escrow', this.digital_asset_collateral);
         return 'done.';
     }
+
 
     /* Fail to Pay clause */
 
     /*
-     *  Clause: Fail to Pay
-     *  
-     *  The Secured Party may declare Default
+     |  Clause: Fail to Pay
+     |  
+     |  The Secured Party may declare Default
      */
+
     fail_to_pay(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.secured_party) {
-            this.default_ = true;
-            this.log(caller, "✓ Default declared");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.secured_party) return 'not permitted';
+        this.default_ = true;
+        this.log(caller, "✓ Default declared");
         return 'done.';
     }
+
 
     /* Take Possession clause */
 
     /*
-     *  Clause: Take Possession
-     *  
-     *  The Filing Office may, provided Default is declared, pay the Digital Asset Collateral to the Secured Party
+     |  Clause: Take Possession
+     |  
+     |  The Filing Office may, provided Default is declared, pay the Digital Asset Collateral to the Secured Party
      */
+
     take_possession(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            if(this.default_) {
-                this._pay(caller, this.filing_office, this.secured_party, this.digital_asset_collateral);
-            }
-        } else {
-            return 'not permitted.';
+        if(caller != this.filing_office) return 'not permitted';
+        if(this.default_) {
+            this.transfer(caller, this.filing_office, this.secured_party, this.digital_asset_collateral);
         }
         return 'done.';
     }
+
 
     /* File Continuation clause */
 
     /*
-     *  Clause: File Continuation
-     *  
-     *  The Secured Party may file the Continuation Statement
+     |  Clause: File Continuation
+     |  
+     |  The Secured Party may file the Continuation Statement
      */
+
     file_continuation(caller, continuation_statement)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.secured_party) {
-            this.continuation_statement = continuation_statement;
-            this.log(caller, "✓ Continuation Statement filed");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.secured_party) return 'not permitted';
+        this.continuation_statement = continuation_statement;
+        this.log(caller, "✓ Continuation Statement filed");
         return 'done.';
     }
+
 
     /* Set Continuation Lapse clause */
 
     /*
-     *  Clause: Set Continuation Lapse
-     *  
-     *  The Filing Office may, provided the Continuation Statement is filed, fix the Continuation Statement Date
+     |  Clause: Set Continuation Lapse
+     |  
+     |  The Filing Office may, provided the Continuation Statement is filed, fix the Continuation Statement Date
      */
+
     set_continuation_lapse(caller, continuation_statement_date)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            if(this.continuation_statement) {
-                this.continuation_statement_date = continuation_statement_date;
-                this.log(caller, "✓ Continuation Statement Date fixed");
-            }
-        } else {
-            return 'not permitted.';
+        if(caller != this.filing_office) return 'not permitted';
+        if(this.continuation_statement) {
+            this.continuation_statement_date = continuation_statement_date;
+            this.log(caller, "✓ Continuation Statement Date fixed");
         }
         return 'done.';
     }
+
 
     /* File Termination clause */
 
     /*
-     *  Clause: File Termination
-     *  
-     *  The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time
+     |  Clause: File Termination
+     |  
+     |  The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time
      */
+
     file_termination(caller, termination_statement)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.secured_party) {
-            this.termination_statement = termination_statement;
-            this.log(caller, "✓ Termination Statement filed");
-            this.termination_statement_time = Date.now();
-            this.log(caller, "✓ Termination Statement Time certified");
-        } else {
-            return 'not permitted.';
-        }
+        if(caller != this.secured_party) return 'not permitted';
+        this.termination_statement = termination_statement;
+        this.log(caller, "✓ Termination Statement filed");
+        this.termination_statement_time = Date.now();
+        this.log(caller, "✓ Termination Statement Time certified");
         return 'done.';
     }
+
 
     /* Release Escrow clause */
 
     /*
-     *  Clause: Release Escrow
-     *  
-     *  The Filing Office may, provided the Termination Statement is filed, pay the Digital Asset Collateral to the Debtor
+     |  Clause: Release Escrow
+     |  
+     |  The Filing Office may, provided the Termination Statement is filed, pay the Digital Asset Collateral to the Debtor
      */
+
     release_escrow(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            if(this.termination_statement) {
-                this._pay(caller, this.filing_office, this.debtor, this.digital_asset_collateral);
-            }
-        } else {
-            return 'not permitted.';
+        if(caller != this.filing_office) return 'not permitted';
+        if(this.termination_statement) {
+            this.transfer(caller, this.filing_office, this.debtor, this.digital_asset_collateral);
         }
         return 'done.';
     }
+
 
     /* Release Reminder Fee clause */
 
     /*
-     *  Clause: Release Reminder Fee
-     *  
-     *  The Filing Office may, provided the Termination Statement is filed, pay the Reminder Fee to the Secured Party
+     |  Clause: Release Reminder Fee
+     |  
+     |  The Filing Office may, provided the Termination Statement is filed, pay the Reminder Fee to the Secured Party
      */
+
     release_reminder_fee(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            if(this.termination_statement) {
-                this._pay(caller, this.filing_office, this.secured_party, this.reminder_fee);
-            }
-        } else {
-            return 'not permitted.';
+        if(caller != this.filing_office) return 'not permitted';
+        if(this.termination_statement) {
+            this.transfer(caller, this.filing_office, this.secured_party, this.reminder_fee);
         }
         return 'done.';
     }
 
+
     /* Termination Period clause */
 
     /*
-     *  Clause: Termination Period
-     *  
-     *  "Termination Period" is defined as 365 days after the Termination Statement Time
+     |  Clause: Termination Period
+     |  
+     |  "Termination Period" is defined as 365 days after the Termination Statement Time
      */
+
     termination_period()  {
         return Some(this.termination_statement_time + (365 * 86400000));
     }
 
+
     /* Terminate and Clear clause */
 
     /*
-     *  Clause: Terminate and Clear
-     *  
-     *  The Filing Office may, provided the Termination Period has passed, terminate this contract
+     |  Clause: Terminate and Clear
+     |  
+     |  The Filing Office may, provided the Termination Period has passed, terminate this contract
      */
+
     terminate_and_clear(caller)  {
         if(this.already_terminated()) return undefined;
-        if(caller == this.filing_office) {
-            if(this.termination_period() <= Date.now()) {
-                this.termination(caller);
-            }
-        } else {
-            return 'not permitted.';
+        if(caller != this.filing_office) return 'not permitted';
+        if(this.termination_period() <= Date.now()) {
+            this.termination(caller);
         }
         return 'done.';
     }
 
     /* built-in convenience function to view state change log. */
+
     history() {
         fs.readFile(this.logname, (e,d)=>{console.log(d.toString())});
     }
 
     /* built-in serialization and storage of entire contract system state. */
+
     persist() {
         console.log('> persisting');
         var data = serialize(this, {space: 4});
@@ -541,23 +533,27 @@ module.exports = class UCCFinancingStatement {
     }
 
     /* re-instate entire contract system from serialized file store */
+
     static load() {
         return new UCCFinancingStatement();
     }
 
     /* built-in tar-balling of code, log and state. */
+
     bundle() {
         console.log('> bundling into contract.tgz');
         tar.create({gzip:true, file:'contract.tgz'}, ['lexon/statement.1005.lex', 'lexon/statement.1005.jsx', 'state', 'log', 'INSTRUCTIONS.TXT']);
     }
 
     /* built-in untar-balling of code, log and state. */
+
     static unbundle() {
         console.log('> unbundling contract.tgz');
         tar.extract('contract.tgz');
     }
 
     /* built-in email sending of code, log and state. */
+
     send() {
 
         this.persist();
@@ -588,7 +584,9 @@ module.exports = class UCCFinancingStatement {
                 console.log('> email sent: ' + info.response); }});
     }
 
+
     /* built-in termination of the entire contract system */
+
     termination(caller) {
         this.terminated = true;
         this.log(caller, '■ contract system terminated');
@@ -601,6 +599,7 @@ module.exports = class UCCFinancingStatement {
     }
 
     /* built-in logging of state changes. */
+
     log(caller, msg) {
         console.log(msg);
         let stamp = (new Date()).toLocaleString('en-US');
@@ -618,6 +617,7 @@ module.exports = class UCCFinancingStatement {
     }
 
     /* built-in password query for private key file, with cache. */
+
     sync_passphrase(caller) {
         if(!caller) process.exit('no caller information');
         if(caller == last_caller) return last_passphrase;
@@ -626,6 +626,7 @@ module.exports = class UCCFinancingStatement {
     }
 
     /* built-in convenience function to create keys for users. */
+
     static create_key(name, passphrase) {
         const { publicKey, privateKey } =
             crypto.generateKeyPairSync('rsa',
@@ -638,14 +639,16 @@ module.exports = class UCCFinancingStatement {
         return true;
     }
 
-    /* built-in pay message */
-    _pay(caller, from, to, amount) {
-        this.log(caller, `➠ system message: pay ${amount} from ${from} to ${to}.`);
+    /* built-in transfer message */
+
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
         if(from == 'escrow') main._escrow -= amount;
         if(to == 'escrow') main._escrow += amount;
     }
 
     /* built-in send message */
+
     _send(caller, from, to, message) {
         this.log(caller, `➠ system message: send message «${message}» from ${from} to ${to}.`);
     }
