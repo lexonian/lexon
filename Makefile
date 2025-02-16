@@ -83,6 +83,9 @@ help:
 	#
 	# ▫️  2nd level of tests: components
 	# deeptest      memory handling, includes, language parser, compiler
+	# comptest      compile the _results_ of all failing deep tests natively
+	# compall       compile all deep test results natively
+	# compmiss      compile the deep test results that failed before
 	# memtest       valgrind & internal memory leak tests
 	# update        interactive update of failing deeptests's result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
@@ -220,7 +223,7 @@ endif
 
 
 sample: build
-ifeq (,$(wildcard nosample))
+ifeq (,$(wildcard .nosample))
 	@printf "\n$(hi)▫️  compile escrow example $(off)\n\n"
 	@printf "$(ok)bin/lexon --solidity examples/escrow.lex$(off)\n\n"
 	@bin/lexon --solidity examples/escrow.lex
@@ -262,7 +265,39 @@ expclean:
 deeptest: build
 	@printf "\n$(hi)▫️  deep test $(off)\n"
 ifneq (,$(wildcard tests/tag.exp))
-	@cd tests ; $(MAKE) check
+	@cd tests ; $(MAKE) deeptest
+	@echo
+else
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+endif
+
+comptest: build
+	@printf "\n$(hi)▫️  deep test with native compilation for failing tests$(off)\n"
+ifneq (,$(wildcard tests/tag.exp))
+	@cd tests ; $(MAKE) comptest 
+	@echo
+else
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+endif
+
+compall: build
+	@printf "\n$(hi)▫️  deep test with native compilation for all$(off)\n"
+ifneq (,$(wildcard tests/tag.exp))
+	@cd tests ; $(MAKE) compall
 	@echo
 else
 	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
@@ -283,6 +318,11 @@ update: build
 autoupdate: build
 	@printf "\n$(hi)▫️  auto-update of deeptest reference results $(off)\n\n"
 	@cd tests ; $(MAKE) autoupdate
+	@echo
+
+autocomp: build
+	@printf "\n$(hi)▫️  auto-update of deeptest reference results and native compile test$(off)\n\n"
+	@cd tests ; $(MAKE) autocomp
 	@echo
 
 recheck: build
@@ -555,6 +595,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update autoupdate recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample check comptest compall devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

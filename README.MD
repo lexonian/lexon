@@ -355,7 +355,15 @@ be availaible on all platforms.
 
 * colordiff
 
+**For extended compilation tests:**
 
+* node + npm modules listed below
+* solcjs
+* aesophia_cli
+
+These are needed for `make comp*` rules that test compiling/instantiating
+of the created Javascript, Solidity, or Sophia code. This tests the syntax
+of the Lexon compiler output.
 
 
 ## Prerequisites for Running Created Javascript Contracts
@@ -374,12 +382,18 @@ someone else, and for persisting its state on your computer, you will need:
 
 * npm
 * serialize-javascript
+* prompt-sync
+* tar
+* nodemailer
 
-Install this library with:
+Install these libraries with:
 
 	npm install serialize-javascript
+	npm install prompt-sync
+	npm install tar
+	npm install nodemailer
 
-Note that no Javascript elements are needed when compiling a Lexon text, no
+Note that NO Javascript elements are needed when compiling a Lexon text, no
 matter to what language, even to Javascript. The above applies solely for
 executing the produced Javascript at a later time.
 
@@ -423,6 +437,8 @@ To install to a different path than `/usr/local/bin` set `PREFIX`, or copy
 
 This runs tests located in sub directories of [`tests/`](tests/).
 
+All tests passing is sufficient verification that the compiler built as expected.
+
 Note that github will not list all files and sub folders in `tests/`. Relevant
 sub folders are [`tests/english`](tests/english), [`tests/lexon`](tests/lexon),
 and [`tests/focus`](tests/focus). But there are also test files in `tests/`
@@ -430,9 +446,52 @@ itself that github will not show.
 
 The tests of `make check` verify that the compiler works as expected. Other
 tests, like `make envtest` check the environment and internal memory handling
-mechanisms. `make devcheck` runs all tests. See immediately below for all
-options.
+mechanisms. `make devcheck` runs all tests, except the slow, extended syntax
+checks. See below for all available rules.
 
+
+### Testing While Developing
+
+When implementing a new feature, an new example Lexon text that demonstrates it
+should be placed into folder `tests/cover`. It will be picked up by all deep
+and comp test rules. The naming convention is loosly base-version-description.
+The name is used to call out the running test later.  For examples, see the
+folder. 
+
+Running `make new` will provide the opportunity to automatically register the
+expected results—of precompiling and compiling this new Lexon text—to four
+targets: core, Javascript, Solidity, and Sophia.
+
+To do regression tests, run `make check`.  This diffs the results of compiling
+Lexon texts with `bin/lexon` to expectations on file, which come with the repo.
+After fixing errors, use `make recheck` to skip tests that passed the previous
+run, and get the opportunity to interactively update expectations to reflect
+intended changes from then on. To update all expectations, run `make
+expectations`. To bulk-update only failing expectations, `make autoupdate`.
+Expectations are deleted by `make expclean`, not by running `make clean`.
+
+However, to get a first impression and use a faster cycle, run `make
+focustest`, which diffs the results of only the three main examples that are
+also given in `examples\` with expected outcomes. To bulk-update these
+expectations, run `make focusprep`.
+
+#### Syntax Checks
+
+In the case that many test results are expected to change, bulk-test the syntax
+of new results with `make comptest`—which instantiates Javascript code, and
+compiles Solidity and Sophia code—for syntax verification of exactly those
+tests that fail the diff with expectations. That is, only the resulting code of
+failing tests is test-compiled. The expectations are not updated. This requires
+node, solcjs, and aesophia_cli, and a handfull of node modules installed.
+
+Later runs of `comptest` will skip compilation of those test results that had
+compiled successfully, even if the diff with expectations still fails in the
+case that you have not updated expectations (yet). To compile all test results,
+use `compall`. Use `compmiss` to compile only those that had not yet been done
+or had failed (that is, node, solcjs, or aesophia_cli gave errors,
+independently of whether expectations on file where met). To auto-update failing
+expectations and test-compile exactly those updated, use `autocomp`. This is the
+opposite of `comptest`.
 
 
 
@@ -447,7 +506,7 @@ options.
 	linux install   install pre-built linux binary and copy it as bin/lexon
 	sample          build escrow example to solidity
 	check           compiler tests: focustest, deeptest
-	devcheck        all tests: envtest, grammarcheck, memtest, focustest, deeptest
+	devcheck        more tests: envtest, grammarcheck, memtest, focustest, deeptest
 	testlog         dump the 100 last lines of the test log
 	clean           delete all built files, except pre-built binaries
 	ls              show the source and build directories
@@ -475,6 +534,9 @@ options.
 **2nd level of tests: components**
 
 	deeptest        memory handling, includes, language parser, compiler
+	comptest        compile the result of all failing deep tests natively*
+	compall         compile all deep test results natively*
+	compmiss        compile the deep test results that failed before*
 	memtest         valgrind & internal memory leak tests
 	update          interactive update of failing deeptests's result references
 	recheck         faster update, skipping successful tests of earlier deeptest
@@ -487,6 +549,7 @@ options.
 	envtest         test of build environment, gcc, flex, mtrac memory checks
 
 
+	* the extended compilation tests use node, solcjs, and aesophia_cli.
 
 
 ## Use

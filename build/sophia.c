@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.97 U"
+#define backend_version "sophia 0.3.98a U"
 #define target_version "sophia 7.1+"
 
 #define CYCLE_2 true
@@ -132,11 +132,12 @@ static const char *typemap(const char *lextype, bool option_type, bool forpara,
 static const char *nullvalue(const char *name, bool defined_default);
 
 static char *methods = null;
-static char *globals = null;
+static char *globals = null;	       // element members of main
 static char *declarations = null;
 static char *initializations = null;
 static char *fixed = null;	       // list of variables that have been set
-static char *declared = null;	       // list of variables that come in as paremeters
+static char *declared = null;	       // check use ◊
+static char *args = null;	       // list of variables that come in as paremeters
 static char *functions = null;
 static bool miller = false;
 
@@ -147,7 +148,7 @@ static char *safedup(const char *name) {
 	strcpy(_safe, " ");
 	strcat(_safe, name);
 	strcat(_safe, " ");
-	if (!strstr(" Message permit send terminate terminated default contract"	// Lexon ◊
+	if (!strstr(" main Message permit notify terminate terminated default contract"	// Lexon ◊
 		    " constructor function transfer call check_termination" " contract include let switch type record datatype if elif"	// Sophia 7.1
 		    " else function stateful payable true false mod public"
 		    " entrypoint private indexed namespace interface main using"
@@ -250,6 +251,10 @@ typedef struct call {
 static bool traverse_for_caller(bind * bind, int fuse);
 static void produce_access_conditions(int down, int indent, char **production,
 				      list * subjects);
+static void inject_permit(char **production, int indent);
+static void inject_transfer(char **production, int indent);
+static void inject_notify(char **production, char **emits, int indent);
+static void inject_termination(char **production, char *prompt, int indent);
 
 /* create or find a binding for a function name */
 static bind *register_bind(char *name) {
@@ -769,6 +774,7 @@ typedef struct Combinand {
 	struct Expiration *Expiration;
 	struct Reflexive *Reflexive;
 	Description *Description;
+	struct Article *Article;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -899,15 +905,15 @@ bool sophia_name(char **production, Name *Name, bool assign, int indent) {
 
 	/* put '_' to names that are target language keywords */
 	char *safe = safedup(SNAKE(Name));
+	bool global = in(globals, Name);
 
 	if (!in(functions, Name)) {
-		padcat(0, 0, production, in(globals, Name)
-		       && !miller ? "state." : "", safe);
+		padcat(0, 0, production, global &&!miller ? "state." : "",
+		       safe);
 	} else {
 		bind *bind = register_bind(safe);
-
-		padcat(0, 0, production, in(globals, Name)
-		       && !miller ? "state." : "", bind->tag);
+		padcat(0, 0, production, global &&!miller ? "state." : "",
+		       bind->tag);
 	}
 	if (assign) padcat(0, 0, &fixed, ":", safe, ":");
 	mtrac_free(safe);
@@ -1112,9 +1118,10 @@ static bool enforce_same_subject = false;
 static list *active_subjects = null;
 static list *covenant_subjects = null;
 static bool no_action_in_group_yet = true;
+static bool uses_main = true;
 static bool uses_termination = false;
-static bool uses_pay = false;
-static bool uses_send = false;
+static bool uses_transfer = false;
+static bool uses_notification = false;
 static bool uses_permit = false;
 static bool has_subclasses = false;
 
@@ -1132,6 +1139,7 @@ bool sophia_document(char **production, Document *Document, int indent) {
 
 	assert(!parameters);
 	assert(!arguments);
+	assert(!args);
 	methods = mtrac_strdup("");
 	globals = mtrac_strdup("");
 	declarations = mtrac_strdup("");
@@ -1143,6 +1151,7 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	adders = mtrac_strdup("");
 	parameters = mtrac_strdup("");
 	arguments = mtrac_strdup("");
+	args = mtrac_strdup("");
 	parameta = mtrac_strdup("");
 	emits = mtrac_strdup("");
 	functions = mtrac_strdup("");
@@ -1222,6 +1231,7 @@ bool sophia_document(char **production, Document *Document, int indent) {
 		mtrac_free(c);
 	}
 
+	/* main contract's constructor */
 	paratag = strlen(*production);
 	if (!opt_bare) padcat(2, indent, production, "");
 
@@ -1257,70 +1267,28 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	/* aux functions to add a new sub object instance (covenants) */
 
 	replace(production, "%34%", adders);
-	/* AUXILIARY FUNCTIONS */
+
+	/* AUXILIARY FUNCTIONS (main contract) */
+
 	char *auxfuncs = mtrac_strdup("");
 
-	/* #terminate() - contract termination */
-	if (uses_termination) {
-		if (opt_comment) padcat(3, indent + 1, &auxfuncs,
-					"/* built-in termination of the entire contract system */");
+	/* access shorthand */
+	if (uses_permit) inject_permit(&auxfuncs, indent + 1);
 
-		padcat(C, indent + 1, &auxfuncs,
-		       "stateful function termination() =", EOL);
-		padcat(1, indent + 2, &auxfuncs,
-		       "put(state{terminated = true})", EOL);
+	/* safe transfer */
+	if (uses_transfer) inject_transfer(&auxfuncs, indent + 1);
 
-		padcat(2, indent + 1, &auxfuncs,
-		       "function check_termination() =");
-		padcat(1, indent + 2, &auxfuncs,
-		       "require(!state.terminated, \"contract system terminated before\")");
-	}
-	/* pay() */
-	if (uses_pay) {
-
-		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* built-in safe transfer */");
-		padcat(C, indent + 1, &auxfuncs,
-		       "stateful function transfer(to : address, amount : int) =");
-		padcat(1, indent + 2, &auxfuncs, "Chain.spend(to, amount)");
-
-	}
-
-	/* send() - sending / emitting of a message */
-	if (uses_send) {
-		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* built-in send message */");
-
-		padcat(C, indent + 1, &auxfuncs,
-		       "function send(to : address, message : string) =");
-		padcat(1, indent + 2, &auxfuncs,
-		       "Chain.event(Message(Call.caller, to, message))", EOL);
-		padcat(0, indent + 1, &emits,
-		       "datatype event = Message(indexed address, indexed address, string)\n");
-		padcat(1, indent + 1, &emits, "");
-	}
+	/* notifications */
+	if (uses_notification) inject_notify(&auxfuncs, &emits, indent + 1);
 
 	/* place message structure definitions (emits) */
 	replace(production, "%29%", emits);	// ◊ correct for S+S?
 
-	/* sol+sop: permit - optimized require() */
-	if (uses_permit) {
-		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* built-in caller assertion */");
+	/* termination */
+	if (uses_termination) inject_termination(&auxfuncs, "contract system",
+						 indent + 1);
 
-		if (opt_harden) {
-			padcat(C, indent + 1, &auxfuncs,
-			       "function permit(authorized : §§§address§, name : string) =");
-			padcat(1, indent + 2, &auxfuncs,
-			       "require(Call.caller == force(authorized, name), StringInternal.concat(\"no access for \", name))");
-		} else {
-			padcat(C, indent + 1, &auxfuncs,
-			       "function permit(authorized : address) =");
-			padcat(1, indent + 2, &auxfuncs,
-			       "require(Call.caller == authorized, \"access\")");
-		}
-	}
-
+	/* Sophia type hardening by Options */
 	if (opt_harden) {
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
 					"/* built-in option type force function */");
@@ -1331,7 +1299,6 @@ bool sophia_document(char **production, Document *Document, int indent) {
 		       "None => abort(StringInternal.concat(name, \" not fixed\"))");
 		padcat(1, indent + 3, &auxfuncs, "Some(a) => a");
 	}
-
 	/* aux functions insert - js: in place. soli+sop: higher up. */
 
 	replace(production, "%31%", auxfuncs);
@@ -1344,7 +1311,7 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	/* sort out names, privacy mark (javascript: '#') and parameters */
 	replace_bind_tags(production, &instructions, binds);
 
-	/* take care of termination flag (js @ [3]) */
+	/* take care of termination flag [3] */
 	if (uses_termination) {
 
 		if (strlen(declarations)) padcat(0, 0, &declarations, ",");
@@ -1377,6 +1344,7 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	delete_bind_tree(binds);
 	mtrac_free(parameters), parameters = null;
 	mtrac_free(arguments), arguments = null;
+	mtrac_free(args), args = null;
 	mtrac_free(parameta), parameta = null;
 	mtrac_free(emits), emits = null;
 	if (caller) mtrac_free(caller), caller = null;
@@ -1398,6 +1366,64 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	return true;
 }
 
+	/* sol+sop: permit - optimized require() */
+void inject_permit(char **production, int indent) {
+
+	if (opt_comment) padcat(2, indent, production,
+				"/* built-in caller assertion */");
+
+	if (opt_harden) {
+		padcat(C, indent, production,
+		       "function permit(authorized : §§§address§, name : string) =");
+		padcat(1, indent + 1, production,
+		       "require(Call.caller == force(authorized, name), StringInternal.concat(\"no access for \", name))");
+	} else {
+		padcat(C, indent, production,
+		       "function permit(authorized : address) =");
+		padcat(1, indent + 1, production,
+		       "require(Call.caller == authorized, \"access\")");
+	}
+}
+
+	/* transfer of tokens */
+void inject_transfer(char **production, int indent) {
+	if (opt_comment) padcat(2, indent, production,
+				"/* built-in safe transfer */");
+	padcat(C, indent, production,
+	       "stateful function transfer(to : address, amount : int) =");
+	padcat(1, indent + 1, production, "Chain.spend(to, amount)");
+
+}
+
+	/* sending / emitting of a message */
+void inject_notify(char **production, char **emits, int indent) {
+
+	if (opt_comment) padcat(2, indent, production,
+				"/* built-in send message */");
+
+	padcat(C, indent, production,
+	       "function notify(to : address, message : string) =");
+	padcat(1, indent + 1, production,
+	       "Chain.event(Message(Call.caller, to, message))", EOL);
+	padcat(0, indent, emits,
+	       "datatype event = Message(indexed address, indexed address, string)\n");
+	padcat(1, indent, emits, "");
+}
+
+	/* terminate() - contract termination */
+void inject_termination(char **production, char *prompt, int indent) {
+
+	if (opt_comment) padcat(3, indent, production,
+				"/* built-in termination of the ", prompt,
+				" */");
+
+	padcat(C, indent, production, "stateful function termination() =", EOL);
+	padcat(1, indent + 1, production, "put(state{terminated = true})", EOL);
+
+	padcat(2, indent, production, "function check_termination() =");
+	padcat(1, indent + 1, production, "require(!state.terminated, \"",
+	       prompt, " terminated before\")");
+}
 bool sophia_head(char **production, Head *Head, int indent) {
 	if (!Head) return false;
 	if (opt_debug) printf("producing Head\n");
@@ -1513,6 +1539,14 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	char *functions_shelve = mtrac_strdup(functions);
 	char *fixed_shelve = mtrac_strdup(fixed);
 	char *declared_shelve = mtrac_strdup(declared);
+	bool main_uses_termination = uses_termination;
+	char *emits = mtrac_strdup("");
+	bool permit_shelve = uses_permit;
+
+	uses_permit = false;
+	bool notification_shelve = uses_notification;
+
+	uses_notification = false;
 	bool termination_shelve = uses_termination;
 
 	uses_termination = false;
@@ -1559,22 +1593,27 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 		mtrac_free(c);
 	}
 
+	/* covenant constructor */
 	padcat(2, indent, production, "contract ", class, " =");
 	padcat(2, indent + 1, production, "record state = {");
 	padcat(0, indent, production, "%27C%");	// %27C%: covenant member declaration
 	padcat(1, indent + 2, production, "}\n");
-	padcat(1, indent + 1, production, "%29%%28%entrypoint init(%2%) = {%32C%");	// %29%: emits, %28%: payable, %1%: paras, %32C%: initializations
+	padcat(1, indent + 1, production, "%29C%%28%entrypoint init(%2%) = {%32C%");	// %29C%: emits, %28%: payable, %1%: paras, %32C%: initializations
 	padcat(1, indent + 2, production, "}");
+
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
 	char *arguments_stack = arguments;
+	char *args_stack = args;
 	char *parameta_stack = parameta;
 
 	declarations = mtrac_strdup("");
 	initializations = mtrac_strdup("");
+
 	parameters = mtrac_strdup("");
 	arguments = mtrac_strdup("");
+	args = mtrac_strdup("");
 	parameta = mtrac_strdup("");   // sic, for JS too
 	bool is_payable_stack = is_payable;
 	bool is_stateful_stack = is_stateful;
@@ -1594,17 +1633,32 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	sophia_provisions(production, Covenant->Provisions, indent + 1);
 	covenant_constructor_body = false;
 	enforce_same_subject = false;
+	/* AUXILIARY FUNCTIONS (covenant) */
 
+	/* access shorthand */
+	if (uses_permit) inject_permit(production, indent + 1);
+
+	/* safe transfers */
+	if (uses_transfer) inject_transfer(production, indent + 1);
+
+	/* notifications */
+	if (uses_notification) inject_notify(production, &emits, indent + 1);	// ~ emits is a local char *
+
+	/* place message structure definitions (emits) */
+	replace(production, "%29C%", emits);	// ◊ correct for S+S?
+
+	/* termination of covenant */
+	if (uses_termination) inject_termination(production, "covenant",
+						 indent + 1);
+
+	/* take care of the covenant's termination flag [3] */
 	if (uses_termination) {
-		if (opt_comment) padcat(3, indent + 1, production,
-					"/* built-in termination of this covenant */");
-		padcat(C, indent + 1, production,
-		       "stateful function termination() =");
-		padcat(1, indent + 2, production,
-		       "put(state{terminated = true})");
-		padcat(2, indent + 1, production,
-		       "function already_terminated() =");
-		padcat(1, indent + 3, production, "state.terminated");
+
+		if (strlen(declarations)) padcat(0, 0, &declarations, ",");
+		padcat(1, 3, &declarations, "terminated : bool");
+		if (strlen(initializations)) padcat(0, 0, &initializations,
+						    ",");
+		padcat(1, 3, &initializations, "terminated = false");
 	}
 
 	/* end of covenant class definition */
@@ -1614,10 +1668,11 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 				" covenant, and register it with main */");
 
 	padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name),
-	       "(%2%) returns(", Covenant->Name, ") {");
-	if (uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
+	       "(%2%) public returns(", Covenant->Name, ") {");
+	if (main_uses_termination) padcat(1, 2, &adders,
+					  "check_termination()" EOL);
 	padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ",
-	       class, "(%2b%);");
+	       class, "(this, %2b%);");
 	padcat(1, 1, &adders, "}");
 	/* inject parameter lists */
 	replace(production, "%2%", parameters);
@@ -1643,11 +1698,13 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	active_subjects = null;
 	mtrac_free(parameters);
 	mtrac_free(arguments);
+	mtrac_free(args);
 	mtrac_free(parameta);
 	mtrac_free(declarations);
 	mtrac_free(initializations);
 	parameters = parameters_stack;
 	arguments = arguments_stack;
+	args = args_stack;
 	parameta = parameta_stack;
 	declarations = declarations_stack;
 	initializations = initializations_stack;
@@ -1656,6 +1713,9 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	mtrac_free(functions), functions = functions_shelve;
 	mtrac_free(fixed), fixed = fixed_shelve;
 	mtrac_free(declared), declared = declared_shelve;
+	uses_notification = notification_shelve;
+	mtrac_free(emits);
+	uses_permit = permit_shelve;
 	uses_termination = termination_shelve;
 	mtrac_free(class), class = null;
 	mtrac_free(instance), instance = null;
@@ -1910,6 +1970,8 @@ bool sophia_clause(char **production, Clause *Clause, int indent) {
 	if (!Clause) return false;
 	if (opt_debug) printf("producing Clause %s\n", Clause->Name);
 
+	mtrac_free(args);
+	args = mtrac_strdup("");
 	list *active_subjects_stack = active_subjects;
 
 	active_subjects = null;
@@ -2083,11 +2145,9 @@ bool sophia_action(char **production, Action *Action, int indent) {
 
 		while (symbols && symbols->Symbol) {
 			assert(symbols->Symbol->Name);
-			printf("testing %s\n", symbols->Symbol->Name);	// ◊◊
 			list *c = active_subjects;
 
 			while (c) {
-				printf("    vs %s\n", (char *)c->item);	// ◊◊
 				if (strcmp
 				    ((char *)c->item, symbols->Symbol->Name))
 					good = false;
@@ -2251,6 +2311,7 @@ bool sophia_subject(char **production, Subject *Subject, int indent) {
 			char *varname = snakedup(s->Symbol->Name);
 			char *lexname = s->Symbol->Name;
 			char *scope = (!in(globals, s->Symbol->Name) && class) ? "this." : "main.";	////// unite with usual 'main_constructor_body?' ?
+			char *postscope = "";
 
 			padcat(0, 0, para, first ? "<<" : " or ", lexname);
 			/* binding of unbound person variable to caller parameter */
@@ -2259,11 +2320,14 @@ bool sophia_subject(char **production, Subject *Subject, int indent) {
 
 				/* precondition that caller and all of the subjects cannot be the same */
 				if (first) padcat(2, indent, &subjnonmatch,
-						  "if(caller != ", scope, safe);
+						  "if(caller != ", scope, safe,
+						  postscope);
 				else padcat(0, 0, &subjnonmatch,
-					    " && caller != ", scope, safe);
+					    " && caller != ", scope, safe,
+					    postscope);
 				/* produce bind code. Person in question must still be null, i.e., unbound */
 				if (!in(fixed, varname)) {
+					///// error when postscope is set == assignment not in the right class
 					padcat(1, indent + 1, &subjlatebind,
 					       !any ? "" : "else ", "if(",
 					       scope, safe, " == null) ", scope,
@@ -2642,7 +2706,7 @@ bool sophia_payment(char **production, Payment *Payment, int indent) {
 bool sophia_pay(char **production, Pay *Pay, int indent) {
 	if (!Pay) return false;
 	if (opt_debug) printf("producing Pay\n");
-	uses_pay = true;
+	uses_transfer = true;
 	is_stateful = true;
 
 	padcat(1, indent, production, "transfer(");
@@ -2677,6 +2741,8 @@ bool sophia_sending(char **production, Sending *Sending, int indent) {
 	if (!Sending) return false;
 	if (opt_debug) printf("producing Sending\n");
 
+	is_stateful = true;
+
 	sophia_send(production, Sending->Send, indent);
 
 	// receiver
@@ -2693,9 +2759,9 @@ bool sophia_sending(char **production, Sending *Sending, int indent) {
 bool sophia_send(char **production, Send *Send, int indent) {
 	if (!Send) return false;
 	if (opt_debug) printf("producing Send\n");
-	uses_send = true;
+	uses_notification = true;
 
-	padcat(1, indent, production, "send(");
+	padcat(1, indent, production, "notify(");
 	if (current_function) current_function->uses_caller |= opt_log
 			|| opt_feedback;
 	return true;
@@ -2715,8 +2781,9 @@ bool sophia_notification(char **production, Notification *Notification, int inde
 	// message
 	if (Notification->Expression)
 		sophia_expression(production, Notification->Expression, 0);
-	else
-		padcat(0, 0, production, "\"NOTIFICATION\"", EOL);
+	else {
+		padcat(0, 0, production, "\"NOTIFICATION\"");
+	}
 	padcat(0, 0, production, ")", EOL);
 
 	return true;
@@ -2726,9 +2793,9 @@ bool sophia_notify(char **production, Notify *Notify, int indent) {
 	if (!Notify) return false;
 	if (opt_debug) printf("producing Notify\n");
 
-	uses_send = true;
+	uses_notification = true;
 
-	padcat(1, indent, production, "send(");
+	padcat(1, indent, production, "notify(");
 	if (current_function) current_function->uses_caller |= opt_log
 			|| opt_feedback;
 
@@ -3098,6 +3165,7 @@ bool sophia_relative_time(char **production, Relative_Time *Relative_Time,
 	if (!Relative_Time) return false;
 	if (opt_debug) printf("producing Relative_Time\n");
 	if (Relative_Time->Symbol) {
+
 		padcat(0, 0, production, opt_harden ? "Some" : "", "(");
 		sophia_symbol(production, Relative_Time->Symbol, false,
 			      indent + 1);
@@ -3282,28 +3350,41 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 
 	/* 1: Add to the parameters and arguments list. In the produced code as well as (parameta) the instructions */
 	if (!use_sender && !use_value) {
-		if (!current_function) {
-			/* outside a function (constructor?/////) */
-			padcat(0, 0, &parameters, *parameters ? ", " : "",
-			       typed_parameter_varname);
-			padcat(0, 0, &arguments, *arguments ? ", " : "",
-			       parameter_varname);
-			if (instructions) padcat(0, 0, &parameta,
-						 *parameta ? ", " : "", "<",
-						 pretty_typed_varname, ">");
-			//////// padcat(0, 0, &declared, ":", parameter_varname, ":"); // declared: write #4  ///// js was varname
-			//////// note: changed to include underscore in some case
-		} else {
-			/* inside a function (clause) */
-			padcat(0, 0, &current_function->parameters,
-			       *current_function->parameters ? ", " : "",
-			       typed_parameter_varname);
-			// arguments don't happen in this case
-			if (instructions)
-				padcat(0, 0, &current_function->parameta,
-				       *current_function->parameta ? ", " : "",
-				       "<", pretty_typed_varname, ">");
+		char *search = mtrac_strdup("");
+
+		concat(&search, ":", parameter_varname, ":");
+		if (!strstr(args, search)) {
+			concat(&args, search);
+			if (!current_function) {
+				/* outside a function (recital/constructor) */
+				padcat(0, 0, &parameters,
+				       *parameters ? ", " : "",
+				       typed_parameter_varname);
+				padcat(0, 0, &arguments, *arguments ? ", " : "",
+				       parameter_varname);
+				if (instructions) padcat(0, 0, &parameta,
+							 *parameta ? ", " : "",
+							 "<",
+							 pretty_typed_varname,
+							 ">");
+				//////// padcat(0, 0, &declared, ":", parameter_varname, ":"); // declared: write #4  ///// js was varname
+				//////// note: changed to include underscore in some case
+			} else {
+				/* inside a function (clause) */
+				padcat(0, 0, &current_function->parameters,
+				       *current_function->
+				       parameters ? ", " : "",
+				       typed_parameter_varname);
+				// arguments don't happen in this case
+				if (instructions)
+					padcat(0, 0,
+					       &current_function->parameta,
+					       *current_function->
+					       parameta ? ", " : "", "<",
+					       pretty_typed_varname, ">");
+			}
 		}
+		mtrac_free(search);
 	}
 
 	/* 2: Set the member to the parameter.  It's a member only if it's not a variable named for a type

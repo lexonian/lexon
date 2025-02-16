@@ -52,23 +52,23 @@ main contract UCCFinancingStatement =
 
 
 
-    stateful function termination() =
-        put(state{terminated = true})
-
-    function check_termination() =
-        require(!state.terminated, "contract system terminated before")
+    function permit(authorized : address) =
+        require(Call.caller == authorized, "access")
 
 
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
 
 
-    function send(to : address, message : string) =
+    function notify(to : address, message : string) =
         Chain.event(Message(Call.caller, to, message))
 
 
-    function permit(authorized : address) =
-        require(Call.caller == authorized, "access")
+    stateful function termination() =
+        put(state{terminated = true})
+
+    function check_termination() =
+        require(!state.terminated, "contract system terminated before")
 
 
     stateful entrypoint certify(file_number : string) =
@@ -107,11 +107,11 @@ main contract UCCFinancingStatement =
         put(state{notification_statement = notification_statement})
 
 
-    entrypoint notify() =
+    stateful entrypoint _notify() =
         check_termination()
         permit(state.filing_office)
         if(state.continuation_window_start =< Chain.timestamp)
-            send(state.secured_party, state.notification_statement)
+            notify(state.secured_party, state.notification_statement)
 
 
     stateful payable entrypoint pay_escrow_in() =

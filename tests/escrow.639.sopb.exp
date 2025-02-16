@@ -22,12 +22,12 @@ main contract Escrow =
 
 
 
-    stateful function transfer(to : address, amount : int) =
-        Chain.spend(to, amount)
-
-
     function permit(authorized : address) =
         require(Call.caller == authorized, "access")
+
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
 
 
     stateful entrypoint pay_out() =

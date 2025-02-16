@@ -1,5 +1,3 @@
-testing Filer
-testing Filing Office
 /** Lexon-generated Sophia code
  **
  **	code:        UCC Financing Statement
@@ -10,11 +8,11 @@ testing Filing Office
  **
  **	code tagged: 0.3 alpha 97
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97g U
+ **	backend:     sophia 0.3.98a U
  **
  **	target:      sophia 7.1+
  **
@@ -159,24 +157,24 @@ main contract UCCFinancingStatement =
         }
 
 
+    /* built-in caller assertion */
 
-    /* built-in termination of the entire contract system */
-
-    stateful function termination() =
-        put(state{terminated = true})
-
-    function check_termination() =
-        require(!state.terminated, "contract system terminated before")
+    function permit(authorized : option(address), name : string) =
+        require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
 
     /* built-in safe transfer */
 
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
 
-    /* built-in caller assertion */
 
-    function permit(authorized : option(address), name : string) =
-        require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
+    /* built-in termination of the contract system */
+
+    stateful function termination() =
+        put(state{terminated = true})
+
+    function check_termination() =
+        require(!state.terminated, "contract system terminated before")
 
     /* built-in option type force function */
 

@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.97g U
+ **	backend:     javascript 0.3.98a U
  **
  **	target:      node 14.1+
  **
@@ -203,7 +203,7 @@ module.exports = class EvaluationLicenseSystem {
 
         this.License = (caller, license_taker, description_of_goods) => {
             if(caller == main.licensor) {
-                return new License(caller, license_taker, description_of_goods);
+                return new License(this, caller, license_taker, description_of_goods);
             }
         };
 
@@ -238,7 +238,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             pay(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(!(caller == this.license_taker)) return 'not permitted';
                 if(caller == this.license_taker) {
                     main.transfer(caller, this.license_taker, main.licensor, main.licensing_service_fee);
@@ -257,7 +257,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             commission(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != main.licensor) return 'not permitted';
                 this.commissioned = true;
                 main.log(caller, "✓ Commissioned certified");
@@ -273,7 +273,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             comment(caller, comment_text)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != this.license_taker) return 'not permitted';
                 this.comment_text = comment_text;
                 main.log(caller, "✓ Comment Text registered");
@@ -289,7 +289,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             publication(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != this.license_taker) return 'not permitted';
                 this.published = true;
                 main.log(caller, "✓ Published certified");
@@ -305,7 +305,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             grant_permission_to_comment(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != this.license_taker) return 'not permitted';
                 this.permission_to_comment = true;
                 main.log(caller, "✓ Permission to Comment granted");
@@ -323,7 +323,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             declare_breach(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != main.agent) return 'not permitted';
                 if(this.factually_breached()) {
                     main.transfer(caller, main.agent, main.licensor, main.breach_service_fee);
@@ -356,7 +356,7 @@ module.exports = class EvaluationLicenseSystem {
              */
 
             notice(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(!(caller == main.agent || caller == main.licensor)) return 'not permitted';
                 this.notice_time = Date.now();
                 main.log(caller, "✓ Notice Time fixed");
@@ -375,17 +375,25 @@ module.exports = class EvaluationLicenseSystem {
                 return this.notice_time;
             }
 
+            /* built-in transfer message */
 
-            /* built-in termination of this covenant */
+            transfer(caller, from, to, amount) {
+                main.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
+                if(from == 'escrow') main._escrow -= amount;
+                if(to == 'escrow') main._escrow += amount;
+            }
+
+
+            /* built-in termination of the covenant */
 
             termination(caller) {
                 this.terminated = true;
-                main.log(caller, '■ covenant terminated');
+                    main.log(caller, '■ covenant terminated');
             }
 
-            already_terminated() {
+            check_termination() {
                 if(!this.terminated) return false;
-                console.log('✕ covenant previously terminated');
+                    console.log('✕ covenant previously terminated');
                 return true;
             }
         }
@@ -411,10 +419,17 @@ module.exports = class EvaluationLicenseSystem {
     /* create new instance of License covenant, and register it with main */
 
     add_license(caller, license_taker, description_of_goods) {
-        if (this.already_terminated()) return undefined;
         return this._license_list[this._license_count += 1] = this.License(caller, license_taker, description_of_goods);
     }
 
+
+    /* built-in transfer message */
+
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') main._escrow -= amount;
+        if(to == 'escrow') main._escrow += amount;
+    }
 
     /* built-in convenience function to view state change log. */
 
@@ -521,14 +536,6 @@ module.exports = class EvaluationLicenseSystem {
         fs.writeFileSync(name+'.key', privateKey);
         fs.writeFileSync(name+'.pub', publicKey);
         return true;
-    }
-
-    /* built-in transfer message */
-
-    transfer(caller, from, to, amount) {
-        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
     }
 }
 

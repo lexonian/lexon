@@ -8,11 +8,11 @@
  **
  **	code tagged: 0.3 alpha 97
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.97g U
+ **	backend:     javascript 0.3.98a U
  **
  **	target:      node 14.1+
  **
@@ -218,7 +218,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     certify(caller, file_number)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(!(caller == this.filing_office || caller == this.filer)) return 'not permitted';
         this.file_number = file_number;
         this.log(caller, "✓ File Number certified");
@@ -234,7 +234,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     set_file_date(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.initial_statement_date = Date.now();
         this.log(caller, "✓ Initial Statement Date fixed");
@@ -250,7 +250,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     set_lapse(caller, lapse_date)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.lapse_date = lapse_date;
         this.log(caller, "✓ Lapse Date fixed");
@@ -266,7 +266,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     set_continuation_start(caller, continuation_window_start)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.continuation_window_start = continuation_window_start;
         this.log(caller, "✓ Continuation Window Start fixed");
@@ -282,7 +282,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     pay_fee(caller, reminder_fee)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.reminder_fee = reminder_fee;
         this.transfer(caller, this.secured_party, 'escrow', this.reminder_fee);
@@ -298,7 +298,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     notice(caller, notification_statement)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.notification_statement = notification_statement;
         this.log(caller, "✓ Notification Statement fixed");
@@ -314,7 +314,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     pay_escrow_in(caller, digital_asset_collateral)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.debtor) return 'not permitted';
         this.digital_asset_collateral = digital_asset_collateral;
         this.transfer(caller, this.debtor, 'escrow', this.digital_asset_collateral);
@@ -330,7 +330,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     fail_to_pay(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.default_ = true;
         this.log(caller, "✓ Default declared");
@@ -346,7 +346,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     take_possession(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.default_) {
             this.transfer(caller, this.filing_office, this.secured_party, this.digital_asset_collateral);
@@ -363,7 +363,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     file_continuation(caller, continuation_statement)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.continuation_statement = continuation_statement;
         this.log(caller, "✓ Continuation Statement filed");
@@ -379,7 +379,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     set_continuation_lapse(caller, continuation_statement_date)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.continuation_statement) {
             this.continuation_statement_date = continuation_statement_date;
@@ -397,7 +397,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     file_termination(caller, termination_statement)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.termination_statement = termination_statement;
         this.log(caller, "✓ Termination Statement filed");
@@ -415,7 +415,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     release_escrow(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_statement) {
             this.transfer(caller, this.filing_office, this.debtor, this.digital_asset_collateral);
@@ -432,7 +432,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     release_reminder_fee(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_statement) {
             this.transfer(caller, this.filing_office, this.secured_party, this.reminder_fee);
@@ -449,7 +449,7 @@ module.exports = class UCCFinancingStatement {
      */
 
     termination_period()  {
-        return Some(this.termination_statement_time + (365 * 86400000));
+        return (this.termination_statement_time + (365 * 86400000));
     }
 
 
@@ -461,12 +461,34 @@ module.exports = class UCCFinancingStatement {
      */
 
     terminate_and_clear(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_period() <= Date.now()) {
             this.termination(caller);
         }
         return 'done.';
+    }
+
+    /* built-in transfer message */
+
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') main._escrow -= amount;
+        if(to == 'escrow') main._escrow += amount;
+    }
+
+
+    /* built-in termination of the contract system */
+
+    termination(caller) {
+        this.terminated = true;
+            this.log(caller, '■ contract system terminated');
+    }
+
+    check_termination() {
+        if(!this.terminated) return false;
+            console.log('✕ contract system previously terminated');
+        return true;
     }
 
     /* built-in convenience function to view state change log. */
@@ -535,20 +557,6 @@ module.exports = class UCCFinancingStatement {
                 console.log('> email sent: ' + info.response); }});
     }
 
-
-    /* built-in termination of the entire contract system */
-
-    termination(caller) {
-        this.terminated = true;
-        this.log(caller, '■ contract system terminated');
-    }
-
-    already_terminated() {
-        if(!this.terminated) return false;
-        console.log('✕ contract system previously terminated');
-        return true;
-    }
-
     /* built-in logging of state changes. */
 
     log(caller, msg) {
@@ -588,14 +596,6 @@ module.exports = class UCCFinancingStatement {
         fs.writeFileSync(name+'.key', privateKey);
         fs.writeFileSync(name+'.pub', publicKey);
         return true;
-    }
-
-    /* built-in transfer message */
-
-    transfer(caller, from, to, amount) {
-        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
     }
 }
 

@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97g U
+ **	backend:     sophia 0.3.98a U
  **
  **	target:      sophia 7.1+
  **
@@ -118,11 +118,6 @@ main contract EvaluationLicenseSystem =
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
 
-    /* built-in caller assertion */
-
-    function permit(authorized : option(address), name : string) =
-        require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
-
     /* built-in option type force function */
 
     function force(o : option('a), name : string) : 'a =
@@ -167,7 +162,8 @@ contract License =
         comment_text : option(string),
         published : option(bool),
         permission_to_comment : option(bool),
-        notice_time : option(int)
+        notice_time : option(int),
+            terminated : bool
         }
 
     entrypoint init(license_taker : address, description_of_goods : string) = {
@@ -178,7 +174,8 @@ contract License =
         comment_text = None,
         published = None,
         permission_to_comment = None,
-        notice_time = None
+        notice_time = None,
+            terminated = false
         }
 
 
@@ -305,13 +302,23 @@ contract License =
     entrypoint noticed() =
         notice_time != None
 
+    /* built-in caller assertion */
 
-    /* built-in termination of this covenant */
+    function permit(authorized : option(address), name : string) =
+        require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+
+    /* built-in termination of the covenant */
 
     stateful function termination() =
         put(state{terminated = true})
 
-    function already_terminated() =
-            state.terminated
+    function check_termination() =
+        require(!state.terminated, "covenant terminated before")
 
 /* end */

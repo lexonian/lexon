@@ -13,11 +13,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     solidity 0.3.97g U
+ **	backend:     solidity 0.3.98a U
  **
  **	target:      solidity 0.8.17+
  **
@@ -83,10 +83,10 @@ pragma solidity ^0.8.17;
 
 contract EvaluationLicenseSystem {
 
-    address payable licensor;
-    address payable arbiter;
-    uint licensing_fee;
-    uint breach_fee;
+    address payable public licensor;
+    address payable public arbiter;
+    uint public licensing_fee;
+    uint public breach_fee;
     bool licensing_fee__set = false;
 
     constructor(address payable _arbiter, uint _breach_fee) payable {
@@ -99,18 +99,18 @@ contract EvaluationLicenseSystem {
 
     /* aggregation of covenants for folds and serialization */
 
-    mapping(uint => contract) public _license_list;
+    mapping(uint => License) public _license_list;
     uint _license_count = 0;
 
     /* create new instance of License covenant, and register it with main */
 
-    function add_license(address payable _licensee, string memory _description_of_goods) returns(License) {
-        return _license_list[_license_count += 1] = new License(_licensee, _description_of_goods);
+    function add_license(address payable _licensee, string memory _description_of_goods) public returns(License) {
+        return _license_list[_license_count += 1] = new License(this, _licensee, _description_of_goods);
     }
 
     /* built-in safe transfer */
 
-    function transfer(address _to, uint _amount) internal {
+    function transfer(address payable _to, uint _amount) internal {
         (bool _success, ) = _to.call{value:_amount}("");
         require(_success, "transfer failed on receiver side");
     }
@@ -141,7 +141,21 @@ contract EvaluationLicenseSystem {
 
 contract License {
 
-    constructor(address payable _licensee, string memory _description_of_goods) payable {
+    EvaluationLicenseSystem main;
+    string public description_of_goods;
+    address payable public licensee;
+    bool public paid;
+    bool public commissioned;
+    string public comment_text;
+    bool public published;
+    bool public permission_to_comment;
+    uint public notice_time;
+    uint public creation_fee;
+    bool creation_fee__set = false;
+
+
+    constructor(EvaluationLicenseSystem _main, address payable _licensee, string memory _description_of_goods) payable {
+        main = _main;
         creation_fee = msg.value;
         creation_fee__set = true;
         licensee = _licensee;
@@ -161,9 +175,16 @@ contract License {
     function pay() public {
         require(msg.sender == licensee, "not permitted");
         if(msg.sender == licensee) {
-            transfer(licensor, licensing_fee);
+            transfer(main.licensor(), main.licensing_fee());
         }
         paid = true;
+    }
+
+    /* built-in safe transfer */
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
     }
 }
 

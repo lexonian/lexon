@@ -7,6 +7,7 @@ SHELL := /bin/bash
 
 hi = \033[97m
 ok = \033[36m
+dim = \033[90m
 err = \033[91m
 off = \033[0m
 errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok)ok$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
@@ -119,6 +120,7 @@ define testrun
 		; echo -n "testing " >> test.log ; cat now.tmp | tr '\n' ' ' >> test.log \
 		; expfile=$$(basename "$$filename" .lex)$(7) \
 		; testfile=$$(basename "$$expfile" .exp).now \
+		; coktag=$$(basename "$$expfile" .exp).cok \
 		; testname="`echo $$filename | sed -e 's/test-//g' -e 's/\.lex//g' -e 's/\.c//g' -e 's/\.lgf//g' -e 's/-/ /g' -e 's/\// /g' -e 's/\./ /g'`" \
 		; if [[ ! -f concise ]] ; then printf "test #%03d $$testname .. " $$testnumber ; fi \
 		; if [ -n "$(8)" ] ; then \
@@ -133,7 +135,7 @@ define testrun
 		; mv tmp $$testfile \
 		; echo $$((`cat testlines.tmp` + `cat $$filename | wc -l`)) > testlines.tmp \
 		; echo $$((`cat nowlines.tmp` + `cat $$testfile | wc -l`)) > nowlines.tmp \
-		; if [[ ! -f $$expfile ]] ; then read -p "no expectation on file for $(3) $(4) $$filename, create .exp file now? " -n 1 -r ; echo ; if [[ $$REPLY =~ ^[Yy]$$ ]] ; then \
+		; if [[ ! -f $$expfile ]] ; then read -p "\n» no expectation on file for $(3) $(4) $$filename, create .exp file now? " -n 1 -r ; echo ; if [[ $$REPLY =~ ^[Yy]$$ ]] ; then \
 				mv $$testfile $$expfile ;  $(call count,update) \
 			; fi \
 			; continue \
@@ -143,26 +145,53 @@ define testrun
 		; cat $$testfile | LC_ALL=C sed -e "s/compiler:.*/compiler:    [...]/g" -e "s/grammar:.*/grammar:     [...]/g" -e "s/backend:.*/backend:     [...]/g" > unvers.tmp \
 		; diff -B -d -y --suppress-common-lines unvers.exp unvers.tmp > diff.tmp \
 		; dret=$$? \
+		; if (( $$dret == 1 )) && [[ ! -f compmiss ]] ; then rm -f $$coktag ; fi \
 		; if (( $$dret == 0 )) ; then printf "  √\n" >> test.log ; fi \
 		; if (( $$dret == 1 )) ; then printf "  #  failed\n" >> test.log ; fi \
 		; if (( $$dret == 2 )) ; then printf "  o  can't perform test\n" >> test.log ; fi \
+		\
 		; if [[ -f concise ]] ; then \
-		    if (( $$dret == 0 )) ; then printf "+" ; $(call count,ok) ; fi \
+		      if (( $$dret == 0 )) ; then printf "+" ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 1 )) ; then printf "#" ; $(call count,err) ; if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; fi \
 		    ; if (( $$dret == 2 )) ; then printf "o" ; $(call count,skip) ; fi \
 		; else \
-		    if (( $$dret == 0 )) && (( $$ret == 0 )) && (( $$failer == 0 )) ; then echo ok ; $(call count,ok) ; fi \
+		      if (( $$dret == 0 )) && (( $$ret == 0 )) && (( $$failer == 0 )) ; then echo ok ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 0 )) && (( $$ret >  0 )) && (( $$failer >  0 )) ; then echo "ok (errors as expected)" ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 0 )) && (( $$ret >  0 )) && (( $$failer == 0 )) ; then echo "ok (unmarked error, but output as expected)" ; $(call count,warn) ; fi \
 		    ; if (( $$dret == 0 )) && (( $$ret == 0 )) && (( $$failer >  0 )) ; then echo "ok (marked error, output as expected)" ; $(call count,ok) ; fi \
 		    ; if (( $$dret == 2 )) ; then echo "can't perform test -> skip" ; $(call count,skip) ; fi \
-		    ; if (( $$dret == 1 )) ; then echo "failed: $(3) $(4) $$filename #< exp | got >#" ;  $(call count,err) ; $(call sep,#,132) ; cat diff.tmp ; $(call sep,#,132) ; \
-			if [[ ! -f noupdate ]] ; then \
-			  if [[ -f autoupdate ]] ; then \
-					mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ; $(call count,update) ; $(call discount,err) \
-			  		; printf "$(ok)› updated √$(off)\n\n" \
-			  ; else \
-			    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
+		; fi ; \
+		if [[ -f showdiff ]] ; then \
+		    if (( $$dret == 1 )) ; then echo "failed: $(3) $(4) $$filename #< exp | got >#" ;  $(call count,err) ; $(call sep,#,132) ; cat diff.tmp ; $(call sep,#,132) ; \
+		    fi ; \
+		fi ; \
+		if [[ -f compdiff ]] || [[ -f compall ]] ; then \
+			if [[ ! -f $$coktag ]] || [[ -f compall ]] ; then \
+				if [[ "$(4)" =~ .*javascript.* ]] ; then \
+					printf "$(ok)» node execution of $$testfile .. $(dim)" ; node -e "contract = require('./$$testfile')" ; \
+					sret=$$? ; \
+					if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+					if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+				elif [[ "$(4)" =~ .*solidity.* ]] ; then \
+					printf "$(ok)» solidity compilation of $$testfile .. $(dim)" ; solcjs --bin $$testfile ; \
+					sret=$$? ; \
+					if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+					if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+				elif [[ "$(4)" =~ .*sophia.* ]] ; then \
+					printf "$(ok)» sophia compilation of $$testfile .. $(dim)" ; aesophia_cli $$testfile ; \
+					sret=$$? ; \
+					if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+					if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+				fi ; \
+			fi ; \
+		fi ; \
+		if [[ -f autoupdate ]] ; then \
+		    if (( $$dret == 1 )) ; then \
+			mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ; $(call count,update) ; $(call discount,err) \
+	  		; printf "$(ok)› updated √$(off)\n\n" ; \
+		    fi ; \
+		elif [[ ! -f noupdate ]] ; then \
+		    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
 				; elif [[ $$REPLY =~ ^[Rr]$$ ]] ; then echo "Result now ($$testfile -- version tags are ignored):" ; $(call sep,_,132) ; cat $$testfile ; $(call sep,_,132) \
@@ -179,12 +208,9 @@ define testrun
 				; elif [[ $$REPLY =~ ^[Ii]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; touch noupdate ; break \
 				; elif [[ $$REPLY =~ ^[Qq]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; fi ; quit=1 ; break 2 \
 				; fi \
-			    ; done \
-			  ; fi \
-			; else if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi \
-			; fi \
-		  ; fi \
-		; fi \
+		    ; done ; \
+		elif [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; \
+		fi \
 	    ; done \
 	    ; echo \
 	    ; echo $$testnumber > testnumber.tmp \
@@ -198,6 +224,13 @@ define focustest
 	cat $(2) | sed "s/compiler:.*/compiler:    [...]/g" | sed "s/grammar:.*/grammar:     [...]/g" | sed "s/backend:.*/backend:     [...]/g" > unvers.now ; \
 	$(DIFF) -wB unvers.exp unvers.now ; \
 	$(errtag)
+	cd focus ; \
+	if [[ $(2) = *.sol ]] ; then \
+		printf "solcjs --bin $(2) > $(2).bin\n$(dim)" ; \
+		solcjs --bin $(2) > $(2).bin ; \
+		$(errtag) ; \
+	fi ; \
+
 endef
 
 define log
@@ -218,6 +251,7 @@ clean:
 	rm -f tmp
 	rm -f *.tmp
 	rm -f *.now
+	rm -f *.bin
 	rm -f *.bak
 	rm -f *.test
 	rm -f unvers.exp
@@ -229,44 +263,152 @@ clean:
 	rm -f focus/*.aes
 	rm -f focus/*.lcc
 	rm -f focus/*.now
+	rm -f focus/*.bin
 	rm -f focus/unvers.exp
-	rm -f lastfail
-	rm -f nopickup
-	rm -f noupdate
-	rm -f concise
 	rm -f onlynew
 	rm -f perfect
+	rm -f concise
+	rm -f noupdate
+	rm -f nopickup
+	rm -f showdiff
+	rm -f compdiff
+	rm -f compmiss
+	rm -f compall
+	rm -f autoupdate
+	rm -f autocomp
+	rm -f lastfail
 
 expclean: clean
-	@echo » deleting regression test expectations
+	@printf "$(ok)» deleting regression test expectations and native compilation check mark$(off)\n"
 	rm -f *.exp
+	rm -f *.cok
+	rm -f focus/*.exp
+	rm -f focus/*.cok
 
-check:
-	@$(call log,CHECK)
+deeptest:
+	@$(call log,DEEP TEST)
+	@echo
+	@echo Run all deep tests with a single-character bar indicating successes
+	@echo and failures and finale tally. No updates of expectations.
+	@echo
 	@touch concise
 	@touch noupdate
-	@rm -f lastfail
+	@touch nopickup
+	@touch showdiff
+	@rm -f compdiff
+	@rm -f compmiss
+	@rm -f compall
 	@rm -f autoupdate
+	@rm -f lastfail
+	@$(MAKE) _test
+
+comptest:
+	@$(call log,DEEP TEST AND COMPILE CHANGED)
+	@echo
+	@echo Compile deep test results that differ from expectations with their
+	@echo native compiler. Does not set new expectations but marks passed.
+	@echo
+	@touch concise
+	@touch noupdate
+	@touch nopickup
+	@touch showdiff
+	@touch compdiff
+	@rm -f compmiss
+	@rm -f compall
+	@rm -f autoupdate
+	@rm -f lastfail
+	@$(MAKE) _test
+
+compmiss:
+	@$(call log,DEEP TEST AND COMPILE THOSE MISSING PASS)
+	@echo
+	@echo Compile all test results differing from expectations or not that
+	@echo miss the pass mark with their native compiler. 
+	@echo
+	@touch concise
+	@touch noupdate
+	@touch nopickup
+	@touch showdiff
+	@touch compdiff
+	@touch compmiss
+	@rm -f compall
+	@rm -f autoupdate
+	@rm -f lastfail
 	@$(MAKE) _test
 
 update:
-	@$(call log,INTERACTIVE UPDATE OF FAILING TESTS)
+	@$(call log,INTERACTIVE UPDATE OF FAILING DEEP TESTS)
+	@echo
+	@echo Run all deep tests and interactively update expectations where
+	@echo they do not match newest compilation results.
+	@echo
 	@rm -f concise
 	@rm -f noupdate
+	@touch nopickup
+	@touch showdiff
+	@rm -f compdiff
+	@rm -f compmiss
+	@rm -f compall
+	@rm -f autoupdate
+	@rm -f lastfail
+	@$(MAKE) _test
+
+compall:
+	@$(call log,TEST-COMPILE ALL DEEP TESTS)
+	@echo
+	@echo Compile all deep test results with their native language compiler.
+	@echo Does not set new expectations but marks which results passed.
+	@echo
+	@touch concise
+	@touch noupdate
+	@touch nopickup
+	@touch showdiff
+	@rm -f compdiff
+	@rm -f compmiss
+	@touch compall
 	@rm -f autoupdate
 	@rm -f lastfail
 	@$(MAKE) _test
 
 autoupdate:
-	@$(call log,AUTO UPDATE OF FAILING TESTS)
-	@touch autoupdate
+	@$(call log,AUTO UPDATE OF FAILING DEEP TESTS)
+	@echo
+	@echo Update expectations of all deep tests that fail.
+	@echo Compilation with the native compiler is not checked.
+	@echo
 	@rm -f concise
 	@rm -f noupdate
+	@touch nopickup
+	@touch showdiff 
+	@rm -f compdiff
+	@rm -f compmiss
+	@rm -f compall
+	@touch autoupdate
 	@rm -f lastfail
 	@$(MAKE) _test
-	@rm -f autoupdate
+
+autocomp:
+	@$(call log,AUTO UPDATE OF FAILING DEEP TESTS)
+	@echo
+	@echo Update expectations of all deep tests that fail.
+	@echo Compile with native compiler and mark when passed.
+	@echo
+	@rm -f concise
+	@rm -f noupdate
+	@touch nopickup
+	@touch showdiff 
+	@touch compdiff
+	@rm -f compmiss
+	@rm -f compall
+	@touch autoupdate
+	@rm -f lastfail
+	@$(MAKE) _test
 
 recheck:
+	@echo
+	@echo Redo deep tests from where the last test run first failed.
+	@echo Interactive updates of expectations like with 'update.' 
+	@echo
 	@if [[ ! -f lastfail ]] ; then \
 	  echo "no failure in last test run" ; \
 	else \
@@ -277,9 +419,104 @@ _recheck:
 	@$(call log,RECHECK FAILED TESTS)
 	@rm -f concise
 	@rm -f noupdate
-	@rm -f autoupdate
 	@rm -f nopickup
+	@rm -f showdiff
+	@rm -f compdiff
+	@rm -f compall
+	@rm -f autoupdate
 	@$(MAKE) _test
+
+_test_proto:
+	@echo
+	@printf "$(ok)» regression tests$(off)\n"
+	@echo ===================
+	@printf "\nexpectations from:\n"
+	@cat tag.exp
+	@rm -f *.tmp
+	$(call init)
+	@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
+	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
+	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
+	@$(call testrun,javascript barebones,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
+	@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
+	@if [[ ! -f quit.tmp ]] ; then \
+		echo ; \
+		ok=`cat ok.tmp` ; \
+		err=`cat err.tmp` ; \
+		warn=`cat warn.tmp` ; \
+		skip=`cat skip.tmp` ; \
+		update=`cat update.tmp` ; \
+		rm -f perfect ; \
+		echo ; \
+		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
+		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
+		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
+		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
+		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
+			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
+		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
+		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
+			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
+		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
+			echo ; \
+			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
+			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
+			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
+			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
+		fi ; \
+	fi
+	@echo
+
+
+
+___test_proto2:
+	@echo
+	@printf "$(ok)» regression tests$(off)\n"
+	@echo ===================
+	@printf "\nexpectations from:\n"
+	@cat tag.exp
+	@rm -f *.tmp
+	$(call init)
+	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	@$(call testrun,solidity barebones,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
+	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
+	@if [[ ! -f quit.tmp ]] ; then \
+		echo ; \
+		ok=`cat ok.tmp` ; \
+		err=`cat err.tmp` ; \
+		warn=`cat warn.tmp` ; \
+		skip=`cat skip.tmp` ; \
+		update=`cat update.tmp` ; \
+		rm -f perfect ; \
+		echo ; \
+		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
+		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
+		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
+		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
+		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
+			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
+		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
+		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
+			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
+		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
+			echo ; \
+			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
+			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
+			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
+			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
+		fi ; \
+	fi
+	@echo
+
 
 _test:
 	@echo
@@ -643,4 +880,4 @@ list_sources:
 	@printf "\n$(hi)▫️  LEXON COVERAGE TESTS $(off)\n"
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' cover/*.lex
 
-.PHONY: all one clean expclean check update autoupdate recheck _recheck _test new expectations _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 
+.PHONY: all one clean expclean deeptest comptest compmiss update autoupdate autocomp recheck _recheck _test new expectations compall _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 

@@ -6,11 +6,11 @@
  **
  **	code tagged: 0.2.12
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97 U
+ **	backend:     sophia 0.3.98a U
  **
  **	target:      sophia 7.1+
  **
@@ -215,7 +215,7 @@ main contract UCCFinancingStatement =
      |  The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
      */
 
-    entrypoint notify() =
+    stateful entrypoint notify() =
         check_termination()
         permit(state.filing_office)
         if(state.continuation_window_start =< Chain.timestamp)

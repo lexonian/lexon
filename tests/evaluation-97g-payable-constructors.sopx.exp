@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
  **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
  **
- **	backend:     sophia 0.3.97g U
+ **	backend:     sophia 0.3.98a U
  **
  **	target:      sophia 7.1+
  **
@@ -186,5 +186,10 @@ contract License =
         if(Some(Call.caller) == licensee)
             transfer(force(state.licensor, "Licensor"), force(state.licensing_fee, "Licensing Fee"))
         paid = true;
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
 
 /* end */

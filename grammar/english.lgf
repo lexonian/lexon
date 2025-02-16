@@ -15,7 +15,7 @@
 ##
 ##	english.lgf — Lexon controlled English grammar
 ##
-##	Version 0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+##	Version 0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
 ##
 ##	This document is in Lexon Grammar Form, a variation of BNF.
 ##	Square brackets indicate optionality, 'or' separates variants.
@@ -309,7 +309,7 @@
 
    combinand:	symbol [expiration]
    		or reflexive
-   		or description
+   		or [article] description
 		or scalar_comparison
 		or negation
 		or existence

@@ -7,11 +7,11 @@ pragma solidity ^0.8.17;
  **
  **	file:        lexon/escrow3.38.lex
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     solidity 0.3.97g U
+ **	backend:     solidity 0.3.98a U
  **
  **	target:      solidity 0.8.17+
  **
@@ -67,10 +67,10 @@ pragma solidity ^0.8.17;
 
 contract Escrow {
 
-    address payable payer;
-    address payable seller;
-    address payable agent;
-    uint amount;
+    address payable public payer;
+    address payable public seller;
+    address payable public agent;
+    uint public amount;
     bool amount__set = false;
 
     constructor(address payable _seller, address payable _agent) payable {
@@ -81,17 +81,17 @@ contract Escrow {
         agent = _agent;
     }
 
-    /* built-in safe transfer */
-
-    function transfer(address _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
-    }
-
     /* built-in caller assertion */
 
-    function permit(address _authorized) internal view {
+    function permit(address payable _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
+    }
+
+    /* built-in safe transfer */
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
     }
 
 

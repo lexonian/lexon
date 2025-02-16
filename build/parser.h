@@ -577,6 +577,7 @@ typedef struct Combinand {
 	struct Expiration *Expiration;
 	struct Reflexive *Reflexive;
 	Description *Description;
+	struct Article *Article;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -825,7 +826,7 @@ Seconds *process_seconds(Seconds *Seconds);
 Milliseconds *process_milliseconds(Milliseconds *Milliseconds);
 Expiration *process_expiration(Expiration *Expiration);
 
-#line 829 "parser.h"
+#line 830 "parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -1099,7 +1100,7 @@ union YYSTYPE
   Weeks * Weeks;                           /* Weeks  */
   Years * Years;                           /* Years  */
 
-#line 1103 "parser.h"
+#line 1104 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -24,10 +24,6 @@ main contract EvaluationLicenseSystem =
         Chain.spend(to, amount)
 
 
-    function permit(authorized : address) =
-        require(Call.caller == authorized, "access")
-
-
 this._license_list = {};
 this._license_count = 0;
 
@@ -41,7 +37,8 @@ contract License =
         comment_text : string,
         published : bool,
         permission_to_comment : bool,
-        notice_time : int
+        notice_time : int,
+            terminated : bool
         }
 
     entrypoint init(license_taker : address, description_of_goods : string) = {
@@ -52,7 +49,8 @@ contract License =
         comment_text = "",
         published = false,
         permission_to_comment = false,
-        notice_time = 0
+        notice_time = 0,
+            terminated = false
         }
 
 
@@ -111,8 +109,16 @@ contract License =
         notice_time != 0
 
 
+    function permit(authorized : address) =
+        require(Call.caller == authorized, "access")
+
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+
     stateful function termination() =
         put(state{terminated = true})
 
-    function already_terminated() =
-            state.terminated
+    function check_termination() =
+        require(!state.terminated, "covenant terminated before")

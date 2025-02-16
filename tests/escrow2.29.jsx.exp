@@ -4,11 +4,11 @@
  **
  **	file:        lexon/escrow2.29.lex
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.97g U
+ **	backend:     javascript 0.3.98a U
  **
  **	target:      node 14.1+
  **
@@ -188,6 +188,14 @@ module.exports = class Escrow {
         return 'done.';
     }
 
+    /* built-in transfer message */
+
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') main._escrow -= amount;
+        if(to == 'escrow') main._escrow += amount;
+    }
+
     /* built-in convenience function to view state change log. */
 
     history() {
@@ -293,14 +301,6 @@ module.exports = class Escrow {
         fs.writeFileSync(name+'.key', privateKey);
         fs.writeFileSync(name+'.pub', publicKey);
         return true;
-    }
-
-    /* built-in transfer message */
-
-    transfer(caller, from, to, amount) {
-        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
     }
 }
 

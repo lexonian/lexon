@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 97 U" // unified 0.3 + experimental 0.4
+#define program_vers "0.3 alpha 98 U" // unified 0.3 + experimental 0.4
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
