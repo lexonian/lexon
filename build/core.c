@@ -534,6 +534,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		struct Expiration *Expiration;
 		struct Reflexive *Reflexive;
 		Description *Description;
+		struct Article *Article;
 		struct Scalar_Comparison *Scalar_Comparison;
 		struct Negation *Negation;
 		struct Existence *Existence;
@@ -4243,7 +4244,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Combinand->Symbol?1:0) + (!!Combinand->Expiration?1:0) + (!!Combinand->Reflexive?1:0) + (!!Combinand->Description?1:0) + (!!Combinand->Scalar_Comparison?1:0) + (!!Combinand->Negation?1:0) + (!!Combinand->Existence?1:0) + (!!Combinand->Point_In_Time?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Combinand->Symbol?1:0) + (!!Combinand->Expiration?1:0) + (!!Combinand->Reflexive?1:0) + (!!Combinand->Description?1:0) + (!!Combinand->Article?1:0) + (!!Combinand->Scalar_Comparison?1:0) + (!!Combinand->Negation?1:0) + (!!Combinand->Existence?1:0) + (!!Combinand->Point_In_Time?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "combinand", off, " ");
@@ -4256,7 +4257,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		grid <<= !terse ? 1 : 0;
 		int irx = !terse ? 1 : 0;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Combinand->Expiration || Combinand->Reflexive || Combinand->Description || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		sibbling_follows = !!(Combinand->Expiration || Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -4264,7 +4265,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_symbol(production, Combinand->Symbol, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Combinand->Reflexive || Combinand->Description || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		sibbling_follows = !!(Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -4272,7 +4273,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_expiration(production, Combinand->Expiration, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Combinand->Description || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		sibbling_follows = !!(Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -4280,13 +4281,23 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_reflexive(production, Combinand->Reflexive, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		sibbling_follows = !!(Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
 		core_description(production, Combinand->Description, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
 		subhighlight = false;
+		if(opt_produce_tree) {
+			if(!terse) grid &= 4294967294;
+			sibbling_follows = !!(Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+			if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+			if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+			core_article(production, Combinand->Article, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
+			subhighlight = false;
+		}
 		if(!terse) grid &= 4294967294;
 		sibbling_follows = !!(Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }

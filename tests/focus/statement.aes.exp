@@ -6,19 +6,19 @@
  **
  **	code tagged: 0.2.12
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97 U
+ **	backend:     sophia 0.3.98c U
  **
- **	target:      sophia 7.1+
+ **	target:      sophia 8+
  **
  **	options:     --sophia  --comment 
  **
  */
 
-@compiler >=6
+@compiler >=8
 
 /**
  **
@@ -55,10 +55,9 @@
  */
 
 
-
 main contract UCCFinancingStatement =
-
     record state = {
+        
             file_number : string,
             initial_statement_date : int,
             filer : address,
@@ -79,7 +78,6 @@ main contract UCCFinancingStatement =
             notification_statement : string,
             terminated : bool
         }
-
     datatype event = Message(indexed address, indexed address, string)
 
     entrypoint init(filing_office : address, debtor : address, secured_party : address, collateral : string) = {
@@ -103,16 +101,13 @@ main contract UCCFinancingStatement =
             notification_statement = "",
             terminated = false
         }
+        
+    
 
+    /* built-in caller assertion */
 
-
-    /* built-in termination of the entire contract system */
-
-    stateful function termination() =
-        put(state{terminated = true})
-
-    function check_termination() =
-        require(!state.terminated, "contract system terminated before")
+    function permit(authorized : address) =
+        require(Call.caller == authorized, "access")
 
     /* built-in safe transfer */
 
@@ -121,13 +116,17 @@ main contract UCCFinancingStatement =
 
     /* built-in send message */
 
-    function send(to : address, message : string) =
+    function notify(to : address, message : string) =
         Chain.event(Message(Call.caller, to, message))
 
-    /* built-in caller assertion */
 
-    function permit(authorized : address) =
-        require(Call.caller == authorized, "access")
+    /* built-in termination of the contract system */
+
+    stateful function termination() =
+        put(state{terminated = true})
+
+    function check_termination() =
+        require(!state.terminated, "contract system terminated before")
 
 
     /* Certify clause */
@@ -215,11 +214,11 @@ main contract UCCFinancingStatement =
      |  The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
      */
 
-    entrypoint notify() =
+    stateful entrypoint _notify() =
         check_termination()
         permit(state.filing_office)
         if(state.continuation_window_start =< Chain.timestamp)
-            send(state.secured_party, state.notification_statement)
+            notify(state.secured_party, state.notification_statement)
 
 
     /* Pay Escrow In clause */

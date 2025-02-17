@@ -3,10 +3,10 @@ pragma solidity ^0.8.17;
 
 contract Escrow {
 
-    address payable buyer;
-    address payable seller;
-    address payable agent;
-    uint amount;
+    address payable public buyer;
+    address payable public seller;
+    address payable public agent;
+    uint public amount;
     bool amount__set = false;
 
     constructor(address payable _seller, address payable _agent) payable {
@@ -17,13 +17,15 @@ contract Escrow {
         agent = _agent;
     }
 
-    function transfer(address _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
     }
 
-    function permit(address _authorized) internal view {
-        require(msg.sender == _authorized, "not permitted");
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
     }
 
 
@@ -31,6 +33,7 @@ contract Escrow {
         permit(agent);
         transfer(seller, address(this).balance);
     }
+
 
     function pay_back() public {
         permit(agent);

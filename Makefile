@@ -44,6 +44,21 @@ off = \033[0m
 has_gindent = $(shell which gindent)
 has_valgrind = $(shell which valgrind)
 
+ifeq ($(wildcard tests/tag.exp),)
+  define check_for_exp
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+  endef
+else
+  define check_for_exp
+  endef
+endif
 
 all: build sample
 
@@ -82,7 +97,11 @@ help:
 	# focusprep     build result references for future focustest runs
 	#
 	# ▫️  2nd level of tests: components
+	# focuscomp     syntax check of focus tests by native compilation, linting*
 	# deeptest      memory handling, includes, language parser, compiler
+	# comptest      natively compile* the result of all failing deep tests
+	# compall       natively compile* all deep test results
+	# compmiss      natively compile* the deep test results that failed before
 	# memtest       valgrind & internal memory leak tests
 	# update        interactive update of failing deeptests's result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
@@ -92,6 +111,8 @@ help:
 	#
 	# ▫️  1st level of tests: build environment
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
+	#
+	# * the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
 
 build:
 	@if (! $(MAKE) -s -o lexccc -q lexccc.c build/.parser & ! $(MAKE) -s lexccc) ; \
@@ -220,7 +241,7 @@ endif
 
 
 sample: build
-ifeq (,$(wildcard nosample))
+ifeq (,$(wildcard .nosample))
 	@printf "\n$(hi)▫️  compile escrow example $(off)\n\n"
 	@printf "$(ok)bin/lexon --solidity examples/escrow.lex$(off)\n\n"
 	@bin/lexon --solidity examples/escrow.lex
@@ -256,13 +277,54 @@ focusprep: build
 focustest: build
 	@cd tests ; $(MAKE) focustest
 
+focuscomp: build
+	@cd tests ; $(MAKE) focuscomp
+
 expclean:
 	@cd tests ; $(MAKE) expclean
 
 deeptest: build
 	@printf "\n$(hi)▫️  deep test $(off)\n"
 ifneq (,$(wildcard tests/tag.exp))
-	@cd tests ; $(MAKE) check
+	@cd tests ; $(MAKE) deeptest
+	@echo
+else
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+endif
+
+comptest: build
+	@printf "\n$(hi)▫️  deep test with native compilation for failing tests$(off)\n"
+ifneq (,$(wildcard tests/tag.exp))
+	@cd tests ; $(MAKE) comptest 
+	@echo
+else
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+endif
+
+compmiss: build
+	@printf "\n$(hi)▫️  deep test with native compilation for all that did not pass native$(off)\n"
+	$(check_for_exp)
+	@cd tests ; $(MAKE) compmiss
+	@echo
+
+compall: build
+	@printf "\n$(hi)▫️  deep test with native compilation for all$(off)\n"
+ifneq (,$(wildcard tests/tag.exp))
+	@cd tests ; $(MAKE) compall
 	@echo
 else
 	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
@@ -283,6 +345,11 @@ update: build
 autoupdate: build
 	@printf "\n$(hi)▫️  auto-update of deeptest reference results $(off)\n\n"
 	@cd tests ; $(MAKE) autoupdate
+	@echo
+
+autocomp: build
+	@printf "\n$(hi)▫️  auto-update of deeptest reference results and native compile test$(off)\n\n"
+	@cd tests ; $(MAKE) autocomp
 	@echo
 
 recheck: build
@@ -333,6 +400,9 @@ endif
 
 testlog:
 	@cd tests ; $(MAKE) testlog
+
+cleanlog:
+	@cd tests ; $(MAKE) cleanlog
 
 clean:
 	@printf "\n\n$(hi)▫️  clean built and generated files $(off)\n\n"
@@ -555,6 +625,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update autoupdate recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample check comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

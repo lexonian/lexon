@@ -13,11 +13,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     solidity 0.3.97g U
+ **	backend:     solidity 0.3.98c U
  **
  **	target:      solidity 0.8.17+
  **
@@ -91,10 +91,10 @@ pragma solidity ^0.8.17;
 
 contract EvaluationLicenseSystem {
 
-    address payable licensor;
-    address payable agent;
-    uint licensing_service_fee;
-    uint breach_service_fee;
+    address payable public licensor;
+    address payable public agent;
+    uint public licensing_service_fee;
+    uint public breach_service_fee;
 
     constructor(address payable _agent, uint _licensing_service_fee, uint _breach_service_fee) {
         licensor = payable(msg.sender);
@@ -105,27 +105,13 @@ contract EvaluationLicenseSystem {
 
     /* aggregation of covenants for folds and serialization */
 
-    mapping(uint => contract) public _license_list;
+    mapping(uint => License) public _license_list;
     uint _license_count = 0;
 
     /* create new instance of License covenant, and register it with main */
 
-    function add_license(address payable _license_taker, string memory _description_of_goods) returns(License) {
-        check_termination();
-        return _license_list[_license_count += 1] = new License(_license_taker, _description_of_goods);
-    }
-
-    /* built-in safe transfer */
-
-    function transfer(address _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
-    }
-
-    /* built-in caller assertion */
-
-    function permit(address _authorized) internal view {
-        require(msg.sender == _authorized, "not permitted");
+    function add_license(address payable _license_taker, string memory _description_of_goods) public returns(License) {
+        return _license_list[_license_count += 1] = new License(this, _license_taker, _description_of_goods);
     }
 }
 
@@ -152,7 +138,21 @@ contract EvaluationLicenseSystem {
  */
 
 contract License {
-    constructor(address payable _license_taker, string memory _description_of_goods) {
+
+    EvaluationLicenseSystem main;
+    string public description_of_goods;
+    address payable public license_taker;
+    bool public paid;
+    bool public commissioned;
+    string public comment_text;
+    bool public published;
+    bool public permission_to_comment;
+    uint public notice_time;
+    bool terminated = false;
+
+
+    constructor(EvaluationLicenseSystem _main, address payable _license_taker, string memory _description_of_goods) {
+        main = _main;
         license_taker = _license_taker;
         description_of_goods = _description_of_goods;
     }
@@ -171,7 +171,7 @@ contract License {
         check_termination();
         require(msg.sender == license_taker, "not permitted");
         if(msg.sender == license_taker) {
-            transfer(licensor, licensing_service_fee);
+            transfer(main.licensor(), main.licensing_service_fee());
         }
         paid = true;
     }
@@ -186,7 +186,7 @@ contract License {
 
     function commission() public {
         check_termination();
-        permit(licensor);
+        permit(main.licensor());
         commissioned = true;
     }
 
@@ -244,9 +244,9 @@ contract License {
 
     function declare_breach() public {
         check_termination();
-        permit(agent);
+        permit(main.agent());
         if(factually_breached()) {
-            transfer(licensor, breach_service_fee);
+            transfer(main.licensor(), main.breach_service_fee());
             termination();
         }
     }
@@ -262,7 +262,7 @@ contract License {
      */
 
     function factually_breached() public view returns(bool) {
-        return ((commissioned && comment_text == "")
+        return ((commissioned && bytes(comment_text).length == 0)
                  || (published && (!permission_to_comment && (notice_time <= (block.timestamp - (24 * 3600))))));
     }
 
@@ -276,7 +276,7 @@ contract License {
 
     function notice() public {
         check_termination();
-        require(msg.sender == agent || msg.sender == licensor, "not permitted");
+        require(msg.sender == main.agent() || msg.sender == main.licensor(), "not permitted");
         notice_time = block.timestamp;
     }
 
@@ -292,16 +292,28 @@ contract License {
         return notice_time != 0;
     }
 
+    /* built-in caller assertion */
 
-    /* built-in termination of this covenant */
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+    /* built-in safe transfer */
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+
+    /* built-in termination of the covenant */
 
     function termination() internal {
         terminated = true;
     }
 
-    function already_terminated() internal view returns(bool) {
-        if(!terminated) return false;
-        return true;
+    function check_termination() internal view {
+        require(!terminated, "covenant terminated before");
     }
 }
 

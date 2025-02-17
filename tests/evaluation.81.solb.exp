@@ -3,10 +3,10 @@ pragma solidity ^0.8.17;
 
 contract EvaluationLicenseSystem {
 
-    address payable licensor;
-    address payable arbiter;
-    uint licensing_fee;
-    uint breach_fee;
+    address payable public licensor;
+    address payable public arbiter;
+    uint public licensing_fee;
+    uint public breach_fee;
 
     constructor(address payable _arbiter, uint _licensing_fee, uint _breach_fee) {
         licensor = payable(msg.sender);
@@ -16,29 +16,31 @@ contract EvaluationLicenseSystem {
     }
 
 
-    mapping(uint => contract) public _license_list;
+    mapping(uint => License) public _license_list;
     uint _license_count = 0;
 
 
-    function add_license(address payable _licensee, string memory _description_of_goods) returns(License) {
-        check_termination();
-        return _license_list[_license_count += 1] = new License(_licensee, _description_of_goods);
-    }
-
-
-    function transfer(address _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
-    }
-
-
-    function permit(address _authorized) internal view {
-        require(msg.sender == _authorized, "not permitted");
+    function add_license(address payable _licensee, string memory _description_of_goods) public returns(License) {
+        return _license_list[_license_count += 1] = new License(this, _licensee, _description_of_goods);
     }
 }
 
 contract License {
-    constructor(address payable _licensee, string memory _description_of_goods) {
+
+    EvaluationLicenseSystem main;
+    string public description_of_goods;
+    address payable public licensee;
+    bool public paid;
+    bool public commissioned;
+    string public comment_text;
+    bool public published;
+    bool public permission_to_comment;
+    uint public notice_time;
+    bool terminated = false;
+
+
+    constructor(EvaluationLicenseSystem _main, address payable _licensee, string memory _description_of_goods) {
+        main = _main;
         licensee = _licensee;
         description_of_goods = _description_of_goods;
     }
@@ -48,7 +50,7 @@ contract License {
         check_termination();
         require(msg.sender == licensee, "not permitted");
         if(msg.sender == licensee) {
-            transfer(licensor, licensing_fee);
+            transfer(main.licensor(), main.licensing_fee());
         }
         paid = true;
     }
@@ -56,7 +58,7 @@ contract License {
 
     function commission() public {
         check_termination();
-        permit(licensor);
+        permit(main.licensor());
         commissioned = true;
     }
 
@@ -84,23 +86,23 @@ contract License {
 
     function declare_breach() public {
         check_termination();
-        permit(arbiter);
+        permit(main.arbiter());
         if(factually_breached()) {
-            transfer(licensor, breach_fee);
+            transfer(main.licensor(), main.breach_fee());
             termination();
         }
     }
 
 
     function factually_breached() public view returns(bool) {
-        return ((commissioned && comment_text == "")
+        return ((commissioned && bytes(comment_text).length == 0)
                  || (published && (!permission_to_comment && (notice_time <= (block.timestamp - (24 * 3600))))));
     }
 
 
     function notice() public {
         check_termination();
-        require(msg.sender == arbiter || msg.sender == licensor, "not permitted");
+        require(msg.sender == main.arbiter() || msg.sender == main.licensor(), "not permitted");
         notice_time = block.timestamp;
     }
 
@@ -110,12 +112,22 @@ contract License {
     }
 
 
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+
     function termination() internal {
         terminated = true;
     }
 
-    function already_terminated() internal view returns(bool) {
-        if(!terminated) return false;
-        return true;
+    function check_termination() internal view {
+        require(!terminated, "covenant terminated before");
     }
 }

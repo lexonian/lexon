@@ -16,7 +16,7 @@ module.exports = class EvaluationLicenseSystem {
 
         this.License = (caller, licensee, description_of_goods) => {
             if(caller == main.licensor) {
-                return new License(caller, licensee, description_of_goods);
+                return new License(this, caller, licensee, description_of_goods);
             }
         };
 
@@ -36,7 +36,7 @@ module.exports = class EvaluationLicenseSystem {
 
 
             pay(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(!(caller == this.licensee)) return 'not permitted';
                 if(caller == this.licensee) {
                     main.transfer(this.licensee, main.licensor, main.licensing_fee);
@@ -47,35 +47,35 @@ module.exports = class EvaluationLicenseSystem {
 
 
             commission(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != main.licensor) return 'not permitted';
                 this.commissioned = true;
             }
 
 
             comment(caller, comment_text)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != this.licensee) return 'not permitted';
                 this.comment_text = comment_text;
             }
 
 
             publication(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != this.licensee) return 'not permitted';
                 this.published = true;
             }
 
 
             grant_permission_to_comment(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != this.licensee) return 'not permitted';
                 this.permission_to_comment = true;
             }
 
 
             declare_breach(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(caller != main.arbiter) return 'not permitted';
                 if(this.factually_breached()) {
                     main.transfer(main.arbiter, main.licensor, main.breach_fee);
@@ -91,7 +91,7 @@ module.exports = class EvaluationLicenseSystem {
 
 
             notice(caller)  {
-                if(this.already_terminated()) return undefined;
+                if(this.check_termination()) return undefined;
                 if(!(caller == main.arbiter || caller == main.licensor)) return 'not permitted';
                 this.notice_time = Date.now();
             }
@@ -102,13 +102,19 @@ module.exports = class EvaluationLicenseSystem {
             }
 
 
+            transfer(from, to, amount) {
+                console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
+                if(from == 'escrow') main._escrow -= amount;
+                if(to == 'escrow') main._escrow += amount;
+            }
+
+
             termination() {
                 this.terminated = true;
             }
 
-            already_terminated() {
+            check_termination() {
                 if(!this.terminated) return false;
-                console.log('✕ covenant previously terminated');
                 return true;
             }
         }
@@ -116,15 +122,7 @@ module.exports = class EvaluationLicenseSystem {
 
 
     add_license(caller, licensee, description_of_goods) {
-        if (this.already_terminated()) return undefined;
         return this._license_list[this._license_count += 1] = this.License(caller, licensee, description_of_goods);
     }
 
-
-
-    transfer(from, to, amount) {
-        console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
-    }
 }

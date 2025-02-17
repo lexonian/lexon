@@ -4874,8 +4874,8 @@ char *yytext;
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 97 U" // unified 0.3 + experimental 0.4
-#define grammar_vers "0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes"
+#define program_vers "0.3 alpha 98 U" // unified 0.3 + experimental 0.4
+#define grammar_vers "0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
 #define slug program_name " " program_vers
@@ -9162,30 +9162,30 @@ void help() {
 	-V --version                    print version slug and exit\n\
 	-h --help                       print this text and exit\n\
 	-m --manual                     print the readme text and exit\n\
-	-o --output <file name>         write result of source translation to <file name>, not stdout\n\
-	-j --echo-source                list the source code that will be processed\n\
-	-Q --no-result                  no output of resulting code to screen even absent <out file>\n\
+	-o --output <file name>         write result of source translation to <file name> (default: stdout)\n\
+	-j --echo-source                list the source text that will be processed\n\
+	-Q --no-result                  no output of resulting code to screen, even absent <out file>\n\
 \n\
-	Developing Lexon Code\n\
+	Producing Lexon Code\n\
 	-2 --javascript                 produce javascript output\n\
 	-3 --solidity                   produce solidity output\n\
 	-4 --sophia                     produce sophia output\n\
 	-v --verbose                    trace detailed compilation steps to find code errors\n\
 	-N --names                      list found names - ie. symbols - and exit\n\
-	-W --echo-precompile            show sanitized source code, with included files\n\
-	-P --precompile                 show sanitized source code, with included files, and exit\n\
+	-W --echo-precompile            show sanitized source code first, with included files\n\
+	-P --precompile                 show sanitized source code, with included files, then exit\n\
 	-J --jurisdictions              list known jurisdictions and exit\n\
 	-b --bare                       generated code is barebones happy path demonstration\n\
 	-y --comment                    generated code has explanatory comments\n\
 	-u --instructions               generated code leads in with user instructions\n\
-	-f --feedback                   generated code confirms calls on-screen\n\
 	-z --harden                     generated code checks for unset arguments and variables\n\
-	-l --log [<file>]               generated code logs state changes to <file> (default: log)\n\
-	-s --signatures [<pem file>]    generated code signs log using <pem file> (default: key.pem)\n\
-	-c --chaining [<hash length>]   generated code hash-chains log-entries (default length 12)\n\
-	-p --persistence [<file>]       generated code stores state in <file> (default: state)\n\
-	-t --bundle [<file>]            generated code can tar code, log and state (default: contract.tgz)\n\
-	-x --all-auxiliaries            generated code features all extras (equals -y -u -f -z -l -s -c -p -t)\n\
+	-f --feedback                   javascript: generated code confirms calls on-screen\n\
+	-l --log [<file>]               javascript: generated code logs state changes to <file> (default: log)\n\
+	-s --signatures [<pem file>]    javascript: generated code signs log using <pem file> (default: key.pem)\n\
+	-c --chaining [<hash length>]   javascript: generated code hash-chains log-entries (default length 12)\n\
+	-p --persistence [<file>]       javascript: generated code stores state in <file> (default: state)\n\
+	-t --bundle [<file>]            javascript: generated code can tar code, log and state (default: contract.tgz)\n\
+	-x --all-auxiliaries            generated code features all applicable extras (-y -u -z -f -l -s -c -p -t)\n\
 	-i --include-path <path>        set a default path to look for include files\n\
  	-I --included-files             print cascade of included and sub-included files and exit\n\
 	-R --ignore-repeat-includes     ignore include files that are given repeatedly\n\
@@ -9226,9 +9226,9 @@ void help() {
 	-d --debug                      detailed trace of processing steps to debug lexon itself\n\
 	-D --debug-modules [<modules>]  detailed trace of specific modules. Use -Dh to list modules\n\
 	-M --memory-check               run-time check and post-mortem of memory allocation and errors\n\
-	$ make check                      run test source files from tests/\n\
-	$ make retest                     run tests from tests/ again but skip those that worked\n\
-	$ make update                     run tests again but interactively inspect & update expectations\n\
+	$ make check                    run test source files from tests/\n\
+	$ make recheck                  run tests from tests/ again but skip those that worked\n\
+	$ make update                   run tests again but interactively inspect & update expectations\n\
 \n\
 	Examples\n\
 	lexon sample.lex\n\
@@ -11597,7 +11597,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
-	replace(&src, "0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes", grammar_version);
+	replace(&src, "0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes", grammar_version);
 	char *src_imbue = str_escape(src, "own");
 
 	/* read grammer file */
@@ -12010,8 +12010,8 @@ const char *own =
 	"#define PATH_MAX 1000\n"
 	"#endif\n"
 	"\n"
-	"#define program_vers \"0.3 alpha 97 U\" // unified 0.3 + experimental 0.4\n"
-	"#define grammar_vers \"0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\"\n"
+	"#define program_vers \"0.3 alpha 98 U\" // unified 0.3 + experimental 0.4\n"
+	"#define grammar_vers \"0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
 	"#define slug program_name \" \" program_vers\n"
@@ -13565,30 +13565,30 @@ const char *own =
 	"	-V --version                    print version slug and exit\\n\\\n"
 	"	-h --help                       print this text and exit\\n\\\n"
 	"	-m --manual                     print the readme text and exit\\n\\\n"
-	"	-o --output <file name>         write result of source translation to <file name>, not stdout\\n\\\n"
-	"	-j --echo-source                list the source code that will be processed\\n\\\n"
-	"	-Q --no-result                  no output of resulting code to screen even absent <out file>\\n\\\n"
+	"	-o --output <file name>         write result of source translation to <file name> (default: stdout)\\n\\\n"
+	"	-j --echo-source                list the source text that will be processed\\n\\\n"
+	"	-Q --no-result                  no output of resulting code to screen, even absent <out file>\\n\\\n"
 	"\\n\\\n"
-	"	Developing Lexon Code\\n\\\n"
+	"	Producing Lexon Code\\n\\\n"
 	"	-2 --javascript                 produce javascript output\\n\\\n"
 	"	-3 --solidity                   produce solidity output\\n\\\n"
 	"	-4 --sophia                     produce sophia output\\n\\\n"
 	"	-v --verbose                    trace detailed compilation steps to find code errors\\n\\\n"
 	"	-N --names                      list found names - ie. symbols - and exit\\n\\\n"
-	"	-W --echo-precompile            show sanitized source code, with included files\\n\\\n"
-	"	-P --precompile                 show sanitized source code, with included files, and exit\\n\\\n"
+	"	-W --echo-precompile            show sanitized source code first, with included files\\n\\\n"
+	"	-P --precompile                 show sanitized source code, with included files, then exit\\n\\\n"
 	"	-J --jurisdictions              list known jurisdictions and exit\\n\\\n"
 	"	-b --bare                       generated code is barebones happy path demonstration\\n\\\n"
 	"	-y --comment                    generated code has explanatory comments\\n\\\n"
 	"	-u --instructions               generated code leads in with user instructions\\n\\\n"
-	"	-f --feedback                   generated code confirms calls on-screen\\n\\\n"
 	"	-z --harden                     generated code checks for unset arguments and variables\\n\\\n"
-	"	-l --log [<file>]               generated code logs state changes to <file> (default: log)\\n\\\n"
-	"	-s --signatures [<pem file>]    generated code signs log using <pem file> (default: key.pem)\\n\\\n"
-	"	-c --chaining [<hash length>]   generated code hash-chains log-entries (default length 12)\\n\\\n"
-	"	-p --persistence [<file>]       generated code stores state in <file> (default: state)\\n\\\n"
-	"	-t --bundle [<file>]            generated code can tar code, log and state (default: contract.tgz)\\n\\\n"
-	"	-x --all-auxiliaries            generated code features all extras (equals -y -u -f -z -l -s -c -p -t)\\n\\\n"
+	"	-f --feedback                   javascript: generated code confirms calls on-screen\\n\\\n"
+	"	-l --log [<file>]               javascript: generated code logs state changes to <file> (default: log)\\n\\\n"
+	"	-s --signatures [<pem file>]    javascript: generated code signs log using <pem file> (default: key.pem)\\n\\\n"
+	"	-c --chaining [<hash length>]   javascript: generated code hash-chains log-entries (default length 12)\\n\\\n"
+	"	-p --persistence [<file>]       javascript: generated code stores state in <file> (default: state)\\n\\\n"
+	"	-t --bundle [<file>]            javascript: generated code can tar code, log and state (default: contract.tgz)\\n\\\n"
+	"	-x --all-auxiliaries            generated code features all applicable extras (-y -u -z -f -l -s -c -p -t)\\n\\\n"
 	"	-i --include-path <path>        set a default path to look for include files\\n\\\n"
 	" 	-I --included-files             print cascade of included and sub-included files and exit\\n\\\n"
 	"	-R --ignore-repeat-includes     ignore include files that are given repeatedly\\n\\\n"
@@ -13629,9 +13629,9 @@ const char *own =
 	"	-d --debug                      detailed trace of processing steps to debug lexon itself\\n\\\n"
 	"	-D --debug-modules [<modules>]  detailed trace of specific modules. Use -Dh to list modules\\n\\\n"
 	"	-M --memory-check               run-time check and post-mortem of memory allocation and errors\\n\\\n"
-	"	$ make check                      run test source files from tests/\\n\\\n"
-	"	$ make retest                     run tests from tests/ again but skip those that worked\\n\\\n"
-	"	$ make update                     run tests again but interactively inspect & update expectations\\n\\\n"
+	"	$ make check                    run test source files from tests/\\n\\\n"
+	"	$ make recheck                  run tests from tests/ again but skip those that worked\\n\\\n"
+	"	$ make update                   run tests again but interactively inspect & update expectations\\n\\\n"
 	"\\n\\\n"
 	"	Examples\\n\\\n"
 	"	lexon sample.lex\\n\\\n"
@@ -16000,7 +16000,7 @@ const char *own =
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
-	"	replace(&src, \"0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\", grammar_version);\n"
+	"	replace(&src, \"0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes\", grammar_version);\n"
 	"	char *src_imbue = str_escape(src, \"own\");\n"
 	"\n"
 	"	/* read grammer file */\n"
@@ -16382,7 +16382,7 @@ const char *owngrm =
 	"##\n"
 	"##	english.lgf — Lexon controlled English grammar\n"
 	"##\n"
-	"##	Version 0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes\n"
+	"##	Version 0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes\n"
 	"##\n"
 	"##	This document is in Lexon Grammar Form, a variation of BNF.\n"
 	"##	Square brackets indicate optionality, 'or' separates variants.\n"
@@ -16676,7 +16676,7 @@ const char *owngrm =
 	"\n"
 	"   combinand:	symbol [expiration]\n"
 	"   		or reflexive\n"
-	"   		or description\n"
+	"   		or [article] description\n"
 	"		or scalar_comparison\n"
 	"		or negation\n"
 	"		or existence\n"
@@ -17112,7 +17112,16 @@ const char *manual =
 	"\n"
 	"* colordiff\n"
 	"\n"
+	"**For syntax sanity tests:**\n"
 	"\n"
+	"* node + npm modules listed below\n"
+	"* eslint\n"
+	"* solcjs\n"
+	"* aesophia_cli\n"
+	"\n"
+	"These are needed for `make comp*` rules that test compiling/instantiating\n"
+	"of the created Javascript, Solidity, or Sophia code. This tests the syntax\n"
+	"of the Lexon compiler output.\n"
 	"\n"
 	"\n"
 	"## Prerequisites for Running Created Javascript Contracts\n"
@@ -17131,12 +17140,18 @@ const char *manual =
 	"\n"
 	"* npm\n"
 	"* serialize-javascript\n"
+	"* prompt-sync\n"
+	"* tar\n"
+	"* nodemailer\n"
 	"\n"
-	"Install this library with:\n"
+	"Install these libraries with:\n"
 	"\n"
 	"	npm install serialize-javascript\n"
+	"	npm install prompt-sync\n"
+	"	npm install tar\n"
+	"	npm install nodemailer\n"
 	"\n"
-	"Note that no Javascript elements are needed when compiling a Lexon text, no\n"
+	"Note that NO Javascript elements are needed when compiling a Lexon text, no\n"
 	"matter to what language, even to Javascript. The above applies solely for\n"
 	"executing the produced Javascript at a later time.\n"
 	"\n"
@@ -17180,6 +17195,8 @@ const char *manual =
 	"\n"
 	"This runs tests located in sub directories of [`tests/`](tests/).\n"
 	"\n"
+	"All tests passing is sufficient verification that the compiler built as expected.\n"
+	"\n"
 	"Note that github will not list all files and sub folders in `tests/`. Relevant\n"
 	"sub folders are [`tests/english`](tests/english), [`tests/lexon`](tests/lexon),\n"
 	"and [`tests/focus`](tests/focus). But there are also test files in `tests/`\n"
@@ -17187,10 +17204,75 @@ const char *manual =
 	"\n"
 	"The tests of `make check` verify that the compiler works as expected. Other\n"
 	"tests, like `make envtest` check the environment and internal memory handling\n"
-	"mechanisms. `make devcheck` runs all tests. See immediately below for all\n"
-	"options.\n"
+	"mechanisms. `make devcheck` runs all tests, except the slow, extended syntax\n"
+	"checks. See below for all available rules.\n"
+	"\n"
+	"Note again that this section is about testing the Lexon compiler when improving\n"
+	"it. It is not relevant for writing and testing Lexon texts.\n"
 	"\n"
 	"\n"
+	"### Testing While Developing\n"
+	"\n"
+	"When implementing a new feature, an new example Lexon text that demonstrates it\n"
+	"should be placed into folder `tests/cover`. It will be picked up by all deep\n"
+	"and comp test rules. The naming convention is loosly base-version-description.\n"
+	"The name is used to call out the running test later.  For examples, see the\n"
+	"`tests/` folder. \n"
+	"\n"
+	"Running `make new` will provide the opportunity to automatically register the\n"
+	"expected results of compiling this new Lexon text to four targets: core,\n"
+	"Javascript, Solidity, and Sophia.\n"
+	"\n"
+	"To get a first impression of the effect of your changes while coding, run `make\n"
+	"focustest`, which diffs the current results of the three main examples that are\n"
+	"also given in `examples\\`, with expected outcomes. Different compiler options\n"
+	"(barebone, w/aux, hardenend) are tried for each target (js, solidity, sophia).\n"
+	"Running the tests takes about a second. To bulk-update the expectations, run\n"
+	"`make focusprep`. Obviously, this should be done only after close inspection of\n"
+	"the results of `focustest`. To make a syntax check for the result of each test\n"
+	"(failing or not, this is not optimized) use `make focuscomp`. This is useful\n"
+	"only if some `focustests` fail, and need to be updated with `focusprep`. It\n"
+	"retests all files and takes ca. 2 minutes.\n"
+	"\n"
+	"To do the full regression test of 5000+ test compilations, run `make check`.\n"
+	"Like `focustest`, it diffs the results of compiling Lexon texts with\n"
+	"`bin/lexon` with expectations on file that came with the repo.  It takes about\n"
+	"3 minutes. After fixing errors in the Lexon compiler code, use `make recheck`\n"
+	"to skip tests that passed the previous run, and be afforded the opportunity to\n"
+	"interactively update expectations to the new compilation results, blessing\n"
+	"intended changes as reference for future test runs. To bulk-update all\n"
+	"expectations, run `make expectations`. This can be useful but loses a lot of\n"
+	"signal obviously. To bulk-update only failing expectations, `make autoupdate`.\n"
+	"Expectations are deleted by `make expclean`, not by running `make clean`.\n"
+	"Updating the expectations is as fast as the tests themselves.\n"
+	"\n"
+	"#### Syntax Checks\n"
+	"\n"
+	"In the case that many test results are expected to change, bulk-test the syntax\n"
+	"of new results with `make comptest`—which instantiates Javascript code, and\n"
+	"compiles Solidity and Sophia code—for syntax verification of exactly those\n"
+	"tests that fail the diff with expectations. That is, only the resulting code of\n"
+	"failing tests is test-compiled. The syntax tests can take hours.  The\n"
+	"expectations are not updated. This requires node, eslint, solcjs, and\n"
+	"aesophia_cli, and a handfull of node modules installed.\n"
+	"\n"
+	"Later runs of `comptest` will skip compilation of those test results that had\n"
+	"passed successfully before, even if the diff with expectations (the actual\n"
+	"regression test) still fails in the case that you have not updated expectations\n"
+	"(yet). Note that catching regressions can be far more important than testing\n"
+	"syntax. To syntax-test all test results, use `compall`. Use `compmiss` to\n"
+	"compile only those that had not yet been done or had failed (that is, where\n"
+	"node, eslint, solcjs, or aesophia_cli gave errors, independently of whether the\n"
+	"expectations diff succeeded). To auto-update failing expectations and\n"
+	"test-compile exactly those updated, use `autocomp`. This is the opposite of\n"
+	"`comptest`.\n"
+	"\n"
+	"#### Summary\n"
+	"\n"
+	"In summary, do `make focustest` for sufficient orientation while developing.\n"
+	"Use `make check` for a more comprehensive assurance that nothing broke while\n"
+	"you were looking elsewhere.  Use `make comptest` to check the syntax of the\n"
+	"failing regression tests of `make check`. \n"
 	"\n"
 	"\n"
 	"## Build Rules\n"
@@ -17204,7 +17286,7 @@ const char *manual =
 	"	linux install   install pre-built linux binary and copy it as bin/lexon\n"
 	"	sample          build escrow example to solidity\n"
 	"	check           compiler tests: focustest, deeptest\n"
-	"	devcheck        all tests: envtest, grammarcheck, memtest, focustest, deeptest\n"
+	"	devcheck        more tests: envtest, grammarcheck, memtest, focustest, deeptest\n"
 	"	testlog         dump the 100 last lines of the test log\n"
 	"	clean           delete all built files, except pre-built binaries\n"
 	"	ls              show the source and build directories\n"
@@ -17229,9 +17311,13 @@ const char *manual =
 	"	focustest       grammar check compiling release-defining examples\n"
 	"	focusprep       build result references for future focustest runs\n"
 	"\n"
-	"**2nd level of tests: components**\n"
+	"**2nd level of tests: components, syntax**\n"
 	"\n"
+	"	focuscomp       syntax check of focus tests by native compilation, linting*\n"
 	"	deeptest        memory handling, includes, language parser, compiler\n"
+	"	comptest        natively compile* the result of all failing deep tests\n"
+	"	compall         natively compile* all deep test results\n"
+	"	compmiss        natively compile* the deep test results that failed before\n"
 	"	memtest         valgrind & internal memory leak tests\n"
 	"	update          interactive update of failing deeptests's result references\n"
 	"	recheck         faster update, skipping successful tests of earlier deeptest\n"
@@ -17244,6 +17330,7 @@ const char *manual =
 	"	envtest         test of build environment, gcc, flex, mtrac memory checks\n"
 	"\n"
 	"\n"
+	"* the extended compilation tests use node, eslint, solcjs, and aesophia_cli.\n"
 	"\n"
 	"\n"
 	"## Use\n"
@@ -17297,17 +17384,17 @@ const char *manual =
 	"	-W --echo-precompile            show sanitized source code, with included files\n"
 	"	-P --precompile                 show sanitized source code, with included files, and exit\n"
 	"	-J --jurisdictions              list known jurisdictions and exit\n"
-	"	-b --bare                       generated code is barebones happy path demonstration\n"
-	"	-y --comment                    generated code has explanatory comments\n"
-	"	-u --instructions               generated code leads in with user instructions\n"
-	"	-f --feedback                   generated code confirms calls on-screen\n"
-	"	-z --harden                     generated code checks for unset arguments and variables\n"
-	"	-l --log [<file>]               generated code logs state changes to <file> (default: log)\n"
-	"	-s --signatures [<pem file>]    generated code signs log using <pem file> (default: key.pem)\n"
-	"	-c --chaining [<hash length>]   generated code hash-chains log-entries (default length 12)\n"
-	"	-p --persistence [<file>]       generated code stores state in <file> (default: state)\n"
-	"	-t --bundle [<file>]            generated code can tar code, log and state (default: contract.tgz)\n"
-	"	-x --all-auxiliaries            generated code features all extras (equals -y -u -f -z -l -s -c -p -t)\n"
+	"	-b --bare                       generated code is barebones happy path demonstration\\n\\\n"
+	"	-y --comment                    generated code has explanatory comments\\n\\\n"
+	"	-u --instructions               generated code leads in with user instructions\\n\\\n"
+	"	-z --harden                     generated code checks for unset arguments and variables\\n\\\n"
+	"	-f --feedback                   javascript: generated code confirms calls on-screen\\n\\\n"
+	"	-l --log [<file>]               javascript: generated code logs state changes to <file> (default: log)\\n\\\n"
+	"	-s --signatures [<pem file>]    javascript: generated code signs log using <pem file> (default: key.pem)\\n\\\n"
+	"	-c --chaining [<hash length>]   javascript: generated code hash-chains log-entries (default length: 12)\\n\\\n"
+	"	-p --persistence [<file>]       javascript: generated code stores state in <file> (default: state)\\n\\\n"
+	"	-t --bundle [<file>]            javascript: generated code can tar code, log and state (default: contract.tgz)\\n\\\n"
+	"	-x --all-auxiliaries            generated code features all applicable extras (-y -u -z -f -l -s -c -p -t)\\n\\\n"
 	"	-i --include-path <path>        set a default path to look for include files\n"
 	"	-I --included-files             print cascade of included and sub-included files and exit\n"
 	"	-R --ignore-repeat-includes     ignore include files that are given repeatedly\n"

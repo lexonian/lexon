@@ -2,7 +2,6 @@ module.exports = class Escrow {
 
     constructor(buyer, amount, seller, arbiter, service_fee) {
 
-        let main = this;
         this._escrow = 0;
         this.buyer = buyer;
         this.seller = seller;
@@ -30,7 +29,7 @@ module.exports = class Escrow {
 
     transfer(from, to, amount) {
         console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
+        if(from == 'escrow') this._escrow -= amount;
+        if(to == 'escrow') this._escrow += amount;
     }
 }

@@ -4,13 +4,13 @@
  **
  **	file:        lexon/escrow2.679.lex
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97g U
+ **	backend:     sophia 0.3.98c U
  **
- **	target:      sophia 7.1+
+ **	target:      sophia 8+
  **
  **	options:     --sophia  --all-auxiliaries 
  **
@@ -49,7 +49,7 @@
    • <<Arbiter>> ⟶   pay_back()
  */
 
-@compiler >=6
+@compiler >=8
 
 include "Option.aes"
 
@@ -76,40 +76,32 @@ include "Option.aes"
  */
 
 
-
-main contract Escrow =
-
+payable main contract Escrow =
     record state = {
+        
             payer : option(address),
             seller : option(address),
             arbiter : option(address),
             service_fee : option(int)
         }
-
-    payable entrypoint init(seller : address, arbiter : address, service_fee : int) = {
-            payer = Some(Call.caller),
-            seller = Some(seller),
-            arbiter = Some(arbiter),
-            service_fee = Some(service_fee)
+    entrypoint init(seller : address, arbiter : address, service_fee : int) = {
+            payer = Some (Call.caller),
+            seller = Some (seller),
+            arbiter = Some (arbiter),
+            service_fee = Some (service_fee)
         }
+        
+    
 
+    /* built-in caller assertion */
+
+    function permit(authorized : option(address), name : string) =
+        require(Call.caller == Option.force_msg(authorized, name), StringInternal.concat("no access for ", name))
 
     /* built-in safe transfer */
 
     stateful function transfer(to : address, amount : int) =
         Chain.spend(to, amount)
-
-    /* built-in caller assertion */
-
-    function permit(authorized : option(address), name : string) =
-        require(Call.caller == force(authorized, name), StringInternal.concat("no access for ", name))
-
-    /* built-in option type force function */
-
-    function force(o : option('a), name : string) : 'a =
-        switch(o)
-            None => abort(StringInternal.concat(name, " not fixed"))
-            Some(a) => a
 
 
     /* Pay Out clause */
@@ -122,8 +114,8 @@ main contract Escrow =
 
     stateful entrypoint pay_out() =
         permit(state.arbiter, "Arbiter")
-        transfer(state.arbiter, force(state.service_fee, "Service Fee"))
-        transfer(force(state.seller, "Seller"), Contract.balance)
+        transfer(Option.force_msg(state.arbiter, "reflexive pronoun"), Option.force_msg( state.service_fee, "Service Fee"))
+        transfer(Option.force_msg(state.seller, "Seller"), Contract.balance)
 
 
     /* Pay Back clause */
@@ -136,7 +128,7 @@ main contract Escrow =
 
     stateful entrypoint pay_back() =
         permit(state.arbiter, "Arbiter")
-        transfer(state.arbiter, force(state.service_fee, "Service Fee"))
-        transfer(force(state.payer, "Payer"), Contract.balance)
+        transfer(Option.force_msg(state.arbiter, "reflexive pronoun"), Option.force_msg( state.service_fee, "Service Fee"))
+        transfer(Option.force_msg(state.payer, "Payer"), Contract.balance)
 
 /* end */

@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 alpha 98 U, grammar 0.2.20 / subset 0.3.8.1 alpha 96 - English / Reyes
+	0.3 alpha 98 U, grammar 0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**
@@ -355,7 +355,16 @@ be availaible on all platforms.
 
 * colordiff
 
+**For syntax sanity tests:**
 
+* node + npm modules listed below
+* eslint
+* solcjs
+* aesophia_cli
+
+These are needed for `make comp*` rules that test compiling/instantiating
+of the created Javascript, Solidity, or Sophia code. This tests the syntax
+of the Lexon compiler output.
 
 
 ## Prerequisites for Running Created Javascript Contracts
@@ -374,12 +383,18 @@ someone else, and for persisting its state on your computer, you will need:
 
 * npm
 * serialize-javascript
+* prompt-sync
+* tar
+* nodemailer
 
-Install this library with:
+Install these libraries with:
 
 	npm install serialize-javascript
+	npm install prompt-sync
+	npm install tar
+	npm install nodemailer
 
-Note that no Javascript elements are needed when compiling a Lexon text, no
+Note that NO Javascript elements are needed when compiling a Lexon text, no
 matter to what language, even to Javascript. The above applies solely for
 executing the produced Javascript at a later time.
 
@@ -423,6 +438,8 @@ To install to a different path than `/usr/local/bin` set `PREFIX`, or copy
 
 This runs tests located in sub directories of [`tests/`](tests/).
 
+All tests passing is sufficient verification that the compiler built as expected.
+
 Note that github will not list all files and sub folders in `tests/`. Relevant
 sub folders are [`tests/english`](tests/english), [`tests/lexon`](tests/lexon),
 and [`tests/focus`](tests/focus). But there are also test files in `tests/`
@@ -430,10 +447,75 @@ itself that github will not show.
 
 The tests of `make check` verify that the compiler works as expected. Other
 tests, like `make envtest` check the environment and internal memory handling
-mechanisms. `make devcheck` runs all tests. See immediately below for all
-options.
+mechanisms. `make devcheck` runs all tests, except the slow, extended syntax
+checks. See below for all available rules.
+
+Note again that this section is about testing the Lexon compiler when improving
+it. It is not relevant for writing and testing Lexon texts.
 
 
+### Testing While Developing
+
+When implementing a new feature, an new example Lexon text that demonstrates it
+should be placed into folder `tests/cover`. It will be picked up by all deep
+and comp test rules. The naming convention is loosly base-version-description.
+The name is used to call out the running test later.  For examples, see the
+`tests/` folder. 
+
+Running `make new` will provide the opportunity to automatically register the
+expected results of compiling this new Lexon text to four targets: core,
+Javascript, Solidity, and Sophia.
+
+To get a first impression of the effect of your changes while coding, run `make
+focustest`, which diffs the current results of the three main examples that are
+also given in `examples\`, with expected outcomes. Different compiler options
+(barebone, w/aux, hardenend) are tried for each target (js, solidity, sophia).
+Running the tests takes about a second. To bulk-update the expectations, run
+`make focusprep`. Obviously, this should be done only after close inspection of
+the results of `focustest`. To make a syntax check for the result of each test
+(failing or not, this is not optimized) use `make focuscomp`. This is useful
+only if some `focustests` fail, and need to be updated with `focusprep`. It
+retests all files and takes ca. 2 minutes.
+
+To do the full regression test of 5000+ test compilations, run `make check`.
+Like `focustest`, it diffs the results of compiling Lexon texts with
+`bin/lexon` with expectations on file that came with the repo.  It takes about
+3 minutes. After fixing errors in the Lexon compiler code, use `make recheck`
+to skip tests that passed the previous run, and be afforded the opportunity to
+interactively update expectations to the new compilation results, blessing
+intended changes as reference for future test runs. To bulk-update all
+expectations, run `make expectations`. This can be useful but loses a lot of
+signal obviously. To bulk-update only failing expectations, `make autoupdate`.
+Expectations are deleted by `make expclean`, not by running `make clean`.
+Updating the expectations is as fast as the tests themselves.
+
+#### Syntax Checks
+
+In the case that many test results are expected to change, bulk-test the syntax
+of new results with `make comptest`—which instantiates Javascript code, and
+compiles Solidity and Sophia code—for syntax verification of exactly those
+tests that fail the diff with expectations. That is, only the resulting code of
+failing tests is test-compiled. The syntax tests can take hours.  The
+expectations are not updated. This requires node, eslint, solcjs, and
+aesophia_cli, and a handfull of node modules installed.
+
+Later runs of `comptest` will skip compilation of those test results that had
+passed successfully before, even if the diff with expectations (the actual
+regression test) still fails in the case that you have not updated expectations
+(yet). Note that catching regressions can be far more important than testing
+syntax. To syntax-test all test results, use `compall`. Use `compmiss` to
+compile only those that had not yet been done or had failed (that is, where
+node, eslint, solcjs, or aesophia_cli gave errors, independently of whether the
+expectations diff succeeded). To auto-update failing expectations and
+test-compile exactly those updated, use `autocomp`. This is the opposite of
+`comptest`.
+
+#### Summary
+
+In summary, do `make focustest` for sufficient orientation while developing.
+Use `make check` for a more comprehensive assurance that nothing broke while
+you were looking elsewhere.  Use `make comptest` to check the syntax of the
+failing regression tests of `make check`. 
 
 
 ## Build Rules
@@ -447,7 +529,7 @@ options.
 	linux install   install pre-built linux binary and copy it as bin/lexon
 	sample          build escrow example to solidity
 	check           compiler tests: focustest, deeptest
-	devcheck        all tests: envtest, grammarcheck, memtest, focustest, deeptest
+	devcheck        more tests: envtest, grammarcheck, memtest, focustest, deeptest
 	testlog         dump the 100 last lines of the test log
 	clean           delete all built files, except pre-built binaries
 	ls              show the source and build directories
@@ -472,9 +554,13 @@ options.
 	focustest       grammar check compiling release-defining examples
 	focusprep       build result references for future focustest runs
 
-**2nd level of tests: components**
+**2nd level of tests: components, syntax**
 
+	focuscomp       syntax check of focus tests by native compilation, linting*
 	deeptest        memory handling, includes, language parser, compiler
+	comptest        natively compile* the result of all failing deep tests
+	compall         natively compile* all deep test results
+	compmiss        natively compile* the deep test results that failed before
 	memtest         valgrind & internal memory leak tests
 	update          interactive update of failing deeptests's result references
 	recheck         faster update, skipping successful tests of earlier deeptest
@@ -487,6 +573,7 @@ options.
 	envtest         test of build environment, gcc, flex, mtrac memory checks
 
 
+* the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
 
 
 ## Use
@@ -540,17 +627,17 @@ This, as an example, compiles the Lexon text in file `escrow.lex` to solidity.
 	-W --echo-precompile            show sanitized source code, with included files
 	-P --precompile                 show sanitized source code, with included files, and exit
 	-J --jurisdictions              list known jurisdictions and exit
-	-b --bare                       generated code is barebones happy path demonstration
-	-y --comment                    generated code has explanatory comments
-	-u --instructions               generated code leads in with user instructions
-	-f --feedback                   generated code confirms calls on-screen
-	-z --harden                     generated code checks for unset arguments and variables
-	-l --log [<file>]               generated code logs state changes to <file> (default: log)
-	-s --signatures [<pem file>]    generated code signs log using <pem file> (default: key.pem)
-	-c --chaining [<hash length>]   generated code hash-chains log-entries (default length 12)
-	-p --persistence [<file>]       generated code stores state in <file> (default: state)
-	-t --bundle [<file>]            generated code can tar code, log and state (default: contract.tgz)
-	-x --all-auxiliaries            generated code features all extras (equals -y -u -f -z -l -s -c -p -t)
+	-b --bare                       generated code is barebones happy path demonstration\n\
+	-y --comment                    generated code has explanatory comments\n\
+	-u --instructions               generated code leads in with user instructions\n\
+	-z --harden                     generated code checks for unset arguments and variables\n\
+	-f --feedback                   javascript: generated code confirms calls on-screen\n\
+	-l --log [<file>]               javascript: generated code logs state changes to <file> (default: log)\n\
+	-s --signatures [<pem file>]    javascript: generated code signs log using <pem file> (default: key.pem)\n\
+	-c --chaining [<hash length>]   javascript: generated code hash-chains log-entries (default length: 12)\n\
+	-p --persistence [<file>]       javascript: generated code stores state in <file> (default: state)\n\
+	-t --bundle [<file>]            javascript: generated code can tar code, log and state (default: contract.tgz)\n\
+	-x --all-auxiliaries            generated code features all applicable extras (-y -u -z -f -l -s -c -p -t)\n\
 	-i --include-path <path>        set a default path to look for include files
 	-I --included-files             print cascade of included and sub-included files and exit
 	-R --ignore-repeat-includes     ignore include files that are given repeatedly

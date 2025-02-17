@@ -4,11 +4,11 @@
  **
  **	file:        lexon/escrow2.276.lex
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.97g U
+ **	backend:     javascript 0.3.98c U
  **
  **	target:      node 14.1+
  **
@@ -127,7 +127,6 @@ module.exports = class Escrow {
 
     constructor(payer, amount, payee, arbiter, fee) {
 
-        let main = this;
 
         /* object members: skip for restoring serialized object */
         if(typeof payer !== 'undefined') {
@@ -141,7 +140,7 @@ module.exports = class Escrow {
             /* start log - overwrites previous by same name */
 
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
-            this.transfer(caller, this.payer, 'escrow', amount);
+            this.transfer(payer, this.payer, 'escrow', amount);
             this.log(payer, "✓ Payee appointed");
             this.log(payer, "✓ Arbiter appointed");
             this.log(payer, "✓ Fee fixed");
@@ -151,8 +150,8 @@ module.exports = class Escrow {
 
         if(typeof payer === 'undefined') {
             console.log("> restore from file 'state'");
-            var data = fs.readFileSync('state', ()=>{});
-            var live = eval('(' + data + ')');
+            let data = fs.readFileSync('state', ()=>{});
+            let live = eval('(' + data + ')');
             Object.assign(this, live);
         }
     }
@@ -186,6 +185,14 @@ module.exports = class Escrow {
         this.transfer(caller, 'escrow', this.arbiter, this.fee);
         this.transfer(caller, 'escrow', this.payer, this._escrow);
         return 'done.';
+    }
+
+    /* built-in transfer message */
+
+    transfer(caller, from, to, amount) {
+        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
+        if(from == 'escrow') this._escrow -= amount;
+        if(to == 'escrow') this._escrow += amount;
     }
 
     /* built-in convenience function to view state change log. */
@@ -293,14 +300,6 @@ module.exports = class Escrow {
         fs.writeFileSync(name+'.key', privateKey);
         fs.writeFileSync(name+'.pub', publicKey);
         return true;
-    }
-
-    /* built-in transfer message */
-
-    transfer(caller, from, to, amount) {
-        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
     }
 }
 

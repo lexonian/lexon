@@ -10,13 +10,13 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97g U
+ **	backend:     sophia 0.3.98c U
  **
- **	target:      sophia 7.1+
+ **	target:      sophia 8+
  **
  **	options:     --sophia  --all-auxiliaries 
  **
@@ -58,9 +58,25 @@
    • <<Licensee>> ⟶   pay()
  */
 
-@compiler >=6
+@compiler >=8
 
 include "Option.aes"
+
+namespace MainState =
+    record main_state = {
+            licensor : option(address),
+            arbiter : option(address),
+            licensing_fee : option(int),
+            breach_fee : option(int),
+            _license_list : list(address),
+            _license_count : int
+        }
+
+using MainState
+
+contract interface Main =
+    entrypoint get_state: () => main_state
+
 
 /**
  **
@@ -87,40 +103,32 @@ include "Option.aes"
  */
 
 
+payable main contract EvaluationLicenseSystem : Main =
 
-main contract EvaluationLicenseSystem =
 
-    record state = {
-            licensor : option(address),
-            arbiter : option(address),
-            licensing_fee : option(int),
-            breach_fee : option(int)
+    type state = main_state
+
+    entrypoint init(arbiter : address, breach_fee : int) = {
+            licensor = Some (Call.caller),
+            arbiter = Some (arbiter),
+            licensing_fee = Some (Call.value),
+            breach_fee = Some (breach_fee),
+            _license_list = [],
+            _license_count = 0
         }
 
-    payable entrypoint init(arbiter : address, breach_fee : int) = {
-            licensor = Some(Call.caller),
-            arbiter = Some(arbiter),
-            licensing_fee = Some(Call.value),
-            breach_fee = Some(breach_fee)
-        }
+    entrypoint get_state() : state =
+        state
 
+        
+    
 
-    /* built-in safe transfer */
-
-    stateful function transfer(to : address, amount : int) =
-        Chain.spend(to, amount)
-
-    /* built-in option type force function */
-
-    function force(o : option('a), name : string) : 'a =
-        switch(o)
-            None => abort(StringInternal.concat(name, " not fixed"))
-            Some(a) => a
-
-/* aggregation of covenants for folds and serialization */
-
-this._license_list = {};
-this._license_count = 0;
+    /* create new instance of License covenant, and register it with main */
+    stateful entrypoint add_license(licensee : address, description_of_goods : string) : address =
+        let covenant = Chain.create(Address.to_contract(Contract.address) : EvaluationLicenseSystem, licensee, description_of_goods) : License
+        put(state{ _license_count = state._license_count + 1})
+        put(state{ _license_list = covenant.address :: state._license_list })
+        covenant.address
 
 /**
  **
@@ -145,30 +153,32 @@ this._license_count = 0;
  | 	The Licensor pays the Creation Fee into escrow, appoints the Licensee, and fixes the Description of Goods.
  */
 
-contract License =
+payable contract License =
 
     record state = {
-        description_of_goods : option(string),
-        licensee : option(address),
-        paid : option(bool),
-        commissioned : option(bool),
-        comment_text : option(string),
-        published : option(bool),
-        permission_to_comment : option(bool),
-        notice_time : option(int),
-        creation_fee : option(int)
+            global : main_state,
+            description_of_goods : option(string),
+            licensee : option(address),
+            paid : option(bool),
+            commissioned : option(bool),
+            comment_text : option(string),
+            published : option(bool),
+            permission_to_comment : option(bool),
+            notice_time : option(int),
+            creation_fee : option(int)
         }
 
-    payable entrypoint init(licensee : address, description_of_goods : string) = {
-        description_of_goods = Some(description_of_goods),
-        licensee = Some(licensee),
-        paid = None,
-        commissioned = None,
-        comment_text = None,
-        published = None,
-        permission_to_comment = None,
-        notice_time = None,
-        creation_fee = Some(Call.value)
+    entrypoint init(global : Main, licensee : address, description_of_goods : string) = {
+            description_of_goods = Some (description_of_goods),
+            licensee = Some (licensee),
+            paid = None,
+            commissioned = None,
+            comment_text = None,
+            published = None,
+            permission_to_comment = None,
+            notice_time = None,
+            creation_fee = Some (Call.value),
+            global = global.get_state()
         }
 
 
@@ -182,9 +192,14 @@ contract License =
      */
 
     stateful entrypoint pay() =
-        require(Some(Call.caller) == licensee, "not permitted")
-        if(Some(Call.caller) == licensee)
-            transfer(force(state.licensor, "Licensor"), force(state.licensing_fee, "Licensing Fee"))
-        paid = true;
+        require(Some (Call.caller) == state.licensee, "not permitted")
+        if(Some (Call.caller) == state.licensee)
+            transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg( state.global.licensing_fee, "Licensing Fee"))
+        put(state{ paid = Some (true)})
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
 
 /* end */

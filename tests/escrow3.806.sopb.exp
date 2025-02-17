@@ -1,31 +1,30 @@
 
 
-@compiler >=6
-
-main contract Escrow =
-
+@compiler >=8
+payable main contract Escrow =
     record state = {
+        
             payer : address,
             payee : address,
             agent : address,
             amount : int
         }
-
-    payable entrypoint init(payee : address, agent : address) = {
+    entrypoint init(payee : address, agent : address) = {
             payer = Call.caller,
             payee = payee,
             agent = agent,
             amount = Call.value
         }
-
-
-
-    stateful function transfer(to : address, amount : int) =
-        Chain.spend(to, amount)
+        
+    
 
 
     function permit(authorized : address) =
         require(Call.caller == authorized, "access")
+
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
 
 
     stateful entrypoint pay_out() =
