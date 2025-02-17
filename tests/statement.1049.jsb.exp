@@ -28,35 +28,35 @@ module.exports = class UCCFinancingStatement {
 
 
     certify(caller, file_number)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.file_number = file_number;
     }
 
 
     set_file_date(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.initial_statement_date = Date.now();
     }
 
 
     set_lapse(caller, lapse_date)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.lapse_date = lapse_date;
     }
 
 
     set_continuation_start(caller, continuation_window_start)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.continuation_window_start = continuation_window_start;
     }
 
 
     pay_fee(caller, reminder_fee)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.reminder_fee = reminder_fee;
         this.transfer(this.secured_party, 'escrow', this.reminder_fee);
@@ -64,23 +64,23 @@ module.exports = class UCCFinancingStatement {
 
 
     notice(caller, notification_statement)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         this.notification_statement = notification_statement;
     }
 
 
-    notify(caller)  {
-        if(this.already_terminated()) return undefined;
+    notify_(caller)  {
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.continuation_window_start <= Date.now()) {
-            this._send(this.filing_office, this.secured_party, this.notification_statement);
+            this.notify(this.filing_office, this.secured_party, this.notification_statement);
         }
     }
 
 
     pay_escrow_in(caller, digital_asset_collateral)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.debtor) return 'not permitted';
         this.digital_asset_collateral = digital_asset_collateral;
         this.transfer(this.debtor, 'escrow', this.digital_asset_collateral);
@@ -88,14 +88,14 @@ module.exports = class UCCFinancingStatement {
 
 
     fail_to_pay(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.default_ = true;
     }
 
 
     take_possession(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.default_) {
             this.transfer(this.filing_office, this.secured_party, this.digital_asset_collateral);
@@ -104,14 +104,14 @@ module.exports = class UCCFinancingStatement {
 
 
     file_continuation(caller, continuation_statement)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.continuation_statement = continuation_statement;
     }
 
 
     set_continuation_lapse(caller, continuation_statement_date)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.continuation_statement) {
             this.continuation_statement_date = continuation_statement_date;
@@ -120,7 +120,7 @@ module.exports = class UCCFinancingStatement {
 
 
     file_termination(caller, termination_statement)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.secured_party) return 'not permitted';
         this.termination_statement = termination_statement;
         this.termination_statement_time = Date.now();
@@ -128,7 +128,7 @@ module.exports = class UCCFinancingStatement {
 
 
     release_escrow(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_statement) {
             this.transfer(this.filing_office, this.debtor, this.digital_asset_collateral);
@@ -137,7 +137,7 @@ module.exports = class UCCFinancingStatement {
 
 
     release_reminder_fee(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_statement) {
             this.transfer(this.filing_office, this.secured_party, this.reminder_fee);
@@ -151,21 +151,11 @@ module.exports = class UCCFinancingStatement {
 
 
     terminate_and_clear(caller)  {
-        if(this.already_terminated()) return undefined;
+        if(this.check_termination()) return undefined;
         if(caller != this.filing_office) return 'not permitted';
         if(this.termination_period() <= Date.now()) {
             this.termination();
         }
-    }
-
-
-    termination() {
-        this.terminated = true;
-    }
-
-    already_terminated() {
-        if(!this.terminated) return false;
-        return true;
     }
 
 
@@ -176,7 +166,17 @@ module.exports = class UCCFinancingStatement {
     }
 
 
-    _send(from, to, message) {
+    notify(from, to, message) {
         console.log(`➠ system message: send message «${message}» from ${from} to ${to}.`);
+    }
+
+
+    termination() {
+        this.terminated = true;
+    }
+
+    check_termination() {
+        if(!this.terminated) return false;
+        return true;
     }
 }

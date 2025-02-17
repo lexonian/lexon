@@ -3,24 +3,24 @@ pragma solidity ^0.8.17;
 
 contract UCCFinancingStatement {
 
-    string file_number;
-    uint initial_statement_date;
-    address payable filer;
-    address payable debtor;
-    address payable secured_party;
-    address payable filing_office;
-    string collateral;
-    uint digital_asset_collateral;
-    uint reminder_fee;
-    uint continuation_window_start;
-    uint continuation_statement_date;
-    string continuation_statement_filing_number;
-    uint lapse_date;
-    bool _default;
-    bool continuation_statement;
-    bool termination_statement;
-    uint termination_statement_time;
-    string notification_statement;
+    string public file_number;
+    uint public initial_statement_date;
+    address payable public filer;
+    address payable public debtor;
+    address payable public secured_party;
+    address payable public filing_office;
+    string public collateral;
+    uint public digital_asset_collateral;
+    uint public reminder_fee;
+    uint public continuation_window_start;
+    uint public continuation_statement_date;
+    string public continuation_statement_filing_number;
+    uint public lapse_date;
+    bool public _default;
+    bool public continuation_statement;
+    bool public termination_statement;
+    uint public termination_statement_time;
+    string public notification_statement;
     bool reminder_fee__set = false;
     bool digital_asset_collateral__set = false;
     bool terminated = false;
@@ -38,25 +38,29 @@ contract UCCFinancingStatement {
         collateral = _collateral;
     }
 
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+
+    function notify(address payable _to, string memory _message) internal {
+        emit Message(msg.sender, _to, _message);
+    }
+
+
     function termination() internal {
         terminated = true;
     }
 
     function check_termination() internal view {
         require(!terminated, "contract system terminated before");
-    }
-
-    function transfer(address _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
-    }
-
-    function send(address _to, string storage _message) internal {
-        emit Message(msg.sender, _to, _message);
-    }
-
-    function permit(address _authorized) internal view {
-        require(msg.sender == _authorized, "not permitted");
     }
 
 
@@ -66,11 +70,13 @@ contract UCCFinancingStatement {
         file_number = _file_number;
     }
 
+
     function set_file_date() public {
         check_termination();
         permit(filing_office);
         initial_statement_date = block.timestamp;
     }
+
 
     function set_lapse(uint _lapse_date) public {
         check_termination();
@@ -78,11 +84,13 @@ contract UCCFinancingStatement {
         lapse_date = _lapse_date;
     }
 
+
     function set_continuation_start(uint _continuation_window_start) public {
         check_termination();
         permit(filing_office);
         continuation_window_start = _continuation_window_start;
     }
+
 
     function pay_fee() public payable {
         check_termination();
@@ -91,19 +99,22 @@ contract UCCFinancingStatement {
         reminder_fee__set = true;
     }
 
+
     function notice(string memory _notification_statement) public {
         check_termination();
         permit(filing_office);
         notification_statement = _notification_statement;
     }
 
-    function notify() public view {
+
+    function _notify() public {
         check_termination();
         permit(filing_office);
         if(continuation_window_start <= block.timestamp) {
-            send(secured_party, notification_statement);
+            notify(secured_party, notification_statement);
         }
     }
+
 
     function pay_escrow_in() public payable {
         check_termination();
@@ -112,11 +123,13 @@ contract UCCFinancingStatement {
         digital_asset_collateral__set = true;
     }
 
+
     function fail_to_pay() public {
         check_termination();
         permit(secured_party);
         _default = true;
     }
+
 
     function take_possession() public {
         check_termination();
@@ -126,11 +139,13 @@ contract UCCFinancingStatement {
         }
     }
 
+
     function file_continuation(bool _continuation_statement) public {
         check_termination();
         permit(secured_party);
         continuation_statement = _continuation_statement;
     }
+
 
     function set_continuation_lapse(uint _continuation_statement_date) public {
         check_termination();
@@ -140,12 +155,14 @@ contract UCCFinancingStatement {
         }
     }
 
+
     function file_termination(bool _termination_statement) public {
         check_termination();
         permit(secured_party);
         termination_statement = _termination_statement;
         termination_statement_time = block.timestamp;
     }
+
 
     function release_escrow() public {
         check_termination();
@@ -155,6 +172,7 @@ contract UCCFinancingStatement {
         }
     }
 
+
     function release_reminder_fee() public {
         check_termination();
         permit(filing_office);
@@ -163,9 +181,11 @@ contract UCCFinancingStatement {
         }
     }
 
+
     function termination_period() public view returns(uint) {
         return (termination_statement_time + (365 * 86400));
     }
+
 
     function terminate_and_clear() public {
         check_termination();

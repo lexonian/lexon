@@ -18,3 +18,7 @@
 *.log
 
 *.now
+
+tests/node_modules/*
+tests/package-lock.json
+tests/package.json

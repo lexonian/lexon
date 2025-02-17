@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97g U
+ **	backend:     sophia 0.3.98b U
  **
  **	target:      sophia 7.1+
  **
@@ -88,22 +88,33 @@ include "Option.aes"
 
 
 
-main contract EvaluationLicenseSystem =
+payable main contract EvaluationLicenseSystem =
 
     record state = {
             licensor : option(address),
             arbiter : option(address),
             licensing_fee : option(int),
-            breach_fee : option(int)
+            breach_fee : option(int),
+            _license_list : list,
+            _license_count : uint
         }
 
-    payable entrypoint init(arbiter : address, breach_fee : int) = {
+    entrypoint init(arbiter : address, breach_fee : int) = {
             licensor = Some(Call.caller),
             arbiter = Some(arbiter),
             licensing_fee = Some(Call.value),
-            breach_fee = Some(breach_fee)
+            breach_fee = Some(breach_fee),
+            _license_list = {},
+            _license_count = 0
         }
 
+    
+
+    /* create new instance of License covenant, and register it with main */
+
+    stateful entrypoint add_license(licensee : address, description_of_goods : string) =
+        put(state{_license_count = state._license_count + 1})
+        put(state{ _license_list = License :: state._license_list })
 
     /* built-in safe transfer */
 
@@ -116,11 +127,6 @@ main contract EvaluationLicenseSystem =
         switch(o)
             None => abort(StringInternal.concat(name, " not fixed"))
             Some(a) => a
-
-/* aggregation of covenants for folds and serialization */
-
-this._license_list = {};
-this._license_count = 0;
 
 /**
  **
@@ -145,30 +151,31 @@ this._license_count = 0;
  | 	The Licensor pays the Creation Fee into escrow, appoints the Licensee, and fixes the Description of Goods.
  */
 
-contract License =
+payable contract License =
 
     record state = {
-        description_of_goods : option(string),
-        licensee : option(address),
-        paid : option(bool),
-        commissioned : option(bool),
-        comment_text : option(string),
-        published : option(bool),
-        permission_to_comment : option(bool),
-        notice_time : option(int),
-        creation_fee : option(int)
+            description_of_goods : option(string),
+            licensee : option(address),
+            paid : option(bool),
+            commissioned : option(bool),
+            comment_text : option(string),
+            published : option(bool),
+            permission_to_comment : option(bool),
+            notice_time : option(int),
+            creation_fee : option(int)
         }
 
-    payable entrypoint init(licensee : address, description_of_goods : string) = {
-        description_of_goods = Some(description_of_goods),
-        licensee = Some(licensee),
-        paid = None,
-        commissioned = None,
-        comment_text = None,
-        published = None,
-        permission_to_comment = None,
-        notice_time = None,
-        creation_fee = Some(Call.value)
+    entrypoint init(master : EvaluationLicenseSystem, licensee : address, description_of_goods : string) = {
+            description_of_goods = Some(description_of_goods),
+            licensee = Some(licensee),
+            paid = None,
+            commissioned = None,
+            comment_text = None,
+            published = None,
+            permission_to_comment = None,
+            notice_time = None,
+            creation_fee = Some(Call.value),
+            master = master
         }
 
 
@@ -182,9 +189,14 @@ contract License =
      */
 
     stateful entrypoint pay() =
-        require(Some(Call.caller) == licensee, "not permitted")
-        if(Some(Call.caller) == licensee)
+        require(Some(Call.caller) == state.licensee, "not permitted")
+        if(Some(Call.caller) == state.state.licensee)
             transfer(force(state.licensor, "Licensor"), force(state.licensing_fee, "Licensing Fee"))
-        paid = true;
+        put(state{ paid = true})
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
 
 /* end */

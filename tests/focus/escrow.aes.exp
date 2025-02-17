@@ -4,11 +4,11 @@
  **
  **	file:        escrow.lex
  **
- **	compiler:    lexon 0.3 alpha 97 U
+ **	compiler:    lexon 0.3 alpha 98 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.2 alpha 97 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.97 U
+ **	backend:     sophia 0.3.98b U
  **
  **	target:      sophia 7.1+
  **
@@ -37,7 +37,7 @@
 
 
 
-main contract Escrow =
+payable main contract Escrow =
 
     record state = {
             payer : address,
@@ -46,23 +46,24 @@ main contract Escrow =
             fee : int
         }
 
-    payable entrypoint init(payee : address, arbiter : address, fee : int) = {
+    entrypoint init(payee : address, arbiter : address, fee : int) = {
             payer = Call.caller,
             payee = payee,
             arbiter = arbiter,
             fee = fee
         }
 
-
-    /* built-in safe transfer */
-
-    stateful function transfer(to : address, amount : int) =
-        Chain.spend(to, amount)
+    
 
     /* built-in caller assertion */
 
     function permit(authorized : address) =
         require(Call.caller == authorized, "access")
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
 
 
     /* Pay Out clause */

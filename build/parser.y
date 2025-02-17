@@ -543,6 +543,7 @@ typedef struct Combinand {
 	struct Expiration *Expiration;
 	struct Reflexive *Reflexive;
 	Description *Description;
+	struct Article *Article;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -1741,7 +1742,8 @@ Expiration *process_expiration(Expiration *Expiration);
 		  Symbol                                          { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; $$=process_combinand(Combinand); }
 		| Symbol Expiration                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; Combinand->Expiration=$Expiration; $$=process_combinand(Combinand); }
 		| Reflexive                                       { NEW(Combinand, *((Literal **)&yylval)); Combinand->Reflexive=$Reflexive; $$=process_combinand(Combinand); }
-		| Description                                     { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=$Description; $$=process_combinand(Combinand); }
+		|  Description                                    { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=$Description; $$=process_combinand(Combinand); }
+		| Article Description                             { NEW(Combinand, *((Literal **)&yylval)); Combinand->Article=$Article; Combinand->Description=$Description; $$=process_combinand(Combinand); }
 		| Scalar_Comparison                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=$Scalar_Comparison; $$=process_combinand(Combinand); }
 		| Negation                                        { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=$Negation; $$=process_combinand(Combinand); }
 		| Existence                                       { NEW(Combinand, *((Literal **)&yylval)); Combinand->Existence=$Existence; $$=process_combinand(Combinand); }
@@ -2567,6 +2569,7 @@ Combinand *process_combinand(Combinand *Combinand) {
 	// Combinand->Expiration
 	// Combinand->Reflexive
 	// Combinand->Description
+	// Combinand->Article
 	// Combinand->Scalar_Comparison
 	// Combinand->Negation
 	// Combinand->Existence

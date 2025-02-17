@@ -1,0 +1,72 @@
+
+precompilation:
+---------------
+
+evaluation 98a default notification   1:   LEX: «Evaluation License System».
+evaluation 98a default notification   2:   LEXON: ‹0.2.1›.
+evaluation 98a default notification   3:   AUTHORS: ‹FLORIAN IDELBERGER, HENNING DIEDRICH›.
+evaluation 98a default notification   4:   PREAMBLE: ‹This is a licensing contract for a software evaluation.›.
+
+evaluation 98a default notification   6:   TERMS: 
+
+evaluation 98a default notification   8:   "«Licensor»" is a person.
+evaluation 98a default notification   9:   "«Arbiter»" is a person.
+evaluation 98a default notification  10:   "«Licensing Fee»" is an amount.
+evaluation 98a default notification  11:   "«Breach Fee»" is an amount.
+
+evaluation 98a default notification  13:   The «Licensor» appoints the «Arbiter»,
+evaluation 98a default notification  14:   fixes the «Licensing Fee»,
+evaluation 98a default notification  15:   and fixes the «Breach Fee».
+
+evaluation 98a default notification  17:   CLAUSE: «Test».
+evaluation 98a default notification  18:   THe «Licensor» may terminate this contract, and notify the «Arbiter».
+
+evaluation 98a default notification  20:   CLAUSE: «Foo».
+evaluation 98a default notification  21:   The «Licensor» may fix the «Breach Fee».
+
+evaluation 98a default notification  23:   TERMS PER «License»:
+
+evaluation 98a default notification  25:   "«Description of Goods»" is a text.
+evaluation 98a default notification  26:   "«Licensee»" is a person.
+evaluation 98a default notification  27:   "«Paid»" is a binary.
+evaluation 98a default notification  28:   "«Commissioned»" is a binary.
+evaluation 98a default notification  29:   "«Comment Text»" is a text.
+evaluation 98a default notification  30:   "«Published»" is a binary.
+evaluation 98a default notification  31:   "«Permission to Comment»" is a binary.
+evaluation 98a default notification  32:   "«Notice Time»" is a time.
+evaluation 98a default notification  33:   "«License»" is this contract.
+
+evaluation 98a default notification  35:   The «Licensor» appoints the «Licensee», and fixes the «Description of Goods».
+
+evaluation 98a default notification  37:   CLAUSE: «Pay».
+evaluation 98a default notification  38:   The «Licensee» pays the «Licensing Fee» to the «Licensor»,
+evaluation 98a default notification  39:   and pays the «Breach Fee» into escrow.
+evaluation 98a default notification  40:   This «License» is therefore «Paid».
+
+evaluation 98a default notification  42:   CLAUSE: «Commission».
+evaluation 98a default notification  43:   The «Licensor» may certify this «License» as «Commissioned».
+
+evaluation 98a default notification  45:   CLAUSE: «Comment».
+evaluation 98a default notification  46:   The «Licensee» may register a «Comment Text».
+
+evaluation 98a default notification  48:   CLAUSE: «Publication».
+evaluation 98a default notification  49:   The «Licensee» may certify this «License» as «Published».
+
+evaluation 98a default notification  51:   CLAUSE: «Grant Permission to Comment».
+evaluation 98a default notification  52:   The «Licensee» may grant the «Permission to Comment».
+
+evaluation 98a default notification  54:   CLAUSE: «Declare Breach».
+evaluation 98a default notification  55:   The «Arbiter» may, if this «License» is «Factually Breached»:
+evaluation 98a default notification  56:   pay the «Breach Fee» to the «Licensor».
+
+evaluation 98a default notification  58:   CLAUSE: «Factually Breached».
+evaluation 98a default notification  59:   "«Factually Breached»" is defined as:
+evaluation 98a default notification  60:   this «License» is «Commissioned» and the «Comment Text» is not fixed,
+evaluation 98a default notification  61:   or this «License» is «Published» and there is no «Permission to Comment» and the «Notice Time» lies at least 24 hours in the past.
+
+evaluation 98a default notification  63:   CLAUSE: «Notice».
+evaluation 98a default notification  64:   The «Licensor» or the «Arbiter» may fix the «Notice Time» as the respective current time.
+
+evaluation 98a default notification  66:   CLAUSE: «Noticed».
+evaluation 98a default notification  67:   "«Noticed»" is defined as a «Notice Time» being fixed.
+
