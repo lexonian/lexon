@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.98a U"
+#define backend_version "sophia 0.3.98b U"
 #define target_version "sophia 7.1+"
 
 #define CYCLE_2 true
@@ -1235,13 +1235,12 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	paratag = strlen(*production);
 	if (!opt_bare) padcat(2, indent, production, "");
 
-	padcat(2, indent, production, "main contract ", camel_spaced(module),
-	       " =");
+	padcat(2, indent, production, "%28%main contract ", camel_spaced(module), " =");	// %28% payable
 	padcat(2, indent + 1, production, "record state = {");
 	padcat(0, indent, production, "%27%");	// %27%: member declaration
 	padcat(1, indent + 2, production, "}\n");
-	padcat(1, indent + 1, production, "%29%%28%entrypoint init(%1%) = {%32%");	// %29%: emits, %28% payable, %1%: paras, %32%: initializations
-	padcat(1, indent + 2, production, "}\n");	// ^ ◊ payable ?
+	padcat(1, indent + 1, production, "%29%entrypoint init(%1%) = {%32%");	// %29%: emits, %1%: paras, %32%: initializations
+	padcat(1, indent + 2, production, "}\n");
 
 	main_constructor_body = true;
 	main_contract = true;
@@ -1255,6 +1254,7 @@ bool sophia_document(char **production, Document *Document, int indent) {
 
 	/* sol, sop: end of main constructor */
 
+	padcat(1, indent + 1, production, "%34%");	// %34%: adders
 	replace(production, "%1%", parameters);
 
 	padcat(0, 0, production, "%31%");	// %31%: auxiliary functions
@@ -1267,7 +1267,6 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	/* aux functions to add a new sub object instance (covenants) */
 
 	replace(production, "%34%", adders);
-
 	/* AUXILIARY FUNCTIONS (main contract) */
 
 	char *auxfuncs = mtrac_strdup("");
@@ -1291,13 +1290,16 @@ bool sophia_document(char **production, Document *Document, int indent) {
 	/* Sophia type hardening by Options */
 	if (opt_harden) {
 		if (opt_comment) padcat(2, indent + 1, &auxfuncs,
-					"/* built-in option type force function */");
+					"/"
+					"* built-in option type force function *"
+					"/");
 		padcat(C, indent + 1, &auxfuncs,
 		       "function force(o : option('a), name : string) : 'a =");
 		padcat(1, indent + 2, &auxfuncs, "switch(o)");
 		padcat(1, indent + 3, &auxfuncs,
-		       "None => abort(StringInternal.concat(name, \" not fixed\"))");
-		padcat(1, indent + 3, &auxfuncs, "Some(a) => a");
+		       "None ="
+		       "> abort(StringInternal.concat(name, \" not fixed\"))");
+		padcat(1, indent + 3, &auxfuncs, "Some(a) =" "> a");
 	}
 	/* aux functions insert - js: in place. soli+sop: higher up. */
 
@@ -1568,9 +1570,12 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 
 	mtrac_concat(&count, "_", instance, "_count");
 
-	if (opt_comment) padcat(2, indent, production, "/* aggregation of covenants for folds and serialization */");	///// fix ◊
-	padcat(C, indent, production, "this.", list, " = {};");
-	padcat(1, indent, production, "this.", count, " = 0;");
+	padcat(0, 0, &declarations, *declarations ? "," : "");
+	padcat(1, 3, &declarations, list, " : list,");
+	padcat(1, 3, &declarations, count, " : uint");
+	padcat(0, 0, &initializations, *initializations ? "," : "");
+	padcat(1, 3, &initializations, list, " = {},");
+	padcat(1, 3, &initializations, count, " = 0");
 
 	if (opt_comment) padcat(2, indent, production, "/**");
 	if (opt_comment) padcat(1, indent, production, " **");
@@ -1594,11 +1599,12 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	}
 
 	/* covenant constructor */
-	padcat(2, indent, production, "contract ", class, " =");
+	padcat(2, indent, production, "%28%contract ", class, " =");	// %28%: payable
 	padcat(2, indent + 1, production, "record state = {");
 	padcat(0, indent, production, "%27C%");	// %27C%: covenant member declaration
 	padcat(1, indent + 2, production, "}\n");
-	padcat(1, indent + 1, production, "%29C%%28%entrypoint init(%2%) = {%32C%");	// %29C%: emits, %28%: payable, %1%: paras, %32C%: initializations
+	padcat(1, indent + 1, production, "%29C%entrypoint init(master : ", camel_spaced(module), ", %2%) = {%32C%,");	// %29C%: emits, %1%: paras, %32C%: initializations
+	padcat(1, indent + 3, production, "master = master");
 	padcat(1, indent + 2, production, "}");
 
 	char *declarations_stack = declarations;
@@ -1666,14 +1672,13 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	if (opt_comment) padcat(2, 1, &adders, "/* create new instance of ",
 				Covenant->Name,
 				" covenant, and register it with main */");
-
-	padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name),
-	       "(%2%) public returns(", Covenant->Name, ") {");
-	if (main_uses_termination) padcat(1, 2, &adders,
-					  "check_termination()" EOL);
-	padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ",
-	       class, "(this, %2b%);");
-	padcat(1, 1, &adders, "}");
+	padcat(C, 1, &adders, "stateful entrypoint add_", SNAKE(Covenant->Name),
+	       "(%2%) =");
+	if (main_uses_termination) padcat(1, 2, &adders, "check_termination()");
+	padcat(1, 2, &adders, "put(state{", count, " = state.", count,
+	       " + 1})");
+	padcat(1, 2, &adders, "put(state{ ", list, " = ", class, " :: state.",
+	       list, " })");
 	/* inject parameter lists */
 	replace(production, "%2%", parameters);
 	replace(&adders, "%2%", parameters);
@@ -1806,14 +1811,14 @@ bool sophia_definition(char **production, Definition *Definition, int indent) {
 		safedup(SNAKE(Definition->Type_Term->Type->Literal));
 
 	if (strlen(declarations)) padcat(0, 0, &declarations, ",");
-	padcat(1, indent + 1, &declarations, lowsnake_safe_name, " : ");
-	//- int len = strlen(lowsnake_safe_name);
+	padcat(1, 3, &declarations, lowsnake_safe_name, " : ");
+	//- int len = strlen(lowsnake_safe_name); ◊ clean up
 	//- padcat(1, indent+1, &declarations, lowsnake_safe_name, len < 4 ? "\t":"", len < 12 ? "\t":"", len < 20 ? "\t":" ", ": ");
 	padcat(0, 0, &declarations,
 	       typemap(SNAKE(Definition->Type_Term->Type->Literal), opt_harden,
 		       false, __LINE__), EOL);
 	if (strlen(initializations)) padcat(0, 0, &initializations, ",");
-	padcat(1, indent + 1, &initializations, lowsnake_safe_name, " = ");
+	padcat(1, 3, &initializations, lowsnake_safe_name, " = ");
 	padcat(0, 0, &initializations,
 	       nullmap(SNAKE(Definition->Type_Term->Type->Literal),
 		       !opt_harden), EOL);
@@ -2235,7 +2240,10 @@ bool sophia_action(char **production, Action *Action, int indent) {
 					      0);
 				if (i++) padcat(0, 0, production, " || ");
 				padcat(0, 0, production,
-				       "§§Call.caller§ == ", symbol);
+				       "§§Call.caller§ == state.", class
+				       && in(globals,
+					     symbol) ? "main." : "state.",
+				       symbol);
 				if (current_function) current_function->
 						uses_caller = true;
 
@@ -2253,7 +2261,10 @@ bool sophia_action(char **production, Action *Action, int indent) {
 						       search);
 						padcat(0, 0, &courtesy,
 						       "§§Call.caller§ == ",
-						       symbol);
+						       class
+						       && in(globals,
+							     symbol) ? "main." :
+						       "state.", symbol);
 						if (current_function)
 								current_function->
 								uses_caller =
@@ -2283,7 +2294,7 @@ bool sophia_action(char **production, Action *Action, int indent) {
 
 	sophia_predicates(production, Action->Predicates, indent);
 
-	/* for multiple sentences, add the closing, reverting else */
+	/* for multiple sentences, add the closing bracket */
 	action = null;
 	if (active_subjects
 	    && active_subjects !=
@@ -2625,9 +2636,11 @@ bool sophia_fix(char **production, Fix *Fix, int indent) {
 bool sophia_setting(char **production, Setting *Setting, int indent) {	// dysfunctional ◊
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
-	padcat(1, indent, production, "");
-	sophia_symbol(production, Setting->Symbol, false, indent + 1);
-	padcat(0, 0, production, " = true;");	// set");
+
+	padcat(1, indent, production, "put(state{ ");
+	sophia_symbol(production, Setting->Symbol, true, indent + 1);
+
+	padcat(0, 0, production, " = true})");
 
 	return true;
 }
@@ -2829,9 +2842,11 @@ bool sophia_terminate(char **production, Terminate *Terminate, int indent) {
 bool sophia_flagging(char **production, Flagging *Flagging, int indent) {
 	if (!Flagging) return false;
 	if (opt_debug) printf("producing Flagging\n");
-	padcat(1, indent, production, "");
+
+	padcat(1, indent, production, "put(state{ ");
 	sophia_symbol(production, Flagging->Symbol, true, indent + 1);
-	padcat(0, 0, production, " = true;");	////////
+
+	padcat(0, 0, production, " = true})");
 	return true;
 }
 

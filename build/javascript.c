@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.98a U"
+#define backend_version "javascript 0.3.98b U"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -1288,7 +1288,6 @@ bool js_document(char **production, Document *Document, int indent) {
 	assert(!active_subjects || active_subjects != covenant_subjects);
 	if (active_subjects) delete_list(active_subjects);
 	active_subjects = null;
-
 	replace(production, "%1%", parameters);
 
 	/* covenants
@@ -1323,6 +1322,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	if (strlen(adders)) padcat(0, 0, production, adders);
 	/* js: now add the general terms methods beneath the constructor */
 	padcat(1, 0, production, methods);
+
 	/* AUXILIARY FUNCTIONS (main contract) */
 
 	char *auxfuncs = mtrac_strdup("");
@@ -1854,7 +1854,6 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 				"/* aggregation of covenants for folds and serialization */");
 	padcat(C, indent, production, "this.", list, " = {};");
 	padcat(1, indent, production, "this.", count, " = 0;");
-
 	if (opt_comment) padcat(2, indent, production, "/**");
 	if (opt_comment) padcat(1, indent, production, " **");
 	if (opt_comment) padcat(1, indent, production, " **\t", class,
@@ -1888,7 +1887,6 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 
 	padcat(2, indent, production, "class ", class, " {");
 	padcat(2, indent + 1, production, "constructor(%2%) {");
-
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
@@ -1949,7 +1947,6 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 	if (main_uses_termination) padcat(1, 2, &adders, "if (this.check_termination()) return undefined;");	// this == main
 	padcat(1, 2, &adders, "return this.", list, "[this.", count,
 	       " += 1] = this.", class, "(%2b%);");
-
 	padcat(1, 1, &adders, "}");
 
 	/* inject catch of non-permissioned caller in constructor wrapper */
@@ -2534,7 +2531,7 @@ bool js_action(char **production, Action *Action, int indent) {
 
 	if (Action->Condition) padcat(1, --indent, production, "}");
 
-	/* for multiple sentences, add the closing, reverting else */
+	/* for multiple sentences, add the closing bracket */
 	if (current_function && !single_sentence_clause) {
 		padcat(1, --indent, production, "}");
 	}
@@ -2941,8 +2938,10 @@ bool js_setting(char **production, Setting *Setting, int indent) {	// dysfunctio
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 	padcat(1, indent, production, "");
-	js_symbol(production, Setting->Symbol, false, indent + 1);
-	padcat(0, 0, production, " = true;");	// set");
+
+	js_symbol(production, Setting->Symbol, true, indent + 1);
+	padcat(0, 0, production, " = true;");
+
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
 		       ".log(", recital_of_terms ? caller : "caller",
@@ -3141,8 +3140,10 @@ bool js_flagging(char **production, Flagging *Flagging, int indent) {
 	if (!Flagging) return false;
 	if (opt_debug) printf("producing Flagging\n");
 	padcat(1, indent, production, "");
+
 	js_symbol(production, Flagging->Symbol, true, indent + 1);
-	padcat(0, 0, production, " = true;");	////////
+	padcat(0, 0, production, " = true;");
+
 	return true;
 }
 

@@ -44,6 +44,21 @@ off = \033[0m
 has_gindent = $(shell which gindent)
 has_valgrind = $(shell which valgrind)
 
+ifeq ($(wildcard tests/tag.exp),)
+  define check_for_exp
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+  endef
+else
+  define check_for_exp
+  endef
+endif
 
 all: build sample
 
@@ -293,6 +308,12 @@ else
 	@echo
 	@exit 1
 endif
+
+compmiss: build
+	@printf "\n$(hi)▫️  deep test with native compilation for all that did not pass native$(off)\n"
+	$(check_for_exp)
+	@cd tests ; $(MAKE) compmiss
+	@echo
 
 compall: build
 	@printf "\n$(hi)▫️  deep test with native compilation for all$(off)\n"

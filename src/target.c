@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.98a U"
+/*JS */ #define backend_version "javascript 0.3.98b U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.98a U"
+/*Sol*/ #define backend_version "solidity 0.3.98b U"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.98a U"
+/*Sop*/ #define backend_version "sophia 0.3.98b U"
 /*Sop*/ #define target_version "sophia 7.1+"
 
 #define CYCLE_2 true
@@ -1357,12 +1357,12 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		padcat(1, 0, production, "%20%"); // %20%: closure 'main = this'
 /*Sol*/		padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%"); // %27%: member declaration
 /*Sol*/		padcat(2, indent+1, production, "%29%constructor(%1%) %28%{"); // %29%: emits, %1%: constructor parameters, %28%: payable
-/*Sop*/		padcat(2, indent, production, "main contract ", camel_spaced(module), " =");
+/*Sop*/		padcat(2, indent, production, "%28%main contract ", camel_spaced(module), " ="); // %28% payable
 /*Sop*/		padcat(2, indent+1, production, "record state = {");
 /*Sop*/		padcat(0, indent  , production, "%27%"); // %27%: member declaration
 /*Sop*/		padcat(1, indent+2, production, "}\n");
-/*Sop*/		padcat(1, indent+1, production, "%29%%28%entrypoint init(%1%) = {%32%"); // %29%: emits, %28% payable, %1%: paras, %32%: initializations
-/*Sop*/		padcat(1, indent+2, production, "}\n"); // ^ ◊ payable ?
+/*Sop*/		padcat(1, indent+1, production, "%29%entrypoint init(%1%) = {%32%"); // %29%: emits, %1%: paras, %32%: initializations
+/*Sop*/		padcat(1, indent+2, production, "}\n");
 
 		main_constructor_body = true;
 		main_contract = true;
@@ -1375,7 +1375,8 @@ static bool is_payment(Predicates *predicates) {
 		active_subjects = null;
 
 /*S+S*/		/* sol, sop: end of main constructor */
-/*Sol*/		padcat(1, indent+1, production, "}%34%"); // %34% adders
+/*Sol*/		padcat(1, indent+1, production, "}%34%"); // %34%: adders
+/*Sop*/		padcat(1, indent+1, production, "%34%"); // %34%: adders
 		replace(production, "%1%", parameters);
 
 /*S+S*/		padcat(0,0, production, "%31%"); // %31%: auxiliary functions
@@ -1414,7 +1415,6 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		/* js: now add the general terms methods beneath the constructor */
 /*JS */		padcat(1, 0, production, methods);
 
-
 		/* AUXILIARY FUNCTIONS (main contract) */
 
 		char *auxfuncs = mtrac_strdup("");
@@ -1436,11 +1436,11 @@ static bool is_payment(Predicates *predicates) {
 
 /*Sop*/		/* Sophia type hardening by Options */
 /*Sop*/		if(opt_harden) {
-/*Sop*/			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/* built-in option type force function */");
+/*Sop*/			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/""* built-in option type force function *""/");
 /*Sop*/			padcat(C, indent+1, &auxfuncs, "function force(o : option('a), name : string) : 'a =");
 /*Sop*/			padcat(1, indent+2, &auxfuncs, "switch(o)");
-/*Sop*/			padcat(1, indent+3, &auxfuncs, "None => abort(StringInternal.concat(name, \" not fixed\"))");
-/*Sop*/			padcat(1, indent+3, &auxfuncs, "Some(a) => a");
+/*Sop*/			padcat(1, indent+3, &auxfuncs, "None =""> abort(StringInternal.concat(name, \" not fixed\"))");
+/*Sop*/			padcat(1, indent+3, &auxfuncs, "Some(a) =""> a");
 /*Sop*/		}
 
 /*JS */		/* contract history from log */
@@ -1940,9 +1940,12 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/		padcat(C, 1, &adders, "mapping(uint => ", class, ") public ", list, ";");
 /*Sol*/		padcat(1, 1, &adders, "uint ", count, " = 0;");
 
-/*Sop*/		if(opt_comment) padcat(2, indent, production, "/* aggregation of covenants for folds and serialization */"); ///// fix ◊
-/*Sop*/		padcat(C, indent, production, "this.", list, " = {};");
-/*Sop*/		padcat(1, indent, production, "this.", count, " = 0;");
+/*Sop*/		padcat(0, 0, &declarations, *declarations?",":"");
+/*Sop*/		padcat(1, 3, &declarations, list, " : list,");
+/*Sop*/		padcat(1, 3, &declarations, count, " : uint");
+/*Sop*/		padcat(0, 0, &initializations, *initializations?",":"");
+/*Sop*/		padcat(1, 3, &initializations, list, " = {},");
+/*Sop*/		padcat(1, 3, &initializations, count, " = 0");
 
 		if(opt_comment) padcat(2, indent, production, "/**");
 		if(opt_comment) padcat(1, indent, production, " **");
@@ -1978,11 +1981,12 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/		padcat(2, indent+1, production, camel_spaced(module), " main;%27C%"); // %27C% member declarations
 /*Sol*/         padcat(3, indent+1, production, "%29C%constructor(", camel_spaced(module), " _main, %2%) %28%{"); // %29C%: emits, %2%: paras, %28%: payable
 /*Sol*/         padcat(1, indent+2, production, "main = _main;");
-/*Sop*/		padcat(2, indent  , production, "contract ", class, " =");
+/*Sop*/		padcat(2, indent  , production, "%28%contract ", class, " ="); // %28%: payable
 /*Sop*/		padcat(2, indent+1, production, "record state = {");
 /*Sop*/		padcat(0, indent  , production, "%27C%"); // %27C%: covenant member declaration
 /*Sop*/		padcat(1, indent+2, production, "}\n");
-/*Sop*/		padcat(1, indent+1, production, "%29C%%28%entrypoint init(%2%) = {%32C%"); // %29C%: emits, %28%: payable, %1%: paras, %32C%: initializations
+/*Sop*/		padcat(1, indent+1, production, "%29C%entrypoint init(master : ", camel_spaced(module), ", %2%) = {%32C%,"); // %29C%: emits, %1%: paras, %32C%: initializations
+/*Sop*/		padcat(1, indent+3, production, "master = master");
 /*Sop*/		padcat(1, indent+2, production, "}");
 
 		char *declarations_stack = declarations;
@@ -2058,10 +2062,15 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		padcat(C, 1, &adders, "add_", SNAKE(Covenant->Name), "(%2%) {");
 /*JS */		if(main_uses_termination) padcat(1, 2, &adders, "if (this.check_termination()) return undefined;"); // this == main
 /*JS */		padcat(1, 2, &adders, "return this.", list, "[this.", count, " += 1] = this.", class, "(%2b%);");
-/*S+S*/		padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name), "(%2%) public returns(", Covenant->Name, ") {");
-/*S+S*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
-/*S+S*/		padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ", class, "(this, %2b%);");
-		padcat(1, 1, &adders, "}");
+/*JS */		padcat(1, 1, &adders, "}");
+/*Sol*/		padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name), "(%2%) public returns(", Covenant->Name, ") {");
+/*Sol*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
+/*Sol*/		padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ", class, "(this, %2b%);");
+/*Sol*/		padcat(1, 1, &adders, "}");
+/*Sop*/		padcat(C, 1, &adders, "stateful entrypoint add_", SNAKE(Covenant->Name), "(%2%) =");
+/*Sop*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()");
+/*Sop*/		padcat(1, 2, &adders, "put(state{", count, " = state.", count, " + 1})");
+/*Sop*/		padcat(1, 2, &adders, "put(state{ ", list, " = ", class, " :: state.", list, " })");
 
 /*JS */		/* inject catch of non-permissioned caller in constructor wrapper */
 /*JS */		char *perm = mtrac_strdup("");
@@ -2226,12 +2235,12 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		char *lowsnake_literal = safedup(SNAKE(Definition->Type_Term->Type->Literal));
 /*Sol*/		padcat(1, indent - 1, &declarations, typemap(lowsnake_literal, opt_harden, false, __LINE__), " public ", lowsnake_safe_name, EOL);
 /*Sop*/		if(strlen(declarations)) padcat(0, 0, &declarations, ",");
-/*Sop*/		padcat(1, indent+1, &declarations, lowsnake_safe_name, " : ");
-/*Sop*/		//- int len = strlen(lowsnake_safe_name);
+/*Sop*/		padcat(1, 3, &declarations, lowsnake_safe_name, " : ");
+/*Sop*/		//- int len = strlen(lowsnake_safe_name); ◊ clean up
 /*Sop*/		//- padcat(1, indent+1, &declarations, lowsnake_safe_name, len < 4 ? "\t":"", len < 12 ? "\t":"", len < 20 ? "\t":" ", ": ");
 /*Sop*/		padcat(0, 0, &declarations, typemap(SNAKE(Definition->Type_Term->Type->Literal), opt_harden, false, __LINE__), EOL);
 /*Sop*/		if(strlen(initializations)) padcat(0, 0, &initializations, ",");
-/*Sop*/		padcat(1, indent+1, &initializations, lowsnake_safe_name, " = ");
+/*Sop*/		padcat(1, 3, &initializations, lowsnake_safe_name, " = ");
 /*Sop*/		padcat(0, 0, &initializations, nullmap(SNAKE(Definition->Type_Term->Type->Literal), !opt_harden), EOL);
 /*S+S*/		mtrac_free(lowsnake_safe_name);
 /*S+S*/		mtrac_free(lowsnake_literal);
@@ -2637,7 +2646,7 @@ static bool is_payment(Predicates *predicates) {
 					if(i++) padcat(0, 0, production, " || ");
 /*JS */					padcat(0, 0, production, "caller == ", symbol);
 /*Sol*/					padcat(0, 0, production, "msg.sender == ", symbol);
-/*Sop*/					padcat(0, 0, production, "§§Call.caller§ == ", symbol);
+/*Sop*/					padcat(0, 0, production, "§§Call.caller§ == state.", class && in(globals, symbol)?"main.":"state.", symbol);
 					if(current_function) current_function->uses_caller = true;
 
 					/* aggregated, potentially shortened access condition for revert message */
@@ -2649,7 +2658,7 @@ static bool is_payment(Predicates *predicates) {
 							padcat(0, 0, &courtesy_track, search);
 /*JS */							padcat(0, 0, &courtesy, "caller == ", symbol);
 /*Sol*/							padcat(0, 0, &courtesy, "msg.sender == ", symbol);
-/*Sop*/							padcat(0, 0, &courtesy, "§§Call.caller§ == ", symbol);
+/*Sop*/							padcat(0, 0, &courtesy, "§§Call.caller§ == ", class && in(globals, symbol)?"main.":"state.", symbol);
 							if(current_function) current_function->uses_caller = true;
 						}
 						mtrac_free(search);
@@ -2677,7 +2686,7 @@ static bool is_payment(Predicates *predicates) {
 
 /*J+S*/		if(Action->Condition) padcat(1, --indent, production, "}");
 
-		/* for multiple sentences, add the closing, reverting else */
+		/* for multiple sentences, add the closing bracket */
 /*J+S*/		if(current_function && !single_sentence_clause) {
 /*J+S*/			padcat(1, --indent, production, "}");
 /*J+S*/		}
@@ -3060,9 +3069,11 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_setting(char **production, Setting *Setting, int indent) { // dysfunctional ◊
 /*T*/		if(!Setting) return false;
 /*T*/		if(opt_debug) printf("producing Setting\n");
-		padcat(1, indent, production, "");
-/*T*/		xxx_symbol(production, Setting->Symbol, false, indent+1);
-		padcat(0, 0, production, " = true;"); // set");
+/*J+S*/		padcat(1, indent, production, "");
+/*Sop*/		padcat(1, indent, production, "put(state{ ");
+/*T*/		xxx_symbol(production, Setting->Symbol, true, indent+1);
+/*J+S*/		padcat(0, 0, production, " = true;");
+/*Sop*/		padcat(0, 0, production, " = true})");
 /*JS */		if(opt_log || opt_feedback) {
 /*JS */			padcat(1, indent, production, (!class?"this":"main"),
 /*JS */				".log(", recital_of_terms?caller:"caller", ", \"✓ ", Setting->Symbol->Name, " state set\");");
@@ -3278,9 +3289,11 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_flagging(char **production, Flagging *Flagging, int indent) {
 /*T*/		if(!Flagging) return false;
 /*T*/		if(opt_debug) printf("producing Flagging\n");
-		padcat(1, indent, production, "");
+/*J+S*/		padcat(1, indent, production, "");
+/*Sop*/		padcat(1, indent, production, "put(state{ ");
 /*T*/		xxx_symbol(production, Flagging->Symbol, true, indent+1);
-		padcat(0, 0, production, " = true;"); ////////
+/*J+S*/		padcat(0, 0, production, " = true;");
+/*Sop*/		padcat(0, 0, production, " = true})");
 /*T*/		return true;
 /*T*/	}
 /*T*/

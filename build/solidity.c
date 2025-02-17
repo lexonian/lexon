@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.98a U"
+#define backend_version "solidity 0.3.98b U"
 #define target_version "solidity 0.8.17+"	// sync w/[5]
 #define CYCLE_2 true
 
@@ -1260,7 +1260,8 @@ bool sol_document(char **production, Document *Document, int indent) {
 	active_subjects = null;
 
 	/* sol, sop: end of main constructor */
-	padcat(1, indent + 1, production, "}%34%");	// %34% adders
+	padcat(1, indent + 1, production, "}%34%");	// %34%: adders
+
 	replace(production, "%1%", parameters);
 
 	padcat(0, 0, production, "%31%");	// %31%: auxiliary functions
@@ -1275,7 +1276,6 @@ bool sol_document(char **production, Document *Document, int indent) {
 	/* aux functions to add a new sub object instance (covenants) */
 
 	replace(production, "%34%", adders);
-
 	/* AUXILIARY FUNCTIONS (main contract) */
 
 	char *auxfuncs = mtrac_strdup("");
@@ -1556,7 +1556,6 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	padcat(C, 1, &adders, "mapping(uint => ", class, ") public ", list,
 	       ";");
 	padcat(1, 1, &adders, "uint ", count, " = 0;");
-
 	if (opt_comment) padcat(2, indent, production, "/**");
 	if (opt_comment) padcat(1, indent, production, " **");
 	if (opt_comment) padcat(1, indent, production, " **\t", class,
@@ -1583,7 +1582,6 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	padcat(2, indent + 1, production, camel_spaced(module), " main;%27C%");	// %27C% member declarations
 	padcat(3, indent + 1, production, "%29C%constructor(", camel_spaced(module), " _main, %2%) %28%{");	// %29C%: emits, %2%: paras, %28%: payable
 	padcat(1, indent + 2, production, "main = _main;");
-
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
@@ -1646,7 +1644,6 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	if (opt_comment) padcat(2, 1, &adders, "/* create new instance of ",
 				Covenant->Name,
 				" covenant, and register it with main */");
-
 	padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name),
 	       "(%2%) public returns(", Covenant->Name, ") {");
 	if (main_uses_termination) padcat(1, 2, &adders,
@@ -2246,7 +2243,7 @@ bool sol_action(char **production, Action *Action, int indent) {
 
 	if (Action->Condition) padcat(1, --indent, production, "}");
 
-	/* for multiple sentences, add the closing, reverting else */
+	/* for multiple sentences, add the closing bracket */
 	if (current_function && !single_sentence_clause) {
 		padcat(1, --indent, production, "}");
 	}
@@ -2591,9 +2588,9 @@ bool sol_setting(char **production, Setting *Setting, int indent) {	// dysfuncti
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 	padcat(1, indent, production, "");
-	sol_symbol(production, Setting->Symbol, false, indent + 1);
-	padcat(0, 0, production, " = true;");	// set");
 
+	sol_symbol(production, Setting->Symbol, true, indent + 1);
+	padcat(0, 0, production, " = true;");
 	return true;
 }
 
@@ -2792,8 +2789,10 @@ bool sol_flagging(char **production, Flagging *Flagging, int indent) {
 	if (!Flagging) return false;
 	if (opt_debug) printf("producing Flagging\n");
 	padcat(1, indent, production, "");
+
 	sol_symbol(production, Flagging->Symbol, true, indent + 1);
-	padcat(0, 0, production, " = true;");	////////
+	padcat(0, 0, production, " = true;");
+
 	return true;
 }
 
