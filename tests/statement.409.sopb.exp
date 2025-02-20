@@ -1,10 +1,9 @@
 
 
-@compiler >=6
-
+@compiler >=8
 main contract UCCFinancingStatement =
-
     record state = {
+        
             file_number : string,
             initial_statement_date : int,
             filer : address,
@@ -25,7 +24,6 @@ main contract UCCFinancingStatement =
             notification_statement : string,
             terminated : bool
         }
-
     datatype event = Message(indexed address, indexed address, string)
 
     entrypoint init(filing_office : address, debtor : address, secured_party : address, collateral : string) = {
@@ -49,7 +47,8 @@ main contract UCCFinancingStatement =
             notification_statement = "",
             terminated = false
         }
-
+        
+    
 
 
     function permit(authorized : address) =

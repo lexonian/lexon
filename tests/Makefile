@@ -10,7 +10,7 @@ ok = \033[36m
 dim = \033[90m
 err = \033[91m
 off = \033[0m
-errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok)ok$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
+errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok)ok √$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
 
 
 ifeq (, $(shell which md5sum))
@@ -168,20 +168,58 @@ define testrun
 		if [[ -f compdiff ]] || [[ -f compall ]] ; then \
 			if [[ ! -f $$coktag ]] || [[ -f compall ]] ; then \
 				if [[ "$(4)" =~ .*javascript.* ]] ; then \
-					printf "$(ok)» node execution of $$testfile .. $(dim)" ; node -e "contract = require('./$$testfile')" ; \
-					sret=$$? ; \
-					if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
-					if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» node instantiation of $$testfile .. $(dim)" ; \
+					fi ; \
+					node -e "contract = require('./$$testfile')" ; \
+					s0ret=$$? ; \
+					if [[ -f concise ]] ; then \
+						if (( $$s0ret == 0 )) ; then printf "$(ok)+$(off)" ; \
+						else printf "$(err)#$(off)" ; fi ; \
+					else \
+						if (( $$s0ret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; \
+						else printf "  $(err)failed #$(off)\n" ; fi ; \
+					fi ; \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» linting of $$testfile .. $(dim)" ; \
+					fi ; \
+					npx eslint $$testfile ; \
+					s1ret=$$? ; \
+					if [[ -f concise ]] ; then \
+						if (( $$s1ret == 0 )) ; then printf "$(ok)+ $(off)" ; \
+						else printf "$(err)# $(off)" ; fi ; \
+					else \
+						if (( $$s1ret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; \
+						else printf "  $(err)failed #$(off)\n" ; fi ; \
+					fi ; \
+					if (( $$s0ret == 0 )) && (( $$s1ret == 0 )) ; then touch $$coktag ; \
+					else rm -f $$coktag ; fi ; \
 				elif [[ "$(4)" =~ .*solidity.* ]] ; then \
-					printf "$(ok)» solidity compilation of $$testfile .. $(dim)" ; solcjs --bin $$testfile ; \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» solidity compilation of $$testfile .. $(dim)" ; \
+					fi ; \
+					solcjs --bin $$testfile ; \
 					sret=$$? ; \
-					if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
-					if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					if [[ -f concise ]] ; then \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; touch $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
+					else \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					fi ; \
 				elif [[ "$(4)" =~ .*sophia.* ]] ; then \
-					printf "$(ok)» sophia compilation of $$testfile .. $(dim)" ; aesophia_cli $$testfile ; \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» sophia compilation of $$testfile .. $(dim)" ; \
+					fi ; \
+					aesophia_cli $$testfile > tmp ; \
 					sret=$$? ; \
-					if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
-					if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					if [[ -f concise ]] ; then \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; touch $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
+					else \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					fi ; \
 				fi ; \
 			fi ; \
 		fi ; \
@@ -190,7 +228,7 @@ define testrun
 			mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ; $(call count,update) ; $(call discount,err) \
 	  		; printf "$(ok)› updated √$(off)\n\n" ; \
 		    fi ; \
-		elif [[ ! -f noupdate ]] ; then \
+		elif (( $$dret == 1 )) && [[ ! -f noupdate ]] ; then \
 		    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
@@ -224,13 +262,31 @@ define focustest
 	cat $(2) | sed "s/compiler:.*/compiler:    [...]/g" | sed "s/grammar:.*/grammar:     [...]/g" | sed "s/backend:.*/backend:     [...]/g" > unvers.now ; \
 	$(DIFF) -wB unvers.exp unvers.now ; \
 	$(errtag)
+endef
+
+
+define focuscomp
 	cd focus ; \
+	cat $(1) | sed "s/compiler:.*/compiler:    [...]/g" | sed "s/grammar:.*/grammar:     [...]/g" | sed "s/backend:.*/backend:     [...]/g" > unvers.exp ; \
+	cat $(2) | sed "s/compiler:.*/compiler:    [...]/g" | sed "s/grammar:.*/grammar:     [...]/g" | sed "s/backend:.*/backend:     [...]/g" > unvers.now ; \
+	$(DIFF) -wB unvers.exp unvers.now ; \
+	$(errtag)
+	cd focus ; \
+	if [[ $(2) = *.jsx ]] ; then \
+		printf "npx eslint $(2) > $(2).lint$(dim) .. " ; \
+		npx eslint $(2) > $(2).lint ; \
+		$(errtag) ; \
+	fi ; \
 	if [[ $(2) = *.sol ]] ; then \
-		printf "solcjs --bin $(2) > $(2).bin\n$(dim)" ; \
+		printf "solcjs --bin $(2) > $(2).bin$(dim) .. " ; \
 		solcjs --bin $(2) > $(2).bin ; \
 		$(errtag) ; \
 	fi ; \
-
+	if [[ $(2) = *.aes ]] ; then \
+		printf "aesophia_cli $(2) > $(2).bin$(dim) .. " ; \
+		aesophia_cli $(2) > $(2).bin ; \
+		$(errtag) ; \
+	fi ;
 endef
 
 define log
@@ -252,6 +308,7 @@ clean:
 	rm -f *.tmp
 	rm -f *.now
 	rm -f *.bin
+	rm -f *.lint
 	rm -f *.bak
 	rm -f *.test
 	rm -f unvers.exp
@@ -264,6 +321,7 @@ clean:
 	rm -f focus/*.lcc
 	rm -f focus/*.now
 	rm -f focus/*.bin
+	rm -f focus/*.lint
 	rm -f focus/unvers.exp
 	rm -f onlynew
 	rm -f perfect
@@ -362,7 +420,7 @@ compall:
 	@touch concise
 	@touch noupdate
 	@touch nopickup
-	@touch showdiff
+	@rm -f showdiff
 	@rm -f compdiff
 	@rm -f compmiss
 	@touch compall
@@ -438,7 +496,7 @@ _test_proto:
 	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
 	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
 	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	@$(call testrun,javascript barebones,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
+	@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
 	@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
 	@if [[ ! -f quit.tmp ]] ; then \
 		echo ; \
@@ -483,7 +541,7 @@ ___test_proto2:
 	@rm -f *.tmp
 	$(call init)
 	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
-	@$(call testrun,solidity barebones,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
+	@$(call testrun,solidity barebone,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
 	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
 	@if [[ ! -f quit.tmp ]] ; then \
 		echo ; \
@@ -549,12 +607,106 @@ _test:
 	@$(call testrun,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
 	@$(call testrun,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
 	@$(call testrun,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
-	@$(call testrun,javascript barebones,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
+	@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
 	@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
-	@$(call testrun,solidity barebones,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
+	@$(call testrun,solidity barebone,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
 	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
-	@$(call testrun,sophia barebones,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
+	@$(call testrun,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
 	@$(call testrun,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
+	@if [[ ! -f quit.tmp ]] ; then \
+		echo ; \
+		ok=`cat ok.tmp` ; \
+		err=`cat err.tmp` ; \
+		warn=`cat warn.tmp` ; \
+		skip=`cat skip.tmp` ; \
+		update=`cat update.tmp` ; \
+		rm -f perfect ; \
+		echo ; \
+		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
+		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
+		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
+		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
+		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
+			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
+		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
+		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
+			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
+		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
+			echo ; \
+			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
+			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
+			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
+			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
+		fi ; \
+	fi
+	@echo
+
+_test_sophia:
+	@echo
+	@printf "$(ok)» regression tests$(off)\n"
+	@echo ===================
+	@printf "\nexpectations from:\n"
+	@cat tag.exp
+	$(call tag,tag.now)
+	@printf "\ncurrent setup:\n"
+	@cat tag.now
+	@rm -f *.tmp
+	$(call init)
+	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
+	@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
+	@$(call testrun,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
+	@$(call testrun,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
+	@if [[ ! -f quit.tmp ]] ; then \
+		echo ; \
+		ok=`cat ok.tmp` ; \
+		err=`cat err.tmp` ; \
+		warn=`cat warn.tmp` ; \
+		skip=`cat skip.tmp` ; \
+		update=`cat update.tmp` ; \
+		rm -f perfect ; \
+		echo ; \
+		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
+		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
+		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
+		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
+		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
+			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
+		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
+		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
+			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
+		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
+			echo ; \
+			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
+			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
+			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
+			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
+		fi ; \
+	fi
+	@echo
+
+_test_js:
+	@echo
+	@printf "$(ok)» regression tests$(off)\n"
+	@echo ===================
+	@printf "\nexpectations from:\n"
+	@cat tag.exp
+	$(call tag,tag.now)
+	@printf "\ncurrent setup:\n"
+	@cat tag.now
+	@rm -f *.tmp
+	$(call init)
+	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
+	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
+	@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
+	@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
 	@if [[ ! -f quit.tmp ]] ; then \
 		echo ; \
 		ok=`cat ok.tmp` ; \
@@ -641,11 +793,11 @@ _expects:
 	$(call buildexp,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
 	$(call buildexp,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
 	$(call buildexp,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
-	$(call buildexp,javascript barebones,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
+	$(call buildexp,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
 	$(call buildexp,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
-	$(call buildexp,solidity barebones,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
+	$(call buildexp,solidity barebone,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
 	$(call buildexp,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
-	$(call buildexp,sophia barebones,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
+	$(call buildexp,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
 	$(call buildexp,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
 	@echo ; \
 	ok=`cat ok.tmp` ; \
@@ -698,36 +850,68 @@ focustest:
 	@echo
 
 	@printf "$(ok)• escrow ⟶   core $(off)\n"
-	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.lcc
+	-cd focus ; ../../bin/lexon --core escrow.lex > escrow.lcc
 	-@$(call focustest,escrow.lcc.exp,escrow.lcc)
 
 	@printf "$(ok)• escrow 2 ⟶   core $(off)\n"
-	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.lcc
+	-cd focus ; ../../bin/lexon --core escrow2.lex > escrow2.lcc
 	-@$(call focustest,escrow2.lcc.exp,escrow2.lcc)
 
 	@printf "$(ok)• statement ⟶   core $(off)\n"
-	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.lcc
+	-cd focus ; ../../bin/lexon --core statement.lex > statement.lcc
 	-@$(call focustest,statement.lcc.exp,statement.lcc)
 
 	@printf "$(ok)• evaluation ⟶   core $(off)\n"
-	-cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.lcc
+	-cd focus ; ../../bin/lexon --core evaluation.lex > evaluation.lcc
 	-@$(call focustest,evaluation.lcc.exp,evaluation.lcc)
 
-	@printf "$(ok)• escrow ⟶   javascript $(off)\n"
-	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.jsx
-	-@$(call focustest,escrow.jsx.exp,escrow.jsx)
+	@printf "$(ok)• escrow ⟶   javascript / barebone $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --bare escrow.lex > escrow.bb.jsx
+	-@$(call focustest,escrow.bb.jsx.exp,escrow.bb.jsx)
 
-	@printf "$(ok)• escrow 2 ⟶   javascript $(off)\n"
-	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.jsx
-	-@$(call focustest,escrow2.jsx.exp,escrow2.jsx)
+	@printf "$(ok)• escrow 2 ⟶   javascript / barebone $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --bare escrow2.lex > escrow2.bb.jsx
+	-@$(call focustest,escrow2.bb.jsx.exp,escrow2.bb.jsx)
 
-	@printf "$(ok)• statement ⟶   javascript $(off)\n"
-	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.jsx
-	-@$(call focustest,statement.jsx.exp,statement.jsx)
+	@printf "$(ok)• statement ⟶   javascript / barebone $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --bare statement.lex > statement.bb.jsx
+	-@$(call focustest,statement.bb.jsx.exp,statement.bb.jsx)
 
-	@printf "$(ok)• evaluation ⟶   javascript $(off)\n"
-	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.jsx
-	-@$(call focustest,evaluation.jsx.exp,evaluation.jsx)
+	@printf "$(ok)• evaluation ⟶   javascript / barebone $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --bare evaluation.lex > evaluation.bb.jsx
+	-@$(call focustest,evaluation.bb.jsx.exp,evaluation.bb.jsx)
+
+	@printf "$(ok)• escrow ⟶   javascript / multi aux $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.ma.jsx
+	-@$(call focustest,escrow.ma.jsx.exp,escrow.ma.jsx)
+
+	@printf "$(ok)• escrow 2 ⟶   / multi aux javascript $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.ma.jsx
+	-@$(call focustest,escrow2.ma.jsx.exp,escrow2.ma.jsx)
+
+	@printf "$(ok)• statement ⟶   javascript / multi aux $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.ma.jsx
+	-@$(call focustest,statement.ma.jsx.exp,statement.ma.jsx)
+
+	@printf "$(ok)• evaluation ⟶   javascript / multi aux $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.ma.jsx
+	-@$(call focustest,evaluation.ma.jsx.exp,evaluation.ma.jsx)
+
+	@printf "$(ok)• escrow ⟶   javascript / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --harden --comment escrow.lex > escrow.h.jsx
+	-@$(call focustest,escrow.h.jsx.exp,escrow.h.jsx)
+
+	@printf "$(ok)• escrow 2 ⟶   javascript / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --harden --comment escrow2.lex > escrow2.h.jsx
+	-@$(call focustest,escrow2.h.jsx.exp,escrow2.h.jsx)
+
+	@printf "$(ok)• statement ⟶   javascript / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --harden --comment statement.lex > statement.h.jsx
+	-@$(call focustest,statement.h.jsx.exp,statement.h.jsx)
+
+	@printf "$(ok)• evaluation ⟶   javascript / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --javascript --harden --comment evaluation.lex > evaluation.h.jsx
+	-@$(call focustest,evaluation.h.jsx.exp,evaluation.h.jsx)
 
 	@printf "$(ok)• escrow ⟶   solidity $(off)\n"
 	-cd focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol
@@ -745,6 +929,22 @@ focustest:
 	-cd focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol
 	-@$(call focustest,evaluation.sol.exp,evaluation.sol)
 
+	@printf "$(ok)• escrow ⟶   solidity / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --harden --comment escrow.lex > escrow.h.sol
+	-@$(call focustest,escrow.h.sol.exp,escrow.h.sol)
+
+	@printf "$(ok)• escrow 2 ⟶   solidity / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --harden --comment escrow2.lex > escrow2.h.sol
+	-@$(call focustest,escrow2.h.sol.exp,escrow2.h.sol)
+
+	@printf "$(ok)• statement ⟶   solidity / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --harden --comment statement.lex > statement.h.sol
+	-@$(call focustest,statement.h.sol.exp,statement.h.sol)
+
+	@printf "$(ok)• evaluation ⟶   solidity / hardened $(off)\n"
+	-cd focus ; ../../bin/lexon --solidity --harden --comment evaluation.lex > evaluation.h.sol
+	-@$(call focustest,evaluation.h.sol.exp,evaluation.h.sol)
+
 	@printf "$(ok)• escrow ⟶   sophia $(off)\n"
 	-cd focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes
 	-@$(call focustest,escrow.aes.exp,escrow.aes)
@@ -757,6 +957,179 @@ focustest:
 	-cd focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes
 	-@$(call focustest,statement.aes.exp,statement.aes)
 
+	@printf "$(ok)• evaluation ⟶   sophia $(off)\n"
+	-cd focus ; ../../bin/lexon --sophia --comment evaluation.lex > evaluation.aes
+	-@$(call focustest,evaluation.aes.exp,evaluation.aes)
+
+	@printf "$(ok)• statement / hardened ⟶   sophia $(off)\n"
+	-cd focus ; ../../bin/lexon --sophia --comment --harden statement.lex > statement.h.aes
+	-@$(call focustest,statement.h.aes.exp,statement.h.aes)
+
+	@printf "$(ok)• evaluation / hardened ⟶   sophia $(off)\n"
+	-cd focus ; ../../bin/lexon --sophia --comment --harden evaluation.lex > evaluation.h.aes
+	-@$(call focustest,evaluation.h.aes.exp,evaluation.h.aes)
+
+	@echo ---
+	@printf "$(ok)done$(off)\n"
+	@echo
+
+focuscomp:
+	@$(call log,FOCUS REGRESSION AND SYNTAX TEST)
+	@printf "\n$(hi)▫️  focus regression and syntax test $(off)\n\n"
+	@echo compiling and diffing of distribution-defining example texts.
+	@echo Syntax check using node, eslint, solcjs, and aesophia_cli. 
+	@echo
+
+	@printf "$(ok)• escrow ⟶   core $(off)\n"
+	@printf "/bin/lexon --core escrow.lex > escrow.lcc .. "
+	-@cd focus ; ../../bin/lexon --core escrow.lex > escrow.lcc
+	-@$(call focuscomp,escrow.lcc.exp,escrow.lcc)
+
+	@printf "$(ok)• escrow 2 ⟶   core $(off)\n"
+	@printf "/bin/lexon --core escrow2.lex > escrow2.lcc .. "
+	-@cd focus ; ../../bin/lexon --core escrow2.lex > escrow2.lcc
+	-@$(call focuscomp,escrow2.lcc.exp,escrow2.lcc)
+
+	@printf "$(ok)• statement ⟶   core $(off)\n"
+	@printf "/bin/lexon --core statement.lex > statement.lcc .. "
+	-@cd focus ; ../../bin/lexon --core statement.lex > statement.lcc
+	-@$(call focuscomp,statement.lcc.exp,statement.lcc)
+
+	@printf "$(ok)• evaluation ⟶   core $(off)\n"
+	@printf "/bin/lexon --core evaluation.lex > evaluation.lcc .. "
+	-@cd focus ; ../../bin/lexon --core evaluation.lex > evaluation.lcc
+	-@$(call focuscomp,evaluation.lcc.exp,evaluation.lcc)
+
+	@printf "$(ok)• escrow ⟶   javascript / barebone $(off)\n"
+	@printf "/bin/lexon --javascript -b escrow.lex > escrow.bb.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript -b escrow.lex > escrow.bb.jsx
+	-@$(call focuscomp,escrow.bb.jsx.exp,escrow.bb.jsx)
+
+	@printf "$(ok)• escrow 2 ⟶   javascript / barebone $(off)\n"
+	@printf "/bin/lexon --javascript -b escrow2.lex > escrow2.bb.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript -b escrow2.lex > escrow2.bb.jsx
+	-@$(call focuscomp,escrow2.bb.jsx.exp,escrow2.bb.jsx)
+
+	@printf "$(ok)• statement ⟶   javascript / barebone $(off)\n"
+	@printf "/bin/lexon --javascript -b statement.lex > statement.bb.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript -b statement.lex > statement.bb.jsx
+	-@$(call focuscomp,statement.bb.jsx.exp,statement.bb.jsx)
+
+	@printf "$(ok)• evaluation ⟶   javascript / barebone $(off)\n"
+	@printf "/bin/lexon --javascript -b evaluation.lex > evaluation.bb.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript -b evaluation.lex > evaluation.bb.jsx
+	-@$(call focuscomp,evaluation.bb.jsx.exp,evaluation.bb.jsx)
+
+	@printf "$(ok)• escrow ⟶   javascript / multi aux $(off)\n"
+	@printf "/bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.ma.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.ma.jsx
+	-@$(call focuscomp,escrow.ma.jsx.exp,escrow.ma.jsx)
+
+	@printf "$(ok)• escrow 2 ⟶   javascript / multi aux $(off)\n"
+	@printf "/bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.ma.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.ma.jsx
+	-@$(call focuscomp,escrow2.ma.jsx.exp,escrow2.ma.jsx)
+
+	@printf "$(ok)• statement ⟶   javascript / multi aux $(off)\n"
+	@printf "/bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.ma.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.ma.jsx
+	-@$(call focuscomp,statement.ma.jsx.exp,statement.ma.jsx)
+
+	@printf "$(ok)• evaluation ⟶   javascript / multi aux $(off)\n"
+	@printf "/bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.ma.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.ma.jsx
+	-@$(call focuscomp,evaluation.ma.jsx.exp,evaluation.ma.jsx)
+
+	@printf "$(ok)• escrow ⟶   javascript / hardened $(off)\n"
+	@printf "/bin/lexon --javascript --harden --comment escrow.lex > escrow.h.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --harden --comment escrow.lex > escrow.h.jsx
+	-@$(call focuscomp,escrow.h.jsx.exp,escrow.h.jsx)
+
+	@printf "$(ok)• escrow 2 ⟶   javascript / hardened $(off)\n"
+	@printf "/bin/lexon --javascript --harden --comment escrow2.lex > escrow2.h.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --harden --comment escrow2.lex > escrow2.h.jsx
+	-@$(call focuscomp,escrow2.h.jsx.exp,escrow2.h.jsx)
+
+	@printf "$(ok)• statement ⟶   javascript / hardened $(off)\n"
+	@printf "/bin/lexon --javascript --harden --comment statement.lex > statement.h.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --harden --comment statement.lex > statement.h.jsx
+	-@$(call focuscomp,statement.h.jsx.exp,statement.h.jsx)
+
+	@printf "$(ok)• evaluation ⟶   javascript / hardened $(off)\n"
+	@printf "/bin/lexon --javascript --harden --comment evaluation.lex > evaluation.h.jsx .. "
+	-@cd focus ; ../../bin/lexon --javascript --harden --comment evaluation.lex > evaluation.h.jsx
+	-@$(call focuscomp,evaluation.h.jsx.exp,evaluation.h.jsx)
+
+	@printf "$(ok)• escrow ⟶   solidity $(off)\n"
+	@printf "/bin/lexon --solidity --comment escrow.lex > escrow.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol
+	-@$(call focuscomp,escrow.sol.exp,escrow.sol)
+
+	@printf "$(ok)• escrow 2 ⟶   solidity $(off)\n"
+	@printf "/bin/lexon --solidity --comment escrow2.lex > escrow2.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --comment escrow2.lex > escrow2.sol
+	-@$(call focuscomp,escrow2.sol.exp,escrow2.sol)
+
+	@printf "$(ok)• statement ⟶   solidity $(off)\n"
+	@printf "/bin/lexon --solidity --comment statement.lex > statement.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --comment statement.lex > statement.sol
+	-@$(call focuscomp,statement.sol.exp,statement.sol)
+
+	@printf "$(ok)• evaluation ⟶   solidity $(off)\n"
+	@printf "/bin/lexon --solidity --comment evaluation.lex > evaluation.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol
+	-@$(call focuscomp,evaluation.sol.exp,evaluation.sol)
+
+	@printf "$(ok)• escrow ⟶   solidity / hardened $(off)\n"
+	@printf "/bin/lexon --solidity --harden --comment escrow.lex > escrow.h.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --harden --comment escrow.lex > escrow.h.sol
+	-@$(call focuscomp,escrow.h.sol.exp,escrow.h.sol)
+
+	@printf "$(ok)• escrow 2 ⟶   solidity / hardened $(off)\n"
+	@printf "/bin/lexon --solidity --harden --comment escrow2.lex > escrow2.h.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --harden --comment escrow2.lex > escrow2.h.sol
+	-@$(call focuscomp,escrow2.h.sol.exp,escrow2.h.sol)
+
+	@printf "$(ok)• statement ⟶   solidity / hardened $(off)\n"
+	@printf "/bin/lexon --solidity --harden --comment statement.lex > statement.h.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --harden --comment statement.lex > statement.h.sol
+	-@$(call focuscomp,statement.h.sol.exp,statement.h.sol)
+
+	@printf "$(ok)• evaluation ⟶   solidity / hardened $(off)\n"
+	@printf "/bin/lexon --solidity --harden --comment evaluation.lex > evaluation.h.sol .. "
+	-@cd focus ; ../../bin/lexon --solidity --harden --comment evaluation.lex > evaluation.h.sol
+	-@$(call focuscomp,evaluation.h.sol.exp,evaluation.h.sol)
+
+	@printf "$(ok)• escrow ⟶   sophia $(off)\n"
+	@printf "/bin/lexon --sophia --comment escrow.lex > escrow.aes .. "
+	-@cd focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes
+	-@$(call focuscomp,escrow.aes.exp,escrow.aes)
+
+	@printf "$(ok)• escrow 2 ⟶   sophia $(off)\n"
+	@printf "/bin/lexon --sophia --comment escrow2.lex > escrow2.aes .. "
+	-@cd focus ; ../../bin/lexon --sophia --comment escrow2.lex > escrow2.aes
+	-@$(call focuscomp,escrow2.aes.exp,escrow2.aes)
+
+	@printf "$(ok)• statement ⟶   sophia $(off)\n"
+	@printf "/bin/lexon --sophia --comment statement.lex > statement.aes .. "
+	-@cd focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes
+	-@$(call focuscomp,statement.aes.exp,statement.aes)
+
+	@printf "$(ok)• evaluation ⟶   sophia $(off)\n"
+	@printf "/bin/lexon --sophia --comment evaluation.lex > evaluation.aes .. "
+	-@cd focus ; ../../bin/lexon --sophia --comment evaluation.lex > evaluation.aes
+	-@$(call focuscomp,evaluation.aes.exp,evaluation.aes)
+
+	@printf "$(ok)• statement ⟶   sophia / hardened $(off)\n"
+	@printf "/bin/lexon --sophia --comment --harden statement.lex > statement.h.aes .. "
+	-@cd focus ; ../../bin/lexon --sophia --comment --harden statement.lex > statement.h.aes
+	-@$(call focuscomp,statement.h.aes.exp,statement.h.aes)
+
+	@printf "$(ok)• evaluation ⟶   sophia / hardened $(off)\n"
+	@printf "/bin/lexon --sophia --comment --harden evaluation.lex > evaluation.h.aes .. "
+	-@cd focus ; ../../bin/lexon --sophia --comment --harden evaluation.lex > evaluation.h.aes
+	-@$(call focuscomp,evaluation.h.aes.exp,evaluation.h.aes)
+
 	@echo ---
 	@printf "$(ok)done$(off)\n"
 	@echo
@@ -766,28 +1139,52 @@ focusprep:
 	@printf "\n\n$(hi)▫️  preparation of expectations for focustest. $(off)\n\n"
 
 	@echo »»» escrow core
-	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.lcc.exp
+	cd focus ; ../../bin/lexon --core escrow.lex > escrow.lcc.exp
 
 	@echo »»» escrow 2 core
-	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.lcc.exp
+	cd focus ; ../../bin/lexon --core escrow2.lex > escrow2.lcc.exp
 
 	@echo »»» statement core
-	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.lcc.exp
+	cd focus ; ../../bin/lexon --core statement.lex > statement.lcc.exp
 
 	@echo »»» evaluation core
-	cd focus ; ../../bin/lexon --core --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.lcc.exp
+	cd focus ; ../../bin/lexon --core evaluation.lex > evaluation.lcc.exp
 
-	@echo »»» escrow javascript
-	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.jsx.exp
+	@echo »»» escrow javascript / barebone
+	cd focus ; ../../bin/lexon --javascript --bare escrow.lex > escrow.bb.jsx.exp
 
-	@echo »»» escrow 2 javascript
-	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.jsx.exp
+	@echo »»» escrow 2 javascript / barebone
+	cd focus ; ../../bin/lexon --javascript --bare escrow2.lex > escrow2.bb.jsx.exp
 
-	@echo »»» statement javascript
-	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.jsx.exp
+	@echo »»» statement javascript / barebone
+	cd focus ; ../../bin/lexon --javascript --bare statement.lex > statement.bb.jsx.exp
 
-	@echo »»» evaluation javascript
-	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.jsx.exp
+	@echo »»» evaluation javascript / barebone
+	cd focus ; ../../bin/lexon --javascript --bare evaluation.lex > evaluation.bb.jsx.exp
+
+	@echo »»» escrow javascript / multi aux
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow.lex > escrow.ma.jsx.exp
+
+	@echo »»» escrow 2 javascript / multi aux
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment escrow2.lex > escrow2.ma.jsx.exp
+
+	@echo »»» statement javascript / multi aux
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment statement.lex > statement.ma.jsx.exp
+
+	@echo »»» evaluation javascript / multi aux
+	cd focus ; ../../bin/lexon --javascript --feedback --log --chaining --signatures --persistence --comment evaluation.lex > evaluation.ma.jsx.exp
+
+	@echo »»» escrow javascript / hardenend
+	cd focus ; ../../bin/lexon --javascript --harden --comment escrow.lex > escrow.h.jsx.exp
+
+	@echo »»» escrow 2 javascript / hardenend
+	cd focus ; ../../bin/lexon --javascript --harden --comment escrow2.lex > escrow2.h.jsx.exp
+
+	@echo »»» statement javascript / hardenend
+	cd focus ; ../../bin/lexon --javascript --harden --comment statement.lex > statement.h.jsx.exp
+
+	@echo »»» evaluation javascript / hardenend
+	cd focus ; ../../bin/lexon --javascript --harden --comment evaluation.lex > evaluation.h.jsx.exp
 
 	@echo »»» escrow solidity
 	cd focus ; ../../bin/lexon --solidity --comment escrow.lex > escrow.sol.exp
@@ -801,6 +1198,18 @@ focusprep:
 	@echo »»» evaluation solidity
 	cd focus ; ../../bin/lexon --solidity --comment evaluation.lex > evaluation.sol.exp
 
+	@echo »»» escrow solidity / hardened
+	cd focus ; ../../bin/lexon --solidity --harden --comment escrow.lex > escrow.h.sol.exp
+
+	@echo »»» escrow 2 solidity / hardened
+	cd focus ; ../../bin/lexon --solidity --harden --comment escrow2.lex > escrow2.h.sol.exp
+
+	@echo »»» statement solidity / hardened
+	cd focus ; ../../bin/lexon --solidity --harden --comment statement.lex > statement.h.sol.exp
+
+	@echo »»» evaluation solidity / hardened
+	cd focus ; ../../bin/lexon --solidity --harden --comment evaluation.lex > evaluation.h.sol.exp
+
 	@echo »»» escrow sophia
 	cd focus ; ../../bin/lexon --sophia --comment escrow.lex > escrow.aes.exp
 
@@ -810,6 +1219,15 @@ focusprep:
 	@echo »»» statement sophia
 	cd focus ; ../../bin/lexon --sophia --comment statement.lex > statement.aes.exp
 
+	@echo »»» evaluation sophia
+	cd focus ; ../../bin/lexon --sophia --comment evaluation.lex > evaluation.aes.exp
+
+	@echo »»» statement sophia / hardened
+	cd focus ; ../../bin/lexon --sophia --comment --harden statement.lex > statement.h.aes.exp
+
+	@echo »»» evaluation sophia / hardened
+	cd focus ; ../../bin/lexon --sophia --comment --harden evaluation.lex > evaluation.h.aes.exp
+
 	@echo ---
 	@echo done
 	@echo
@@ -817,6 +1235,10 @@ focusprep:
 testlog:
 	@printf "\nLast 100 lines of test.log:\n\n"
 	@tail -n100 test.log
+	@ls -alth test.log
+
+cleanlog:
+	rm -f test.log
 
 list_expectations:
 	@echo Listing of the expected results for the test source files used in the deeptest suit.
@@ -880,4 +1302,4 @@ list_sources:
 	@printf "\n$(hi)▫️  LEXON COVERAGE TESTS $(off)\n"
 	@awk 'FNR==1 {print "\n$(hi)» ", FILENAME, "$(off)\n"}{print}' cover/*.lex
 
-.PHONY: all one clean expclean deeptest comptest compmiss update autoupdate autocomp recheck _recheck _test new expectations compall _expects grammar_expectations grammar_expects focustest focusprep testlog list_expectations list_sources 
+.PHONY: all one clean expclean deeptest comptest compmiss update autoupdate autocomp recheck _recheck _test new expectations compall _expects grammar_expectations grammar_expects focustest focusprep focuscomp testlog list_expectations list_sources 

@@ -10,7 +10,7 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.98a U
+ **	backend:     javascript 0.3.98c U
  **
  **	target:      node 14.1+
  **
@@ -178,7 +178,6 @@ module.exports = class UCCFinancingStatement {
 
     constructor(filer, filing_office, debtor, secured_party, collateral) {
 
-        let main = this;
 
         /* object members: skip for restoring serialized object */
         if(typeof filer !== 'undefined') {
@@ -217,8 +216,8 @@ module.exports = class UCCFinancingStatement {
 
         if(typeof filer === 'undefined') {
             console.log("> restore from file 'state'");
-            var data = fs.readFileSync('state', ()=>{});
-            var live = eval('(' + data + ')');
+            let data = fs.readFileSync('state', ()=>{});
+            let live = eval('(' + data + ')');
             Object.assign(this, live);
         }
     }
@@ -522,8 +521,8 @@ module.exports = class UCCFinancingStatement {
 
     transfer(caller, from, to, amount) {
         this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
+        if(from == 'escrow') this._escrow -= amount;
+        if(to == 'escrow') this._escrow += amount;
     }
 
     /* built-in send message */

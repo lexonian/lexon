@@ -17,7 +17,7 @@ pragma solidity ^0.8.17;
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     solidity 0.3.98a U
+ **	backend:     solidity 0.3.98c U
  **
  **	target:      solidity 0.8.17+
  **
@@ -72,13 +72,6 @@ contract EvaluationLicenseSystem {
 
     function add_license(address payable _licensee, string memory _description_of_goods) public returns(License) {
         return _license_list[_license_count += 1] = new License(this, _licensee, _description_of_goods);
-    }
-
-    /* built-in safe transfer */
-
-    function transfer(address payable _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
     }
 }
 
@@ -259,6 +252,12 @@ contract License {
         return notice_time != 0;
     }
 
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
     /* built-in safe transfer */
 
     function transfer(address payable _to, uint _amount) internal {
@@ -266,14 +265,8 @@ contract License {
         require(_success, "transfer failed on receiver side");
     }
 
-    /* built-in caller assertion */
 
-    function permit(address payable _authorized) internal view {
-        require(msg.sender == _authorized, "not permitted");
-    }
-
-
-    /* built-in termination of this covenant */
+    /* built-in termination of the covenant */
 
     function termination() internal {
         terminated = true;

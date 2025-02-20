@@ -125,11 +125,4 @@ module.exports = class EvaluationLicenseSystem {
         return this._license_list[this._license_count += 1] = this.License(caller, licensee, description_of_goods);
     }
 
-
-
-    transfer(from, to, amount) {
-        console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
-    }
 }

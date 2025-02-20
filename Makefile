@@ -97,10 +97,11 @@ help:
 	# focusprep     build result references for future focustest runs
 	#
 	# ▫️  2nd level of tests: components
+	# focuscomp     syntax check of focus tests by native compilation, linting*
 	# deeptest      memory handling, includes, language parser, compiler
-	# comptest      compile the _results_ of all failing deep tests natively
-	# compall       compile all deep test results natively
-	# compmiss      compile the deep test results that failed before
+	# comptest      natively compile* the result of all failing deep tests
+	# compall       natively compile* all deep test results
+	# compmiss      natively compile* the deep test results that failed before
 	# memtest       valgrind & internal memory leak tests
 	# update        interactive update of failing deeptests's result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
@@ -110,6 +111,8 @@ help:
 	#
 	# ▫️  1st level of tests: build environment
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
+	#
+	# * the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
 
 build:
 	@if (! $(MAKE) -s -o lexccc -q lexccc.c build/.parser & ! $(MAKE) -s lexccc) ; \
@@ -274,6 +277,9 @@ focusprep: build
 focustest: build
 	@cd tests ; $(MAKE) focustest
 
+focuscomp: build
+	@cd tests ; $(MAKE) focuscomp
+
 expclean:
 	@cd tests ; $(MAKE) expclean
 
@@ -394,6 +400,9 @@ endif
 
 testlog:
 	@cd tests ; $(MAKE) testlog
+
+cleanlog:
+	@cd tests ; $(MAKE) cleanlog
 
 clean:
 	@printf "\n\n$(hi)▫️  clean built and generated files $(off)\n\n"
@@ -616,6 +625,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check comptest compall devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample check comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

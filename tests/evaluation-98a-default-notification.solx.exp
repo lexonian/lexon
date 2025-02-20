@@ -17,7 +17,7 @@ pragma solidity ^0.8.17;
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     solidity 0.3.98a U
+ **	backend:     solidity 0.3.98c U
  **
  **	target:      solidity 0.8.17+
  **
@@ -127,13 +127,6 @@ contract EvaluationLicenseSystem {
 
     function permit(address payable _authorized) internal view {
         require(msg.sender == _authorized, "not permitted");
-    }
-
-    /* built-in safe transfer */
-
-    function transfer(address payable _to, uint _amount) internal {
-        (bool _success, ) = _to.call{value:_amount}("");
-        require(_success, "transfer failed on receiver side");
     }
 
     /* built-in send message */

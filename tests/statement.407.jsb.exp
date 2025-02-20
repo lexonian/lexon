@@ -2,7 +2,6 @@ module.exports = class UCCFinancingStatement {
 
     constructor(filer, filing_office, debtor, secured_party, collateral) {
 
-        let main = this;
         this._escrow = 0;
         this.file_number = null;
         this.initial_statement_date = null;
@@ -161,8 +160,8 @@ module.exports = class UCCFinancingStatement {
 
     transfer(from, to, amount) {
         console.log(`➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
+        if(from == 'escrow') this._escrow -= amount;
+        if(to == 'escrow') this._escrow += amount;
     }
 
 

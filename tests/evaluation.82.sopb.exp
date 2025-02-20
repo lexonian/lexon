@@ -1,112 +1,130 @@
 
 
-@compiler >=6
+@compiler >=8
 
-main contract EvaluationLicenseSystem =
-
-    record state = {
+namespace MainState =
+    record main_state = {
             licensor : address,
             arbiter : address,
             licensing_service_fee : int,
-            breach_service_fee : int
+            breach_service_fee : int,
+            _license_list : list(address),
+            _license_count : int
         }
+
+using MainState
+
+contract interface Main =
+    entrypoint get_state: () => main_state
+
+main contract EvaluationLicenseSystem : Main =
+
+
+    type state = main_state
 
     entrypoint init(arbiter : address, licensing_service_fee : int, breach_service_fee : int) = {
             licensor = Call.caller,
             arbiter = arbiter,
             licensing_service_fee = licensing_service_fee,
-            breach_service_fee = breach_service_fee
+            breach_service_fee = breach_service_fee,
+            _license_list = [],
+            _license_count = 0
         }
 
+    entrypoint get_state() : state =
+        state
 
+        
+    
 
-    stateful function transfer(to : address, amount : int) =
-        Chain.spend(to, amount)
-
-
-this._license_list = {};
-this._license_count = 0;
+    stateful entrypoint add_license(licensee : address, description_of_goods : string) : address =
+        let covenant = Chain.create(Address.to_contract(Contract.address) : EvaluationLicenseSystem, licensee, description_of_goods) : License
+        put(state{ _license_count = state._license_count + 1})
+        put(state{ _license_list = covenant.address :: state._license_list })
+        covenant.address
 
 contract License =
 
     record state = {
-        description_of_goods : string,
-        licensee : address,
-        paid : bool,
-        commissioned : bool,
-        comment_text : string,
-        published : bool,
-        permission_to_comment : bool,
-        notice_time : int,
+            global : main_state,
+            description_of_goods : string,
+            licensee : address,
+            paid : bool,
+            commissioned : bool,
+            comment_text : string,
+            published : bool,
+            permission_to_comment : bool,
+            notice_time : int,
             terminated : bool
         }
 
-    entrypoint init(licensee : address, description_of_goods : string) = {
-        description_of_goods = description_of_goods,
-        licensee = licensee,
-        paid = false,
-        commissioned = false,
-        comment_text = "",
-        published = false,
-        permission_to_comment = false,
-        notice_time = 0,
-            terminated = false
+    entrypoint init(global : Main, licensee : address, description_of_goods : string) = {
+            description_of_goods = description_of_goods,
+            licensee = licensee,
+            paid = false,
+            commissioned = false,
+            comment_text = "",
+            published = false,
+            permission_to_comment = false,
+            notice_time = 0,
+            terminated = false,
+            global = global.get_state()
         }
 
 
     stateful entrypoint pay() =
         check_termination()
-        require(Call.caller == licensee, "not permitted")
-        if(Call.caller == licensee)
-            transfer(state.licensor, state.licensing_service_fee)
-        paid = true;
+        require(Call.caller == state.licensee, "not permitted")
+        if(Call.caller == state.licensee)
+            transfer(state.global.licensor, state.global.licensing_service_fee)
+        put(state{ paid = true})
 
 
     stateful entrypoint commission() =
         check_termination()
-        permit(state.licensor)
+        permit(state.global.licensor)
         put(state{commissioned = true})
 
 
     stateful entrypoint comment(comment_text : string) =
         check_termination()
-        permit(licensee)
+        permit(state.licensee)
         put(state{comment_text = comment_text})
 
 
     stateful entrypoint publication() =
         check_termination()
-        permit(licensee)
+        permit(state.licensee)
         put(state{published = true})
 
 
     stateful entrypoint grant_permission_to_comment() =
         check_termination()
-        permit(licensee)
+        permit(state.licensee)
         put(state{permission_to_comment = true})
 
 
     stateful entrypoint declare_breach() =
         check_termination()
-        permit(state.arbiter)
+        permit(state.global.arbiter)
         if(factually_breached())
-            transfer(state.licensor, state.breach_service_fee)
+            transfer(state.global.licensor, state.global.breach_service_fee)
             termination()
 
 
     entrypoint factually_breached() =
-        ((commissioned && comment_text == "")
-                 || (published && (!permission_to_comment && (notice_time =< (Chain.timestamp - (24 * 3600000))))))
+        ((state.commissioned && state.comment_text == "")
+                 || (state.published && (!state.permission_to_comment && (state.notice_time =< (Chain.timestamp - (24 * 3600000))))))
 
 
     stateful entrypoint notice() =
         check_termination()
-        require(Call.caller == state.arbiter || Call.caller == state.licensor, "not permitted")
+        require(Call.caller == state.global.arbiter || Call.caller == state.global.licensor, "not permitted")
         put(state{notice_time = Chain.timestamp})
 
 
     entrypoint noticed() =
-        notice_time != 0
+        state.notice_time != 0
 
 
     function permit(authorized : address) =

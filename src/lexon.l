@@ -1601,30 +1601,30 @@ void help() {
 	-V --version                    print version slug and exit\n\
 	-h --help                       print this text and exit\n\
 	-m --manual                     print the readme text and exit\n\
-	-o --output <file name>         write result of source translation to <file name>, not stdout\n\
-	-j --echo-source                list the source code that will be processed\n\
-	-Q --no-result                  no output of resulting code to screen even absent <out file>\n\
+	-o --output <file name>         write result of source translation to <file name> (default: stdout)\n\
+	-j --echo-source                list the source text that will be processed\n\
+	-Q --no-result                  no output of resulting code to screen, even absent <out file>\n\
 \n\
-	Developing Lexon Code\n\
+	Producing Lexon Code\n\
 	-2 --javascript                 produce javascript output\n\
 	-3 --solidity                   produce solidity output\n\
 	-4 --sophia                     produce sophia output\n\
 	-v --verbose                    trace detailed compilation steps to find code errors\n\
 	-N --names                      list found names - ie. symbols - and exit\n\
-	-W --echo-precompile            show sanitized source code, with included files\n\
-	-P --precompile                 show sanitized source code, with included files, and exit\n\
+	-W --echo-precompile            show sanitized source code first, with included files\n\
+	-P --precompile                 show sanitized source code, with included files, then exit\n\
 	-J --jurisdictions              list known jurisdictions and exit\n\
 	-b --bare                       generated code is barebones happy path demonstration\n\
 	-y --comment                    generated code has explanatory comments\n\
 	-u --instructions               generated code leads in with user instructions\n\
-	-f --feedback                   generated code confirms calls on-screen\n\
 	-z --harden                     generated code checks for unset arguments and variables\n\
-	-l --log [<file>]               generated code logs state changes to <file> (default: log)\n\
-	-s --signatures [<pem file>]    generated code signs log using <pem file> (default: key.pem)\n\
-	-c --chaining [<hash length>]   generated code hash-chains log-entries (default length 12)\n\
-	-p --persistence [<file>]       generated code stores state in <file> (default: state)\n\
-	-t --bundle [<file>]            generated code can tar code, log and state (default: contract.tgz)\n\
-	-x --all-auxiliaries            generated code features all extras (equals -y -u -f -z -l -s -c -p -t)\n\
+	-f --feedback                   javascript: generated code confirms calls on-screen\n\
+	-l --log [<file>]               javascript: generated code logs state changes to <file> (default: log)\n\
+	-s --signatures [<pem file>]    javascript: generated code signs log using <pem file> (default: key.pem)\n\
+	-c --chaining [<hash length>]   javascript: generated code hash-chains log-entries (default length 12)\n\
+	-p --persistence [<file>]       javascript: generated code stores state in <file> (default: state)\n\
+	-t --bundle [<file>]            javascript: generated code can tar code, log and state (default: contract.tgz)\n\
+	-x --all-auxiliaries            generated code features all applicable extras (-y -u -z -f -l -s -c -p -t)\n\
 	-i --include-path <path>        set a default path to look for include files\n\
  	-I --included-files             print cascade of included and sub-included files and exit\n\
 	-R --ignore-repeat-includes     ignore include files that are given repeatedly\n\
@@ -1665,9 +1665,9 @@ void help() {
 	-d --debug                      detailed trace of processing steps to debug lexon itself\n\
 	-D --debug-modules [<modules>]  detailed trace of specific modules. Use -Dh to list modules\n\
 	-M --memory-check               run-time check and post-mortem of memory allocation and errors\n\
-	$ make check                      run test source files from tests/\n\
-	$ make retest                     run tests from tests/ again but skip those that worked\n\
-	$ make update                     run tests again but interactively inspect & update expectations\n\
+	$ make check                    run test source files from tests/\n\
+	$ make recheck                  run tests from tests/ again but skip those that worked\n\
+	$ make update                   run tests again but interactively inspect & update expectations\n\
 \n\
 	Examples\n\
 	lexon sample.lex\n\

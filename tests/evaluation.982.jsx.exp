@@ -14,7 +14,7 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.98a U
+ **	backend:     javascript 0.3.98c U
  **
  **	target:      node 14.1+
  **
@@ -427,14 +427,14 @@ module.exports = class EvaluationLicenseSystem {
 
         if(typeof licensor === 'undefined') {
             console.log("> restore from file 'state'");
-            var data = fs.readFileSync('state', ()=>{});
-            var live = eval('(' + data + ')');
+            let data = fs.readFileSync('state', ()=>{});
+            let live = eval('(' + data + ')');
             Object.assign(this, live);
             
             /* restore License objects */
             for (let id in this._license_list) {
-                var live = this._license_list[id];
-                var instance = new License();
+                let live = this._license_list[id];
+                let instance = new License();
                 Object.assign(instance, live);
                 this._license_list[id] = instance;
             }
@@ -447,14 +447,6 @@ module.exports = class EvaluationLicenseSystem {
         return this._license_list[this._license_count += 1] = this.License(caller, license_taker, description_of_goods);
     }
 
-
-    /* built-in transfer message */
-
-    transfer(caller, from, to, amount) {
-        this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
-    }
 
     /* built-in convenience function to view state change log. */
 

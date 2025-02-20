@@ -8,7 +8,7 @@
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     javascript 0.3.98a U
+ **	backend:     javascript 0.3.98c U
  **
  **	target:      node 14.1+
  **
@@ -132,7 +132,6 @@ module.exports = class Escrow {
 
     constructor(buyer, amount, seller, agent, service_fee) {
 
-        let main = this;
 
         /* object members: skip for restoring serialized object */
         if(typeof buyer !== 'undefined') {
@@ -146,7 +145,7 @@ module.exports = class Escrow {
             /* start log - overwrites previous by same name */
 
             fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
-            this.transfer(caller, this.buyer, 'escrow', amount);
+            this.transfer(buyer, this.buyer, 'escrow', amount);
             this.log(buyer, "✓ Seller appointed");
             this.log(buyer, "✓ Agent appointed");
             this.log(buyer, "✓ Service Fee fixed");
@@ -156,8 +155,8 @@ module.exports = class Escrow {
 
         if(typeof buyer === 'undefined') {
             console.log("> restore from file 'state'");
-            var data = fs.readFileSync('state', ()=>{});
-            var live = eval('(' + data + ')');
+            let data = fs.readFileSync('state', ()=>{});
+            let live = eval('(' + data + ')');
             Object.assign(this, live);
         }
     }
@@ -199,8 +198,8 @@ module.exports = class Escrow {
 
     transfer(caller, from, to, amount) {
         this.log(caller, `➠ system message: transfer ${amount} from ${from} to ${to}.`);
-        if(from == 'escrow') main._escrow -= amount;
-        if(to == 'escrow') main._escrow += amount;
+        if(from == 'escrow') this._escrow -= amount;
+        if(to == 'escrow') this._escrow += amount;
     }
 
     /* built-in convenience function to view state change log. */

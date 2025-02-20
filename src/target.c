@@ -64,18 +64,18 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.98b U"
+/*JS */ #define backend_version "javascript 0.3.98c U"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.98b U"
+/*Sol*/ #define backend_version "solidity 0.3.98c U"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.98b U"
-/*Sop*/ #define target_version "sophia 7.1+"
+/*Sop*/ #define backend_version "sophia 0.3.98c U"
+/*Sop*/ #define target_version "sophia 8+"
 
 #define CYCLE_2 true
 
@@ -187,11 +187,14 @@ static char *methods = null;
 static char *globals = null; // element members of main
 static char *declarations = null;
 static char *initializations = null;
+static char *main_interface = null;
+static char *command_init = null;
+static bool beyond_assignment = false;
 static char *fixed = null; // list of variables that have been set
 static char *declared = null; // check use ◊
 static char *args = null; // list of variables that come in as paremeters
 static char *functions = null;
-static bool miller = false;
+/*Sop*/	static bool miller = false;
 
 static char *safedup(const char *name) {
 	assert(name);
@@ -338,6 +341,7 @@ static void produce_access_conditions(int down, int indent, char **production, l
 static void inject_transfer(char **production, int indent);
 static void inject_notify(char **production, char **emits, int indent);
 static void inject_termination(char **production, char *prompt, int indent);
+/*Sop*/	static void inject_force(char **production, int indent);
 
 /* create or find a binding for a function name */
 static bind *register_bind(char *name) {
@@ -970,56 +974,11 @@ static bool in(char *hay, char *needle) {
 /*T*/
 	static void insert_parameter_and_set_member(char **production, char **instructions, Symbol *symbol, bool payment, size_t paratag, int indent, int line);
 
-/*T*/	bool xxx_walk(char **production) {
-/*T*/		if(!root) return false;
-/*T*/		return xxx_document(production, root, 0);
-/*T*/	}
-
-	static Name *class = null;
-	static bool main_constructor_body = true;
-	static bool main_contract = true;
-	static bool covenant_constructor_body = false;
-	static bool terms_body = true;
-	static bool recital_of_terms = false;
-/*T*/	bool xxx_name(char **production, Name *Name, bool assign, int indent) {
-/*T*/		if(!Name) return false;
-
-		/* put '_' to names that are target language keywords */
-		char *safe = safedup(SNAKE(Name));
-		bool global = in(globals, Name);
-
-		if(!in(functions, Name)) {
-/*JS */			padcat(0, 0, production, global && !main_constructor_body?"main.":"this.", safe);
-/*Sol*/			padcat(0, 0, production, global && class?"main.":"", safe, global && class ? "()":"");
-/*Sop*/			padcat(0, 0, production, global && !miller?"state.":"", safe);
-		} else {
-			bind *bind = register_bind(safe);
-/*JS */			padcat(0, 0, production, global && !main_constructor_body?"main.":"this.", bind->tag);
-/*Sol*/			padcat(0, 0, production, global && class?"main.":"", bind->tag);
-/*Sop*/			padcat(0, 0, production, global && !miller?"state.":"", bind->tag);
-		}
-		if(assign) padcat(0, 0, &fixed, ":", safe, ":");
-		mtrac_free(safe);
-/*T*/		return true;
-/*T*/	}
-
-/*T*/	bool xxx_description(char **production, Description *Description, int indent) {
-/*T*/		if(!Description) return false;
-/*T*/		padcat(0, 0, production, "\"", Description, "\"");
-/*T*/		return true;
-/*T*/	}
-
-/*T*/	bool xxx_scalar(char **production, Scalar *Scalar, int indent) {
-/*T*/		if(!Scalar) return false;
-/*T*/		padcat(0, 0, production, Scalar);
-/*T*/		return true;
-/*T*/	}
-
-/*T*/	bool xxx_hex(char **production, Hex *Hex, int indent) {
-/*T*/		if(!Hex) return false;
-/*T*/		padcat(0, 0, production, Hex);
-/*T*/		return true;
-/*T*/	}
+/*T*/	bool xxx_walk(char **production);
+/*T*/	bool xxx_name(char **production, Name *Name, bool assign, int indent);
+/*T*/	bool xxx_description(char **production, Description *Description, int indent);
+/*T*/	bool xxx_scalar(char **production, Scalar *Scalar, int indent);
+/*T*/	bool xxx_hex(char **production, Hex *Hex, int indent);
 
 static const char *lexsymtype(Symbol *symbol);
 
@@ -1142,6 +1101,10 @@ static bool is_payment(Predicates *predicates) {
 	static char *msg_value = null;
 	static bool is_payable = false;
 	static bool payment_expression = false;
+/*Sop*/	static bool conditional_expression = false;
+/*Sop*/	static bool require_option = false;
+/*Sop*/	static bool require_mandat = false;
+/*Sop*/	static bool require_force = false;
 	static char *inference = null;
 /*S+S*/	static bool is_stateful = false;
 	static char *parameters = null;
@@ -1242,6 +1205,68 @@ static bool is_payment(Predicates *predicates) {
 	static bool uses_notification = false;
 /*S+S*/	static bool uses_permit = false;
 	static bool has_subclasses = false;
+/*Sop*/	static bool uses_option = false; // Sophia Option header
+
+/*JS */ static void optional_caller(char **production) {
+/*JS */		if(opt_log)
+/*JS */			concat(production, !current_function && active_subjects ? SNAKE(active_subjects->item) : "caller", ", ");
+/*JS */	}
+
+/*T*/	bool xxx_walk(char **production) {
+/*T*/		if(!root) return false;
+/*T*/		return xxx_document(production, root, 0);
+/*T*/	}
+
+	static Name *class = null;
+	static bool main_constructor_body = true;
+	static bool main_contract = true;
+	static bool covenant_constructor_body = false;
+	static bool terms_body = true;
+	static bool recital_of_terms = false;
+/*T*/	bool xxx_name(char **production, Name *Name, bool assign, int indent) {
+/*T*/		if(!Name) return false;
+
+		/* put '_' to names that are target language keywords */
+		char *safe = safedup(SNAKE(Name));
+		bool global = in(globals, Name) && class;
+
+/*Sop*/		if(opt_harden && require_force) { padcat(0, 0, production, "Option.force_msg("); uses_option = true; }
+
+		if(!in(functions, Name)) {
+/*JS */			padcat(0, 0, production, global && !main_constructor_body?"main.":"this.", safe);
+/*Sol*/			padcat(0, 0, production, global && class?"main.":"", safe, global && class ? "()":"");
+/*Sop*/			padcat(0, 0, production, !miller?"state.":"", global && !miller?"global.":"", safe);
+		} else {
+			bind *bind = register_bind(safe);
+/*JS */			padcat(0, 0, production, global && !main_constructor_body?"main.":"this.", bind->tag);
+/*Sol*/			padcat(0, 0, production, global && class?"main.":"", bind->tag);
+/*Sop*/			padcat(0, 0, production, global && !miller?"state.":"", bind->tag);
+		}
+/*Sop*/		if(opt_harden && require_force) padcat(0, 0, production, ", \"", Name, "\")");
+
+		if(assign) padcat(0, 0, &fixed, ":", safe, ":");
+		mtrac_free(safe);
+/*T*/		return true;
+/*T*/	}
+
+/*T*/	bool xxx_description(char **production, Description *Description, int indent) {
+/*T*/		if(!Description) return false;
+/*T*/		padcat(0, 0, production, "\"", Description, "\"");
+/*T*/		return true;
+/*T*/	}
+
+/*T*/	bool xxx_scalar(char **production, Scalar *Scalar, int indent) {
+/*T*/		if(!Scalar) return false;
+/*T*/		padcat(0, 0, production, Scalar);
+/*T*/		return true;
+/*T*/	}
+
+/*T*/	bool xxx_hex(char **production, Hex *Hex, int indent) {
+/*T*/		if(!Hex) return false;
+/*T*/		padcat(0, 0, production, Hex);
+/*T*/		return true;
+/*T*/	}
+
 
 /*T*/	bool xxx_document(char **production, Document *Document, int indent) {
 /*T*/		if(!Document) return false;
@@ -1325,8 +1350,21 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		if(opt_log && opt_signatures) padcat(1, indent, production, "var last_passphrase;");
 
 /*Sop*/		/* source code head (Sop) */
-/*Sop*/		padcat(2, 0, production, "@compiler >=6");
-/*Sop*/		if(opt_harden) padcat(2, 0, production, "include \"Option.aes\"");
+/*Sop*/		padcat(2, 0, production, "@compiler >=8");
+/*Sop*/		if(opt_harden) padcat(0, 0, production, "%43%"); // %43%: include "Option.aes"
+
+/*Sop*/		/* if covenants exist, the main state declaration is forward-extracted
+/*Sop*/		   into its own namespace to be shared via a class interface 'Main'.
+/*Sop*/		   The interface is required possibly because of an aesophia bug.
+/*Sop*/		   Using the main contracts' type in places results in an 'unbound' error. */
+/*Sop*/		padcat(0, 0, production, "%37%"); // %37%: state namespace if covenants need access to it
+/*Sop*/		main_interface = mtrac_strdup( // not used when no covenants exist
+/*Sop*/			"\n\nnamespace MainState =\n"
+/*Sop*/			"    record main_state = {%27%\n" // %27%: declarations (if covenants exist)
+/*Sop*/			"        }\n\n"
+/*Sop*/			"using MainState\n\n"
+/*Sop*/			"contract interface Main =\n"
+/*Sop*/			"    entrypoint get_state: () => main_state\n");
 
 		/* comments */
 		if(opt_comment) {
@@ -1357,12 +1395,10 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		padcat(1, 0, production, "%20%"); // %20%: closure 'main = this'
 /*Sol*/		padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%"); // %27%: member declaration
 /*Sol*/		padcat(2, indent+1, production, "%29%constructor(%1%) %28%{"); // %29%: emits, %1%: constructor parameters, %28%: payable
-/*Sop*/		padcat(2, indent, production, "%28%main contract ", camel_spaced(module), " ="); // %28% payable
-/*Sop*/		padcat(2, indent+1, production, "record state = {");
-/*Sop*/		padcat(0, indent  , production, "%27%"); // %27%: member declaration
-/*Sop*/		padcat(1, indent+2, production, "}\n");
+/*Sop*/		padcat(1, indent, production, "%28%main contract ", camel_spaced(module), "%38% ="); // %28%: payable, %38%: Main interface inheritance
+/*Sop*/		padcat(1, 0     , production, "%39%"); // %39%: main_state type def, may contain %27%: declarations -- or state type def (if covenants)
 /*Sop*/		padcat(1, indent+1, production, "%29%entrypoint init(%1%) = {%32%"); // %29%: emits, %1%: paras, %32%: initializations
-/*Sop*/		padcat(1, indent+2, production, "}\n");
+/*Sop*/		padcat(1, indent+2, production, "}%40%%41%"); // %40%: state getter
 
 		main_constructor_body = true;
 		main_contract = true;
@@ -1376,8 +1412,18 @@ static bool is_payment(Predicates *predicates) {
 
 /*S+S*/		/* sol, sop: end of main constructor */
 /*Sol*/		padcat(1, indent+1, production, "}%34%"); // %34%: adders
+/*Sop*/		padcat(1, indent+2, production, "%42%"); // end of init2
 /*Sop*/		padcat(1, indent+1, production, "%34%"); // %34%: adders
 		replace(production, "%1%", parameters);
+
+/*Sop*/		/* sop: command-dedicated, second constructor */
+/*Sop*/		if(beyond_assignment) {
+/*Sop*/			replace(production, "%41%", "\n    /* required additional constructor for statements beyond assignments */ \n    entrypoint init2() : state =");
+/*Sop*/			replace(production, "%42%", "state");
+/*Sop*/		} else {
+/*Sop*/			replace(production, "%41%", "");
+/*Sop*/			replace(production, "%42%", "");
+/*Sop*/		}
 
 /*S+S*/		padcat(0,0, production, "%31%"); // %31%: auxiliary functions
 
@@ -1398,8 +1444,8 @@ static bool is_payment(Predicates *predicates) {
 /*JS */			if(opt_comment) padcat(2, indent+2, production, "/* restore object from file - must be below class definition */");
 /*JS */			padcat(C, indent+2, production, "if(typeof ", caller, " === 'undefined') {");
 /*JS */ 		padcat(1, indent+3, production, "console.log(\"> restore from file '", opt_persistence, "'\");");
-/*JS */ 		padcat(1, indent+3, production, "var data = fs.readFileSync('", opt_persistence, "', ()=>{});");
-/*JS */ 		padcat(1, indent+3, production, "var live = eval('(' + data + ')');");
+/*JS */ 		padcat(1, indent+3, production, "let data = fs.readFileSync('", opt_persistence, "', ()=>{});");
+/*JS */ 		padcat(1, indent+3, production, "let live = eval('(' + data + ')');");
 /*JS */ 		padcat(1, indent+3, production, "Object.assign(this, live);");
 /*JS */ 		if(restorers && strlen(restorers)) padcat(1, indent+3, production, restorers);
 /*JS */ 		padcat(1, indent+2, production, "}");
@@ -1435,13 +1481,7 @@ static bool is_payment(Predicates *predicates) {
 		if(uses_termination) inject_termination(&auxfuncs, "contract system", indent+1);
 
 /*Sop*/		/* Sophia type hardening by Options */
-/*Sop*/		if(opt_harden) {
-/*Sop*/			if(opt_comment) padcat(2, indent+1, &auxfuncs, "/""* built-in option type force function *""/");
-/*Sop*/			padcat(C, indent+1, &auxfuncs, "function force(o : option('a), name : string) : 'a =");
-/*Sop*/			padcat(1, indent+2, &auxfuncs, "switch(o)");
-/*Sop*/			padcat(1, indent+3, &auxfuncs, "None =""> abort(StringInternal.concat(name, \" not fixed\"))");
-/*Sop*/			padcat(1, indent+3, &auxfuncs, "Some(a) =""> a");
-/*Sop*/		}
+/*Sop*/		// ◊◊ if(opt_harden) inject_force(&auxfuncs, indent);
 
 /*JS */		/* contract history from log */
 /*JS */		if(opt_log) {
@@ -1667,10 +1707,26 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/			padcat(1, 3, &initializations, "terminated = false");
 /*S+S*/		}
 
-/*S+S*/		/* sol+sop: insert declaration of member variables into constructor (sol)/contract (sop) head */
-/*S+S*/		replace(production, "%27%", declarations);
+/*Sol*/		/* insert declaration of member variables into constructor (sol)/contract (sop) head */
+/*Sol*/		replace(production, "%27%", declarations);
 
-/*Sop*/		/* sop: insert initializations of member variables into constructor (sop) head */
+/*Sop*/		/* insert declaration of member variables into constructor or interface declaration */ 
+/*Sop*/		if(!has_subclasses) {
+/*Sop*/			replace(production, "%37%", ""); // no namespace and Main interface
+/*Sop*/			replace(production, "%38%", "");
+/*Sop*/			replace(production, "%39%", "    record state = {\n        %27%\n        }");
+/*Sop*/			replace(production, "%27%", declarations);
+/*Sop*/			replace(production, "%40%", "");
+/*Sop*/		} else {
+/*Sop*/			replace(production, "%27%", "");
+/*Sop*/			replace(&main_interface, "%27%", declarations);
+/*Sop*/			replace(production, "%37%", main_interface);
+/*Sop*/			replace(production, "%38%", " : Main");
+/*Sop*/			replace(production, "%39%", "\n\n    type state = main_state\n");
+/*Sop*/			replace(production, "%40%", "\n\n    entrypoint get_state() : state =\n        state\n");
+/*Sop*/		}
+
+/*Sop*/		/* sop: insert initializations of member variables into constructor head */
 /*Sop*/		replace(production, "%32%", initializations);
 
 		/* prepend instructions to the top - or just discard if not switched on */
@@ -1682,11 +1738,16 @@ static bool is_payment(Predicates *predicates) {
 		replace(production, "%0%", opt_instructions ? instructions : "");
 
 /*Sop*/		/* add option casts */
-/*Sop*/		replace(production, "§§§", opt_harden ? "option(" : "");
-/*Sop*/		replace(production, "§§", opt_harden ? "Some(" : "");
-/*Sop*/		replace(production, "§", opt_harden ? ")" : "");
-/*Sop*/		replace(production, "±±", opt_harden ? "force(" : "");
-/*Sop*/		replace(production, "±", opt_harden ? ")" : "");
+/*Sop*/		replace(production, ":§§§:", opt_harden ? "option(" : "");
+/*Sop*/		replace(production, ":§§:", opt_harden ? "Some (" : "");
+/*Sop*/		replace(production, ":§:", opt_harden ? ")" : "");
+
+/*Sop*/		/* include Sophia Options declaration */
+/*Sop*/		if(opt_harden && uses_option)
+/*Sop*/			replace(production, "%43%", "\n\ninclude \"Option.aes\"");
+/*Sop*/		else
+/*Sop*/			replace(production, "%43%", "");
+
 
 		/* memory clean up */
 		delete_bind_tree(binds);
@@ -1700,6 +1761,7 @@ static bool is_payment(Predicates *predicates) {
 		mtrac_free(globals);
 		mtrac_free(declarations);
 		mtrac_free(initializations);
+/*Sop*/		mtrac_free(main_interface);
 		mtrac_free(fixed);
 		mtrac_free(declared);
 		mtrac_free(class_lists);
@@ -1722,8 +1784,9 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/		padcat(1, indent+1, production, "require(msg.sender == _authorized, \"not permitted\");");
 /*Sol*/		padcat(1, indent, production, "}");
 /*Sop*/		if(opt_harden) {
-/*Sop*/			padcat(C, indent, production, "function permit(authorized : §§§address§, name : string) =");
-/*Sop*/			padcat(1, indent+1, production, "require(Call.caller == force(authorized, name), StringInternal.concat(\"no access for \", name))");
+/*Sop*/			padcat(C, indent, production, "function permit(authorized : :§§§:address:§:, name : string) =");
+/*Sop*/			padcat(1, indent+1, production, "require(Call.caller == Option.force_msg(authorized, name), StringInternal.concat(\"no access for \", name))");
+/*Sop*/			uses_option = true;
 /*Sop*/		} else {
 /*Sop*/			padcat(C, indent, production, "function permit(authorized : address) =");
 /*Sop*/			padcat(1, indent+1, production, "require(Call.caller == authorized, \"access\")");
@@ -1745,8 +1808,8 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/		padcat(1, indent+1, production, "Chain.spend(to, amount)");
 
 /*JS */		/* track escrow balance */
-/*JS */		padcat(1, indent+1, production, "if(from == 'escrow') main._escrow -= amount;");
-/*JS */		padcat(1, indent+1, production, "if(to == 'escrow') main._escrow += amount;");
+/*JS */		padcat(1, indent+1, production, "if(from == 'escrow') ", class?"main.":"this.", "_escrow -= amount;");
+/*JS */		padcat(1, indent+1, production, "if(to == 'escrow') ", class?"main.":"this.", "_escrow += amount;");
 /*J+S*/		padcat(1, indent, production, "}");
 	}
 
@@ -1800,6 +1863,15 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/		padcat(2, indent  , production, "function check_termination() =");
 /*Sop*/		padcat(1, indent+1, production, "require(!state.terminated, \"", prompt, " terminated before\")");
 	}
+
+/*Sop*/	/* Sophia type hardening by Options ◊◊ */
+/*Sop*/	void inject_force(char **production, int indent) {
+/*Sop*/		if(opt_comment) padcat(2, indent+1, production, "/""* built-in option type force function *""/");
+/*Sop*/		padcat(C, indent+1, production, "function force(o : option('a), name : string) : 'a =");
+/*Sop*/		padcat(1, indent+2, production, "switch(o)");
+/*Sop*/		padcat(1, indent+3, production, "None =""> abort(StringInternal.concat(name, \" not fixed\"))");
+/*Sop*/		padcat(1, indent+3, production, "Some(a) =""> a");
+/*Sop*/	}
 
 /*T*/
 /*T*/	bool xxx_head(char **production, Head *Head, int indent) {
@@ -1914,6 +1986,8 @@ static bool is_payment(Predicates *predicates) {
 		char * emits = mtrac_strdup("");
 /*S+S*/		bool permit_shelve = uses_permit;
 /*S+S*/		uses_permit = false;
+		bool transfer_shelve = uses_transfer;
+		uses_transfer = false;
 		bool notification_shelve = uses_notification;
 		uses_notification = false;
 		bool termination_shelve = uses_termination;
@@ -1941,10 +2015,10 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/		padcat(1, 1, &adders, "uint ", count, " = 0;");
 
 /*Sop*/		padcat(0, 0, &declarations, *declarations?",":"");
-/*Sop*/		padcat(1, 3, &declarations, list, " : list,");
-/*Sop*/		padcat(1, 3, &declarations, count, " : uint");
+/*Sop*/		padcat(1, 3, &declarations, list, " : list(address),");
+/*Sop*/		padcat(1, 3, &declarations, count, " : int");
 /*Sop*/		padcat(0, 0, &initializations, *initializations?",":"");
-/*Sop*/		padcat(1, 3, &initializations, list, " = {},");
+/*Sop*/		padcat(1, 3, &initializations, list, " = [],");
 /*Sop*/		padcat(1, 3, &initializations, count, " = 0");
 
 		if(opt_comment) padcat(2, indent, production, "/**");
@@ -1983,10 +2057,12 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/         padcat(1, indent+2, production, "main = _main;");
 /*Sop*/		padcat(2, indent  , production, "%28%contract ", class, " ="); // %28%: payable
 /*Sop*/		padcat(2, indent+1, production, "record state = {");
-/*Sop*/		padcat(0, indent  , production, "%27C%"); // %27C%: covenant member declaration
+/*Sop*/		padcat(1, indent+3, production, "global : main_state,");
+/*Sop*/		padcat(0, 0       , production, "%27C%"); // %27C%: covenant member declaration
 /*Sop*/		padcat(1, indent+2, production, "}\n");
-/*Sop*/		padcat(1, indent+1, production, "%29C%entrypoint init(master : ", camel_spaced(module), ", %2%) = {%32C%,"); // %29C%: emits, %1%: paras, %32C%: initializations
-/*Sop*/		padcat(1, indent+3, production, "master = master");
+/*Sop*/		padcat(1, indent+1, production, "%29C%entrypoint init(global : Main, %2%) = {%32C%,"); // %29C%: emits, %1%: paras, %32C%: initializations
+/*Sop*/		padcat(1, indent+3, production, "global = global.get_state()");
+
 /*Sop*/		padcat(1, indent+2, production, "}");
 
 		char *declarations_stack = declarations;
@@ -2014,8 +2090,8 @@ static bool is_payment(Predicates *predicates) {
 
 /*JS */		if(opt_comment) padcat(1, indent+1, &restorers, "/* restore ", class, " objects */");
 /*JS */		padcat(1, indent+1, &restorers, "for (let id in this.", list, ") {");
-/*JS */		padcat(1, indent+2, &restorers, "var live = this.", list, "[id];");
-/*JS */		padcat(1, indent+2, &restorers, "var instance = new ", class, "();");
+/*JS */		padcat(1, indent+2, &restorers, "let live = this.", list, "[id];");
+/*JS */		padcat(1, indent+2, &restorers, "let instance = new ", class, "();");
 /*JS */		padcat(1, indent+2, &restorers, "Object.assign(instance, live);");
 /*JS */		padcat(1, indent+2, &restorers, "this.", list, "[id] = instance;");
 /*JS */		padcat(1, indent+1, &restorers, "}");
@@ -2045,6 +2121,9 @@ static bool is_payment(Predicates *predicates) {
 		/* termination of covenant */
 		if(uses_termination) inject_termination(production, "covenant", indent+1);
 
+/*Sop*/		/* Sophia type hardening by Options */
+/*Sop*/		// ◊◊ if(opt_harden) inject_force(production, indent);
+
 /*S+S*/		/* take care of the covenant's termination flag [3] */
 /*S+S*/		if(uses_termination) {
 /*Sol*/			padcat(1, 1, &declarations, "bool terminated = false;");
@@ -2067,10 +2146,12 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
 /*Sol*/		padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ", class, "(this, %2b%);");
 /*Sol*/		padcat(1, 1, &adders, "}");
-/*Sop*/		padcat(C, 1, &adders, "stateful entrypoint add_", SNAKE(Covenant->Name), "(%2%) =");
+/*Sop*/		padcat(C-1, 1, &adders, "stateful entrypoint add_", SNAKE(Covenant->Name), "(%2%) : address =");
 /*Sop*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()");
-/*Sop*/		padcat(1, 2, &adders, "put(state{", count, " = state.", count, " + 1})");
-/*Sop*/		padcat(1, 2, &adders, "put(state{ ", list, " = ", class, " :: state.", list, " })");
+/*Sop*/		padcat(1, 2, &adders, "let covenant = Chain.create(Address.to_contract(Contract.address) : ", camel_spaced(module), ", %2b%) : ", class);
+/*Sop*/		padcat(1, 2, &adders, "put(state{ ", count, " = state.", count, " + 1})");
+/*Sop*/		padcat(1, 2, &adders, "put(state{ ", list, " = covenant.address :: state.", list, " })");
+/*Sop*/		padcat(1, 2, &adders, "covenant.address");
 
 /*JS */		/* inject catch of non-permissioned caller in constructor wrapper */
 /*JS */		char *perm = mtrac_strdup("");
@@ -2122,9 +2203,10 @@ static bool is_payment(Predicates *predicates) {
 		mtrac_free(functions), functions = functions_shelve;
 		mtrac_free(fixed), fixed = fixed_shelve;
 		mtrac_free(declared), declared = declared_shelve;
+/*S+S*/		uses_permit = permit_shelve;
+		uses_transfer = transfer_shelve;
 		uses_notification = notification_shelve;
 		mtrac_free(emits);
-/*S+S*/		uses_permit = permit_shelve;
 		uses_termination = termination_shelve;
 		mtrac_free(class), class = null;
 		mtrac_free(instance), instance = null;
@@ -2373,8 +2455,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/
 /*T*/	bool xxx_all_contracts(char **production, All_Contracts *All_Contracts, int indent) { // unclear concept ◊
 /*T*/		if(!All_Contracts) return false;
-		// intentionally empty
 /*JS */		padcat(0, 0, production, "main.");
+		// intentionally empty
 /*T*/		return true;
 /*T*/	}
 /*T*/
@@ -2646,7 +2728,7 @@ static bool is_payment(Predicates *predicates) {
 					if(i++) padcat(0, 0, production, " || ");
 /*JS */					padcat(0, 0, production, "caller == ", symbol);
 /*Sol*/					padcat(0, 0, production, "msg.sender == ", symbol);
-/*Sop*/					padcat(0, 0, production, "§§Call.caller§ == state.", class && in(globals, symbol)?"main.":"state.", symbol);
+/*Sop*/					padcat(0, 0, production, ":§§:Call.caller:§: == ", symbol);
 					if(current_function) current_function->uses_caller = true;
 
 					/* aggregated, potentially shortened access condition for revert message */
@@ -2658,7 +2740,7 @@ static bool is_payment(Predicates *predicates) {
 							padcat(0, 0, &courtesy_track, search);
 /*JS */							padcat(0, 0, &courtesy, "caller == ", symbol);
 /*Sol*/							padcat(0, 0, &courtesy, "msg.sender == ", symbol);
-/*Sop*/							padcat(0, 0, &courtesy, "§§Call.caller§ == ", class && in(globals, symbol)?"main.":"state.", symbol);
+/*Sop*/							padcat(0, 0, &courtesy, ":§§:Call.caller:§: == ", symbol);
 							if(current_function) current_function->uses_caller = true;
 						}
 						mtrac_free(search);
@@ -2807,15 +2889,23 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Object) return false;
 /*T*/		if(opt_debug) printf("producing Object\n");
 		if(Object->Symbol) {
-/*Sop*/			if(opt_harden) padcat(0,0, production, "force(");
+/*Sop*/			//◊if(opt_harden && require_mandat) padcat(0,0, production, "Option.default(0,Option.force_msg("); /////
+/*Sop*/			if(opt_harden) { padcat(0,0, production, "Option.force_msg("); uses_option = true; }
 			xxx_symbol(production, Object->Symbol, false, indent+1);
 /*Sop*/			if(opt_harden) {
 /*Sop*/				padcat(0,0, production, ", \"");
 /*Sop*/				xxx_noun(production, Object->Symbol, indent+1);
 /*Sop*/				padcat(0,0, production, "\")");
+/*Sop*/			//◊	if(require_mandat) padcat(0,0, production, ")");
 /*Sop*/			}
-		} else if(Object->Reflexive)
+		} else if(Object->Reflexive) {
+/*Sop*/			if(opt_harden) { padcat(0,0, production, "Option.force_msg("); uses_option = true; }
 			xxx_reflexive(production, Object->Reflexive, indent+1);
+/*Sop*/			if(opt_harden) {
+/*Sop*/				padcat(0,0, production, ", \"reflexive pronoun\")");
+/*Sop*/				// ◊ xxx_noun(production, Object->Symbol, indent+1);
+/*Sop*/			}
+		}
 		// else: escrow == do nothing
 /*T*/		return true;
 /*T*/	}
@@ -2876,15 +2966,16 @@ static bool is_payment(Predicates *predicates) {
 	static void assign(char **production, int indent, Symbol *symbol, Expression *expression) {
 		padcat(1, indent, production, "");
 /*Sop*/		padcat(0, 0, production, "put(state{");
-		miller = true;
+/*Sop*/		miller = true;
 		xxx_symbol(production, symbol, true, indent); // true --> assign flag
-		miller = false;
+/*Sop*/		miller = false;
 /*S+S*/		is_stateful = true; // clean up where set outside assign ◊
 		padcat(0, 0, production, " = ");
 		if(expression)
 			xxx_expression(production, expression, indent+1);
 		else
-			padcat(0, 0, production, "true");
+/*J+S*/			padcat(0, 0, production, "true");
+/*Sop*/			padcat(0, 0, production, ":§§:true:§:");
 /*Sop*/		padcat(0, 0, production, "})");
 		padcat(0, 0, production, EOL);
 }
@@ -3071,9 +3162,11 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(opt_debug) printf("producing Setting\n");
 /*J+S*/		padcat(1, indent, production, "");
 /*Sop*/		padcat(1, indent, production, "put(state{ ");
+/*Sop*/		miller = true;
 /*T*/		xxx_symbol(production, Setting->Symbol, true, indent+1);
+/*Sop*/		miller = false;
 /*J+S*/		padcat(0, 0, production, " = true;");
-/*Sop*/		padcat(0, 0, production, " = true})");
+/*Sop*/		padcat(0, 0, production, " = :§§:true:§:})");
 /*JS */		if(opt_log || opt_feedback) {
 /*JS */			padcat(1, indent, production, (!class?"this":"main"),
 /*JS */				".log(", recital_of_terms?caller:"caller", ", \"✓ ", Setting->Symbol->Name, " state set\");");
@@ -3140,20 +3233,25 @@ static bool is_payment(Predicates *predicates) {
 
 
 		/* receiver */
-		if(!explicit_to_escrow)
+		if(!explicit_to_escrow) {
+			payment_expression = true;
 			xxx_object(production, Payment->Object, 0);
-		else
+			payment_expression = false;
+		} else
 			padcat(0, 0, production, "'escrow'");
 
 		padcat(0, 0, production, ", ");
 
 		/* amount */
-		if(Payment->Expression)
+		if(Payment->Expression) {
+			payment_expression = true;
 /*T*/			xxx_expression(production, Payment->Expression, 0);
-		else
+			payment_expression = false;
+		} else {
 /*JS */			padcat(0, 0, production, main_constructor_body?"this._escrow":"main._escrow");
 /*Sol*/			padcat(0, 0, production, "address(this).balance");
 /*Sop*/			padcat(0, 0, production, "Contract.balance");
+		}
 
 		padcat(0, 0, production, ")", EOL);
 
@@ -3166,7 +3264,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(opt_debug) printf("producing Pay\n");
 		uses_transfer = true;
 /*S+S*/		is_stateful = true;
-/*JS */		padcat(1, indent, production, (class?"main":"this"), ".transfer(", (opt_log)?"caller, ":"");
+/*JS */		padcat(1, indent, production, (class?"main":"this"), ".transfer(");
+/*JS */		optional_caller(production);
 /*S+S*/		padcat(1, indent, production, "transfer(");
 		if(current_function) current_function->uses_caller |= opt_log || opt_feedback;
 /*T*/		return true;
@@ -3202,17 +3301,19 @@ static bool is_payment(Predicates *predicates) {
 
 		xxx_send(production, Sending->Send, indent);
 
-/*JS */		// sender
+/*JS */		/* sender */
 /*JS */		xxx_name(production, (Name *)subject, false, 0);
 /*JS */		padcat(0, 0, production, ", ");
 
-		// receiver
+		/* receiver */
 		assert(Sending->Object->Symbol || Sending->Object->Reflexive);
 		xxx_object(production, Sending->Object, 0);
 		padcat(0, 0, production, ", ");
 
-		// message
+		/* message */
+/*Sop*/		require_mandat = true;	
 /*T*/		xxx_expression(production, Sending->Expression, 0);
+/*Sop*/		require_mandat = false;	
 		padcat(0, 0, production, ")", EOL);
 /*T*/		return true;
 /*T*/	}
@@ -3220,8 +3321,10 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_send(char **production, Send *Send, int indent) {
 /*T*/	        if(!Send) return false;
 /*T*/	        if(opt_debug) printf("producing Send\n");
+/*Sol*/		beyond_assignment = true;
 		uses_notification = true;
-/*JS */		padcat(1, indent, production, (class?"main.":"this."), "notify(", (opt_log)?"caller, ":"");
+/*JS */		padcat(1, indent, production, (class?"main.":"this."), "notify(");
+/*JS */		optional_caller(production);
 /*S+S*/		padcat(1, indent, production, "notify(");
 		if(current_function) current_function->uses_caller |= opt_log || opt_feedback;
 /*T*/		return true;
@@ -3230,6 +3333,7 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_notification(char **production, Notification *Notification, int indent) { // document it ◊
 /*T*/	        if(!Notification) return false;
 /*T*/	        if(opt_debug) printf("producing Notification\n");
+		beyond_assignment = true; /// ◊ make comprehensive
 
 /*T*/	        xxx_notify(production, Notification->Notify, indent);
 
@@ -3243,9 +3347,11 @@ static bool is_payment(Predicates *predicates) {
 		padcat(0, 0, production, ", ");
 
 		// message
-		if(Notification->Expression)
+		if(Notification->Expression) {
+/*Sop*/			require_mandat = true;
 /*T*/			xxx_expression(production, Notification->Expression, 0);
-		else {
+/*Sop*/			require_mandat = false;
+		} else {
 			padcat(0, 0, production, "\"NOTIFICATION\"");
 		}
 		padcat(0, 0, production, ")", EOL);
@@ -3257,8 +3363,10 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	        if(!Notify) return false;
 /*T*/	        if(opt_debug) printf("producing Notify\n");
 
+/*Sol*/		beyond_assignment = true;
 		uses_notification = true;
-/*JS */		padcat(1, indent, production, (class?"main.":"this."), "notify(", (opt_log)?"caller, ":"");
+/*JS */		padcat(1, indent, production, (class?"main.":"this."), "notify(");
+/*JS */		optional_caller(production);
 /*S+S*/		padcat(1, indent, production, "notify(");
 		if(current_function) current_function->uses_caller |= opt_log || opt_feedback;
 
@@ -3291,9 +3399,11 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(opt_debug) printf("producing Flagging\n");
 /*J+S*/		padcat(1, indent, production, "");
 /*Sop*/		padcat(1, indent, production, "put(state{ ");
+/*Sop*/		miller = true;
 /*T*/		xxx_symbol(production, Flagging->Symbol, true, indent+1);
+/*Sop*/		miller = false;
 /*J+S*/		padcat(0, 0, production, " = true;");
-/*Sop*/		padcat(0, 0, production, " = true})");
+/*Sop*/		padcat(0, 0, production, " = :§§:true:§:})");
 /*T*/		return true;
 /*T*/	}
 /*T*/
@@ -3302,7 +3412,11 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(opt_debug) printf("producing Condition\n");
 
 /*T*/		xxx_if(production, Condition->If, indent);
+/*Sop*/		conditional_expression = true;
+/*Sop*/		require_mandat = true;
 /*T*/		xxx_expression(production, Condition->Expression, indent+1);
+/*Sop*/		conditional_expression = false;
+/*Sop*/		require_mandat = false;
 /*J+S*/		padcat(0, 0, production, ") {");
 /*Sop*/		padcat(0, 0, production, ")");
 
@@ -3319,9 +3433,9 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_expression(char **production, Expression *Expression, int indent) {
 /*T*/		if(!Expression) return false;
 /*T*/		if(opt_debug) printf("producing Expression\n");
-		// padcat(0, 0, production, "«");
+/*Sop*/		if(!no_literal /* ◊ */ && !require_mandat && !conditional_expression && !payment_expression) padcat(0, 0, production, ":§§:");
 /*T*/		xxx_combination(production, Expression->Combination, indent+1);
-		 //padcat(0, 0, production, "»");
+/*Sop*/		if(!no_literal && !require_mandat && !conditional_expression && !payment_expression) padcat(0, 0, production, ":§:");
 /*T*/		return true;
 /*T*/	}
 /*T*/
@@ -3336,11 +3450,19 @@ static bool is_payment(Predicates *predicates) {
 
 		// dito if(!self) { ///// clean up
 		padcat(0, 0, production, "(");
+/*Sop*/		require_force = true;
+/*Sop*/		require_mandat = true;
 /*T*/		xxx_scalar_expression(production, Scalar_Comparison->Scalar_Expression, indent+1);
+/*Sop*/		require_force = false;
+/*Sop*/		require_mandat = false;
 /*T*/		xxx_comparison_operator(production, Scalar_Comparison->Comparison_Operator, indent+1);
 		// }
 		char *inference_stack = inference;
+/*Sop*/		require_force = true;
+/*Sop*/		require_mandat = true;
 /*T*/		xxx_scalar_expression(production, Scalar_Comparison->Scalar_Expression2, indent+1);
+/*Sop*/		require_mandat = false;
+/*Sop*/		require_force = false;
 		inference = inference_stack;
 /*T*/
 		// dito if(!self) ///// clean up
@@ -3442,10 +3564,11 @@ static bool is_payment(Predicates *predicates) {
 				insert_parameter_and_set_member(production, &instructions,
 					Combinand->Symbol, payment_expression, paratag, indent+4, __LINE__); ////// call #7
 			}
-			/* produce the literal (name or type name for variables that are named verbatim a type) */
 
+			/* produce the literal (name or type name for variables that are named verbatim a type) */
 			if(!no_literal) {
-/*Sop*/				if(opt_harden) padcat(0, 0, production, "force(");
+/*Sop*/				// if(opt_harden && require_mandat) padcat(0, 0, production, "Option.default( 0,"); /////
+/*Sop*/				if(opt_harden) { padcat(0, 0, production, "Option.force_msg( "); uses_option = true; }
 				xxx_symbol(production, Combinand->Symbol, false, indent+1);
 /*Sop*/				if(opt_harden) padcat(0, 0, production, ", \"");
 /*Sop*/				if(opt_harden) xxx_noun(production, Combinand->Symbol, indent+1);
@@ -3519,7 +3642,7 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		const char *lst = lexsymtype(Existence->Symbol);
 /*S+S*/		if(!lst || !strcmp(lst, "binary")) {
 /*Sop*/			if(opt_harden)
-/*Sop*/				padcat(0, 0, production, " == §§true§");
+/*Sop*/				padcat(0, 0, production, " == :§§:true:§:");
 /*Sop*/			// else: nothing instead of " == true" and that both for !opt_harden and the outer if also for Sol
 /*S+S*/		} else {
 /*S+S*/			padcat(0, 0, production, " != ", nullvalue(Existence->Symbol->Name, !opt_harden));
@@ -3542,7 +3665,7 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/				xxx_symbol(production, Negation->Symbol, false, indent+1);
 /*Sop*/			} else {
 /*Sop*/				xxx_symbol(production, Negation->Symbol, false, indent+1);
-/*Sop*/				padcat(0, 0, production, " == §§false§");
+/*Sop*/				padcat(0, 0, production, " == :§§:false:§:");
 /*Sop*/			}
 /*S+S*/		} else {
 /*Sop*/			xxx_symbol(production, Negation->Symbol, false, indent+1);
@@ -3589,8 +3712,11 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_point_in_time(char **production, Point_In_Time *Point_In_Time, int indent) {
 /*T*/		if(!Point_In_Time) return false;
 /*T*/		if(opt_debug) printf("producing Point In Time\n");
+/*Sop*/		bool wrap = false;
+/*Sop*/		if(require_option) { concat(production, ":§§:"); wrap = true; require_option = false; }
 /*T*/		xxx_current_time(production, Point_In_Time->Current_Time, indent+1);
 /*T*/		xxx_relative_time(production, Point_In_Time->Relative_Time, indent+1);
+/*Sop*/		if(wrap) concat(production, ":§:");
 		inference = "uint";
 /*T*/		return true;
 /*T*/	}
@@ -3609,9 +3735,10 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Relative_Time) return false;
 /*T*/		if(opt_debug) printf("producing Relative_Time\n");
 		if(Relative_Time->Symbol) {
-/*J+S*/			padcat(0, 0, production, "(");
-/*Sop*/			padcat(0, 0, production, opt_harden?"Some":"", "(");
+			padcat(0, 0, production, "(");
+/*Sop*/			if(opt_harden) { padcat(0, 0, production, "Option.force_msg("); uses_option = true; }
 /*T*/	        	xxx_symbol(production, Relative_Time->Symbol, false, indent+1);
+/*Sop*/			if(opt_harden) padcat(0, 0, production, ", \"...\")"); // ◊
 			padcat(0, 0, production, " + ");
 		} else {
 /*JS */			padcat(0, 0, production, "(Date.now() - ");
@@ -3847,8 +3974,8 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/			int setting_indent = preassign ? preass_indent : indent + 1;
 /*S+S*/			if(use_sender) {
 /*Sol*/				padcat(linebreak, setting_indent, &setting, varname, " = payable(msg.sender);");
-/*Sop*/				padcat(linebreak, setting_indent, &setting, "put(state{", varname, " = §§Call.caller§})");
-/*Sop*/				padcat(linebreak, setting_indent, &initializing, varname, " = §§Call.caller§");
+/*Sop*/				padcat(linebreak, setting_indent, &setting, "put(state{", varname, " = :§§:Call.caller:§:})");
+/*Sop*/				padcat(linebreak, setting_indent, &initializing, varname, " = :§§:Call.caller:§:");
 /*S+S*/			} else if(use_value) {
 /*Sol*/				padcat(1, 1, &declarations, "bool ", varname, "__set = false;");
 /*S+S*/				if(!main_constructor_body && !covenant_constructor_body) {
@@ -3857,30 +3984,32 @@ static bool is_payment(Predicates *predicates) {
 /*Sol*/					padcat(1, setting_indent, &setting, "} else {");
 /*Sol*/					padcat(1, setting_indent+1, &setting, varname, " = msg.value;");
 /*Sop*/					if(opt_harden) { ////// ? v v needed? 
-/*Sop*/						padcat(1, setting_indent, &setting, "put(state{", varname, " = option.default(0, state.", varname, ") + Call.value})");
+/*Sop*/						padcat(1, setting_indent, &setting, "put(state{", varname, " = Some(Option.default(0, state.", varname, ") + Call.value)})"); // ◊ this is the only occurrance of Options.default. Is it required?
+/*Sop*/						uses_option = true;
 /*Sop*/						//padcat(1, setting_indent+2, &setting, "Some(_) => abort(\"", symbol_name, " already paid\")");
 /*Sop*/					} else {
 /*Sop*/						if(opt_harden) { ///// never reached
-/*Sop*/							padcat(1, setting_indent, &setting, "put(state{", varname, " = §§force(state.", varname, ", \"");
+/*Sop*/							padcat(1, setting_indent, &setting, "put(state{", varname, " = :§§:Option.force_msg(state.", varname, ", \"");
+/*Sop*/							uses_option = true;
 /*Sop*/							xxx_noun(&setting, symbol, 0);
-/*Sop*/							padcat(0,0, &setting, "\") + Call.value§})");
+/*Sop*/							padcat(0,0, &setting, "\") + Call.value:§:})");
 /*Sop*/						} else {
 /*Sop*/							padcat(1, setting_indent, &setting, "put(state{", varname, " = state.", varname, " + Call.value})");
 /*Sop*/						}
 /*Sop*/					}
-/*Sop*/					padcat(1, setting_indent+1, &initializing, varname, " = §§Call.value§,");
+/*Sop*/					padcat(1, setting_indent+1, &initializing, varname, " = :§§:Call.value:§:,");
 /*Sol*/					padcat(1, setting_indent+1, &setting, varname, "__set = true;");
 /*Sol*/					padcat(1, setting_indent, &setting, "}");
 /*S+S*/				} else {
 /*Sol*/					padcat(1, setting_indent, &setting, varname, " = msg.value;");
 /*Sol*/					padcat(1, setting_indent, &setting, varname, "__set = true;");
 /*Sop*/					padcat(1, setting_indent, &setting, varname, " ///= Call.value"); /////// needed?
-/*Sop*/					padcat(0, 0, &initializing, varname, " = §§Call.value§", EOL);
+/*Sop*/					padcat(0, 0, &initializing, varname, " = :§§:Call.value:§:", EOL);
 /*S+S*/				}
 /*S+S*/			} else {
 /*Sol*/				padcat(linebreak, setting_indent, &setting, varname, " = ", parameter_varname, EOL);
-/*Sop*/				padcat(linebreak, setting_indent, &setting, "put(state{", varname, " = §§", parameter_varname, "§})", EOL);
-/*Sop*/				padcat(linebreak, setting_indent, &initializing, varname, " = §§", parameter_varname, "§", EOL);
+/*Sop*/				padcat(linebreak, setting_indent, &setting, "put(state{", varname, " = :§§:", parameter_varname, ":§:})", EOL);
+/*Sop*/				padcat(linebreak, setting_indent, &initializing, varname, " = :§§:", parameter_varname, ":§:", EOL);
 /*S+S*/			}
 
 /*JS */			/* 2a: optimized setting right in the declaration list (replacing '= null') */

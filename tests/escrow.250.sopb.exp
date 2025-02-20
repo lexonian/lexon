@@ -1,25 +1,24 @@
 
 
-@compiler >=6
-
-main contract Escrow =
-
+@compiler >=8
+payable main contract Escrow =
     record state = {
+        
             payer : address,
             payee : address,
             agent : address,
             amount : int,
             fee : int
         }
-
-    payable entrypoint init(payee : address, agent : address, fee : int) = {
+    entrypoint init(payee : address, agent : address, fee : int) = {
             payer = Call.caller,
             payee = payee,
             agent = agent,
             amount = Call.value,
             fee = fee
         }
-
+        
+    
 
 
     function permit(authorized : address) =
