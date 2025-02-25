@@ -1,0 +1,21 @@
+
+precompilation:
+---------------
+
+pool   1:   LEX: «Pool»
+
+pool   3:   "«Referee»" is a person.
+pool   4:   "«Entry Fee»" is an amount.
+pool   5:   "«Winner»" is a person.
+
+pool   7:   The «Referee» fixes the «Entry Fee».
+
+pool   9:   CLAUSE: «Decide».
+pool  10:   The «Referee» certifies the «Winner», and pays the escrow to the «Winner».
+
+pool  12:   TERMS PER «Participant»:
+
+pool  14:   "«Participant»" is a person.
+
+pool  16:   The «Participant» pays the «Entry Fee» into escrow.
+

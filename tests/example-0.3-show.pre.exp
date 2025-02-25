@@ -1,0 +1,14 @@
+
+precompilation:
+---------------
+
+example 0.3 show  1:   LEX: «Show Me The Money».
+
+example 0.3 show  3:   "«Payer»" is a person.
+example 0.3 show  4:   "«Amount»" is an amount.
+
+example 0.3 show  6:   The «Payer» pays an «Amount» into escrow.
+
+example 0.3 show  8:   CLAUSE: «Take Back».
+example 0.3 show  9:   The «Payer» returns the «Amount» to themselves.
+

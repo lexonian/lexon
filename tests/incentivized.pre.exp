@@ -1,0 +1,19 @@
+
+precompilation:
+---------------
+
+incentivized   1:   LEX: «Incentivized DIY Escrow».
+
+incentivized   3:   "«Payer»" is a person.
+incentivized   4:   "«Payee»" is a person.
+incentivized   5:   "«Amount»" is an amount.
+incentivized   6:   "«Reward»" is an amount.
+
+incentivized   8:   The «Payer» pays an «Amount» into escrow, appoints the «Payee», and fixes the «Reward».
+
+incentivized  10:   CLAUSE: «Pay Out».
+incentivized  11:   The «Payer» may pay the escrow to the «Payee».
+
+incentivized  13:   CLAUSE: «Cancel».
+incentivized  14:   The «Payee» may pay the «Reward» to themselves, and afterwards return the remainder of the escrow to the «Payer».
+

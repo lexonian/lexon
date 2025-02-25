@@ -253,6 +253,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	
 	typedef struct Symbol {
 		Name *Name;
+		struct New *New;
 		struct Article *Article;
 		struct Type *Type;
 		Literal *Literal;
@@ -291,6 +292,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		struct Registration *Registration;
 		struct Grantment *Grantment;
 		struct Appointment *Appointment;
+		struct Acceptance *Acceptance;
 		struct Fixture *Fixture;
 		struct Setting *Setting;
 		struct Payment *Payment;
@@ -372,6 +374,17 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	typedef struct Appoint {
 		Literal *Literal;
 	} Appoint;
+	
+	typedef struct Acceptance {
+		struct Accept *Accept;
+		struct Symbol *Symbol;
+		struct Expression *Expression;
+		Literal *Literal;
+	} Acceptance;
+	
+	typedef struct Accept {
+		Literal *Literal;
+	} Accept;
 	
 	typedef struct Fixture {
 		struct Fix *Fix;
@@ -496,6 +509,8 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	
 	typedef struct Comparison_Operator {
 		struct Equal *Equal;
+		struct Greater *Greater;
+		struct Less *Less;
 		struct Later *Later;
 		Literal *Literal;
 	} Comparison_Operator;
@@ -503,6 +518,14 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	typedef struct Equal {
 		Literal *Literal;
 	} Equal;
+	
+	typedef struct Greater {
+		Literal *Literal;
+	} Greater;
+	
+	typedef struct Less {
+		Literal *Literal;
+	} Less;
 	
 	typedef struct Later {
 		Literal *Literal;
@@ -532,6 +555,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	typedef struct Combinand {
 		struct Symbol *Symbol;
 		struct Expiration *Expiration;
+		struct Timeliness *Timeliness;
 		struct Reflexive *Reflexive;
 		Description *Description;
 		struct Article *Article;
@@ -601,6 +625,10 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	typedef struct Article {
 		Literal *Literal;
 	} Article;
+	
+	typedef struct New {
+		Literal *Literal;
+	} New;
 	
 	typedef struct Point_In_Time {
 		struct Current_Time *Current_Time;
@@ -672,6 +700,10 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		Literal *Literal;
 	} Expiration;
 	
+	typedef struct Timeliness {
+		Literal *Literal;
+	} Timeliness;
+	
 	/*T*/	extern struct Document *root;
 	bool core_document(char **production, Document *root, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 
@@ -695,7 +727,6 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 
 	bool core_name(char **production, Name *Name, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
 		if(!Name) return false;
-		///// padcat(0, 0, production, "\"", Name, "\"");
 		padcat(0, 0, production, "«", opt_symbols?opt_symbols:"", LOW(dash_spaced(quote_trimmed(Name))), opt_symbols?"\033[0m":"", "» ");
 		return true;
 	}
@@ -708,14 +739,12 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 
 	bool core_scalar(char **production, Scalar *Scalar, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
 		if(!Scalar) return false;
-		///// padcat(0, 0, production, "\"", Scalar, "\"");
 		padcat(0, 0, production, Scalar, " ");
 		return true;
 	}
 
 	bool core_hex(char **production, Hex *Hex, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
 		if(!Hex) return false;
-		///// padcat(0, 0, production, "\"", Hex, "\"");
 		padcat(0, 0, production, Hex, " ");
 		return true;
 	}
@@ -775,6 +804,8 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	bool core_grant(char **production, Grant *Grant, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_appointment(char **production, Appointment *Appointment, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_appoint(char **production, Appoint *Appoint, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_acceptance(char **production, Acceptance *Acceptance, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_accept(char **production, Accept *Accept, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_fixture(char **production, Fixture *Fixture, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_fix(char **production, Fix *Fix, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_fixed(char **production, Fixed *Fixed, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
@@ -799,6 +830,8 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	bool core_scalar_comparison(char **production, Scalar_Comparison *Scalar_Comparison, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_comparison_operator(char **production, Comparison_Operator *Comparison_Operator, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_equal(char **production, Equal *Equal, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_greater(char **production, Greater *Greater, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_less(char **production, Less *Less, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_later(char **production, Later *Later, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_scalar_expression(char **production, Scalar_Expression *Scalar_Expression, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_combination(char **production, Combination *Combination, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
@@ -815,6 +848,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	bool core_being(char **production, Being *Being, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_true(char **production, True *True, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_article(char **production, Article *Article, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_new(char **production, New *New, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_point_in_time(char **production, Point_In_Time *Point_In_Time, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_current_time(char **production, Current_Time *Current_Time, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_relative_time(char **production, Relative_Time *Relative_Time, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
@@ -829,6 +863,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	bool core_seconds(char **production, Seconds *Seconds, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_milliseconds(char **production, Milliseconds *Milliseconds, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_expiration(char **production, Expiration *Expiration, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_timeliness(char **production, Timeliness *Timeliness, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 /* AST walk (stub) functions */
 
 	bool core_document(char **production, Document *Document, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
@@ -2228,7 +2263,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Symbol->Name?1:0) + (!!Symbol->Article?1:0) + (!!Symbol->Type?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Symbol->Name?1:0) + (!!Symbol->New?1:0) + (!!Symbol->Article?1:0) + (!!Symbol->Type?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "symbol", off, " ");
@@ -2241,12 +2276,20 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		grid <<= !terse ? 1 : 0;
 		int irx = !terse ? 1 : 0;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Symbol->Article || Symbol->Type);
+		sibbling_follows = !!(Symbol->New || Symbol->Article || Symbol->Type);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
 		core_name(production, Symbol->Name, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "symbol"), opt_subvalues && !!strstr(opt_subvalues, "symbol"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Symbol->Article || Symbol->Type);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_new(production, Symbol->New, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "symbol"), opt_subvalues && !!strstr(opt_subvalues, "symbol"));
 		subhighlight = false;
 		if(opt_produce_tree) {
 			if(!terse) grid &= 4294967294;
@@ -2470,7 +2513,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Predicate->Certification?1:0) + (!!Predicate->Declaration?1:0) + (!!Predicate->Filing?1:0) + (!!Predicate->Registration?1:0) + (!!Predicate->Grantment?1:0) + (!!Predicate->Appointment?1:0) + (!!Predicate->Fixture?1:0) + (!!Predicate->Setting?1:0) + (!!Predicate->Payment?1:0) + (!!Predicate->Sending?1:0) + (!!Predicate->Notification?1:0) + (!!Predicate->Termination?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Predicate->Certification?1:0) + (!!Predicate->Declaration?1:0) + (!!Predicate->Filing?1:0) + (!!Predicate->Registration?1:0) + (!!Predicate->Grantment?1:0) + (!!Predicate->Appointment?1:0) + (!!Predicate->Acceptance?1:0) + (!!Predicate->Fixture?1:0) + (!!Predicate->Setting?1:0) + (!!Predicate->Payment?1:0) + (!!Predicate->Sending?1:0) + (!!Predicate->Notification?1:0) + (!!Predicate->Termination?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "predicate", off, " ");
@@ -2484,7 +2527,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		grid <<= !terse ? 1 : 0;
 		int irx = !terse ? 1 : 0;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Predicate->Declaration || Predicate->Filing || Predicate->Registration || Predicate->Grantment || Predicate->Appointment || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		sibbling_follows = !!(Predicate->Declaration || Predicate->Filing || Predicate->Registration || Predicate->Grantment || Predicate->Appointment || Predicate->Acceptance || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -2492,7 +2535,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_certification(production, Predicate->Certification, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Predicate->Filing || Predicate->Registration || Predicate->Grantment || Predicate->Appointment || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		sibbling_follows = !!(Predicate->Filing || Predicate->Registration || Predicate->Grantment || Predicate->Appointment || Predicate->Acceptance || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -2500,7 +2543,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_declaration(production, Predicate->Declaration, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Predicate->Registration || Predicate->Grantment || Predicate->Appointment || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		sibbling_follows = !!(Predicate->Registration || Predicate->Grantment || Predicate->Appointment || Predicate->Acceptance || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -2508,7 +2551,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_filing(production, Predicate->Filing, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Predicate->Grantment || Predicate->Appointment || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		sibbling_follows = !!(Predicate->Grantment || Predicate->Appointment || Predicate->Acceptance || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -2516,7 +2559,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_registration(production, Predicate->Registration, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Predicate->Appointment || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		sibbling_follows = !!(Predicate->Appointment || Predicate->Acceptance || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -2524,12 +2567,20 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_grantment(production, Predicate->Grantment, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		sibbling_follows = !!(Predicate->Acceptance || Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
 		core_appointment(production, Predicate->Appointment, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Predicate->Fixture || Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_acceptance(production, Predicate->Acceptance, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "predicate"), opt_subvalues && !!strstr(opt_subvalues, "predicate"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
 		sibbling_follows = !!(Predicate->Setting || Predicate->Payment || Predicate->Sending || Predicate->Notification || Predicate->Termination);
@@ -3100,6 +3151,84 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 				padcat(1, indent, production, "↳  ", color, "appoint", off, " ");
 		} else {
 			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "appoint", off, " ");
+			sameline = !bracket_just_closed;
+			bracket_just_closed=false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		grid >>= !terse ? 1 : 0;
+
+		return true;
+	}
+
+	bool core_acceptance(char **production, Acceptance *Acceptance, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!Acceptance) return false;
+		if(opt_debug) printf("producing Acceptance\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "acceptance")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Acceptance->Accept?1:0) + (!!Acceptance->Symbol?1:0) + (!!Acceptance->Expression?1:0)));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "acceptance", off, " ");
+		} else {
+			padcat(1, indent, production, opening_bracket, " ", color, "acceptance", off, " ");
+			sameline = false;
+			bracket_just_closed = false;
+			sameline = false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Acceptance->Symbol || Acceptance->Expression);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_accept(production, Acceptance->Accept, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "acceptance"), opt_subvalues && !!strstr(opt_subvalues, "acceptance"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Acceptance->Expression);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_symbol(production, Acceptance->Symbol, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "acceptance"), opt_subvalues && !!strstr(opt_subvalues, "acceptance"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = false;
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_expression(production, Acceptance->Expression, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "acceptance"), opt_subvalues && !!strstr(opt_subvalues, "acceptance"));
+		subhighlight = false;
+		grid >>= !terse ? 1 : 0;
+		padcat(0, 0, production, opt_produce_tree?"":closing_bracket, " ");
+		bracket_just_closed=true;
+
+		return true;
+	}
+
+	bool core_accept(char **production, Accept *Accept, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!Accept) return false;
+		if(opt_debug) printf("producing Accept\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "accept")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "accept", off, " ");
+		} else {
+			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "accept", off, " ");
 			sameline = !bracket_just_closed;
 			bracket_just_closed=false;
 		}
@@ -3996,7 +4125,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Comparison_Operator->Equal?1:0) + (!!Comparison_Operator->Later?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Comparison_Operator->Equal?1:0) + (!!Comparison_Operator->Greater?1:0) + (!!Comparison_Operator->Less?1:0) + (!!Comparison_Operator->Later?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "comparison-operator", off, " ");
@@ -4010,12 +4139,28 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		grid <<= !terse ? 1 : 0;
 		int irx = !terse ? 1 : 0;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Comparison_Operator->Later);
+		sibbling_follows = !!(Comparison_Operator->Greater || Comparison_Operator->Less || Comparison_Operator->Later);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
 		core_equal(production, Comparison_Operator->Equal, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "comparison_operator"), opt_subvalues && !!strstr(opt_subvalues, "comparison_operator"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Comparison_Operator->Less || Comparison_Operator->Later);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_greater(production, Comparison_Operator->Greater, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "comparison_operator"), opt_subvalues && !!strstr(opt_subvalues, "comparison_operator"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Comparison_Operator->Later);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_less(production, Comparison_Operator->Less, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "comparison_operator"), opt_subvalues && !!strstr(opt_subvalues, "comparison_operator"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
 		sibbling_follows = false;
@@ -4046,6 +4191,58 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 				padcat(1, indent, production, "↳  ", color, "equal", off, " ");
 		} else {
 			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "equal", off, " ");
+			sameline = !bracket_just_closed;
+			bracket_just_closed=false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		grid >>= !terse ? 1 : 0;
+
+		return true;
+	}
+
+	bool core_greater(char **production, Greater *Greater, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!Greater) return false;
+		if(opt_debug) printf("producing Greater\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "greater")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "greater", off, " ");
+		} else {
+			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "greater", off, " ");
+			sameline = !bracket_just_closed;
+			bracket_just_closed=false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		grid >>= !terse ? 1 : 0;
+
+		return true;
+	}
+
+	bool core_less(char **production, Less *Less, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!Less) return false;
+		if(opt_debug) printf("producing Less\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "less")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "less", off, " ");
+		} else {
+			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "less", off, " ");
 			sameline = !bracket_just_closed;
 			bracket_just_closed=false;
 		}
@@ -4244,7 +4441,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Combinand->Symbol?1:0) + (!!Combinand->Expiration?1:0) + (!!Combinand->Reflexive?1:0) + (!!Combinand->Description?1:0) + (!!Combinand->Article?1:0) + (!!Combinand->Scalar_Comparison?1:0) + (!!Combinand->Negation?1:0) + (!!Combinand->Existence?1:0) + (!!Combinand->Point_In_Time?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Combinand->Symbol?1:0) + (!!Combinand->Expiration?1:0) + (!!Combinand->Timeliness?1:0) + (!!Combinand->Reflexive?1:0) + (!!Combinand->Description?1:0) + (!!Combinand->Article?1:0) + (!!Combinand->Scalar_Comparison?1:0) + (!!Combinand->Negation?1:0) + (!!Combinand->Existence?1:0) + (!!Combinand->Point_In_Time?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "combinand", off, " ");
@@ -4257,7 +4454,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		grid <<= !terse ? 1 : 0;
 		int irx = !terse ? 1 : 0;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Combinand->Expiration || Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		sibbling_follows = !!(Combinand->Expiration || Combinand->Timeliness || Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -4265,12 +4462,20 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_symbol(production, Combinand->Symbol, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		sibbling_follows = !!(Combinand->Timeliness || Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
 		core_expiration(production, Combinand->Expiration, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = !!(Combinand->Reflexive || Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_timeliness(production, Combinand->Timeliness, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "combinand"), opt_subvalues && !!strstr(opt_subvalues, "combinand"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
 		sibbling_follows = !!(Combinand->Description || Combinand->Article || Combinand->Scalar_Comparison || Combinand->Negation || Combinand->Existence || Combinand->Point_In_Time);
@@ -4766,6 +4971,32 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		return true;
 	}
 
+	bool core_new(char **production, New *New, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!New) return false;
+		if(opt_debug) printf("producing New\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "new")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "new", off, " ");
+		} else {
+			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "new", off, " ");
+			sameline = !bracket_just_closed;
+			bracket_just_closed=false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		grid >>= !terse ? 1 : 0;
+
+		return true;
+	}
+
 	bool core_point_in_time(char **production, Point_In_Time *Point_In_Time, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
 		if(!Point_In_Time) return false;
 		if(opt_debug) printf("producing Point_In_Time\n");
@@ -5239,6 +5470,32 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 				padcat(1, indent, production, "↳  ", color, "expiration", off, " ");
 		} else {
 			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "expiration", off, " ");
+			sameline = !bracket_just_closed;
+			bracket_just_closed=false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		grid >>= !terse ? 1 : 0;
+
+		return true;
+	}
+
+	bool core_timeliness(char **production, Timeliness *Timeliness, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!Timeliness) return false;
+		if(opt_debug) printf("producing Timeliness\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "timeliness")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "timeliness", off, " ");
+		} else {
+			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "timeliness", off, " ");
 			sameline = !bracket_just_closed;
 			bracket_just_closed=false;
 		}

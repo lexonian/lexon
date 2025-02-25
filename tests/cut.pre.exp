@@ -1,0 +1,17 @@
+
+precompilation:
+---------------
+
+cut   1:   LEX: «Asset».
+
+cut   3:   "«Id»" is a text.
+cut   4:   "«Creator»" is a person.
+cut   5:   "«Owner»" is a person.
+cut   6:   "«Cut»" is an amount.
+
+cut   8:   The «Creator» fixes the «Id», fixes the «Cut», and appoints the «Owner».
+
+cut  10:   CLAUSE: «Transfer Ownership».
+cut  11:   The «Owner» may pay the «Cut» to the «Creator», and appoint the «Owner».
+
+

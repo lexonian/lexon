@@ -1,0 +1,15 @@
+LEX Timed Veto
+
+"Payer" is a person.
+"Receiver" is a person.
+"Officiator" is a person.
+"Time" is a time.
+
+The Payer pays an amount into escrow, appoints the Receiver, appoints the Officiator, and fixes a Time.
+
+CLAUSE: Draw.
+The Receiver may, if the Time has passed, pay the escrow to themselves.
+
+CLAUSE: Veto.
+The Officiator may return the escrow to the Payer.
+

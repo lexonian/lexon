@@ -1,0 +1,82 @@
+
+precompilation:
+---------------
+
+statement   1:   LEX: «UCC Financing Statement».
+
+statement   3:   LEXON: ‹0.2.12›.
+
+statement   5:   "«Financing Statement»" is this contract.
+statement   6:   "«File Number»" is data.
+statement   7:   "«Initial Statement Date»" is a time.
+statement   8:   "«Filer»" is a person.
+statement   9:   "«Debtor»" is a person.
+statement  10:   "«Secured Party»" is a person.
+statement  11:   "«Filing Office»" is a person.
+statement  12:   "«Collateral»" is data.
+statement  13:   "«Digital Asset Collateral»" is an amount.
+statement  14:   "«Reminder Fee»" is an amount.
+statement  15:   "«Continuation Window Start»" is a time.
+statement  16:   "«Continuation Statement Date»" is a time.
+statement  17:   "«Continuation Statement Filing Number»" is data.
+statement  18:   "«Lapse Date»" is a time.
+statement  19:   "«Default»" is a binary.
+statement  20:   "«Continuation Statement»" is a binary.
+statement  21:   "«Termination Statement»" is a binary.
+statement  22:   "«Termination Statement Time»" is a time.
+statement  23:   "«Notification Statement»" is a text.
+
+statement  25:   The «Filer» fixes the «Filing Office», fixes the «Debtor», fixes the «Secured Party», and fixes the «Collateral».
+
+statement  27:   Clause: «Certify».
+statement  28:   The «Filing Office» may certify the «File Number».
+
+statement  30:   Clause: «Set File Date».
+statement  31:   The «Filing Office» may fix the «Initial Statement Date» as the current time.
+
+statement  33:   Clause: «Set Lapse».
+statement  34:   The «Filing Office» may fix the «Lapse Date».
+
+statement  36:   Clause: «Set Continuation Start».
+statement  37:   The «Filing Office» may fix the «Continuation Window Start».
+
+statement  39:   Clause: «Pay Fee».
+statement  40:   The «Secured Party» may pay a «Reminder Fee» into escrow.
+
+statement  42:   Clause: «Notice».
+statement  43:   The «Filing Office» may fix the «Notification Statement».
+
+statement  45:   Clause: «Notify».
+statement  46:   The «Filing Office» may, if the «Continuation Window Start» has passed, send the «Notification Statement» to the «Secured Party».
+
+statement  48:   Clause: «Pay Escrow In».
+statement  49:   The «Debtor» may pay the «Digital Asset Collateral» into escrow.
+
+statement  51:   Clause: «Fail to Pay».
+statement  52:   The «Secured Party» may declare «Default».
+
+statement  54:   Clause: «Take Possession».
+statement  55:   The «Filing Office» may, if «Default» is declared, pay the «Digital Asset Collateral» to the «Secured Party».
+
+statement  57:   Clause: «File Continuation».
+statement  58:   The «Secured Party» may file the «Continuation Statement».
+
+statement  60:   Clause: «Set Continuation Lapse».
+statement  61:   The «Filing Office» may, if the «Continuation Statement» is filed, fix the «Continuation Statement Date».
+
+statement  63:   Clause: «File Termination».
+statement  64:   The «Secured Party» may file a «Termination Statement», and certify the «Termination Statement Time» as the then current time.
+
+statement  66:   Clause: «Release Escrow».
+statement  67:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Digital Asset Collateral» to the «Debtor».
+
+statement  69:   Clause: «Release Reminder Fee».
+statement  70:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Reminder Fee» to the «Secured Party».
+
+statement  72:   Clause: «Termination Period».
+statement  73:   "«Termination Period»" is defined as 365 days after the «Termination Statement Time».
+
+statement  75:   Clause: «Terminate and Clear».
+statement  76:   The «Filing Office» may, if the «Termination Period» has passed, terminate this contract.
+
+

@@ -1,0 +1,67 @@
+
+precompilation:
+---------------
+
+example 0.3 evaluation   1:   LEX: «Evaluation License System».
+example 0.3 evaluation   2:   LEXON: ‹0.2.1›.
+example 0.3 evaluation   3:   AUTHORS: ‹FLORIAN IDELBERGER, HENNING DIEDRICH›.
+example 0.3 evaluation   4:   PREAMBLE: ‹This is a licensing contract for a software evaluation.›.
+
+example 0.3 evaluation   6:   TERMS: 
+
+example 0.3 evaluation   8:   "«Licensor»" is a person.
+example 0.3 evaluation   9:   "«Arbiter»" is a person.
+example 0.3 evaluation  10:   "«Licensing Fee»" is an amount.
+example 0.3 evaluation  11:   "«Breach Fee»" is an amount.
+
+example 0.3 evaluation  13:   The «Licensor» appoints the «Arbiter»,
+example 0.3 evaluation  14:   fixes the «Licensing Fee»,
+example 0.3 evaluation  15:   and fixes the «Breach Fee».
+
+example 0.3 evaluation  17:   TERMS PER «License»:
+
+example 0.3 evaluation  19:   "«Description of Goods»" is a text.
+example 0.3 evaluation  20:   "«Licensee»" is a person.
+example 0.3 evaluation  21:   "«Paid»" is a binary.
+example 0.3 evaluation  22:   "«Commissioned»" is a binary.
+example 0.3 evaluation  23:   "«Comment Text»" is a text.
+example 0.3 evaluation  24:   "«Published»" is a binary.
+example 0.3 evaluation  25:   "«Permission to Comment»" is a binary.
+example 0.3 evaluation  26:   "«Notice Time»" is a time.
+example 0.3 evaluation  27:   "«License»" is this contract.
+
+example 0.3 evaluation  29:   The «Licensor» appoints the «Licensee», and fixes the «Description of Goods».
+
+example 0.3 evaluation  31:   CLAUSE: «Pay».
+example 0.3 evaluation  32:   The «Licensee» pays the «Licensing Fee» to the «Licensor»,
+example 0.3 evaluation  33:   and pays the «Breach Fee» into escrow.
+example 0.3 evaluation  34:   This «License» is therefore «Paid».
+
+example 0.3 evaluation  36:   CLAUSE: «Commission».
+example 0.3 evaluation  37:   The «Licensor» may certify this «License» as «Commissioned».
+
+example 0.3 evaluation  39:   CLAUSE: «Comment».
+example 0.3 evaluation  40:   The «Licensee» may register a «Comment Text».
+
+example 0.3 evaluation  42:   CLAUSE: «Publication».
+example 0.3 evaluation  43:   The «Licensee» may certify this «License» as «Published».
+
+example 0.3 evaluation  45:   CLAUSE: «Grant Permission to Comment».
+example 0.3 evaluation  46:   The «Licensee» may grant the «Permission to Comment».
+
+example 0.3 evaluation  48:   CLAUSE: «Declare Breach».
+example 0.3 evaluation  49:   The «Arbiter» may, if this «License» is «Factually Breached»:
+example 0.3 evaluation  50:   pay the «Breach Fee» to the «Licensor»,
+example 0.3 evaluation  51:   and afterwards terminate this «License».
+
+example 0.3 evaluation  53:   CLAUSE: «Factually Breached».
+example 0.3 evaluation  54:   "«Factually Breached»" is defined as:
+example 0.3 evaluation  55:   this «License» is «Commissioned» and the «Comment Text» is not fixed,
+example 0.3 evaluation  56:   or this «License» is «Published» and there is no «Permission to Comment» and the «Notice Time» lies at least 24 hours in the past.
+
+example 0.3 evaluation  58:   CLAUSE: «Notice».
+example 0.3 evaluation  59:   The «Licensor» or the «Arbiter» may fix the «Notice Time» as the respective current time.
+
+example 0.3 evaluation  61:   CLAUSE: «Noticed».
+example 0.3 evaluation  62:   "«Noticed»" is defined as a «Notice Time» being fixed.
+

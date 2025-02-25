@@ -1,0 +1,11 @@
+
+precompilation:
+---------------
+
+burn  1:   LEX: «Burn».
+
+burn  3:   "«Payer»" is a person.
+burn  4:   "«Amount»" is an amount.
+
+burn  6:   The «Payer» pays an «Amount» into escrow.
+

@@ -1,0 +1,26 @@
+
+precompilation:
+---------------
+
+fourway   1:   LEX: «Four Way Escrow».
+
+fourway   3:   "«Payer»" is a person.
+fourway   4:   "«Payee»" is a person.
+fourway   5:   "«Arbiter»" is a person.
+fourway   6:   "«Fee»" is an amount.
+fourway   7:   "«Amount»" is an amount.
+
+fourway   9:   The «Payer» pays an «Amount» into escrow, appoints the «Payee», appoints the «Arbiter», and fixes the «Fee».
+
+fourway  11:   CLAUSE: «Arbiter Pay Out».
+fourway  12:   The «Arbiter» may pay from escrow the «Fee» to themselves, and afterwards pay the remainder of the escrow to the «Payee».
+
+fourway  14:   CLAUSE: «Voluntary Pay Out By Payer».
+fourway  15:   The «Payer» may pay from escrow the «Fee» to themselves, and afterwards pay the remainder of the escrow to the «Payee».
+
+fourway  17:   CLAUSE: «Arbiter Return».
+fourway  18:   The «Arbiter» may pay from escrow the «Fee» to themselves, and afterwards return the remainder of the escrow to the «Payer».
+
+fourway  20:   CLAUSE: «Voluntary Return By Payer».
+fourway  21:   The «Payee» may pay from escrow the «Fee» to themselves, and afterwards return the remainder of the escrow to the «Payer».
+

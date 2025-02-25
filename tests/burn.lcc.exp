@@ -1,0 +1,19 @@
+( document 
+    ( head 
+        ( lex «burn» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «payer» ( type person ) ) 
+                ( definition «amount» ( type amount ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «payer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol «amount» ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) ) ) ) ) ) ) )
