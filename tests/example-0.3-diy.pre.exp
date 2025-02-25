@@ -1,0 +1,18 @@
+
+precompilation:
+---------------
+
+example 0.3 diy   1:   LEX: «DIY Escrow».
+
+example 0.3 diy   3:   "«Payer»" is a person.
+example 0.3 diy   4:   "«Payee»" is a person.
+example 0.3 diy   5:   "«Amount»" is an amount.
+
+example 0.3 diy   7:   The «Payer» pays an «Amount» into escrow, and appoints the «Payee».
+
+example 0.3 diy   9:   CLAUSE: «Pay Out».
+example 0.3 diy  10:   The «Payer» may pay the escrow to the «Payee».
+
+example 0.3 diy  12:   CLAUSE: «Cancel».
+example 0.3 diy  13:   The «Payee» may return the escrow to the «Payer».
+

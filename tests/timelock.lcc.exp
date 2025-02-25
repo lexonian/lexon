@@ -1,0 +1,38 @@
+( document 
+    ( head 
+        ( lex «time-lock» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «owner» ( type person ) ) 
+                ( definition «time» ( type time ) ) ) 
+            ( clauses 
+                ( clause «draw» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object reflexive ) 
+                                                escrow ) ) ) 
+                                    permission 
+                                    ( condition if 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «time» ) 
+                                                        expiration ) ) ) ) ) ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «owner» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «time» ) ) ) ) ) ) ) ) ) )

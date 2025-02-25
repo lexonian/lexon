@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 98 U
+ **	compiler:    lexon 0.3 alpha 99 U
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.98c U
+ **	backend:     sophia 0.3.99a U
  **
  **	target:      sophia 8+
  **
@@ -109,10 +109,10 @@ payable main contract EvaluationLicenseSystem : Main =
     type state = main_state
 
     entrypoint init(arbiter : address, breach_fee : int) = {
-            licensor = Some (Call.caller),
-            arbiter = Some (arbiter),
-            licensing_fee = Some (Call.value),
-            breach_fee = Some (breach_fee),
+            licensor = Some(Call.caller),
+            arbiter = Some(arbiter),
+            licensing_fee = Some(Call.value),
+            breach_fee = Some(breach_fee),
             _license_list = [],
             _license_count = 0
         }
@@ -169,15 +169,15 @@ payable contract License =
         }
 
     entrypoint init(global : Main, licensee : address, description_of_goods : string) = {
-            description_of_goods = Some (description_of_goods),
-            licensee = Some (licensee),
+            description_of_goods = Some(description_of_goods),
+            licensee = Some(licensee),
             paid = None,
             commissioned = None,
             comment_text = None,
             published = None,
             permission_to_comment = None,
             notice_time = None,
-            creation_fee = Some (Call.value),
+            creation_fee = Some(Call.value),
             global = global.get_state()
         }
 
@@ -192,10 +192,10 @@ payable contract License =
      */
 
     stateful entrypoint pay() =
-        require(Some (Call.caller) == state.licensee, "not permitted")
-        if(Some (Call.caller) == state.licensee)
+        require(Some(Call.caller) == state.licensee, "not permitted")
+        if(Some(Call.caller) == state.licensee)
             transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg( state.global.licensing_fee, "Licensing Fee"))
-        put(state{ paid = Some (true)})
+        put(state{paid = Some(true)})
 
     /* built-in safe transfer */
 

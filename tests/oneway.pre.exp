@@ -1,0 +1,15 @@
+
+precompilation:
+---------------
+
+oneway   1:   LEX: «One Way Lock In».
+
+oneway   3:   "«Payer»" is a person.
+oneway   4:   "«Payee»" is a person.
+oneway   5:   "«Amount»" is an amount.
+
+oneway   7:   The «Payer» pays an «Amount» into escrow, and appoints the «Payee».
+
+oneway   9:   CLAUSE: «Pay Out».
+oneway  10:   The «Payer» may pay the escrow to the «Payee».
+

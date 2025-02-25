@@ -13,11 +13,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 98 U
+ **	compiler:    lexon 0.3 alpha 99 U
  **
- **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
  **
- **	backend:     solidity 0.3.98c U
+ **	backend:     solidity 0.3.99a U
  **
  **	target:      solidity 0.8.17+
  **
@@ -117,7 +117,14 @@ contract EvaluationLicenseSystem {
     /* create new instance of License covenant, and register it with main */
 
     function add_license(address payable _licensee, string memory _description_of_goods) public returns(License) {
+        permit(licensor);
         return _license_list[_license_count += 1] = new License(this, _licensee, _description_of_goods);
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
     }
 }
 

@@ -425,9 +425,9 @@ clean:
 	@printf "$(ok)√ cleaned for building from cycle 1 $(off)\n\n"
 
 distclean: restore_binaries
-	@printf "\n\n$(hi)▫️  clean and pre-build for distribution $(off)\n\n"
+	@printf "\n\n$(hi)▫️  clean and pre-build for master branch $(off)\n\n"
 	@$(MAKE) binaries clean build
-	@printf "\n$(hi)▫️  clean build folder for distribution  $(off)\n\n"
+	@printf "\n$(hi)▫️  clean build folder for master branch $(off)\n\n"
 	rm -f bin/lexccc
 	rm -f bin/lexon
 	rm -f build/.indent.pro
@@ -462,6 +462,29 @@ distclean: restore_binaries
 	@printf "$(off)\n"
 	@echo ""
 	git status
+
+distribution:
+	@printf "\n\n$(hi)▫️  clean, pre-build and copy for distribution $(off)\n\n"
+	@$(MAKE) distclean
+	rm -f distribution
+	mkdir -p distribution/Source/tests
+	cp -vpR .distribution/tests/* distribution/Source/tests/
+	cp -vpR .distribution/RELEASE*.pdf distribution/
+	cp -vpR .distribution/Papers distribution/
+	cp -vpR .distribution/Documentation distribution/
+	cp -vpR bin distribution/Compiler
+	cp -vpR bin distribution/Source/
+	cp -vpR build distribution/Source/
+	cp -vpR src distribution/Source/
+	cp -vpR examples distribution/Examples
+	cp -vpR examples distribution/Source/
+	cp -vpR grammar distribution/Grammar
+	cp -vpR grammar distribution/Source/
+	cp -vpR README.MD distribution/Source/
+	cp -vpR LICENSE distribution/Source/
+	cp -vpR CREDITS distribution/Source/
+	cp -vpR Makefile distribution/Source/
+	@ls -R distribution
 
 binaries:
 	@echo "» checking that binaries are in place"

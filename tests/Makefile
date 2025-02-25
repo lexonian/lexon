@@ -10,7 +10,7 @@ ok = \033[36m
 dim = \033[90m
 err = \033[91m
 off = \033[0m
-errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok)ok √$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
+errtag = if [[ $$? -eq 0 ]] ; then printf "$(ok) ok √$(off)\n" ;  else printf "$(err)\# error$(off)\n" ; fi
 
 
 ifeq (, $(shell which md5sum))
@@ -54,7 +54,7 @@ define tag
 	@echo OS: `uname` `printf "$$OSTYPE "` > $(1)
 	@echo lexon: `../bin/lexon --version` `$(MD5) ../bin/lexon | cut -c-5` >> $(1)
 	@cat ../Makefile | grep -o -E '\.targets:.*' | cut -c 2- | sed 's/ .*backend//g' | sed 's/build\///g' | sed 's/\.c//g' >> $(1)
-	@# 	@printf commit: echo `git rev-parse HEAD` >> $(1)
+	@printf commit: echo `git rev-parse HEAD` >> $(1)
 	@printf "tests: %d+ files (" $$((`find . | grep -e '\.lex$$' -e '\.c$$' -e '\.lgf$$' | wc -l`)) >> $(1)
 	@cat `find . | grep -e '\.lex$$' -e '\.c$$' -e '\.lgf$$'` | $(MD5) | cut -c -5 | tr "\n" "\0" >> $(1)
 	@printf "), %d+ tests (" $$((`find . | grep -e '\.exp$$' | wc -l | sed 's/ //g'`)) >> $(1)
@@ -128,6 +128,7 @@ define testrun
 		; else \
 			failer=0 \
 		; fi \
+		; failer2=`grep -c -E "%ERR" $$filename` \
 		; $(2) \
 		; $(3) $(4) $$filename &> tmp \
 		; $(5) >> tmp 2>&1 \
@@ -167,6 +168,13 @@ define testrun
 		fi ; \
 		if [[ -f compdiff ]] || [[ -f compall ]] ; then \
 			if [[ ! -f $$coktag ]] || [[ -f compall ]] ; then \
+			    if (( $$failer2 > 0 )) ; then \
+				if [[ "$(4)" =~ .*javascript.* ]] || [[ "$(4)" =~ .*solidity.* ]] || [[ "$(4)" =~ .*sophia.* ]] ; then \
+			    		rm -f $$coktag ; \
+			        	if [[ -f concise ]] ; then printf "$(ok) $(off)" ; \
+					else printf "  $(ok)skipped expected error √$(off)\n" ; fi ; \
+				fi ; \
+			    else \
 				if [[ "$(4)" =~ .*javascript.* ]] ; then \
 					if [[ ! -f concise ]] ; then \
 						printf "$(ok)» node instantiation of $$testfile .. $(dim)" ; \
@@ -221,6 +229,7 @@ define testrun
 						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
 					fi ; \
 				fi ; \
+			    fi ; \
 			fi ; \
 		fi ; \
 		if [[ -f autoupdate ]] ; then \
@@ -478,7 +487,7 @@ _recheck:
 	@rm -f concise
 	@rm -f noupdate
 	@rm -f nopickup
-	@rm -f showdiff
+	@touch showdiff
 	@rm -f compdiff
 	@rm -f compall
 	@rm -f autoupdate
@@ -645,6 +654,76 @@ _test:
 	fi
 	@echo
 
+
+_test_solidity:
+	@echo
+	@printf "$(ok)» regression tests$(off)\n"
+	@echo ===================
+	@printf "\nexpectations from:\n"
+	@cat tag.exp
+	$(call tag,tag.now)
+	@printf "\ncurrent setup:\n"
+	@cat tag.now
+	@rm -f *.tmp
+	$(call init)
+	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
+	#@$(call testrun,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
+	#@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
+	#@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
+	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
+	#@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
+	#@$(call testrun,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
+	#@$(call testrun,precompile,:,../bin/lexon,-P,:,grep -l %PRE $(files),.pre.exp,%PREERR)
+	#@$(call testrun,gui generator info,:,../bin/lexon,-U,:,grep -l %GEN $(files),.gen.exp,%GENERR)
+	#@$(call testrun,circular includes,:,../bin/lexon,-C -P,:,grep -l %PRE $(files),.cir.exp,%CIRERR)
+	#@$(call testrun,repeat includes,:,../bin/lexon,-R -P,:,grep -l %PRE $(files),.rep.exp,%REPERR)
+	#@$(call testrun,circular and repeat,:,../bin/lexon,-R -C -P,:,grep -l %PRE $(files),.car.exp,%CARERR)
+	#@$(call testrun,jurisdictions list,:,../bin/lexon,-J,:,ls -1 test-hello-00.lex,.jur.exp,)
+	#@$(call testrun,jurisdiction parsing,:,../bin/lexon,-P,:,grep -l %JUR test-*.lex,.jur.exp,)
+	#@$(call testrun,lxf extension grammar production,:,../bin/lexon,,:,grep -l %LXF test-*.lex,.lxf.exp,%LXFERR)
+	#@$(call testrun,lgf lexon grammar production,:,../bin/lexon,-B,:,ls -1 test-*.lgf,.lgf.exp,%LGFERR)
+	#@$(call testrun,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,)
+	#@$(call testrun,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
+	#@$(call testrun,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
+	#@$(call testrun,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
+	#@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
+	#@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
+	@$(call testrun,solidity barebone,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
+	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
+	#@$(call testrun,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
+	#@$(call testrun,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
+	@if [[ ! -f quit.tmp ]] ; then \
+		echo ; \
+		ok=`cat ok.tmp` ; \
+		err=`cat err.tmp` ; \
+		warn=`cat warn.tmp` ; \
+		skip=`cat skip.tmp` ; \
+		update=`cat update.tmp` ; \
+		rm -f perfect ; \
+		echo ; \
+		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
+		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
+		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
+		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
+		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
+		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
+			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
+		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
+			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
+		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
+			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
+		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
+			echo ; \
+			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
+			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
+			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
+			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
+		fi ; \
+	fi
+	@echo
+
 _test_sophia:
 	@echo
 	@printf "$(ok)» regression tests$(off)\n"
@@ -692,7 +771,7 @@ _test_sophia:
 	fi
 	@echo
 
-_test_js:
+_test_javascript:
 	@echo
 	@printf "$(ok)» regression tests$(off)\n"
 	@echo ===================
@@ -808,7 +887,7 @@ _expects:
 	if (( $$ok == 0 )) && (( $$err == 0 )) ; then echo "### no tests #########################"; fi ; \
 	if (( $$ok != 0 )) && (( $$err == 0 )) ; then echo "==== perfect ===="; fi
 	$(call tag,tag.exp)
-	@if [[ -f onlynew ]] ; then echo "VALID FOR NEWEST ONLY" >> tag.exp ; fi
+	@if [[ -f onlynew ]] ; then echo "(valid for newest only)" >> tag.exp ; fi
 	@cat tag.exp
 	@echo
 
@@ -829,7 +908,7 @@ grammar_expects:
 	@echo Grammar Test Regression Expectations
 	@echo ====================================
 	$(call tag,tag.exp)
-	@if [[ -f onlynew ]] ; then echo "VALID FOR NEWEST ONLY" >> tag.exp ; fi
+	@if [[ -f onlynew ]] ; then echo "(valid for newest only)" >> tag.exp ; fi
 	@cat tag.exp
 	$(call init)
 	$(call buildexp,english grammar parsing,:,../bin/lexon,,:,ls -1 english/test-*.lex,.eng.exp,%ERR)

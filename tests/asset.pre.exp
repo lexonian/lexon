@@ -1,0 +1,16 @@
+
+precompilation:
+---------------
+
+asset   1:   LEX: «Asset».
+
+asset   3:   "«Id»" is a text.
+asset   4:   "«Creator»" is a person.
+asset   5:   "«Owner»" is a person.
+
+asset   7:   The «Creator» fixes the «Id», and appoints the «Owner».
+
+asset   9:   CLAUSE: «Transfer Ownership».
+asset  10:   The «Owner» may appoint a new «Owner».
+
+

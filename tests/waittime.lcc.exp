@@ -1,0 +1,56 @@
+( document 
+    ( head 
+        ( lex «right-to-petition» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «board» ( type person ) ) 
+                ( definition «organization-name» ( type text ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «board» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «organization-name» ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «member» 
+            ( provisions 
+                ( definitions 
+                    ( definition «member» ( type person ) ) 
+                    ( definition «date-of-acceptance» ( type time ) ) 
+                    ( definition «petition» ( type text ) ) ) 
+                ( clauses 
+                    ( clause «member-petition» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «member» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( notification notify 
+                                                    ( object ( symbol «board» ) ) ) ) ) 
+                                        permission 
+                                        ( condition if 
+                                            ( expression ( combination ( combinor ( combinand 
+                                                            ( scalar-comparison 
+                                                                ( scalar-expression ( symbol «date-of-acceptance» ) ) 
+                                                                ( comparison-operator later ) 
+                                                                ( scalar-expression 
+                                                                    ( point-in-time 
+                                                                        ( relative-time 
+                                                                            ( duration 
+                                                                                ( scalar-expression 2 ) 
+                                                                                ( time-unit months ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «board» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( acceptance accept ( symbol «member» ) ) ) ) 
+                            permission ) ) ) ) ) ) )

@@ -1,0 +1,18 @@
+
+precompilation:
+---------------
+
+preregistration   1:   LEX: «Preregistration»
+
+preregistration   3:   "«Organizer»" is a person.
+preregistration   4:   "«Registry»" is a person.
+preregistration   5:   "«Deadline»" is a time.
+
+preregistration   7:   The «Organizer» fixes the «Deadline», and appoints the «Registry».
+
+preregistration   9:   TERMS PER «Attendee»:
+
+preregistration  11:   "«Attendee»" is a person.
+
+preregistration  13:   The «Registry» may, if the «Deadline» has not yet passed, appoint an «Attendee».
+

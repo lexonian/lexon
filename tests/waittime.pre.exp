@@ -1,0 +1,23 @@
+
+precompilation:
+---------------
+
+waittime   1:   LEX: «Right To Petition».
+
+waittime   3:   "«Board»" is a person.
+waittime   4:   "«Organization Name»" is a text.
+
+waittime   6:   The «Board» fixes the «Organization Name».
+
+waittime   8:   TERMS PER «Member»:
+
+waittime  10:   "«Member»" is a person.
+waittime  11:   "«Date of Acceptance»" is a time.
+waittime  12:   "«Petition»" is a text.
+
+
+waittime  15:   The «Board» may accept a «Member».
+
+waittime  17:   CLAUSE: «Member Petition».
+waittime  18:   The «Member» may, if the «Date of Acceptance» is at least 2 months in the past, notify the «Board».
+
