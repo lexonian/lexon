@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 alpha 99 U, grammar 0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+	0.3 beta 1, grammar 0.2.20 / subset 0.3.9 beta 1 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**

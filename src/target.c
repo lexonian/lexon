@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.99 U"
+/*JS */ #define backend_version "javascript 0.3.100 beta 1"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.99 U"
+/*Sol*/ #define backend_version "solidity 0.3.100 beta 1"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.99 U"
+/*Sop*/ #define backend_version "sophia 0.3.100 beta 1"
 /*Sop*/ #define target_version "sophia 8+"
 
 #define CYCLE_2 true

@@ -143,7 +143,7 @@ build/.parser: lexccc src/lexon.l grammar/english.lgf
 	@printf "$(ok)» frontend $(off)\n\n"
 	@mkdir -p build
 	@rm -f build/.built
-	@cp README.MD build/README
+	@cp docs/MANUAL build/MANUAL
 	cd build ; ../bin/lexccc -Yparser.y -Hparser.h -Sscanner.l -F../src/lexon.l -Lcore ../grammar/english.lgf
 	cd build ; bison -d -Wn -o parser.c parser.y
 	cd build ; flex -d -o scanner.c scanner.l
@@ -432,7 +432,7 @@ distclean: restore_binaries
 	rm -f bin/lexon
 	rm -f build/.indent.pro
 	rm -f build/.built
-	rm -f build/README
+	rm -f build/MANUAL
 	@echo cd tests
 	@cd tests ; $(MAKE) clean
 	@$(MAKE) ls
@@ -511,7 +511,7 @@ diffclean:
 	rm -f build/.built
 	rm -f build/.parser
 	rm -f build/.targets
-	rm -f build/README
+	rm -f build/MANUAL
 	@echo
 	@echo .:
 	@ls -A

@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 99 U" // unified 0.3 + experimental 0.4
+#define program_vers "0.3 beta 1"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -4025,8 +4025,8 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	char *grm = filedup(opt_source, owngrm);
 	char *grm_imbue = str_escape(grm, "owngrm");
 
-	/* read readme file */
-	char *man = filedup("README", manual);
+	/* read manual file */
+	char *man = filedup("MANUAL", manual);
 	char *man_imbue = str_escape(man, "manual");
 
 	char *pre_midend = strstr(src, "/* --" "->"); // never fe" "ed on yourself

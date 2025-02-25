@@ -35,7 +35,7 @@ Asset ownership transfer with provision to creator.
 Exclusive right to anonymously message the creator of an asset.
 
 ### Timelock
-    timelock.
+    timelock.lex
 Lock tokens in for a set amount of time.
 
 ### Delay
