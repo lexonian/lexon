@@ -44,18 +44,35 @@ off = \033[0m
 has_gindent = $(shell which gindent)
 has_valgrind = $(shell which valgrind)
 
+ifeq ($(wildcard tests/tag.exp),)
+  define check_for_exp
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+  endef
+else
+  define check_for_exp
+  endef
+endif
 
-all: build
+all: build sample
 
 help:
 	# make rules
-	# 
+	#
 	# all           build compiler and run an example (default)
 	# build         build compiler
 	# install       install compiler (run with sudo)
+	# mac install   install pre-built mac binary and copy it as bin/lexon
+	# linux install install pre-built linux binary and copy it as bin/lexon
 	# sample        compile escrow example to solidity
-	# check         compiler tests: deeptest, focustest, sample
-	# devcheck      all tests: envtest, memtest, deeptest, grammarcheck, focustest, sample
+	# check         compiler tests: focustest, deeptest
+	# devcheck      all tests: envtest, grammarcheck, memtest, focustest, deeptest
 	# testlog       dump the 100 last lines of the test log
 	# clean         delete all built files, except pre-built binaries
 	# ls            show the source and build directories
@@ -80,22 +97,29 @@ help:
 	# focusprep     build result references for future focustest runs
 	#
 	# ▫️  2nd level of tests: components
+	# focuscomp     syntax check of focus tests by native compilation, linting*
 	# deeptest      memory handling, includes, language parser, compiler
+	# comptest      natively compile* the result of all failing deep tests
+	# compall       natively compile* all deep test results
+	# compmiss      natively compile* the deep test results that failed before
 	# memtest       valgrind & internal memory leak tests
-	# update        interactive, selective update of deeptest result references
+	# update        interactive update of failing deeptests's result references
 	# recheck       faster update, skipping successful tests of earlier deeptest
-	# expectations  full non-interactive update of deeptest result references
-	# new           creation only of missing deeptest result references
+	# autoupdate    automatic update of failing deeptests's result references
+	# expectations  full non-interactive update of all deeptest result references
+	# new           creation of missing deeptest result references
 	#
 	# ▫️  1st level of tests: build environment
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
+	#
+	# * the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
 
 build:
-	@if (! $(MAKE) -q lexccc.c build/scanner.c build/parser.c) ; \
+	@if (! $(MAKE) -s -o lexccc -q lexccc.c build/.parser & ! $(MAKE) -s lexccc) ; \
 		then printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
 		$(MAKE) lexccc ; \
 	fi
-	@if (! $(MAKE) -o lexccc -q lexon) ; \
+	@if (! $(MAKE) -s -o lexccc -q lexon) ; \
 		then printf "\n$(hi)▫️  cycle 2: build compiler $(off)\n\n" ; \
 		$(MAKE) -o lexccc lexon ; \
 	fi
@@ -119,7 +143,7 @@ build/.parser: lexccc src/lexon.l grammar/english.lgf
 	@printf "$(ok)» frontend $(off)\n\n"
 	@mkdir -p build
 	@rm -f build/.built
-	@cp README.MD build/README
+	@cp docs/MANUAL build/MANUAL
 	cd build ; ../bin/lexccc -Yparser.y -Hparser.h -Sscanner.l -F../src/lexon.l -Lcore ../grammar/english.lgf
 	cd build ; bison -d -Wn -o parser.c parser.y
 	cd build ; flex -d -o scanner.c scanner.l
@@ -197,19 +221,36 @@ build/sophia.c: src/target.c src/.indent.pro $(wildcard src/sophia.c)
 		sed -E -e "s/\/\*T\*\///" -e "s/\/\*Sop\*\/ ?//" -e "s/\/\*S\+S\*\/ ?//" -e "s/\/\*Sol.*//" -e "s/\/\*JS.*//" -e "s/\/\*J\+S.*//" -e "s/xxx_/sophia_/g" -e 's/ ##.*//g' ../src/target.c > sophia.c ; \
 	fi
 
-install: build
+install:
 	@install -d $(PREFIX)/bin/
 	install bin/lexon $(PREFIX)/bin/
 
+mac:
+ifeq (,$(wildcard bin/lexon_mac))
+	$(error Lexon binary for Mac not present in bin/. Try a fresh clone of the master branch.)
+endif
+	@touch -A-0100 bin/lexon_mac
+	cp -p bin/lexon_mac bin/lexon
+
+linux:
+ifeq (,$(wildcard bin/lexon_linux))
+	$(error Lexon binary for Linux not present in bin/. Try a fresh clone of the master branch.)
+endif
+	@touch -A-0100 bin/lexon_linux
+	cp -p bin/lexon_linux bin/lexon
+
+
 sample: build
+ifeq (,$(wildcard .nosample))
 	@printf "\n$(hi)▫️  compile escrow example $(off)\n\n"
 	@printf "$(ok)bin/lexon --solidity examples/escrow.lex$(off)\n\n"
 	@bin/lexon --solidity examples/escrow.lex
 	@echo
+endif
 
-check: deeptest focustest
+check: focustest deeptest
 
-devcheck: envtest grammarcheck memtest deeptest focustest
+devcheck: envtest grammarcheck memtest focustest deeptest
 
 grammarcheck: build
 	@printf "\n$(hi)▫️  grammar checks $(off)\n\n"
@@ -236,13 +277,54 @@ focusprep: build
 focustest: build
 	@cd tests ; $(MAKE) focustest
 
+focuscomp: build
+	@cd tests ; $(MAKE) focuscomp
+
 expclean:
 	@cd tests ; $(MAKE) expclean
 
 deeptest: build
 	@printf "\n$(hi)▫️  deep test $(off)\n"
 ifneq (,$(wildcard tests/tag.exp))
-	@cd tests ; $(MAKE) check
+	@cd tests ; $(MAKE) deeptest
+	@echo
+else
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+endif
+
+comptest: build
+	@printf "\n$(hi)▫️  deep test with native compilation for failing tests$(off)\n"
+ifneq (,$(wildcard tests/tag.exp))
+	@cd tests ; $(MAKE) comptest 
+	@echo
+else
+	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
+	@echo "Depending on what you meant to achieve, it can make sense to check out the"
+	@echo "original expectation files that came with this commit to tests/. Or to create"
+	@echo "them yourself using"
+	@echo
+	@echo "	make expectations"
+	@echo
+	@exit 1
+endif
+
+compmiss: build
+	@printf "\n$(hi)▫️  deep test with native compilation for all that did not pass native$(off)\n"
+	$(check_for_exp)
+	@cd tests ; $(MAKE) compmiss
+	@echo
+
+compall: build
+	@printf "\n$(hi)▫️  deep test with native compilation for all$(off)\n"
+ifneq (,$(wildcard tests/tag.exp))
+	@cd tests ; $(MAKE) compall
 	@echo
 else
 	@printf "\n$(warn)Can't run regression tests: test expectation files are missing.$(off)\n"
@@ -258,6 +340,16 @@ endif
 update: build
 	@printf "\n$(hi)▫️  interactive update of deeptest reference results $(off)\n\n"
 	@cd tests ; $(MAKE) update
+	@echo
+
+autoupdate: build
+	@printf "\n$(hi)▫️  auto-update of deeptest reference results $(off)\n\n"
+	@cd tests ; $(MAKE) autoupdate
+	@echo
+
+autocomp: build
+	@printf "\n$(hi)▫️  auto-update of deeptest reference results and native compile test$(off)\n\n"
+	@cd tests ; $(MAKE) autocomp
 	@echo
 
 recheck: build
@@ -309,6 +401,9 @@ endif
 testlog:
 	@cd tests ; $(MAKE) testlog
 
+cleanlog:
+	@cd tests ; $(MAKE) cleanlog
+
 clean:
 	@printf "\n\n$(hi)▫️  clean built and generated files $(off)\n\n"
 	rm -f .????????
@@ -330,14 +425,14 @@ clean:
 	@printf "$(ok)√ cleaned for building from cycle 1 $(off)\n\n"
 
 distclean: restore_binaries
-	@printf "\n\n$(hi)▫️  clean and pre-build for distribution $(off)\n\n"
+	@printf "\n\n$(hi)▫️  clean and pre-build for master branch $(off)\n\n"
 	@$(MAKE) binaries clean build
-	@printf "\n$(hi)▫️  clean build folder for distribution  $(off)\n\n"
+	@printf "\n$(hi)▫️  clean build folder for master branch $(off)\n\n"
 	rm -f bin/lexccc
 	rm -f bin/lexon
 	rm -f build/.indent.pro
 	rm -f build/.built
-	rm -f build/README
+	rm -f build/MANUAL
 	@echo cd tests
 	@cd tests ; $(MAKE) clean
 	@$(MAKE) ls
@@ -368,6 +463,29 @@ distclean: restore_binaries
 	@echo ""
 	git status
 
+distribution:
+	@printf "\n\n$(hi)▫️  clean, pre-build and copy for distribution $(off)\n\n"
+	@$(MAKE) distclean
+	rm -f distribution
+	mkdir -p distribution/Source/tests
+	cp -vpR .distribution/tests/* distribution/Source/tests/
+	cp -vpR .distribution/RELEASE*.pdf distribution/
+	cp -vpR .distribution/Papers distribution/
+	cp -vpR .distribution/Documentation distribution/
+	cp -vpR bin distribution/Compiler
+	cp -vpR bin distribution/Source/
+	cp -vpR build distribution/Source/
+	cp -vpR src distribution/Source/
+	cp -vpR examples distribution/Examples
+	cp -vpR examples distribution/Source/
+	cp -vpR grammar distribution/Grammar
+	cp -vpR grammar distribution/Source/
+	cp -vpR README.MD distribution/Source/
+	cp -vpR LICENSE distribution/Source/
+	cp -vpR CREDITS distribution/Source/
+	cp -vpR Makefile distribution/Source/
+	@ls -R distribution
+
 binaries:
 	@echo "» checking that binaries are in place"
 ifeq (,$(wildcard bin/lexon_mac))
@@ -393,7 +511,7 @@ diffclean:
 	rm -f build/.built
 	rm -f build/.parser
 	rm -f build/.targets
-	rm -f build/README
+	rm -f build/MANUAL
 	@echo
 	@echo .:
 	@ls -A
@@ -530,6 +648,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check devcheck grammarcheck conflicts counter focusprep focustest expclean deeptest update recheck expectations new envtest testlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample check comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

@@ -262,6 +262,7 @@ typedef struct Symbols {
 
 typedef struct Symbol {
 	Name *Name;
+	struct New *New;
 	struct Article *Article;
 	struct Type *Type;
 	Literal *Literal;
@@ -300,6 +301,7 @@ typedef struct Predicate {
 	struct Registration *Registration;
 	struct Grantment *Grantment;
 	struct Appointment *Appointment;
+	struct Acceptance *Acceptance;
 	struct Fixture *Fixture;
 	struct Setting *Setting;
 	struct Payment *Payment;
@@ -374,12 +376,24 @@ typedef struct Grant {
 typedef struct Appointment {
 	struct Appoint *Appoint;
 	struct Symbol *Symbol;
+	struct Expression *Expression;
 	Literal *Literal;
 } Appointment;
 
 typedef struct Appoint {
 	Literal *Literal;
 } Appoint;
+
+typedef struct Acceptance {
+	struct Accept *Accept;
+	struct Symbol *Symbol;
+	struct Expression *Expression;
+	Literal *Literal;
+} Acceptance;
+
+typedef struct Accept {
+	Literal *Literal;
+} Accept;
 
 typedef struct Fixture {
 	struct Fix *Fix;
@@ -504,6 +518,8 @@ typedef struct Scalar_Comparison {
 
 typedef struct Comparison_Operator {
 	struct Equal *Equal;
+	struct Greater *Greater;
+	struct Less *Less;
 	struct Later *Later;
 	Literal *Literal;
 } Comparison_Operator;
@@ -511,6 +527,14 @@ typedef struct Comparison_Operator {
 typedef struct Equal {
 	Literal *Literal;
 } Equal;
+
+typedef struct Greater {
+	Literal *Literal;
+} Greater;
+
+typedef struct Less {
+	Literal *Literal;
+} Less;
 
 typedef struct Later {
 	Literal *Literal;
@@ -540,6 +564,10 @@ typedef struct Combinor {
 typedef struct Combinand {
 	struct Symbol *Symbol;
 	struct Expiration *Expiration;
+	struct Timeliness *Timeliness;
+	struct Reflexive *Reflexive;
+	Description *Description;
+	struct Article *Article;
 	struct Scalar_Comparison *Scalar_Comparison;
 	struct Negation *Negation;
 	struct Existence *Existence;
@@ -606,6 +634,10 @@ typedef struct True {
 typedef struct Article {
 	Literal *Literal;
 } Article;
+
+typedef struct New {
+	Literal *Literal;
+} New;
 
 typedef struct Point_In_Time {
 	struct Current_Time *Current_Time;
@@ -677,6 +709,10 @@ typedef struct Expiration {
 	Literal *Literal;
 } Expiration;
 
+typedef struct Timeliness {
+	Literal *Literal;
+} Timeliness;
+
 
 Document *root;
 /* action handler (stub) functions */
@@ -733,6 +769,8 @@ Grantment *process_grantment(Grantment *Grantment);
 Grant *process_grant(Grant *Grant);
 Appointment *process_appointment(Appointment *Appointment);
 Appoint *process_appoint(Appoint *Appoint);
+Acceptance *process_acceptance(Acceptance *Acceptance);
+Accept *process_accept(Accept *Accept);
 Fixture *process_fixture(Fixture *Fixture);
 Fix *process_fix(Fix *Fix);
 Fixed *process_fixed(Fixed *Fixed);
@@ -757,6 +795,8 @@ Expression *process_expression(Expression *Expression);
 Scalar_Comparison *process_scalar_comparison(Scalar_Comparison *Scalar_Comparison);
 Comparison_Operator *process_comparison_operator(Comparison_Operator *Comparison_Operator);
 Equal *process_equal(Equal *Equal);
+Greater *process_greater(Greater *Greater);
+Less *process_less(Less *Less);
 Later *process_later(Later *Later);
 Scalar_Expression *process_scalar_expression(Scalar_Expression *Scalar_Expression);
 Combination *process_combination(Combination *Combination);
@@ -773,6 +813,7 @@ Negator *process_negator(Negator *Negator);
 Being *process_being(Being *Being);
 True *process_true(True *True);
 Article *process_article(Article *Article);
+New *process_new(New *New);
 Point_In_Time *process_point_in_time(Point_In_Time *Point_In_Time);
 Current_Time *process_current_time(Current_Time *Current_Time);
 Relative_Time *process_relative_time(Relative_Time *Relative_Time);
@@ -787,6 +828,7 @@ Minutes *process_minutes(Minutes *Minutes);
 Seconds *process_seconds(Seconds *Seconds);
 Milliseconds *process_milliseconds(Milliseconds *Milliseconds);
 Expiration *process_expiration(Expiration *Expiration);
+Timeliness *process_timeliness(Timeliness *Timeliness);
 }
 
 /* Declarations */
@@ -825,6 +867,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token PREAMBLE
 	%token TERMS
 	%token A
+	%token ACCEPT
+	%token ACCEPTS
 	%token AFTER
 	%token AFTERWARDS
 	%token ALL
@@ -844,6 +888,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token CERTIFIED
 	%token CERTIFIES
 	%token CERTIFY
+	%token COMING
 	%token CONTRACT
 	%token CONTRACTS
 	%token CURRENT
@@ -868,6 +913,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token GIVEN
 	%token GRANT
 	%token GRANTS
+	%token GREATER
 	%token HAS
 	%token HERSELF
 	%token HIMSELF
@@ -875,10 +921,12 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token HOURS
 	%token IF
 	%token IN
+	%token INCOMING
 	%token INTO
 	%token IS
 	%token ITSELF
 	%token LEAST
+	%token LESS
 	%token LIES
 	%token MAY
 	%token MILLISECOND
@@ -889,6 +937,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token MONTHS
 	%token MYSELF
 	%token NEITHER
+	%token NEW
+	%token NEXT
 	%token NO
 	%token NOR
 	%token NOT
@@ -910,6 +960,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token REGISTER
 	%token REGISTERS
 	%token REMAINDER
+	%token REPAY
+	%token REPAYS
 	%token RESPECTIVE
 	%token RETURN
 	%token RETURNS
@@ -918,10 +970,12 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token SEND
 	%token SENDS
 	%token SIGNED
+	%token SMALLER
 	%token SO
 	%token TERMINATE
 	%token TERMINATES
 	%token TEXT
+	%token THAN
 	%token THAT
 	%token THE
 	%token THEMSELF
@@ -942,8 +996,11 @@ Expiration *process_expiration(Expiration *Expiration);
 	%token YEAR
 	%token YEARS
 	%token YES
+	%token YET
 	%token YOURSELF
 	%token YOURSELVES
+	%nterm <Accept *> Accept
+	%nterm <Acceptance *> Acceptance
 	%nterm <Action *> Action
 	%nterm <All_Contracts *> All_Contracts
 	%nterm <Amount *> Amount
@@ -995,11 +1052,13 @@ Expiration *process_expiration(Expiration *Expiration);
 	%nterm <Function *> Function
 	%nterm <Grant *> Grant
 	%nterm <Grantment *> Grantment
+	%nterm <Greater *> Greater
 	%nterm <Head *> Head
 	%nterm <Hours *> Hours
 	%nterm <If *> If
 	%nterm <Illocutor *> Illocutor
 	%nterm <Later *> Later
+	%nterm <Less *> Less
 	%nterm <Lex *> Lex
 	%nterm <Lexon *> Lexon
 	%nterm <Milliseconds *> Milliseconds
@@ -1008,6 +1067,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	%nterm <Negation *> Negation
 	%nterm <Negator *> Negator
 	%nterm <Neither *> Neither
+	%nterm <New *> New
 	%nterm <Nor *> Nor
 	%nterm <Notification *> Notification
 	%nterm <Notify *> Notify
@@ -1046,6 +1106,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	%nterm <This_Contract *> This_Contract
 	%nterm <Time *> Time
 	%nterm <Time_Unit *> Time_Unit
+	%nterm <Timeliness *> Timeliness
 	%nterm <True *> True
 	%nterm <Type *> Type
 	%nterm <Type_Term *> Type_Term
@@ -1320,9 +1381,13 @@ Expiration *process_expiration(Expiration *Expiration);
 	
 	Symbol:	
 		   Name                                           { NEW(Symbol, *((Literal **)&yylval)); Symbol->Name=$Name; $$=process_symbol(Symbol); }
+		|  New Name                                       { NEW(Symbol, *((Literal **)&yylval)); Symbol->New=$New; Symbol->Name=$Name; $$=process_symbol(Symbol); }
 		| Article Name                                    { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=$Article; Symbol->Name=$Name; $$=process_symbol(Symbol); }
+		| Article New Name                                { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=$Article; Symbol->New=$New; Symbol->Name=$Name; $$=process_symbol(Symbol); }
 		|  Type                                           { NEW(Symbol, *((Literal **)&yylval)); Symbol->Type=$Type; $$=process_symbol(Symbol); }
+		|  New Type                                       { NEW(Symbol, *((Literal **)&yylval)); Symbol->New=$New; Symbol->Type=$Type; $$=process_symbol(Symbol); }
 		| Article Type                                    { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=$Article; Symbol->Type=$Type; $$=process_symbol(Symbol); }
+		| Article New Type                                { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=$Article; Symbol->New=$New; Symbol->Type=$Type; $$=process_symbol(Symbol); }
 		;
 
 
@@ -1337,7 +1402,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	Object:	
 		  Symbol                                          { NEW(Object, *((Literal **)&yylval)); Object->Symbol=$Symbol; $$=process_object(Object); }
 		| Reflexive                                       { NEW(Object, *((Literal **)&yylval)); Object->Reflexive=$Reflexive; $$=process_object(Object); }
-		| ESCROW                                          { NEW(Object, *((Literal **)&yylval)); $$=process_object(Object); }
+		|  ESCROW                                         { NEW(Object, *((Literal **)&yylval)); $$=process_object(Object); }
+		| THE ESCROW                                      { NEW(Object, *((Literal **)&yylval)); $$=process_object(Object); }
 		;
 
 
@@ -1390,6 +1456,7 @@ Expiration *process_expiration(Expiration *Expiration);
 		| Registration                                    { NEW(Predicate, *((Literal **)&yylval)); Predicate->Registration=$Registration; $$=process_predicate(Predicate); }
 		| Grantment                                       { NEW(Predicate, *((Literal **)&yylval)); Predicate->Grantment=$Grantment; $$=process_predicate(Predicate); }
 		| Appointment                                     { NEW(Predicate, *((Literal **)&yylval)); Predicate->Appointment=$Appointment; $$=process_predicate(Predicate); }
+		| Acceptance                                      { NEW(Predicate, *((Literal **)&yylval)); Predicate->Acceptance=$Acceptance; $$=process_predicate(Predicate); }
 		| Fixture                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Fixture=$Fixture; $$=process_predicate(Predicate); }
 		| Setting                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Setting=$Setting; $$=process_predicate(Predicate); }
 		| Payment                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Payment=$Payment; $$=process_predicate(Predicate); }
@@ -1494,6 +1561,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	
 	Appointment:	
 		  Appoint Symbol                                  { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; $$=process_appointment(Appointment); }
+		| Appoint Symbol Expression                       { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
+		| Appoint Symbol AS Expression                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
 		;
 
 
@@ -1501,6 +1570,21 @@ Expiration *process_expiration(Expiration *Expiration);
 	Appoint:	
 		  APPOINT                                         { NEW(Appoint, *((Literal **)&yylval)); $$=process_appoint(Appoint); }
 		| APPOINTS                                        { NEW(Appoint, *((Literal **)&yylval)); $$=process_appoint(Appoint); }
+		;
+
+
+	
+	Acceptance:	
+		  Accept Symbol                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=$Accept; Acceptance->Symbol=$Symbol; $$=process_acceptance(Acceptance); }
+		| Accept Symbol Expression                        { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=$Accept; Acceptance->Symbol=$Symbol; Acceptance->Expression=$Expression; $$=process_acceptance(Acceptance); }
+		| Accept Symbol AS Expression                     { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=$Accept; Acceptance->Symbol=$Symbol; Acceptance->Expression=$Expression; $$=process_acceptance(Acceptance); }
+		;
+
+
+	
+	Accept:	
+		  ACCEPT                                          { NEW(Accept, *((Literal **)&yylval)); $$=process_accept(Accept); }
+		| ACCEPTS                                         { NEW(Accept, *((Literal **)&yylval)); $$=process_accept(Accept); }
 		;
 
 
@@ -1567,6 +1651,8 @@ Expiration *process_expiration(Expiration *Expiration);
 		| PAYS                                            { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
 		| RETURN                                          { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
 		| RETURNS                                         { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
+		| REPAY                                           { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
+		| REPAYS                                          { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
 		;
 
 
@@ -1574,6 +1660,7 @@ Expiration *process_expiration(Expiration *Expiration);
 	Preposition:	
 		  TO                                              { NEW(Preposition, *((Literal **)&yylval)); $$=process_preposition(Preposition); }
 		| INTO                                            { NEW(Preposition, *((Literal **)&yylval)); $$=process_preposition(Preposition); }
+		| OF                                              { NEW(Preposition, *((Literal **)&yylval)); $$=process_preposition(Preposition); }
 		;
 
 
@@ -1610,7 +1697,8 @@ Expiration *process_expiration(Expiration *Expiration);
 
 	
 	Notification:	
-		  Notify Object Preposition Expression            { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=$Notify; Notification->Object=$Object; Notification->Preposition=$Preposition; Notification->Expression=$Expression; $$=process_notification(Notification); }
+		  Notify Object                                   { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=$Notify; Notification->Object=$Object; $$=process_notification(Notification); }
+		| Notify Object Preposition Expression            { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=$Notify; Notification->Object=$Object; Notification->Preposition=$Preposition; Notification->Expression=$Expression; $$=process_notification(Notification); }
 		;
 
 
@@ -1679,6 +1767,8 @@ Expiration *process_expiration(Expiration *Expiration);
 	
 	Comparison_Operator:	
 		  Equal                                           { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Equal=$Equal; $$=process_comparison_operator(Comparison_Operator); }
+		| Greater                                         { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Greater=$Greater; $$=process_comparison_operator(Comparison_Operator); }
+		| Less                                            { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Less=$Less; $$=process_comparison_operator(Comparison_Operator); }
 		| Later                                           { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Later=$Later; $$=process_comparison_operator(Comparison_Operator); }
 		;
 
@@ -1698,6 +1788,88 @@ Expiration *process_expiration(Expiration *Expiration);
 
 
 	
+	Greater:	
+		   GREATER BEING GREATER                          { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		|  GREATER BEING GREATER THAN                     { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		|  GREATER THAN BEING GREATER                     { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		|  GREATER THAN BEING GREATER THAN                { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		| IS GREATER BEING GREATER                        { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		| IS GREATER BEING GREATER THAN                   { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		| IS GREATER THAN BEING GREATER                   { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		| IS GREATER THAN BEING GREATER THAN              { NEW(Greater, *((Literal **)&yylval)); $$=process_greater(Greater); }
+		;
+
+
+	
+	Less:	
+		   LESS BEING LESS SMALLER BEING SMALLER          { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS SMALLER BEING SMALLER THAN     { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS SMALLER THAN BEING SMALLER     { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS IS SMALLER BEING SMALLER       { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS IS SMALLER BEING SMALLER THAN  { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS IS SMALLER THAN BEING SMALLER  { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN SMALLER BEING SMALLER     { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN IS SMALLER BEING SMALLER  { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS SMALLER BEING SMALLER     { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS IS SMALLER BEING SMALLER  { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN SMALLER BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		|  LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS SMALLER BEING SMALLER        { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS SMALLER BEING SMALLER THAN   { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS SMALLER THAN BEING SMALLER   { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS IS SMALLER BEING SMALLER     { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN SMALLER BEING SMALLER   { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN IS SMALLER BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS SMALLER BEING SMALLER   { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS IS SMALLER BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		| IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN { NEW(Less, *((Literal **)&yylval)); $$=process_less(Less); }
+		;
+
+
+	
 	Later:	
 		  IS AT LEAST                                     { NEW(Later, *((Literal **)&yylval)); $$=process_later(Later); }
 		| IS AT THE LEAST                                 { NEW(Later, *((Literal **)&yylval)); $$=process_later(Later); }
@@ -1711,6 +1883,8 @@ Expiration *process_expiration(Expiration *Expiration);
 		  Symbol                                          { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Symbol=$Symbol; $$=process_scalar_expression(Scalar_Expression); }
 		| Scalar                                          { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Scalar=$Scalar; $$=process_scalar_expression(Scalar_Expression); }
 		| Point_In_Time                                   { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Point_In_Time=$Point_In_Time; $$=process_scalar_expression(Scalar_Expression); }
+		|  ESCROW                                         { NEW(Scalar_Expression, *((Literal **)&yylval)); $$=process_scalar_expression(Scalar_Expression); }
+		| THE ESCROW                                      { NEW(Scalar_Expression, *((Literal **)&yylval)); $$=process_scalar_expression(Scalar_Expression); }
 		;
 
 
@@ -1733,6 +1907,10 @@ Expiration *process_expiration(Expiration *Expiration);
 	Combinand:	
 		  Symbol                                          { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; $$=process_combinand(Combinand); }
 		| Symbol Expiration                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; Combinand->Expiration=$Expiration; $$=process_combinand(Combinand); }
+		| Symbol Timeliness                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=$Symbol; Combinand->Timeliness=$Timeliness; $$=process_combinand(Combinand); }
+		| Reflexive                                       { NEW(Combinand, *((Literal **)&yylval)); Combinand->Reflexive=$Reflexive; $$=process_combinand(Combinand); }
+		|  Description                                    { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=$Description; $$=process_combinand(Combinand); }
+		| Article Description                             { NEW(Combinand, *((Literal **)&yylval)); Combinand->Article=$Article; Combinand->Description=$Description; $$=process_combinand(Combinand); }
 		| Scalar_Comparison                               { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=$Scalar_Comparison; $$=process_combinand(Combinand); }
 		| Negation                                        { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=$Negation; $$=process_combinand(Combinand); }
 		| Existence                                       { NEW(Combinand, *((Literal **)&yylval)); Combinand->Existence=$Existence; $$=process_combinand(Combinand); }
@@ -1828,6 +2006,15 @@ Expiration *process_expiration(Expiration *Expiration);
 		  A                                               { NEW(Article, *((Literal **)&yylval)); $$=process_article(Article); }
 		| AN                                              { NEW(Article, *((Literal **)&yylval)); $$=process_article(Article); }
 		| THE                                             { NEW(Article, *((Literal **)&yylval)); $$=process_article(Article); }
+		;
+
+
+	
+	New:	
+		  NEW                                             { NEW(New, *((Literal **)&yylval)); $$=process_new(New); }
+		| NEXT                                            { NEW(New, *((Literal **)&yylval)); $$=process_new(New); }
+		| COMING                                          { NEW(New, *((Literal **)&yylval)); $$=process_new(New); }
+		| INCOMING                                        { NEW(New, *((Literal **)&yylval)); $$=process_new(New); }
 		;
 
 
@@ -1938,6 +2125,23 @@ Expiration *process_expiration(Expiration *Expiration);
 		  HAS PASSED                                      { NEW(Expiration, *((Literal **)&yylval)); $$=process_expiration(Expiration); }
 		|  PAST                                           { NEW(Expiration, *((Literal **)&yylval)); $$=process_expiration(Expiration); }
 		| IS PAST                                         { NEW(Expiration, *((Literal **)&yylval)); $$=process_expiration(Expiration); }
+		;
+
+
+	
+	Timeliness:	
+		   NOT PASSED                                     { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		|  NOT YET PASSED                                 { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		| HAS NOT PASSED                                  { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		| HAS NOT YET PASSED                              { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		|  NOT PAST                                       { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		|  NOT PAST YET                                   { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		|  NOT YET PAST                                   { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		|  NOT YET PAST YET                               { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		| IS NOT PAST                                     { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		| IS NOT PAST YET                                 { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		| IS NOT YET PAST                                 { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
+		| IS NOT YET PAST YET                             { NEW(Timeliness, *((Literal **)&yylval)); $$=process_timeliness(Timeliness); }
 		;
 
 
@@ -2229,6 +2433,7 @@ Symbols *process_symbols(Symbols *Symbols) {
 Symbol *process_symbol(Symbol *Symbol) {
 	if(opt_debug_actions) printf("actions: parsing Symbol %s\n", Symbol->Name);
 	// Symbol->Name
+	// Symbol->New
 	// Symbol->Article
 	// Symbol->Type
 	return Symbol;
@@ -2273,6 +2478,7 @@ Predicate *process_predicate(Predicate *Predicate) {
 	// Predicate->Registration
 	// Predicate->Grantment
 	// Predicate->Appointment
+	// Predicate->Acceptance
 	// Predicate->Fixture
 	// Predicate->Setting
 	// Predicate->Payment
@@ -2359,12 +2565,26 @@ Appointment *process_appointment(Appointment *Appointment) {
 	if(opt_debug_actions) printf("actions: parsing Appointment '%s'\n", Appointment->Literal);
 	// Appointment->Appoint
 	// Appointment->Symbol
+	// Appointment->Expression
 	return Appointment;
 }
 
 Appoint *process_appoint(Appoint *Appoint) {
 	if(opt_debug_actions) printf("actions: parsing Appoint '%s'\n", Appoint->Literal);
 	return Appoint;
+}
+
+Acceptance *process_acceptance(Acceptance *Acceptance) {
+	if(opt_debug_actions) printf("actions: parsing Acceptance '%s'\n", Acceptance->Literal);
+	// Acceptance->Accept
+	// Acceptance->Symbol
+	// Acceptance->Expression
+	return Acceptance;
+}
+
+Accept *process_accept(Accept *Accept) {
+	if(opt_debug_actions) printf("actions: parsing Accept '%s'\n", Accept->Literal);
+	return Accept;
 }
 
 Fixture *process_fixture(Fixture *Fixture) {
@@ -2513,6 +2733,8 @@ Scalar_Comparison *process_scalar_comparison(Scalar_Comparison *Scalar_Compariso
 Comparison_Operator *process_comparison_operator(Comparison_Operator *Comparison_Operator) {
 	if(opt_debug_actions) printf("actions: parsing Comparison_Operator '%s'\n", Comparison_Operator->Literal);
 	// Comparison_Operator->Equal
+	// Comparison_Operator->Greater
+	// Comparison_Operator->Less
 	// Comparison_Operator->Later
 	return Comparison_Operator;
 }
@@ -2520,6 +2742,16 @@ Comparison_Operator *process_comparison_operator(Comparison_Operator *Comparison
 Equal *process_equal(Equal *Equal) {
 	if(opt_debug_actions) printf("actions: parsing Equal '%s'\n", Equal->Literal);
 	return Equal;
+}
+
+Greater *process_greater(Greater *Greater) {
+	if(opt_debug_actions) printf("actions: parsing Greater '%s'\n", Greater->Literal);
+	return Greater;
+}
+
+Less *process_less(Less *Less) {
+	if(opt_debug_actions) printf("actions: parsing Less '%s'\n", Less->Literal);
+	return Less;
 }
 
 Later *process_later(Later *Later) {
@@ -2552,9 +2784,13 @@ Combinor *process_combinor(Combinor *Combinor) {
 }
 
 Combinand *process_combinand(Combinand *Combinand) {
-	if(opt_debug_actions) printf("actions: parsing Combinand '%s'\n", Combinand->Literal);
+	if(opt_debug_actions) printf("actions: parsing Combinand %s\n", Combinand->Description);
 	// Combinand->Symbol
 	// Combinand->Expiration
+	// Combinand->Timeliness
+	// Combinand->Reflexive
+	// Combinand->Description
+	// Combinand->Article
 	// Combinand->Scalar_Comparison
 	// Combinand->Negation
 	// Combinand->Existence
@@ -2631,6 +2867,11 @@ True *process_true(True *True) {
 Article *process_article(Article *Article) {
 	if(opt_debug_actions) printf("actions: parsing Article '%s'\n", Article->Literal);
 	return Article;
+}
+
+New *process_new(New *New) {
+	if(opt_debug_actions) printf("actions: parsing New '%s'\n", New->Literal);
+	return New;
 }
 
 Point_In_Time *process_point_in_time(Point_In_Time *Point_In_Time) {
@@ -2715,5 +2956,10 @@ Milliseconds *process_milliseconds(Milliseconds *Milliseconds) {
 Expiration *process_expiration(Expiration *Expiration) {
 	if(opt_debug_actions) printf("actions: parsing Expiration '%s'\n", Expiration->Literal);
 	return Expiration;
+}
+
+Timeliness *process_timeliness(Timeliness *Timeliness) {
+	if(opt_debug_actions) printf("actions: parsing Timeliness '%s'\n", Timeliness->Literal);
+	return Timeliness;
 }
 
