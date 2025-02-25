@@ -1,0 +1,24 @@
+
+precompilation:
+---------------
+
+message   1:   LEX: «Creator Messaging».
+
+message   3:   "«Asset Id»" is a text.
+message   4:   "«Creator»" is a person.
+message   5:   "«Owner»" is a person.
+message   6:   "«Message»" is a text.
+message   7:   "«Confirmation»" is a text.
+
+message   9:   The «Creator» fixes the «Asset Id», and appoints the «Owner».
+
+message  11:   CLAUSE: «Transfer Ownership».
+message  12:   The «Owner» may appoint the «Owner».
+
+message  14:   CLAUSE: «Send Message».
+message  15:   The «Owner» may send a «Message» to the «Creator».
+
+message  17:   CLAUSE: «Send Confirmation».
+message  18:   The «Creator» may send a «Confirmation» to the «Owner».
+
+

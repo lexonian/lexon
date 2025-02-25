@@ -1,0 +1,61 @@
+( document 
+    ( head 
+        ( lex «creator-messaging» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «asset-id» ( type text ) ) 
+                ( definition «creator» ( type person ) ) 
+                ( definition «owner» ( type person ) ) 
+                ( definition «message» ( type text ) ) 
+                ( definition «confirmation» ( type text ) ) ) 
+            ( clauses 
+                ( clause «transfer-ownership» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «owner» ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «send-message» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( sending send 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «message» ) ) ) ) ) 
+                                                preposition 
+                                                ( object ( symbol «creator» ) ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «send-confirmation» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «creator» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( sending send 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «confirmation» ) ) ) ) ) 
+                                                preposition 
+                                                ( object ( symbol «owner» ) ) ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «creator» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «asset-id» ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «owner» ) ) ) ) ) ) ) ) ) )

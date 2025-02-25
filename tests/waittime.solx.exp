@@ -1,0 +1,161 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+/** Lexon-generated Solidity code
+ **
+ **	code:        Right To Petition
+ **
+ **	file:        cover/waittime.lex
+ **
+ **	compiler:    lexon 0.3 alpha 99 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **
+ **	backend:     solidity 0.3.99a U
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Ethereum blockchain or Goerli testchain.  Replace
+   the <parameters> with literal values to interact with the contract via terminal.
+
+   Note that the instructions below reflect your lexon code, as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used during compilation  –  a list of which, is available with
+   lexon -h.  The functions are given in the order of appearance, in the lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an address for it for
+   the first time. This will require for the same address to be used for the same role
+   after this point. Else, the call will revert.
+
+   Some clauses of the original lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment:
+
+   <organization_name : string>
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per Member.
+
+   > member = waittime.add_member(<member : address payable>)
+   • <<Member>> ⟶   member_petition()
+ */
+
+/**
+ **
+ **	Main Right To Petition contract system
+ **
+ **/
+
+/*
+ | 	LEX Right To Petition.
+ | 
+ | 	"Board" is a person.
+ | 	"Organization Name" is a text.
+ | 
+ | 	The Board fixes the Organization Name.
+ */
+
+contract RightToPetition {
+
+    address payable public board;
+    string public organization_name;
+
+    constructor(string memory _organization_name) {
+        board = payable(msg.sender);
+        organization_name = _organization_name;
+    }
+
+    /* aggregation of covenants for folds and serialization */
+
+    mapping(uint => Member) public _member_list;
+    uint _member_count = 0;
+
+    /* create new instance of Member covenant, and register it with main */
+
+    function add_member(address payable _member) public returns(Member) {
+        permit(board);
+        return _member_list[_member_count += 1] = new Member(this, _member);
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+}
+
+/**
+ **
+ **	Member covenant class
+ **
+ **/
+
+/*
+ | 	TERMS PER Member
+ | 
+ | 	"Member" is a person.
+ | 	"Date of Acceptance" is a time.
+ | 	"Petition" is a text.
+ | 
+ | 	
+ | 	The Board may accept a Member.
+ */
+
+contract Member {
+
+    RightToPetition main;
+    address payable public member;
+    uint public date_of_acceptance;
+    string public petition;
+
+
+    event Message(
+        address indexed _from,
+        address indexed _to,
+        string _message);
+
+    constructor(RightToPetition _main, address payable _member) {
+        main = _main;
+        member = _member;
+    }
+
+
+    /* Member Petition clause */
+
+    /*
+     |  CLAUSE: Member Petition.
+     |  The Member may, if the Date of Acceptance is at least 2 months in the past, notify the Board.
+     */
+
+    function member_petition() public {
+        permit(member);
+        if((date_of_acceptance <= (block.timestamp - (2 * 2592000)))) {
+            notify(main.board(), "NOTIFICATION");
+        }
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+    /* built-in send message */
+
+    function notify(address payable _to, string memory _message) internal {
+        emit Message(msg.sender, _to, _message);
+    }
+}
+
+/* end */

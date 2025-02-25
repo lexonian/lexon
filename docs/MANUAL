@@ -1,0 +1,2497 @@
+﻿      _      ____   _      ___    _          ___       ___
+     | |    | |_   \ \_/  / / \  | |\ |     / / \  __   ) )
+     |_|__  |_|__  /_/ \  \_\_/  |_| \|     \_\_/ (_() _)_)
+
+
+            Lexon — natural language programming
+
+                        LEXON
+                       WRITER'S
+                        MANUAL
+                         0.3
+
+        This excerpt from the manual describes the
+        workflow to create and use Lexon digital
+        contracts on the Ethereum blockchain. It
+        covers writing, compiling and deploying of
+        Lexon texts.
+
+        You don't need any of this to READ Lexon.
+
+        There is further material, background,
+        papers, books, and online references at
+        https://www.lexon.org. The Lexon book
+        offers all relevant angles in a concise for-
+        mat. The Lexon BIBLE adds details & trivia.
+        Characteristica Universalis is a high-level,
+        philosophical book covering 350+ years of
+        research into language and logic, up to
+        AI. 
+
+        This manual includes excerpts from these
+        sources but focuses on the practical and
+        technical aspects of writing Lexon texts.
+        Get the full PDF version online at
+        https://lexon.org/manual.html
+
+
+
+DISCLAIMERS
+
+The information provided in this document is strictly for educational purposes.
+There are no warranties, express or implied. Any use of this information is at
+your own risk. The author does not assume and hereby disclaims any liability to
+any party for any loss, damage, or disruption.
+
+Lexon is not an all-purpose human language. An unambiguous language is
+desirable for programming and lawmaking, less so for other purposes of human
+communication.1
+
+Lexon compiler output must be audited before using it in production. There is
+no warranty for fitness for any purpose, nor any other warranty for the
+compiler output. See  the  License  text  at https://lexon.org/license.html.
+
+
+
+LICENSE
+
+There is no claim to the output products of the Lexon compiler. Any text you
+write in Lexon and anything you create using the Lexon compiler is yours or
+determined by arrangements you made.
+
+This document is licensed under the GNU Public License (GPL) version 3. The
+license text can be found at https://www.gnu.org/licenses/gpl-3.0.txt.
+Basically, you can quote, share or modify this document but must give credit
+and allow the same.
+
+Papers quoted are copyrighted as provided in the papers.
+
+Lexon is licensed to you under AGPL 3.0 under the tems provided below.
+
+
+
+VERSION
+
+Excerpt of text version 1.0.1 / 0.5.5.1 of this manual, for Lexon 0.3 on Ethereum.
+
+
+
+INTRODUCTION
+
+Lexon is a plain-text programming language. This means that it reads like natural English and digital contracts written in Lexon that run on the blockchain can be read and understood by anyone, without requiring any knowledge of programming.
+
+Lexon's digital contracts inherit their unstoppable power from smart contracts. That they are also readable by anyone - not just programmers - is their interface to the real world. They connect to the legal system, for far-reaching consequences: a digital contract cannot be broken and is a legal agreement.
+
+To work its magic, Lexon perfects an AI language processing approach that had been researched for decades.2 Its contribution is 'Zen-like,' reducing transformation steps to stay closer to how human thought works: its internal data model retains human-readability. This makes Lexon transparent as well as precise and provides unparalleled agency.
+
+The example contract below is a minimal escrow that is an agreement between a payer and a receiver. The notary decides whether a payment in escrow should be paid out to the receiver or sent back to the payer. This could be the reaction to a corresponding deal being aborted, goods not arriving or being returned for any reason. The contract looks only at the payment side, with the notary in the role of the oracle, i.e., the connection from the blockchain to the real world.
+
+As is, the contract could serve many different use cases. There could be many variations, including a scenario that works without oracles.
+
+
+
+A Lexon digital contract example:
+
+        LEX Escrow.
+
+        "Payer" is a person.
+        "Receiver" is a person.
+        "Notary" is a person.
+        "Fee" is an amount.
+
+        The Payer pays an Amount into escrow, appoints the Receiver, appoints the Notary, and fixes the Fee.
+
+        CLAUSE: Pay Out.
+        The Notary may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Receiver.
+
+        CLAUSE: Pay Back.
+        The Notary may pay from escrow the Fee to themselves, and afterwards return the 
+        remainder of the escrow to the Payer.
+
+
+
+In the following chapters, we will discuss this example's grammar, and compile this digital contract using the online Lexon compiler.
+
+
+
+
+QUICK START
+
+
+As a crypto developer, all you need to get started may be this:
+
+LEXON WRITING AND COMPILATION
+
+There is no training required to read and understand a Lexon text.
+
+To write your first own digital contract, take an example and modify it at https://lexon.org/compiler.
+
+The online compiler screen has an example button that rotates through a number of texts.
+
+Click compile, copy and paste the resulting Solidity code to Remix to deploy, or deploy it manually as described below for the Escrow example.
+
+To understand the vocabulary and grammar, dive into the interactive vocabulary at https://lexon.org/vocabulary. Clicking around this page is an excellent way to get a feel for Lexon.
+
+At the time of writing, the word reference in this manual is the same as the one at the online vocabulary.
+
+
+
+CONCEPTS
+
+The four most important concepts to understand to WRITE Lexon texts:
+
+LEXON
+
+Lexon unites developments in computational law, cryptography, computer sciences, AI3 and linguistics to achieve long-sought milestones in each field: digital contract analysis, legally enforceable smart contracts, self-documenting code, deterministic language processing, and an executable human language. The resulting accessibility and agency open new ways even to think about some of the more intractable-looking challenges of our times and solve them. It is perfect for trustless private law, i.e., legally valid agreements implemented on the blockchain that can't be broken.
+
+LEXON COMPILER
+
+The Lexon compiler4, 5 accepts text adhering to Lexon's grammar and transposes this natural-language code to the Ethereum language Solidity. It is a web3 application interacting with the Ethereum blockchain to help creating new web3 applications that run on Ethereum.
+
+DIGITAL CONTRACTS
+
+Blockchain smart contracts written in Lexon are called digital contracts. While lawmakers will need time to understand their new options, Lexon shines as a language for private law, i.e., contracting. Digital contracts are legally enforceable agreements.
+
+SOLIDITY 
+
+Solidity is the language that smart contracts are programmed in for the Ethereum blockchain. It is a purpose-built, 3rd generation language, designed to be as safe as possible. Lexon users, however, do not need to learn Solidity to be able to create smart contracts.
+ 
+
+
+
+********************************************************************************
+VOCABULARY
+********************************************************************************
+
+
+The point of Lexon is that one does NOT have to learn it to READ it.
+
+But even learning to write Lexon is best done by looking at examples rather than memorizing words. This is no different than how a human language, or a programming language, or even legalese is usually picked up. The allowed use of a word, its context, are what matters. 
+
+The Lexon 0.3 word list starts on pg. 23 and is online at http://lexon.org/vocabulary. The webpage is a learning tool to help grasp the bigger picture, not neccessarily to memorize individual words. To this end, one thousand links are at your disposal for fast navigation between words, examples and references. You will find that clicking around reveals the deeper structure of Lexon, beyond words.
+
+As the Lexon grammar is a so-called controlled grammar, only some ways of using a word are permitted, fewer than in normal English. This is why it is better learned by doing than done by learning. In fact, it can be particularly hard to 'unlearn' what you know is correct in normal language. But you will – and that is a unique quality of Lexon for a programming language – get a feel for what works.
+
+The following is the list of the known words in Lexon 0.3 (13) that between themselves stand up the Lexon grammar. Because you can define words and phrases when writing Lexon, the vocabulary and grammar complexity of Lexon are unlimited from the point of view of natural language. This is discussed below.
+
+Note that these words can be redefined as names but in that case cannot serve their original function anywhere in the contract. The exception are category names (types; marked with an asterisk (*) above). They cannot be redefined but can be used as generic names (see, e.g., amount). All words can be used as part of names without losing their original, stand-alone function.
+
+In the individual, per-word entries on the following pages, the first information about each word is, in what linguistic capacity it is used in Lexon. This angle can help because English words frequently cover two ore more different grammatical roles. The second line is technical, based on computer science designations for the function that a word is used in in Lexon. It will more often than not be a helpful pointer for non-programmers, too. In many cases, a description follows that describes the use of the word and occasionally presents additional context. Note that the description often seems to explain the obvious, because you know how English works. However, it can help to spell it out to learn to write Lexon. After that, one or more examples show the word in the context of an examples sentence. 
+
+Note that at http://lexon.org/vocabulary this sentence can be inspected in the context of a complete digital contract by clicking the link immediately below the example sentence. The link leads to a contract that contains the examples sentence, and highlights it.
+
+
+
+Breadth and Capacity
+
+Lexon's vocabulary is unlimited because a) any noun or compound term can be defined and used in a Lexon text, b) any phrase can be used as clause name and then used as part of a sentence elsewhere in the text, and c) the Lexon compiler is extensible and keywords can and are added while the grammar grows more powerful.
+
+a) Definitions:
+
+see Payer, Payee, etc. in the Escrow example (pg. 6).
+
+b) Clauses:
+
+cf. Noticed, Factually Breached, etc. in the Evaluation License example, see
+
+https://lexon.org/vocabulary.html#LicenseEvaluation 
+
+c) Keywords:
+
+cf. vocabulary 0.3 from pg. 23 vs. 0.2 in the 2020 (DRAFT 3) Lexon Bible, and the forthcoming Lexon Extension Form.
+
+The latter—Keywords—is a slow and incremental process. A special, faster process has been prepared for verbs of foundational importance – like move for robotics – that can sustain an entire domain.14 The two former bullet points—Definitions and Clauses—are instant and happen when a writer authors a Lexon text.
+
+Each Lexon digital contract therefore has its own vocabulary, extending the dictionary on the fly while drafting, as integral and organic part of the writing process. This is in keeping with the way that paper contracts are written: terms are being defined for clarity, laying the ground for an agreement's text. That's exactly how Lexon's vocabulary grows while penning a digital contract.
+
+However, as it comes, before any definitions are added, Lexon 0.3 understands 91 keywords plus variations, of which roughly half are processed in an interesting way. Many have only one specific function as marker, like CLAUSE, or make the list solely by virtue of being part of a fix multi-word term, with no independent function, like OFF in SIGN OFF.
+
+To put the word count into perspective, a modern 3rd generation programming language like Rust has about 50 reserved keywords, which are mostly used in the rigid, less interesting way. Beginner's English is said to consist of about 300 words, the Basic English world language project15 has about 850. These latter counts include many nouns; Lexon's vocabulary contains almost no nouns because these are as a rule defined by the writer of a Lexon text and the Lexon compiler understands them from their function as implied by the rest of the text.16 This is a fundamental aspect of Lexon's approach and the reason why the Lexon compiler needs to 'understand' relatively few words out of the box. The nouns and phrases that a user adds are inevitably what gives a text depth. The way that definitions work, the compiler learns the role of the new words on the go and recognizes them in the text from that point on. Clause names, however, can be the most interesting because they are the way to insert any complexity of grammar, which can make Lexon texts look rich and elegant. This is a consequential design choice that serves to include language constructs outside of the limit up to which the controlled grammar has to be observed – offering instead of a hard stop, freedom to be fully creative within the safety of a well defined reference frame. Lexon 'understands' such phrases (the clause names) en block, the clause itself defines their meaning. The (multi-word) name of a clause's internal grammatical composition is not analysed. The way that the processing of clause names is isolated from the rest of the text makes it possible to mix these monolithic elements with the bulk of the text that the Lexon compiler processes word-for-word, i.e., 'more truely understands'. This combination is a pragmatic way to empower writers to add complexity without having to think about any controlled grammar rules, but importantly also: to freely add vocabulary. The new words are baked into the specific grammatical way that they are presented (in the clause name). They need not be explained further. This mode of extension makes perfect sense for Lexon.
+
+Third generation programming languages generally allow to add variable names and add types. But they can never reach beyond their fix grammar. Lexon, in contrast, accepts any grammatical extension through the freedom it offers in naming clauses. There is not even a requirement to avoid the initial 91 words that Lexon knows when creating compound new compositions.
+
+But the list of initial words cannot be redefined. It is therefore on the one hand desirable that it includes few nouns. The reason that Lexon, on the other hand, has a larger basic vocabulary than, e.g., Rust is that Lexon's grammar is designed to enable multiple ways of expressing the same, to make writing more intuitive, and to allow for more fluid, natural-appearing texts. This does not mean that Lexon's grammar is ambigious, i.e., that the same sentence could have multiple meanings. It only means that the same meaning can be expressed by differently worded sentences.17
+
+
+
+WORD LIST
+
+The entries are based on the grammar version 0.2.20 / subset 0.3.8 alpha 79 - English / Reyes.
+For an interactive version of this word list, tied into examples, visit http://lexon.org/vocabulary.
+Don’t try to learn these by heart, this section is to get an idea and to turn to in doubt.
+
+---------------------------------------
+A, AN
+---------------------------------------
+indefinite article
+no op
+---------------------------------------
+Articles can be left out with no change in meaning. They are optional to increase readability.
+
+They can be omitted, because the name they precede must always be unambigous on its own. This is familiar practice with paper contracts.
+
+Same goes for the, this, these.
+
+        The Payer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+AFTER
+---------------------------------------
+timewise prepostion
+time operator
+---------------------------------------
+After is used to calculate a point in time, relative to a given one.
+
+        "Termination Period" is defined as 365 days after the Termination Statement Time.
+
+        (see examples/statement.lex)
+
+For more on how to use time, see hours and days.
+---------------------------------------
+AFTERWARDS
+---------------------------------------
+adverb
+causal concatenation
+---------------------------------------
+Keyword that introduces temporal order, which is not a default in Lexon.
+
+Separate sentences are performed independently of each other, declaratively, rather than one after the other. Afterwards serves to bind statements into one sentence and to establish that the phrase following it is performed only after all side effects of the phrase before it have been established.
+
+To illustrate by example, in the Lexon sentence given below, the remainder is what remains after the Fee mentioned before afterwards has been deducted.
+
+Cf. THEREFORE.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+ALL
+---------------------------------------
+adjective
+quantifier
+---------------------------------------
+Only with CONTRACTS.
+
+All contracts means all digital contracts in a contract system. This includes the main contract as well as the covenants, or subcontracts.
+
+---------------------------------------
+ALSO
+---------------------------------------
+adverb
+no op
+---------------------------------------
+Only appears with AND.
+
+And also is synonymous to AND.
+
+---------------------------------------
+AMOUNT
+---------------------------------------
+noun
+type
+---------------------------------------
+Defines that a name stands for an amount. In the example, Digital Asset Collateral is marked as being used as the handle for a specific number in the document.
+
+        "Digital Asset Collateral" is an amount.
+
+        (see examples/statement.lex)
+
+Amount can also be used as a name itself, without being first defined. It can only stand for an amount – i.e., for a number and not a text or a time – and Amount must be spelled with a capital 'A' in this case.
+
+        The Payer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+AND
+---------------------------------------
+conjunction
+logical and procedural operator
+---------------------------------------
+Concatenates actions ...
+
+        The Payer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+
+        (see examples/escrow.lex)
+
+... as well as logical expressions.
+A phrase that contains and is true if the part left and the part right of the and are true. There can also be multiple parts, each separated by and. All of them need to be true for the entire expression to be true.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+For precedence and the interplay between and and or, see or.
+
+---------------------------------------
+ANNOUNCED
+---------------------------------------
+adjective
+truth value
+---------------------------------------
+Functions like FIXED.
+
+---------------------------------------
+APPOINT, APPOINTS
+---------------------------------------
+verb
+parameter assignment operator
+---------------------------------------
+Expresses that the subject of the sentence will determine what the specified object's names will mean concretely. In the example, who the Payee and the Arbiter are.
+
+Functions like fix, see additional notes regarding the subject there.
+
+        The Payer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+
+        (see examples/escrow.lex)
+
+Functional synonym to certify, declare, file, fix, grant, and register.
+
+---------------------------------------
+AS
+---------------------------------------
+conjunction
+value assignment operator part
+---------------------------------------
+Assigns the value of the expression to its right to the name on its left.
+
+        The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time.
+
+        (see examples/statement.lex)
+
+As can also make a name true that was defined as a binary. In this example, License serves as an object that means the entire contract system, which ultimately is a redundant scope. The relevant mutation is that Commissioned becomes a fact, i.e., true.
+
+        The Licensor may certify this License as Commissioned.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+AT
+---------------------------------------
+preposition
+quantifier
+---------------------------------------
+Only in conjunction with LEAST.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+AUTHOR, AUTHORS
+---------------------------------------
+noun
+keyword
+---------------------------------------
+The information after the AUTHOR(s) keyword is expected to be the name(s) of the creator(s) of the Lexon text. They are meta data, not parsed, and not used in the document itself.
+
+As a convention, author and authors are usually spelled in uppercase.
+
+        AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+BE
+---------------------------------------
+verb
+assignment
+---------------------------------------
+Used with a meaning like shall.
+
+Functions like IS and can be used synonymously. The linguistic difference is irrelevant for the machine.
+
+        "Noticed" be defined as a Notice Time being fixed.
+
+---------------------------------------
+BEEN
+---------------------------------------
+verb
+comparison operator
+---------------------------------------
+Appears only in conjunction with HAS.
+
+Has been functions like BEING.
+
+        The Arbiter may, if the Notice Time has been fixed, return the Fee to the Seller.
+
+---------------------------------------
+BEING
+---------------------------------------
+present participle
+comparison operator
+---------------------------------------
+Compares the expression to its left with the expression on its right and results in everything together being TRUE or FALSE.
+
+In the example, being tests Notice Time for whether it had been fixed before. Noticed will be true exactly when Notice Time is known, and false if, no value has been given for Notice Time before at any point during the lifetime of the contract.
+
+        "Noticed" is defined as a Notice Time being fixed.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+BINARY
+---------------------------------------
+adjective
+type
+---------------------------------------
+Defines a name as standing for a binary value, e.g., YES or NO, or TRUE or FALSE.
+
+Note that an undefined binary name is considered to have the value FALSE. Declaring a name sets it to TRUE. Likewise, testing whether a binary name is declared, checks whether it is TRUE.
+
+        "Default" is a binary.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+CERTIFIED
+---------------------------------------
+adjective
+«defined»
+---------------------------------------
+Expresses that a name has a value assigned, i.e., is not unbound or undefined.
+
+In the example, being tests Notice Time for whether it had been certified before. Noticed will be true exactly when a Notice Time is known, and false if no value has been given for Notice Time before, at any point during the lifetime of the contract.
+
+Functions like FIXED.
+
+        "Noticed" is defined as a Notice Time being certified.
+
+---------------------------------------
+CERTIFIES, CERTIFY
+---------------------------------------
+verb
+assignment operator
+---------------------------------------
+Expresses that the subject of the sentence will determine what the specified object's names will mean concretely. In the example, who the Payee and the Arbiter are.
+
+Functions like fix, see additional notes regarding the subject and invocation there.
+
+        The Filing Office may certify the File Number.
+
+        (see examples/statement.lex)
+
+Functional synonym to appoint, declare, file, fix, grant, and register.
+
+---------------------------------------
+CLAUSE
+---------------------------------------
+noun
+function keyword
+---------------------------------------
+Signals the start of a clause. A colon must follow, and the name of the clause. Then, the statements that constitute the clause.
+
+Almost every digital contract has one or more clauses. Only in rare, simplistic cases does a contract have only a recital.
+
+Either a clause's name is used to instigate actions that change the state of the contract:
+
+        CLAUSE: Pay Back.
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
+
+        (see examples/escrow.lex)
+
+Or, a clause name can itself be a value, if the clause uses defined.
+The concrete meaning of the name of such clause is dynamic. That is, the concrete meaning of the clause name is not assigned once and for all at any point in time. Instead, whenever the clause name is used elsewhere in any context, the expression right-hand of defined is re-evaluated for its now current result, which is then the meaning, or value, of that clause name.
+
+        Clause: Termination Period.
+        "Termination Period" is defined as 365 days after the Termination Statement Time.
+
+        (see examples/statement.lex)
+
+The clause name can be used as an expression in the context of other clauses, i.e the name can be used like a value.
+The example below uses the name Termination Period that is defined in the example above.
+
+        The Filing Office may, if the Termination Period has passed, terminate this contract.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+COMMENT, COMMENTS
+---------------------------------------
+noun
+comment keyword
+---------------------------------------
+Start of comments that are not translated by the compiler.
+
+Functions like PREAMBLE but can be used multiple times in different places.
+
+Lexon is self-documenting, which greatly diminishes the role of comments. They should be used sparingly or not at all. They can help to explain a more convoluted set of conditions, as can be found in contracts that need to spell out things in detail, including all relevant fringe cases.
+
+Care should be taken to clarify that a comment is not part of the legally binding text; but is written to provide motivation or explain complex aspects with a broad brush, to make the contract easier to understand for a human reader. Such clarification may be added as part of the comment itself.
+
+As a convention, COMMENT is usually spelled in uppercase.
+
+        COMMENT: A license can be for any tangible or intangible good.
+
+Cf. PREAMBLE.
+
+---------------------------------------
+CONTRACT, CONTRACTS
+---------------------------------------
+noun
+self reference
+---------------------------------------
+Contract as well as all contracts stand for the contract (system) itself, including all covenants (subcontracts)
+
+Contract can either be used to define a proper name for the digital contract:
+
+        "Financing Statement" is this contract.
+
+        (see examples/statement.lex)
+
+Or, Contract as well as all contracts can be used as object to terminate.
+
+        The Filing Office may, if the Termination Period has passed, terminate this contract.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+CURRENT
+---------------------------------------
+adjective
+time value
+---------------------------------------
+Only appears with time.
+
+        The Filing Office may fix the Initial Statement Date as the current time.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+DATA
+---------------------------------------
+noun
+type
+---------------------------------------
+Defines a name as standing for a piece of data.
+
+Data can be a text, a number, a hash, a blockchain address, or an id of any type.
+
+        "File Number" is data.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+DAY, DAYS
+---------------------------------------
+noun
+time unit
+---------------------------------------
+Used to describe a duration.
+
+A duration can be used to calculate a point in time relative to another point in time. For example, relative to now or in the past, or – as in the example below - relative to a name that means a specific time.
+
+        "Termination Period" is defined as 365 days after the Termination Statement Time.
+
+        (see examples/Cf. hours.)
+
+---------------------------------------
+DECLARE, DECLARES
+---------------------------------------
+verb
+truth assignment operator
+---------------------------------------
+Used to state that something has happened, or is true.
+
+Technically, declare assigns the truth value, true, to a name. That name must have been defined (see is) as a binary.
+
+In the example this means that Default is now true. Note that before that, it was false.
+
+Cf. binary.
+
+        The Secured Party may declare Default.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+DECLARED
+---------------------------------------
+adjective
+«true»
+---------------------------------------
+Synonym to true.
+
+In the example, the fact that Default has been declared is the same as saying that it is true that Default happened.
+
+        The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+DEFINED
+---------------------------------------
+adjective
+assignment operator
+---------------------------------------
+Always used with IS, or BE and AS, to describe the meaning of the name to its left by means of the expression on its right.
+
+The meaning is dynamic. That is, the concrete meaning is not assigned once and for all at any point in time. But instead, whenever the name that is being defined is used elsewhere in any context, the expression right-hand of defined is re-evaluated for its now current result, which is in that moment the meaning of that name.
+
+        CLAUSE: Termination Period
+        "Termination Period" is defined as 365 days after the Termination Statement Time.
+
+        (see examples/statement.lex)
+
+This type of sentence is the essence of a particular type of CLAUSE whose name can be used like an expression, i.e., the name of such clause can be used like a value in the text of another clause.
+The example below uses the name Termination Period that is defined in the example above.
+
+        The Filing Office may, if the Termination Period has passed, terminate this contract.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+EQUAL
+---------------------------------------
+comparison operator
+equivalence of values
+---------------------------------------
+Forms an expression that is true if the values left and right of equal are the same.
+
+Near synonym of equaling.
+
+        "Parity" is defined as the Count of X being equal to the Count of Y.
+
+---------------------------------------
+EQUALING
+---------------------------------------
+comparison operator
+equivalence of values
+---------------------------------------
+Forms an expression that is true if the values left and right of equaling are the same.
+
+Near synonym of equal.
+
+        "Parity" is defined as the Left Side equaling the Right Side.
+
+---------------------------------------
+ESCROW
+---------------------------------------
+noun
+system variable
+---------------------------------------
+The internal escrow of a digital contract.
+
+It is mostly used as object to the predicate pay.
+
+Using it with remainder results into a number: the amount left in the escrow at that point in time.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+FILED
+---------------------------------------
+adjective
+«defined»
+---------------------------------------
+Asking whether a name is filed constitutes an expression that is true in case the name had a value assigned to it previously. The expression is false if the name had not been defined before during the lifetime of the contract.
+
+        ... the Continuation Statement is filed ...
+
+        (see examples/statement.lex)
+
+To clarify, it does not matter if there is text somewhere in the contract that gives a name a concrete meaning. What matters is whether for a specific, live contract between concrete parties and with a concrete state, it so happened that it is clear what a specific name stands for, or, that what the name stands for exists.
+If you take this example ...
+
+        The Filing Office may, if the Continuation Statement is filed, fix the Continuation Statement Date.
+
+        (see examples/statement.lex)
+
+... the phrase the Continuation Statement is filed is true, if what is described in the clause shown below ever happened. Concretely, if the Secured Party has filed the Continuation Statement.
+
+        Clause: File Continuation.
+        The Secured Party may file the Continuation Statement.
+
+        (see examples/statement.lex)
+
+Note that in this example contract, the Continuation Statement is defined as a binary. That means that it does not have any specific content beyond existing or not. The filing of it 'is' the statement that continuation is desired.
+
+---------------------------------------
+FILE, FILES
+---------------------------------------
+verb
+parameter assignment operator
+---------------------------------------
+Synonym to fix.
+
+        The Secured Party may file the Continuation Statement.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+FIX, FIXES
+---------------------------------------
+verb
+parameter assignment operator
+---------------------------------------
+Indicates that the subject of the sentence will be who determines the meaning of the named objects.
+
+Note that this cuts both ways. The subject might itself be determined by the act of fixing the objects: if it had not been settled yet who the name of the subject refers to, then whoever performs the fixing is from that point on named like the subject of this sentence. The name sticks for the remaining lifetime of the contract. Accordingly, in the example below, if the role of the Filer had not been determined, the person who is fixing the Filing Office etc. becomes the Filer. The way to prevent this automatism is to use may.
+
+The values that are assigned to the objects of the sentence are given by the subject when that person acts to invoke this clause.
+
+        The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral.
+
+        (see examples/statement.lex)
+
+Functional synonym to appoint, certify, declare, file, grant, and register.
+
+---------------------------------------
+FIXED
+---------------------------------------
+adjective
+«defined»
+---------------------------------------
+Expresses that a name has a value assigned, i.e., is not unbound or undefined. In the example, being tests Notice Time for whether it had been fixed before. Noticed will be true exactly when a Notice Time is known, and false if no value has been given for Notice Time before, at any point during the lifetime of the contract.
+
+Functions like CERTIFIED.
+
+        "Noticed" is defined as a Notice Time being fixed.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+FOR
+---------------------------------------
+preposition
+no op
+---------------------------------------
+Only in conjunction with FILE or FILED.
+
+The terms FILE FOR or FILED FOR function like FILE or FILED without FOR.
+
+---------------------------------------
+FROM
+---------------------------------------
+preposition
+transfer origin marker
+---------------------------------------
+
+Only in conjunction with ESCROW.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+GENERAL
+---------------------------------------
+adjective
+no op
+---------------------------------------
+Optional specification to TERMS.
+
+---------------------------------------
+GIVEN
+---------------------------------------
+preposition
+conditional keyword
+---------------------------------------
+Following statements are executed only if the immediately following condition is true.
+
+Appears only together with THAT.
+
+GIVEN THAT is a synonym to IF.
+
+        The Filing Office may, given that the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+---------------------------------------
+GRANT, GRANTS
+---------------------------------------
+verb
+truth assignment operator
+---------------------------------------
+Synonym to fix.
+
+        The Licensee may grant the Permission to Comment.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+HAS
+---------------------------------------
+auxiliary verb
+part
+---------------------------------------
+Only in conjunction with BEEN or PASSED.
+
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+HERSELF, HIMSELF
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+Functions like THEMSELF.
+
+HOUR, HOURS
+
+time unit
+
+time constant of 3600 seconds
+
+Used to describe a duration.
+
+A duration can be used to calculate a point in time relative to another point in time. For example, relative to now or in the past.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+Cf. days.
+
+---------------------------------------
+IF
+---------------------------------------
+conjunction
+assertion
+---------------------------------------
+Following statements are executed only of the immediately following condition is true.
+
+The condition starts after if and ends with a comma, which can be followed by an optional then.
+
+The statements follow after that.
+
+In this example ...
+
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        (see examples/statement.lex)
+
+... the condition is:
+
+        the Continuation Window Start has passed
+
+... the statements are:
+
+        send the Notification Statement to the Secured Party
+
+---------------------------------------
+IN
+---------------------------------------
+preposition
+no op
+---------------------------------------
+Only in conjunction with PAST.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+INTO
+---------------------------------------
+preposition
+operator part
+---------------------------------------
+Used with NOTIFY, SEND and PAY.
+
+        The Secured Party may pay a Reminder Fee into escrow.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+IS
+---------------------------------------
+verb
+assignment and equality operator
+---------------------------------------
+Can be used to define of what category a name is; to assign a value to a name; to compare a name to a value; or to check that something is the case.
+
+        "Payer" is a person.
+
+        (see examples/escrow.lex)
+
+
+        The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party.
+
+        (see examples/statement.lex)
+
+Note that in the following example, License means the (sub)contract itself and is checks the state of the License, diverting into the clause Factually Breached to find out if the License is breached.
+
+        The Arbiter may, if this License is Factually Breached:
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+ITSELF
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+Functions like THEMSELF.
+
+---------------------------------------
+LEAST
+---------------------------------------
+adjective
+time operator part
+---------------------------------------
+Only in conjunction with AT.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+LEX
+---------------------------------------
+noun
+keyword
+---------------------------------------
+Keyword for the start of a digital contract.
+
+LEX must be the first word of a digital contract. The words after LEX are the name of the entire digital contract (system) described thereafter.
+
+As a convention, LEX is usually spelled in uppercase.
+
+        LEX Escrow.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+LEXON
+---------------------------------------
+noun
+keyword
+---------------------------------------
+The numbers following LEXON are the version number of the Lexon compiler that the digital contract was written for. This is a concept that helps while Lexon is evolving. As a rule, newer compilers can compile older version Lexon texts but there will sometimes be 'breaking changes' where this backward compatibility is not provided and older texts have to be adapted to the changes of a new grammar.
+
+Note that compatibility is not a dimension of what the texts mean in human language, which remains the same throughout Lexon versions, because English does not change. Instead, this is about older versions of the compiler understanding less than newer ones, i.e., the grammar getting less restricted.
+
+As a convention, LEXON is usually spelled in uppercase.
+
+        LEXON: 0.2.12
+
+        (see examples/statement.lex)
+
+---------------------------------------
+LIES
+---------------------------------------
+verb
+time comparison operator
+---------------------------------------
+Only in conjunction with AT LEAST.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+MAY
+---------------------------------------
+auxilliary verb
+permission marker
+---------------------------------------
+The subject to MAY is/are the only party or parties to the contract that are auhtorized to initiate the action described. The subject must be bound, i.e., the name before MAY must have been defined before, it cannot be defined in the may statement. Note that statements without may might likewise restrict authority to the named subject. And it is possible that the subject is unbound in cases without MAY, i.e., the role not defined at that point.
+
+        The Filing Office may certify the File Number.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+MILLISECOND, MILLISECONDS
+---------------------------------------
+noun
+time constant of 1/1000 seconds.
+---------------------------------------
+Functions like DAYS.
+
+---------------------------------------
+MINUTE, MINUTES
+---------------------------------------
+noun
+time constant of 60 seconds
+---------------------------------------
+Functions like DAYS.
+
+---------------------------------------
+MONTH, MONTHS
+---------------------------------------
+noun
+Time constant of 2592000 seconds, i.e., 30 DAYS
+---------------------------------------
+Functions like DAYS.
+
+---------------------------------------
+MYSELF
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+Functions like THEMSELF.
+
+---------------------------------------
+NO
+---------------------------------------
+adverb
+logic operator
+---------------------------------------
+Logical inversion. In conjunction with there is, also used to test whether a name has been assign any concrete meaning yet. See fixed.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+NOT
+---------------------------------------
+adverb
+logic operator
+---------------------------------------
+Logical inversion.
+
+Used to form the opposite of a logical expression. Can be positioned before a name, or before fixed. The resulting expression means the opposite of what the part after not meant. It can be part of a bigger logical expression, as shown below. Not, as is grammatically correct, binds the next noun or verb only. The requirements for sentence structure make sure that no ambiguity can arise for the human reader.
+
+If a more complex expression must be inverted, it has to be written as a clause. This simple device to avoid ambiguity without requiring literal bracketing is borrowed from proven best practice in Functional Programming.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+NOW
+---------------------------------------
+noun
+time value
+---------------------------------------
+Synonym to CURRENT TIME.
+
+        The Filing Office may fix the Initial Statement Date as now.
+
+---------------------------------------
+OF
+---------------------------------------
+preposition
+no op
+---------------------------------------
+Only with REMAINDER.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+OFF
+---------------------------------------
+adverb
+operator part
+---------------------------------------
+Only with SIGNED.
+
+---------------------------------------
+ON
+---------------------------------------
+preposition
+operator part
+---------------------------------------
+Only with SIGNED.
+
+---------------------------------------
+ONESELF
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+Functions like THEMSELF.
+
+---------------------------------------
+OR
+---------------------------------------
+conjunction
+logic operator
+---------------------------------------
+Used to build logical expressions. A phrase that contains or is true if the part left or the part right of the or are true.
+
+Colons, commas and semicolons are relevant to separate sub-phrases. Programmers note that there is no precedence of and over or in Lexon as this is not a part of natural language. Commas and semicolons offer two levels of nesting. Beyong this, precedence is created by encapsulating logical expressions into separate clauses.
+
+In the example ...
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+... all of the following counts as the left-side of the or, because there is a comma before the or and no comma to the left of it:
+
+        this License is Commissioned and the Comment Text is not fixed
+
+... and all of the following is the right side of the or, because there is a comma before the or and no comma to the right of it:
+
+        this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+---------------------------------------
+OURSELVES
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+Functions like THEMSELF.
+
+---------------------------------------
+PASSED
+---------------------------------------
+adjective
+time comparison operator
+---------------------------------------
+Compares a point in time to the current time.
+
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        (see examples/statement.lex)
+
+For more on how to use time, see hours and days.
+
+---------------------------------------
+PAST
+---------------------------------------
+noun or adjective
+negative time sign
+---------------------------------------
+Past indicates that a measure of time is to be subtracted from the current time, or it functions like HAS PASSED.
+
+In the example, in the past functions as a negative sign to the literal 24 hours, relative to now.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+For more on how to use time, see hours and days.
+
+---------------------------------------
+PAY, PAYS
+---------------------------------------
+verb
+transfer operator
+---------------------------------------
+A transfer over the amount given immediately following pay, from the subject of the sentence, to the object marked with to or into.
+
+        The Payer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+PER
+---------------------------------------
+preposition
+keyword
+---------------------------------------
+PER marks the beginning of the TERMS of a covenant or sub-contract.
+
+Digital contracts are often really contract systems that control the creation of individual contracts each with different counter parties. These sub contracts are called covenants in the context of digital contracts. Their terms are separated from the general terms of the digital contracts – which govern everything else, specifically how the covenants come into existence – by the keyword PER, followed by the name the of the covenant, and optionally preceded by the keyword TERMS.
+
+As a convention, PER is usually spelled in uppercase.
+
+        TERMS PER License:
+
+        (see examples/statement.lex)
+
+---------------------------------------
+PERSON
+---------------------------------------
+noun
+type
+---------------------------------------
+Defines a name to stand for a person.
+
+        "Payer" is a person.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+PREAMBLE
+---------------------------------------
+noun
+keyword
+---------------------------------------
+Start of a comment from both legal and processing point of view. Words after PREAMBLE are explanations with minimal legal weight and are not translated to 3rd generation language code by the compiler. Accordingly, in the example below, no word behind the colon is interpreted. This is not a special case: it is similar to how Lexon does not account for the common meaning of nouns in human language that a writer defines. This meaning is helpful to understand the contract, but not part of it, like the preamble text. Likewise, it is a common pitfall to read the preamble in a paper contract as part of the legal agreement; it is not. Its value lies in paraphrasing the more technical prose of the agreement in more accessible but blurier terms and to provide context.
+
+As a convention, PREAMBLE is usually spelled in uppercase.
+
+        PREAMBLE: This is a licensing contract for a software evaluation.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+PROVIDED
+---------------------------------------
+adjective
+conditional keyword
+---------------------------------------
+Synonym to IF.
+
+        The Filing Office may, provided the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+---------------------------------------
+REGISTER, REGISTERS
+---------------------------------------
+verb
+parameter assignment operator
+---------------------------------------
+Synonym to fix.
+
+        The Licensee may register a Comment Text.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+REMAINDER
+---------------------------------------
+noun
+no op
+---------------------------------------
+Optional part to internal variable ESCROW.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+RESPECTIVE
+---------------------------------------
+adjective
+optional part of built-in time value
+---------------------------------------
+Only in conjunction with CURRENT TIME.
+
+        The Secured Party may certify the Termination Statement Time as the respective current time.
+
+---------------------------------------
+RETURN, RETURNS
+---------------------------------------
+verb
+transfer operator
+---------------------------------------
+Synonym to PAY.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards return the remainder of the escrow to the Payer.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+SECOND, SECONDS
+---------------------------------------
+noun
+time constant of 1 second
+---------------------------------------
+Functions like DAYS.
+
+---------------------------------------
+SEND, SENDS
+---------------------------------------
+verb
+transfer and messaging operator
+---------------------------------------
+Send a message. On the blockchain, this can be an entry on the receipt log.
+
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+SIGNED
+---------------------------------------
+adjective
+logical true
+---------------------------------------
+Only in the combination SIGNED OFF, with optional following ON.
+
+In other words, signed, signed off, and signed off on all mean the same.
+
+        The Agent may, once the Receipt is signed off, return the Collateral to the Counterparty.
+
+---------------------------------------
+SO
+---------------------------------------
+adjective
+causal concatenator part
+---------------------------------------
+Only in conjunction with IF.
+
+IF SO is a synonym for AFTERWARDS. See remarks on sentence order there.
+
+        The Arbiter may pay from escrow the Fee to themselves, and if so return the remainder of the escrow to the Payer.
+
+---------------------------------------
+TERMINATE, TERMINATES
+---------------------------------------
+verb
+destruction operator
+---------------------------------------
+The consequence of termination is that a contract's state cannot be changed anymore. Both main contracts and covenants (subcontracts) can be terminated. It is good practice to end a contract after its purpose is fulfilled so that it cannot be partially restarted for unintended consequences.
+
+        The Filing Office may, if the Termination Period has passed, terminate this contract.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+TERMS
+---------------------------------------
+noun
+optional keyword
+---------------------------------------
+Optional marker of the beginning of general or per-subcontract terms. The TERMS keyword serves to increase clarity but can be left out as the document order suffices for the compiler to understand what part of a document to expect next: terms are neccessarily all statements following the LEX keyword and digital contract (system) name. For yet more clarity, TERMS can be preceded by the optional keyword GENERAL.
+
+For covenants (sub contracts), their terms must be marked at least by the keyword PER, followed by the covenant's name. TERMS may precede PER but is optional.
+
+As a convention, TERMS is usually spelled in uppercase.
+
+        TERMS:
+        ...
+        TERMS PER License:
+
+        (see examples/statement.lex)
+
+---------------------------------------
+TEXT
+---------------------------------------
+noun
+type
+---------------------------------------
+Defines that a name is standing for a text.
+
+        "Notification Statement" is a text.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+THAT
+---------------------------------------
+conjunction
+conditional keyword
+---------------------------------------
+Following statements are executed only of the immediately following condition is true.
+
+Appears only together with GIVEN.
+
+GIVEN THAT is a synonym to IF.
+
+        The Filing Office may, given that the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+---------------------------------------
+THE
+---------------------------------------
+article
+no op
+---------------------------------------
+Articles are optional to increase readability, because the name they precede must always be unambigous on its own.
+
+        The Payer pays an Amount into escrow, appoints the Payee, appoints the Arbiter, and fixes the Fee.
+
+        (see examples/escrow.lex)
+
+Cf. A.
+---------------------------------------
+THEMSELF, THEMSELVES
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+In this example, themselves means the Arbiter.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+
+        (see examples/escrow.lex)
+
+---------------------------------------
+THEN
+---------------------------------------
+adverb, adjective
+conditional keyword, causal conccatenator
+---------------------------------------
+In conjunction with CURRENT TIME:
+
+        The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time.
+
+        (see examples/statement.lex)
+
+Also functions like THEREFOR:
+
+        This License is then Paid.
+
+---------------------------------------
+THERE
+---------------------------------------
+adverb
+existence test
+---------------------------------------
+Used to reason about the existence of something, ore more precisely, about whether a name has a defined meaning or not.
+
+Appears only in THERE IS or THERE IS NOT, or with variations of IS, like BE.
+
+Cf. fixed.
+
+        "Factually Breached" is defined as: this License is Commissioned and the Comment Text is not fixed, or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+THEREFOR, THEREFORE
+---------------------------------------
+adverb
+causal concatenator
+---------------------------------------
+THEREFORE binds a sentence to the preceding ones, so that it is performed only if all preceding sentences were performed, i.e., did not disqualify for access or conditional reasons.
+
+Without THEREFORE, a sentence by itself is always materialized when a clause is triggered.
+
+Cf. afterwards.
+
+        The Licensee pays the Licensing Fee to the Licensor, and pays the Breach Fee into escrow. This License is therefore Paid.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+THESE
+---------------------------------------
+adjective
+no op
+---------------------------------------
+These can be required to get the natural language grammar right but does not change meaning by its presence or absence because the name that it precedes must always be unambiguous by itself.
+
+        The Licensor may certify these Agreements as Commissioned.
+
+---------------------------------------
+THIS
+---------------------------------------
+adjective
+no op
+---------------------------------------
+THIS can be required to get the natural language grammar right but does not change meaning by its presence or absence because the name that it precedes must always be unambiguous by itself.
+
+        The Licensor may certify this License as Commissioned.
+
+        (see examples/evaluation.lex)
+
+---------------------------------------
+TIME
+---------------------------------------
+noun
+type
+---------------------------------------
+Either defines a name as standing for a time value.
+
+        "Initial Statement Date" is a time.
+
+        (see examples/statement.lex)
+
+Or, specifies the current point in time.
+
+        The Filing Office may fix the Initial Statement Date as the current time.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+TO
+---------------------------------------
+preposition
+transfer operator part
+---------------------------------------
+Appears in conjunction with PAY, SEND, be or equal.
+
+        The Arbiter may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Payee.
+
+        (see examples/escrow.lex)
+
+
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        (see examples/statement.lex)
+
+---------------------------------------
+TRUE
+---------------------------------------
+adjective
+logical true
+---------------------------------------
+A value that a name or an expression can have, meaning that something is the case.
+
+Synonymous with YES.
+
+In the following example, the expression the Continuation Window has passed can be TRUE or FALSE.
+
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        (see examples/statement.lex)
+
+Cf. FIXED.
+
+---------------------------------------
+WAS
+---------------------------------------
+verb
+logic equivalence operator
+---------------------------------------
+Functions like IS.
+
+---------------------------------------
+WEEK, WEEKS
+---------------------------------------
+noun
+time factor constant
+---------------------------------------
+Time constant of 604,800 seconds, i.e., 7 DAYS.
+
+---------------------------------------
+WITH
+---------------------------------------
+conjunction
+causal concatenator
+---------------------------------------
+Only appears as AND WITH THIS.
+
+---------------------------------------
+YEAR, YEARS
+---------------------------------------
+noun
+time factor constant
+---------------------------------------
+Time constant of 31,536,000 seconds, i.e., 365 DAYS.
+
+---------------------------------------
+YES
+---------------------------------------
+noun
+logical true
+---------------------------------------
+A value that a name or an expression can have, meaning that something is the case.
+
+---------------------------------------
+YOURSELF, YOURSELVES
+---------------------------------------
+reflexive pronoun
+automatic reference
+---------------------------------------
+Refers to the subject of the sentence.
+
+
+
+********************************************************************************
+EXAMPLES
+********************************************************************************
+
+
+LEXON FOR LAW
+
+Lexon allows for law to be executed as a program. Asst. prof. Carla L. Reyes of SMU pioneers the use of Lexon to write statute – shown below – in her seminal 2021 paper Creating Cryptolaw for the Uniform Commercial Code.18 She created the following Lexon code as a proposal to the commission that is tasked with the reform of the U.S. trade law, which she advised on blockchain topics. This code could become model law, be adapted by states to be executed on the computers of their local agencies and protect billions of dollars of collateral.
+
+    The salient point is that the law itself, without further changes is the program that the respective office runs to implement the law. The productivity gains of Lexon could not be illustrated better.
+    
+The motivation for this proposal is a concrete shortfall of the existing statute. Asst. prof. Reyes writes (emphasis added):
+
+    “Under certain conditions, security interests not only bind the creditor and debtor, but also third-party creditors seeking to lend against the same collateral. To receive this extraordinary benefit, creditors must put the world on notice, usually by filing a financing statement with the state in which the debtor is located. Unfortunately, the Uniform Commercial Code (U.C.C.) Article 9 filing system fails to provide actual notice to interested parties and introduces risk of heavy financial losses. To solve this problem, this Article introduces a smart-contract-based U.C.C.-1 form built using Lexon, an innovative new programming language that enables the development of smart contracts in English. The proposed “Lexon U.C.C. Financing Statement” does much more than merely replicate the financing statement in digital form; it also performs several U.C.C. rules so that, for the first time, the filing system works as intended. In demonstrating that such a system remains compatible with existing law, the Lexon U.C.C. Financing Statement also reveals important lessons about the interaction of technology and commercial law.” ibid. 15
+
+
+        LEX UCC Financing Statement.
+
+        LEXON: 0.2.12
+
+        "Financing Statement" is this contract. 
+        "File Number" is data.
+        "Initial Statement Date" is a time.
+        "Filer" is a person. 
+        "Debtor" is a person.
+        "Secured Party" is a person.
+        "Filing Office" is a person.
+        "Collateral" is data.
+        "Digital Asset Collateral" is an amount.
+        "Reminder Fee" is an amount.
+        "Continuation Window Start" is a time.
+        "Continuation Statement Date" is a time.
+        "Continuation Statement Filing Number" is data.
+        "Lapse Date" is a time.
+        "Default" is a binary.
+        "Continuation Statement" is a binary.
+        "Termination Statement" is a binary.
+        "Termination Statement Time" is a time.
+        "Notification Statement" is a text. 
+
+        The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral.
+
+        Clause: Certify.
+        The Filing Office may certify the File Number.
+
+        Clause: Set File Date.
+        The Filing Office may fix the Initial Statement Date as the current time. 
+
+        Clause: Set Lapse.
+        The Filing Office may fix the Lapse Date.
+
+        Clause: Set Continuation Start.
+        The Filing Office may fix the Continuation Window Start.
+
+        Clause: Pay Fee.
+        The Secured Party may pay a Reminder Fee into escrow. 
+
+        Clause: Notice.
+        The Filing Office may fix the Notification Statement.
+
+        Clause: Notify.
+        The Filing Office may, if the Continuation Window Start has passed, send the Notification Statement to the Secured Party.
+
+        Clause: Pay Escrow In.
+        The Debtor may pay the Digital Asset Collateral into escrow.
+
+        Clause: Fail to Pay.
+        The Secured Party may declare Default.
+
+        Clause: Take Possession.
+        The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party.
+
+        Clause: File Continuation.
+        The Secured Party may file the Continuation Statement.
+
+        Clause: Set Continuation Lapse.
+        The Filing Office may, if the Continuation Statement is filed, fix the Continuation Statement Date.
+
+        Clause: File Termination.
+        The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time.
+
+        Clause: Release Escrow.
+        The Filing Office may, if the Termination Statement is filed, return the Digital Asset Collateral to the Debtor.
+
+        Clause: Release Reminder Fee.
+        The Filing Office may, if the Termination Statement is filed, return the Reminder Fee to the Secured Party.
+
+        Clause: Termination Period.
+        "Termination Period" is defined as 365 days after the Termination Statement Time.
+
+        Clause: Terminate and Clear.
+        The Filing Office may, if the Termination Period has passed, terminate this contract.
+        Source 3 – Lexon code example: U.C.C. Filing Statement
+
+
+
+EVALUATION LICENSE SYSTEM.
+
+This digital contract was created by F. Idelberger, Phd candidate at the European University Institute in Florence. It appears in Merging traditional contracts (or law) and (smart) e-contracts – a novel approach, comparing this text to smart contracts written in other languages.
+Idelberger’s paper about the contract is available at
+https://lawgorithm.com.br/wp-content/uploads/2020/09/MLR2020-Florian-Idelberger.pdf. 
+
+        LEX: Evaluation License System.
+
+        LEXON: 0.2.1
+
+        AUTHORS: FLORIAN IDELBERGER, HENNING DIEDRICH
+
+        PREAMBLE: This is a licensing contract for a software evaluation.
+
+        TERMS:
+
+        "Licensor" is a person.
+        "Arbiter" is a person.
+        "Licensing Fee" is an amount.
+        "Breach Fee" is an amount.
+
+        The Licensor appoints the Arbiter,
+        fixes the Licensing Fee,
+        and fixes the Breach Fee.
+
+        TERMS PER License:
+
+        "Description of Goods" is a text.
+        "Licensee" is a person.
+        "Paid" is a binary.
+        "Commissioned" is a binary.
+        "Comment Text" is a text.
+        "Published" is a binary.
+        "Permission to Comment" is a binary.
+        "Notice Time" is a time.
+        "License" is this contract.
+
+        The Licensor appoints the Licensee, and fixes the Description of Goods.
+
+        CLAUSE: Pay.
+        The Licensee pays the Licensing Fee to the Licensor,
+        and pays the Breach Fee into escrow.
+        This License is therefore Paid.
+
+        CLAUSE: Commission.
+        The Licensor may certify this License as Commissioned.
+
+        CLAUSE: Comment.
+        The Licensee may register a Comment Text.
+
+        CLAUSE: Publication.
+        The Licensee may certify this License as Published.
+
+        CLAUSE: Grant Permission to Comment.
+        The Licensee may grant the Permission to Comment.
+
+        CLAUSE: Declare Breach.
+        The Arbiter may, if this License is Factually Breached:
+        pay the Breach Fee to the Licensor,
+        and afterwards terminate this License.
+
+        CLAUSE: Factually Breached.
+        "Factually Breached" is defined as:
+        this License is Commissioned and the Comment Text is not fixed,
+        or this License is Published and there is no Permission to Comment and the Notice Time lies at least 24 hours in the past.
+
+        CLAUSE: Notice.
+        The Licensor or the Arbiter may fix the Notice Time as the respective current time.
+
+        CLAUSE: Noticed.
+        "Noticed" is defined as a Notice Time being fixed.
+
+
+
+INTERNAL MODEL
+
+The following is a part of the abstract syntax tree (AST), the internal model the compiler creates when processing the grammar and text discussed in chapter Grammar, pg. 54. It reflects natural language grammar rather than programming logic. Such a tree can be created from any Lexon text using the tree options.
+
+    
+            ↳  statements 
+                ↳  statement 
+                    ↳  action 
+                        ↳  subject 
+                        ⎸   ↳  symbols 
+                        ⎸       ↳  symbol «payer» 
+                        ⎸           ↳  article    
+                        ↳  predicates 
+                            ↳  predicate 
+                            ⎸   ↳  payment 
+                            ⎸       ↳  pay 
+                            ⎸       ⎸ 
+                            ⎸       ↳  expression 
+                            ⎸       ⎸   ↳  combination 
+                            ⎸       ⎸       ↳  combinor 
+                            ⎸       ⎸           ↳  combinand 
+                            ⎸       ⎸               ↳  symbol «amount» 
+                            ⎸       ⎸                   ↳  article      
+                            ⎸       ⎸ 
+                            ⎸       ↳  preposition 
+                            ⎸       ⎸ 
+                            ⎸       ↳  object     
+                            ⎸ 
+                            ↳  predicate 
+                            ⎸   ↳  appointment 
+                            ⎸       ↳  appoint 
+                            ⎸       ⎸ 
+                            ⎸       ↳  symbol «payee» 
+                            ⎸           ↳  article    
+                            ⎸ 
+                            ↳  predicate 
+                            ⎸   ↳  appointment 
+                            ⎸       ↳  appoint 
+                            ⎸       ⎸ 
+                            ⎸       ↳  symbol «arbiter» 
+                            ⎸           ↳  article    
+                            ↳  predicate 
+                                ↳  fixture 
+                                    ↳  fix 
+                                    ↳  symbol «fee» 
+                                        ↳  article
+
+To create such a tree for your own Lexon text, check out the --tree option.
+
+There are fine-grained options for highlighting specific elements of the tree: color, highlight etc.
+    
+© 2025 Henning Diedrich
+
+
+LICENSE
+
+        Copyright (C) 2016-25 Henning Diedrich, licensed under AGPL3 in
+        jurisidictions that allow for the following warranty exclusion.
+
+        hd@lexon.org
+
+        You can redistribute this program and/or modify it under the terms of
+        the GNU Affero General Public License as published by the Free Software
+        Foundation, either version 3 of the License (given below), or (at your
+        option) any later version, if the following exclusion of warranties
+        can be fully effective in the jurisdiction that would apply:
+
+        This program is distributed WITHOUT ANY WARRANTY; without even the
+        implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        See the GNU Affero General Public License (below) for more details.
+
+        If the jurisdiction that would apply does not allow for this exclusion
+        of warranties to be effective, the program is not licensed to you. This
+        condition might be relaxed with future versions of the software.
+
+
+
+                         GNU AFFERO GENERAL PUBLIC LICENSE
+                            Version 3, 19 November 2007
+
+         Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+         Everyone is permitted to copy and distribute verbatim copies
+         of this license document, but changing it is not allowed.
+
+                                    Preamble
+
+          The GNU Affero General Public License is a free, copyleft license for
+        software and other kinds of works, specifically designed to ensure
+        cooperation with the community in the case of network server software.
+
+          The licenses for most software and other practical works are designed
+        to take away your freedom to share and change the works.  By contrast,
+        our General Public Licenses are intended to guarantee your freedom to
+        share and change all versions of a program--to make sure it remains free
+        software for all its users.
+
+          When we speak of free software, we are referring to freedom, not
+        price.  Our General Public Licenses are designed to make sure that you
+        have the freedom to distribute copies of free software (and charge for
+        them if you wish), that you receive source code or can get it if you
+        want it, that you can change the software or use pieces of it in new
+        free programs, and that you know you can do these things.
+
+          Developers that use our General Public Licenses protect your rights
+        with two steps: (1) assert copyright on the software, and (2) offer
+        you this License which gives you legal permission to copy, distribute
+        and/or modify the software.
+
+          A secondary benefit of defending all users' freedom is that
+        improvements made in alternate versions of the program, if they
+        receive widespread use, become available for other developers to
+        incorporate.  Many developers of free software are heartened and
+        encouraged by the resulting cooperation.  However, in the case of
+        software used on network servers, this result may fail to come about.
+        The GNU General Public License permits making a modified version and
+        letting the public access it on a server without ever releasing its
+        source code to the public.
+
+          The GNU Affero General Public License is designed specifically to
+        ensure that, in such cases, the modified source code becomes available
+        to the community.  It requires the operator of a network server to
+        provide the source code of the modified version running there to the
+        users of that server.  Therefore, public use of a modified version, on
+        a publicly accessible server, gives the public access to the source
+        code of the modified version.
+
+          An older license, called the Affero General Public License and
+        published by Affero, was designed to accomplish similar goals.  This is
+        a different license, not a version of the Affero GPL, but Affero has
+        released a new version of the Affero GPL which permits relicensing under
+        this license.
+
+          The precise terms and conditions for copying, distribution and
+        modification follow.
+
+                               TERMS AND CONDITIONS
+
+          0. Definitions.
+
+          "This License" refers to version 3 of the GNU Affero General Public License.
+
+          "Copyright" also means copyright-like laws that apply to other kinds of
+        works, such as semiconductor masks.
+
+          "The Program" refers to any copyrightable work licensed under this
+        License.  Each licensee is addressed as "you".  "Licensees" and
+        "recipients" may be individuals or organizations.
+
+          To "modify" a work means to copy from or adapt all or part of the work
+        in a fashion requiring copyright permission, other than the making of an
+        exact copy.  The resulting work is called a "modified version" of the
+        earlier work or a work "based on" the earlier work.
+
+          A "covered work" means either the unmodified Program or a work based
+        on the Program.
+
+          To "propagate" a work means to do anything with it that, without
+        permission, would make you directly or secondarily liable for
+        infringement under applicable copyright law, except executing it on a
+        computer or modifying a private copy.  Propagation includes copying,
+        distribution (with or without modification), making available to the
+        public, and in some countries other activities as well.
+
+          To "convey" a work means any kind of propagation that enables other
+        parties to make or receive copies.  Mere interaction with a user through
+        a computer network, with no transfer of a copy, is not conveying.
+
+          An interactive user interface displays "Appropriate Legal Notices"
+        to the extent that it includes a convenient and prominently visible
+        feature that (1) displays an appropriate copyright notice, and (2)
+        tells the user that there is no warranty for the work (except to the
+        extent that warranties are provided), that licensees may convey the
+        work under this License, and how to view a copy of this License.  If
+        the interface presents a list of user commands or options, such as a
+        menu, a prominent item in the list meets this criterion.
+
+          1. Source Code.
+
+          The "source code" for a work means the preferred form of the work
+        for making modifications to it.  "Object code" means any non-source
+        form of a work.
+
+          A "Standard Interface" means an interface that either is an official
+        standard defined by a recognized standards body, or, in the case of
+        interfaces specified for a particular programming language, one that
+        is widely used among developers working in that language.
+
+          The "System Libraries" of an executable work include anything, other
+        than the work as a whole, that (a) is included in the normal form of
+        packaging a Major Component, but which is not part of that Major
+        Component, and (b) serves only to enable use of the work with that
+        Major Component, or to implement a Standard Interface for which an
+        implementation is available to the public in source code form.  A
+        "Major Component", in this context, means a major essential component
+        (kernel, window system, and so on) of the specific operating system
+        (if any) on which the executable work runs, or a compiler used to
+        produce the work, or an object code interpreter used to run it.
+
+          The "Corresponding Source" for a work in object code form means all
+        the source code needed to generate, install, and (for an executable
+        work) run the object code and to modify the work, including scripts to
+        control those activities.  However, it does not include the work's
+        System Libraries, or general-purpose tools or generally available free
+        programs which are used unmodified in performing those activities but
+        which are not part of the work.  For example, Corresponding Source
+        includes interface definition files associated with source files for
+        the work, and the source code for shared libraries and dynamically
+        linked subprograms that the work is specifically designed to require,
+        such as by intimate data communication or control flow between those
+        subprograms and other parts of the work.
+
+          The Corresponding Source need not include anything that users
+        can regenerate automatically from other parts of the Corresponding
+        Source.
+
+          The Corresponding Source for a work in source code form is that
+        same work.
+
+          2. Basic Permissions.
+
+          All rights granted under this License are granted for the term of
+        copyright on the Program, and are irrevocable provided the stated
+        conditions are met.  This License explicitly affirms your unlimited
+        permission to run the unmodified Program.  The output from running a
+        covered work is covered by this License only if the output, given its
+        content, constitutes a covered work.  This License acknowledges your
+        rights of fair use or other equivalent, as provided by copyright law.
+
+          You may make, run and propagate covered works that you do not
+        convey, without conditions so long as your license otherwise remains
+        in force.  You may convey covered works to others for the sole purpose
+        of having them make modifications exclusively for you, or provide you
+        with facilities for running those works, provided that you comply with
+        the terms of this License in conveying all material for which you do
+        not control copyright.  Those thus making or running the covered works
+        for you must do so exclusively on your behalf, under your direction
+        and control, on terms that prohibit them from making any copies of
+        your copyrighted material outside their relationship with you.
+
+          Conveying under any other circumstances is permitted solely under
+        the conditions stated below.  Sublicensing is not allowed; section 10
+        makes it unnecessary.
+
+          3. Protecting Users' Legal Rights From Anti-Circumvention Law.
+
+          No covered work shall be deemed part of an effective technological
+        measure under any applicable law fulfilling obligations under article
+        11 of the WIPO copyright treaty adopted on 20 December 1996, or
+        similar laws prohibiting or restricting circumvention of such
+        measures.
+
+          When you convey a covered work, you waive any legal power to forbid
+        circumvention of technological measures to the extent such circumvention
+        is effected by exercising rights under this License with respect to
+        the covered work, and you disclaim any intention to limit operation or
+        modification of the work as a means of enforcing, against the work's
+        users, your or third parties' legal rights to forbid circumvention of
+        technological measures.
+
+          4. Conveying Verbatim Copies.
+
+          You may convey verbatim copies of the Program's source code as you
+        receive it, in any medium, provided that you conspicuously and
+        appropriately publish on each copy an appropriate copyright notice;
+        keep intact all notices stating that this License and any
+        non-permissive terms added in accord with section 7 apply to the code;
+        keep intact all notices of the absence of any warranty; and give all
+        recipients a copy of this License along with the Program.
+
+          You may charge any price or no price for each copy that you convey,
+        and you may offer support or warranty protection for a fee.
+
+          5. Conveying Modified Source Versions.
+
+          You may convey a work based on the Program, or the modifications to
+        produce it from the Program, in the form of source code under the
+        terms of section 4, provided that you also meet all of these conditions:
+
+            a) The work must carry prominent notices stating that you modified
+            it, and giving a relevant date.
+
+            b) The work must carry prominent notices stating that it is
+            released under this License and any conditions added under section
+            7.  This requirement modifies the requirement in section 4 to
+            "keep intact all notices".
+
+            c) You must license the entire work, as a whole, under this
+            License to anyone who comes into possession of a copy.  This
+            License will therefore apply, along with any applicable section 7
+            additional terms, to the whole of the work, and all its parts,
+            regardless of how they are packaged.  This License gives no
+            permission to license the work in any other way, but it does not
+            invalidate such permission if you have separately received it.
+
+            d) If the work has interactive user interfaces, each must display
+            Appropriate Legal Notices; however, if the Program has interactive
+            interfaces that do not display Appropriate Legal Notices, your
+            work need not make them do so.
+
+          A compilation of a covered work with other separate and independent
+        works, which are not by their nature extensions of the covered work,
+        and which are not combined with it such as to form a larger program,
+        in or on a volume of a storage or distribution medium, is called an
+        "aggregate" if the compilation and its resulting copyright are not
+        used to limit the access or legal rights of the compilation's users
+        beyond what the individual works permit.  Inclusion of a covered work
+        in an aggregate does not cause this License to apply to the other
+        parts of the aggregate.
+
+          6. Conveying Non-Source Forms.
+
+          You may convey a covered work in object code form under the terms
+        of sections 4 and 5, provided that you also convey the
+        machine-readable Corresponding Source under the terms of this License,
+        in one of these ways:
+
+            a) Convey the object code in, or embodied in, a physical product
+            (including a physical distribution medium), accompanied by the
+            Corresponding Source fixed on a durable physical medium
+            customarily used for software interchange.
+
+            b) Convey the object code in, or embodied in, a physical product
+            (including a physical distribution medium), accompanied by a
+            written offer, valid for at least three years and valid for as
+            long as you offer spare parts or customer support for that product
+            model, to give anyone who possesses the object code either (1) a
+            copy of the Corresponding Source for all the software in the
+            product that is covered by this License, on a durable physical
+            medium customarily used for software interchange, for a price no
+            more than your reasonable cost of physically performing this
+            conveying of source, or (2) access to copy the
+            Corresponding Source from a network server at no charge.
+
+            c) Convey individual copies of the object code with a copy of the
+            written offer to provide the Corresponding Source.  This
+            alternative is allowed only occasionally and noncommercially, and
+            only if you received the object code with such an offer, in accord
+            with subsection 6b.
+
+            d) Convey the object code by offering access from a designated
+            place (gratis or for a charge), and offer equivalent access to the
+            Corresponding Source in the same way through the same place at no
+            further charge.  You need not require recipients to copy the
+            Corresponding Source along with the object code.  If the place to
+            copy the object code is a network server, the Corresponding Source
+            may be on a different server (operated by you or a third party)
+            that supports equivalent copying facilities, provided you maintain
+            clear directions next to the object code saying where to find the
+            Corresponding Source.  Regardless of what server hosts the
+            Corresponding Source, you remain obligated to ensure that it is
+            available for as long as needed to satisfy these requirements.
+
+            e) Convey the object code using peer-to-peer transmission, provided
+            you inform other peers where the object code and Corresponding
+            Source of the work are being offered to the general public at no
+            charge under subsection 6d.
+
+          A separable portion of the object code, whose source code is excluded
+        from the Corresponding Source as a System Library, need not be
+        included in conveying the object code work.
+
+          A "User Product" is either (1) a "consumer product", which means any
+        tangible personal property which is normally used for personal, family,
+        or household purposes, or (2) anything designed or sold for incorporation
+        into a dwelling.  In determining whether a product is a consumer product,
+        doubtful cases shall be resolved in favor of coverage.  For a particular
+        product received by a particular user, "normally used" refers to a
+        typical or common use of that class of product, regardless of the status
+        of the particular user or of the way in which the particular user
+        actually uses, or expects or is expected to use, the product.  A product
+        is a consumer product regardless of whether the product has substantial
+        commercial, industrial or non-consumer uses, unless such uses represent
+        the only significant mode of use of the product.
+
+          "Installation Information" for a User Product means any methods,
+        procedures, authorization keys, or other information required to install
+        and execute modified versions of a covered work in that User Product from
+        a modified version of its Corresponding Source.  The information must
+        suffice to ensure that the continued functioning of the modified object
+        code is in no case prevented or interfered with solely because
+        modification has been made.
+
+          If you convey an object code work under this section in, or with, or
+        specifically for use in, a User Product, and the conveying occurs as
+        part of a transaction in which the right of possession and use of the
+        User Product is transferred to the recipient in perpetuity or for a
+        fixed term (regardless of how the transaction is characterized), the
+        Corresponding Source conveyed under this section must be accompanied
+        by the Installation Information.  But this requirement does not apply
+        if neither you nor any third party retains the ability to install
+        modified object code on the User Product (for example, the work has
+        been installed in ROM).
+
+          The requirement to provide Installation Information does not include a
+        requirement to continue to provide support service, warranty, or updates
+        for a work that has been modified or installed by the recipient, or for
+        the User Product in which it has been modified or installed.  Access to a
+        network may be denied when the modification itself materially and
+        adversely affects the operation of the network or violates the rules and
+        protocols for communication across the network.
+
+          Corresponding Source conveyed, and Installation Information provided,
+        in accord with this section must be in a format that is publicly
+        documented (and with an implementation available to the public in
+        source code form), and must require no special password or key for
+        unpacking, reading or copying.
+
+          7. Additional Terms.
+
+          "Additional permissions" are terms that supplement the terms of this
+        License by making exceptions from one or more of its conditions.
+        Additional permissions that are applicable to the entire Program shall
+        be treated as though they were included in this License, to the extent
+        that they are valid under applicable law.  If additional permissions
+        apply only to part of the Program, that part may be used separately
+        under those permissions, but the entire Program remains governed by
+        this License without regard to the additional permissions.
+
+          When you convey a copy of a covered work, you may at your option
+        remove any additional permissions from that copy, or from any part of
+        it.  (Additional permissions may be written to require their own
+        removal in certain cases when you modify the work.)  You may place
+        additional permissions on material, added by you to a covered work,
+        for which you have or can give appropriate copyright permission.
+
+          Notwithstanding any other provision of this License, for material you
+        add to a covered work, you may (if authorized by the copyright holders of
+        that material) supplement the terms of this License with terms:
+
+            a) Disclaiming warranty or limiting liability differently from the
+            terms of sections 15 and 16 of this License; or
+
+            b) Requiring preservation of specified reasonable legal notices or
+            author attributions in that material or in the Appropriate Legal
+            Notices displayed by works containing it; or
+
+            c) Prohibiting misrepresentation of the origin of that material, or
+            requiring that modified versions of such material be marked in
+            reasonable ways as different from the original version; or
+
+            d) Limiting the use for publicity purposes of names of licensors or
+            authors of the material; or
+
+            e) Declining to grant rights under trademark law for use of some
+            trade names, trademarks, or service marks; or
+
+            f) Requiring indemnification of licensors and authors of that
+            material by anyone who conveys the material (or modified versions of
+            it) with contractual assumptions of liability to the recipient, for
+            any liability that these contractual assumptions directly impose on
+            those licensors and authors.
+
+          All other non-permissive additional terms are considered "further
+        restrictions" within the meaning of section 10.  If the Program as you
+        received it, or any part of it, contains a notice stating that it is
+        governed by this License along with a term that is a further
+        restriction, you may remove that term.  If a license document contains
+        a further restriction but permits relicensing or conveying under this
+        License, you may add to a covered work material governed by the terms
+        of that license document, provided that the further restriction does
+        not survive such relicensing or conveying.
+
+          If you add terms to a covered work in accord with this section, you
+        must place, in the relevant source files, a statement of the
+        additional terms that apply to those files, or a notice indicating
+        where to find the applicable terms.
+
+          Additional terms, permissive or non-permissive, may be stated in the
+        form of a separately written license, or stated as exceptions;
+        the above requirements apply either way.
+
+          8. Termination.
+
+          You may not propagate or modify a covered work except as expressly
+        provided under this License.  Any attempt otherwise to propagate or
+        modify it is void, and will automatically terminate your rights under
+        this License (including any patent licenses granted under the third
+        paragraph of section 11).
+
+          However, if you cease all violation of this License, then your
+        license from a particular copyright holder is reinstated (a)
+        provisionally, unless and until the copyright holder explicitly and
+        finally terminates your license, and (b) permanently, if the copyright
+        holder fails to notify you of the violation by some reasonable means
+        prior to 60 days after the cessation.
+
+          Moreover, your license from a particular copyright holder is
+        reinstated permanently if the copyright holder notifies you of the
+        violation by some reasonable means, this is the first time you have
+        received notice of violation of this License (for any work) from that
+        copyright holder, and you cure the violation prior to 30 days after
+        your receipt of the notice.
+
+          Termination of your rights under this section does not terminate the
+        licenses of parties who have received copies or rights from you under
+        this License.  If your rights have been terminated and not permanently
+        reinstated, you do not qualify to receive new licenses for the same
+        material under section 10.
+
+          9. Acceptance Not Required for Having Copies.
+
+          You are not required to accept this License in order to receive or
+        run a copy of the Program.  Ancillary propagation of a covered work
+        occurring solely as a consequence of using peer-to-peer transmission
+        to receive a copy likewise does not require acceptance.  However,
+        nothing other than this License grants you permission to propagate or
+        modify any covered work.  These actions infringe copyright if you do
+        not accept this License.  Therefore, by modifying or propagating a
+        covered work, you indicate your acceptance of this License to do so.
+
+          10. Automatic Licensing of Downstream Recipients.
+
+          Each time you convey a covered work, the recipient automatically
+        receives a license from the original licensors, to run, modify and
+        propagate that work, subject to this License.  You are not responsible
+        for enforcing compliance by third parties with this License.
+
+          An "entity transaction" is a transaction transferring control of an
+        organization, or substantially all assets of one, or subdividing an
+        organization, or merging organizations.  If propagation of a covered
+        work results from an entity transaction, each party to that
+        transaction who receives a copy of the work also receives whatever
+        licenses to the work the party's predecessor in interest had or could
+        give under the previous paragraph, plus a right to possession of the
+        Corresponding Source of the work from the predecessor in interest, if
+        the predecessor has it or can get it with reasonable efforts.
+
+          You may not impose any further restrictions on the exercise of the
+        rights granted or affirmed under this License.  For example, you may
+        not impose a license fee, royalty, or other charge for exercise of
+        rights granted under this License, and you may not initiate litigation
+        (including a cross-claim or counterclaim in a lawsuit) alleging that
+        any patent claim is infringed by making, using, selling, offering for
+        sale, or importing the Program or any portion of it.
+
+          11. Patents.
+
+          A "contributor" is a copyright holder who authorizes use under this
+        License of the Program or a work on which the Program is based.  The
+        work thus licensed is called the contributor's "contributor version".
+
+          A contributor's "essential patent claims" are all patent claims
+        owned or controlled by the contributor, whether already acquired or
+        hereafter acquired, that would be infringed by some manner, permitted
+        by this License, of making, using, or selling its contributor version,
+        but do not include claims that would be infringed only as a
+        consequence of further modification of the contributor version.  For
+        purposes of this definition, "control" includes the right to grant
+        patent sublicenses in a manner consistent with the requirements of
+        this License.
+
+          Each contributor grants you a non-exclusive, worldwide, royalty-free
+        patent license under the contributor's essential patent claims, to
+        make, use, sell, offer for sale, import and otherwise run, modify and
+        propagate the contents of its contributor version.
+
+          In the following three paragraphs, a "patent license" is any express
+        agreement or commitment, however denominated, not to enforce a patent
+        (such as an express permission to practice a patent or covenant not to
+        sue for patent infringement).  To "grant" such a patent license to a
+        party means to make such an agreement or commitment not to enforce a
+        patent against the party.
+
+          If you convey a covered work, knowingly relying on a patent license,
+        and the Corresponding Source of the work is not available for anyone
+        to copy, free of charge and under the terms of this License, through a
+        publicly available network server or other readily accessible means,
+        then you must either (1) cause the Corresponding Source to be so
+        available, or (2) arrange to deprive yourself of the benefit of the
+        patent license for this particular work, or (3) arrange, in a manner
+        consistent with the requirements of this License, to extend the patent
+        license to downstream recipients.  "Knowingly relying" means you have
+        actual knowledge that, but for the patent license, your conveying the
+        covered work in a country, or your recipient's use of the covered work
+        in a country, would infringe one or more identifiable patents in that
+        country that you have reason to believe are valid.
+
+          If, pursuant to or in connection with a single transaction or
+        arrangement, you convey, or propagate by procuring conveyance of, a
+        covered work, and grant a patent license to some of the parties
+        receiving the covered work authorizing them to use, propagate, modify
+        or convey a specific copy of the covered work, then the patent license
+        you grant is automatically extended to all recipients of the covered
+        work and works based on it.
+
+          A patent license is "discriminatory" if it does not include within
+        the scope of its coverage, prohibits the exercise of, or is
+        conditioned on the non-exercise of one or more of the rights that are
+        specifically granted under this License.  You may not convey a covered
+        work if you are a party to an arrangement with a third party that is
+        in the business of distributing software, under which you make payment
+        to the third party based on the extent of your activity of conveying
+        the work, and under which the third party grants, to any of the
+        parties who would receive the covered work from you, a discriminatory
+        patent license (a) in connection with copies of the covered work
+        conveyed by you (or copies made from those copies), or (b) primarily
+        for and in connection with specific products or compilations that
+        contain the covered work, unless you entered into that arrangement,
+        or that patent license was granted, prior to 28 March 2007.
+
+          Nothing in this License shall be construed as excluding or limiting
+        any implied license or other defenses to infringement that may
+        otherwise be available to you under applicable patent law.
+
+          12. No Surrender of Others' Freedom.
+
+          If conditions are imposed on you (whether by court order, agreement or
+        otherwise) that contradict the conditions of this License, they do not
+        excuse you from the conditions of this License.  If you cannot convey a
+        covered work so as to satisfy simultaneously your obligations under this
+        License and any other pertinent obligations, then as a consequence you may
+        not convey it at all.  For example, if you agree to terms that obligate you
+        to collect a royalty for further conveying from those to whom you convey
+        the Program, the only way you could satisfy both those terms and this
+        License would be to refrain entirely from conveying the Program.
+
+          13. Remote Network Interaction; Use with the GNU General Public License.
+
+          Notwithstanding any other provision of this License, if you modify the
+        Program, your modified version must prominently offer all users
+        interacting with it remotely through a computer network (if your version
+        supports such interaction) an opportunity to receive the Corresponding
+        Source of your version by providing access to the Corresponding Source
+        from a network server at no charge, through some standard or customary
+        means of facilitating copying of software.  This Corresponding Source
+        shall include the Corresponding Source for any work covered by version 3
+        of the GNU General Public License that is incorporated pursuant to the
+        following paragraph.
+
+          Notwithstanding any other provision of this License, you have
+        permission to link or combine any covered work with a work licensed
+        under version 3 of the GNU General Public License into a single
+        combined work, and to convey the resulting work.  The terms of this
+        License will continue to apply to the part which is the covered work,
+        but the work with which it is combined will remain governed by version
+        3 of the GNU General Public License.
+
+          14. Revised Versions of this License.
+
+          The Free Software Foundation may publish revised and/or new versions of
+        the GNU Affero General Public License from time to time.  Such new versions
+        will be similar in spirit to the present version, but may differ in detail to
+        address new problems or concerns.
+
+          Each version is given a distinguishing version number.  If the
+        Program specifies that a certain numbered version of the GNU Affero General
+        Public License "or any later version" applies to it, you have the
+        option of following the terms and conditions either of that numbered
+        version or of any later version published by the Free Software
+        Foundation.  If the Program does not specify a version number of the
+        GNU Affero General Public License, you may choose any version ever published
+        by the Free Software Foundation.
+
+          If the Program specifies that a proxy can decide which future
+        versions of the GNU Affero General Public License can be used, that proxy's
+        public statement of acceptance of a version permanently authorizes you
+        to choose that version for the Program.
+
+          Later license versions may give you additional or different
+        permissions.  However, no additional obligations are imposed on any
+        author or copyright holder as a result of your choosing to follow a
+        later version.
+
+          15. Disclaimer of Warranty.
+
+          THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+        APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+        HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+        OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+        THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+        PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+        IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+        ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+          16. Limitation of Liability.
+
+          IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+        WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+        THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+        GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+        USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+        DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+        PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+        EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+        SUCH DAMAGES.
+
+          17. Interpretation of Sections 15 and 16.
+
+          If the disclaimer of warranty and limitation of liability provided
+        above cannot be given local legal effect according to their terms,
+        reviewing courts shall apply local law that most closely approximates
+        an absolute waiver of all civil liability in connection with the
+        Program, unless a warranty or assumption of liability accompanies a
+        copy of the Program in return for a fee.
+
+                             END OF TERMS AND CONDITIONS
+
+                    How to Apply These Terms to Your New Programs
+
+          If you develop a new program, and you want it to be of the greatest
+        possible use to the public, the best way to achieve this is to make it
+        free software which everyone can redistribute and change under these terms.
+
+          To do so, attach the following notices to the program.  It is safest
+        to attach them to the start of each source file to most effectively
+        state the exclusion of warranty; and each file should have at least
+        the "copyright" line and a pointer to where the full notice is found.
+
+            <one line to give the program's name and a brief idea of what it does.>
+            Copyright (C) <year>  <name of author>
+
+            This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU Affero General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or
+            (at your option) any later version.
+
+            This program is distributed in the hope that it will be useful,
+            but WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+            GNU Affero General Public License for more details.
+
+            You should have received a copy of the GNU Affero General Public License
+            along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+        Also add information on how to contact you by electronic and paper mail.
+
+          If your software can interact with users remotely through a computer
+        network, you should also make sure that it provides a way for users to
+        get its source.  For example, if your program is a web application, its
+        interface could display a "Source" link that leads users to an archive
+        of the code.  There are many ways you could offer source, and different
+        solutions will be better for different programs; see section 13 for the
+        specific requirements.
+
+          You should also get your employer (if you work as a programmer) or school,
+        if any, to sign a "copyright disclaimer" for the program, if necessary.
+        For more information on this, and how to apply and follow the GNU AGPL, see
+        <https://www.gnu.org/licenses/>.
+
+
+

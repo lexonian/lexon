@@ -1,0 +1,3946 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+
+<title>Lexon</title>
+
+<style>
+
+body	{ font-family: "Avenir Next", Avenir, Verdana, Helvetica, Arial, "Droit Sans", sans-serif;
+	  background: black;
+	  color: white;
+	  margin: 0;
+	  padding: 0;
+	}
+p	{ text-align: justify;
+	  -webkit-hyphens: auto;
+	  -ms-hyphens: auto;
+	  hyphens: auto;
+	}
+p.indent { text-indent: 2em;
+	}
+p.left	{ text-align: left;
+	}
+ul {
+  list-style-type: square;
+}
+h1	{ background: black;
+	   color: white;
+	   font-size: 2em;
+	   font-weight: 700;
+	   padding: 2em 7vw;
+	   margin: 0;
+	 }
+.tophead, .tophead:visited { color: white;
+	}
+.tophead:hover { text-decoration: none;
+	}
+div.body { background: white;
+	   color: black;
+	   font-size: 1em;
+	   padding: 2.5em 7vw 4em;
+	   # padding: 2.5em 6em 4em;
+	   border-radius: 0 1.5em 0 1.5em;
+	}
+div.foot { background: black;
+	   color: white;
+	   margin: 0em;
+	   padding: 2.5em 7vw 4em;
+	   # padding: 2em 9em 2em 7vw;
+	   font-size: 0.7em;
+	}
+p.foot	{ margin: 0.2rem;
+	  padding: 0;
+	}
+a.foot	{ margin: 0;
+	  padding: 0;
+	  color: white !important;
+	}
+a.foot:hover { text-decoration: none;
+	  color: #d0e0ff !important;
+	}
+div.leadintext {
+	   columns: 15em 3;
+	   column-gap: 2em;
+	}
+div.xcode { font-family: Menlo, "Courier New", monospace;
+	   color: black;
+	   white-space: pre-wrap;
+	   background: rgb(252,252,252); 
+	   border: 0.1em solid whiteSmoke;
+	   margin: 2em 0em 0em 0em;
+	   padding: 2em 7vw 3em 7vw;
+	  #  padding: 2em 5em 3em 5em;
+	}
+a	{ color: inherit;
+	  text-decoration: none;
+	}
+a.std:before { content: "⟶ ";
+	}
+a	{ color: inherit;
+	  text-decoration: none;
+	}
+a:hover,
+a.seenonvoc:hover { color: darkgray;
+	  text-decoration: underline;
+	  cursor: pointer;
+	}
+a:visited { color: darkgray;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+a:active {
+}
+div.caption { text-align: center;
+	  font-size: 0.8em;
+	  margin: 0.5em;
+	}
+ul	{ margin: 2em 0;
+	}
+li	{ prefix-symbol: symbol("");
+	}
+
+
+html 		{
+			scroll-behavior: smooth;
+		}
+:target:before	{
+			content: "";
+			display: inline;
+		}
+div.wordlist	{	font-weight: 500;
+			font-size: 1.1em;
+			line-height: 1.6em;
+			letter-spacing: 0.01em;
+			word-spacing: 0.2em;
+			text-transform: lowercase;
+			text-align: justify;
+		}
+a.entrylink	{	color: gray;
+			font-weight: bold;
+		}
+a.entrylink:hover,
+a.entrylink:visited {	color: black;
+			text-decoration: none;
+		}
+
+div.examples	{	margin: 2em 0em;
+		}
+div.entry,
+div.wordlistbox	{	margin-top: 2em;
+			margin-bottom: 2em;
+			margin-left: 0em;
+			margin-right: 0em;
+			border: 1px solid gainsboro;
+			padding: 2em 6vh;
+			scroll-margin: 10em;
+		}
+a.entry:hover,
+a.entry:active,
+a.entry:visited	{	color: inherit;
+			text-decoration: none;
+		}
+h2		{	font-size: 3em;
+			font-weight: bold;
+		}
+h3		{	font-size: 2em;
+			font-weight: bold;
+		}
+h3.black	{	margin-left: 3em;
+			font-size: 2.5em;
+		}
+@media (orientation: portrait) {
+h3.black	{	margin-left: 1em;
+		}
+}
+h4		{	font-size: 2em;
+			font-weight: bold;
+		}
+div.keyword	{	font-size: 2em;
+			font-weight: bold;
+			text-transform: lowercase;
+		}
+a.keyword	{	color: black;
+			text-decoration: none;
+		}
+div.ling	{	font-style: italic;
+			letter-spacing: 0.02em;
+			color: gray;
+			margin-bottom: 0.2em;
+		}
+a.ling		{	color: gray;
+			text-decoration: none;
+		}
+a.linganchor,
+a.funcanchor	{
+			scroll-margin: 10em;
+		}
+a.linganchor:hover,
+a.funcanchor:hover {
+			text-decoration: none;
+			font-weight: inherit;
+			color: inherit;
+		}
+div.func	{	font-weight: medium-bold;
+			color: gray;
+			font-size: 0.9em;
+			font-family: Courier;
+		}
+a.func		{	color: gray;
+			text-decoration: none;
+		}
+div.desc	{	font-size: 1em;
+			line-height: 1.6em;
+			text-align: justify;
+			margin-top: 1em;
+                        margin-bottom: 0.5em;
+		}
+@media (orientation: portrait) {
+div.desc	{	text-align: left;
+		}
+}
+br		{
+		}
+div.samp, div.code, div.examplecode {
+			color: black;
+			font-weight: 500;
+			background: rgb(246,246,246); 
+			border: 0.1em solid whiteSmoke;
+			border-radius: 0.2em;
+			margin: 1em 0em 0em 0em;
+			padding: 2em 4em 2em 4em;
+		}
+div.examplecode {	font-style: italic;
+	  		line-height: 1.6em;
+		}
+div.samp	{
+			line-height: 1.6em;
+			padding: 2em 4em 2em 6em;
+			text-indent: -2em;
+			font-style: italic;
+			letter-spacing: 0.01em;
+			white-space: normal;
+		}
+@media (orientation: portrait) {
+	div.samp {
+			text-indent: 0;
+			margin-left: 0;
+			margin-right: 0;
+			padding-left: 2em;
+			padding-right: 2em;
+			border-left: 0;
+			border-right: 0;
+		}
+}
+div.code	{
+			font-style: italic;
+			letter-spacing: 0.01em;
+			white-space: pre-wrap;
+		}
+@media (orientation: portrait) {
+        div.examplecode {
+                        text-indent: 0;
+                        margin-left: 0;
+                        margin-right: 0;
+                        padding-left: 2em;
+                        padding-right: 2em;
+                        border-left: 0;
+                        border-right: 0;
+                }
+}
+div.link	{	color:gray;
+			margin-bottom: 1em;
+		}
+a.link		{	color: gray;
+			font-size: 0.8em;
+			# font-style: italic;
+			text-decoration: none;
+		}
+a.link:before	{	content: "see ⟶ ";
+		}
+a.link:hover,
+a.entrylink:hover {	color: black;
+			background-color: white;
+			border: 1px solid lightgray;
+			border-radius: 0.2em;
+			padding: 5px;
+			margin: -6px;
+	  	}
+a.see, a.seenonvoc {	text-transform: lowercase;
+			text-decoration: none;
+			color: inherit;
+
+		}
+a.see		{	font-weight: bold;
+
+		}
+a.upper		{	text-transform: uppercase;
+		}a.upper		{	text-transform: uppercase;
+				}
+a.see:hover	{	color: black;
+			border: 1px solid lightgray;
+			border-radius: 0.2em;
+			padding: 5px;
+			margin: -6px;
+	  	}
+a.see:before,
+a.seenonvoc:before,
+a.paper:before,
+a.page:before	{	content: "⟶ ";
+		}
+.paper,
+.paper:hover,
+.paper:active,
+.paper:visited,
+.page,
+.page:hover,
+.page:active,
+.page:visited	{	font-style: italic;
+			color: black;
+			text-decoration: none;
+		}
+.paper:hover,
+.paper:active,
+.page:hover,
+.page:active	{	color: gray;
+		}
+.lookup,
+.lookup:visited {	color: #808080;
+		}
+.lookup2,
+.lookup2:visited {	color: black;
+		}
+.lookup,
+.lookup:visited,
+.lookup2,
+.lookup2:visited {	text-decoration-line: underline;
+			text-decoration-color: #d0d0d0;
+		}
+.lookup:hover,
+.lookup2:hover	{	color: black;
+			background: white;
+			text-decoration: none;
+			border: 0.04em solid lightgray;
+			border-radius: 0.2em;
+			margin: -0.43em;
+			padding: 0.4em;
+		}
+em.entry	{	font-weight: bold;
+			color: black;
+			font-style: inherit;
+			text-transform: lowercase;
+		}
+em.leave	{	text-transform: inherit;
+		}
+em.secondary	{	font-weight: bold;
+			font-style: inherit;
+		}
+em.upper	{	text-transform: uppercase;
+		}
+em.cap		{	text-transform: capitalize;
+		}
+em.literal	{	font-weight: inherit;
+			color: inherit;
+			text-transform: inherit;
+		}
+em.meta		{	font-weight: inherit;
+			color: gray;
+			text-transform: inherit;
+		}
+div.exampleshead {	font-size: 3em; 
+		}
+div.examplehead {	font-size: 2em; 
+		}
+a.exampleline	{	scroll-margin: 40vh;
+		}
+div.exampleline	{	scroll-margin: 40vh;
+		}
+@keyframes high {	from { background-color: white;
+				border: 0.02em solid black; 
+			}
+			to { background-color: #f0f0f0;
+				border: 0.02em solid white; 
+			}
+		}
+@keyframes bold {	from { background-color: lightgray;
+				font-weight: bold;
+			}
+			to { background-color: inherit; 
+				font-weight: inherit;
+			}
+		}
+div.colorslider	{	float: right;
+		}
+input.colorsliderInput {
+    visibility: hidden;
+}
+.colorslider {
+    width: 6em;
+    height: 1.735em;
+    background: #555;
+    border-radius: 1em;
+    position: relative;
+}
+.colorslider:before {
+	font-family: sans-serif;
+	vertical-align: middle;
+    	color: lightgreen;
+	text-shadow: 0 0 0.2em green, 0 0 1em lightgreen, 0 0 0.2em white;
+    content: 'on';
+    position: absolute;
+    top: 0.38em;
+    left: 0.68em;
+    height: 0.1em;
+    font-size: 1em;
+}
+.colorslider:after {
+	font-family: sans-serif;
+	vertical-align: middle;
+    content: 'off';
+    position: absolute;
+    top: 0.39em;
+    left: 4.2em;
+    height: 0.1em;
+    color: #aaa;
+    font-size: 1em;
+}
+.colorslider label {
+	font-size: 0.9em;
+	color: white;
+	text-shadow: 0.1em 0.1em 0.2em gray;
+	line-height: 1.52em;
+	font-family: sans-serif;
+	text-align: center;
+    display: block;
+    width: 4em;
+    height: 1.54em;
+    border-radius: 1em;
+    transition: all .3s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 0.2em;
+    z-index: 1;
+    left: 0.2em;
+    background: #ddd;
+}
+.colorslider input[type=checkbox]:checked + label {
+    left: 2.4em;
+}
+@media (orientation: portrait) {
+	div.entry	{	margin-left: 0;
+				margin-right: 0;
+				margin-bottom: 0;
+				padding-left: 0;
+				padding-right: 0;
+				padding-bottom: 0;
+				border-left: 0;
+				border-right: 0;
+				border-bottom: 0;
+			}
+} 
+@media print {
+  div.entry {
+    break-inside: avoid;
+  }
+	a { text-decoration: none !important; }
+
+ div.printFooter {
+	color: lightgray;
+    position: fixed;
+    bottom: 0;
+	writing-mode: vertical-lr;
+	text-orientation: mixed;
+ }
+}
+
+@media screen {
+  div.printFooter {
+    display: none;
+  }
+}
+</style>
+
+<script>
+Element.prototype.documentOffsetTop = function () {
+    return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop() : 0 );
+};
+
+function high(hash) {
+	let name = hash.substr(1);
+	const o = document.getElementById(name);
+	o.style.animation = "none";
+	void o.offsetHeight;
+	o.style.animation = null;
+	o.style.margin = "-5px -30px";
+	o.style.padding = "4px 30px";
+	o.style.animationName = "high";
+	o.style.animationDuration = "20s";
+	o.style.animationTimingFunction = "ease-out";
+	o.style.animationFillMode = "forwards";
+}
+function green(o) {
+	o.style.color = "green";
+}
+function unhigh(o) {
+	o.style.color = "inherit";
+}
+function bold(hash) {
+	let name = hash.substr(1);
+	const o = document.getElementById(name);
+	o.style.animation = "none";
+	void o.offsetHeight;
+	o.style.animation = null;
+	o.style.animationName = "bold";
+	o.style.animationDuration = "20s";
+	o.style.animationTimingFunction = "ease-out";
+	o.style.animationFillMode = "forwards";
+}
+function toggle_color(on) {
+	let slider = document.getElementById('colorsliderInput');
+	if(slider)
+		if(typeof(on) == 'undefined') on = !slider.checked; // toggle
+	slider.checked = on; // sic, always
+
+	const style = document.createElement('style');
+	if(on) 
+		style.innerHTML = `
+			em.entry { color: darkblue !important; }
+			a.see { color: darkblue !important; }
+			.code { color: maroon !important; }
+			.code, .samp { font-variant: none !important; }
+			div.samp, div.code, div.examplecode { color: green; }
+			em.literal { color: #a000ff !important; }
+			em.meta { color: maroon !important; }
+			.lookup, .lookup2, lookup:visited, lookup2:visited { 
+				color: #0000a0 !important; 
+				font-variant: none !important; }
+			a.entry { color: #0000a0 !important; }
+		`;
+	else
+		style.innerHTML = `
+			em.entry { color: black !important; }
+			a.see { color: gray !important; }
+			.code { color: black !important; }
+			.code, .samp { font-variant: italic !important; }
+			div.samp, div.code, div.examplecode { color: black; }
+			em.literal { color: black !important; }
+			em.meta { color: gray !important; }
+			.lookup, .lookup2, lookup:visited, lookup2:visited { 
+				color: black !important; 
+				font-variant: italic !important; }
+			a.entry { color: black !important; }
+		`;
+	document.head.appendChild(style);
+}
+
+</script>
+
+</head>
+
+<body>
+   <div class=printFooter>Lexon 0.3 vocabulary</div>
+
+<h1><a href="https://www.lexon.org" class=tophead>Lexon</a></h1>
+
+<div class=body>
+
+<p>
+<div class=colorslider>
+        <input class=colorsliderInput type=checkbox value=0 id=colorsliderInput name="" onclick=toggle_color(this.checked) />
+        <label for=colorsliderInput>color</label>
+</div>
+</p>
+
+<p style="text-align:left; letter-spacing: 0.2em">plain-text programming</p>
+
+<h2>Vocabulary</h2>
+
+<p>You don't need this to read and understand a Lexon text. This page is for getting an idea how to write one.</p>
+
+<p>This is the word list of Lexon 0.3. The page is a learning tool to help grasp the bigger picture, not neccessarily to memorize individual words. To this end, one thousand links are at your disposal below for fast navigation between words, examples and references. You will find that clicking around reveals the deeper structure of Lexon, beyond words.</p>
+
+<p class=indent>The point of Lexon is that one does not have to learn it to read it. Learning to <em>write</em> Lexon is best done by looking at examples rather than memorizing words. This is no different than how a human language, or a programming language, or even legalese is picked up. The allowed use of a word, its context, are what matters. As the Lexon grammar is a so-called <i>controlled grammar</i>, only some ways of using a word are permitted, fewer than in normal English. Studying this is better learned by doing than done by learning. In fact, it is particularly hard to 'unlearn' what you know is correct in normal language. This is why the best way to use this word list is to compare and explore, and focus on the examples, skipping from one to the next by clicking on any of its words. You will – and that is a unique quality of Lexon – get a feel for what works.</p>
+
+<ul>
+<li><a class=std href=#words>Words</a></li>
+<li><a class=std href=#examples>Examples</a></li>
+</ul>
+
+<h3>Breadth and Capacity</h3>
+
+<div class=leadintext> <p style="margin: 0; padding: 0;"> Lexon's vocabulary is unlimited because a) any noun or compound term can be defined and used in a Lexon text, b) any phrase can be used as clause name and then used      as part of a sentence elsewhere in the text, and c) the Lexon compiler is extensible and keywords can and are added while the grammar grows more powerful.</p>
+
+<div class=entry style="margin-left: 0; margin-right: 0; padding-left: 4em;"> 
+<p style="text-align: left; text-indent:-1em"> a) <i>Definitions</i>:<br> see Payer, Payee, etc. in the <a class=seenonvoc href=#PayerIsAPerson onclick="high(this.hash);">Escrow</a> example.</p>
+<p style="text-align: left; text-indent:-1em"> b) <i>Clauses</i>:<br> see Noticed, Factually Breached, etc. in the <a class=seenonvoc href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);high('#NoticedIsDefinedAsANoticeTime')">Evaluation License</a> example.</p>
+<p style="text-align: left; text-indent:-1em"> c) <i>Keywords</i>:<br> Cf. vocabulary 0.3 below vs. <a class=seenonvoc href="/docs/Lexon Reference 2020.pdf">0.2 of the 2020 Lexon Bible</a>.</p>
+</div>
+
+
+<p class=indent>The latter is a slow and incremental process.      A special, faster process has been prepared for verbs of foundational importance – like <em>move</em> for robotics – that can sustain an entire domain. The two former points are instant and happen when a user authors a Lexon text. Each Lexon digital contract therefore has its own vocabulary, extending the dictionary on the fly while drafting; as integral and organic part of the writing process. This is in keeping with the usual way that paper contracts are written: terms are being defined for clarity, laying the ground for an agreement's text. That's exactly how Lexon's vocabulary grows while penning a digital contract.</p>
+
+<p class=indent>However, as it comes, before any definitions are added, Lexon 0.3 understands 91 keywords plus variations, of which roughly half are processed in an interesting way. Many have only one specific function as marker, like <a class=see href=#CLAUSE>CLAUSE</a>, or make the list solely by virtue of being part of a fix multi-word term, with no independent function, like <a class=see href=#OFF>OFF</a> in <em class=entry>SIGN OFF</em>.</p>
+<p class=indent>To put the word count into perspective, a modern 3rd generation programming language like Rust has about 50 reserved keywords, which are mostly used in a rigid, less interesting way. Beginner's English is said to consist of about 300 words, the Basic English world language       project [1] has about 850. These latter counts include many nouns; Lexon's vocabulary contains almost no nouns because these are as a rule defined by the       writer of a Lexon text and the Lexon compiler understands them from their function as implied by the rest of the text. This is a fundamental aspect of          Lexon's approach and the reason why the Lexon compiler needs to 'understand' relatively few words out of the box. The nouns and phrases that a user adds        are inevitably what gives a text depth. The way that definitions work, the compiler learns the role of the new words on the go and recognizes them in       the text from that point on. Clause names, however, can be the most interesting because they are the way to insert any complexity of grammar, which can         make Lexon texts look rich and elegant. This is a powerful design choice that serves to include language constructs outside of the limit up to which the controlled grammar has to be observed – offering instead of a hard stop, freedom to be fully creative within the safety of a well defined reference frame. Lexon 'understands' such phrases (the clause names) en block, obviously, because the clause itself defines their meaning. The (multi-word) name of a clause's internal grammatical composition is not analysed. The way that the processing of clause names is isolated from the rest of the text is making it possible to mix these monolithic elements with the bulk of the text that the Lexon compiler processes word-for-word, i.e., 'more truely understands'. This combination is a pragmatic way to empower the users       to add complexity without having to think about any controlled grammar rules, but importantly also: to freely add vocabulary. The new words are baked into the specific grammatical way that they are presented (in the clause name). They need not be explained further. This mode of extension makes perfect sense for Lexon. 3<super>rd</super> generation programming languages generally allow to add variable names and add types. But they can never reach beyond their fix grammar. Lexon, in contrast, accepts any grammatical extension through the freedom it offers in naming clauses. In this, there is not even a requirement to avoid the initial 91 words that Lexon knows when creating compound new compositions.</p>
+
+<p class=indent>But the list of initial words cannot be redefined. It is therefore on the one hand desirable that it includes few nouns. The reason that Lexon, on the other hand, has a larger basic vocabulary than, e.g., Rust is that Lexon's grammar is designed to     enable multiple ways of expressing the same meanning, to make writing more intuitive, and to allow for more fluid, natural-appearing texts. This does not mean that Lexon's grammar is ambigious, i.e., that the same sentence could have multiple meanings. It only means that the same meaning can be expressed by differently worded sentences. This is normal for any programming language, and only some developer communities have the ambition to adhere to a style at all times that defines the one, 'right' way for anything that could be expressed. This is always only a convention though.</p>
+
+
+</div>
+
+<p class=left style="display: block; text-indent: -2em; margin: 2em;">[1] Basic English <a class=see style="font-weight:normal; font-style:italic; " href=https://simple.wikipedia.org/wiki/Basic_English>https://simple.wikipedia.org/wiki/Basic_English</a></p>
+
+<div class=vocabulary>
+<a name=words></a>
+<h3>Words</h3>
+
+<p>This is the list of the <i>known words</i> in Lexon 0.3 that between themselves stand up the Lexon grammar.</p>
+
+<div class="wordlistbox">
+	<div class=wordlist>
+	<a class=entrylink href=#A>A</a>
+	<a class=entrylink href=#AFTER>AFTER</a>
+	<a class=entrylink href=#AFTERWARDS>AFTERWARDS</a>
+	<a class=entrylink href=#ALL>ALL</a>
+	<a class=entrylink href=#ALSO>ALSO</a>
+	<a class=entrylink href=#AMOUNT>AMOUNT*</a>
+	<a class=entrylink href=#AN>AN</a>
+	<a class=entrylink href=#AND>AND</a>
+	<a class=entrylink href=#ANNOUNCED>ANNOUNCED</a>
+	<a class=entrylink href=#APPOINT>APPOINT</a>
+	<a class=entrylink href=#APPOINTS>APPOINTS</a>
+	<a class=entrylink href=#AS>AS</a>
+	<a class=entrylink href=#AT>AT</a>
+	<a class=entrylink href=#AUTHOR>AUTHOR</a>
+	<a class=entrylink href=#AUTHOR>AUTHORS</a>
+	<a class=entrylink href=#BE>BE</a>
+	<a class=entrylink href=#BEEN>BEEN</a>
+	<a class=entrylink href=#BEING>BEING</a>
+	<a class=entrylink href=#BINARY>BINARY*</a>
+	<a class=entrylink href=#CERTIFIED>CERTIFIED</a>
+	<a class=entrylink href=#CERTIFY>CERTIFIES</a>
+	<a class=entrylink href=#CERTIFY>CERTIFY</a>
+	<a class=entrylink href=#CLAUSE>CLAUSE</a>
+	<a class=entrylink href=#COMMENT>COMMENT</a>
+	<a class=entrylink href=#COMMENT>COMMENTS</a>
+	<a class=entrylink href=#CONTRACT>CONTRACT</a>
+	<a class=entrylink href=#CONTRACT>CONTRACTS</a>
+	<a class=entrylink href=#CURRENT>CURRENT</a>
+	<a class=entrylink href=#DATA>DATA*</a>
+	<a class=entrylink href=#DAY>DAY</a>
+	<a class=entrylink href=#DAY>DAYS</a>
+	<a class=entrylink href=#DECLARE>DECLARE</a>
+	<a class=entrylink href=#DECLARED>DECLARED</a>
+	<a class=entrylink href=#DECLARE>DECLARES</a>
+	<a class=entrylink href=#DEFINED>DEFINED</a>
+	<a class=entrylink href=#EQUAL>EQUAL</a>
+	<a class=entrylink href=#EQUALING>EQUALING</a>
+	<a class=entrylink href=#ESCROW>ESCROW</a>
+	<a class=entrylink href=#FILED>FILED</a>
+	<a class=entrylink href=#FILE>FILE</a>
+	<a class=entrylink href=#FILE>FILES</a>
+	<a class=entrylink href=#FIX>FIX</a>
+	<a class=entrylink href=#FIXED>FIXED</a>
+	<a class=entrylink href=#FIX>FIXES</a>
+	<a class=entrylink href=#FOR>FOR</a>
+	<a class=entrylink href=#FROM>FROM</a>
+	<a class=entrylink href=#GENERAL>GENERAL</a>
+	<a class=entrylink href=#GIVEN>GIVEN</a>
+	<a class=entrylink href=#GRANT>GRANT</a>
+	<a class=entrylink href=#GRANT>GRANTS</a>
+	<a class=entrylink href=#HAS>HAS</a>
+	<a class=entrylink href=#HERSELF>HERSELF</a>
+	<a class=entrylink href=#HERSELF>HIMSELF</a>
+	<a class=entrylink href=#HOUR>HOUR</a>
+	<a class=entrylink href=#HOUR>HOURS</a>
+	<a class=entrylink href=#IF>IF</a>
+	<a class=entrylink href=#IN>IN</a>
+	<a class=entrylink href=#INTO>INTO</a>
+	<a class=entrylink href=#IS>IS</a>
+	<a class=entrylink href=#ITSELF>ITSELF</a>
+	<a class=entrylink href=#LEAST>LEAST</a>
+	<a class=entrylink href=#LEX>LEX</a>
+	<a class=entrylink href=#LEXON>LEXON</a>
+	<a class=entrylink href=#LIES>LIES</a>
+	<a class=entrylink href=#MAY>MAY</a>
+	<a class=entrylink href=#MILLISECOND>MILLISECOND</a>
+	<a class=entrylink href=#MILLISECOND>MILLISECONDS</a>
+	<a class=entrylink href=#MINUTE>MINUTE</a>
+	<a class=entrylink href=#MINUTE>MINUTES</a>
+	<a class=entrylink href=#MONTH>MONTH</a>
+	<a class=entrylink href=#MONTH>MONTHS</a>
+	<a class=entrylink href=#MYSELF>MYSELF</a>
+<!--	<a class=entrylink href=#NEITHER>NEITHER</a> -->
+	<a class=entrylink href=#NO>NO</a>
+<!--	<a class=entrylink href=#NOR>NOR</a> -->
+	<a class=entrylink href=#NOT>NOT</a>
+<!--	<a class=entrylink href=#NOTIFY>NOTIFIES</a> -->
+<!--	<a class=entrylink href=#NOTIFY>NOTIFY</a> -->
+	<a class=entrylink href=#NOW>NOW</a>
+	<a class=entrylink href=#OF>OF</a>
+	<a class=entrylink href=#OFF>OFF</a>
+	<a class=entrylink href=#ON>ON</a>
+	<a class=entrylink href=#ONESELF>ONESELF</a>
+	<a class=entrylink href=#OR>OR</a>
+	<a class=entrylink href=#OURSELVES>OURSELVES</a>
+	<a class=entrylink href=#PASSED>PASSED</a>
+	<a class=entrylink href=#PAST>PAST</a>
+	<a class=entrylink href=#PAY>PAY</a>
+	<a class=entrylink href=#PAY>PAYS</a>
+	<a class=entrylink href=#PER>PER</a>
+	<a class=entrylink href=#PERSON>PERSON*</a>
+	<a class=entrylink href=#PREAMBLE>PREAMBLE</a>
+	<a class=entrylink href=#PROVIDED>PROVIDED</a>
+	<a class=entrylink href=#REGISTER>REGISTER</a>
+	<a class=entrylink href=#REGISTER>REGISTERS</a>
+	<a class=entrylink href=#REMAINDER>REMAINDER</a>
+	<a class=entrylink href=#RESPECTIVE>RESPECTIVE</a>
+	<a class=entrylink href=#RETURN>RETURN</a>
+	<a class=entrylink href=#RETURN>RETURNS</a>
+	<a class=entrylink href=#SECOND>SECOND</a>
+	<a class=entrylink href=#SECOND>SECONDS</a>
+	<a class=entrylink href=#SEND>SEND</a>
+	<a class=entrylink href=#SEND>SENDS</a>
+	<a class=entrylink href=#SIGNED>SIGNED</a>
+	<a class=entrylink href=#SO>SO</a>
+	<a class=entrylink href=#TERMINATE>TERMINATE</a>
+	<a class=entrylink href=#TERMINATE>TERMINATES</a>
+	<a class=entrylink href=#TERMS>TERMS</a>
+	<a class=entrylink href=#TEXT>TEXT</a>
+	<a class=entrylink href=#THAT>THAT</a>
+	<a class=entrylink href=#THE>THE</a>
+	<a class=entrylink href=#THEMSELF>THEMSELF</a>
+	<a class=entrylink href=#THEMSELVES>THEMSELVES</a>
+	<a class=entrylink href=#THEN>THEN</a>
+	<a class=entrylink href=#THERE>THERE</a>
+	<a class=entrylink href=#THEREFOR>THEREFOR</a>
+	<a class=entrylink href=#THEREFOR>THEREFORE</a>
+	<a class=entrylink href=#THESE>THESE</a>
+	<a class=entrylink href=#THIS>THIS</a>
+	<a class=entrylink href=#TIME>TIME*</a>
+	<a class=entrylink href=#TO>TO</a>
+	<a class=entrylink href=#TRUE>TRUE</a>
+	<a class=entrylink href=#WAS>WAS</a>
+	<a class=entrylink href=#WEEK>WEEK</a>
+	<a class=entrylink href=#WEEK>WEEKS</a>
+	<a class=entrylink href=#WITH>WITH</a>
+	<a class=entrylink href=#YEAR>YEAR</a>
+	<a class=entrylink href=#YEAR>YEARS</a>
+	<a class=entrylink href=#YES>YES</a>
+	<a class=entrylink href=#YOURSELF>YOURSELF</a>
+	<a class=entrylink href=#YOURSELF>YOURSELVES</a>
+	</div>
+</div>
+
+<p>In case you have to, these words can mostly be redefined as <i>names</i> but in that case can then not serve in their original function as described below anywhere in the contract. The exception are <i>category</i> names (types, marked with an asterisk (*) above). They cannot be redefined but can be used as generic names (see, e.g., <a class=see href=#AMOUNT>amount</a>). All words can be used as <i>part</i> of names without losing their original, stand-alone function.</p>
+
+<p>In the individual, per-word entries below, <a id=ling name=ling class=linganchor>the first information about each word is, in what linguistic capacity it is used in Lexon. This angle can help because English words frequently cover two ore more different grammatical roles.</a> <a id=func name=func class=funcanchor>The second line is technical, based on computer sciences designations for the function that a word is used for in Lexon. It will more often than not be a helpful pointer for non-programmers, too.</a> In many cases, a description follows that describes the use of the word and occasionally presents additional context. Note that the description often seems to explain the obvious, because you know how English works. However, it can help to spell it out to learn to write Lexon. After that, one or more examples show the word in the context of an examples sentence. This sentence can be inspected in the context of a complete digital contract by clicking the link immediately below the example sentence.</p>
+
+
+<div class=entry id=EXAMPLE>
+<div class=keyword>
+<a class=entry name=EXAMPLE>
+WORD</a>
+</div>
+        <div class=ling><a class=ling href=#ling onclick=bold(this.hash)>linguistic function</a></div>
+        <div class=func><a class=func href=#func onclick=bold(this.hash)>programming function</a></div>
+        <div class=desc>
+	Description.
+        </div>
+        <div class=samp>
+	Example sentence.
+        </div>
+        <div class=link><a class=link>
+        complete example contract
+        </a></div>
+</div>
+
+
+<p>The html version of this page can be switched to <a onclick='toggle_color();'>colored code</a>. The style for different words in different roles is:</p>
+
+<div class=entry style="border-color:white; margin-top: 0; padding-top: 0">
+        <div class=samp>
+		<p><a class=lookup>Lexon keywords</a></p>
+		<p><em class=entry>entry's keyword</em></p>
+		<p>user-defined terms</p>
+		<p><em class=literal>literal numbers</em></p>
+		<p><em class=meta>meta information</em></p>
+        </div>
+</div>
+
+
+<h3>Alphabetical Entries</h3>
+
+<p>The entries are based on the grammar version <i>0.2.20 / subset 0.3.8 alpha 79 - English / Reyes</i>.</p>
+
+<div class=entry id=A onhover=alert('hover')>
+<div class=keyword>
+<a class=entry name=A>
+A</a>,
+<a class=entry name=AN>
+AN
+</a>
+</div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>		indefinite article		</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>		no op		</a></div>
+	<div class=desc>
+	Articles can be left out with no change in meaning. They are optional to increase readability.<p></p>
+	They can be omitted, because the name they precede must always be unambigous on its own. This is familiar practice with paper contracts.<P></p>
+	Same goes for <a class=see href=#THE>the</a>, <a class=see href=#THIS>this</a>, <a class=see href=#THESE>these</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Payer <a class=lookup2 href=#PAYS>pays</a> <em class=entry>an</em> <a class=lookup2 href=#AMOUNT>Amount</a> <a class=lookup2 href=#INTO>into</a> <a class=lookup2 href=#ESCROW>escrow</a>, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Payee, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Arbiter, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#FIXES>fixes</a> <a class=lookup2 href=#THE>the</a> Fee.
+	</div>
+	<div class=link><a class=link href=#ThePayerPaysAnAmountIntoEscrow onclick="high(this.hash););">
+	escrow.lex
+	</a></div>
+</div>
+
+<div class=entry name=AFTER>
+<div class=keyword>
+<a class=entry name=AFTER>
+AFTER
+</a>
+</div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+		timewise prepostion
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+		time operator
+	</a></div>
+	<div class=desc>
+	<em class="entry leave">After</em> is used to calculate a point in time, relative to a given one.
+	</div>
+	<div class=samp>
+	"Termination Period" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a> <em class=literal>365</em> <a class=lookup2 href=#DAYS>days</a> <em class=entry>after</em> <a class=lookup2 href=#THE>the</a> Termination Statement Time.
+	</div>
+	<div class=link><a class=link href=#TerminationPeriodIsDefinedAs365Days onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	For more on how to use time, see <a class=see href=#HOURS>hours</a> and <a class=see lookup href=#DAYS>days</a>.
+	</div>
+</div>
+</div>
+
+<div class=entry id=AFTERWARDS>
+<div class=keyword>
+<a class=entry name=AFTERWARDS>
+AFTERWARDS
+</a>
+</div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	causal concatenation
+	</a></div>
+	<div class=desc>
+	Keyword that introduces temporal order, which is not a default in Lexon.<p></p>
+	Separate sentences are performed independently of each other, <em>declaratively</em>, rather than one after the other. <em class="entry leave">Afterwards</em> serves to bind statements into one sentence and to establish that the phrase following it is performed only after all side effects of the phrase before it have been established.<p></p>
+	To illustrate by example, in the Lexon sentence given below, the <a class=see href=#REMAINDER>remainder</a> is what remains after the Fee mentioned before <em class=entry>afterwards</em> has been deducted.<p></p>
+	Cf. <a class=see href=#THEREFOR>THEREFORE</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <em class=entry>afterwards</em> <a class=lookup2 href=#RETURN>return</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payer.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+<div class=entry id=ALL>
+<div class=keyword>
+<a class=entry name=ALL>
+ALL
+</a>
+</div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	quantifier
+	</a></div>
+	<div class=desc>
+	Only with <a class=see href=#CONTRACTS>CONTRACTS</a>.<p></p>
+	<em class="entry leave">All contracts</em> means all digital contracts in a contract system. This includes the main contract as well as the covenants, or subcontracts.
+	</div>
+</div>
+
+<div class=entry id=ALSO>
+<div class=keyword>
+<a class=entry name=ALSO>
+ALSO
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Only appears with <a class=see href=#AND>AND</a>.<p></p>
+	<em class="entry leave">And also</em> is synonymous to <a class=see href=#AND>AND</a>.
+	</div>
+</div>
+
+<div class=entry id=AMOUNT>
+<div class=keyword>
+<a class=entry name=AMOUNT>
+AMOUNT
+</a>
+</div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	type
+	</a></div>
+	<div class=desc>
+	Defines that a name stands for an amount. In the example, Digital Asset Collateral is marked as being used as the handle for a specific number in the document.
+	</div>
+	<div class=samp>
+	"Digital Asset Collateral" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#AN>an</a> <em class=entry>amount</em>.
+	</div>
+	<div class=link><a class=link href=#DigitalAssetCollateralIsAnAmount onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+	<div class=desc>
+	<em class="entry leave">Amount</em> can also be used as a name itself, without being first defined. It can only stand for an amount – i.e., for a number and not a text or a time – and  <em class="entry leave">Amount</em> must be spelled with a capital 'A' in this case.
+	</div>
+        <div class=samp>
+        <a class=lookup2 href=#THE>The</a> Payer <a class=lookup href=#PAYS>pays</a> <a class=lookup2 href=#AN>an</a> <em class="entry cap">Amount</em> <a class=lookup2 href=#INTO>into</a> <a class=lookup2 href=#ESCROW>escrow</a>, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2                       href=#THE>the</a> Payee, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Arbiter, <a class=lookup2 href=#AND>and</              a> <a class=lookup2 href=#FIXES>fixes</a> <a class=lookup2 href=#THE>the</a> Fee.
+        </div>
+        <div class=link><a class=link href=#ThePayerPaysAnAmountIntoEscrow onclick="high(this.hash);">
+        escrow.lex
+        </a></div>
+</div>
+
+<div class=entry id=AND>
+<div class=keyword>
+<a class=entry name=AND>
+AND
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logical and procedural operator
+	</a></div>
+
+	<div class=desc>
+	Concatenates actions ...
+	</div>
+
+	<div class=samp>
+        <a class=lookup2 href=#THE>The</a> Payer <a class=lookup2 href=#PAYS>pays</a> <a class=lookup href=#AN>an</a> <a class=lookup2 href=#AMOUNT>Amount</a> <a class=lookup2 href=#INTO>into</a> <a class=lookup2 href=#ESCROW>escrow</a>, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Payee, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Arbiter, <em class=entry>and</em> <a class=lookup2 href=#FIXES>fixes</a> <a class=lookup2 href=#THE>the</a> Fee.
+        </div>
+        <div class=link><a class=link href=#ThePayerPaysAnAmountIntoEscrow onclick="high(this.hash);">
+        escrow.lex
+        </a></div>
+
+	<div class=desc>
+	... as well as logical expressions.<p></p>
+	A phrase that contains <em class=entry>and</em> is <a class=see href=#TRUE>true</a> if the part left and the part right of the <em class=entry>and</em> are true. There can also be multiple parts, each separated by <em class=entry>and</em>. All of them need to be true for the entire expression to be true.
+	</div>
+
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <em class=entry>and</em> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <em class=entry>and</em> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <em class=entry>and</em> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+
+	<div class=desc>
+	For precedence and the interplay between <em class=entry>and</em> and <em class=entry>or</em>, see <a class=see href=#OR>or</a>.
+	</div>
+
+</div>
+
+
+<div class=entry id=ANNOUNCED>
+<div class=keyword>
+<a class=entry name=ANNOUNCED>
+ANNOUNCED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	truth value
+	</a></div>
+
+	<div class=desc>
+	Functions like <a class=see href=#FIXED>FIXED</a>.
+	</div>
+</div>
+
+
+<div class=entry id=APPOINT>
+<div class=keyword>
+<a class=entry name=APPOINT>
+APPOINT
+</a>,<a class=entry name=APPOINTS>
+APPOINTS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	parameter assignment operator
+	</a></div>
+
+	<div class=desc>
+	Expresses that the subject of the sentence will determine what the specified object's names will mean concretely. In the example, who the Payee and the Arbiter are.<p></p>
+	Functions like <a class=see href=#FIX>fix</a>, see additional notes regarding the <i>subject</i> there.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Payer <a class=lookup2 href=#PAYS>pays</a> <a class=lookup2 href=#AN>an</a> <a class=lookup2 href=#AMOUNT>Amount</a> <a class=lookup2 href=#INTO>into</a> <a class=lookup2 href=#ESCROW>escrow</a>, <em class=entry>appoints</em> <a class=lookup2 href=#THE>the</a> Payee, <em class=entry>appoints</em> <a class=lookup2 href=#THE>the</a> Arbiter, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#FIXES>fixes</a> <a class=lookup2 href=#THE>the</a> Fee.
+	</div>
+	<div class=link><a class=link href=#ThePayerPaysAnAmountIntoEscrow onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+
+	<div class=desc>
+        Functional synonym to <a class=see href=#CERTIFY>certify</a>, <a class=see href=#DECLARE>declare</a>, <a                    class=see href=#FILE>file</a>, <a class=see href=#FIX>fix</a>, <a class=see href=#GRANT>grant</a>, and <a class=see href=#REGISTER>register</a>.
+        </div>
+</div>
+
+
+<div class=entry id=AS>
+<div class=keyword>
+<a class=entry name=AS>
+AS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	value assignment operator part
+	</a></div>
+
+	<div class=desc>
+	Assigns the value of the expression to its right to the name on its left.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Secured Party <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#FILE>file</a> <a class=lookup2 href=#a TERMINATION>a</a> Termination Statement, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#CERTIFY>certify</a> <a class=lookup2 href=#THE>the</a> Termination Statement Time <em class=entry>as</em> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#THEN>then</a> <a class=lookup2 href=#CURRENT>current</a> <a class=lookup2 href=#TIME>time</a>.
+	</div>
+	<div class=link><a class=link href=#TheSecuredPartyMayFileATermination onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	<em class="entry leave">As</em> can also make a name <a class=see href=#TRUE>true</a> that was defined as a <a class=see href=#BINARY>binary</a>. In this example, License serves as an object that means the entire contract system, which ultimately is a redundant scope. The relevant mutation is that Commissioned becomes a fact, i.e., <a class=see href=#TRUE>true</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Licensor <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#CERTIFY>certify</a> <a class=lookup2 href=#THIS>this</a> License <em class=entry>as</em> Commissioned.
+	</div>
+	<div class=link><a class=link href=#TheLicensorMayCertifyThisLicenseAs onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=AT>
+<div class=keyword>
+<a class=entry name=AT>
+AT
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	quantifier
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#LEAST>LEAST</a>.
+	</div>
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <em class=entry>at</em> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=AUTHOR>
+<div class=keyword>
+<a class=entry name=AUTHOR>
+AUTHOR</a>, 
+<a class=entry name=AUTHORS>
+AUTHORS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	keyword
+	</a></div>
+
+	<div class=desc>
+	The information after the <em class="entry upper">AUTHOR(s)</em> keyword is expected to be the name(s) of the creator(s) of the Lexon text. They are meta data, not parsed, and not used in the document itself.<p></p>
+	As a convention, <em class="entry upper">author</em> and <em class="entry upper">authors</em> are usually spelled in uppercase.
+	</div>
+
+	<div class=samp>
+	<em class="entry upper">AUTHORS</em>: <em class=meta>FLORIAN IDELBERGER, HENNING DIEDRICH</em>
+	</div>
+	<div class=link><a class=link href=#AUTHORSFLORIANIDELBERGER onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=BE>
+<div class=keyword>
+<a class=entry name=BE>
+BE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	assignment
+	</a></div>
+
+	<div class=desc>
+	Used with a meaning like <em>shall</em>.<p></p>
+	Functions like <a class=see href=#IS>IS</a> and can be used synonymously. The linguistic difference is irrelevant for the machine.
+	</div>
+
+	<div class=samp>
+	"Noticed" <em class=entry>be</em> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#a NOTICE>a</a> Notice Time <a class=lookup2 href=#BEING>being</a> <a class=lookup2 href=#FIXED>fixed</a>.
+	</div>
+</div>
+
+
+<div class=entry id=BEEN>
+<div class=keyword>
+<a class=entry name=BEEN>
+BEEN
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	comparison operator
+	</a></div>
+
+	<div class=desc>
+	Appears only in conjunction with <a class=see href=#HAS>HAS</a>.
+	</div>
+	<div class=desc>
+	<em class="entry leave">Has</em> <em class=entry>been</em> functions like <a class=see href=#BEING>BEING</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup href=#THE>The</a> Arbiter <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THE>the</a> Notice Time <a class=lookup href=#HAS>has</a> <em class=entry>been</em> <a class=lookup href=#FIXED>fixed</a>, <a class=lookup href=#RETURN>return</a> <a class=lookup href=#THE>the</a> Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Seller.
+	</div>
+</div>
+
+
+<div class=entry id=BEING>
+<div class=keyword>
+<a class=entry name=BEING>
+BEING
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	present participle
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	comparison operator
+	</a></div>
+
+	<div class=desc>
+	Compares the expression to its left with the expression on its right and results in everything together being <a class=see href=#TRUE>TRUE</a> or <a class=see href=#FALSE>FALSE</a>.<p></p>
+	In the example, <em class=entry>being</em> tests Notice Time for whether it had been <a class=see href=#FIXED>fixed</a> before. Noticed will be true exactly when Notice Time is known, and false if, no value has been given for Notice Time before at any point during the lifetime of the contract.
+	</div>
+
+	<div class=samp>
+	"Noticed" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#a NOTICE>a</a> Notice Time <em class=entry>being</em> <a class=lookup2 href=#FIXED>fixed</a>.
+	</div>
+	<div class=link><a class=link href=#NoticedIsDefinedAsANoticeTime onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=BINARY>
+<div class=keyword>
+<a class=entry name=BINARY>
+BINARY
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	type
+	</a></div>
+
+	<div class=desc>
+	Defines a name as standing for a binary value, e.g., <a class=see href=#YES>YES</a> or <a class=see href=#NO>NO</a>, or <a class=see href=#TRUE>TRUE</a> or <a class=see href=#FALSE>FALSE</a>.<p></p>
+	Note that an undefined binary name is considered to have the value <a class=see href=#FALSE>FALSE</a>. <a class=see href=#DECLARE>Declaring</a> a name sets it to <a class=see href=#TRUE>TRUE</a>. Likewise, testing whether a binary name is <a class=see href=#DECLARED>declared</a>, checks whether it is <a class=see href=#TRUE>TRUE</a>.
+	</div>
+	<div class=samp>
+	"Default" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#A>a</a> <em class=entry>binary</em>.
+	</div>
+	<div class=link><a class=link href=#DefaultIsABinary onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=CERTIFIED>
+<div class=keyword>
+<a class=entry name=CERTIFIED>
+CERTIFIED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	«defined»
+	</a></div>
+
+        <div class=desc>
+	Expresses that a name has a value assigned, i.e., is not <em>unbound</em> or <em>undefined</em>.<p></p>
+	In the example, <a class=see href=#BEING>being</a> tests Notice Time for whether it had been <em class=entry>certified</em> before. Noticed will be <a class=see href=#TRUE>true</a> exactly when a Notice Time is known, and <a class=see href=#FALSE>false</a> if no value has been given for Notice Time before, at any point during the lifetime of the contract.<p></p>
+	Functions like <a class=see href=#FIXED>FIXED</a>.
+        </div>
+	<div class=samp>
+	"Noticed" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#A>a</a> Notice Time <a class=lookup2 href=#BEING>being</a> <em class=entry>certified</em>.
+	</div>
+</div>
+
+
+<div class=entry id=CERTIFY>
+<div class=keyword>
+<a class=entry name=CERTIFIES>
+CERTIFIES,</a>
+<a class=entry name=CERTIFY>
+CERTIFY
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	assignment operator
+	</a></div>
+
+	<div class=desc>
+        Expresses that the subject of the sentence will determine what the specified object's names will mean concretely. In the example, who the Payee and the             Arbiter are.<p></p>
+        Functions like <a class=see href=#FIX>fix</a>, see additional notes regarding the <i>subject</i> and invocation there.<p></p>
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a> <em class=entry>certify</em> <a class=lookup2 href=#THE>the</a> File Number.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayCertifyTheFile onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+        Functional synonym to <a class=see href=#APPOINT>appoint</a>, <a class=see href=#DECLARE>declare</a>, <a class=see href=#FILE>file</a>, <a class=see href=#FIX>fix</a>, <a class=see href=#GRANT>grant</a>, and <a class=see href=#REGISTER>register</a>.
+        </div>
+
+</div>
+
+
+<div class=entry id=CLAUSE>
+<div class=keyword>
+<a class=entry name=CLAUSE>
+CLAUSE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	function keyword
+	</a></div>
+
+	<div class=desc>
+	Signals the start of a clause. A colon must follow, and the name of the clause. Then, the statements that constitute the clause.<p></p>
+	Almost every digital contract has one or more clauses. Only in rare, simplistic cases does a contract have only a <i>recital</i>.<p></p>
+	Either a clause's name is used to instigate actions that change the state of the contract:
+	</div>
+
+	<div class=samp>
+	<em class="entry upper"><p>CLAUSE</em>: Pay Back.</p>
+	<p><a class=lookup href=#THE>The</a> Arbiter <a class=lookup href=#MAY>may</a> <a class=lookup href=#PAY>pay</a> <a class=lookup href=#FROM>from</a> <a class=lookup href=#ESCROW>escrow</a> <a class=lookup href=#THE>the</a> Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THEMSELVES>themselves</a>, <a class=lookup href=#AND>and</a> <a class=lookup href=#AFTERWARDS>afterwards</a> <a class=lookup href=#RETURN>return</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#REMAINDER>remainder</a> <a class=lookup href=#OF>of</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#ESCROW>escrow</a> <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Payer.</p>
+	</div>
+	<div class=link><a class=link href=#CLAUSEPay onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+
+	<div class=desc>
+	Or, a clause name can itself be a value, if the clause uses <a class=see href=#DEFINED>defined</a>.<p></p>
+	The concrete meaning of the name of such clause is dynamic. That is, the concrete meaning of the clause name is not assigned once and for all at any point in time. Instead, whenever the clause name is used elsewhere in any context, the expression right-hand of <a class=see href=#DEFINED>defined</a> is re-evaluated for its now current result, which is then the meaning, or value, of that clause name.<p></p>
+	</div>
+
+	<div class=samp>
+	<p><em class="entry upper" href=#CLAUSE>Clause</em>: Termination Period.</p>
+	<p>"Termination Period" <a class=lookup2 href=#IS>is</a> <em class=entry>defined</em> <a class=lookup2 href=#AS>as</a> <em class=literal>365</em> <a class=lookup2 href=#DAYS>days</a> <a class=lookup2 href=#AFTER>after</a> <a class=lookup2 href=#THE>the</a> Termination Statement Time.</p>
+	</div>
+	<div class=link><a class=link href=#TerminationPeriodIsDefinedAs365Days onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	The clause name can be used as an expression in the context of other clauses, i.e the name can be used like a value.<p></p>
+	The example below uses the name Termination Period that is defined in the example above.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> <em class=secondary>Termination Period</em> <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup href=#TERMINATE>terminate</a> <a class=lookup2 href=#THIS>this</a> <a class=lookup2 href=#CONTRACT>contract</a>.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayTerminate onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+
+</div>
+
+
+<div class=entry id=COMMENT>
+<div class=keyword>
+<a class=entry name=COMMENT>
+COMMENT, COMMENTS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	comment keyword
+	</a></div>
+	<div class=desc>
+	Start of comments that are not translated by the compiler.<p></p>
+	Functions like <a class=see href=#PREAMBLE>PREAMBLE</a> but can be used multiple times in different places.<p></p>
+	Lexon is self-documenting, which greatly diminishes the role of comments. They should be used sparingly or not at all. They can help to explain a more convoluted set of conditions, as can be found in contracts that need to spell out things in detail, including all relevant fringe cases.<p></p>
+	Care should be taken to clarify that a comment is not part of the legally binding text; but is written to provide motivation or explain complex aspects with a broad brush, to make the contract easier to understand for a human reader. Such clarification may be added as part of the comment itself.<p></p>
+	As a convention, <em class="entry upper">COMMENT</em> is usually spelled in uppercase.<p></p>
+	Cf. <a class=see href=#PREAMBLE>PREAMBLE</a>.<p></p> 
+	</div>
+	<div class=samp>
+        <em class="entry upper">COMMENT</em>: <em class=meta>A license can be for any tangible or intangible good.</em>
+        </div>
+</div>
+
+
+<div class=entry id=CONTRACT>
+<div class=keyword>
+<a class=entry name=CONTRACT>
+CONTRACT</a>,
+<a class=entry name=CONTRACTS>
+CONTRACTS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	self reference
+	</a></div>
+
+	<div class=desc>
+	<em class="entry leave">Contract</em> as well as <a class=see href=#ALL>all</a> <em class=entry>contracts</em> stand for the contract (system) itself, including all covenants (subcontracts)<p></p>
+	<em class="entry leave">Contract</em> can either be used to define a proper name for the digital contract:
+	</div>
+
+	<div class=samp>
+	"Financing Statement" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#THIS>this</a> <em class=entry>contract</em>.
+	</div>
+	<div class=link><a class=link href=#FinancingStatementisthiscontract onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	Or, <em class=entry>Contract</em> as well as <a class=see href=#ALL>all</a> <em class=entry>contracts</em> can be used as object to <a class=see href=#TERMINATE>terminate</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Termination Period <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#TERMINATE>terminate</a> <a class=lookup2 href=#THIS>this</a> <em class=entry>contract</em>.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayTerminate onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=CURRENT>
+<div class=keyword>
+<a class=entry name=CURRENT>
+CURRENT
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time value
+	</a></div>
+
+	<div class=desc>
+	Only appears with <a class=see href=#TIME>time</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#FIX>fix</a> <a class=lookup2 href=#THE>the</a> Initial Statement Date <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#THE>the</a> <em class=entry>current</em> <a class=lookup2 href=#TIME>time</a>.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayFixTheInitial onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=DATA>
+<div class=keyword>
+<a class=entry name=DATA>
+DATA
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	type
+	</a></div>
+
+	<div class=desc>
+	Defines a name as standing for a piece of data.<p></p>
+	Data can be a text, a number, a hash, a blockchain address, or an id of any type.<p></p>
+	</div>
+	<div class=samp>
+	"File Number" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DATA>data</a>.
+	</div>
+	<div class=link><a class=link href=#FileNumberIsData onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=DAY>
+<div class=keyword>
+<a class=entry name=DAY>
+DAY</a>,
+<a class=entry name=DAYS>
+DAYS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time unit
+	</a></div>
+
+	<div class=desc>
+	Used to describe a duration.<p></p>
+	A duration can be used to calculate a point in time relative to another point in time. For example, relative to <a class=see href=#NOW>now</a> or <a class=see href=#PAST>in the past</a>, or – as in the example below - relative to a name that means a specific time.
+	</div>
+
+	<div class=samp>
+	"Termination Period" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a> <em class=literal>365</em> <em class=entry>days</em> <a class=lookup2 href=#AFTER>after</a> <a class=lookup2 href=#THE>the</a> Termination Statement Time.
+	</div>
+
+	<div class=desc>
+	Cf. <a class=see href=#HOURS>hours</a>.
+	</div>
+
+</div>
+
+
+<div class=entry id=DECLARE>
+<div class=keyword>
+<a class=entry name=DECLARE>
+DECLARE, DECLARES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	truth assignment operator
+	</a></div>
+	<div class=desc>
+	Used to state that something has happened, or is <a class=see href=#TRUE>true</a>.<p></p>
+	Technically, <em class=entry>declare</em> assigns the truth value, <a class=see href=#TRUE>true</a>, to a name. That name must have been defined (see <a class=see href=#IS>is</a>) as a <a class=see href=#BINARY>binary</a>.<p></p>
+	In the example this means that Default is now true. Note that before that, it was <a class=see href=#FALSE>false</a>.<p></p>
+	Cf. <a class=see href=#BINARY>binary</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Secured Party <a class=lookup2 href=#MAY>may</a> <em class=entry>declare</em> Default.
+	</div>
+	<div class=link><a class=link href=#TheSecuredPartyMayDeclareDefault onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=DECLARED>
+<div class=keyword>
+<a class=entry name=DECLARED>
+DECLARED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	«true»
+	</a></div>
+
+	<div class=desc>
+	Synonym to <a class=see href=#TRUE>true</a>.<p></p>
+	In the example, the fact that Default has been <em class=entry>declared</em> is the same as saying that it is <a class=see href=#TRUE>true</a> that Default happened.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> Default <a class=lookup2 href=#IS>is</a> <em class=entry>declared</em>, <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> Digital Asset Collateral <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfDefaultIs onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=DEFINED>
+<div class=keyword>
+<a class=entry name=DEFINED>
+DEFINED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	assignment operator
+	</a></div>
+
+	<div class=desc>
+	Always used with <a class=see href=#IS>IS</a>, or <a class=see href=#BE>BE</a> and <a class=see href=#AS>AS</a>, to describe the meaning of the name to its left by means of the expression on its right.<p></p>
+	The meaning is dynamic. That is, the concrete meaning is not assigned once and for all at any point in time. But instead, whenever the name that is being defined is used elsewhere in any context, the expression right-hand of <em class=entry>defined</em> is re-evaluated for its now current result, which is in that moment the meaning of that name.<p></p>
+	</div>
+
+	<div class=samp>
+	<p><a class=lookup href=#CLAUSE>CLAUSE</a>: Termination Period</p>
+	<p>"Termination Period" <a class=lookup2 href=#IS>is</a> <em class=entry>defined</em> <a class=lookup2 href=#AS>as</a> <em class=literal>365</em> <a class=lookup2 href=#DAYS>days</a> <a class=lookup2 href=#AFTER>after</a> <a class=lookup2 href=#THE>the</a> Termination Statement Time.</p>
+	</div>
+	<div class=link><a class=link href=#TerminationPeriodIsDefinedAs365Days onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	This type of sentence is the essence of a particular type of <a class="see upper" href=#CLAUSE>CLAUSE</a> whose name can be used like an expression, i.e., the name of such clause can be used like a value in the text of another clause.<p></p>
+	The example below uses the name Termination Period that is defined in the example above.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> <em class=secondary>Termination Period</em> <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup href=#TERMINATE>terminate</a> <a class=lookup2 href=#THIS>this</a> <a class=lookup2 href=#CONTRACT>contract</a>.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayTerminate onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+</div>
+
+
+<div class=entry id=EQUAL>
+<div class=keyword>
+<a class=entry name=EQUAL>
+EQUAL
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	comparison operator
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	equivalence of values
+	</a></div>
+
+	<div class=desc>
+	Forms an expression that is <a class=see href=#TRUE>true</a> if the values left and right of <em class=entry>equal</em> are the same.<p></p>
+	Near synonym of <a class=see href=#EQUALING>equaling</a>.
+	</div>
+
+	<div class=samp>
+	"Parity" <a class=lookup href=#IS>is</a> <a class=lookup href=#DEFINED>defined</a> <a class=lookup href=#AS>as</a> <a class=lookup href=#THE>the</a> Count of X <a class=lookup href=#BEING>being</a> <em class=entry>equal</em> <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Count of Y.
+	</div>
+</div>
+
+
+<div class=entry id=EQUALING>
+<div class=keyword>
+<a class=entry name=EQUALING>
+EQUALING
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	comparison operator
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	equivalence of values
+	</a></div>
+
+	<div class=desc>
+	Forms an expression that is <a class=see href=#TRUE>true</a> if the values left and right of <em class=entry>equaling</em> are the same.<p></p>
+	Near synonym of <a class=see href=#EQUAL>equal</a>.
+	</div>
+
+	<div class=samp>
+	"Parity" <a class=lookup href=#IS>is</a> <a class=lookup href=#DEFINED>defined</a> <a class=lookup href=#AS>as</a> <a class=lookup href=#THE>the</a> Left Side <em class=entry>equaling</em> <a class=lookup href=#THE>the</a> Right Side.
+	</div>
+
+</div>
+
+
+<div class=entry id=ESCROW>
+<div class=keyword>
+<a class=entry name=ESCROW>
+ESCROW
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	system variable
+	</a></div>
+
+	<div class=desc>
+	The internal token escrow of a digital contract.<p></p>
+	It is mostly used as object to the predicate <a class=see href=#PAY>pay</a>.<p></p>
+	Using it with <a class=see ref=#REMAINDER>remainder</a> results into a number: the amount of tokens left in the escrow at that point in time.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <em class=entry>escrow</em> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <em class=entry>escrow</em> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payee.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=FILED>
+<div class=keyword>
+<a class=entry name=FILED>
+FILED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	«defined»
+	</a></div>
+
+	<div class=desc>
+	Asking whether a name <em class=entry>is filed</em> constitutes an expression that is <a class=see href=#TRUE>true</a> in case the name had a value assigned to it previously. The expression is <a class=see href=#FALSE>false</a> if the name had not been defined before during the lifetime of the contract.<p></p>
+	</div>
+
+	<div class=samp>
+	... <a class=lookup2 href=#THE>the</a> Continuation Statement <a class=lookup2 href=#IS>is</a> <em class=entry>filed</em> ...
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayFix onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	To clarify, it does not matter if there is text somewhere in the contract that gives a name a concrete meaning. What matters is whether for a specific, live contract between concrete parties and with a concrete state, it so happened that it is clear what a specific name stands for, or, that what the name stands for exists.<p></p>
+	If you take this example ...
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Continuation Statement <a class=lookup2 href=#IS>is</a> <em class=entry>filed</em>, <a class=lookup2 href=#FIX>fix</a> <a class=lookup2 href=#THE>the</a> Continuation Statement Date.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayFix onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	... the phrase <i>the Continuation Statement is filed</i> is <i>true</i>, if what is described in the clause shown below ever happened. Concretely, if the Secured Party has filed the Continuation Statement.<p></p>
+	</div>
+
+	<div class=samp>
+	<p><a class="lookup upper" href=#CLAUSE>Clause</a>: File Continuation.</p>
+	<p><a class=lookup href=#THE>The</a> Secured Party <a class=lookup href=#MAY>may</a> <a class=lookup href=#FILE>file</a> <a class=lookup href=#THE>the</a> Continuation Statement.</p>
+	</div>
+	<div class=link><a class=link href=#TheSecuredPartyMayFileTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	Note that in this example contract, the Continuation Statement is defined as a binary. That means that it does not have any specific content beyond existing or not. The filing of it 'is' the statement that continuation is desired. 
+	</div>
+
+</div>
+
+
+<div class=entry id=FILE>
+<div class=keyword>
+<a class=entry name=FILE>
+FILE</a>,
+<a class=entry name=FILES>
+FILES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	parameter assignment operator
+	</a></div>
+
+	<div class=desc>
+	Synonym to <a class=see href=#FIX>fix</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Secured Party <a class=lookup2 href=#MAY>may</a> <em class=entry>file</em> <a class=lookup2 href=#THE>the</a> Continuation Statement.
+	</div>
+	<div class=link><a class=link href=#TheSecuredPartyMayFileTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=FIX>
+<div class=keyword>
+<a class=entry name=FIX>
+FIX</a>,
+<a class=entry name=FIXES>
+FIXES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	parameter assignment operator
+	</a></div>
+
+	<div class=desc>
+	Indicates that the subject of the sentence will be who determines the meaning of the named objects.<p></p>
+	Note that this cuts both ways. The subject might itself be determined by the act of fixing the objects: if it had not been settled yet who the name of the subject refers to, then whoever performs the fixing is from that point on named like the subject of this sentence. The name sticks for the remaining lifetime of the contract. Accordingly, in the example below, if the role of the Filer had not been determined, the person who is fixing the Filing Office etc. becomes the Filer. The way to prevent this automatism is to use <a class=see href=#MAY>may</a>.<p></p>
+	The values that are assigned to the objects of the sentence are given by the subject when that person acts to invoke this clause.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filer <em class=entry>fixes</em> <a class=lookup2 href=#THE>the</a> Filing Office, <em class=entry>fixes</em> <a class=lookup2 href=#THE>the</a> Debtor, <em class=entry>fixes</em> <a class=lookup2 href=#THE>the</a> Secured Party, <a class=lookup2 href=#AND>and</a> <em class=entry>fixes</em> <a class=lookup2 href=#THE>the</a> Collateral.
+	</div>
+	<div class=link><a class=link href=#TheFilerFixesTheFilingOfficeFixes onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	Functional synonym to <a class=see href=#APPOINT>appoint</a>, <a class=see href=#CERTIFY>certify</a>, <a class=see href=#DECLARE>declare</a>, <a class=see href=#FILE>file</a>, <a class=see href=#GRANT>grant</a>, and <a class=see href=#REGISTER>register</a>.
+	</div>
+
+</div>
+
+
+<div class=entry id=FIXED>
+<div class=keyword>
+<a class=entry name=FIXED>
+FIXED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	«defined»
+	</a></div>
+
+        <div class=desc>
+	Expresses that a name has a value assigned, i.e., is not <em>unbound</em> or <em>undefined</em>.
+	In the example, <a class=see href=#BEING>being</a> tests Notice Time for whether it had been <em class=entry>fixed</em> before. Noticed will be true exactly when a Notice Time is known, and false if no value has been given for Notice Time before, at any point during the lifetime of the contract.<p></p>
+	Functions like <a class=see href=#CERTIFIED>CERTIFIED</a>.
+        </div>
+	<div class=samp>
+	"Noticed" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#A>a</a> Notice Time <a class=lookup2 href=#BEING>being</a> <em class=entry>fixed</em>.
+	</div>
+	<div class=link><a class=link href=#NoticedIsDefinedAsANoticeTime onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=FOR>
+<div class=keyword>
+<a class=entry name=FOR>
+FOR
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#FILE>FILE</a> or <a class=see href=#FILED>FILED</a>.
+	</div>
+	The terms <em class="entry">FILE FOR</em> or <em class=entry>FILED FOR</em> function like <a class=see href=#FILE>FILE</a> or <a class=see href=#FILED>FILED</a> without <em class=entry>FOR</em>.
+</div>
+
+
+<div class=entry id=FROM>
+<div class=keyword>
+<a class=entry name=FROM>
+FROM
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	transfer origin marker
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#ESCROW>ESCROW</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <em class=entry>from</em> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <a class=lookup2 href=#RETURN>return</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payer.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=GENERAL>
+<div class=keyword>
+<a class=entry name=GENERAL>
+GENERAL
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Optional specification to <a class="see upper" href=#TERMS>TERMS</a>.
+	</div>
+</div>
+
+
+<div class=entry id=GIVEN>
+<div class=keyword>
+<a class=entry name=GIVEN>
+GIVEN
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	conditional keyword
+	</a></div>
+
+	<div class=desc>
+	Following statements are executed only if the immediately following condition is true.</br>
+	Appears only together with <a class=see href=#THAT>THAT</a>.<p></p>
+	<em class=entry>GIVEN THAT</em> is a synonym to <a class=see href=#IF>IF</a>.
+	</div>
+
+        <div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <em class=entry>given</em> <a class=lookup href=#THAT>that</a> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+        </div>
+</div>
+
+
+<div class=entry id=GRANT>
+<div class=keyword>
+<a class=entry name=GRANT>
+GRANT</a>,
+<a class=entry name=GRANTS>
+GRANTS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	truth assignment operator
+	</a></div>
+
+	<div class=desc>
+	Synonym to <a class=see href=#FIX>fix</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Licensee <a class=lookup2 href=#MAY>may</a> <em class=entry>grant</em> <a class=lookup2 href=#THE>the</a> Permission to Comment.
+	</div>
+	<div class=link><a class=link href=#TheLicenseeMayGrantThePermissionTo onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=HAS>
+<div class=keyword>
+<a class=entry name=HAS>
+HAS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	auxilliary verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	part
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#BEEN>BEEN</a> or <a class=see href=#PASSED>PASSED</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Continuation Window Start <em class=entry>has</em> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=HERSELF>
+<div class=keyword>
+<a class=entry name=HERSELF>
+HERSELF, HIMSELF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	Functions like <a class=see href=#THEMSELF>THEMSELF</a>.
+	</div>
+</div>
+
+
+<div class=entry id=HOUR>
+<div class=keyword>
+<a class=entry name=HOUR>
+HOUR</a>,
+<a class=entry name=HOURS>
+HOURS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	time unit
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time constant of 3600 seconds
+	</a></div>
+
+	<div class=desc>
+	Used to describe a duration.<p></p>
+	A duration can be used to calculate a point in time relative to another point in time. For example, relative to <a class=see href=#NOW>now</a> or <a class=see href=#PAST>in the past</a>.
+	</div>
+
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <em class=entry>hours</em> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+
+	<div class=desc>
+	Cf. <a class=see href=#DAYS>days</a>.
+	</div>
+
+</div>
+
+
+<div class=entry id=IF>
+<div class=keyword>
+<a class=entry name=IF>
+IF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	assertion
+	</a></div>
+
+	<div class=desc>
+	Following statements are executed only of the immediately following condition is true.<p></p>
+	The condition starts after <em class=entry>if</em> and ends with a comma, which can be followed by an optional <a class=see href=#THEN>then</a>.<p></p>
+	The statements follow after that.<p></p>
+	In this example ...
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <em class=entry>if</em> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+	<div class=desc>
+	... the condition is:
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>
+	</div>
+	<div class=desc>
+	... the statements are:
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party
+	</div>
+</div>
+
+
+<div class=entry id=IN>
+<div class=keyword>
+<a class=entry name=IN>
+IN
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#PAST>PAST</a>.
+	</div>
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <em class=entry>in</em> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=INTO>
+<div class=keyword>
+<a class=entry name=INTO>
+INTO
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	prepositiion
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	operator part
+	</a></div>
+
+	<div class=desc>
+	Used with <a class=see href=#NOTIFY>NOTIFY</a>, <a class=see href=#SEND>SEND</a> and <a class=see href=#PAY>PAY</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Secured Party <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#A>a</a> Reminder Fee <em class=entry>into</em> <a class=lookup2 href=#ESCROW>escrow</a>. 
+	</div>
+	<div class=link><a class=link href=#TheSecuredPartyMayPayAReminder onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=IS>
+<div class=keyword>
+<a class=entry name=IS>
+IS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	assignment and equality operator
+	</a></div>
+
+	<div class=desc>
+	Can be used to define of what category a name is; to assign a value to a name; to compare a name to a value; or to check that something is the case.
+	</div>
+
+	<div class=samp>
+	"Payer" <em class=entry>is</em> <a class=lookup2 href=#A>a</a> <a class=lookup2 href=#PERSON>person</a>.
+	</div>
+	<div class=link><a class=link href=#PayerIsAPerson onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> Default <em class=entry>is</em> <a class=lookup2 href=#DECLARED>declared</a>, <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> Digital Asset Collateral <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfDefaultIs onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	Note that in the following example, License means the (sub)contract itself and <em class=entry>is</em> checks the state of the License, diverting into the clause Factually Breached to find out if the License is breached.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THIS>this</a> License <em class=entry>is</em> Factually Breached:
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayIfThisLicenseIs onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=ITSELF>
+<div class=keyword>
+<a class=entry name=ITSELF>
+ITSELF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	Functions like <a class=see href=#THEMSELF>THEMSELF</a>.
+	</div>
+</div>
+
+
+<div class=entry id=LEAST>
+<div class=keyword>
+<a class=entry name=LEAST>
+LEAST
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time operator part
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#AT>AT</a>.
+	</div>
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <em class=entry>least</em> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=LEX>
+<div class=keyword>
+<a class=entry name=LEX>
+LEX
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	keyword
+	</a></div>
+	<div class=desc>
+	Keyword for the start of a digital contract.<p></p>
+	<em class="entry upper">LEX</em> must be the first word of a digital contract. The words after <em class="entry upper">LEX</em> are the name of the entire digital contract (system) described thereafter.<p></p>
+	As a convention, <em class="entry upper">LEX</em> is usually spelled in uppercase.
+	</div>
+	<div class=samp>
+	<em class="entry upper">LEX</em> <em class=meta>Escrow</em>.
+	</div>
+	<div class=link><a class=link href=#LEXEscrow onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=LEXON>
+<div class=keyword>
+<a class=entry name=LEXON>
+LEXON
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	keyword
+	</a></div>
+	<div class=desc>
+	The numbers following <em class="entry upper">LEXON</em> are the <b>version number</b> of the Lexon compiler that the digital contract was written for. This is a concept that helps while Lexon is evolving. As a rule, newer compilers can compile older version Lexon texts but there will sometimes be 'breaking changes' where this backward compatibility is not provided and older texts have to be adapted to the changes of a new grammar.<p></p>
+	Note that compatibility is not a dimension of what the texts mean in human language, which remains the same throughout Lexon versions, because English does not change. Instead, this is about older versions of the compiler understanding less than newer ones, i.e., the grammar getting less restricted.<p></p>
+	As a convention, <em class="entry upper">LEXON</em> is usually spelled in uppercase.
+	</div>
+	<div class=samp>
+	<em class="entry upper">LEXON</em>: <em class=meta>0.2.12</em>
+	</div>
+	<div class=link><a class=link href=#LEXON0212 onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=LIES>
+<div class=keyword>
+<a class=entry name=LIES>
+LIES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time comparison operator
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#LEAST>AT LEAST</a>.
+	</div>
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <em class=entry>lies</em> <a class=lookup2 href=#AT>at</a> <a class=lookup href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=MAY>
+<div class=keyword>
+<a class=entry name=MAY>
+MAY
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	auxilliary verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	permission marker
+	</a></div>
+
+	<div class=desc>
+	The subject to <em class=entry>MAY</em> is/are the only party or parties to the contract that are auhtorized to initiate the action described. The subject must be bound, i.e., the name before <em class=entry>MAY</em> must have been defined before, it cannot be defined in the may statement. Note that statements without may might likewise restrict authority to the named subject. And it is possible that the subject is unbound in cases without <em class=entry>MAY</em>, i.e., the role not defined at that point.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <em class=entry>may</em> <a class=lookup2 href=#CERTIFY>certify</a> <a class=lookup2 href=#THE>the</a> File Number.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayCertifyTheFile onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=MILLISECOND>
+<div class=keyword>
+<a class=entry name=MILLISECOND>
+MILLISECOND, MILLISECONDS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time constant of 1/1000 seconds.
+	</a></div>
+        <div class=desc>
+	Functions like <a class=see href=#DAY>DAYS</a>.
+	</div>
+</div>
+
+
+<div class=entry id=MINUTE>
+<div class=keyword>
+<a class=entry name=MINUTE>
+MINUTE, MINUTES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time constant of 60 seconds
+	</a></div>
+        <div class=desc>
+	Functions like <a class=see href=#DAY>DAYS</a>.
+	</div>
+</div>
+
+<div class=entry id=MONTH>
+<div class=keyword>
+<a class=entry name=MONTH>
+MONTH, MONTHS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	Time constant of 2592000 seconds, i.e., 30 DAYS
+	</a></div>
+        <div class=desc>
+	Functions like <a class=see href=#DAY>DAYS</a>.
+	</div>
+</div>
+
+
+<div class=entry id=MYSELF>
+<div class=keyword>
+<a class=entry name=MYSELF>
+MYSELF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	Functions like <a class=see href=#THEMSELF>THEMSELF</a>.
+	</div>
+</div>
+
+<!--
+<div class=entry id=NEITHER>
+<div class=keyword>
+<a class=entry name=NEITHER>
+NEITHER
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logic operator
+	</a></div>
+</div>
+-->
+
+<div class=entry id=NO>
+<div class=keyword>
+<a class=entry name=NO>
+NO
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logic operator
+	</a></div>
+
+	<div class=desc>
+	Logical inversion.
+	In conjunction with <a class=see href=#THERE>there is</a>, also used to test whether a name has been assign any concrete meaning yet. See <a class=see href=#FIXED>fixed</a>.
+	</div>
+
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <em class=entry>no</em> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+<!--
+<div class=entry id=NOR>
+<div class=keyword>
+<a class=entry name=NOR>
+NOR
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logical operator
+	</a></div>
+</div>
+-->
+
+
+<div class=entry id=NOT>
+<div class=keyword>
+<a class=entry name=NOT>
+NOT
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logic operator
+	</a></div>
+
+	<div class=desc>
+	Logical inversion.
+	</div>
+
+	<div class=desc>
+	Used to form the opposite of a logical expression. Can be positioned before a name, or before <a class=see href=#FIXED>fixed</a>. The resulting expression means the opposite of what the part after not meant. It can be part of a bigger logical expression, as shown below. <em class="entry leave">Not</em>, as is grammatically correct, binds the next noun or verb only. The requirements for sentence structure make sure that no ambiguity can arise for the human reader.<p></p>
+	If a more complex expression must be inverted, it has to be written as a clause. This simple device to avoid ambiguity without requiring literal bracketing is borrowed from proven best practice in Functional Programming.
+	</div>
+
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <em class=entry>not</em> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+
+</div>
+
+<!--
+<div class=entry id=NOTIFY>
+<div class=keyword>
+<a class=entry name=NOTIFIES>
+NOTIFIES</a>,
+<a class=entry name=NOTIFY>
+NOTIFY
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	messaging operator
+	</a></div>
+</div>
+-->
+
+<div class=entry id=NOW>
+<div class=keyword>
+<a class=entry name=NOW>
+NOW
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time value
+	</a></div>
+
+	<div class=desc>
+	Synonym  to <a class=see href=#CURRENT>CURRENT TIME</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#FIX>fix</a> <a class=lookup2 href=#THE>the</a> Initial Statement Date <a class=lookup2 href=#AS>as</a> <em class=entry>now</em>.
+	</div>
+</div>
+
+
+<div class=entry id=OF>
+<div class=keyword>
+<a class=entry name=OF>
+OF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Only with <a class=see href=#REMAINDER>REMAINDER</a>.
+        </div>
+        <div class=samp>
+        <a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a>               <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2                               href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <a class=lookup2                           href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> <a class=lookup href=#REMAINDER>remainder</a> <em class=entry>of</em> <a class=lookup2                           href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payee.
+        </div>
+        <div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+        escrow.lex
+        </a></div>
+</div>
+
+
+<div class=entry id=OFF>
+<div class=keyword>
+<a class=entry name=OFF>
+OFF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	operator part
+	</a></div>
+
+	<div class=desc>
+	Only with <a class=see href=#SIGNED>SIGNED</a>.
+	</div>
+</div>
+
+
+<div class=entry id=ON>
+<div class=keyword>
+<a class=entry name=ON>
+ON
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	operator part
+	</a></div>
+
+	<div class=desc>
+	Only with <a class=see href=#SIGNED>SIGNED</a>.
+	</div>
+</div>
+
+
+<div class=entry id=ONESELF>
+<div class=keyword>
+<a class=entry name=ONESELF>
+ONESELF
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	Functions like <a class=see href=#THEMSELF>THEMSELF</a>.
+	</div>
+</div>
+
+
+<div class=entry id=OR>
+<div class=keyword>
+<a class=entry name=OR>
+OR
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logic operator
+	</a></div>
+
+	<div class=desc>
+	Used to build logical expressions. A phrase that contains <em class=entry>or</em> is <a class=see href=#TRUE>true</a> if the part left or the part right of the <em class=entry>or</em> are true.<p></p>
+	Colons, commas and semicolons are relevant to separate sub-phrases.
+	Programmers note that there is no precedence of <em class=entry>and</em> over <em class=entry>or</em> in Lexon as this is not a part of natural language. Commas and semicolons offer two levels of nesting. Beyong this, precedence is created by encapsulating logical expressions into separate clauses.<p></p>
+	In the example ...
+	</div>
+
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <em class=entry>or</em> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+
+	<div class=desc>
+	... all of the following counts as the left-side of the <em class=entry>or</em>, because there is a comma before the <em class=entry>or</em> and no comma to the left of it:<p></p>
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>
+	</div>
+	<div class=desc>
+	... and all of the following is the right side of the <em class=entry>or</em>, because there is a comma before the <em class=entry>or</em> and no comma to the right of it:<p></p>
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+</div>
+
+
+<div class=entry id=OURSELVES>
+<div class=keyword>
+<a class=entry name=OURSELVES>
+OURSELVES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	Functions like <a class=see href=#THEMSELF>THEMSELF</a>.
+	</div>
+</div>
+
+
+<div class=entry id=PASSED>
+<div class=keyword>
+<a class=entry name=PASSED>
+PASSED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time comparison operator
+	</a></div>
+
+	<div class=desc>
+	Compares a point in time to the current time.<p></p>
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <em class=entry>passed</em>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	<div class=desc>
+	For more on how to use time, see <a class=see href=#HOURS>hours</a> and <a class=see lookup href=#DAYS>days</a>.
+	</div>
+
+</div>
+
+
+<div class=entry id=PAST>
+<div class=keyword>
+<a class=entry name=PAST>
+PAST
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun or adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	negative time sign
+	</a></div>
+
+	<div class=desc>
+	<em class="entry leave">Past</em> indicates that a measure of time is to be subtracted from the current time, or it functions like <a class=see href=#PASSED>HAS PASSED</a>.<p></p>
+	In the example, <em class=entry>in the past</em> functions as a negative sign to the literal 24 <a class=lookup href=#HOURS>hours</a>, relative to now.
+	</div>
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THERE>there</a> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <em class=entry>past</em>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+
+	<div class=desc>
+	For more on how to use time, see <a class=see href=#HOURS>hours</a> and <a class=see lookup href=#DAYS>days</a>.
+	</div>
+
+</div>
+
+
+<div class=entry id=PAY>
+<div class=keyword>
+<a class=entry name=PAY>
+PAY</a>, <a class=entry name=PAYS>
+PAYS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	transfer operator
+	</a></div>
+
+	<div class=desc>
+	A transfer over the amount given immediately following <em class=entry>pay</em>, from the subject of the sentence, to the object marked with <a class=see href=#TO>to</a> or <a class=see href=#INTO>into</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Payer <em class=entry>pays</em> <a class=lookup2 href=#AN>an</a> <a class=lookup2 href=#AMOUNT>Amount</a> <a class=lookup2 href=#INTO>into</a> <a class=lookup2 href=#ESCROW>escrow</a>, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Payee, <a class=lookup2 href=#APPOINTS>appoints</a> <a class=lookup2 href=#THE>the</a> Arbiter, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#FIXES>fixes</a> <a class=lookup2 href=#THE>the</a> Fee.
+	</div>
+	<div class=link><a class=link href=#ThePayerPaysAnAmountIntoEscrow onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=PER>
+<div class=keyword>
+<a class=entry name=PER>
+PER
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	keyword
+	</a></div>
+
+	<div class=desc>
+	<em class="entry upper">PER</em> marks the beginning of the  <a class=see href=#TERMS>TERMS</a> of a covenant or sub-contract.<p></p>
+	Digital contracts are often really contract systems that control the creation of individual contracts each with different counter parties. These sub contracts are called covenants in the context of digital contracts. Their terms are separated from the general terms of the digital contracts – which govern everything else, specifically how the covenants come into existence – by the keyword <em class=entry>PER</em>, followed by the name the of the covenant, and optionally preceded by the keyword <a class=see href=#TERMS>TERMS</a>.<p></p>
+	As a convention, <em class="entry upper">PER</em> is usually spelled in uppercase.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#TERMS>TERMS</a> <em class="entry upper">PER</em> License:
+	</div>
+	<div class=link><a class=link href=#TERMSPERLicense onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=PERSON>
+<div class=keyword>
+<a class=entry name=PERSON>
+PERSON
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	type
+	</a></div>
+
+	<div class=desc>
+	Defines a name to stand for a person.
+	</div>
+	<div class=samp>
+	"Payer" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#A>a</a> <a class=lookup2 href=#PERSON>person</a>.
+	</div>
+	<div class=link><a class=link href=#PayerIsAPerson onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=PREAMBLE>
+<div class=keyword>
+<a class=entry name=PREAMBLE>
+PREAMBLE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	keyword
+	</a></div>
+
+	<div class=desc>
+	Start of a comment from both legal and processing point of view. Words after <em class="entry upper">PREAMBLE</em> are explanations with minimal legal weight and are not translated to 3<sup>rd</sup> generation language code by the compiler. Accordingly, in the example below, no word behind the colon is interpreted. This is not a special case: it is similar to how Lexon does not account for the common meaning of nouns in human language that a writer defines. This meaning is helpful to understand the contract, but not part of it, like the <em class="entry upper">preamble</em> text. Likewise, it is a common pitfall to read the preamble in a paper contract as part of the legal agreement; it is not. Its value lies in paraphrasing the more technical prose of the agreement in more accessible but blurier terms and to provide context.<p></p>
+	As a convention, <em class="entry upper">PREAMBLE</em> is usually spelled in uppercase.
+	</div>
+	<div class=samp>
+	<em class="entry upper">PREAMBLE</em>: <em class=meta>This is a licensing contract for a software evaluation.</em>
+	</div>
+	<div class=link><a class=link href=#PREAMBLEThisIsALicensingContractFor onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=PROVIDED>
+<div class=keyword>
+<a class=entry name=PROVIDED>
+PROVIDED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+        conditional keyword
+	</a></div>
+
+        <div class=desc>
+	Synonym to <a class=see href=#IF>IF</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <em class=entry>provided</em> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+</div>
+
+
+<div class=entry id=REGISTER>
+<div class=keyword>
+<a class=entry name=REGISTER>
+REGISTER</a>,
+<a class=entry name=REGISTERS>
+REGISTERS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	parameter assignment operator
+	</a></div>
+
+	<div class=desc>
+	Synonym to <a class=see href=#FIX>fix</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Licensee <a class=lookup2 href=#MAY>may</a> <em class=entry>register</em> <a class=lookup2 href=#A>a</a> Comment Text. 
+	</div>
+	<div class=link><a class=link href=#TheLicenseeMayRegisterACommentText onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=REMAINDER>
+<div class=keyword>
+<a class=entry name=REMAINDER>
+REMAINDER
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Optional part to internal token count variable <a class=see href=#ESCROW>ESCROW</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> <em class=entry>remainder</em> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payee.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=RESPECTIVE>
+<div class=keyword>
+<a class=entry name=RESPECTIVE>
+RESPECTIVE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	optional part of built-in time value
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#CURRENT>CURRENT TIME</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Secured Party <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#CERTIFY>certify</a> <a class=lookup2 href=#THE>the</a> Termination Statement Time <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#THE>the</a> <em class=entry>respective</em> <a class=lookup2 href=#CURRENT>current</a> <a class=lookup2 href=#TIME>time</a>.
+	</div>
+</div>
+
+
+<div class=entry id=RETURN>
+<div class=keyword>
+<a class=entry name=RETURN>
+RETURN, RETURNS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	transfer operator
+	</a></div>
+
+	<div class=desc>
+	Synonym to <a class=see href=#PAY>PAY</a>.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <em class=entry>return</em> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payer.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=SECOND>
+<div class=keyword>
+<a class=entry name=SECOND>
+SECOND, SECONDS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time constant of 1 second
+	</a></div>
+        <div class=desc>
+	Functions like <a class=see href=#DAY>DAYS</a>.
+	</div>
+</div>
+
+
+<div class=entry id=SEND>
+<div class=keyword>
+<a class=entry name=SEND>
+SEND, SENDS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	transfer and messaging operator
+	</a></div>
+
+	<div class=desc>
+	Send a message. On the blockchain, this can be an entry on the receipt log.
+	</div>
+
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <em class=entry>send</em> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=SIGNED>
+<div class=keyword>
+<a class=entry name=SIGNED>
+SIGNED
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logical true
+	</a></div>
+
+	<div class=desc>
+	Only in the combination <em class=entry>SIGNED OFF</em>, with optional following <a class=see href=#ON>ON</a>.<p></p>
+	In other words, <em class=entry>signed</em>, <em class=entry>signed off</em>, and <em class=entry>signed off on</em> all mean the same.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Agent <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#ONCE>once</a> <a class=lookup2 href=#THE>the</a> Receipt <a class=lookup2 href=#IS>is</a> <em class=entry>signed</em> <a class=lookup2 href=#OFF>off</a>, <a class=lookup2 href=#RETURN>return</a> <a class=lookup2 href=#THE>the</a> Collateral <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Counterparty.
+	</div>
+</div>
+
+
+<div class=entry id=SO>
+<div class=keyword>
+<a class=entry name=SO>
+SO
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	causal concatenator part
+	</a></div>
+
+	<div class=desc>
+	Only in conjunction with <a class=see href=#IF>IF</a>.<p></p>
+	<em class=entry>IF SO</em> is a synonym for <a class=see href=#AFTERWARDS>AFTERWARDS</a>. See remarks on sentence order there.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#IF>if</a> <em class=entry>so</em> <a class=lookup2 href=#RETURN>return</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payer.
+	</div>
+</div>
+
+
+<div class=entry id=TERMINATE>
+<div class=keyword>
+<a class=entry name=TERMINATE>
+TERMINATE, TERMINATES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	destruction operator
+	</a></div>
+
+	<div class=desc>
+	The consequence of termination is that a contract's state cannot be changed anymore. Both main contracts and covenants (subcontracts) can be terminated. It is good practice to end a contract after its purpose is fulfilled so that it cannot be partially restarted for unintended consequences.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Termination Period <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <em class=entry>terminate</em> <a class=lookup2 href=#THIS>this</a> <a class=lookup2 href=#CONTRACT>contract</a>.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayTerminate onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=TERMS>
+<div class=keyword>
+<a class=entry name=TERMS>
+TERMS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	optional keyword
+	</a></div>
+
+	<div class=desc>
+	Optional marker of the beginning of general or per-subcontract terms. The <em class="entry upper">TERMS</em> keyword serves to increase clarity but can be left out as the document order suffices for the compiler to understand what part of a document to expect next: terms are neccessarily all statements following the <a class="see upper" href=#LEX>LEX</a> keyword and digital contract (system) name. For yet more clarity, <em class="entry upper">TERMS</em> can be preceded by the optional keyword <a class="see upper" href=#GENERAL>GENERAL</a>.<p></p>
+	For covenants (sub contracts), their terms must be marked at least by the keyword <a class="see upper" href=#PER>PER</a>, followed by the covenant's name. <em class="entry upper">TERMS</em> may precede <a class="see upper" href=#PER>PER</a> but is optional.<p></p>
+	As a convention, <em class="entry upper">TERMS</em> is usually spelled in uppercase.
+	</div>
+	<div class=samp>
+	<em class="entry upper">TERMS</em>:
+	</div>
+	<div class=link><a class=link href=#TERMSSample onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+	<div class=samp>
+	<em class="entry upper">TERMS</em> <a class=lookup2 href=#PER>PER</a> License:
+	</div>
+	<div class=link><a class=link href=#TERMSPERLicense onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=TEXT>
+<div class=keyword>
+<a class=entry name=TEXT>
+TEXT
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	type
+	</a></div>
+
+	<div class=desc>
+	Defines that a name is standing for a text.
+	</div>
+	<div class=samp>
+	"Notification Statement" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#A>a</a> <em class=entry>text</em>.
+	</div>
+	<div class=link><a class=link href=#NotificationStatementIsAText onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=THAT>
+<div class=keyword>
+<a class=entry name=THAT>
+THAT
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	conditional keyword
+	</a></div>
+
+	<div class=desc>
+	Following statements are executed only of the immediately following condition is true.</br>
+	Appears only together with <a class=see href=#GIVEN>GIVEN</a>.<p></p>
+	<em class=entry>GIVEN THAT</em> is a synonym to <a class=see href=#IF>IF</a>.
+	</div>
+
+        <div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup href=#GIVEN>given</a> <em class=entry>that</em> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+        </div>
+
+</div>
+
+
+<div class=entry id=THE>
+<div class=keyword>
+<a class=entry name=THE>
+THE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	article
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	Articles are optional to increase readability, because the name they precede must always be unambigous on its own.
+	</div>
+	<div class=samp>
+	<em style="text-transform: none;">The</em> Payer <a class=lookup2 href=#PAYS>pays</a> <a class=lookup2 href=#AN>an</a> <a class=lookup2 href=#AMOUNT>Amount</a> <a class=lookup2 href=#INTO>into</a> <a class=lookup2 href=#ESCROW>escrow</a>, <a class=lookup2 href=#APPOINTS>appoints</a> <em class=entry>the</em> Payee, <a class=lookup2 href=#APPOINTS>appoints</a> <em class=entry>the</em> Arbiter, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#FIXES>fixes</a> <em class=entry>the</em> Fee.
+	</div>
+	<div class=link><a class=link href=#ThePayerPaysAnAmountIntoEscrow onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+	<div class=desc>
+	Cf. <a class=see href=#A>A</a>.
+	</div>
+</div>
+
+
+<div class=entry id=THEMSELF>
+<div class=keyword>
+<a class=entry name=THEMSELF>
+THEMSELF</a>, <a class=entry name=THEMSELVES>
+THEMSELVES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	In this example, <em class=entry>themselves</em> means the Arbiter.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> <em class=secondary>Arbiter</em> <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <a class=lookup2 href=#TO>to</a> <em class=entry>themselves</em>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Payee.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=THEN>
+<div class=keyword>
+<a class=entry name=THEN>
+THEN
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb, adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	conditional keyword, causal conccatenator
+	</a></div>
+
+	<div class=samp>
+	<a class=lookup2 href=#IF>If</a> <a class=lookup2 href=#THE>the</a> Termination Period <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <em class=entry>then</em> <a class=lookup2 href=#TERMINATE>terminate</a> <a class=lookup2 href=#THIS>this</a> <a class=lookup2 href=#CONTRACT>contract</a>.
+	</div>
+	<div class=desc>
+	In conjunction with <a class=see href=#CURRENT>CURRENT TIME</a>:
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Secured Party <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#FILE>file</a> <a class=lookup2 href=#A>a</a> Termination Statement, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#CERTIFY>certify</a> <a class=lookup2 href=#THE>the</a> Termination Statement Time <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#THE>the</a> <em class=entry>then</em> <a class=lookup2 href=#CURRENT>current</a> <a class=lookup2 href=#TIME>time</a>.
+	</div>
+	<div class=link><a class=link href=#TheSecuredPartyMayFileATermination onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+	Also functions like <a class=see href=#THEREFOR>THEREFOR</a>:
+	<div class=samp>
+	<a class=lookup2 href=#THIS>This</a> License <a class=lookup2 href=#IS>is</a> <em class=entry>then</em> Paid.
+	</div>
+</div>
+
+
+<div class=entry id=THERE>
+<div class=keyword>
+<a class=entry name=THERE>
+THERE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	existence test
+	</a></div>
+
+	<div class=desc>
+	Used to reason about the existence of something, ore more precisely, about whether a name has a defined meaning or not.<p></p>
+	Appears only in <em class=entry>THERE IS</em> or <em class=entry>THERE IS NOT</em>, or with variations of <a class=see href=#IS>IS</a>, like <a class=see href=#BE>BE</a>.<p></p>
+	Cf. <a class=see href=#FIXED>fixed</a>.
+	</div>
+	<div class=samp>
+	"Factually Breached" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#DEFINED>defined</a> <a class=lookup2 href=#AS>as</a>: <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Commissioned <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Comment Text <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NOT>not</a> <a class=lookup2 href=#FIXED>fixed</a>, <a class=lookup2 href=#OR>or</a> <a class=lookup2 href=#THIS>this</a> License <a class=lookup2 href=#IS>is</a> Published <a class=lookup2 href=#AND>and</a> <em class=entry>there</em> <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#NO>no</a> Permission to Comment <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#THE>the</a> Notice Time <a class=lookup2 href=#LIES>lies</a> <a class=lookup2 href=#AT>at</a> <a class=lookup2 href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup2 href=#HOURS>hours</a> <a class=lookup2 href=#IN>in</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#PAST>past</a>.
+	</div>
+	<div class=link><a class=link href=#FactuallyBreachedIsDefinedAsThisLicense onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=THEREFOR>
+<div class=keyword>
+<a class=entry name=THEREFOR>
+THEREFOR</a>,
+<a class=entry name=THEREFORE>
+THEREFORE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adverb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	causal concatenator
+	</a></div>
+
+	<div class=desc>
+	<em class="entry leave">Therefore</em> binds a sentence to the preceding ones, so that it is performed only if all preceding sentences were performed, i.e., did not disqualify for access or conditional reasons.<p></p>
+	Without <em class=entry>THEREFORE</em>, a sentence by itself is always materialized when a clause is triggered.<p></p>
+	Cf. <a class=see href=#AFTERWARDS>afterwards</a>.
+	</div>
+	<div class=samp>
+	 <a class=lookup href=#THE>The</a> Licensee <a class=lookup href=#PAYS>pays</a> <a class=lookup href=#THE>the</a> Licensing Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Licensor, <a class=lookup href=#AND>and</a> <a class=lookup href=#PAYS>pays</a> <a class=lookup href=#THE>the</a> Breach Fee <a class=lookup href=#INTO>into</a> <a class=lookup href=#ESCROW>escrow</a>.
+	<a class=lookup2 href=#THIS>This</a> License <a class=lookup2 href=#IS>is</a> <em class=entry>therefore</em> Paid.
+	</div>
+	<div class=link><a class=link href=#ThisLicenseIsThereforePaid onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=THESE>
+<div class=keyword>
+<a class=entry name=THESE>
+THESE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective 
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	<em class="entry leave">These</em> can be required to get the natural language grammar right but does not change meaning by its presence or absence because the name that it precedes must always be unambiguous by itself.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Licensor <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#CERTIFY>certify</a> <em class=entry>these</em> Agreements <a class=lookup2 href=#AS>as</a> Commissioned.
+	</div>
+</div>
+
+
+<div class=entry id=THIS>
+<div class=keyword>
+<a class=entry name=THIS>
+THIS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	no op
+	</a></div>
+
+	<div class=desc>
+	<em class=entry>THIS</em> can be required to get the natural language grammar right but does not change meaning by its presence or absence because the name that it precedes must always be unambiguous by itself.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Licensor <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#CERTIFY>certify</a> <em class=entry>this</em> License <a class=lookup2 href=#AS>as</a> Commissioned.
+	</div>
+	<div class=link><a class=link href=#TheLicensorMayCertifyThisLicenseAs onclick="high(this.hash);">
+	evaluation.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=TIME>
+<div class=keyword>
+<a class=entry name=TIME>
+TIME
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	type
+	</a></div>
+
+	<div class=desc>
+	Either defines a name as standing for a time value.
+	</div>
+	<div class=samp>
+	"Initial Statement Date" <a class=lookup2 href=#IS>is</a> <a class=lookup2 href=#A>a</a> <em class=entry>time</em>.
+	</div>
+	<div class=link><a class=link href=#InitialStatementDateIsATime onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+	<div class=desc>
+	Or, specificies the <a class=see href=#CURRENT>current</a> point in time.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#FIX>fix</a> <a class=lookup2 href=#THE>the</a> Initial Statement Date <a class=lookup2 href=#AS>as</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#CURRENT>current</a> <em class=entry>time</em>.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayFixTheInitial onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=TO>
+<div class=keyword>
+<a class=entry name=TO>
+TO
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	preposition
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	transfer operator part
+	</a></div>
+
+	<div class=desc>
+	Appears in conjunction with <a class=see href=#PAY>PAY</a>, <a class=see href=#SEND>SEND</a>, <a class=see href=#BE>be</a> or <a class=see href=#EQUAL>equal</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Arbiter <a class=lookup2 href=#MAY>may</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#FROM>from</a> <a class=lookup2 href=#ESCROW>escrow</a> <a class=lookup2 href=#THE>the</a> Fee <em class=entry>to</em> <a class=lookup2 href=#THEMSELVES>themselves</a>, <a class=lookup2 href=#AND>and</a> <a class=lookup2 href=#AFTERWARDS>afterwards</a> <a class=lookup2 href=#PAY>pay</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#REMAINDER>remainder</a> <a class=lookup2 href=#OF>of</a> <a class=lookup2 href=#THE>the</a> <a class=lookup2 href=#ESCROW>escrow</a> <em class=entry>to</em> <a class=lookup2 href=#THE>the</a> Payee.
+	</div>
+	<div class=link><a class=link href=#TheArbiterMayPayFromEscrowThe onclick="high(this.hash);">
+	escrow.lex
+	</a></div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <em class=entry>to</em> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+</div>
+
+
+<div class=entry id=TRUE>
+<div class=keyword>
+<a class=entry name=TRUE>
+TRUE
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	adjective
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logical true
+	</a></div>
+
+	<div class=desc>
+	A value that a name or an expression can have, meaning that something is the case.<p></p>
+	Synonymous with <a class=see href=#YES>YES</a>.<p></p>
+	In the following example, the expression <i>the Continuation Window has passed</i> can be <a class=see href=#TRUE>TRUE</a> or <a class=see href=#FALSE>FALSE</a>.
+	</div>
+	<div class=samp>
+	<a class=lookup2 href=#THE>The</a> Filing Office <a class=lookup2 href=#MAY>may</a>, <a class=lookup2 href=#IF>if</a> <em class=secondary><a class=lookup2 href=#THE>the</a> Continuation Window Start <a class=lookup2 href=#HAS>has</a> <a class=lookup2 href=#PASSED>passed</a></em>, <a class=lookup2 href=#SEND>send</a> <a class=lookup2 href=#THE>the</a> Notification Statement <a class=lookup href=#TO>to</a> <a class=lookup2 href=#THE>the</a> Secured Party.
+	</div>
+	<div class=link><a class=link href=#TheFilingOfficeMayIfTheContinuation onclick="high(this.hash);">
+	statement.lex
+	</a></div>
+
+	Cf. <a class=see href=#FIXED>fixed</a>.
+</div>
+
+
+<div class=entry id=WAS>
+<div class=keyword>
+<a class=entry name=WAS>
+WAS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	verb
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logic equivalence operator
+	</a></div>
+
+	<div class=desc>
+	Functions like <a class=see href=#IS>IS</a>.
+	</div>
+</div>
+
+
+<div class=entry id=WEEK>
+<div class=keyword>
+<a class=entry name=WEEK>
+WEEK, WEEKS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	time factor constant
+	</a></div>
+	<div class=desc>
+	Time constant of 604,800 seconds, i.e., 7 <a class=see href=#DAY>DAYS</a>.
+	</div>
+        Functions similar to <a class=see href=#DAY>DAYS</a>.
+</div>
+
+
+
+<div class=entry id=WITH>
+<div class=keyword>
+<a class=entry name=WITH>
+WITH
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	conjunction
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	causal concatenator
+	</a></div>
+
+	<div class=desc>
+	Only appears as <em class=entry>AND WITH THIS</em>.<p></p>
+	Functions like <a class=see href=#THEREFORE>THEREFORE</a>.
+	</div>
+
+	<!-- predicates comma "and" "with" "this" predicate. -->
+</div>
+
+
+<div class=entry id=YEAR>
+<div class=keyword>
+<a class=entry name=YEAR>
+YEAR, YEARS
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	time factor constant
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	</a></div>
+	<div class=desc>
+	Time constant of 31,536,000 seconds, i.e., 365 <a class=see href=#DAY>DAYS</a>.
+	</div>
+
+        <div class=desc>
+	Functions simlar to <a class=see href=#DAY>DAYS</a>.
+	</div>
+</div>
+
+<div class=entry id=YES>
+<div class=keyword>
+<a class=entry name=YES>
+YES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	noun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	logical true
+	</a></div>
+
+	<div class=desc>
+	A value that a name or an expression can have, meaning that something is the case.<p></p>
+	Synonymous with <a class=see href=#TRUE>TRUE</a>.
+	</div>
+</div>
+
+
+<div class=entry id=YOURSELF>
+<div class=keyword>
+<a class=entry name=YOURSELF>
+YOURSELF, YOURSELVES
+</a></div>
+	<div class=ling><a class=ling href=#ling onclick=bold(this.hash)>
+	reflexive pronoun
+	</a></div>
+	<div class=func><a class=func href=#func onclick=bold(this.hash)>
+	automatic reference
+	</a></div>
+
+	<div class=desc>
+	Refers to the subject of the sentence.<p></p>
+	Functions like <a class=see href=#THEMSELF>THEMSELF</a>.
+	</div>
+</div>
+</div>
+
+
+<a name=examples></a>
+<div class="examples">
+
+	<h3 class=black>
+	Examples
+	</h3>
+
+<div class=body style="border-radius: 0 1.5em 0 0 ">
+
+	<a name=EscrowExample></a>
+	<div class=entry id=EscrowExample>
+
+	<h4>
+	Minimal Escrow Example
+	</h4>
+
+	<p>This is the example that frequently features in the Lexon material, from the <a class=paper href="https://www.amazon.com/dp/169774768X">book</a> to the <a class=paper href="https://www.lexon/org/docs/Lexon Whitepaper 2023 - The Holy Grail of Computational Law.pdf">whitepaper</a>.</p>
+
+	<div class=examplecode>
+
+		<a class=exampleline name=LEXEscrow></a>
+		<div class=exampleline id=LEXEscrow>
+			<a class=lookup href=#LEX>LEX</a> <em class=meta>Escrow</em>.
+		</div>
+
+		<br class=separator>
+
+		<a class=exampleline name=PayerIsAPerson></a><div class=exampleline id=PayerIsAPerson>
+			"Payer" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.
+		</div>
+
+		<a class=exampleline name=PayerIsAPerson></a><div class=exampleline id=PayerIsAPerson>
+			"Payee" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.
+		</div>
+
+		<a class=exampleline name=PayerIsAPerson></a><div class=exampleline id=PayerIsAPerson>
+			"Arbiter" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.
+		</div>
+
+		<a class=exampleline name=PayerIsAPerson></a><div class=exampleline id=PayerIsAPerson>
+			"Amount" <a class=lookup href=#IS>is</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>amount</a>.
+		</div>
+
+		<a class=exampleline name=PayerIsAPerson></a><div class=exampleline id=PayerIsAPerson>
+			"Fee" <a class=lookup href=#IS>is</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>amount</a>.
+		</div>
+
+		<br class=separator>
+
+		<a class=exampleline name=ThePayerPaysAnAmountIntoEscrow></a><div class=exampleline id=ThePayerPaysAnAmountIntoEscrow>
+			<a class=lookup href=#THE>The</a> Payer <a class=lookup href=#PAYS>pays</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>Amount</a> <a class=lookup href=#INTO>into</a> <a class=lookup href=#ESCROW>escrow</a>, <a class=lookup href=#APPOINTS>appoints</a> <a class=lookup href=#THE>the</a> <span onmouseover="green(this)" onmouseout="unhigh(this)">Payee</span>, <a class=lookup href=#APPOINTS>appoints</a> <a class=lookup href=#THE>the</a> Arbiter, <a class=lookup href=#AND>and</a> <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Fee.
+		</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>CLAUSE</a>: Pay Out.</div>
+
+		<div><a class=lookup href=#THE>The</a> Arbiter <a class=lookup href=#MAY>may</a> <a class=lookup href=#PAY>pay</a> <a class=lookup href=#FROM>from</a> <a class=lookup href=#ESCROW>escrow</a> <a class=lookup href=#THE>the</a> Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THEMSELVES>themselves</a>, <a class=lookup href=#AND>and</a> <a class=lookup href=#AFTERWARDS>afterwards</a> <a class=lookup href=#PAY>pay</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#REMAINDER>remainder</a> <a class=lookup href=#OF>of</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#ESCROW>escrow</a> <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Payee.</div>
+
+		<br class=separator>
+		<a class=exampleline name=exampleline name=CLAUSEPay></a><div class=exampleline id=CLAUSEPay>CLAUSE: Pay Back. </div>
+
+		<a class=exampleline name=exampleline name=TheArbiterMayPayFromEscrowThe></a><div class=exampleline id=TheArbiterMayPayFromEscrowThe>
+			<a class=lookup href=#THE>The</a> Arbiter <a class=lookup href=#MAY>may</a> <a class=lookup href=#PAY>pay</a> <a class=lookup href=#FROM>from</a> <a class=lookup href=#ESCROW>escrow</a> <a class=lookup href=#THE>the</a> Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THEMSELVES>themselves</a>, <a class=lookup href=#AND>and</a> <a class=lookup href=#AFTERWARDS>afterwards</a> <a class=lookup href=#RETURN>return</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#REMAINDER>remainder</a> <a class=lookup href=#OF>of</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#ESCROW>escrow</a> <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Payer.
+		</div>
+
+		</div>
+
+	</div>
+
+	<a name=UCCStatement></a>
+	<div class=entry id=UCCStatement>
+
+	<h4>
+	Carla L. Reyes, U.C.C. Statement
+	</h4>
+	<p>This Lexon text is model trade statute developed by asst. prof. Carla L. Reyes. For an in-depth, abstract and concrete <em>legal</em> discussion see <a class=paper href="https://ssrn.com/abstract=3809901">Reyes, Carla, Creating Cryptolaw for the Uniform Commercial Code (2021)</a>. 78 Washington and Lee Law Review 1521 (2021), SMU Dedman School of Law Legal Studies Research Paper No. 502. For additional technical details, including a terminal run-through, see <a class=page href=https://lexon.org/reyes>lexon.org/reyes</a>.</p>
+	<div class=reference>
+
+	<div class=examplecode>
+
+		<div><a class=lookup href=#LEX>LEX</a> <em class=meta>UCC Financing Statement</em>.</div>
+
+		<br class=separator>
+
+
+		<a class=exampleline name=LEXON0212></a><div class=exampleline id=LEXON0212><a class=lookup href=#LEXON>LEXON</a>: <em class=meta>0.2.12</em></div>
+
+		<br class=separator>
+
+		<a class=exampleline name=exampleline name=FinancingStatementisthiscontract></a><div class=exampleline id=FinancingStatementisthiscontract>
+			"Financing Statement" <a class=lookup href=#IS>is</a> <a class=lookup href=#THIS>this</a> <a class=lookup href=#CONTRACT>contract</a>.
+		</div>
+
+		<a class=exampleline name=exampleline name=FileNumberIsData></a><div class=exampleline id=FileNumberIsData>
+			"File Number" <a class=lookup href=#IS>is</a> <a class=lookup href=#DATA>data</a>.
+		</div>
+
+		<a class=exampleline name=InitialStatementDateIsATime></a><div class=exampleline id=InitialStatementDateIsATime>
+			"Initial Statement Date" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TIME>time</a>.
+		</div>
+
+		<div>"Filer" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.</div>
+
+		<div>"Debtor" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.</div>
+
+		<div>"Secured Party" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.</div>
+
+		<div>"Filing Office" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.</div>
+
+		<div>"Collateral" <a class=lookup href=#IS>is</a> <a class=lookup href=#DATA>data</a>.</div>
+
+		<a class=exampleline name=DigitalAssetCollateralIsAnAmount></a><div class=exampleline id=DigitalAssetCollateralIsAnAmount>"Digital Asset Collateral" <a class=lookup href=#IS>is</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>amount</a>.</div>
+
+		<div>"Reminder Fee" <a class=lookup href=#IS>is</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>amount</a>.</div>
+
+		<div>"Continuation Window Start" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TIME>time</a>.</div>
+
+		<div>"Continuation Statement Date" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TIME>time</a>.</div>
+
+		<div>"Continuation Statement Filing Number" <a class=lookup href=#IS>is</a> <a class=lookup href=#DATA>data</a>.</div>
+
+		<div>"Lapse Date" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TIME>time</a>.</div>
+
+		<a class=exampleline name=exampleline name=DefaultIsABinary></a><div class=exampleline id=DefaultIsABinary>"Default" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>. </div>
+
+		<div>"Continuation Statement" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>.</div>
+
+		<div>"Termination Statement" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>.</div>
+
+		<div>"Termination Statement Time" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TIME>time</a>.</div>
+
+		<a class=exampleline name=NotificationStatementIsAText></a><div class=exampleline id=NotificationStatementIsAText>"Notification Statement" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TEXT>text</a>.</div>
+
+		<br class=separator>
+
+		<a class=exampleline name=TheFilerFixesTheFilingOfficeFixes></a><div class=exampleline id=TheFilerFixesTheFilingOfficeFixes>
+			<a class=lookup href=#THE>The</a> Filer <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Filing Office, <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Debtor, <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Secured Party, <a class=lookup href=#AND>and</a> <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Collateral.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Certify.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayCertifyTheFile></a><div class=exampleline id=TheFilingOfficeMayCertifyTheFile>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a> <a class=lookup href=#CERTIFY>certify</a> <a class=lookup href=#THE>the</a> File Number.  </div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Set File Date.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayFixTheInitial></a><div class=exampleline id=TheFilingOfficeMayFixTheInitial>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a> <a class=lookup href=#FIX>fix</a> <a class=lookup href=#THE>the</a> Initial Statement Date <a class=lookup href=#AS>as</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#CURRENT>current</a> <a class=lookup href=#TIME>time</a>.  </div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Set Lapse.</div>
+
+		<div><a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a> <a class=lookup href=#FIX>fix</a> <a class=lookup href=#THE>the</a> Lapse Date.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Set Continuation Start.</div>
+
+		<div><a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a> <a class=lookup href=#FIX>fix</a> <a class=lookup href=#THE>the</a> Continuation Window Start.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Pay Fee.</div>
+
+		<a class=exampleline name=TheSecuredPartyMayPayAReminder></a><div class=exampleline id=TheSecuredPartyMayPayAReminder>
+			<a class=lookup href=#THE>The</a> Secured Party <a class=lookup href=#MAY>may</a> <a class=lookup href=#PAY>pay</a> <a class=lookup href=#A>a</a> Reminder Fee <a class=lookup href=#INTO>into</a> <a class=lookup href=#ESCROW>escrow</a>.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Notice.</div>
+
+		<div><a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a> <a class=lookup href=#FIX>fix</a> <a class=lookup href=#THE>the</a> Notification Statement.</div>
+
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Notify.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayIfTheContinuation></a><div class=exampleline id=TheFilingOfficeMayIfTheContinuation>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THE>the</a> Continuation Window Start <a class=lookup href=#HAS>has</a> <a class=lookup href=#PASSED>passed</a>, <a class=lookup href=#SEND>send</a> <a class=lookup href=#THE>the</a> Notification Statement <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Secured Party.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Pay Escrow In.</div>
+
+		<div><a class=lookup href=#THE>The</a> Debtor <a class=lookup href=#MAY>may</a> <a class=lookup href=#PAY>pay</a> <a class=lookup href=#THE>the</a> Digital Asset Collateral <a class=lookup href=#INTO>into</a> <a class=lookup href=#ESCROW>escrow</a>.</div>
+
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Fail to Pay.</div>
+
+		<a class=exampleline name=TheSecuredPartyMayDeclareDefault></a><div class=exampleline id=TheSecuredPartyMayDeclareDefault>
+			<a class=lookup href=#THE>The</a> Secured Party <a class=lookup href=#MAY>may</a> <a class=lookup href=#DECLARE>declare</a> Default.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Take Possession.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayIfDefaultIs></a><div class=exampleline id=TheFilingOfficeMayIfDefaultIs>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> Default <a class=lookup href=#IS>is</a> <a class=lookup href=#DECLARED>declared</a>, <a class=lookup href=#PAY>pay</a> <a class=lookup href=#THE>the</a> Digital Asset Collateral <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Secured Party.  </div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: File Continuation.</div>
+
+		<a class=exampleline name=TheSecuredPartyMayFileTheContinuation></a><div class=exampleline id=TheSecuredPartyMayFileTheContinuation>
+			<a class=lookup href=#THE>The</a> Secured Party <a class=lookup href=#MAY>may</a> <a class=lookup href=#FILE>file</a> <a class=lookup href=#THE>the</a> Continuation Statement.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Set Continuation Lapse.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayFix></a><div class=exampleline id=TheFilingOfficeMayFix>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THE>the</a> Continuation Statement <a class=lookup href=#IS>is</a> <a class=lookup href=#FILED>filed</a>, <a class=lookup href=#FIX>fix</a> <a class=lookup href=#THE>the</a> Continuation Statement Date.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: File Termination.</div>
+
+		<a class=exampleline name=TheSecuredPartyMayFileATermination></a><div class=exampleline id=TheSecuredPartyMayFileATermination>
+			<a class=lookup href=#THE>The</a> Secured Party <a class=lookup href=#MAY>may</a> <a class=lookup href=#FILE>file</a> <a class=lookup href=#A>a</a> Termination Statement, <a class=lookup href=#AND>and</a> <a class=lookup href=#CERTIFY>certify</a> <a class=lookup href=#THE>the</a> Termination Statement Time <a class=lookup href=#AS>as</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#THEN>then</a> <a class=lookup href=#CURRENT>current</a> <a class=lookup href=#TIME>time</a>.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Release Escrow.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayIfTheTermination></a><div class=exampleline id=TheFilingOfficeMayIfTheTermination>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THE>the</a> Termination Statement <a class=lookup href=#IS>is</a> <a class=lookup href=#FILED>filed</a>, <a class=lookup href=#RETURN>return</a> <a class=lookup href=#THE>the</a> Digital Asset Collateral <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Debtor.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Release Reminder Fee.</div>
+
+		<div><a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THE>the</a> Termination Statement <a class=lookup href=#IS>is</a> <a class=lookup href=#FILED>filed</a>, <a class=lookup href=#RETURN>return</a> <a class=lookup href=#THE>the</a> Reminder Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Secured Party.</div>
+
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Termination Period.</div>
+
+		<a class=exampleline name=TerminationPeriodIsDefinedAs365Days></a><div class=exampleline id=TerminationPeriodIsDefinedAs365Days>
+			"Termination Period" <a class=lookup href=#IS>is</a> <a class=lookup href=#DEFINED>defined</a> <a class=lookup href=#AS>as</a> <em class=literal>365</em> <a class=lookup href=#DAYS>days</a> <a class=lookup href=#AFTER>after</a> <a class=lookup href=#THE>the</a> Termination Statement Time.</div>
+
+		<br class=separator>
+
+		<div><a class=lookup href=#CLAUSE>Clause</a>: Terminate and Clear.</div>
+
+		<a class=exampleline name=TheFilingOfficeMayTerminate></a><div class=exampleline id=TheFilingOfficeMayTerminate>
+			<a class=lookup href=#THE>The</a> Filing Office <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THE>the</a> Termination Period <a class=lookup href=#HAS>has</a> <a class=lookup href=#PASSED>passed</a>, <a class=lookup href=#TERMINATE>terminate</a> <a class=lookup href=#THIS>this</a> <a class=lookup href=#CONTRACT>contract</a>.</div>
+		</div>
+
+	</div>
+	</div>
+
+	<a name=LicenseEvaluation></a>
+	<div class=entry id=LicenseEvaluation>
+
+	<h4>
+	Florian Idelberger, License Evaluation
+	</h4>
+
+	<p>This digital contract was created by Florian Idelberger, Phd candidate at the European University Institute in Florence. It appears in <a class=paper href=https://lawgorithm.com.br/wp-content/uploads/2020/09/MLR2020-Florian-Idelberger.pdf>Merging traditional contracts (or law) and (smart) e-contracts – a novel approach</a>, comparing this text to smart contracts written in other languages.</p>
+
+
+	<p>This test case is a license contract to license a copy of a software or other specified work for use and evaluation, in exchange for a licensing fee. Furthermore, sublicensees can be specified. These grants and license are defined in article 1. The sublicense part was inspired by Surden’s description of a licensing system where universities can automatically manage the licenses of their libraries and conclude more tailored licensing agreements. In article 2, it is defined that optionally, the licensee or sublicensee is commissioned to publish comments about the use of the product. This approves publication, but also requires it. In article 3, publishing of comments about the use and evaluation of the asset without approval by the licensor beforehand is prohibited. In case of unauthorized publication, the licensee has 24 hours to remove the published material. This improves the test case, as it requires use of external agents or data sources depending on the system, as otherwise there is no basis on which to automate or act. Additionally, the passing of time is tested with the time limit. Finally, in article 4, it is laid out that the license agreement terminates automatically upon breach of the licensing agreement, and that the licensee has to pay a fee in case of breach. The resulting license agreement is simplified for publication, but includes the most important features of license contracts.</p>
+
+		<div class=examplecode>
+		<div><a class=lookup href=#LEX>LEX</a>: <em class=meta>Evaluation License System</em>.</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#LEXON>LEXON</a>: <em class=meta>0.2.1</em>
+		</div>
+
+		<a class=exampleline name=AUTHORSFLORIANIDELBERGER></a><div class=exampleline id=AUTHORSFLORIANIDELBERGER>
+			<a class=lookup href=#AUTHORS>AUTHORS</a>: <em class=meta>FLORIAN IDELBERGER, HENNING DIEDRICH</em>
+		</div>
+
+		<br class=separator>
+
+		<a class=exampleline name=PREAMBLEThisIsALicensingContractFor></a><div class=examplelinei id=PREAMBLEThisIsALicensingContractFor>
+			<a class=lookup href=#PREAMBLE>PREAMBLE</a>: <em class=meta>This is a licensing contract for a software evaluation.</em>
+		</div>
+
+		<br class=separator>
+
+		<a class=exampleline name=TERMSSample></a><div class=exampleline id=TERMSSample>
+			<a class=lookup href=#TERMS>TERMS</a>:
+		</div>
+
+		<br class=separator>
+
+		<div>
+			"Licensor" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.
+		</div>
+
+		<div>
+			"Arbiter" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.
+		</div>
+
+		<div>
+			"Licensing Fee" <a class=lookup href=#IS>is</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>amount</a>.
+		</div>
+
+		<div>
+			"Breach Fee" <a class=lookup href=#IS>is</a> <a class=lookup href=#AN>an</a> <a class=lookup href=#AMOUNT>amount</a>.
+		</div>
+
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#THE>The</a> Licensor <a class=lookup href=#APPOINTS>appoints</a> <a class=lookup href=#THE>the</a> Arbiter,
+		</div>
+
+		<div>
+			<a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Licensing Fee,
+		</div>
+
+		<div>
+			<a class=lookup href=#AND>and</a> <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Breach Fee.
+		</div>
+
+
+		<br class=separator>
+
+		<a class=exampleline name=TERMSPERLicense></a><div class=exampleline id=TERMSPERLicense>
+			<a class=lookup href=#TERMS>TERMS</a> <a class=lookup href=#PER>PER</a> License:
+		</div>
+
+		<br class=separator>
+
+		<div>
+			"Description of Goods" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TEXT>text</a>.
+		</div>
+
+		<div>
+			"Licensee" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#PERSON>person</a>.
+		</div>
+
+		<div>
+			"Paid" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>.
+		</div>
+
+		<div>
+			"Commissioned" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>.
+		</div>
+
+		<div>
+			"Comment Text" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TEXT>text</a>.
+		</div>
+
+		<div>
+			"Published" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>.
+		</div>
+
+		<div>
+			"Permission to Comment" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#BINARY>binary</a>.
+		</div>
+
+		<div>
+			"Notice Time" <a class=lookup href=#IS>is</a> <a class=lookup href=#A>a</a> <a class=lookup href=#TIME>time</a>.
+		</div>
+
+		<div>
+			"License" <a class=lookup href=#IS>is</a> <a class=lookup href=#THIS>this</a> <a class=lookup href=#CONTRACT>contract</a>.
+		</div>
+
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#THE>The</a> Licensor <a class=lookup href=#APPOINTS>appoints</a> <a class=lookup href=#THE>the</a> Licensee, <a class=lookup href=#AND>and</a> <a class=lookup href=#FIXES>fixes</a> <a class=lookup href=#THE>the</a> Description of Goods.
+		</div>
+
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Pay.
+		</div>
+
+		<div>
+			<a class=lookup href=#THE>The</a> Licensee <a class=lookup href=#PAYS>pays</a> <a class=lookup href=#THE>the</a> Licensing Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Licensor,
+		</div>
+		<div>
+			<a class=lookup href=#AND>and</a> <a class=lookup href=#PAYS>pays</a> <a class=lookup href=#THE>the</a> Breach Fee <a class=lookup href=#INTO>into</a> <a class=lookup href=#ESCROW>escrow</a>.
+		</div>
+
+		<a class=exampleline name=ThisLicenseIsThereforePaid></a>
+		<div class=exampleline id=ThisLicenseIsThereforePaid>
+			<a class=lookup href=#THIS>This</a> License <a class=lookup href=#IS>is</a> <a class=lookup href=#THEREFORE>therefore</a> Paid.
+		</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Commission.
+		</div>
+
+		<a class=exampleline name=TheLicensorMayCertifyThisLicenseAs></a><div class=exampleline id=TheLicensorMayCertifyThisLicenseAs>
+			<a class=lookup href=#THE>The</a> Licensor <a class=lookup href=#MAY>may</a> <a class=lookup href=#CERTIFY>certify</a> <a class=lookup href=#THIS>this</a> License <a class=lookup href=#AS>as</a> Commissioned.
+		</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Comment.
+		</div>
+
+		<a class=exampleline name=TheLicenseeMayRegisterACommentText></a><div class=exampleline id=TheLicenseeMayRegisterACommentText>
+			<a class=lookup href=#THE>The</a> Licensee <a class=lookup href=#MAY>may</a> <a class=lookup href=#REGISTER>register</a> <a class=lookup href=#a COMMENT>a</a> Comment Text.
+		</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Publication.
+		</div>
+
+		<div>
+			<a class=lookup href=#THE>The</a> Licensee <a class=lookup href=#MAY>may</a> <a class=lookup href=#CERTIFY>certify</a> <a class=lookup href=#THIS>this</a> License <a class=lookup href=#AS>as</a> Published.
+		</div>
+
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Grant Permission to Comment.
+		</div>
+
+		<a class=exampleline name=TheLicenseeMayGrantThePermissionTo></a><div class=exampleline id=TheLicenseeMayGrantThePermissionTo>
+			<a class=lookup href=#THE>The</a> Licensee <a class=lookup href=#MAY>may</a> <a class=lookup href=#GRANT>grant</a> <a class=lookup href=#THE>the</a> Permission to Comment.
+		</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Declare Breach.
+		</div>
+
+		<a class=exampleline name=TheArbiterMayIfThisLicenseIs></a>
+		<div class=exampleline id=TheArbiterMayIfThisLicenseIs>
+		<div>
+			<a class=lookup href=#THE>The</a> Arbiter <a class=lookup href=#MAY>may</a>, <a class=lookup href=#IF>if</a> <a class=lookup href=#THIS>this</a> License <a class=lookup href=#IS>is</a> Factually Breached:
+		</div>
+		<div>
+			<a class=lookup href=#PAY>pay</a> <a class=lookup href=#THE>the</a> Breach Fee <a class=lookup href=#TO>to</a> <a class=lookup href=#THE>the</a> Licensor,
+		</div>
+		<div>
+			<a class=lookup href=#AND>and</a> <a class=lookup href=#AFTERWARDS>afterwards</a> <a class=lookup href=#TERMINATE>terminate</a> <a class=lookup href=#THIS>this</a> License.
+		</div>
+		</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Factually Breached.
+		</div>
+
+		<a class=exampleline name=FactuallyBreachedIsDefinedAsThisLicense></a>
+		<div class=exampleline id=FactuallyBreachedIsDefinedAsThisLicense>
+		<div>
+			"Factually Breached" <a class=lookup href=#IS>is</a> <a class=lookup href=#DEFINED>defined</a> <a class=lookup href=#AS>as</a>:
+		</div>
+		<div>
+			<a class=lookup href=#THIS>this</a> License <a class=lookup href=#IS>is</a> Commissioned <a class=lookup href=#AND>and</a> <a class=lookup href=#THE>the</a> Comment Text <a class=lookup href=#IS>is</a> <a class=lookup href=#NOT>not</a> <a class=lookup href=#FIXED>fixed</a>,
+		</div>
+		<div>
+			<a class=lookup href=#OR>or</a> <a class=lookup href=#THIS>this</a> License <a class=lookup href=#IS>is</a> Published <a class=lookup href=#AND>and</a> <a class=lookup href=#THERE>there</a> <a class=lookup href=#IS>is</a> <a class=lookup href=#NO>no</a> Permission to Comment <a class=lookup href=#AND>and</a> <a class=lookup href=#THE>the</a> Notice Time <a class=lookup href=#LIES>lies</a> <a class=lookup href=#AT>at</a> <a class=lookup href=#LEAST>least</a> <em class=literal>24</em> <a class=lookup href=#HOURS>hours</a> <a class=lookup href=#IN>in</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#PAST>past</a>.
+		</div>
+		</div>
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Notice.
+		</div>
+
+		<div>
+			<a class=lookup href=#THE>The</a> Licensor <a class=lookup href=#OR>or</a> <a class=lookup href=#THE>the</a> Arbiter <a class=lookup href=#MAY>may</a> <a class=lookup href=#FIX>fix</a> <a class=lookup href=#THE>the</a> Notice Time <a class=lookup href=#AS>as</a> <a class=lookup href=#THE>the</a> <a class=lookup href=#RESPECTIVE>respective</a> <a class=lookup href=#CURRENT>current</a> <a class=lookup href=#TIME>time</a>.
+		</div>
+
+
+		<br class=separator>
+
+		<div>
+			<a class=lookup href=#CLAUSE>CLAUSE</a>: Noticed.
+		</div>
+
+		<a class=exampleline name=NoticedIsDefinedAsANoticeTime></a><div class=exampleline id=NoticedIsDefinedAsANoticeTime>
+			"Noticed" <a class=lookup href=#IS>is</a> <a class=lookup href=#DEFINED>defined</a> <a class=lookup href=#AS>as</a> <a class=lookup href=#a NOTICE>a</a> Notice Time <a class=lookup href=#BEING>being</a> <a class=lookup href=#FIXED>fixed</a>.
+		</div>
+
+	</div>
+
+</div>
+</div>
+</div>
+
+</div> <!-- body -->
+
+<div class=foot>
+<table width=100%><tr><td>
+<p class=foot><a class=foot href="https://www.lexon.org/docs/Lexon Whitepaper 2017 - Legal Smart Contracts.pdf">2017 Whitepaper</a></p>
+<p class=foot><a class=foot href="https://www.lexon.org/docs/Lexon Whitepaper 2023 - The Holy Grail of Computational Law.pdf">2023 Whitepaper</a></p>
+<p class=foot><a class=foot href=https://www.amazon.com/dp/169774768X>Book</a></p>
+<p class=foot><a class=foot href=https://www.amazon.com/dp/1656262665>Bible</a></p>
+<p class=foot><a class=foot href=https://www.amazon.com/dp/B0D8Y6F8DW>Philosophy</a></p>
+<p class=foot><a class=foot href=https://www.lexon.org/compiler.html>Online Compiler</a></p>
+</td><td valign=top>
+<p style="text-align: right;">last update: 09/08/24</p>
+</td></tr></table>
+
+
+</div> <!-- foot -->
+
+</body>
+
+<script>
+toggle_color(document.getElementById('colorsliderInput').checked);
+</script>
+</html>
+
+

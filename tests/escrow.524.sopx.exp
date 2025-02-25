@@ -4,11 +4,11 @@
  **
  **	file:        lexon/escrow.524.lex
  **
- **	compiler:    lexon 0.3 alpha 98 U
+ **	compiler:    lexon 0.3 alpha 99 U
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.98c U
+ **	backend:     sophia 0.3.99a U
  **
  **	target:      sophia 8+
  **
@@ -88,19 +88,22 @@ payable main contract Escrow =
             fee : option(int)
         }
     entrypoint init(payee : address, arbiter : address, fee : int) = {
-            payer = Some (Call.caller),
-            payee = Some (payee),
-            arbiter = Some (arbiter),
-            amount = Some (Call.value),
-            fee = Some (fee)
+            payer = Some(Call.caller),
+            payee = Some(payee),
+            arbiter = Some(arbiter),
+            amount = Some(Call.value),
+            fee = Some(fee)
         }
         
     
 
     /* built-in caller assertion */
 
-    function permit(authorized : option(address), name : string) =
-        require(Call.caller == Option.force_msg(authorized, name), StringInternal.concat("no access for ", name))
+    function permit(option_authorized : option(address), name : string) =
+            switch(option_authorized)
+                None => abort(StringInternal.concat(name, " not set"))
+                Some(authorized) => if(Call.caller != authorized)
+                    abort(StringInternal.concat(name, " only"))
 
     /* built-in safe transfer */
 

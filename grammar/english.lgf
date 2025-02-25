@@ -15,7 +15,7 @@
 ##
 ##	english.lgf — Lexon controlled English grammar
 ##
-##	Version 0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+##	Version 0.2.20 / subset 0.3.9 beta 1 - English / Reyes
 ##
 ##	This document is in Lexon Grammar Form, a variation of BNF.
 ##	Square brackets indicate optionality, 'or' separates variants.
@@ -119,15 +119,15 @@
 
    symbols:	[symbols catena] symbol
 
-   symbol:	[article] name
-		or [article] type
+   symbol:	[article] [new] name
+		or [article] [new] type
 
    catena:	"or" or comma
 
 
 ## OBJECT
 
-   object:	symbol or reflexive or "escrow"
+   object:	symbol or reflexive or ["the"] "escrow"
 
    reflexive:	"myself" or "yourself" or "herself" or "himself" or "oneself" or "itself" or "themself" or "ourselves" or "yourselves" or "themselves"
 
@@ -151,6 +151,7 @@
 		or registration
 		or grantment
 		or appointment
+		or acceptance
 		or fixture
 		or setting
 		or payment
@@ -207,6 +208,13 @@
    appoint:	"appoint" or "appoints"
 
 
+## ACCEPTANCE PREDICATE
+
+   acceptance:	accept symbol [["as"] expression]
+
+   accept:	"accept" or "accepts"
+
+
 ## FIXTURE PREDICATE
 
    fixture:	fix symbol ["as" expression]
@@ -232,7 +240,7 @@
 		or pay expression from_escrow preposition object
 		or pay escrow preposition object
 
-   pay:		"pay" or "pays" or "return" or "returns"
+   pay:		"pay" or "pays" or "return" or "returns" or "repay" or "repays"
 
    preposition:	"to" or "into" or "of"
 
@@ -288,6 +296,8 @@
    scalar_comparison:	scalar_expression comparison_operator scalar_expression
 
    comparison_operator:	equal
+   			or greater
+			or less
 			or later
 
    equal:		"equal" ["to"]
@@ -295,10 +305,18 @@
 			or "is" ["equal" ["to"]]
 			or "being" ["equal" ["to"]]
 
+   greater:		["is"] "greater" ["than"]
+   			"being" "greater" ["than"]
+
+   less:		["is"] "less" ["than"]
+   			"being" "less" ["than"]
+   			["is"] "smaller" ["than"]
+   			"being" "smaller" ["than"]
+
    later:		"is" "at" ["the"] "least"
 			or "lies" "at" ["the"] "least"
 
-   scalar_expression:	symbol or scalar or point_in_time
+   scalar_expression:	symbol or scalar or point_in_time or ["the"] "escrow"
 
 
 ## LOGIC EXPRESSIONS
@@ -308,7 +326,8 @@
    combinor:	combinand [combinator combinor]
 
    combinand:	symbol [expiration]
-   		or reflexive
+   		or symbol timeliness
+		or reflexive
    		or [article] description
 		or scalar_comparison
 		or negation
@@ -358,6 +377,8 @@
 
    article:	"a" or "an" or "the"
 
+   new:		"new" or "next" or "coming" or "incoming"
+
 
 ## TIME
 
@@ -384,3 +405,4 @@
    milliseconds: "millisecond"["s"]
 
    expiration:	"has" "passed" or ["is"] "past"
+   timeliness:  ["has"] "not" ["yet"] "passed" or ["is"] "not" ["yet"] "past" ["yet"]

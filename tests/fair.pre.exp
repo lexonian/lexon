@@ -1,0 +1,26 @@
+
+precompilation:
+---------------
+
+fair   1:   LEX: «Fair Payee Escrow».
+
+fair   3:   "«Payer»" is a person.
+fair   4:   "«Payee»" is a person.
+fair   5:   "«Arbiter»" is a person.
+fair   6:   "«Fee»" is an amount.
+fair   7:   "«Amount»" is an amount.
+
+fair   9:   The «Payer» pays an «Amount» into escrow, appoints the «Payee», appoints the «Arbiter», and fixes the «Fee».
+
+fair  11:   CLAUSE: «Arbiter Pay Out».
+fair  12:   The «Arbiter» may pay from escrow the «Fee» to themselves, and afterwards pay the remainder of the escrow to the «Payee».
+
+fair  14:   CLAUSE: «Voluntary Pay Out By Payer».
+fair  15:   The «Payer» may pay from escrow the «Fee» to themselves, and afterwards pay the remainder of the escrow to the «Payee».
+
+fair  17:   CLAUSE: «Arbiter Return».
+fair  18:   The «Arbiter» may pay from escrow the «Fee» to themselves, and afterwards return the remainder of the escrow to the «Payer».
+
+fair  20:   CLAUSE: «Voluntary Return By Payer».
+fair  21:   The «Payee» may pay the escrow to the «Payer».
+

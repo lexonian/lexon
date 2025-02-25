@@ -1,0 +1,36 @@
+( document 
+    ( head 
+        ( lex «one-way-lock-in» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «payer» ( type person ) ) 
+                ( definition «payee» ( type person ) ) 
+                ( definition «amount» ( type amount ) ) ) 
+            ( clauses 
+                ( clause «pay-out» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «payer» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «payee» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «payer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol «amount» ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «payee» ) ) ) ) ) ) ) ) ) )

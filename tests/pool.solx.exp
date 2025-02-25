@@ -1,0 +1,151 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+/** Lexon-generated Solidity code
+ **
+ **	code:        Pool
+ **
+ **	file:        cover/pool.lex
+ **
+ **	compiler:    lexon 0.3 alpha 99 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **
+ **	backend:     solidity 0.3.99a U
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Ethereum blockchain or Goerli testchain.  Replace
+   the <parameters> with literal values to interact with the contract via terminal.
+
+   Note that the instructions below reflect your lexon code, as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used during compilation  –  a list of which, is available with
+   lexon -h.  The functions are given in the order of appearance, in the lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an address for it for
+   the first time. This will require for the same address to be used for the same role
+   after this point. Else, the call will revert.
+
+   Some clauses of the original lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment:
+
+   <entry_fee : uint>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<Referee>> ⟶   decide(<winner : address payable>)
+
+   The following are actions that can be performed per Participant.
+
+   > participant = pool.add_participant()
+ */
+
+/**
+ **
+ **	Main Pool contract system
+ **
+ **/
+
+/*
+ | 	LEX Pool
+ | 
+ | 	"Referee" is a person.
+ | 	"Entry Fee" is an amount.
+ | 	"Winner" is a person.
+ | 
+ | 	The Referee fixes the Entry Fee.
+ */
+
+contract Pool {
+
+    address payable public referee;
+    uint public entry_fee;
+    address payable public winner;
+
+    constructor(uint _entry_fee) {
+        referee = payable(msg.sender);
+        entry_fee = _entry_fee;
+    }
+
+    /* aggregation of covenants for folds and serialization */
+
+    mapping(uint => Participant) public _participant_list;
+    uint _participant_count = 0;
+
+    /* create new instance of Participant covenant, and register it with main */
+
+    function add_participant() public returns(Participant) {
+        permit(participant);
+        return _participant_list[_participant_count += 1] = new Participant(this);
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+    /* built-in safe transfer */
+
+    function transfer(address payable _to, uint _amount) internal {
+        (bool _success, ) = _to.call{value:_amount}("");
+        require(_success, "transfer failed on receiver side");
+    }
+
+
+    /* Decide clause */
+
+    /*
+     |  CLAUSE: Decide.
+     |  The Referee certifies the Winner, and pays the escrow to the Winner.
+     */
+
+    function decide(address payable _winner) public {
+        permit(referee);
+        winner = _winner;
+        transfer(winner, address(this).balance);
+    }
+}
+
+/**
+ **
+ **	Participant covenant class
+ **
+ **/
+
+/*
+ | 	TERMS PER Participant
+ | 
+ | 	"Participant" is a person.
+ | 
+ | 	The Participant pays the Entry Fee into escrow.
+ */
+
+contract Participant {
+
+    Pool main;
+    address payable public participant;
+
+
+    constructor(Pool _main) {
+        main = _main;
+
+        if(caller != this.participant) {
+            if(this.participant == null) this.participant = caller;
+        }
+
+    }
+}
+
+/* end */

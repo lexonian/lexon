@@ -1,0 +1,174 @@
+/** Lexon-generated Sophia code
+ **
+ **	code:        Pool
+ **
+ **	file:        cover/pool.lex
+ **
+ **	compiler:    lexon 0.3 alpha 99 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **
+ **	backend:     sophia 0.3.99a U
+ **
+ **	target:      sophia 8+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <entry_fee : option(int)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<Referee>> ⟶   decide(<winner : option(address)>)
+
+   The following are actions that can be performed per Participant.
+
+   > participant = pool.add_participant()
+ */
+
+@compiler >=8
+
+include "Option.aes"
+
+namespace MainState =
+    record main_state = {
+            referee : option(address),
+            entry_fee : option(int),
+            winner : option(address),
+            _participant_list : list(address),
+            _participant_count : int
+        }
+
+using MainState
+
+contract interface Main =
+    entrypoint get_state: () => main_state
+
+
+/**
+ **
+ **	Main Pool contract system
+ **
+ **/
+
+/*
+ | 	LEX Pool
+ | 
+ | 	"Referee" is a person.
+ | 	"Entry Fee" is an amount.
+ | 	"Winner" is a person.
+ | 
+ | 	The Referee fixes the Entry Fee.
+ */
+
+
+main contract Pool : Main =
+
+
+    type state = main_state
+
+    entrypoint init(entry_fee : int) = {
+            referee = Some(Call.caller),
+            entry_fee = Some(entry_fee),
+            winner = None,
+            _participant_list = [],
+            _participant_count = 0
+        }
+
+    entrypoint get_state() : state =
+        state
+
+        
+    
+
+    /* create new instance of Participant covenant, and register it with main */
+    stateful entrypoint add_participant() : address =
+        let covenant = Chain.create(Address.to_contract(Contract.address) : Pool) : Participant
+        put(state{ _participant_count = state._participant_count + 1})
+        put(state{ _participant_list = covenant.address :: state._participant_list })
+        covenant.address
+
+    /* built-in caller assertion */
+
+    function permit(option_authorized : option(address), name : string) =
+            switch(option_authorized)
+                None => abort(StringInternal.concat(name, " not set"))
+                Some(authorized) => if(Call.caller != authorized)
+                    abort(StringInternal.concat(name, " only"))
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+
+    /* Decide clause */
+
+    /*
+     |  CLAUSE: Decide.
+     |  The Referee certifies the Winner, and pays the escrow to the Winner.
+     */
+
+    stateful entrypoint decide(winner : address) =
+        permit(state.referee, "Referee")
+        put(state{winner = Some(winner)})
+        transfer(Option.force_msg(state.winner, "Winner"), Contract.balance)
+
+/**
+ **
+ **	Participant covenant class
+ **
+ **/
+
+/*
+ | 	TERMS PER Participant
+ | 
+ | 	"Participant" is a person.
+ | 
+ | 	The Participant pays the Entry Fee into escrow.
+ */
+
+contract Participant =
+
+    record state = {
+            global : main_state,
+            participant : option(address)
+        }
+
+    entrypoint init(global : Main) = {
+            participant = None,
+            global = global.get_state()
+        }
+
+    if(caller != this.participant) {
+        if(this.participant == null) this.participant = caller;
+    }
+
+
+/* end */

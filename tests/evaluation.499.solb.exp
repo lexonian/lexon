@@ -21,7 +21,13 @@ contract EvaluationLicenseSystem {
 
 
     function add_license(address payable _license_taker, string memory _description_of_goods) public returns(License) {
+        permit(licensor);
         return _license_list[_license_count += 1] = new License(this, _license_taker, _description_of_goods);
+    }
+
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
     }
 }
 

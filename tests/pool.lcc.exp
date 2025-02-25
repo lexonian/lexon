@@ -1,0 +1,48 @@
+( document 
+    ( head 
+        ( lex «pool» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «referee» ( type person ) ) 
+                ( definition «entry-fee» ( type amount ) ) 
+                ( definition «winner» ( type person ) ) ) 
+            ( clauses 
+                ( clause «decide» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «referee» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( certification certify ( symbol «winner» ) ) ) 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «winner» ) ) 
+                                                escrow ) ) ) ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «referee» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «entry-fee» ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «participant» 
+            ( provisions 
+                ( definitions 
+                    ( definition «participant» ( type person ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «participant» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «entry-fee» ) ) ) ) ) 
+                                        preposition 
+                                        ( object ) ) ) ) ) ) ) ) ) ) )

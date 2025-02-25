@@ -1,0 +1,36 @@
+( document 
+    ( head 
+        ( lex «preregistration» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «organizer» ( type person ) ) 
+                ( definition «registry» ( type person ) ) 
+                ( definition «deadline» ( type time ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «organizer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «deadline» ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «registry» ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «attendee» 
+            ( provisions 
+                ( definitions 
+                    ( definition «attendee» ( type person ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «registry» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( appointment appoint ( symbol «attendee» ) ) ) ) 
+                            permission 
+                            ( condition if 
+                                ( expression ( combination ( combinor ( combinand ( symbol «deadline» ) 
+                                                timeliness ) ) ) ) ) ) ) ) ) ) ) )

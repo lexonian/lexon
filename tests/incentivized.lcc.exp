@@ -1,0 +1,57 @@
+( document 
+    ( head 
+        ( lex «incentivized-diy-escrow» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «payer» ( type person ) ) 
+                ( definition «payee» ( type person ) ) 
+                ( definition «amount» ( type amount ) ) 
+                ( definition «reward» ( type amount ) ) ) 
+            ( clauses 
+                ( clause «pay-out» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «payer» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «payee» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «cancel» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «payee» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «reward» ) ) ) ) ) 
+                                                preposition 
+                                                ( object reflexive ) ) ) 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «payer» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «payer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol «amount» ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «payee» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «reward» ) ) ) ) ) ) ) ) ) )

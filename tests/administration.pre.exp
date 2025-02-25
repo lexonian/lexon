@@ -1,0 +1,34 @@
+
+precompilation:
+---------------
+
+administration   1:   LEX: «Administration».
+
+administration   3:   "«Manager»" is a person.
+administration   4:   "«Secretary»" is a person.
+administration   5:   "«Proposed New Secretary»" is a person.
+administration   6:   "«Accepted New Secretary»" is a person.
+
+administration   8:   The «Manager» appoints the «Secretary».
+
+
+administration  11:   CLAUSE: «New Secretary».
+administration  12:   The «Manager» may appoint a «Secretary».
+
+administration  14:   CLAUSE: «New Manager».
+administration  15:   The «Manager» may appoint a «Manager».
+
+
+administration  18:   TERMS PER «Member»:
+
+administration  20:   "«Proposal»" is a text.
+administration  21:   "«Member»" is a person.
+
+administration  23:   The «Secretary» may appoint a «Member».
+
+administration  25:   CLAUSE: «Notify».
+administration  26:   The «Member» may send a «Proposal» to the «Manager».
+
+administration  28:   CLAUSE: «Acknowledge».
+administration  29:   The «Secretary» may notify the «Member» of ‹Acknowledgement the Proposal›.
+

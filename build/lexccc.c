@@ -3212,7 +3212,7 @@ char *yytext;
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 alpha 98 U" // unified 0.3 + experimental 0.4
+#define program_vers "0.3 beta 1"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -3354,7 +3354,7 @@ char *buf2;
 char *t;
 char *src; // used by lgf
 char *keywords;
-char *funclist; /// not used yet
+char *funclist; // not used yet
 
 /* imbued files */
 #ifndef CYCLE_2
@@ -3654,7 +3654,7 @@ char **_mtrac_concat(char *file, int line, int down, int right, char **buf, ...)
 void mtrac_stats();
 void mtrac_dump();
 int mtrac_check();
-size_t mtrac_limit = 1000000000; //// make optional
+size_t mtrac_limit = 1000000000; // ◊ make optional
 bool mtrac_really_free = true;
 bool mtrac_verbose = false;
 bool mtrac_blank_pointers = false;
@@ -4241,7 +4241,7 @@ case YY_STATE_EOF(TRIM):
 								} // (*)
 	YY_BREAK
 
-///// refactor. Only used by LEX tag
+// ◊ refactor: only used by LEX tag
 case 31:
 YY_RULE_SETUP
 #line 697 "../src/lexon.l"
@@ -6156,7 +6156,7 @@ void parsargs(int argc, char **argv) {
 	{"debug-modules",            optional_argument, null, 'D'},
 	{"memory-check",             no_argument,       null, 'M'},
 	/* target languages */
-	{"tree",                     no_argument,       null, '0'}, // #tree ////// sort numbers
+	{"tree",                     no_argument,       null, '0'}, // #tree
 	{"core",                     no_argument,       null, '1'}, // #core
 	{"javascript",               no_argument,       null, '2'}, // #javascript
 	{"solidity",                 no_argument,       null, '3'}, // #solidity
@@ -6539,7 +6539,7 @@ void parsargs(int argc, char **argv) {
 	    fprintf (stderr, "command line parameter error, missing argument\n");
 	    exit(1);
 	default:
-	    fprintf (stderr, "command line parameter error (0%o)\n", c); //// allow ignoring
+	    fprintf (stderr, "command line parameter error (0%o)\n", c); // ◊ allow ignoring
 	    exit(1);
 	}
     }
@@ -6712,10 +6712,10 @@ void syntax(char *message, char *violation) {
 			 *(unsigned char *)violation, *(unsigned char *)violation);
 		fprintf(stderr, ".\n");
 	} else {
-		// fprintf(stderr, "%s<<<\n\n", src); //// make more error context optional
+		// fprintf(stderr, "%s<<<\n\n", src); // ◊ make more error context optional
 		fprintf(stderr, "Lexon: syntax error at line %d: %s.\n", line, message);
 	}
-	fprintf(stderr, ">> %s\n", context); //// make more error context optional
+	fprintf(stderr, ">> %s\n", context); // ◊ make more error context optional
 	exit(1); // |1| because tests atm want expected fails to return 1. Fits as weakest, controlled error exit.
 }
 
@@ -6733,7 +6733,7 @@ void precompile() {
 
 	if(opt_verbose || opt_debug) fprintf(stderr, "• precompilation\n"); // not quite, the start of PRE is the real start of precompilation
 
-	/* protect pre-existing « » ///// is this resolved, e.g., for quoted texts later? */
+	/* protect pre-existing « » ◊ cover */
 	replace(&buf, "«", "\\«");
 	replace(&buf, "»", "\\»");
 
@@ -6872,7 +6872,6 @@ char *LOW(const char *token) {
 
 char *lowdup(const char *s) {
 	char *buf = mtrac_strdup(s);
-	////// strcpy(buf, s);
 	char *c = buf -1;
 	while(*++c) *c = tolower(*c);
 	return buf;
@@ -7099,7 +7098,7 @@ int include_done() {
 	line = include_stack[include_stack_ptr].line;
 	line++; // the \n was consumed with the path but progress only now.
 
-	///// chdir(file_location) missing ??
+	// ◊ is a call to chdir(file_location) missing ?
 
 	yy_switch_to_buffer(include_stack[include_stack_ptr].buffer);
 
@@ -7332,7 +7331,7 @@ int _replace(char **orig, const char *rep, const char *with, int all, char *from
 			} while(tub && tub < ins) ;
 			inquote = but && tub && but < ins && tub > ins;
 		}
-		//////// printf("> > > %s 	%d %p %p %p\n", with, inquote, but, ins, tub);
+		// printf("> > > %s 	%d %p %p %p\n", with, inquote, but, ins, tub); ◊ make option
 		len_front = ins - start;
 		tmp = strncpy(tmp, start, len_front) + len_front;
 		const char *border = " \t\r\n\".,;:?!()[]{}&%$#@~+/\\“”";
@@ -7716,7 +7715,7 @@ void new_lexcom(const char *name, const char *value) {
 		while(m) {
 			if(!strcmp(LOW(snake_spaced(name)), m->key)) {
 				// except, allow multiple _pre_ entries
-				//// _pre_ entries, if any, are never used.
+				// ◊ _pre_ entries, if any, are never used.
 				if(strcmp(name, "_pre_")) {
 					fprintf(stderr, "clause or covenant name used twice: %s", name);
 					exit(1);
@@ -7981,7 +7980,8 @@ void produce_grammar(struct definition *definition) {
 		bool no_break = !!strstr(no_break_list, match);
 		bool skip = !!strstr(",Type_Term,Body", match);
 		mtrac_free(match);
-		char *production_name = LOW(dash_spaced(definition->name)); ///// don't store LOW buffer
+
+		char *production_name = mtrac_strdup(LOW(dash_spaced(definition->name)));
 
 		/* tree production (same as core case 'has_leaf') */
 		concat(&templ, "/*T*/\t\tbool sameline;\n");
@@ -8003,36 +8003,31 @@ void produce_grammar(struct definition *definition) {
 		concat(&templ, "/*T*/\t\t\tif(!(opt_produce_flat && has_more_recursion) && !terse)\n");
 		concat(&templ, "/*T*/\t\t\t\t", "padcat(", definition==grammar?"0":"1", ", indent, production, \"",
 			definition!=grammar?"↳  ":"   ", "\", color, \"", production_name, "\", off, \" \");\n"); // ↳
-			/////// production_name is LOW buffer
-		// concat(&templ, "/*T*/\t\t\tif(!(opt_produce_flat && has_more_recursion) && terse) { padcat(1,indent, production, \"x x x x x\");}\n");
-		//// clean up ^
 
 		/* core: skips some, unpacks the binary nesting and uses less lines */
 		concat(&templ, "/*T*/\t\t} else {\n");
 		if(!skip) {
 			if(recursive)
-				/* list conversion: those definitions that have a leaf that is of their own type are not printed when that leaf is not null
-				   this produces lists instead of nested binary nodes. Note the produced if lives two runtimes later.
-				   It leaves it to the next nested instance to produce (or to also pass until the last of these) */
+				/* list conversion: those definitions that have a leaf that is of their own type are not printed
+				   when that leaf is not null this produces lists instead of nested binary nodes. Note the produced
+				   if lives two runtimes later. It leaves it to the next nested instance to produce (or to also
+				   pass until the last of these) */
 				concat(&templ, "/*T*/\t\t\tif(!has_more_recursion && !terse) {\n");
 			if(no_break) {
 				concat(&templ, "/*T*/", recursive?"\t":"",
 					"\t\t\tpadcat(bracket_just_closed?1:0, bracket_just_closed?indent:0,"
 					" production, opening_bracket, \" \", color, \"", production_name, "\", off, \" \");\n");
-					///// production_name is LOW buffer
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tsameline = !bracket_just_closed;\n");
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tbracket_just_closed = false;\n");
 			} else if(has_leaf) {
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tpadcat(", definition==grammar?"0":"1", ", indent,"
 					" production, opening_bracket, \" \", color, \"", production_name,"\", off, \" \");\n");
-					///// production_name is LOW buffer
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tsameline = false;\n");
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tbracket_just_closed = false;\n");
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tsameline = false;\n");
 			} else {
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tpadcat(bracket_just_closed?1:0, bracket_just_closed?indent:0,"
 					" production, color, \"", production_name, "\", off, \" \");\n");
-					///// production_name is LOW buffer
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tsameline = !bracket_just_closed;\n");
 				concat(&templ, "/*T*/", recursive?"\t":"", "\t\t\tbracket_just_closed=false;\n");
 			}
@@ -8041,8 +8036,11 @@ void produce_grammar(struct definition *definition) {
 				concat(&templ, "/*T*/\t\t\t\tsameline = true;\n");
 			}
 		}
-		///// /* for leafless tokens print literal: the actual word that triggered the token */
-		///// if(!definition->tokens) concat(&templ, ", \"«\", ", definition->name, "->Literal", ", \"»\" ");
+		mtrac_free(production_name);
+
+		// /* for leafless tokens print literal: the actual word that triggered the token */
+		// if(!definition->tokens) concat(&templ, ", \"«\", ", definition->name, "->Literal", ", \"»\" "); ◊ clean up / make option
+
 		concat(&templ, "/*T*/\t\t}\n");
 
 		/* *** calls to constituting leaves *** */
@@ -8074,7 +8072,7 @@ void produce_grammar(struct definition *definition) {
 		/* producing calls */
 		token = definition->tokens;
 		types = definition->types;
-		const char *stop = ",Article,This_Contract,Be,Catena,Illocutor,Preposition,"; //////
+		const char *stop = ",Article,This_Contract,Be,Catena,Illocutor,Preposition,";
 		concat(&templ, "/*T*/\t\tbool sibbling_follows;\n");
 		if(recursive)
 			concat(&templ, "/*T*/\t\tif(!opt_produce_flat) grid <<= 1;\n");
@@ -8131,19 +8129,19 @@ void produce_grammar(struct definition *definition) {
 
 
 			/* *** actual call to the leaf *** */
-			concat(&templ, "/*T*/\t\t", stopped?"\t":"", opt_langprefix, "_", LOW(types->string),
+			char *type = lowdup(types->string);
+			char *name = lowdup(definition->name);
+			concat(&templ, "/*T*/\t\t", stopped?"\t":"", opt_langprefix, "_", type,
 				"(production, ",
 				definition->name, "->", token->string,
 				", indent+irx, ",
 				namesake?"false, ":"true, ",
-				recursive?"sibbling_follows && skipped":"false", namesake?"|| sibbling":"");
-			concat(&templ,
-				", subhighlight || opt_values && !!strstr(opt_values, \"", LOW(definition->name), "\")");
-				///// (three concat calls bec. 1 LOW buffer)
-			concat(&templ,
-				", opt_subvalues && !!strstr(opt_subvalues, \"", LOW(definition->name), "\")", ");\n");
-				///// (three concat calls bec. 1 LOW buffer)
-			concat(&templ, "/*T*/\t\t", stopped?"\t":"", "subhighlight = false;\n");
+				recursive?"sibbling_follows && skipped":"false", namesake?"|| sibbling":"",
+				", subhighlight || opt_values && !!strstr(opt_values, \"", name, "\")",
+				", opt_subvalues && !!strstr(opt_subvalues, \"", name, "\")", ");\n",
+				"/*T*/\t\t", stopped?"\t":"", "subhighlight = false;\n");
+			mtrac_free(type);
+			mtrac_free(name);
 
 			/* delayed grid shift for skipped recursives */
 			if(recursive && namesake) {
@@ -8161,16 +8159,13 @@ void produce_grammar(struct definition *definition) {
 
 		/* closing bracket of the production of this node */
 		if((no_break || has_leaf) && !skip) {
-			/* list conversion: those definitions that have a leaf that is of their own type are not printed when that leaf is not null
-			   this produces lists instead of nested binary nodes. Note the produced if lives two runtimes later. */
+			/* list conversion: those definitions that have a leaf that is of their own type are not
+			   printed when that leaf is not null this produces lists instead of nested binary nodes.
+			   Note the produced if lives two runtimes later. */
 			if(recursive)
-				// concat(&templ, "/*T*/\t\tif(!", definition->name, "->", definition->name, ") {\n");
-				// = leave to next nested instance to produce
-				//// clean up ^
 				concat(&templ, "/*T*/\t\tif(topcall) {\n");
 			concat(&templ, "/*T*/", recursive?"\t":"", "\t\tpadcat(0, 0, production, opt_produce_tree?\"\":closing_bracket, \"",
 				definition==grammar?"\\n":" ", "\");\n");
-//			concat(&templ, "/*T*/", recursive?"\t":"", "\t\tif(bracket_just_closed) { padcat(1, indent, production, \"\"); }\n");
 			concat(&templ, "/*T*/", recursive?"\t":"", "\t\tbracket_just_closed=true;\n");
 			if(recursive)
 				concat(&templ, "\t\t}\n");
@@ -8559,7 +8554,7 @@ char *blind(int n) {
 
 /* write examples to file or screen */
 void write_examples(stringlist *example, int count) {
-	int width = 6; /// log10(count)+1;
+	int width = 6; // log10(count)+1; ◊ can require lib
 	int i = 1;
 
 	/* to screen */
@@ -8745,14 +8740,12 @@ void produce_rule(stringlist *result, struct definition *definition, struct rule
 		}
 		mtrac_free(t0);
 
-
 		/* Now we are done with all words and have picked up all optionals, add the action
 		   (unless we want pure BNF output). */
 		if(!opt_bnf) {
 			pad(&result->string, 50);
 
 			char *fields = mtrac_strdup("");
-			// char *literally = mtrac_strdup("");
 
 			stringlist *token = action_tokens;
 			stringlist *number = action_numbers;
@@ -8769,23 +8762,16 @@ void produce_rule(stringlist *result, struct definition *definition, struct rule
 				concat(&fields, definition->name, "->"); // separate in 3 calls when using UP buffer
 				concat(&fields, field, "=$");
 				concat(&fields, reference, "; ");
-				// char *litpointer = strcmp(token->string, "name") ? "" : "->Literal";
-				// concat(&literally, *literally?", ":"", "($", number->string, ")", litpointer);
 				mtrac_free(field);
 				token = token->next;
 				number = number->next;
 			}
-			// if(!*literally) concat(&literally, "mtrac_strdup(*((Literal **)&yylval))");
 
-			// concat(&result->string, " { NEW(", definition->name, ", _mtrac_dupcat(\" • \", ", literally, ")); ",
-			//	fields, definition==grammar?"root":"$$", "=process_", LOW(definition->name), "(", UP(definition->name), "); }" );
-			//// clean up ^
 			concat(&result->string, " { NEW(", definition->name, ", *((Literal **)&yylval)); ",
 				fields, definition==grammar?"root":"$$", "=process_", LOW(definition->name), "(", UP(definition->name), "); }" );
 
 			delete_stringlist(appearances);
 			mtrac_free(fields);
-			// mtrac_free(literally);
 		}
 		delete_stringlist(action_tokens);
 		delete_stringlist(action_numbers);
@@ -8936,7 +8922,7 @@ void source(char *s) {
 const char *yacc_stub() {
 	return
 		"bool core_document(char **production, Document *root, int indent, bool topcall, bool sibbling,\n"
-		"	bool highlight, bool subhighlight); // #core #tree\n" // todo. ////
+		"	bool highlight, bool subhighlight); // #core #tree\n"
 //#		"bool sph_document(char **production, Document *root, int indent); // #spheres\n" // :spheres
 		"bool js_document(char **production, Document *root, int indent); // #javascript\n" // :javascript
 		"bool sol_document(char **production, Document *root, int indent); // #solidity\n" // :solidity
@@ -8947,7 +8933,6 @@ const char *yacc_stub() {
 		"extern bool opt_produce_javascript;\n"
 		"extern bool opt_produce_solidity;\n"
 		"extern bool opt_produce_sophia;\n"
-//////		"extern void exit(int);\n\n"
 		"char *walk() {\n"
 		"	char *production = mtrac_strdup(\"\");\n"
 		"	if(opt_verbose || opt_debug) fprintf(stderr, \"• starting walk\\n\");\n"
@@ -9010,9 +8995,8 @@ const char *walk_stub() {
 		"/*T*/	}\n\n"
 		"/*T*/	bool <prefix>_name(char **production, Name *Name, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {\n"
 		"/*T*/		if(!Name) return false;\n"
-		"/*T*/		///// padcat(0, 0, production, \"\\\"\", Name, \"\\\"\");\n"
 		"/*T*/		padcat(0, 0, production, \"«\", opt_symbols?opt_symbols:\"\", LOW(dash_spaced(quote_trimmed(Name))),"
-			" opt_symbols?\"\\033[0m\":\"\", \"» \");\n" /////
+			" opt_symbols?\"\\033[0m\":\"\", \"» \");\n" 
 		"/*T*/		return true;\n"
 		"/*T*/	}\n\n"
 		"/*T*/	bool <prefix>_description(char **production, Description *Description, int indent, bool topcall,"
@@ -9023,13 +9007,11 @@ const char *walk_stub() {
 		"/*T*/	}\n\n"
 		"/*T*/	bool <prefix>_scalar(char **production, Scalar *Scalar, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {\n"
 		"/*T*/		if(!Scalar) return false;\n"
-		"/*T*/		///// padcat(0, 0, production, \"\\\"\", Scalar, \"\\\"\");\n"
 		"/*T*/		padcat(0, 0, production, Scalar, \" \");\n"
 		"/*T*/		return true;\n"
 		"/*T*/	}\n\n"
 		"/*T*/	bool <prefix>_hex(char **production, Hex *Hex, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {\n"
 		"/*T*/		if(!Hex) return false;\n"
-		"/*T*/		///// padcat(0, 0, production, \"\\\"\", Hex, \"\\\"\");\n"
 		"/*T*/		padcat(0, 0, production, Hex, \" \");\n"
 		"/*T*/		return true;\n"
 		"/*T*/	}\n\n";
@@ -9063,8 +9045,8 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 	char *grm = filedup(opt_source, owngrm);
 	char *grm_imbue = str_escape(grm, "owngrm");
 
-	/* read readme file */
-	char *man = filedup("README", manual);
+	/* read manual file */
+	char *man = filedup("MANUAL", manual);
 	char *man_imbue = str_escape(man, "manual");
 
 	char *pre_midend = strstr(src, "/* --" "->"); // never fe" "ed on yourself
@@ -9146,7 +9128,7 @@ char *str_escape(const char *src, const char *varname) {
 	return imbue;
 }
 
-/* alternate, tracking dynamic memory management */
+/* tracking dynamic memory management */
 
 typedef struct mtrac {
 	unsigned long magic;
@@ -9416,5 +9398,5 @@ void mtrac_free_gross() {
 }
 
  /* Thanks to Tom Niemann, whose Lex & Yacc tutorial I kept coming back to for
-    every restart: https://www.epaperpress.com/lexandyacc/index.html */
+    every restart :-D  https://www.epaperpress.com/lexandyacc/index.html */
 

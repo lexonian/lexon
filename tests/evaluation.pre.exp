@@ -1,0 +1,67 @@
+
+precompilation:
+---------------
+
+evaluation   1:   LEX: «Evaluation License System».
+evaluation   2:   LEXON: ‹0.2.1›.
+evaluation   3:   AUTHORS: ‹FLORIAN IDELBERGER, HENNING DIEDRICH›.
+evaluation   4:   PREAMBLE: ‹This is a licensing contract for a software evaluation.›.
+
+evaluation   6:   TERMS: 
+
+evaluation   8:   "«Licensor»" is a person.
+evaluation   9:   "«Arbiter»" is a person.
+evaluation  10:   "«Licensing Fee»" is an amount.
+evaluation  11:   "«Breach Fee»" is an amount.
+
+evaluation  13:   The «Licensor» appoints the «Arbiter»,
+evaluation  14:   fixes the «Licensing Fee»,
+evaluation  15:   and fixes the «Breach Fee».
+
+evaluation  17:   TERMS PER «License»:
+
+evaluation  19:   "«Description of Goods»" is a text.
+evaluation  20:   "«Licensee»" is a person.
+evaluation  21:   "«Paid»" is a binary.
+evaluation  22:   "«Commissioned»" is a binary.
+evaluation  23:   "«Comment Text»" is a text.
+evaluation  24:   "«Published»" is a binary.
+evaluation  25:   "«Permission to Comment»" is a binary.
+evaluation  26:   "«Notice Time»" is a time.
+evaluation  27:   "«License»" is this contract.
+
+evaluation  29:   The «Licensor» appoints the «Licensee», and fixes the «Description of Goods».
+
+evaluation  31:   CLAUSE: «Pay».
+evaluation  32:   The «Licensee» pays the «Licensing Fee» to the «Licensor»,
+evaluation  33:   and pays the «Breach Fee» into escrow.
+evaluation  34:   This «License» is therefore «Paid».
+
+evaluation  36:   CLAUSE: «Commission».
+evaluation  37:   The «Licensor» may certify this «License» as «Commissioned».
+
+evaluation  39:   CLAUSE: «Comment».
+evaluation  40:   The «Licensee» may register a «Comment Text».
+
+evaluation  42:   CLAUSE: «Publication».
+evaluation  43:   The «Licensee» may certify this «License» as «Published».
+
+evaluation  45:   CLAUSE: «Grant Permission to Comment».
+evaluation  46:   The «Licensee» may grant the «Permission to Comment».
+
+evaluation  48:   CLAUSE: «Declare Breach».
+evaluation  49:   The «Arbiter» may, if this «License» is «Factually Breached»:
+evaluation  50:   pay the «Breach Fee» to the «Licensor»,
+evaluation  51:   and afterwards terminate this «License».
+
+evaluation  53:   CLAUSE: «Factually Breached».
+evaluation  54:   "«Factually Breached»" is defined as:
+evaluation  55:   this «License» is «Commissioned» and the «Comment Text» is not fixed,
+evaluation  56:   or this «License» is «Published» and there is no «Permission to Comment» and the «Notice Time» lies at least 24 hours in the past.
+
+evaluation  58:   CLAUSE: «Notice».
+evaluation  59:   The «Licensor» or the «Arbiter» may fix the «Notice Time» as the respective current time.
+
+evaluation  61:   CLAUSE: «Noticed».
+evaluation  62:   "«Noticed»" is defined as a «Notice Time» being fixed.
+

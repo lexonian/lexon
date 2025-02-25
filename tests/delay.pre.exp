@@ -1,0 +1,15 @@
+
+precompilation:
+---------------
+
+delay   1:   LEX: «Time Lock»
+
+delay   3:   "«Payer»" is a person.
+delay   4:   "«Receiver»" is a person.
+delay   5:   "«Time»" is a time.
+
+delay   7:   The «Payer» pays an amount into escrow, appoints the «Receiver», and fixes a «Time».
+
+delay   9:   CLAUSE: «Draw».
+delay  10:   The «Receiver» may, if the «Time» has passed, pay the escrow to themselves.
+

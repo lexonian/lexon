@@ -1,0 +1,14 @@
+
+precompilation:
+---------------
+
+timelock  1:   LEX: «Time Lock»
+
+timelock  3:   "«Owner»" is a person.
+timelock  4:   "«Time»" is a time.
+
+timelock  6:   The «Owner» pays an amount into escrow, and fixes a «Time».
+
+timelock  8:   CLAUSE: «Draw».
+timelock  9:   The «Owner» may, if the «Time» has passed, pay the escrow to themselves.
+

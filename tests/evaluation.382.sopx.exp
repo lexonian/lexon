@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 98 U
+ **	compiler:    lexon 0.3 alpha 99 U
  **
  **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
  **
- **	backend:     sophia 0.3.98c U
+ **	backend:     sophia 0.3.99a U
  **
  **	target:      sophia 8+
  **
@@ -117,10 +117,10 @@ main contract EvaluationLicenseSystem : Main =
     type state = main_state
 
     entrypoint init(agent : address, licensing_fee : int, breach_fee : int) = {
-            licensor = Some (Call.caller),
-            agent = Some (agent),
-            licensing_fee = Some (licensing_fee),
-            breach_fee = Some (breach_fee),
+            licensor = Some(Call.caller),
+            agent = Some(agent),
+            licensing_fee = Some(licensing_fee),
+            breach_fee = Some(breach_fee),
             _license_list = [],
             _license_count = 0
         }
@@ -176,8 +176,8 @@ contract License =
         }
 
     entrypoint init(global : Main, licensee : address, description_of_goods : string) = {
-            description_of_goods = Some (description_of_goods),
-            licensee = Some (licensee),
+            description_of_goods = Some(description_of_goods),
+            licensee = Some(licensee),
             paid = None,
             commissioned = None,
             comment_text = None,
@@ -200,10 +200,10 @@ contract License =
 
     stateful entrypoint pay() =
         check_termination()
-        require(Some (Call.caller) == state.licensee, "not permitted")
-        if(Some (Call.caller) == state.licensee)
+        require(Some(Call.caller) == state.licensee, "not permitted")
+        if(Some(Call.caller) == state.licensee)
             transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg( state.global.licensing_fee, "Licensing Fee"))
-        put(state{ paid = Some (true)})
+        put(state{paid = Some(true)})
 
 
     /* Commission clause */
@@ -216,7 +216,7 @@ contract License =
     stateful entrypoint commission() =
         check_termination()
         permit(state.global.licensor, "Licensor")
-        put(state{commissioned = Some (true)})
+        put(state{commissioned = Some(true)})
 
 
     /* Comment clause */
@@ -229,7 +229,7 @@ contract License =
     stateful entrypoint comment(comment_text : string) =
         check_termination()
         permit(state.licensee, "Licensee")
-        put(state{comment_text = Some (comment_text)})
+        put(state{comment_text = Some(comment_text)})
 
 
     /* Publication clause */
@@ -242,7 +242,7 @@ contract License =
     stateful entrypoint publication() =
         check_termination()
         permit(state.licensee, "Licensee")
-        put(state{published = Some (true)})
+        put(state{published = Some(true)})
 
 
     /* Grant Permission to Comment clause */
@@ -255,7 +255,7 @@ contract License =
     stateful entrypoint grant_permission_to_comment() =
         check_termination()
         permit(state.licensee, "Licensee")
-        put(state{permission_to_comment = Some (true)})
+        put(state{permission_to_comment = Some(true)})
 
 
     /* Declare Breach clause */
@@ -270,7 +270,7 @@ contract License =
     stateful entrypoint declare_breach() =
         check_termination()
         permit(state.global.agent, "Agent")
-        if(factually_breached() == Some (true))
+        if(factually_breached() == Some(true))
             transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg( state.global.breach_fee, "Breach Fee"))
             termination()
 
@@ -285,8 +285,8 @@ contract License =
      */
 
     entrypoint factually_breached() =
-        Some (((state.commissioned == Some (true) && state.comment_text == None)
-                 || (state.published == Some (true) && (state.permission_to_comment == Some (false) && (Option.force_msg(state.notice_time, "Notice Time") =< (Chain.timestamp - (24 * 3600000)))))))
+        Some(((state.commissioned == Some(true) && state.comment_text == None)
+                 || (state.published == Some(true) && (state.permission_to_comment == Some(false) && (Option.force_msg(state.notice_time, "Notice Time not set") =< (Chain.timestamp - (24 * 3600000)))))))
 
 
     /* Notice clause */
@@ -298,8 +298,8 @@ contract License =
 
     stateful entrypoint notice() =
         check_termination()
-        require(Some (Call.caller) == state.global.agent || Some (Call.caller) == state.global.licensor, "not permitted")
-        put(state{notice_time = Some (Chain.timestamp)})
+        require(Some(Call.caller) == state.global.agent || Some(Call.caller) == state.global.licensor, "not permitted")
+        put(state{notice_time = Some(Chain.timestamp)})
 
 
     /* Noticed clause */
@@ -310,12 +310,15 @@ contract License =
      */
 
     entrypoint noticed() =
-        Some (state.notice_time != None)
+        Some(state.notice_time != None)
 
     /* built-in caller assertion */
 
-    function permit(authorized : option(address), name : string) =
-        require(Call.caller == Option.force_msg(authorized, name), StringInternal.concat("no access for ", name))
+    function permit(option_authorized : option(address), name : string) =
+            switch(option_authorized)
+                None => abort(StringInternal.concat(name, " not set"))
+                Some(authorized) => if(Call.caller != authorized)
+                    abort(StringInternal.concat(name, " only"))
 
     /* built-in safe transfer */
 

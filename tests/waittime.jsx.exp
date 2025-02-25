@@ -1,0 +1,347 @@
+/** Lexon-generated Javascript 
+ **
+ **	code:        Right To Petition
+ **
+ **	file:        cover/waittime.lex
+ **
+ **	compiler:    lexon 0.3 alpha 99 U
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **
+ **	backend:     javascript 0.3.99a U
+ **
+ **	target:      node 14.1+
+ **
+ **	options:     --javascript  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Execute this program using node. Replace the <parameters> with literal values.
+
+   Running this program as-is requires beginners programmer knowledge. This phase is
+   yet not covered by lexon's mission to make code readable and useful for non-coders.
+   In the future, an interface will be generated to complete this last mile. However,
+   embedding this code into a self-explanatory user interface is a straight forward
+   task for a full-stack programmer.
+
+   Note that the instructions below reflect your lexon code as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input. Some functions are 'built-in' but only appear when needed as
+   per compiled-in features – a list of which is available with lexon -h. The functions
+   are not given in a specific order of execution but as listed in the lexon source.
+
+   These node modules have to be installed once:
+
+   $ npm install serialize-javascript
+   $ npm install tar
+   $ npm install nodemailer
+   $ npm install prompt-sync
+
+   Parameters below are marked with double angle brackets << >> for the respective
+   required caller. If the role is defined earlier, it can only be performed by this
+   person. (But remember that this entire setup is trustful: anyone can manipulate
+   anything about this contract. Though they cannot sign it or change the signed log.)
+   If the role is not defined earlier, the call makes the role be assigned to the
+   person named for the call. Some functions can be called without naming a caller.
+   Some clauses of the original lexon source will not appear below. Namely, those
+   that have no permission phrase, wherefore they are regarded as internal.
+
+   The main contract system is initialized by loading the module and instantiating:
+
+   $ node
+   > contract = require("./cover/waittime.jsx");
+   > waittime = new contract(<<board>>, <organization_name>);
+
+   Remember to reset node's module cache each time you edit and recompile your code:
+
+   > delete require.cache[require.resolve('./cover/waittime.jsx')];
+
+   These are the state progress functions that allow to interact with the contract:
+
+
+   The following are actions that can be performed per Member.
+
+   > member = waittime.add_member(<<board>>, <member>)
+   > member.member_petition(<<member>>)
+
+   state changes of the contract can be listed, e.g. actions performed by
+   a party to it, or agents who are assigned privileges. In case hash chains
+   or signatures are used, they are visible in this log. The log is stored in
+   in the file 'log'.
+
+   > waittime.history()
+
+   The complete contract state can be saved to disk and re-loaded at a
+   later point in time. This serves to continue work after stopping and
+   restarting node; or to send the entire contract system and its current
+   state - which can include hashes and signatures - to another party,
+   who may perform the next steps.
+
+   > waittime.persist()
+   > waittime.load()
+
+   The contract code, state and log can be bundled into one file to exchange
+   or archive it:
+
+   > waittime.bundle()
+   > waittime.unbundle()
+
+   The contract code, state and log can be sent to a counterparty. This
+   requires configuring an email account in the file 'config'.
+
+   > waittime.send()
+
+   Keys for signing log entries are expected on-file, by default named after
+   the actor, with the extension .key. For demo purposes, key files can be
+   created using this utility function:
+
+   > waittime.create_key(name, passphrase)
+ */
+
+var fs = require('fs');
+var crypto = require('crypto');
+var serialize = require('serialize-javascript');
+var prompt = require('prompt-sync')();
+var tar = require('tar');
+var nodemailer = require('nodemailer');
+var last_caller;
+var last_passphrase;
+
+/**
+ **
+ **	Main Right To Petition contract system
+ **
+ **/
+
+/*
+ | 	LEX Right To Petition.
+ | 
+ | 	"Board" is a person.
+ | 	"Organization Name" is a text.
+ | 
+ | 	The Board fixes the Organization Name.
+ */
+
+module.exports = class RightToPetition {
+
+    /* This classes constructor's is the only scope where the covenant classes exist. 
+       This can hide them in larger contexts but requires constructor indirections. */
+    constructor(board, organization_name) {
+
+        let main = this;
+
+        /* object members: skip for restoring serialized object */
+        if(typeof board !== 'undefined') {
+            this._escrow = 0;
+            this.board = board;
+            this.organization_name = organization_name;
+            this.logname = 'log';
+
+            /* start log - overwrites previous by same name */
+
+            fs.writeFileSync(this.logname, "Lexon log " + (new Date).toLocaleString('en-US') + "\n", ()=>{});
+            this.log(board, "✓ Organization Name fixed");
+        }
+
+        /* aggregation of covenants for folds and serialization */
+
+        this._member_list = {};
+        this._member_count = 0;
+
+        /**
+         **
+         **	Member covenant class
+         **
+         **/
+
+        /*
+	 | 	TERMS PER Member
+	 | 
+	 | 	"Member" is a person.
+	 | 	"Date of Acceptance" is a time.
+	 | 	"Petition" is a text.
+	 | 
+	 | 	
+	 | 	The Board may accept a Member.
+	 */
+
+        /* this closure exports the covenant's constructor to the scope of the main */
+
+        this.Member = (caller, member) => {
+            if(caller == main.board) {
+                return new Member(this, caller, member);
+            }
+        };
+
+        class Member {
+
+            constructor(caller, member) {
+
+                /* object members: skip for restoring serialized object */
+                if(typeof caller !== 'undefined') {
+                    this.member = member;
+                    this.date_of_acceptance = null;
+                    this.petition = null;
+                    main.log(caller, "✓ Member accepted");
+                }
+            }
+
+
+            /* Member Petition clause */
+
+            /*
+             |  CLAUSE: Member Petition.
+             |  The Member may, if the Date of Acceptance is at least 2 months in the past, notify the Board.
+             */
+
+            member_petition(caller)  {
+                if(caller != this.member) return 'not permitted';
+                if((this.date_of_acceptance <= (Date.now() - (2 * 2592000000)))) {
+                    main.notify(caller, this.member, main.board, "NOTIFICATION");
+                }
+                return 'done.';
+            }
+
+            /* built-in send message */
+
+            notify(caller, from, to, message) {
+                main.log(caller, `➠ system message: send message «${message}» from ${from} to ${to}.`);
+            }
+        }
+
+        /* restore object from file - must be below class definition */
+
+        if(typeof board === 'undefined') {
+            console.log("> restore from file 'state'");
+            let data = fs.readFileSync('state', ()=>{});
+            let live = eval('(' + data + ')');
+            Object.assign(this, live);
+            
+            /* restore Member objects */
+            for (let id in this._member_list) {
+                let live = this._member_list[id];
+                let instance = new Member();
+                Object.assign(instance, live);
+                this._member_list[id] = instance;
+            }
+        }
+    }
+
+    /* create new instance of Member covenant, and register it with main */
+
+    add_member(caller, member) {
+        return this._member_list[this._member_count += 1] = this.Member(caller, member);
+    }
+
+
+    /* built-in convenience function to view state change log. */
+
+    history() {
+        fs.readFile(this.logname, (e,d)=>{console.log(d.toString())});
+    }
+
+    /* built-in serialization and storage of entire contract system state. */
+
+    persist() {
+        console.log('> persisting');
+        var data = serialize(this, {space: 4});
+        fs.writeFileSync('state', data, ()=>{});
+    }
+
+    /* re-instate entire contract system from serialized file store */
+
+    static load() {
+        return new RightToPetition();
+    }
+
+    /* built-in tar-balling of code, log and state. */
+
+    bundle() {
+        console.log('> bundling into contract.tgz');
+        tar.create({gzip:true, file:'contract.tgz'}, ['cover/waittime.lex', 'cover/waittime.jsx', 'state', 'log', 'INSTRUCTIONS.TXT']);
+    }
+
+    /* built-in untar-balling of code, log and state. */
+
+    static unbundle() {
+        console.log('> unbundling contract.tgz');
+        tar.extract('contract.tgz');
+    }
+
+    /* built-in email sending of code, log and state. */
+
+    send() {
+
+        this.persist();
+        this.bundle();
+
+        console.log('> sending via email');
+        var receiver = prompt('enter receiver address: ');
+
+        var config = fs.readFileSync('config', ()=>{});
+        var email = eval('(' + config + ')').email;
+        console.log(email);
+
+        var transporter = nodemailer.createTransport({
+            service: email.service,
+            auth: { user: email.user, pass: email.pass }});
+
+        var mailOptions = {
+            from: email.from,
+            to: receiver,
+            subject: email.subject,
+            text: email.text,
+            attachments: { path: './contract.tgz', contentType: 'application/gzip' }};
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('> email sent: ' + info.response); }});
+    }
+
+    /* built-in logging of state changes. */
+
+    log(caller, msg) {
+        console.log(msg);
+        let stamp = (new Date()).toLocaleString('en-US');
+        var entry = `⌽  ${stamp} ✦ ${caller} ${msg}`;
+        var passphrase = this.sync_passphrase(caller);
+        var pem = fs.readFileSync(caller + '.key');
+        var key = pem.toString('ascii');
+        var sign = crypto.createSign('RSA-SHA256');
+        sign.update(entry);
+        var sig = sign.sign({ key: key, passphrase: passphrase }, 'hex');
+        fs.appendFileSync(this.logname, `${entry} ❈ ${sig}\n`);
+        let pay = fs.readFileSync(this.logname);
+        let hash = crypto.createHash('sha256').update(pay);
+        fs.appendFileSync(this.logname, '⧉ ' + hash.digest('hex').substr(0, 12) + " ");
+    }
+
+    /* built-in password query for private key file, with cache. */
+
+    sync_passphrase(caller) {
+        if(!caller) process.exit('no caller information');
+        if(caller == last_caller) return last_passphrase;
+        last_caller = caller;
+        return last_passphrase = prompt('enter pass phrase for ' + caller + ': ', {echo: ''});
+    }
+
+    /* built-in convenience function to create keys for users. */
+
+    static create_key(name, passphrase) {
+        const { publicKey, privateKey } =
+            crypto.generateKeyPairSync('rsa',
+                { modulusLength: 2048,
+                    publicKeyEncoding: { type: 'spki', format: 'pem' },
+                    privateKeyEncoding: { type: 'pkcs8', format: 'pem', cipher: 'aes-256-cbc', passphrase: passphrase }});
+
+        fs.writeFileSync(name+'.key', privateKey);
+        fs.writeFileSync(name+'.pub', publicKey);
+        return true;
+    }
+}
+
+/* end */

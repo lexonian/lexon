@@ -77,7 +77,7 @@ contract License =
         require(Call.caller == state.license_taker, "not permitted")
         if(Call.caller == state.license_taker)
             transfer(state.global.licensor, state.global.licensing_service_fee)
-        put(state{ paid = true})
+        put(state{paid = true})
 
 
     stateful entrypoint commission() =
