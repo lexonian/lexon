@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 1"
+#define program_vers "0.3 beta 2"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -103,7 +103,7 @@ void parsargs(int argc, char **argv);
 void syntax(char *message, char *violation);
 void yacc_printf(FILE *stream, char *format, ...);
 char *coredup(char *src);
-void process(char *ltrim, char *skip, char *mtrim, char *pif, char *rtrim);
+void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);
 void process2(char *pif, char *rtrim, char *open, char *close);
 void include(char *pif);
 int include_done();
@@ -583,10 +583,15 @@ percents [%]
 brackets [\[\]]
 space	 [ \t]
 white	 [ \t\n]
+category (is[ \t]+)?((an?|the)[ \t]+)?(person|amount|time|binary|text|data)
+contract (is[ \t]+)?this[ \t]+[^\"“”\n]+
+defined  (be|is)[: \t]+
 
 /* two compiler passes (PRE, MAIN), multiple sub scan states */
 %x BOFTRIM
 %x PRE
+%x NAME_PROCESSING
+%x QUOTED_TEXT
 %s MAIN
 
 %x TRIM
@@ -631,11 +636,11 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 ^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
-									 process(" \t", "TERMS PER", " \t", yytext, ": \t"); // make TERMS optional for process ◊
-									 concat(&buf, yytext); 
-									 concat(&buf, ":"); } // why is the : lost in the scan? (and needs re-adding here)  ◊
+									 process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t"); // ◊ separate TERMS PER
+									 concat(&buf, yytext);
+									 concat(&buf, ":"); } // ◊ why is the : lost in the scan? (and needs re-adding here)
 ^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
-									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
+									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", "", "", yytext, ". \t");
 									 concat(&buf, yytext); }
 ^{space}*INCLUDE{space}*:?{space}*				{ D; freeline(); BEGIN(INCLUDE); }
 ^{space}*LAW{space}*:?{space}*					{ D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
@@ -644,14 +649,18 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^{space}*{word}{space}*:{space}*				{ D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
 ^{space}*PREAMBLE{space}*(:|\.)*{space}*			{ D; lineno(); concat(&buf, trim(yytext), " ‹"); BEGIN(LONGQUOTE); }
 ^{space}*{word}{space}*						{ D; lineno(); concat(&buf, trim(yytext), " "); }
-(\"|“|”){term}(\"|“|”)						{ D; lineno(); process("\"“”", "", "", yytext, "\"“”"); concat(&buf, yytext); lhd=true; }
-{space}+                                   			{ D; concat(&buf, " "); }
+^{space}*(A|AN|THE)?{space}*(\"|“|”){space}*			{ D; lineno(); concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
+\.{space}*(A|AN|THE)?{space}*(\"|“|”){space}*			{ D;           concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
+[^.\n]{space}*(\"|“|”)						{ D;           concat(&buf, yytext); BEGIN(QUOTED_TEXT); }
+{space}+                                   			{ D;           concat(&buf, " "); }
 ^(\"|“|”) /* these 2 lines emulate ^[^"“”]: */			{ D; lineno(); concat(&buf, yytext); }
 ^.	 							{ D0; yyless(0); if(plhd && pretty) freeline(); }
 .								{ D; lineno(); concat(&buf, yytext); }
 <<EOF>>		        					{ D0; new_lexcom("_pre_", "");
-									if(include_done()) BEGIN(PRE);
-									else {
+									if(include_done()) {
+										// yy_set_bol(true); // ◊ added for no effect
+										BEGIN(PRE);
+									} else {
 										precompile();
 										if(do_main_pass) {
 											BEGIN(MAIN);
@@ -662,6 +671,17 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 											return 0;
 									} 
 								} // (*)
+}
+
+<NAME_PROCESSING>{
+{term}/(\"|“|”){space}*({category}|{contract}|{defined}) { D; process("", "", "", "", "", yytext, " \t"); concat(&buf, yytext); lhd=true; BEGIN(PRE); } // should be {term}/{space}* but that triggers a Flex (buggy) warning
+[^"“”]+/(\"|“|”)	/* description string */		{ D; concat(&buf, "‹", yytext, "›"); BEGIN(PRE); }
+.                                                               { D0; yyless(0); BEGIN(PRE); }
+}
+
+<QUOTED_TEXT>{
+[^"“”]+/(\"|“|”)						{ D; concat(&buf, "‹", yytext, "›"); BEGIN(PRE); }
+.                                                               { D0; yyless(0); BEGIN(PRE); } // ◊ error msg for empty text ""
 }
 
 <BOFTRIM>{
@@ -677,9 +697,10 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^.								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 .								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 <<EOF>>				  				{ D0; new_lexcom("_pre_", "");
-									if(include_done())
+									if(include_done()) {
+										// yy_set_bol(true); // ◊ added for no effect 
 										BEGIN(PRE);
-									else {
+									} else {
 										precompile();
 										if(do_main_pass) {
 											BEGIN(MAIN);
@@ -693,7 +714,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 
 }
 
-<NAMEQUOTE>{							// ◊ refactor: only used by LEX tag
+<NAMEQUOTE>{
 {letter}({letter}|{digit}|{space})*				{ D; process2(yytext, ". \t", "«", "»"); concat(&buf, yytext); BEGIN(PRE); }
 .								{ D; syntax("unexpected character in name", yytext); }
 \n								{ D; syntax("unexpected end of line instead of name", ""); }
@@ -713,7 +734,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ({space}*\n){3}                                                 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 }
 
-<INCLUDE>{path}/\n						{ D; input(); include(yytext); BEGIN(PRE); }
+<INCLUDE>{path}/\n						{ D; input(); include(yytext); yy_set_bol(true); BEGIN(PRE); }
 <INCLUDE>.							{ D; syntax("unexpected character in include filename and path", yytext); }
 <INCLUDE>\n							{ D; syntax("unexpected end of line instead of include filename and path", ""); }
 <INCLUDE><<EOF>>						{ D; syntax("unexpected end of file instead of include filename and path", yytext); }
@@ -739,7 +760,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 \.({space}*\n)*							{ D; DX(Separator); return Separator; }
 {white}+							{ D; }
 «								{ D; BEGIN(NAME_); }
-‹								{ D; BEGIN(DESCRIPTION_); }
+\"?{space}*‹							{ D; BEGIN(DESCRIPTION_); }
 {scalar}                                                        { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
  /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
  /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */
@@ -765,7 +786,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 
 <DESCRIPTION_>{
 [^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
-›{space}*\.?({space}*\n)*					{ D; DX(Separator); BEGIN(MAIN); return Separator; }
+›{space}*\"?{space}*\.?({space}*\n)*				{ D; DX(Separator); BEGIN(MAIN); return Separator; }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 }
 
@@ -2115,10 +2136,12 @@ void delete_include_trace() {
 }
 
 /* add a symbol (name) to the symbols list, scanned directly from the code buffer */
-void process(char *ltrim, char *skip, char *mtrim, char *pif, char *rtrim) {
+void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {
 	pif += strspn(pif, ltrim);
-	pif += strlen(skip);
+	if(tolower(*pif) == tolower(*skip1)) pif += strlen(skip1);
 	pif += strspn(pif, mtrim);
+	if(tolower(*pif) == tolower(*skip2)) pif += strlen(skip2);
+	pif += strspn(pif, ctrim);
 	pif = mtrac_strdup(pif);
 	char *e = pif + strlen(pif);
 	while(strchr(rtrim, *--e)) ; *++e = 0;
