@@ -1,0 +1,58 @@
+( document 
+    ( head 
+        ( lex «veto» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «payer» ( type person ) ) 
+                ( definition «receiver» ( type person ) ) 
+                ( definition «officiator» ( type person ) ) 
+                ( definition «time» ( type time ) ) ) 
+            ( clauses 
+                ( clause «draw» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «receiver» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object reflexive ) 
+                                                escrow ) ) ) 
+                                    permission 
+                                    ( condition if 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «time» ) 
+                                                        expiration ) ) ) ) ) ) ) ) ) ) 
+                ( clause «veto» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «officiator» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «payer» ) ) 
+                                                escrow ) ) ) 
+                                    permission 
+                                    ( condition if 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «time» ) 
+                                                        timeliness ) ) ) ) ) ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «payer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «receiver» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «time» ) ) ) ) ) ) ) ) ) )

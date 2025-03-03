@@ -1,0 +1,25 @@
+
+precompilation:
+---------------
+
+ticket 102 transfer   1:   LEX: «Ticket Machine»
+
+ticket 102 transfer   3:   "«Admin»" is a person.
+ticket 102 transfer   4:   "«Beneficial Party»" is a person.
+ticket 102 transfer   5:   "«Price»" is an amount.
+
+ticket 102 transfer   7:   The «Admin» fixes the «Price».
+
+ticket 102 transfer   9:   CLAUSE: «Draw».
+ticket 102 transfer  10:   The «Admin» may transfer the escrow to the «Beneficial Party».
+
+
+ticket 102 transfer  13:   TERMS PER «CLIENT»:
+
+ticket 102 transfer  15:   "«Client»" is a person.
+
+ticket 102 transfer  17:   The «Client» pays the «Price» into escrow.
+
+ticket 102 transfer  19:   CLAUSE: «Proof».
+ticket 102 transfer  20:   The «Client» may notify the «Beneficial Party».
+

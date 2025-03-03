@@ -1,0 +1,227 @@
+/** Lexon-generated Sophia code
+ **
+ **	code:        Administration
+ **
+ **	file:        cover/administration-102-per.lex
+ **
+ **	compiler:    lexon 0.3 beta 2
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **
+ **	backend:     sophia 0.3.102 beta 2
+ **
+ **	target:      sophia 8+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <secretary : option(address)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<manager>> ⟶   new_secretary(<secretary : option(address)>)
+   • <<manager>> ⟶   new_manager(<manager : option(address)>)
+
+   The following are actions that can be performed per Member.
+
+   > member = administration.add_member(<member : option(address)>)
+   • <<secretary>> ⟶   acknowledge()
+   • <<member>> ⟶   _notify(<proposal : option(string)>)
+ */
+
+@compiler >=8
+
+include "Option.aes"
+
+namespace MainState =
+    record main_state = {
+            manager : option(address),
+            secretary : option(address),
+            proposed_new_secretary : option(address),
+            accepted_new_secretary : option(address),
+            _member_list : list(address),
+            _member_count : int
+        }
+
+using MainState
+
+contract interface Main =
+    entrypoint get_state: () => main_state
+
+
+/**
+ **
+ **	Main Administration contract system
+ **
+ **/
+
+/*
+ | 	LEX Administration.
+ | 
+ | 	The "Manager" is a person.
+ | 	The "Secretary" is a person.
+ | 	The "Proposed New Secretary" is a person.
+ | 	The "Accepted New Secretary" is a person.
+ | 
+ | 	The Manager appoint a Secretary.
+ */
+
+
+main contract Administration : Main =
+
+
+    type state = main_state
+
+    entrypoint init(secretary : address) = {
+            manager = Some(Call.caller),
+            secretary = Some(secretary),
+            proposed_new_secretary = None,
+            accepted_new_secretary = None,
+            _member_list = [],
+            _member_count = 0
+        }
+
+    entrypoint get_state() : state =
+        state
+
+        
+    
+
+    /* create new instance of Member covenant, and register it with main */
+    stateful entrypoint add_member(member : address) : address =
+        let covenant = Chain.create(Address.to_contract(Contract.address) : Administration, member) : Member
+        put(state{ _member_count = state._member_count + 1})
+        put(state{ _member_list = covenant.address :: state._member_list })
+        covenant.address
+
+    /* built-in caller assertion */
+
+    function permit(option_authorized : option(address), name : string) =
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
+
+
+    /* New Secretary clause */
+
+    /*
+     |  CLAUSE: New Secretary.
+     |  The Manager appoints a new Secretary.
+     */
+
+    stateful entrypoint new_secretary(secretary : address) =
+        permit(state.manager, "Manager")
+        put(state{secretary = Some(secretary)})
+
+
+    /* New Manager clause */
+
+    /*
+     |  CLAUSE: New Manager.
+     |  The Manager may appoint a new Manager.
+     |  
+     |  
+     |  PER Member:
+     |  
+     |  "Member" is a person.
+     |  "Proposal" is a text.
+     |  
+     |  The Secretary appoint a new Member.
+     */
+
+    stateful entrypoint new_manager(manager : address) =
+        permit(state.manager, "Manager")
+        put(state{manager = Some(manager)})
+
+/**
+ **
+ **	Member covenant class
+ **
+ **/
+
+/*
+ | 	
+ */
+
+contract Member =
+
+    record state = {
+            global : main_state,
+            member : option(address),
+            proposal : option(string)
+        }
+
+    datatype event = Message(indexed address, indexed address, string)
+
+    entrypoint init(global : Main, member : address) = {
+            member = Some(member),
+            proposal = None,
+            global = global.get_state()
+        }
+
+
+    /* Acknowledge clause */
+
+    /*
+     |  CLAUSE: Acknowledge.
+     |  The Secretary may notify the Member of the "Acknowledgement of the Proposal."
+     */
+
+    stateful entrypoint acknowledge() =
+        permit(state.global.secretary, "Secretary")
+        notify(Option.force_msg(state.member, "Member"), "Acknowledgement of the Proposal.")
+
+
+    /* Notify clause */
+
+    /*
+     |  CLAUSE: Notify.
+     |  The Member may send a Proposal to the Manager.
+     */
+
+    stateful entrypoint _notify(proposal : string) =
+        permit(state.member, "Member")
+        put(state{proposal = Some(proposal)})
+        notify(Option.force_msg(state.global.manager, "Manager"), Option.force_msg(state.proposal, "Proposal"))
+
+    /* built-in caller assertion */
+
+    function permit(option_authorized : option(address), name : string) =
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
+
+    /* built-in send message */
+
+    function notify(to : address, message : string) =
+        Chain.event(Message(Call.caller, to, message))
+
+/* end */

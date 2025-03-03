@@ -1,7 +1,6 @@
 module.exports = class UCCFinancingStatement {
 
     constructor(filer, filing_office, debtor, secured_party, collateral) {
-
         this._escrow = 0;
         this.file_number = null;
         this.initial_statement_date = null;
@@ -173,6 +172,7 @@ module.exports = class UCCFinancingStatement {
     termination() {
         this.terminated = true;
     }
+
 
     check_termination() {
         if(!this.terminated) return false;

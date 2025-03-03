@@ -4,11 +4,11 @@
  **
  **	file:        cover/veto.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     sophia 0.3.99a U
+ **	backend:     sophia 0.3.102 beta 2
  **
  **	target:      sophia 8+
  **
@@ -45,8 +45,8 @@
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Receiver>> ⟶   draw()
-   • <<Officiator>> ⟶   veto()
+   • <<receiver>> ⟶   draw()
+   • <<officiator>> ⟶   veto()
  */
 
 @compiler >=8
@@ -91,10 +91,10 @@ payable main contract TimedVeto =
     /* built-in caller assertion */
 
     function permit(option_authorized : option(address), name : string) =
-            switch(option_authorized)
-                None => abort(StringInternal.concat(name, " not set"))
-                Some(authorized) => if(Call.caller != authorized)
-                    abort(StringInternal.concat(name, " only"))
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
 
     /* built-in safe transfer */
 
@@ -111,7 +111,7 @@ payable main contract TimedVeto =
 
     stateful entrypoint draw() =
         permit(state.receiver, "Receiver")
-        if(Option.force_msg( state.time, "Time") =< Chain.timestamp)
+        if(Option.force_msg(state.time, "Time") =< Chain.timestamp)
             transfer(Option.force_msg(state.receiver, "reflexive pronoun"), Contract.balance)
 
 

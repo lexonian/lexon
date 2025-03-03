@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     javascript 0.3.99a U
+ **	backend:     javascript 0.3.102 beta 2
  **
  **	target:      node 14.1+
  **
@@ -296,6 +296,7 @@ module.exports = class EvaluationLicenseSystem {
                 this.terminated = true;
                     main.log(caller, '■ covenant terminated');
             }
+
 
             check_termination() {
                 if(!this.terminated) return false;

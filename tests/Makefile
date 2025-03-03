@@ -7,6 +7,7 @@ SHELL := /bin/bash
 
 hi = \033[97m
 ok = \033[36m
+warn = \033[38;5;214m
 dim = \033[90m
 err = \033[91m
 off = \033[0m
@@ -136,7 +137,7 @@ define testrun
 		; mv tmp $$testfile \
 		; echo $$((`cat testlines.tmp` + `cat $$filename | wc -l`)) > testlines.tmp \
 		; echo $$((`cat nowlines.tmp` + `cat $$testfile | wc -l`)) > nowlines.tmp \
-		; if [[ ! -f $$expfile ]] ; then read -p "\n» no expectation on file for $(3) $(4) $$filename, create .exp file now? " -n 1 -r ; echo ; if [[ $$REPLY =~ ^[Yy]$$ ]] ; then \
+		; if [[ ! -f $$expfile ]] ; then printf "\n$(warn)» no expectation on file for $(3) $(4) $$filename, create .exp file now?$(off) " ; read -p ">> " -n 1 -r ; echo ; if [[ $$REPLY =~ ^[Yy]$$ ]] ; then \
 				mv $$testfile $$expfile ;  $(call count,update) \
 			; fi \
 			; continue \
@@ -167,7 +168,13 @@ define testrun
 		    fi ; \
 		fi ; \
 		if [[ -f compdiff ]] || [[ -f compall ]] ; then \
-			if [[ ! -f $$coktag ]] || [[ -f compall ]] ; then \
+			if [[ -f compdiff ]] && [[ -f $$coktag ]] && [[ `$(MD5) $$testfile` == `cat $$coktag` ]] ; then \
+				if [[ ! -f concise ]] ; then \
+					printf "$(ok)» syntax check up to date √ $(dim)\n" ; \
+				else \
+					printf "$(ok)•$(off) " ; \
+				fi ; \
+			else \
 			    if (( $$failer2 > 0 )) ; then \
 				if [[ "$(4)" =~ .*javascript.* ]] || [[ "$(4)" =~ .*solidity.* ]] || [[ "$(4)" =~ .*sophia.* ]] ; then \
 			    		rm -f $$coktag ; \
@@ -200,7 +207,7 @@ define testrun
 						if (( $$s1ret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; \
 						else printf "  $(err)failed #$(off)\n" ; fi ; \
 					fi ; \
-					if (( $$s0ret == 0 )) && (( $$s1ret == 0 )) ; then touch $$coktag ; \
+					if (( $$s0ret == 0 )) && (( $$s1ret == 0 )) ; then $(MD5) $$testfile > $$coktag ; \
 					else rm -f $$coktag ; fi ; \
 				elif [[ "$(4)" =~ .*solidity.* ]] ; then \
 					if [[ ! -f concise ]] ; then \
@@ -209,10 +216,10 @@ define testrun
 					solcjs --bin $$testfile ; \
 					sret=$$? ; \
 					if [[ -f concise ]] ; then \
-						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; touch $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) $$testfile > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
 					else \
-						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) $$testfile > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
 					fi ; \
 				elif [[ "$(4)" =~ .*sophia.* ]] ; then \
@@ -222,10 +229,10 @@ define testrun
 					aesophia_cli $$testfile > tmp ; \
 					sret=$$? ; \
 					if [[ -f concise ]] ; then \
-						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; touch $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) $$testfile > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
 					else \
-						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; touch $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) $$testfile > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
 					fi ; \
 				fi ; \
@@ -594,6 +601,12 @@ _test:
 	$(call tag,tag.now)
 	@printf "\ncurrent setup:\n"
 	@cat tag.now
+	@printf "\n	+   success: lexon compilation result has not changed, it matches stored expectations\n"
+	@printf "	.   skipped: lexon compilation test skipped winding forward to first fail of last run\n"
+	@printf "	$(ok)+$(off)   syntax check passed: native compilation of lexon output has no errors\n"
+	@printf "	$(ok)•$(off)   syntax check skipped: lexon output hash had not changed since prior run\n"
+	@printf "\n	Expectation files are verbatim prior lexon output. Syntax checks use separate hashes.\n"
+	@printf "	Hashes are always updated after native compilation, even if expectation files are not.\n"
 	@rm -f *.tmp
 	$(call init)
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l

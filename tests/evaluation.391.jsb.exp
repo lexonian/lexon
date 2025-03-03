@@ -31,7 +31,7 @@ module.exports = class EvaluationLicenseSystem {
                 this.published = null;
                 this.permission_to_comment = null;
                 this.notice_time = null;
-                    this.terminated = false;
+                this.terminated = false;
             }
 
 
@@ -112,6 +112,7 @@ module.exports = class EvaluationLicenseSystem {
             termination() {
                 this.terminated = true;
             }
+
 
             check_termination() {
                 if(!this.terminated) return false;

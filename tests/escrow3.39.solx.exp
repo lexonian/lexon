@@ -7,11 +7,11 @@ pragma solidity ^0.8.17;
  **
  **	file:        lexon/escrow3.39.lex
  **
- **	compiler:    lexon 0.3 alpha 98 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     solidity 0.3.98a U
+ **	backend:     solidity 0.3.102 beta 2
  **
  **	target:      solidity 0.8.17+
  **
@@ -44,8 +44,8 @@ pragma solidity ^0.8.17;
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Agent>> ⟶   pay_out()
-   • <<Agent>> ⟶   pay_back()
+   • <<agent>> ⟶   pay_out()
+   • <<agent>> ⟶   pay_back()
  */
 
 /**
@@ -72,6 +72,7 @@ contract Escrow {
     address payable public agent;
     uint public amount;
     bool amount__set = false;
+
 
     constructor(address payable _seller, address payable _agent) payable {
         buyer = payable(msg.sender);

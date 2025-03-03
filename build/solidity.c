@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.100 beta 1"
+#define backend_version "solidity 0.3.102 beta 2"
 #define target_version "solidity 0.8.17+"	// sync w/[5]
 #define CYCLE_2 true
 
@@ -1116,17 +1116,11 @@ static bool enforce_same_subject = false;
 static list *active_subjects = null;
 static list *covenant_subjects = null;
 static bool no_action_in_group_yet = true;
-static bool uses_main = true;
 static bool uses_termination = false;
 static bool uses_transfer = false;
 static bool uses_notification = false;
 static bool uses_permit = false;
 static bool has_subclasses = false;
-
-bool sol_walk(char **production) {
-	if (!root) return false;
-	return sol_document(production, root, 0);
-}
 
 static Name *class = null;
 static bool main_constructor_body = true;
@@ -1134,6 +1128,11 @@ static bool main_contract = true;
 static bool covenant_constructor_body = false;
 static bool terms_body = true;
 static bool recital_of_terms = false;
+bool sol_walk(char **production) {
+	if (!root) return false;
+	return sol_document(production, root, 0);
+}
+
 bool sol_name(char **production, Name *Name, bool assign, int indent) {
 	if (!Name) return false;
 
@@ -1288,13 +1287,12 @@ bool sol_document(char **production, Document *Document, int indent) {
 	if (!opt_bare) padcat(2, indent, production, "");
 
 	padcat(0, indent, production, "contract ", camel_spaced(module), " {\n%27%");	// %27%: member declaration
-	padcat(2, indent + 1, production, "%29%constructor(%1%) %28%{");	// %29%: emits, %1%: constructor parameters, %28%: payable
+	padcat(3, indent + 1, production, "%29%constructor(%1%) %28%{");	// %29%: emits, %1%: constructor parameters, %28%: payable
 
 	main_constructor_body = true;
 	main_contract = true;
 	assert(active_subjects == null);
 	sol_terms(production, Document->Terms, indent + 2);	// sets caller, uses methods variable for production string
-	main_constructor_body = false; // off for non-JS? ◊
 	main_contract = false;
 	assert(!active_subjects || active_subjects != covenant_subjects);
 	if (active_subjects) delete_list(active_subjects);
@@ -1310,8 +1308,8 @@ bool sol_document(char **production, Document *Document, int indent) {
 
 	/* sol, sop: end of main class (sop: by indent) */
 	padcat(1, indent, production, "}");
-
 	sol_covenants(production, Document->Covenants, indent);
+
 	/* aux functions to add a new sub object instance (covenants) */
 
 	replace(production, "%34%", adders);
@@ -1427,7 +1425,7 @@ void inject_notify(char **production, char **emits, int indent) {
 	padcat(1, indent + 1, emits, "address indexed _from,");
 	padcat(1, indent + 1, emits, "address indexed _to,");
 	padcat(1, indent + 1, emits, "string _message);");
-	padcat(2, indent, emits, "");
+	padcat(3, indent, emits, "");
 
 }
 
@@ -1440,12 +1438,13 @@ void inject_termination(char **production, char *prompt, int indent) {
 	padcat(C, indent, production, "function termination() internal {");
 	padcat(1, indent + 1, production, "terminated = true;");
 	padcat(1, indent, production, "}");
-	padcat(2, indent, production,
+	padcat(3, indent, production,
 	       "function check_termination() internal view {");
 	padcat(1, indent + 1, production, "require(!terminated, \"", prompt,
 	       " terminated before\");");
 	padcat(1, indent, production, "}");
 }
+
 bool sol_head(char **production, Head *Head, int indent) {
 	if (!Head) return false;
 	if (opt_debug) printf("producing Head\n");
@@ -1622,6 +1621,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	padcat(2, indent + 1, production, camel_spaced(module), " main;%27C%");	// %27C% member declarations
 	padcat(3, indent + 1, production, "%29C%constructor(", camel_spaced(module), " _main%2,%%2%) %28%{");	// %29C%: emits, %2%: paras, %28%: payable
 	padcat(1, indent + 2, production, "main = _main;");	// ◊ assure caller integrity
+
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
@@ -1781,7 +1781,9 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 
 	/* end of constructor code */
 
-	if (!main_constructor_body) padcat(1, --indent, production, "}");	// end of constructor
+	if (class) padcat(1, --indent, production, "}");	// end of constructor
+	main_constructor_body = false;
+	covenant_constructor_body = false;
 
 	/* insert caller argumnet and 'payable' modifier */
 
@@ -1793,8 +1795,7 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 
 	char *termination_test = mtrac_strdup("");
 
-	if (uses_termination) padcat(1,
-				     indent + (main_constructor_body ? 0 : 1),
+	if (uses_termination) padcat(1, indent + (class ? 1 : 0),
 				     &termination_test,
 				     "check_termination()" EOL);
 
@@ -2000,14 +2001,14 @@ bool sol_clause(char **production, Clause *Clause, int indent) {
 	if (opt_comment) padcat(3, indent, production, "/* ", Clause->Name,
 				" clause */");
 
-	/* lexon clause text as extended code comment */
+	/* clause comments from lexon clause text */
 	if (opt_lexon_comments) {
 		char *clause = snakedup(Clause->Name);
 		char *c = mtrac_strdup(get_lexcom(clause));
 
 		mtrac_free(clause);
 		assert(c);
-		if (main_constructor_body) {
+		if (!main_constructor_body && !class) {
 			replace(&c, "\n", "\n    " LEXCOM1 " ");
 			padcat(2, 0, production,
 			       "    " LEXCOM0 "\n    " LEXCOM1 " ", c,
@@ -2115,7 +2116,6 @@ bool sol_function(char **production, Function *Function, int indent) {
 	return true;
 }
 
-static char *subjnonmatch = null;
 static char *subjlatebind = null;
 bool sol_statements(char **production, Statements *Statements, int indent) {
 	if (!Statements) return false;
@@ -2197,19 +2197,15 @@ bool sol_action(char **production, Action *Action, int indent) {
 	no_action_in_group_yet = false;
 	ever = true;
 
-	assert(!subjnonmatch);
 	assert(!subjlatebind);
-	subjnonmatch = mtrac_strdup("");
 	subjlatebind = mtrac_strdup("");
-	padcat(0, 0, production, "%11%%12%");
+	padcat(0, 0, production, "%12%");
 
 	sol_subject(production, Action->Subject, indent);
 
 	/* pre-insert the non-match comparisons and late bindings */
 
-	replace(production, "%11%", subjnonmatch);	// can be ""
 	replace(production, "%12%", subjlatebind);	// can be ""
-	mtrac_free(subjnonmatch), subjnonmatch = null;
 	mtrac_free(subjlatebind), subjlatebind = null;
 
 	/* check binding of the subject */
@@ -2329,32 +2325,26 @@ bool sol_subject(char **production, Subject *Subject, int indent) {
 			// ◊ into symbol coming in here
 			char *varname = snakedup(s->Symbol->Name);
 			char *lexname = s->Symbol->Name;
-			char *scope = (!in(globals, s->Symbol->Name) && class) ? "this." : "main.";	// ◊ unite with usual 'main_constructor_body?' ?
-			char *postscope = "";
 
-			postscope = (!in(globals, s->Symbol->Name) && class) ? "" : "()";	// access main contract elements through getter
+			char *scope = (in(globals, s->Symbol->Name) && class) ? "main." : "";	// ◊ add putter for main
 
-			padcat(0, 0, para, first ? "<<" : " or ", lexname);
+			padcat(0, 0, para, first ? "<<" : " or ", varname);
+			first = false;
+
 			/* binding of unbound person variable to caller parameter */
-			if (!main_constructor_body) {
+			if (!any && !main_constructor_body) {
 				char *safe = safedup(varname);
 
-				/* precondition that caller and all of the subjects cannot be the same */
-				if (first) padcat(2, indent, &subjnonmatch,
-						  "if(caller != ", scope, safe,
-						  postscope);
-				else padcat(0, 0, &subjnonmatch,
-					    " && caller != ", scope, safe,
-					    postscope);
 				/* produce bind code. Person in question must still be null, i.e., unbound */
 				if (!in(fixed, varname)) {
-					// ◊ add error when postscope is set == assignment not in the right class
-					padcat(1, indent + 1, &subjlatebind,
-					       !any ? "" : "else ", "if(",
-					       scope, safe, " == null) ", scope,
-					       safe, " = caller;");
+					// ◊ catch attempt to set global (main) value
+					padcat(1, indent, &subjlatebind, "if(",
+					       scope, safe, " == ",
+					       "address(0x0)) ", scope, safe,
+					       " = payable(msg.sender);");
+
+					padcat(0, 0, &fixed, ":", safe, ":");
 					any = true;
-					padcat(0, 0, &fixed, ":", safe, ":");	// right? ◊
 				}
 				mtrac_free(safe);
 			}
@@ -2363,19 +2353,11 @@ bool sol_subject(char **production, Subject *Subject, int indent) {
 		s = s->Symbols;
 		first = false;
 	}
+
 	if (strlen(*para)) padcat(0, 0, para, ">>");	// ◊ .. sometimes produces >>>>
 	if (strlen(*para)) concat(para, " ⟶   ");
 	replace(&instructions, "%26%", *para);
 	mtrac_free(_para);
-
-	if (any)
-		padcat(0, 0, &subjnonmatch, ") {"), padcat(1, indent,
-							   &subjlatebind,
-							   "}\n");
-	else
-		/* reset all when all in subjlatebind are actually constructor arguments, of the main or sub contract
-		 * This is known only after the loop has been traversed and 'any' is still false.  */
-		mtrac_free(subjnonmatch), subjnonmatch = mtrac_strdup("");
 
 	return true;
 }
@@ -2689,6 +2671,7 @@ bool sol_payment(char **production, Payment *Payment, int indent) {
 	sol_pay(production, Payment->Pay, indent);
 
 	/* sender */
+
 	/* receiver */
 	if (!explicit_to_escrow) {
 		payment_expression = true;

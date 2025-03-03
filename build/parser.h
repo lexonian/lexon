@@ -1018,17 +1018,19 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
     THIS = 398,                    /* THIS  */
     TIME = 399,                    /* TIME  */
     TO = 400,                      /* TO  */
-    TRUE = 401,                    /* TRUE  */
-    WAS = 402,                     /* WAS  */
-    WEEK = 403,                    /* WEEK  */
-    WEEKS = 404,                   /* WEEKS  */
-    WITH = 405,                    /* WITH  */
-    YEAR = 406,                    /* YEAR  */
-    YEARS = 407,                   /* YEARS  */
-    YES = 408,                     /* YES  */
-    YET = 409,                     /* YET  */
-    YOURSELF = 410,                /* YOURSELF  */
-    YOURSELVES = 411               /* YOURSELVES  */
+    TRANSFER = 401,                /* TRANSFER  */
+    TRANSFERS = 402,               /* TRANSFERS  */
+    TRUE = 403,                    /* TRUE  */
+    WAS = 404,                     /* WAS  */
+    WEEK = 405,                    /* WEEK  */
+    WEEKS = 406,                   /* WEEKS  */
+    WITH = 407,                    /* WITH  */
+    YEAR = 408,                    /* YEAR  */
+    YEARS = 409,                   /* YEARS  */
+    YES = 410,                     /* YES  */
+    YET = 411,                     /* YET  */
+    YOURSELF = 412,                /* YOURSELF  */
+    YOURSELVES = 413               /* YOURSELVES  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -1157,7 +1159,7 @@ union YYSTYPE
   Weeks * Weeks;                           /* Weeks  */
   Years * Years;                           /* Years  */
 
-#line 1161 "parser.h"
+#line 1163 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -4,11 +4,11 @@
  **
  **	file:        lexon/escrow.631.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     sophia 0.3.99a U
+ **	backend:     sophia 0.3.102 beta 2
  **
  **	target:      sophia 8+
  **
@@ -45,8 +45,8 @@
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Agent>> ⟶   pay_out()
-   • <<Agent>> ⟶   pay_back()
+   • <<agent>> ⟶   pay_out()
+   • <<agent>> ⟶   pay_back()
  */
 
 @compiler >=8
@@ -100,10 +100,10 @@ payable main contract Escrow =
     /* built-in caller assertion */
 
     function permit(option_authorized : option(address), name : string) =
-            switch(option_authorized)
-                None => abort(StringInternal.concat(name, " not set"))
-                Some(authorized) => if(Call.caller != authorized)
-                    abort(StringInternal.concat(name, " only"))
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
 
     /* built-in safe transfer */
 
@@ -121,7 +121,7 @@ payable main contract Escrow =
 
     stateful entrypoint pay_out() =
         permit(state.agent, "Agent")
-        transfer(Option.force_msg(state.agent, "reflexive pronoun"), Option.force_msg( state.fee, "Fee"))
+        transfer(Option.force_msg(state.agent, "reflexive pronoun"), Option.force_msg(state.fee, "Fee"))
         transfer(Option.force_msg(state.seller, "Seller"), Contract.balance)
 
 
@@ -135,7 +135,7 @@ payable main contract Escrow =
 
     stateful entrypoint pay_back() =
         permit(state.agent, "Agent")
-        transfer(Option.force_msg(state.agent, "reflexive pronoun"), Option.force_msg( state.fee, "Fee"))
+        transfer(Option.force_msg(state.agent, "reflexive pronoun"), Option.force_msg(state.fee, "Fee"))
         transfer(Option.force_msg(state.buyer, "Buyer"), Contract.balance)
 
 /* end */

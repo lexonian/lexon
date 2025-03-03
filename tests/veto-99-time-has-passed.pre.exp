@@ -1,0 +1,20 @@
+
+precompilation:
+---------------
+
+veto 99 time has passed   1:   LEX: «Veto»
+
+veto 99 time has passed   3:   "«Payer»" is a person.
+veto 99 time has passed   4:   "«Receiver»" is a person.
+veto 99 time has passed   5:   "«Officiator»" is a person.
+veto 99 time has passed   6:   "«Time»" is a time.
+
+veto 99 time has passed   8:   The «Payer» pays an amount into escrow, appoints the «Receiver», and fixes a «Time».
+
+veto 99 time has passed  10:   CLAUSE: «Draw».
+veto 99 time has passed  11:   The «Receiver» may, if the «Time» has passed, pay the escrow to themselves.
+
+veto 99 time has passed  13:   CLAUSE: «Veto».
+veto 99 time has passed  14:   The «Officiator» may, if the «Time» has not passed, repay the escrow to the «Payer».
+
+

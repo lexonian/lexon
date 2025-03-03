@@ -988,6 +988,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token THIS
 	%token TIME
 	%token TO
+	%token TRANSFER
+	%token TRANSFERS
 	%token TRUE
 	%token WAS
 	%token WEEK
@@ -1653,6 +1655,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 		| RETURNS                                         { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
 		| REPAY                                           { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
 		| REPAYS                                          { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
+		| TRANSFER                                        { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
+		| TRANSFERS                                       { NEW(Pay, *((Literal **)&yylval)); $$=process_pay(Pay); }
 		;
 
 

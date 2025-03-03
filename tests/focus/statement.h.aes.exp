@@ -6,11 +6,11 @@
  **
  **	code tagged: 0.2.12
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     sophia 0.3.99a U
+ **	backend:     sophia 0.3.102 beta 2
  **
  **	target:      sophia 8+
  **
@@ -109,10 +109,10 @@ main contract UCCFinancingStatement =
     /* built-in caller assertion */
 
     function permit(option_authorized : option(address), name : string) =
-            switch(option_authorized)
-                None => abort(StringInternal.concat(name, " not set"))
-                Some(authorized) => if(Call.caller != authorized)
-                    abort(StringInternal.concat(name, " only"))
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
 
     /* built-in safe transfer */
 
@@ -129,6 +129,7 @@ main contract UCCFinancingStatement =
 
     stateful function termination() =
         put(state{terminated = true})
+
 
     function check_termination() =
         require(!state.terminated, "contract system terminated before")
@@ -222,8 +223,8 @@ main contract UCCFinancingStatement =
     stateful entrypoint _notify() =
         check_termination()
         permit(state.filing_office, "Filing Office")
-        if(Option.force_msg( state.continuation_window_start, "Continuation Window Start") =< Chain.timestamp)
-            notify(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg( state.notification_statement, "Notification Statement"))
+        if(Option.force_msg(state.continuation_window_start, "Continuation Window Start") =< Chain.timestamp)
+            notify(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.notification_statement, "Notification Statement"))
 
 
     /* Pay Escrow In clause */
@@ -263,7 +264,7 @@ main contract UCCFinancingStatement =
         check_termination()
         permit(state.filing_office, "Filing Office")
         if(state._default == Some(true))
-            transfer(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg( state.digital_asset_collateral, "Digital Asset Collateral"))
+            transfer(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.digital_asset_collateral, "Digital Asset Collateral"))
 
 
     /* File Continuation clause */
@@ -318,7 +319,7 @@ main contract UCCFinancingStatement =
         check_termination()
         permit(state.filing_office, "Filing Office")
         if(state.termination_statement == Some(true))
-            transfer(Option.force_msg(state.debtor, "Debtor"), Option.force_msg( state.digital_asset_collateral, "Digital Asset Collateral"))
+            transfer(Option.force_msg(state.debtor, "Debtor"), Option.force_msg(state.digital_asset_collateral, "Digital Asset Collateral"))
 
 
     /* Release Reminder Fee clause */
@@ -332,7 +333,7 @@ main contract UCCFinancingStatement =
         check_termination()
         permit(state.filing_office, "Filing Office")
         if(state.termination_statement == Some(true))
-            transfer(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg( state.reminder_fee, "Reminder Fee"))
+            transfer(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.reminder_fee, "Reminder Fee"))
 
 
     /* Termination Period clause */
@@ -356,7 +357,7 @@ main contract UCCFinancingStatement =
     stateful entrypoint terminate_and_clear() =
         check_termination()
         permit(state.filing_office, "Filing Office")
-        if(Option.force_msg( termination_period(), "Termination Period") =< Chain.timestamp)
+        if(Option.force_msg(termination_period(), "Termination Period") =< Chain.timestamp)
             termination()
 
 /* end */

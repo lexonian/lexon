@@ -1,0 +1,20 @@
+
+precompilation:
+---------------
+
+veto 99 repay   1:   LEX: «Veto»
+
+veto 99 repay   3:   "«Payer»" is a person.
+veto 99 repay   4:   "«Receiver»" is a person.
+veto 99 repay   5:   "«Officiator»" is a person.
+veto 99 repay   6:   "«Time»" is a time.
+
+veto 99 repay   8:   The «Payer» pays an amount into escrow, appoints the «Receiver», and fixes a «Time».
+
+veto 99 repay  10:   CLAUSE: «Draw».
+veto 99 repay  11:   The «Receiver» may, if the «Time» has passed, repay the escrow to themselves.
+
+veto 99 repay  13:   CLAUSE: «Veto».
+veto 99 repay  14:   The «Officiator» may repay the escrow to the «Payer».
+
+

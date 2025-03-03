@@ -1,0 +1,60 @@
+( document 
+    ( head 
+        ( lex «ticket-machine» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «admin» ( type person ) ) 
+                ( definition «beneficial-party» ( type person ) ) 
+                ( definition «price» ( type amount ) ) ) 
+            ( clauses 
+                ( clause «draw» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «admin» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object ( symbol «beneficial-party» ) ) 
+                                                escrow ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «admin» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «price» ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «client» 
+            ( provisions 
+                ( definitions 
+                    ( definition «client» ( type person ) ) ) 
+                ( clauses 
+                    ( clause «proof» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «client» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( notification notify 
+                                                    ( object ( symbol «beneficial-party» ) ) ) ) ) 
+                                        permission ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «client» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( payment pay 
+                                        ( expression ( combination ( combinor ( combinand ( symbol «price» ) ) ) ) ) 
+                                        preposition 
+                                        ( object ) ) ) ) ) ) ) ) ) ) )

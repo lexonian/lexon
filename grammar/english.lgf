@@ -15,7 +15,7 @@
 ##
 ##	english.lgf — Lexon controlled English grammar
 ##
-##	Version 0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+##	Version 0.2.20 / subset 0.3.10 beta 2 - English / Reyes
 ##
 ##	This document is in Lexon Grammar Form, a variation of BNF.
 ##	Square brackets indicate optionality, 'or' separates variants.
@@ -240,7 +240,10 @@
 		or pay expression from_escrow preposition object
 		or pay escrow preposition object
 
-   pay:		"pay" or "pays" or "return" or "returns" or "repay" or "repays"
+   pay:		"pay" or "pays"
+   		or "return" or "returns"
+		or "repay" or "repays"
+		or "transfer" or "transfers"
 
    preposition:	"to" or "into" or "of"
 
