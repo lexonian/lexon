@@ -1,0 +1,36 @@
+
+precompilation:
+---------------
+
+administration 102 per   1:   LEX: «Administration».
+
+administration 102 per   3:   The "«Manager»" is a person.
+administration 102 per   4:   The "«Secretary»" is a person.
+administration 102 per   5:   The "«Proposed New Secretary»" is a person.
+administration 102 per   6:   The "«Accepted New Secretary»" is a person.
+
+administration 102 per   8:   The «Manager» appoint a «Secretary».
+
+
+administration 102 per  11:   CLAUSE: «New Secretary».
+administration 102 per  12:   The «Manager» appoints a new «Secretary».
+
+administration 102 per  14:   CLAUSE: «New Manager».
+administration 102 per  15:   The «Manager» may appoint a new «Manager».
+
+
+administration 102 per  18:   PER «Member»:
+
+administration 102 per  20:   "«Member»" is a person.
+administration 102 per  21:   "«Proposal»" is a text.
+
+administration 102 per  23:   The «Secretary» appoint a new «Member».
+
+administration 102 per  25:   CLAUSE: «Acknowledge».
+administration 102 per  26:   The «Secretary» may notify the «Member» of the "‹Acknowledgement of the Proposal.›"
+
+administration 102 per  28:   CLAUSE: «Notify».
+administration 102 per  29:   The «Member» may send a «Proposal» to the «Manager».
+
+
+

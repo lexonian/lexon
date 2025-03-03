@@ -13,11 +13,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     solidity 0.3.99a U
+ **	backend:     solidity 0.3.102 beta 2
  **
  **	target:      solidity 0.8.17+
  **
@@ -54,14 +54,14 @@ pragma solidity ^0.8.17;
    The following are actions that can be performed per License.
 
    > license = evaluation.add_license(<licensee : address payable>, <description_of_goods : string>)
-   • <<Licensee>> ⟶   pay()
-   • <<Licensor>> ⟶   commission()
-   • <<Licensee>> ⟶   comment(<comment_text : string>)
-   • <<Licensee>> ⟶   publication()
-   • <<Licensee>> ⟶   grant_permission_to_comment()
-   • <<Agent>> ⟶   declare_breach()
+   • <<licensee>> ⟶   pay()
+   • <<licensor>> ⟶   commission()
+   • <<licensee>> ⟶   comment(<comment_text : string>)
+   • <<licensee>> ⟶   publication()
+   • <<licensee>> ⟶   grant_permission_to_comment()
+   • <<agent>> ⟶   declare_breach()
    • anyone ⟶   factually_breached()
-   • <<Agent or Licensor>> ⟶   notice()
+   • <<agent or licensor>> ⟶   notice()
    • anyone ⟶   noticed()
  */
 
@@ -101,6 +101,7 @@ contract EvaluationLicenseSystem {
     address payable public agent;
     uint public licensing_service_fee;
     uint public breach_service_fee;
+
 
     constructor(address payable _agent, uint _licensing_service_fee, uint _breach_service_fee) {
         licensor = payable(msg.sender);
@@ -343,6 +344,7 @@ contract License {
     function termination() internal {
         terminated = true;
     }
+
 
     function check_termination() internal view {
         require(!terminated, "covenant terminated before");

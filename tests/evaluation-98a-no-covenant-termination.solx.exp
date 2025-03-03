@@ -13,11 +13,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     solidity 0.3.99a U
+ **	backend:     solidity 0.3.102 beta 2
  **
  **	target:      solidity 0.8.17+
  **
@@ -50,20 +50,20 @@ pragma solidity ^0.8.17;
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Licensor>> ⟶   test()
-   • <<Licensor>> ⟶   foo(<breach_fee : uint>)
+   • <<licensor>> ⟶   test()
+   • <<licensor>> ⟶   foo(<breach_fee : uint>)
 
    The following are actions that can be performed per License.
 
    > license = evaluation.add_license(<licensee : address payable>, <description_of_goods : string>)
-   • <<Licensee>> ⟶   pay()
-   • <<Licensor>> ⟶   commission()
-   • <<Licensee>> ⟶   comment(<comment_text : string>)
-   • <<Licensee>> ⟶   publication()
-   • <<Licensee>> ⟶   grant_permission_to_comment()
-   • <<Arbiter>> ⟶   declare_breach()
+   • <<licensee>> ⟶   pay()
+   • <<licensor>> ⟶   commission()
+   • <<licensee>> ⟶   comment(<comment_text : string>)
+   • <<licensee>> ⟶   publication()
+   • <<licensee>> ⟶   grant_permission_to_comment()
+   • <<arbiter>> ⟶   declare_breach()
    • anyone ⟶   factually_breached()
-   • <<Arbiter or Licensor>> ⟶   notice()
+   • <<arbiter or licensor>> ⟶   notice()
    • anyone ⟶   noticed()
  */
 
@@ -99,6 +99,7 @@ contract EvaluationLicenseSystem {
     uint public breach_fee;
     bool terminated = false;
 
+
     constructor(address payable _arbiter, uint _licensing_fee, uint _breach_fee) {
         licensor = payable(msg.sender);
         arbiter = _arbiter;
@@ -131,6 +132,7 @@ contract EvaluationLicenseSystem {
     function termination() internal {
         terminated = true;
     }
+
 
     function check_termination() internal view {
         require(!terminated, "contract system terminated before");

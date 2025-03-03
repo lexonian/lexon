@@ -240,7 +240,10 @@
 		or pay expression from_escrow preposition object
 		or pay escrow preposition object
 
-   pay:		"pay" or "pays" or "return" or "returns" or "repay" or "repays"
+   pay:		"pay" or "pays"
+   		or "return" or "returns"
+		or "repay" or "repays"
+		or "transfer" or "transfers"
 
    preposition:	"to" or "into" or "of"
 

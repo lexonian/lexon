@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     sophia 0.3.99a U
+ **	backend:     sophia 0.3.102 beta 2
  **
  **	target:      sophia 8+
  **
@@ -55,14 +55,14 @@
    The following are actions that can be performed per License.
 
    > license = evaluation.add_license(<license_taker : option(address)>, <description_of_goods : option(string)>)
-   • <<License Taker>> ⟶   pay()
-   • <<Licensor>> ⟶   commission()
-   • <<License Taker>> ⟶   comment(<comment_text : option(string)>)
-   • <<License Taker>> ⟶   publication()
-   • <<License Taker>> ⟶   grant_permission_to_comment()
-   • <<Agent>> ⟶   declare_breach()
+   • <<license_taker>> ⟶   pay()
+   • <<licensor>> ⟶   commission()
+   • <<license_taker>> ⟶   comment(<comment_text : option(string)>)
+   • <<license_taker>> ⟶   publication()
+   • <<license_taker>> ⟶   grant_permission_to_comment()
+   • <<agent>> ⟶   declare_breach()
    • anyone ⟶   factually_breached()
-   • <<Agent or Licensor>> ⟶   notice()
+   • <<agent or licensor>> ⟶   notice()
    • anyone ⟶   noticed()
  */
 
@@ -202,7 +202,7 @@ contract License =
         check_termination()
         require(Some(Call.caller) == state.license_taker, "not permitted")
         if(Some(Call.caller) == state.license_taker)
-            transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg( state.global.licensing_fee, "Licensing Fee"))
+            transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg(state.global.licensing_fee, "Licensing Fee"))
         put(state{paid = Some(true)})
 
 
@@ -271,7 +271,7 @@ contract License =
         check_termination()
         permit(state.global.agent, "Agent")
         if(factually_breached() == Some(true))
-            transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg( state.global.breach_fee, "Breach Fee"))
+            transfer(Option.force_msg(state.global.licensor, "Licensor"), Option.force_msg(state.global.breach_fee, "Breach Fee"))
             termination()
 
 
@@ -315,10 +315,10 @@ contract License =
     /* built-in caller assertion */
 
     function permit(option_authorized : option(address), name : string) =
-            switch(option_authorized)
-                None => abort(StringInternal.concat(name, " not set"))
-                Some(authorized) => if(Call.caller != authorized)
-                    abort(StringInternal.concat(name, " only"))
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
 
     /* built-in safe transfer */
 
@@ -330,6 +330,7 @@ contract License =
 
     stateful function termination() =
         put(state{terminated = true})
+
 
     function check_termination() =
         require(!state.terminated, "covenant terminated before")

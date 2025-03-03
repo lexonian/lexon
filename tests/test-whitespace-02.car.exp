@@ -5,8 +5,8 @@ precompilation:
 test whitespace 02   1:   LEX: «Paid Escrow».
 test whitespace 02   2:   LEXON: ‹0.3.xx›.
 test whitespace 02   3:   COMMENT: ‹%PRE %GEN an escrow that is controlled by a third party for a fee.›.
-test whitespace 02   4:   “«Paying Party»” is a person. “«Paid Party»” is a person.
-test whitespace 02   5:   “«Pay Master»” is a person . “«Payment»” is an amount. “«Payment Fee»” is an amount. “«Non-Payment Fee»” is an amount. “«Master's Fee»” is an amount. The «Paying Party» pays a «Payment» into escrow,
+test whitespace 02   4:   “«Paying Party»” is a person.  “«Paid Party»” is a person.
+test whitespace 02   5:   “«Pay Master»” is a person .  “«Payment»” is an amount.  “«Payment Fee»” is an amount.  “«Non-Payment Fee»” is an amount.  “«Master's Fee»” is an amount. The «Paying Party» pays a «Payment» into escrow,
 test whitespace 02   6:   appoints the «Paid Party»,
 test whitespace 02   7:   appoints the «Pay Master»,
 test whitespace 02   8:   and also fixes the «Master's Fee».

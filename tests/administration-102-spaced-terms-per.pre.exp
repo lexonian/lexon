@@ -1,0 +1,33 @@
+
+precompilation:
+---------------
+
+administration 102 spaced terms per   1:   LEX: «Administration».
+
+administration 102 spaced terms per   3:   The "«Manager»" is a person.
+administration 102 spaced terms per   4:   The "«Secretary»" is a person.
+administration 102 spaced terms per   5:   The "«Proposed New Secretary»" is a person.
+administration 102 spaced terms per   6:   The "«Accepted New Secretary»" is a person.
+
+administration 102 spaced terms per   8:   The «Manager» appoints the «Secretary».
+
+
+administration 102 spaced terms per  11:   CLAUSE: «New Secretary».
+administration 102 spaced terms per  12:   The «Manager» may appoint a new «Secretary».
+
+administration 102 spaced terms per  14:   CLAUSE: «New Manager».
+administration 102 spaced terms per  15:   The «Manager» may appoint a new «Manager».
+
+
+administration 102 spaced terms per  18:   TERMS  PER «Member»:
+
+administration 102 spaced terms per  20:   "«Member»" is a person.
+administration 102 spaced terms per  21:   "«Proposal»" is a text.
+
+administration 102 spaced terms per  23:   The «Secretary» may appoint a new «Member».
+
+administration 102 spaced terms per  25:   CLAUSE: «Notify».
+administration 102 spaced terms per  26:   The «Member» may send a «Proposal» to the «Manager».
+
+administration 102 spaced terms per  28:   CLAUSE: «Acknowledge».
+administration 102 spaced terms per  29:   The «Secretary» may notify the «Member» of the "‹Acknowledgement of the Proposal.›" 

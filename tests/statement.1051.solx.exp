@@ -9,11 +9,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.12
  **
- **	compiler:    lexon 0.3 alpha 98 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     solidity 0.3.98a U
+ **	backend:     solidity 0.3.102 beta 2
  **
  **	target:      solidity 0.8.17+
  **
@@ -46,23 +46,23 @@ pragma solidity ^0.8.17;
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Filing Office>> ⟶   certify(<file_number : string>)
-   • <<Filing Office>> ⟶   set_file_date()
-   • <<Filing Office>> ⟶   set_lapse(<lapse_date : uint>)
-   • <<Filing Office>> ⟶   set_continuation_start(<continuation_window_start : uint>)
-   • <<Secured Party>> ⟶   pay_service_fee()
-   • <<Filing Office>> ⟶   notice(<notification_statement : string>)
-   • <<Filing Office>> ⟶   _notify()
-   • <<Debtor>> ⟶   pay_escrow_in()
-   • <<Secured Party>> ⟶   fail_to_pay()
-   • <<Filing Office>> ⟶   take_possession()
-   • <<Secured Party>> ⟶   file_continuation(<continuation_statement : bool>)
-   • <<Filing Office>> ⟶   set_continuation_lapse(<continuation_statement_date : uint>)
-   • <<Secured Party>> ⟶   file_termination(<termination_statement : bool>)
-   • <<Filing Office>> ⟶   release_escrow()
-   • <<Filing Office>> ⟶   release_reminder_service_fee()
+   • <<filing_office>> ⟶   certify(<file_number : string>)
+   • <<filing_office>> ⟶   set_file_date()
+   • <<filing_office>> ⟶   set_lapse(<lapse_date : uint>)
+   • <<filing_office>> ⟶   set_continuation_start(<continuation_window_start : uint>)
+   • <<secured_party>> ⟶   pay_service_fee()
+   • <<filing_office>> ⟶   notice(<notification_statement : string>)
+   • <<filing_office>> ⟶   _notify()
+   • <<debtor>> ⟶   pay_escrow_in()
+   • <<secured_party>> ⟶   fail_to_pay()
+   • <<filing_office>> ⟶   take_possession()
+   • <<secured_party>> ⟶   file_continuation(<continuation_statement : bool>)
+   • <<filing_office>> ⟶   set_continuation_lapse(<continuation_statement_date : uint>)
+   • <<secured_party>> ⟶   file_termination(<termination_statement : bool>)
+   • <<filing_office>> ⟶   release_escrow()
+   • <<filing_office>> ⟶   release_reminder_service_fee()
    • anyone ⟶   termination_period()
-   • <<Filing Office>> ⟶   terminate_and_clear()
+   • <<filing_office>> ⟶   terminate_and_clear()
  */
 
 /**
@@ -140,10 +140,12 @@ contract UCCFinancingStatement {
     bool digital_asset_collateral__set = false;
     bool terminated = false;
 
+
     event Message(
         address indexed _from,
         address indexed _to,
         string _message);
+
 
     constructor(address payable _filing_office, address payable _debtor, address payable _secured_party, string memory _collateral) {
         filer = payable(msg.sender);
@@ -178,6 +180,7 @@ contract UCCFinancingStatement {
     function termination() internal {
         terminated = true;
     }
+
 
     function check_termination() internal view {
         require(!terminated, "contract system terminated before");
@@ -255,8 +258,12 @@ contract UCCFinancingStatement {
     function pay_service_fee() public payable {
         check_termination();
         permit(secured_party);
-        reminder_service_fee = msg.value;
-        reminder_service_fee__set = true;
+        if(reminder_service_fee__set) {
+            require(msg.value == reminder_service_fee, "wrong amount");
+        } else {
+            reminder_service_fee = msg.value;
+            reminder_service_fee__set = true;
+        }
     }
 
 
@@ -303,8 +310,12 @@ contract UCCFinancingStatement {
     function pay_escrow_in() public payable {
         check_termination();
         permit(debtor);
-        digital_asset_collateral = msg.value;
-        digital_asset_collateral__set = true;
+        if(digital_asset_collateral__set) {
+            require(msg.value == digital_asset_collateral, "wrong amount");
+        } else {
+            digital_asset_collateral = msg.value;
+            digital_asset_collateral__set = true;
+        }
     }
 
 

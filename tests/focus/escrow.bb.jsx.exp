@@ -1,7 +1,6 @@
 module.exports = class Escrow {
 
     constructor(payer, amount, payee, arbiter, fee) {
-
         this._escrow = 0;
         this.payer = payer;
         this.payee = payee;

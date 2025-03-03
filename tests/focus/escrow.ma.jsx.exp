@@ -4,11 +4,11 @@
  **
  **	file:        escrow.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     javascript 0.3.99a U
+ **	backend:     javascript 0.3.102 beta 2
  **
  **	target:      node 14.1+
  **
@@ -43,7 +43,6 @@ var last_passphrase;
 module.exports = class Escrow {
 
     constructor(payer, amount, payee, arbiter, fee) {
-
 
         /* object members: skip for restoring serialized object */
         if(typeof payer !== 'undefined') {

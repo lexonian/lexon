@@ -1,0 +1,208 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+/** Lexon-generated Solidity code
+ **
+ **	code:        Administration
+ **
+ **	file:        cover/administration-102-per.lex
+ **
+ **	compiler:    lexon 0.3 beta 2
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **
+ **	backend:     solidity 0.3.102 beta 2
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Ethereum blockchain or Goerli testchain.  Replace
+   the <parameters> with literal values to interact with the contract via terminal.
+
+   Note that the instructions below reflect your lexon code, as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used during compilation  –  a list of which, is available with
+   lexon -h.  The functions are given in the order of appearance, in the lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an address for it for
+   the first time. This will require for the same address to be used for the same role
+   after this point. Else, the call will revert.
+
+   Some clauses of the original lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment:
+
+   <secretary : address payable>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<manager>> ⟶   new_secretary(<secretary : address payable>)
+   • <<manager>> ⟶   new_manager(<manager : address payable>)
+
+   The following are actions that can be performed per Member.
+
+   > member = administration.add_member(<member : address payable>)
+   • <<secretary>> ⟶   acknowledge()
+   • <<member>> ⟶   _notify(<proposal : string>)
+ */
+
+/**
+ **
+ **	Main Administration contract system
+ **
+ **/
+
+/*
+ | 	LEX Administration.
+ | 
+ | 	The "Manager" is a person.
+ | 	The "Secretary" is a person.
+ | 	The "Proposed New Secretary" is a person.
+ | 	The "Accepted New Secretary" is a person.
+ | 
+ | 	The Manager appoint a Secretary.
+ */
+
+contract Administration {
+
+    address payable public manager;
+    address payable public secretary;
+    address payable public proposed_new_secretary;
+    address payable public accepted_new_secretary;
+
+
+    constructor(address payable _secretary) {
+        manager = payable(msg.sender);
+        secretary = _secretary;
+    }
+
+    /* aggregation of covenants for folds and serialization */
+
+    mapping(uint => Member) public _member_list;
+    uint _member_count = 0;
+
+    /* create new instance of Member covenant, and register it with main */
+
+    function add_member(address payable _member) public returns(Member) {
+        permit(secretary);
+        return _member_list[_member_count += 1] = new Member(this, _member);
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+
+    /* New Secretary clause */
+
+    /*
+     |  CLAUSE: New Secretary.
+     |  The Manager appoints a new Secretary.
+     */
+
+    function new_secretary(address payable _secretary) public {
+        permit(manager);
+        secretary = _secretary;
+    }
+
+
+    /* New Manager clause */
+
+    /*
+     |  CLAUSE: New Manager.
+     |  The Manager may appoint a new Manager.
+     |  
+     |  
+     |  PER Member:
+     |  
+     |  "Member" is a person.
+     |  "Proposal" is a text.
+     |  
+     |  The Secretary appoint a new Member.
+     */
+
+    function new_manager(address payable _manager) public {
+        permit(manager);
+        manager = _manager;
+    }
+}
+
+/**
+ **
+ **	Member covenant class
+ **
+ **/
+
+/*
+ | 	
+ */
+
+contract Member {
+
+    Administration main;
+    address payable public member;
+    string public proposal;
+
+
+    event Message(
+        address indexed _from,
+        address indexed _to,
+        string _message);
+
+
+    constructor(Administration _main, address payable _member) {
+        main = _main;
+        member = _member;
+    }
+
+
+    /* Acknowledge clause */
+
+    /*
+     |  CLAUSE: Acknowledge.
+     |  The Secretary may notify the Member of the "Acknowledgement of the Proposal."
+     */
+
+    function acknowledge() public {
+        permit(main.secretary());
+        notify(member, "Acknowledgement of the Proposal.");
+    }
+
+
+    /* Notify clause */
+
+    /*
+     |  CLAUSE: Notify.
+     |  The Member may send a Proposal to the Manager.
+     */
+
+    function _notify(string memory _proposal) public {
+        permit(member);
+        proposal = _proposal;
+        notify(main.manager(), proposal);
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+    /* built-in send message */
+
+    function notify(address payable _to, string memory _message) internal {
+        emit Message(msg.sender, _to, _message);
+    }
+}
+
+/* end */

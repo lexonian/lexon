@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.100 beta 1"
+#define backend_version "javascript 0.3.102 beta 2"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -1130,23 +1130,11 @@ static bool enforce_same_subject = false;
 static list *active_subjects = null;
 static list *covenant_subjects = null;
 static bool no_action_in_group_yet = true;
-static bool uses_main = true;
 static bool uses_termination = false;
 static bool uses_transfer = false;
 static bool uses_notification = false;
 
 static bool has_subclasses = false;
-static void optional_caller(char **production) {
-	if (opt_log)
-		concat(production, !current_function
-		       && active_subjects ? SNAKE(active_subjects->
-						  item) : "caller", ", ");
-}
-
-bool js_walk(char **production) {
-	if (!root) return false;
-	return js_document(production, root, 0);
-}
 
 static Name *class = null;
 static bool main_constructor_body = true;
@@ -1154,6 +1142,20 @@ static bool main_contract = true;
 static bool covenant_constructor_body = false;
 static bool terms_body = true;
 static bool recital_of_terms = false;
+
+static void optional_caller(char **production) {
+	if (opt_log)
+		concat(production, active_subjects
+		       && (!current_function
+			   && !class) ? SNAKE(active_subjects->item) : "caller",
+		       ", ");
+}
+
+bool js_walk(char **production) {
+	if (!root) return false;
+	return js_document(production, root, 0);
+}
+
 bool js_name(char **production, Name *Name, bool assign, int indent) {
 	if (!Name) return false;
 
@@ -1163,13 +1165,13 @@ bool js_name(char **production, Name *Name, bool assign, int indent) {
 
 	if (!in(functions, Name)) {
 		padcat(0, 0, production,
-		       global &&!main_constructor_body ? "main." : "this.",
-		       safe);
+		       global &&(!main_constructor_body
+				 || class) ? "main." : "this.", safe);
 	} else {
 		bind *bind = register_bind(safe, Name);
 		padcat(0, 0, production,
-		       global &&!main_constructor_body ? "main." : "this.",
-		       bind->tag);
+		       global &&(!main_constructor_body
+				 || class) ? "main." : "this.", bind->tag);
 	}
 	if (assign) padcat(0, 0, &fixed, ":", safe, ":");
 	mtrac_free(safe);
@@ -1324,13 +1326,12 @@ bool js_document(char **production, Document *Document, int indent) {
 	if (!opt_bare) padcat(2, indent, production, "");
 	padcat(0, indent, production, "module.exports = class ", camel_spaced(module), " {%21%");	// %21%: member initialization by parameters
 	padcat(1, indent + 1, production, "constructor(%1%) {");	// sic not C. %1%: constructor parameters
-	padcat(1, 0, production, "%20%");	// %20%: closure 'main = this'
+	padcat(0, 0, production, "%20%");	// %20%: closure 'main = this'
 
 	main_constructor_body = true;
 	main_contract = true;
 	assert(active_subjects == null);
 	js_terms(production, Document->Terms, indent + 2);	// sets caller, uses methods variable for production string
-	main_constructor_body = false; // off for non-JS? ◊
 	main_contract = false;
 	assert(!active_subjects || active_subjects != covenant_subjects);
 	if (active_subjects) delete_list(active_subjects);
@@ -1340,7 +1341,11 @@ bool js_document(char **production, Document *Document, int indent) {
 	/* covenants
 	 * js: like all non-covenant clauses, the entire covenant class definition including all their clauses,
 	 * are hidden in the scope of the main, top level constructor */
+	main_constructor_body = true;  // sic! the main constructor in JS includes the covenant clauses.
 	js_covenants(production, Document->Covenants, indent + 2);
+
+	main_constructor_body = false; // sic! the main constructor in JS ends after the covenant is embedded.
+
 	/* note this must follow after the class definitions, to be able to use the main_constructor_bodys in `restorers` */
 	if (opt_persistence) {
 		if (opt_comment) padcat(2, indent + 2, production,
@@ -1643,7 +1648,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	/* if needed, create 'main' variable to provide 'this' for closures */
 	char *closure_this = mtrac_strdup("");
 
-	if (strstr(*production, "main.")) padcat(1, indent + 2, &closure_this,
+	if (strstr(*production, "main.")) padcat(2, indent + 2, &closure_this,
 						 "let main = this;");
 	replace(production, "%20%", closure_this);
 	mtrac_free(closure_this);
@@ -1749,7 +1754,7 @@ void inject_termination(char **production, char *prompt, int indent) {
 				    ".log(caller, '■ ", prompt,
 				    " terminated');");
 	padcat(1, indent, production, "}");
-	padcat(2, indent, production, "check_termination() {");
+	padcat(3, indent, production, "check_termination() {");
 	padcat(1, indent + 1, production, "if(!this.terminated) return false;");
 	if (opt_log
 	    || opt_feedback) padcat(1, indent + 2, production,
@@ -1759,6 +1764,7 @@ void inject_termination(char **production, char *prompt, int indent) {
 	padcat(1, indent, production, "}");
 
 }
+
 bool js_head(char **production, Head *Head, int indent) {
 	if (!Head) return false;
 	if (opt_debug) printf("producing Head\n");
@@ -1938,6 +1944,7 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 
 	padcat(2, indent, production, "class ", class, " {");
 	padcat(2, indent + 1, production, "constructor(%2%) {");
+
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
@@ -2066,16 +2073,15 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	if (opt_persistence
 	    && opt_comment) padcat(2, indent, production,
 				   "/* object members: skip for restoring serialized object */");
-	if (opt_persistence) padcat(1 + (opt_comment ? 0 : 1), indent++, production, "if(typeof ", main_constructor_body ? "%7%" : "caller", " !== 'undefined') {");	// (*)
+	if (opt_persistence) padcat(1 + (opt_comment ? 0 : 1), indent++, production, "if(typeof ", !class ? "%7%" : "caller", " !== 'undefined') {");	// (*)
 
-	if (main_constructor_body) padcat(1, indent, production,
-					  "this._escrow = 0;");
+	if (!class) padcat(1, indent, production, "this._escrow = 0;");
 	if (!global_definitions) global_definitions = Provisions->Definitions;
 	else covenant_definitions = Provisions->Definitions;	// (sic)
 	js_definitions(production, Provisions->Definitions, indent);
 
 	/* placeholder for this.terminated */
-	padcat(0, 0, production, main_constructor_body ? "%22%" : "%23%");
+	padcat(0, 0, production, "%22%");
 
 	if (opt_log
 	    && !class) padcat(1, indent, production, (!class ? "this" : "main"),
@@ -2103,7 +2109,9 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 
 	/* end of constructor code */
 	if (opt_persistence) padcat(1, --indent, production, "}");
-	if (!main_constructor_body) padcat(1, --indent, production, "}");	// end of constructor
+	if (class) padcat(1, --indent, production, "}");	// end of constructor
+	main_constructor_body = false;
+	covenant_constructor_body = false;
 
 	/* insert caller argumnet and 'payable' modifier */
 	replace(production, "%7%", caller ? caller : "caller");	// ! caller is not yet set at (*) above.
@@ -2114,16 +2122,13 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	/* add element this.terminated, if needed */
 	char *terminated = mtrac_strdup("");
 
-	if (uses_termination) padcat(1, indent + (main_constructor_body ? 0 : 2), &terminated, "this.terminated = false;");	// [3] ◊ unify
-	replace(production, main_constructor_body ? "%22%" : "%23%",
-		terminated);
+	if (uses_termination) padcat(1, (!class ? 2 : 4) + (opt_persistence ? 1 : 0), &terminated, "this.terminated = false;");	// [3] ◊ unify
+	replace(production, "%22%", terminated);
 	mtrac_free(terminated);
 
 	char *termination_test = mtrac_strdup("");
 
-	if (uses_termination) padcat(1,
-				     indent + (main_constructor_body ? 0 : 1),
-				     &termination_test,
+	if (uses_termination) padcat(1, class ? 4 : 2, &termination_test,
 				     "if(this.check_termination()) return undefined;");
 	replace(instance ? production : &methods,
 		main_constructor_body ? "%24%" : "%25%", termination_test);
@@ -2309,14 +2314,14 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 	if (opt_comment) padcat(3, indent, production, "/* ", Clause->Name,
 				" clause */");
 
-	/* lexon clause text as extended code comment */
+	/* clause comments from lexon clause text */
 	if (opt_lexon_comments) {
 		char *clause = snakedup(Clause->Name);
 		char *c = mtrac_strdup(get_lexcom(clause));
 
 		mtrac_free(clause);
 		assert(c);
-		if (main_constructor_body) {
+		if (!main_constructor_body && !class) {
 			replace(&c, "\n", "\n    " LEXCOM1 " ");
 			padcat(2, 0, production,
 			       "    " LEXCOM0 "\n    " LEXCOM1 " ", c,
@@ -2409,7 +2414,6 @@ bool js_function(char **production, Function *Function, int indent) {
 	return true;
 }
 
-static char *subjnonmatch = null;
 static char *subjlatebind = null;
 bool js_statements(char **production, Statements *Statements, int indent) {
 	if (!Statements) return false;
@@ -2491,19 +2495,15 @@ bool js_action(char **production, Action *Action, int indent) {
 	no_action_in_group_yet = false;
 	ever = true;
 
-	assert(!subjnonmatch);
 	assert(!subjlatebind);
-	subjnonmatch = mtrac_strdup("");
 	subjlatebind = mtrac_strdup("");
-	padcat(0, 0, production, "%11%%12%");
+	padcat(0, 0, production, "%12%");
 
 	js_subject(production, Action->Subject, indent);
 
 	/* pre-insert the non-match comparisons and late bindings */
 
-	replace(production, "%11%", subjnonmatch);	// can be ""
 	replace(production, "%12%", subjlatebind);	// can be ""
-	mtrac_free(subjnonmatch), subjnonmatch = null;
 	mtrac_free(subjlatebind), subjlatebind = null;
 
 	/* check binding of the subject */
@@ -2618,31 +2618,23 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 			// ◊ into symbol coming in here
 			char *varname = snakedup(s->Symbol->Name);
 			char *lexname = s->Symbol->Name;
-			char *scope = (!in(globals, s->Symbol->Name) && class) ? "this." : "main.";	// ◊ unite with usual 'main_constructor_body?' ?
-			char *postscope = "";
+			char *scope = (in(globals, s->Symbol->Name) && class) ? "main." : "this.";	// ◊ unite with usual 'main_constructor_body?' ?
 
-			padcat(0, 0, para, first ? "<<" : " or ", varname);	//X unite with S+S?
+			padcat(0, 0, para, first ? "<<" : " or ", varname);
+			first = false;
 
 			/* binding of unbound person variable to caller parameter */
-			if (!main_constructor_body) {
+			if (!any && !main_constructor_body) {
 				char *safe = safedup(varname);
 
-				/* precondition that caller and all of the subjects cannot be the same */
-				if (first) padcat(2, indent, &subjnonmatch,
-						  "if(caller != ", scope, safe,
-						  postscope);
-				else padcat(0, 0, &subjnonmatch,
-					    " && caller != ", scope, safe,
-					    postscope);
 				/* produce bind code. Person in question must still be null, i.e., unbound */
 				if (!in(fixed, varname)) {
-					// ◊ add error when postscope is set == assignment not in the right class
-					padcat(1, indent + 1, &subjlatebind,
-					       !any ? "" : "else ", "if(",
-					       scope, safe, " == null) ", scope,
-					       safe, " = caller;");
+					// ◊ catch attempt to set global (main) value
+					padcat(1, indent, &subjlatebind, "if(",
+					       scope, safe, " == ", "null) ",
+					       scope, safe, " = caller;");
+					padcat(0, 0, &fixed, ":", safe, ":");
 					any = true;
-					padcat(0, 0, &fixed, ":", safe, ":");	// right? ◊
 				}
 				mtrac_free(safe);
 			}
@@ -2651,16 +2643,8 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 		s = s->Symbols;
 		first = false;
 	}
-	if (strlen(*para)) padcat(0, 0, para, ">>");	// ◊ .. sometimes produces >>>>
-	if (any)
-		padcat(0, 0, &subjnonmatch, ") {"), padcat(1, indent,
-							   &subjlatebind,
-							   "}\n");
-	else
-		/* reset all when all in subjlatebind are actually constructor arguments, of the main or sub contract
-		 * This is known only after the loop has been traversed and 'any' is still false.  */
-		mtrac_free(subjnonmatch), subjnonmatch = mtrac_strdup("");
 
+	if (strlen(*para)) padcat(0, 0, para, ">>");	// ◊ .. sometimes produces >>>>
 	return true;
 }
 
@@ -2803,8 +2787,9 @@ static void assign(char **production, int indent, Symbol *symbol,
 static void log_entry(char **production, char *name, char *action, int indent) {
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
-		       ".log(", recital_of_terms ? caller : "caller",
-		       ", \"✓ ", name, " ", action, "\");");
+		       ".log(", recital_of_terms
+		       && !class ? caller : "caller", ", \"✓ ", name, " ",
+		       action, "\");");
 		if (current_function) current_function->uses_caller |= class
 				|| !strcmp(caller, "caller");
 	}
@@ -2986,7 +2971,6 @@ bool js_payment(char **production, Payment *Payment, int indent) {
 		js_from_escrow(production, Payment->From_Escrow, 0);
 	else
 		js_name(production, (Name *) subject, false, 0);
-
 	padcat(0, 0, production, ", ");
 	/* receiver */
 	if (!explicit_to_escrow) {
@@ -3005,7 +2989,7 @@ bool js_payment(char **production, Payment *Payment, int indent) {
 		payment_expression = false;
 	} else {
 		padcat(0, 0, production,
-		       main_constructor_body ? "this._escrow" : "main._escrow");
+		       !class ? "this._escrow" : "main._escrow");
 	}
 
 	padcat(0, 0, production, ")", EOL);

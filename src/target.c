@@ -2621,7 +2621,6 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		return true;
 /*T*/	}
 /*T*/
-	static char *subjnonmatch = null;
 	static char *subjlatebind = null;
 /*T*/	bool xxx_statements(char **production, Statements *Statements, int indent) {
 /*T*/		if(!Statements) return false;
@@ -2692,19 +2691,15 @@ static bool is_payment(Predicates *predicates) {
 		no_action_in_group_yet = false;
 		ever = true;
 
-		assert(!subjnonmatch);
 		assert(!subjlatebind);
-		subjnonmatch = mtrac_strdup("");
 		subjlatebind = mtrac_strdup("");
-		padcat(0, 0, production, "%11%%12%");
+		padcat(0, 0, production, "%12%");
 
 		xxx_subject(production, Action->Subject, indent);
 
 		/* pre-insert the non-match comparisons and late bindings */
 
-		replace(production, "%11%", subjnonmatch); // can be ""
 		replace(production, "%12%", subjlatebind); // can be ""
-		mtrac_free(subjnonmatch), subjnonmatch = null;
 		mtrac_free(subjlatebind), subjlatebind = null;
 
 		/* check binding of the subject */
@@ -2815,83 +2810,35 @@ static bool is_payment(Predicates *predicates) {
 /*JS */				char *scope = (in(globals, s->Symbol->Name) && class) ? "main." : "this."; // ◊ unite with usual 'main_constructor_body?' ?
 /*Sol*/				char *scope = (in(globals, s->Symbol->Name) && class) ? "main." : ""; // ◊ add putter for main
 /*Sop*/				char *scope = (in(globals, s->Symbol->Name) && class) ? "state.global." : "state.";
-/*Sol*/				char *postscope = "";
-/*Sol*/				postscope = (in(globals, s->Symbol->Name) && class) ? "()" : ""; // access main contract elements through getter
 
-/*S+S*/				padcat(0,0,para, first ? "<<" : " or ", lexname);
-/*JS */				padcat(0,0,para, first ? "<<" : " or ", varname); // ◊ unite with S+S?
+				padcat(0,0,para, first ? "<<" : " or ", varname);
+				first = false;
 
-/*JS */				/* binding of unbound person variable to caller parameter */
-/*JS */				if(!main_constructor_body) {
-/*JS */					char *safe = safedup(varname);
-/*JS */					/* precondition that caller and all of the subjects cannot be the same */
-/*JS */					if(first) padcat(1, indent, &subjnonmatch, "if(caller != ", scope, safe);
-/*JS */					else padcat(0, 0, &subjnonmatch, " && caller != ", scope, safe);
-/*JS */					/* produce bind code. Person in question must still be null, i.e., unbound */
-/*JS */					if(!in(fixed, varname)) {
-/*JS */						// ◊ add error when postscope is set == assignment not in the right class
-/*JS */						padcat(1, indent, &subjlatebind, !any ? "" : "else ", "if(", scope,
-/*JS */							safe, " == null) ", scope, safe, " = caller;");
-/*JS */						any = true;
-/*JS */						padcat(0, 0, &fixed, ":", safe, ":"); // right? ◊
-/*JS */					}
-/*JS */					mtrac_free(safe);
-/*JS */				}
-
-/*Sol*/				/* binding of unbound person variable to caller parameter */
-/*Sol*/				if(!main_constructor_body) {
-/*Sol*/					char *safe = safedup(varname);
-/*Sol*/					/* precondition that caller and all of the subjects cannot be the same */
-/*Sol*/					if(first) padcat(1, indent, &subjnonmatch, "if(msg.sender != ", scope, safe, postscope);
-/*Sol*/					else padcat(0, 0, &subjnonmatch, " && caller != ", scope, safe, postscope);
-/*Sol*/					/* produce bind code. Person in question must still be null, i.e., unbound */
-/*Sol*/					if(!in(fixed, varname)) {
-/*Sol*/						// ◊ add error when postscope is set == assignment not in the right class
-/*Sol*/						padcat(1, indent+1, &subjlatebind, !any ? "" : "else ", "if(", scope,
-/*Sol*/							safe, " == address(0x0)) ", scope, safe, " = payable(msg.sender);");
-/*Sol*/						any = true;
-/*Sol*/						padcat(0, 0, &fixed, ":", safe, ":"); // right? ◊
-/*Sol*/					}
-/*Sol*/					mtrac_free(safe);
-/*Sol*/				}
-
-/*Sop*/				/* binding of unbound person variable to caller parameter */
-/*Sop*/				if(!main_constructor_body) {
-/*Sop*/					char *safe = safedup(varname);
-/*Sop*/					const char *nullval = nullvalue(lexname, !opt_harden);
-/*Sop*/					/* precondition that caller and all of the subjects cannot be the same */
-/*Sop*/					if(first) padcat(1, indent, &subjnonmatch, "if(:§§:Call.caller:§: != ", scope, safe);
-/*Sop*/					else padcat(0, 0, &subjnonmatch, " && :§§:Call.caller:§: != ", scope, safe);
-/*Sop*/					/* produce bind code. Person in question must still be null, i.e., unbound */
-/*Sop*/					if(!in(fixed, varname)) {
-/*Sop*/						// ◊ add error when postscope is set == assignment not in the right class
-/*Sop*/						padcat(1, indent+1, &subjlatebind, !any ? "" : "else ", "if(", scope,
-/*Sop*/							safe, " == ", nullval, ") put(state{", safe, " = :§§:Call.caller:§:})");
-/*Sop*/						any = true;
-/*Sop*/						padcat(0, 0, &fixed, ":", safe, ":");
-/*Sop*/					}
-/*Sop*/					mtrac_free(safe);
-/*Sop*/				}
-
+				/* binding of unbound person variable to caller parameter */
+				if(!any && !main_constructor_body) {
+					char *safe = safedup(varname);
+					/* produce bind code. Person in question must still be null, i.e., unbound */
+					if(!in(fixed, varname)) {
+						// ◊ catch attempt to set global (main) value
+						padcat(1, indent, &subjlatebind, "if(", scope, safe, " == ",
+/*JS */							"null) ", scope, safe, " = caller;");
+/*Sol*/							"address(0x0)) ", scope, safe, " = payable(msg.sender);");
+/*Sop*/							nullvalue(lexname, !opt_harden), ") put(state{", safe, " = :§§:Call.caller:§:})");
+						padcat(0, 0, &fixed, ":", safe, ":");
+						any = true;
+					}
+					mtrac_free(safe);
+				}
 				mtrac_free(varname);
 			}
 			s = s->Symbols;
 			first = false;
 		}
+
 		if(strlen(*para)) padcat(0, 0, para, ">>"); // ◊ .. sometimes produces >>>>
 /*S+S*/		if(strlen(*para)) concat(para, " ⟶   ");
 /*S+S*/		replace(&instructions, "%26%", *para);
 /*S+S*/		mtrac_free(_para);
-
-/*Sol*/		if(any)
-/*Sol*/			padcat(0, 0, &subjnonmatch, ") {"), padcat(1, indent, &subjlatebind, "}\n");
-/*Sol*/		else
-/*Sop*/		if(any)
-/*Sop*/			padcat(0, 0, &subjnonmatch, ")");
-/*Sop*/		else
-			/* reset all when all in subjlatebind are actually constructor arguments, of the main or sub contract
-			   This is known only after the loop has been traversed and 'any' is still false.  */
-			mtrac_free(subjnonmatch), subjnonmatch = mtrac_strdup("");
 
 /*T*/		return true;
 /*T*/	}

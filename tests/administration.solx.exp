@@ -7,11 +7,11 @@ pragma solidity ^0.8.17;
  **
  **	file:        cover/administration.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     solidity 0.3.99a U
+ **	backend:     solidity 0.3.102 beta 2
  **
  **	target:      solidity 0.8.17+
  **
@@ -44,14 +44,14 @@ pragma solidity ^0.8.17;
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Manager>> ⟶   new_secretary(<secretary : address payable>)
-   • <<Manager>> ⟶   new_manager(<manager : address payable>)
+   • <<manager>> ⟶   new_secretary(<secretary : address payable>)
+   • <<manager>> ⟶   new_manager(<manager : address payable>)
 
    The following are actions that can be performed per Member.
 
    > member = administration.add_member(<member : address payable>)
-   • <<Member>> ⟶   _notify(<proposal : string>)
-   • <<Secretary>> ⟶   acknowledge()
+   • <<member>> ⟶   _notify(<proposal : string>)
+   • <<secretary>> ⟶   acknowledge()
  */
 
 /**
@@ -77,6 +77,7 @@ contract Administration {
     address payable public secretary;
     address payable public proposed_new_secretary;
     address payable public accepted_new_secretary;
+
 
     constructor(address payable _secretary) {
         manager = payable(msg.sender);
@@ -154,6 +155,7 @@ contract Member {
         address indexed _from,
         address indexed _to,
         string _message);
+
 
     constructor(Administration _main, address payable _member) {
         main = _main;

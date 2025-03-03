@@ -25,10 +25,12 @@ contract UCCFinancingStatement {
     bool digital_asset_collateral__set = false;
     bool terminated = false;
 
+
     event Message(
         address indexed _from,
         address indexed _to,
         string _message);
+
 
     constructor(address payable _filing_office, address payable _debtor, address payable _secured_party, string memory _collateral) {
         filer = payable(msg.sender);
@@ -58,6 +60,7 @@ contract UCCFinancingStatement {
     function termination() internal {
         terminated = true;
     }
+
 
     function check_termination() internal view {
         require(!terminated, "contract system terminated before");
@@ -95,8 +98,12 @@ contract UCCFinancingStatement {
     function pay_fee() public payable {
         check_termination();
         permit(secured_party);
-        reminder_fee = msg.value;
-        reminder_fee__set = true;
+        if(reminder_fee__set) {
+            require(msg.value == reminder_fee, "wrong amount");
+        } else {
+            reminder_fee = msg.value;
+            reminder_fee__set = true;
+        }
     }
 
 
@@ -119,8 +126,12 @@ contract UCCFinancingStatement {
     function pay_escrow_in() public payable {
         check_termination();
         permit(debtor);
-        digital_asset_collateral = msg.value;
-        digital_asset_collateral__set = true;
+        if(digital_asset_collateral__set) {
+            require(msg.value == digital_asset_collateral, "wrong amount");
+        } else {
+            digital_asset_collateral = msg.value;
+            digital_asset_collateral__set = true;
+        }
     }
 
 

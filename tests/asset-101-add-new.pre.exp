@@ -1,0 +1,17 @@
+
+precompilation:
+---------------
+
+asset 101 add new   1:   LEX: «Asset».
+
+asset 101 add new   3:   "«Id»" is a text.
+asset 101 add new   4:   "«Creator»" is a person.
+asset 101 add new   5:   "«Owner»" is a person.
+
+asset 101 add new   7:   The «Creator» fixes the «Id».
+asset 101 add new   8:   The «Owner» is defined as the «Creator».
+
+asset 101 add new  10:   CLAUSE: «Transfer».
+asset 101 add new  11:   The «Owner» may appoint a person as new «Owner».
+
+

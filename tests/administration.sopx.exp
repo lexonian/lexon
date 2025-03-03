@@ -4,11 +4,11 @@
  **
  **	file:        cover/administration.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
  **
- **	backend:     sophia 0.3.99a U
+ **	backend:     sophia 0.3.102 beta 2
  **
  **	target:      sophia 8+
  **
@@ -45,14 +45,14 @@
 
    These are the state progress functions that allow to interact with the contract:
 
-   • <<Manager>> ⟶   new_secretary(<secretary : option(address)>)
-   • <<Manager>> ⟶   new_manager(<manager : option(address)>)
+   • <<manager>> ⟶   new_secretary(<secretary : option(address)>)
+   • <<manager>> ⟶   new_manager(<manager : option(address)>)
 
    The following are actions that can be performed per Member.
 
    > member = administration.add_member(<member : option(address)>)
-   • <<Member>> ⟶   _notify(<proposal : option(string)>)
-   • <<Secretary>> ⟶   acknowledge()
+   • <<member>> ⟶   _notify(<proposal : option(string)>)
+   • <<secretary>> ⟶   acknowledge()
  */
 
 @compiler >=8
@@ -123,10 +123,10 @@ main contract Administration : Main =
     /* built-in caller assertion */
 
     function permit(option_authorized : option(address), name : string) =
-            switch(option_authorized)
-                None => abort(StringInternal.concat(name, " not set"))
-                Some(authorized) => if(Call.caller != authorized)
-                    abort(StringInternal.concat(name, " only"))
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
 
 
     /* New Secretary clause */
@@ -194,7 +194,7 @@ contract Member =
     stateful entrypoint _notify(proposal : string) =
         permit(state.member, "Member")
         put(state{proposal = Some(proposal)})
-        notify(Option.force_msg(state.global.manager, "Manager"), Option.force_msg( state.proposal, "Proposal"))
+        notify(Option.force_msg(state.global.manager, "Manager"), Option.force_msg(state.proposal, "Proposal"))
 
 
     /* Acknowledge clause */
@@ -211,10 +211,10 @@ contract Member =
     /* built-in caller assertion */
 
     function permit(option_authorized : option(address), name : string) =
-            switch(option_authorized)
-                None => abort(StringInternal.concat(name, " not set"))
-                Some(authorized) => if(Call.caller != authorized)
-                    abort(StringInternal.concat(name, " only"))
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
 
     /* built-in send message */
 
