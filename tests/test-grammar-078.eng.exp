@@ -504,9 +504,7 @@
                                                 ( filing file ( symbol ( type time ) ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type text ) ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinand 
@@ -646,9 +644,7 @@
                                                 ( registration register ( symbol «xyzzy» ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol ( type text ) ) 
                                                     ( expression ( combination ( combination ( combinor ( combinand 
@@ -744,9 +740,7 @@
                                                                         ( contract all-contracts ) ) ) 
                                                                 ( combinator and ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( appointment appoint ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
@@ -794,17 +788,13 @@
                                             ( predicate 
                                                 ( certification certify ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type time ) ) 
                                                     ( contract 
                                                         ( this-contract «bar» ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type text ) ) ) ) 
+                                                ( setting be ( symbol ( type text ) ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type person ) ) 
                                                     ( contract 
@@ -1079,9 +1069,7 @@
                                                     preposition 
                                                     ( object ( symbol ( type data ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «xyzzy» ) ) ) ) 

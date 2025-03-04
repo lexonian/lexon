@@ -11,7 +11,7 @@ TERMS PER Corge Waldo:.
 "Corge Waldo" is this Bar.
 "Corge Waldo" is this Bar.
 "Corge Waldo" is this Bar.
-This Bar Is defined as Then therefore time.
+This Bar Is Then therefore time.
 
 TERMS PER Corge Waldo:.
 
@@ -20,16 +20,16 @@ An "Corge Waldo" is this Bar.
 "Corge Waldo" is this Bar.
 
 CLAUSE: Garply.
-"Garply" is defined: Binary, an binary has been declared.
+"Garply" is: Binary, an binary has been declared.
 
 CLAUSE: Garply Waldo.
 Person May given that text past nor the person was signed off certifies this Bar the Garply Waldo.
 
 CLAUSE: Fred.
-Is defined as Therefore binary.
+Is Therefore binary.
 
 CLAUSE: Fred Waldo.
-"Fred Waldo" is defined as: Fred Waldo has passed Or The Fred Waldo And The current time, is past nor the current time nor Fred Waldo has been filed for or data past.
+"Fred Waldo" is: Fred Waldo has passed Or The Fred Waldo And The current time, is past nor the current time nor Fred Waldo has been filed for or data past.
 
 TERMS PER Fred Waldo:.
 
@@ -42,4 +42,4 @@ An "Fred Waldo" is a time.
 "Fred Waldo" is this Bar.
 
 CLAUSE: Xyzzy.
-"Xyzzy" is defined: Past.
+"Xyzzy" is: Past.

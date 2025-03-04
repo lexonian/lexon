@@ -117,9 +117,7 @@
                                                         ( symbol «bar» ) ) ) ) 
                                             ( combinator or- ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -175,9 +173,7 @@
                                             ( symbols ( symbol ( type amount ) ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «corge-plugh» ) ) ) 
+                                                ( setting be ( symbol «corge-plugh» ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol «corge-plugh» ) ) ) 
                                             ( predicate 
@@ -469,13 +465,9 @@
                                                     ( object reflexive ) 
                                                     from-escrow ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «garply» ) ) ) 
+                                                ( setting be ( symbol «garply» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «garply» ) ) ) 
+                                                ( setting be ( symbol «garply» ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand 
@@ -538,9 +530,7 @@
                                                             be ) ) 
                                                     ( combinator and ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol ( type person ) ) 
                                         ( contract all-contracts ) ) ) 

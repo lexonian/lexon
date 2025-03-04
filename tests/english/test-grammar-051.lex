@@ -4,7 +4,7 @@ PREAMBLE:  Aenean commodo.
 
 TERMS:
 "Bar" is a data.
-Be defined as Then the person.
+Be Then the person.
 
 PER Baz:.
 

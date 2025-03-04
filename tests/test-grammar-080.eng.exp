@@ -24,9 +24,7 @@
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type time ) ) ) ) 
+                                ( setting be ( symbol ( type time ) ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combinor ( combinor ( combinand expiration ) ) 
@@ -41,18 +39,14 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol ( type binary ) ) 
                                     ( contract 
@@ -92,9 +86,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type data ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
@@ -112,9 +104,7 @@
                                                 ( combinator neither ) ) 
                                             ( combinator neither ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol ( type data ) ) 
                                     ( contract all-contracts ) ) ) 
@@ -419,9 +409,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type time ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type time ) ) ) ) 
+                                ( setting be ( symbol ( type time ) ) ) ) 
                             ( predicate 
                                 ( payment pay 
                                     ( expression ( combination ( combination ( combination ( combinor ( combinand 
@@ -515,22 +503,16 @@
                                             ( combinor ( combinand expiration ) ) 
                                             ( combinator and ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( notification notify 
                                     ( object ) 
                                     preposition 
                                     ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type data ) ) ) ) 
                             ( predicate 

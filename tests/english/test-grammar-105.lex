@@ -12,4 +12,4 @@ PER Baz:.
 A "Baz" is person.
 An "Baz" is the person.
 "Baz" is the text.
-This Bar Be as The Baz.
+This Bar Be The Baz.

@@ -68,9 +68,7 @@
                             ( predicate 
                                 ( registration register ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( payment pay 
                                     ( expression ( combination ( combination ( combination ( combinor ( combinand ( symbol «bar» ) ) ) ) 
@@ -298,9 +296,7 @@
                                     ( object ( symbol ( type data ) ) ) 
                                     escrow ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( payment pay 
                                     ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -349,9 +345,7 @@
                                             ( combinor ( combinand 
                                                     ( point-in-time current-time ) ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( certification certify ( symbol ( type time ) ) 
                                     ( contract all-contracts ) ) ) 

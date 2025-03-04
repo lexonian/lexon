@@ -130,9 +130,7 @@
                                                 ( combinor ( combinand expiration ) ) 
                                                 ( combinator neither ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «fred-grault» ) ) ) 
+                                    ( setting be ( symbol «fred-grault» ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol ( type amount ) ) 
                                         ( expression ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
@@ -352,9 +350,7 @@
                                 ( predicate 
                                     ( appointment appoint ( symbol «fred-grault» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «fred-grault» ) ) ) 
+                                    ( setting be ( symbol «fred-grault» ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol «fred-grault» ) ) ) 
                                 ( predicate 
@@ -363,9 +359,7 @@
                                 ( predicate 
                                     ( grantment grant ( symbol ( type time ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) ) 
                             permission 
                             ( condition if 
                                 ( expression ( combination ( combination ( combinor ( combinor ( combinand 
@@ -1059,9 +1053,7 @@
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) ) 
                             permission 
                             ( condition if 
                                 ( expression ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 

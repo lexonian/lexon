@@ -412,7 +412,7 @@ typedef struct Fixed {
 } Fixed;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
 	Literal *Literal;
 } Setting;
@@ -1563,8 +1563,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	
 	Appointment:	
 		  Appoint Symbol                                  { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; $$=process_appointment(Appointment); }
-		| Appoint Symbol Expression                       { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
-		| Appoint Symbol AS Expression                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
+		| Appoint Expression AS Symbol                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Expression=$Expression; Appointment->Symbol=$Symbol; $$=process_appointment(Appointment); }
 		;
 
 
@@ -1613,12 +1612,12 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 
 	
 	Setting:	
-		  Illocutor Symbol                                { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEREFOR Symbol                       { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEREFORE Symbol                      { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEN Symbol                           { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEN THEREFOR Symbol                  { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEN THEREFORE Symbol                 { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		  Be Symbol                                       { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEREFOR Symbol                              { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEREFORE Symbol                             { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEN Symbol                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEN THEREFOR Symbol                         { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEN THEREFORE Symbol                        { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
 		;
 
 
@@ -2612,7 +2611,7 @@ Fixed *process_fixed(Fixed *Fixed) {
 
 Setting *process_setting(Setting *Setting) {
 	if(opt_debug_actions) printf("actions: parsing Setting '%s'\n", Setting->Literal);
-	// Setting->Illocutor
+	// Setting->Be
 	// Setting->Symbol
 	return Setting;
 }

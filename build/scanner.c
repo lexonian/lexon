@@ -5694,7 +5694,7 @@ char *yytext;
 #endif
 
 #define program_vers "0.3 beta 2"
-#define grammar_vers "0.2.20 / subset 0.3.9 beta 1 - English / Reyes"
+#define grammar_vers "0.2.20 / subset 0.3.11 beta 3 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
 #define slug program_name " " program_vers
@@ -12533,7 +12533,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
-	replace(&src, "0.2.20 / subset 0.3.9 beta 1 - English / Reyes", grammar_version);
+	replace(&src, "0.2.20 / subset 0.3.11 beta 3 - English / Reyes", grammar_version);
 	char *src_imbue = str_escape(src, "own");
 
 	/* read grammer file */
@@ -12947,7 +12947,7 @@ const char *own =
 	"#endif\n"
 	"\n"
 	"#define program_vers \"0.3 beta 2\"\n"
-	"#define grammar_vers \"0.2.20 / subset 0.3.9 beta 1 - English / Reyes\"\n"
+	"#define grammar_vers \"0.2.20 / subset 0.3.11 beta 3 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
 	"#define slug program_name \" \" program_vers\n"
@@ -16941,7 +16941,7 @@ const char *own =
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
-	"	replace(&src, \"0.2.20 / subset 0.3.9 beta 1 - English / Reyes\", grammar_version);\n"
+	"	replace(&src, \"0.2.20 / subset 0.3.11 beta 3 - English / Reyes\", grammar_version);\n"
 	"	char *src_imbue = str_escape(src, \"own\");\n"
 	"\n"
 	"	/* read grammer file */\n"
@@ -17323,7 +17323,7 @@ const char *owngrm =
 	"##\n"
 	"##	english.lgf — Lexon controlled English grammar\n"
 	"##\n"
-	"##	Version 0.2.20 / subset 0.3.9 beta 1 - English / Reyes\n"
+	"##	Version 0.2.20 / subset 0.3.11 beta 3 - English / Reyes\n"
 	"##\n"
 	"##	This document is in Lexon Grammar Form, a variation of BNF.\n"
 	"##	Square brackets indicate optionality, 'or' separates variants.\n"
@@ -17511,7 +17511,8 @@ const char *owngrm =
 	"\n"
 	"## APPOINTMENT PREDICATE\n"
 	"\n"
-	"   appointment:	appoint symbol [[\"as\"] expression]\n"
+	"   appointment:	appoint symbol\n"
+	"   		or appoint expression \"as\" symbol\n"
 	"\n"
 	"   appoint:	\"appoint\" or \"appoints\"\n"
 	"\n"
@@ -17535,7 +17536,7 @@ const char *owngrm =
 	"\n"
 	"## FIXTURE PREDICATE / PASSIVE\n"
 	"\n"
-	"   setting:	illocutor [\"then\"] [\"therefor\"[\"e\"]] symbol\n"
+	"   setting:	be [\"then\"] [\"therefor\"[\"e\"]] symbol\n"
 	"\n"
 	"   illocutor: 	be [\"defined\"] [\"as\"]\n"
 	"\n"

@@ -4,9 +4,9 @@ PREAMBLE:  Aenean commodo.
 
 TERMS:
 "Bar" is data.
-This Bar Is defined Then the binary.
-Is defined Then Bar.
+This Bar Is Then the binary.
+Is Then Bar.
 
 TERMS PER Xyzzy:
 "Xyzzy" is this Bar.
-This Bar Is as Then therefore a Xyzzy.
+This Bar Is Then therefore a Xyzzy.

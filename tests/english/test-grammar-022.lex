@@ -5,7 +5,7 @@ PREAMBLE:  Aenean commodo.
 TERMS:
 "Bar" is data.
 A data May, file data an Bar is past, neither not Bar, and if so afterwards pay a data neither an Bar from escrow into the Bar, if so afterwards send has passed nor person is past or is past and 123 being equal to 123, Bar past neither the then current time lies at the least 123 and Bar being equal fixed into the person.
-Be defined Therefore Bar.
+Be Therefore Bar.
 
 PER Fred:.
 
@@ -27,10 +27,10 @@ PER Fred:.
 TERMS PER Fred:.
 
 "Fred" is a text.
-Amount May given that Fred equal to fixed, text neither has passed or person is equal fixed, there be person then: Register an binary as Fred has passed, and if so afterwards is as therefor an data.
+Amount May given that Fred equal to fixed, text neither has passed or person is equal fixed, there be person then: Register an binary as Fred has passed, and if so afterwards is therefor an data.
 
 CLAUSE: Fred Qux.
-This Bar Be defined as Then therefore time.
+This Bar Be Then therefore time.
 
 TERMS PER Fred Qux:
 "Fred Qux" is an text.

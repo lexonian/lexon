@@ -210,9 +210,7 @@
                                                 ( combinator and ) ) 
                                             ( combinator neither ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combinor ( combinand 
@@ -328,9 +326,7 @@
                                     ( expression ( combination ( combinor ( combinand ( symbol «bar» ) 
                                                     expiration ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( termination terminate 
                                     ( this-contract «bar» ) ) ) 
@@ -360,9 +356,7 @@
                             ( predicate 
                                 ( fixture fix ( symbol ( type amount ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
@@ -451,9 +445,7 @@
                                     ( object ) 
                                     escrow ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( certification certify ( symbol «bar» ) 
                                     ( contract all-contracts ) ) ) 
@@ -650,18 +642,14 @@
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type binary ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply-corge» ) ) ) 
+                                    ( setting be ( symbol «garply-corge» ) ) ) 
                                 ( predicate 
                                     ( certification certify ( symbol «garply-corge» ) 
                                         ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -877,9 +865,7 @@
                                     ( fixture fix ( symbol «garply-corge» ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply-corge» ) ) ) 
+                                    ( setting be ( symbol «garply-corge» ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol ( type person ) ) 
                                         ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -1119,9 +1105,7 @@
                                                         expiration ) 
                                                     ( combinator and ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply-corge» ) ) ) 
+                                    ( setting be ( symbol «garply-corge» ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type binary ) ) 
                                         ( contract 

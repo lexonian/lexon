@@ -307,9 +307,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «foo-bar» ) ) ) 
+                                    ( setting be ( symbol «foo-bar» ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol «foo-bar» ) ) 
@@ -687,9 +685,7 @@
                                 ( predicate 
                                     ( filing file ( symbol «foo-bar» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «foo-bar» ) ) ) 
+                                    ( setting be ( symbol «foo-bar» ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type time ) ) 
                                         ( expression ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -817,9 +813,7 @@
                                     ( registration register ( symbol ( type text ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type text ) ) ) ) 
+                                    ( setting be ( symbol ( type text ) ) ) ) 
                                 ( predicate 
                                     ( certification certify ( symbol ( type amount ) ) 
                                         ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand 
@@ -921,16 +915,12 @@
                                 ( predicate 
                                     ( appointment appoint ( symbol ( type time ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «foo-bar» ) ) ) 
+                                    ( setting be ( symbol «foo-bar» ) ) ) 
                                 ( predicate 
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( fixture fix ( symbol ( type person ) ) 
                                         ( contract 

@@ -26,9 +26,7 @@
                                 ( fixture fix ( symbol «thud-garply» ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
                                 ( appointment appoint ( symbol «thud-garply» ) ) ) 
                             ( predicate 
@@ -49,9 +47,7 @@
                                                     ( existence ( symbol «thud-garply» ) 
                                                         being true ) ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «thud-garply» ) ) ) 
+                                ( setting be ( symbol «thud-garply» ) ) ) 
                             ( predicate 
                                 ( appointment appoint ( symbol ( type binary ) ) ) ) ) 
                         permission 
@@ -130,9 +126,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol ( type person ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «foo-bar» ) ) ) 
+                                                ( setting be ( symbol «foo-bar» ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type data ) ) 
                                                     ( contract all-contracts ) ) ) 
@@ -274,9 +268,7 @@
                                             ( predicate 
                                                 ( certification certify ( symbol «foo-bar» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( termination terminate 
                                                     ( this-contract «bar» ) ) ) 

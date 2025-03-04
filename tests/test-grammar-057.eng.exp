@@ -171,9 +171,7 @@
                                     catena ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol «garply» ) 
                                         ( expression ( combination ( combinor ( combinor ( combinand 
@@ -389,9 +387,7 @@
                                 ( predicate 
                                     ( certification certify ( symbol ( type data ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol «garply» ) ) ) 
                                 ( predicate 
@@ -955,9 +951,7 @@
                                             ( predicate 
                                                 ( fixture fix ( symbol «fred» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol «fred» ) ) ) 
                                             ( predicate 
@@ -1031,9 +1025,7 @@
                                                 ( termination terminate 
                                                     ( this-contract «bar» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol ( type text ) ) 
                                                     ( contract all-contracts ) ) ) 
@@ -1123,9 +1115,7 @@
                                                 ( certification certify ( symbol ( type amount ) ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -1520,9 +1510,7 @@
                                                     ( expression ( combination ( combinor ( combinand 
                                                                     ( point-in-time current-time ) ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type amount ) ) ) ) 
+                                                ( setting be ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
                                                 ( certification certify ( symbol «fred» ) 
                                                     ( expression ( combination ( combinor ( combinand 
@@ -1667,15 +1655,11 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «fred» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol «fred» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type amount ) ) ) ) 
+                                                ( setting be ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combinor ( combinand 
@@ -1803,9 +1787,7 @@
                                             ( predicate 
                                                 ( fixture fix ( symbol «fred» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( certification certify ( symbol ( type person ) ) ) ) 
                                             ( predicate 

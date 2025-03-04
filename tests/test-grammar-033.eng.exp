@@ -64,15 +64,11 @@
                                 ( predicate 
                                     ( filing file ( symbol «xyzzy» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type amount ) ) ) ) 
+                                    ( setting be ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «xyzzy» ) ) ) 
+                                    ( setting be ( symbol «xyzzy» ) ) ) 
                                 ( predicate 
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 

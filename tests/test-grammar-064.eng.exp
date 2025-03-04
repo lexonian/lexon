@@ -106,9 +106,7 @@
                                 ( certification certify ( symbol «bar» ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( declaration declare ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -216,9 +214,7 @@
                                     ( object ) 
                                     escrow ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol ( type amount ) ) 
                                     ( contract all-contracts ) ) ) 
@@ -250,9 +246,7 @@
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -342,9 +336,7 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) ) 
                         permission 
                         ( condition if 
                             ( expression ( combination ( combination ( combinor ( combinand ( symbol «bar» ) 

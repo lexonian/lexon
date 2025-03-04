@@ -8,7 +8,7 @@
  **
  **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.10 beta 2 - English / Reyes
  **
  **	backend:     javascript 0.3.102 beta 2
  **
@@ -66,7 +66,7 @@
    > statement.triple_certify(<<secured_party or filing_office or filer>>, <file_number><<filing_office or filer>>, <filing_office><<filing_office>>, <reminder_fee>)
    > statement.value_certify(<<filing_office>>, <reminder_fee>)
    > statement.alternate_certify(<<filer>>, <file_number><<filing_office>>, <filing_office>)
-   > statement.super_certify(<<filing_office or filer>>, <file_number><<filer or filer>>, <filing_office><<filer>><<filer>>, <filer><<filing_office>>)
+   > statement.super_certify(<<filing_office or filer>>, <file_number><<debtor or filer>><<filer>><<filer>>, <filer><<filing_office>>, <filing_office>)
    > statement.set_file_date(<<filing_office>>)
    > statement.set_lapse(<<filing_office>>, <lapse_date>)
    > statement.set_continuation_start(<<filing_office>>, <continuation_window_start>)
@@ -304,21 +304,21 @@ module.exports = class UCCFinancingStatement {
     /*
      |  Clause: Super Certify.
      |  The Filer or the Filing Office may certify the File Number.
-     |  The Filer or the Filer may appoint the Filing Office as themselves. 
+     |  The Filer or the Debtor may appoint themselves as the Filing Office.
      |  The Filer may certify the File Number.
      |  The Filer may certify the Filer.
      |  The Filing Office may appoint a Filing Office.
      */
 
-    super_certify(caller, file_number, filing_office, filer)  {
+    super_certify(caller, file_number, filer, filing_office)  {
         if(this.check_termination()) return undefined;
-        if(!(caller == this.filing_office || caller == this.filer)) return 'not permitted';
+        if(!(caller == this.filing_office || caller == this.filer || caller == this.debtor)) return 'not permitted';
         if(caller == this.filing_office || caller == this.filer) {
             this.file_number = file_number;
             this.log(caller, "✓ File Number certified");
         }
-        if(caller == this.filer || caller == this.filer) {
-            this.filing_office = filing_office;
+        if(caller == this.debtor || caller == this.filer) {
+            this.filing_office = caller;
             this.log(caller, "✓ Filing Office appointed");
         }
         if(caller == this.filer) {

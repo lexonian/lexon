@@ -29,6 +29,7 @@
 #include <assert.h>
 
 #define EOL ";"
+#define CALLER "caller"
 
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
@@ -681,8 +682,9 @@ typedef struct Fix {
 } Fix;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
+	Literal *Literal;
 } Setting;
 
 typedef struct Illocutor {
@@ -832,6 +834,7 @@ typedef struct Combinand {
 	struct Negation *Negation;
 	struct Existence *Existence;
 	struct Point_In_Time *Point_In_Time;
+	Literal *Literal;
 } Combinand;
 
 typedef struct Combinator {
@@ -2714,21 +2717,17 @@ bool js_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	assert(action);
 	assert(action->Subject);
 	assert(action->Subject->Symbols);
+	/* no subject */
 	if (!action->Subject->Symbols->Symbol)
 		error("missing subject for reflexive pronoun ",
 		      Reflexive->Literal);
+	/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 	if (action->Subject->Symbols->Symbols) {
-		char *msg = mtrac_strdup("");
-
-		concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-		       action->Subject->Symbols->Symbols->Symbol->Name, " / ",
-		       Reflexive->Literal, ")");
-		error("don't use multiple subjects with a reflexive pronoun",
-		      msg);
-		mtrac_free(msg);
-	}
-	js_symbol(production, action->Subject->Symbols->Symbol, false,
-		  indent + 1);
+		padcat(0, 0, production, CALLER);
+		if (current_function) current_function->uses_caller = true;
+	} else
+		js_symbol(production, action->Subject->Symbols->Symbol, false,
+			  indent + 1);
 
 	return true;
 }
@@ -2897,9 +2896,13 @@ bool js_appointment(char **production, Appointment *Appointment, int indent) {
 	if (!Appointment) return false;
 	if (opt_debug) printf("producing Appointment\n");
 
-	insert_parameter_and_set_member(production, &instructions,
-					Appointment->Symbol, false, paratag,
-					indent, __LINE__);
+	if (Appointment->Expression)
+		assign(production, indent, Appointment->Symbol,
+		       Appointment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Appointment->Symbol, false,
+						paratag, indent, __LINE__);
 
 	log_entry(production, Appointment->Symbol->Name, "appointed", indent);
 
@@ -2942,9 +2945,20 @@ bool js_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 
-	assign(production, indent, Setting->Symbol, null);	// null -> set true
+	padcat(1, indent, production, "");
 
-	log_entry(production, Setting->Symbol->Name, "state set", indent);
+	js_symbol(production, action->Subject->Symbols->Symbol, true, indent + 1);	// true --> assign flag
+	padcat(0, 0, production, " = ");
+
+	if (Setting->Symbol)
+		js_symbol(production, Setting->Symbol, false, indent + 1);
+	else
+		padcat(0, 0, production, "true");
+
+	padcat(0, 0, production, EOL);
+
+	log_entry(production, action->Subject->Symbols->Symbol->Name, "set",
+		  indent);
 
 	return true;
 }
@@ -3172,6 +3186,7 @@ bool js_if(char **production, If *If, int indent) {
 bool js_expression(char **production, Expression *Expression, int indent) {
 	if (!Expression) return false;
 	if (opt_debug) printf("producing Expression\n");
+
 	js_combination(production, Expression->Combination, indent + 1);
 	return true;
 }
@@ -3338,14 +3353,15 @@ bool js_combinand(char **production, Combinand *Combinand, int indent) {
 		}
 		mtrac_free(varname);
 	}
-	js_expiration(production, Combinand->Expiration, indent + 1);
 	js_timeliness(production, Combinand->Timeliness, indent + 1);
+	js_reflexive(production, Combinand->Reflexive, indent + 1);
 	js_description(production, Combinand->Description, indent + 1);
 	js_scalar_comparison(production, Combinand->Scalar_Comparison,
 			     indent + 1);
 	js_negation(production, Combinand->Negation, indent + 1);
 	js_existence(production, Combinand->Existence, indent + 1);
 	js_point_in_time(production, Combinand->Point_In_Time, indent + 1);
+	js_expiration(production, Combinand->Expiration, indent + 1);
 
 	return true;
 }

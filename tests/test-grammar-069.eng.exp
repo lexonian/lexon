@@ -24,13 +24,9 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type data ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
@@ -118,9 +114,7 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type data ) ) ) ) ) 
+                                ( setting be ( symbol ( type data ) ) ) ) ) 
                         permission 
                         ( condition if 
                             ( expression ( combination ( combinor ( combinor ( combinand 
@@ -258,9 +252,7 @@
                                             ( symbols ( symbol ( type person ) ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol «qux» ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 

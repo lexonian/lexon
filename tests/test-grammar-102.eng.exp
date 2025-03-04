@@ -595,9 +595,7 @@
                                 ( certification certify ( symbol «grault-garply» ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol «grault-garply» ) 
                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «grault-garply» ) 
@@ -1292,9 +1290,7 @@
                             ( predicate 
                                 ( grantment grant ( symbol «grault-garply» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «grault-garply» ) ) ) 
+                                ( setting be ( symbol «grault-garply» ) ) ) 
                             ( predicate 
                                 ( declaration declare ( symbol ( type data ) ) 
                                     ( expression ( combination ( combinor ( combinand 
@@ -1412,9 +1408,7 @@
                                                         ( contract all-contracts ) ) ) 
                                                 ( combinator and ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( notification notify 
                                     ( object reflexive ) 
@@ -1534,9 +1528,7 @@
                                                 ( combinator and ) ) 
                                             ( combinator neither ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol ( type text ) ) 
                                     ( contract 
@@ -1658,9 +1650,7 @@
                                     ( object reflexive ) 
                                     from-escrow ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «grault-garply» ) ) ) 
+                                ( setting be ( symbol «grault-garply» ) ) ) 
                             ( predicate 
                                 ( certification certify ( symbol ( type data ) ) ) ) 
                             ( predicate 
@@ -2040,9 +2030,7 @@
                             ( predicate 
                                 ( grantment grant ( symbol «grault-garply» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «grault-garply» ) ) ) 
+                                ( setting be ( symbol «grault-garply» ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type binary ) ) ) ) 
                             ( predicate 
@@ -2057,9 +2045,7 @@
                             ( predicate 
                                 ( certification certify ( symbol ( type binary ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( payment pay preposition 
                                     ( object ) 
@@ -2827,9 +2813,7 @@
                                                                     ( time-unit years ) ) ) ) ) ) 
                                                 ( combinator neither ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «grault-garply» ) ) ) 
+                                    ( setting be ( symbol «grault-garply» ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type amount ) ) 
                                         ( expression ( combination ( combinor ( combinand 
@@ -2954,9 +2938,7 @@
                                                     ( combinand ( symbol «grault-garply» ) ) 
                                                     ( combinator neither ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type text ) ) ) ) 
+                                    ( setting be ( symbol ( type text ) ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol ( type binary ) ) 
                                         ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) 

@@ -64,9 +64,7 @@
                                         ( object reflexive ) 
                                         from-escrow ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol «corge» ) ) ) 
                                 ( predicate 
@@ -202,9 +200,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 
@@ -313,9 +309,7 @@
                                                             being true ) ) ) 
                                                 ( combinator or- ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type time ) ) 
                                         ( contract all-contracts ) ) ) 
@@ -890,9 +884,7 @@
                                                     ( combinand expiration ) 
                                                     ( combinator nor ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type text ) ) ) ) ) 
+                                    ( setting be ( symbol ( type text ) ) ) ) ) 
                             permission 
                             ( condition if 
                                 ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -1155,9 +1147,7 @@
                                                                 ( this-contract «bar» ) ) ) ) ) 
                                                 ( combinator and ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) ) 
                             permission 
                             ( condition if 
                                 ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
@@ -1592,9 +1582,7 @@
                                         ( expression ( combination ( combinor ( combinand 
                                                         ( point-in-time current-time ) ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «xyzzy» ) ) ) 
+                                    ( setting be ( symbol «xyzzy» ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol ( type person ) ) ) 
@@ -1740,9 +1728,7 @@
                                             ( symbols ( symbol ( type data ) ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol «corge» ) ) ) 
                                             ( predicate 

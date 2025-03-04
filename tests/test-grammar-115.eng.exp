@@ -180,9 +180,7 @@
                                                 preposition 
                                                 ( object ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol ( type amount ) ) ) ) 
+                                            ( setting be ( symbol ( type amount ) ) ) ) 
                                         ( predicate 
                                             ( registration register ( symbol «foo-bar» ) 
                                                 ( contract 
@@ -212,9 +210,7 @@
                                                 preposition 
                                                 ( object ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol ( type binary ) ) ) ) ) 
+                                            ( setting be ( symbol ( type binary ) ) ) ) ) 
                                     permission 
                                     ( condition if 
                                         ( expression ( combination ( combination ( combinor ( combinand 
@@ -240,9 +236,7 @@
                                                             ( combinand expiration ) 
                                                             ( combinator and ) ) ) ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol «foo-bar» ) ) ) 
+                                            ( setting be ( symbol «foo-bar» ) ) ) 
                                         ( predicate 
                                             ( payment pay 
                                                 ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol «foo-bar» ) 
@@ -451,9 +445,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type person ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type time ) ) ) ) ) 
+                                ( setting be ( symbol ( type time ) ) ) ) ) 
                         permission 
                         ( condition if 
                             ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -696,9 +688,7 @@
                                 ( symbols ( symbol ( type time ) ) ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «foo-bar» ) ) ) 
+                                    ( setting be ( symbol «foo-bar» ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 

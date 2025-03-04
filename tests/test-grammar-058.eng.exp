@@ -16,9 +16,7 @@
                                 catena ) ) 
                         ( predicates 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( certification certify ( symbol «bar» ) 
                                     ( contract 
@@ -191,9 +189,7 @@
                             ( predicate 
                                 ( registration register ( symbol ( type time ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type amount ) ) ) ) 
                             ( predicate 
@@ -239,9 +235,7 @@
                                                     ( point-in-time current-time ) ) 
                                                 ( combinator neither ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( notification notify 
                                     ( object reflexive ) 

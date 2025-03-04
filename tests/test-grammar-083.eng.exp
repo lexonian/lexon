@@ -310,9 +310,7 @@
                                 ( predicate 
                                     ( grantment grant ( symbol «thud-qux» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( payment pay 
                                         ( expression ( combination ( combinor ( combinor ( combinor ( combinand expiration ) ) 
@@ -599,9 +597,7 @@
                                             ( predicate 
                                                 ( termination terminate all-contracts ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type text ) ) ) ) 
+                                                ( setting be ( symbol ( type text ) ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 
@@ -626,9 +622,7 @@
                                                                 ( combinator and ) ) 
                                                             ( combinor ( combinand ( symbol «garply» ) ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type amount ) ) ) ) 
+                                                ( setting be ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
@@ -660,9 +654,7 @@
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type time ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 

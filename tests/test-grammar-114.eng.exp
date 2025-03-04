@@ -300,9 +300,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «qux-xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «qux-xyzzy» ) ) ) 
+                                                ( setting be ( symbol «qux-xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -433,9 +431,7 @@
                                                     ( expression ( combination ( combinor ( combinand ( symbol «qux-xyzzy» ) 
                                                                     expiration ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol «qux-xyzzy» ) 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -534,9 +530,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «qux-xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type text ) ) ) ) 
+                                                ( setting be ( symbol ( type text ) ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol ( type text ) ) ) ) 
                                             ( predicate 
@@ -1235,9 +1229,7 @@
                                                     preposition 
                                                     ( object ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «garply-xyzzy-bar» ) ) ) 
+                                                ( setting be ( symbol «garply-xyzzy-bar» ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type data ) ) 
                                                     ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand ( symbol «garply-xyzzy-bar» ) ) ) 
@@ -1430,9 +1422,7 @@
                                             ( predicate 
                                                 ( fixture fix ( symbol «fred» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol «fred» ) 
                                                     ( contract all-contracts ) ) ) 
@@ -1897,17 +1887,11 @@
                                                 ( termination terminate 
                                                     ( this-contract «thud-plugh» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
@@ -1930,9 +1914,7 @@
                                                                         ( contract 
                                                                             ( this-contract «thud-plugh» ) ) ) ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 
@@ -1986,9 +1968,7 @@
                                                 ( registration register ( symbol ( type binary ) ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type binary ) ) ) ) ) 

@@ -9,9 +9,9 @@ An Bar, an Bar May if data or the Bar not fixed or an Bar has passed, and is pas
 TERMS PER Qux Grault:
 A "Qux Grault" is this Bar.
 "Qux Grault" is an binary.
-This Bar Be defined as Then Qux Grault.
+This Bar Be Then Qux Grault.
 Is Then therefore a time.
-Be defined A text.
+Be A text.
 
 CLAUSE: Corge.
-A "Corge" be defined as the current time is at least 123 nor 123 lies at the least an text minutes past, or there not an Corge and past.
+A "Corge" be the current time is at least 123 nor 123 lies at the least an text minutes past, or there not an Corge and past.

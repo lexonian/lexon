@@ -8,7 +8,7 @@ This Bar Be An Bar.
 
 TERMS PER Fred:
 "Fred" is this Bar.
-Is as Then therefore a data.
+Is Then therefore a data.
 
 CLAUSE: Plugh Qux.
 This Bar Is Then therefore time.
@@ -22,18 +22,18 @@ CLAUSE: Thud Qux.
 
 PER Thud Qux:
 "Thud Qux" is time.
-Be as Then an text.
+Be Then an text.
 An amount Or Thud Qux May, file for all contracts Thud Qux.
-An data Or the time May, given that no an Thud Qux neither an Thud Qux has passed and an Thud Qux has passed nor Thud Qux is past then,: Grants person, and with this certifies Thud Qux, and also notify person to time is at least 123 neither is no an time, an text has passed, neither an binary being equal to the respective then current time nor 123 lies at the least the respective then current time, be not binary, all contracts be no a data nor the respective current time minutes in the past days past Thud Qux neither has passed, and also afterwards fixes an binary as past or person past nor the respective current time, and if so fixes an data, and also if so pay escrow into Thud Qux, and grants Thud Qux, and with this be defined therefore time, and afterwards pays a amount is past nor the Thud Qux is true and past to myself, if so grant a Thud Qux, afterwards notifies escrow to Thud Qux, there be a Thud Qux or 123 minutes past the Thud Qux is the current time, 123 millisecond in the past and the respective current time.
+An data Or the time May, given that no an Thud Qux neither an Thud Qux has passed and an Thud Qux has passed nor Thud Qux is past then,: Grants person, and with this certifies Thud Qux, and also notify person to time is at least 123 neither is no an time, an text has passed, neither an binary being equal to the respective then current time nor 123 lies at the least the respective then current time, be not binary, all contracts be no a data nor the respective current time minutes in the past days past Thud Qux neither has passed, and also afterwards fixes an binary as past or person past nor the respective current time, and if so fixes an data, and also if so pay escrow into Thud Qux, and grants Thud Qux, and with this be therefore time, and afterwards pays a amount is past nor the Thud Qux is true and past to myself, if so grant a Thud Qux, afterwards notifies escrow to Thud Qux, there be a Thud Qux or 123 minutes past the Thud Qux is the current time, 123 millisecond in the past and the respective current time.
 
 CLAUSE: Foo Bar.
-Be defined Therefore text.
+Be Therefore text.
 
 CLAUSE: Foo Corge Bar.
-A "Foo Corge Bar" be as past, nor text and the Foo Corge Bar is at the least the Foo Corge Bar and a person nor there is Foo Corge Bar, a Foo Corge Bar nor there is a Foo Corge Bar.
+A "Foo Corge Bar" be past, nor text and the Foo Corge Bar is at the least the Foo Corge Bar and a person nor there is Foo Corge Bar, a Foo Corge Bar nor there is a Foo Corge Bar.
 
 CLAUSE: Baz.
-This Bar Be defined Therefore Baz.
+This Bar Be Therefore Baz.
 
 PER Baz:
 The "Baz" is a text.
@@ -48,14 +48,14 @@ An "Baz" is binary.
 The Baz Or the text Or an Baz May appoint text, if so terminate all contracts.
 
 CLAUSE: Qux Corge.
-The "Qux Corge" is defined is past or an Qux Corge past neither there no data.
+The "Qux Corge" is is past or an Qux Corge past neither there no data.
 
 CLAUSE: Corge.
-This Bar Is defined as Therefore data.
+This Bar Is Therefore data.
 
 CLAUSE: Grault Corge.
 The text Or a text May, declares this Bar amount, if so notify text into a Grault Corge past and a Grault Corge is at the least the current time minute past second in the past Grault Corge, the respective current time, is no binary and there not Grault Corge, 123 days in the past and the text is equal fixed, and past.
-Is as Then Grault Corge.
+Is Then Grault Corge.
 Is Therefore time.
 
 CLAUSE: Garply.

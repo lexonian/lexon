@@ -446,7 +446,7 @@ typedef struct Fixed {
 } Fixed;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
 	Literal *Literal;
 } Setting;

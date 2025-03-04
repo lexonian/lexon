@@ -25,7 +25,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+
 #define EOL ";"
+#define CALLER "payable(msg.sender)"
+
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
 #define LEXCOM2 " */"
@@ -678,8 +681,9 @@ typedef struct Fix {
 } Fix;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
+	Literal *Literal;
 } Setting;
 
 typedef struct Illocutor {
@@ -829,6 +833,7 @@ typedef struct Combinand {
 	struct Negation *Negation;
 	struct Existence *Existence;
 	struct Point_In_Time *Point_In_Time;
+	Literal *Literal;
 } Combinand;
 
 typedef struct Combinator {
@@ -1685,7 +1690,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 				Covenant->Name,
 				" covenant, and register it with main */");
 	padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name),
-	       "(%2%) public returns(", Covenant->Name, ") {");
+	       "(%2%) public returns(", class, ") {");
 	padcat(0, 0, &adders, "%15%");
 	if (main_uses_termination) padcat(1, 2, &adders,
 					  "check_termination()" EOL);
@@ -2428,21 +2433,17 @@ bool sol_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	assert(action);
 	assert(action->Subject);
 	assert(action->Subject->Symbols);
+	/* no subject */
 	if (!action->Subject->Symbols->Symbol)
 		error("missing subject for reflexive pronoun ",
 		      Reflexive->Literal);
+	/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 	if (action->Subject->Symbols->Symbols) {
-		char *msg = mtrac_strdup("");
-
-		concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-		       action->Subject->Symbols->Symbols->Symbol->Name, " / ",
-		       Reflexive->Literal, ")");
-		error("don't use multiple subjects with a reflexive pronoun",
-		      msg);
-		mtrac_free(msg);
-	}
-	sol_symbol(production, action->Subject->Symbols->Symbol, false,
-		   indent + 1);
+		padcat(0, 0, production, CALLER);
+		if (current_function) current_function->uses_caller = true;
+	} else
+		sol_symbol(production, action->Subject->Symbols->Symbol, false,
+			   indent + 1);
 
 	return true;
 }
@@ -2586,9 +2587,13 @@ bool sol_appointment(char **production, Appointment *Appointment, int indent) {
 	if (!Appointment) return false;
 	if (opt_debug) printf("producing Appointment\n");
 
-	insert_parameter_and_set_member(production, &instructions,
-					Appointment->Symbol, false, paratag,
-					indent, __LINE__);
+	if (Appointment->Expression)
+		assign(production, indent, Appointment->Symbol,
+		       Appointment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Appointment->Symbol, false,
+						paratag, indent, __LINE__);
 
 	return true;
 }
@@ -2625,7 +2630,19 @@ bool sol_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 
-	assign(production, indent, Setting->Symbol, null);	// null -> set true
+	padcat(1, indent, production, "");
+
+	sol_symbol(production, action->Subject->Symbols->Symbol, true, indent + 1);	// true --> assign flag
+	padcat(0, 0, production, " = ");
+
+	if (Setting->Symbol)
+		sol_symbol(production, Setting->Symbol, false, indent + 1);
+	else
+		padcat(0, 0, production, "true");
+
+	padcat(0, 0, production, EOL);
+
+	is_stateful = true;
 
 	return true;
 }
@@ -2864,6 +2881,7 @@ bool sol_if(char **production, If *If, int indent) {
 bool sol_expression(char **production, Expression *Expression, int indent) {
 	if (!Expression) return false;
 	if (opt_debug) printf("producing Expression\n");
+
 	sol_combination(production, Expression->Combination, indent + 1);
 	return true;
 }
@@ -3031,14 +3049,15 @@ bool sol_combinand(char **production, Combinand *Combinand, int indent) {
 		}
 		mtrac_free(varname);
 	}
-	sol_expiration(production, Combinand->Expiration, indent + 1);
 	sol_timeliness(production, Combinand->Timeliness, indent + 1);
+	sol_reflexive(production, Combinand->Reflexive, indent + 1);
 	sol_description(production, Combinand->Description, indent + 1);
 	sol_scalar_comparison(production, Combinand->Scalar_Comparison,
 			      indent + 1);
 	sol_negation(production, Combinand->Negation, indent + 1);
 	sol_existence(production, Combinand->Existence, indent + 1);
 	sol_point_in_time(production, Combinand->Point_In_Time, indent + 1);
+	sol_expiration(production, Combinand->Expiration, indent + 1);
 
 	return true;
 }

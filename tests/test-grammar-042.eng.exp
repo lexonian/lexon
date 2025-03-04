@@ -31,17 +31,13 @@
                             ( predicate 
                                 ( filing file ( symbol ( type data ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol ( type amount ) ) 
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -185,9 +181,7 @@
                                     preposition 
                                     ( object reflexive ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol ( type time ) ) ) ) 
                             ( predicate 
@@ -244,9 +238,7 @@
                                     ( object ( symbol «bar» ) ) 
                                     from-escrow ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( appointment appoint ( symbol «bar» ) ) ) 
                             ( predicate 

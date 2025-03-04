@@ -167,9 +167,7 @@
                                                 ( fixture fix ( symbol ( type data ) ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type amount ) ) ) ) 
+                                                ( setting be ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol ( type binary ) ) 
                                                     ( contract all-contracts ) ) ) 
@@ -217,9 +215,7 @@
                                 ( symbols ( symbol ( type binary ) ) ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol «fred» ) ) ) 
                                 ( predicate 
@@ -382,9 +378,7 @@
                                         preposition 
                                         ( object ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
@@ -454,9 +448,7 @@
                                 ( predicate 
                                     ( appointment appoint ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type text ) ) ) ) 
+                                    ( setting be ( symbol ( type text ) ) ) ) 
                                 ( predicate 
                                     ( payment pay 
                                         ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -502,9 +494,7 @@
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «fred» ) ) ) 
+                                    ( setting be ( symbol «fred» ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol ( type person ) ) 
                                         ( contract 
@@ -583,13 +573,9 @@
                                             ( predicate 
                                                 ( termination terminate all-contracts ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «foo-baz-bar» ) ) ) 
+                                                ( setting be ( symbol «foo-baz-bar» ) ) ) 
                                             ( predicate 
                                                 ( appointment appoint ( symbol «foo-baz-bar» ) ) ) 
                                             ( predicate 
@@ -632,23 +618,17 @@
                                                     ( contract 
                                                         ( this-contract «bar» ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( appointment appoint ( symbol «baz» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol ( type text ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( certification certify ( symbol ( type amount ) ) 
                                                     ( contract 
@@ -796,9 +776,7 @@
                                             ( predicate 
                                                 ( declaration declare ( symbol «baz» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( appointment appoint ( symbol «baz» ) ) ) 
                                             ( predicate 
@@ -881,9 +859,7 @@
                                                                                 ( time-unit minutes ) ) ) ) ) 
                                                                 ( combinator or- ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol «baz» ) 
                                                     ( contract all-contracts ) ) ) 
@@ -905,9 +881,7 @@
                                             ( predicate 
                                                 ( registration register ( symbol «baz» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type text ) ) ) ) 
+                                                ( setting be ( symbol ( type text ) ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol «baz» ) ) ) 
                                             ( predicate 
@@ -1255,9 +1229,7 @@
                                                                 ( combinator nor ) ) 
                                                             ( combinator or- ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
@@ -1303,9 +1275,7 @@
                                                     ( contract 
                                                         ( this-contract «bar» ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol «baz» ) ) ) 
                                             ( predicate 
@@ -1514,9 +1484,7 @@
                                     catena ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «thud-bar» ) ) ) ) 
+                                    ( setting be ( symbol «thud-bar» ) ) ) ) 
                             permission ) ) 
                     ( statement 
                         ( action 
@@ -2092,9 +2060,7 @@
                                 ( predicate 
                                     ( certification certify ( symbol ( type person ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol «thud-bar» ) 
                                         ( contract 
@@ -2104,9 +2070,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «thud-bar» ) ) ) 
+                                    ( setting be ( symbol «thud-bar» ) ) ) 
                                 ( predicate 
                                     ( sending send 
                                         ( expression ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type time ) ) 
@@ -2545,9 +2509,7 @@
                                                             being true ) ) 
                                                     ( combinator and ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «thud-bar» ) ) ) 
+                                    ( setting be ( symbol «thud-bar» ) ) ) 
                                 ( predicate 
                                     ( sending send 
                                         ( expression ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -2746,9 +2708,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 
@@ -2991,9 +2951,7 @@
                                         preposition 
                                         ( object ( symbol «thud-bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( filing file ( symbol ( type data ) ) 
                                         ( contract 
@@ -3003,9 +2961,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol «thud-bar» ) ) 
@@ -3126,9 +3082,7 @@
                                                                     ( time-unit months ) ) ) ) ) 
                                                     ( combinator neither ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type amount ) ) ) ) 
+                                    ( setting be ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol ( type data ) ) ) 
@@ -3305,9 +3259,7 @@
                                                     ( combinand ( symbol ( type data ) ) ) 
                                                     ( combinator neither ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol «thud-bar» ) 
                                         ( expression ( combination ( combinor ( combinand ( symbol «thud-bar» ) ) ) ) ) ) ) 

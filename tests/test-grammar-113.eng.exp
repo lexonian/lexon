@@ -156,9 +156,7 @@
                                         preposition 
                                         ( object ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply-plugh-bar» ) ) ) 
+                                    ( setting be ( symbol «garply-plugh-bar» ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
@@ -238,13 +236,9 @@
                                                     ( combinator and ) ) 
                                                 ( combinator neither ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( declaration declare ( symbol «garply-plugh-bar» ) 
                                         ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand 
@@ -477,9 +471,7 @@
                                                     ( object reflexive ) 
                                                     escrow ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand ( symbol ( type text ) ) 

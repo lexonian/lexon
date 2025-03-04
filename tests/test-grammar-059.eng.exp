@@ -560,9 +560,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) ) 
                         permission 
                         ( condition if 
                             ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -682,9 +680,7 @@
                                                             ( combinor ( combinand ( symbol ( type amount ) ) ) ) 
                                                             ( combinator nor ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -793,27 +789,17 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol ( type text ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type amount ) ) ) ) 
+                                                ( setting be ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 

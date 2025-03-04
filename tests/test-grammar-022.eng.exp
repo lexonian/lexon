@@ -226,9 +226,7 @@
                                         ( expression ( combination ( combinor ( combinand ( symbol «fred» ) 
                                                         expiration ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) ) 
                             permission 
                             ( condition if 
                                 ( expression ( combination ( combination ( combination ( combinor ( combinand 

@@ -403,7 +403,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	} Fixed;
 	
 	typedef struct Setting {
-		struct Illocutor *Illocutor;
+		struct Be *Be;
 		struct Symbol *Symbol;
 		Literal *Literal;
 	} Setting;
@@ -3363,7 +3363,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Setting->Illocutor?1:0) + (!!Setting->Symbol?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Setting->Be?1:0) + (!!Setting->Symbol?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "setting", off, " ");
@@ -3383,7 +3383,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 			if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
-			core_illocutor(production, Setting->Illocutor, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "setting"), opt_subvalues && !!strstr(opt_subvalues, "setting"));
+			core_be(production, Setting->Be, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "setting"), opt_subvalues && !!strstr(opt_subvalues, "setting"));
 			subhighlight = false;
 		}
 		if(!terse) grid &= 4294967294;

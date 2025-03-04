@@ -209,9 +209,7 @@
                                                     preposition 
                                                     ( object ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol «plugh-thud» ) ) ) 
                                             ( predicate 
@@ -351,9 +349,7 @@
                                                             ( combinor ( combinand expiration ) ) 
                                                             ( combinator or- ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol «plugh-thud» ) 
                                                     ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) 
@@ -364,9 +360,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol ( type person ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh-thud» ) ) ) 
+                                                ( setting be ( symbol «plugh-thud» ) ) ) 
                                             ( predicate 
                                                 ( payment pay preposition 
                                                     ( object ) 
@@ -607,9 +601,7 @@
                                                 ( termination terminate 
                                                     ( this-contract «garply-thud-bar» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh-thud» ) ) ) 
+                                                ( setting be ( symbol «plugh-thud» ) ) ) 
                                             ( predicate 
                                                 ( certification certify ( symbol ( type person ) ) 
                                                     ( expression ( combination ( combination ( combination ( combinor ( combinand 
@@ -665,9 +657,7 @@
                                             ( symbols ( symbol «plugh-thud» ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh-thud» ) ) ) 
+                                                ( setting be ( symbol «plugh-thud» ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol ( type time ) ) ) ) 
                                             ( predicate 

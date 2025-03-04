@@ -175,9 +175,7 @@
                             ( predicate 
                                 ( grantment grant ( symbol «garply-garply-bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( notification notify 
                                     ( object ) 
@@ -204,13 +202,9 @@
                                             ( combinor ( combinand ( symbol ( type time ) ) ) ) 
                                             ( combinator nor ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol «garply-garply-bar» ) ) ) 
                             ( predicate 
@@ -264,9 +258,7 @@
                             ( predicate 
                                 ( grantment grant ( symbol «garply-garply-bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) ) 
                         permission 
                         ( condition if 
                             ( expression ( combination ( combination ( combinor ( combinand 
@@ -334,9 +326,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «plugh-garply» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type binary ) ) ) ) 
+                                                ( setting be ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 
@@ -373,9 +363,7 @@
                                             ( predicate 
                                                 ( grantment grant ( symbol ( type amount ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type binary ) ) ) ) ) 
+                                                ( setting be ( symbol ( type binary ) ) ) ) ) 
                                         permission 
                                         ( condition if 
                                             ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) ) 
@@ -428,9 +416,7 @@
                                             ( predicate 
                                                 ( registration register ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( certification certify ( symbol «xyzzy» ) ) ) 
                                             ( predicate 

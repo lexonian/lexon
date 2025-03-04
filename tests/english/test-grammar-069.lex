@@ -4,7 +4,7 @@ PREAMBLE:  Aenean commodo.
 
 TERMS:
 An "Bar" is data.
- Bar Or time, data, an Bar May, if an Bar milliseconds past year past year in the past lies at the least 123 nor the respective then current time, then: Appoint data, and if so is defined as then therefore text, and if so be defined then therefore Bar, if so terminates all contracts, and if so afterwards declares this Bar an binary, and if so afterwards sends the binary lies at the least the then current time day in the past neither a person, or a Bar no fixed and text was true, the text be no fixed and there is an Bar, this Bar is not time into escrow, send a Bar into escrow, and with this sends all contracts is not time neither Bar and has passed nor the then current time, or Bar and be no time into Bar, and if so certifies person time is filed for, Bar, certifies this Bar the person, and if so afterwards is defined as then therefore data.
+ Bar Or time, data, an Bar May, if an Bar milliseconds past year past year in the past lies at the least 123 nor the respective then current time, then: Appoint data, and if so is then therefore text, and if so be then therefore Bar, if so terminates all contracts, and if so afterwards declares this Bar an binary, and if so afterwards sends the binary lies at the least the then current time day in the past neither a person, or a Bar no fixed and text was true, the text be no fixed and there is an Bar, this Bar is not time into escrow, send a Bar into escrow, and with this sends all contracts is not time neither Bar and has passed nor the then current time, or Bar and be no time into Bar, and if so certifies person time is filed for, Bar, certifies this Bar the person, and if so afterwards is then therefore data.
 
 TERMS PER Baz:.
 
@@ -25,5 +25,5 @@ CLAUSE: Corge.
 
 PER Corge:
 "Corge" is this Bar.
-This Bar Be defined Then therefore a text.
-Is defined as Then therefore data.
+This Bar Be Then therefore a text.
+Is Then therefore data.

@@ -55,9 +55,7 @@
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( certification certify ( symbol ( type time ) ) 
                                         ( contract all-contracts ) ) ) 

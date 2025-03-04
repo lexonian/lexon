@@ -84,9 +84,7 @@
                                     preposition 
                                     ( object reflexive ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -109,19 +107,13 @@
                                 ( registration register ( symbol ( type time ) ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type amount ) ) ) ) 
+                                ( setting be ( symbol ( type amount ) ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -962,9 +954,7 @@
                                                             ( scalar-expression 123 ) ) ) 
                                                     ( combinator or- ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
                                     ( certification certify ( symbol ( type person ) ) 
                                         ( expression ( combination ( combination ( combination ( combinor ( combinand 
@@ -994,9 +984,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
@@ -1020,9 +1008,7 @@
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol «garply» ) ) ) 
                                 ( predicate 

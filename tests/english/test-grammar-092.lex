@@ -4,11 +4,11 @@ PREAMBLE:  Aenean commodo.
 
 TERMS:
 The "Bar" is this Bar.
-Be defined as Then therefore Bar.
-An data May, provided the Bar and all contracts not an text nor past, then: Is as Therefore amount, and declare this Bar data, and also if so grant an data, and also if so appoints Bar, and certifies this Bar as Bar.
-A text, text Or Bar Or an binary, binary May, be as then therefor Bar, and register all contracts as the text, afterwards returns the remainder of the escrow to the Bar, and with this file for this Bar to be the data, and also afterwards grants a Bar, and afterwards fix binary, afterwards grant data.
-Is defined as Therefore amount.
-Is as Therefore an Bar.
+Be Then therefore Bar.
+An data May, provided the Bar and all contracts not an text nor past, then: Is Therefore amount, and declare this Bar data, and also if so grant an data, and also if so appoints Bar, and certifies this Bar as Bar.
+A text, text Or Bar Or an binary, binary May, be then therefor Bar, and register all contracts as the text, afterwards returns the remainder of the escrow to the Bar, and with this file for this Bar to be the data, and also afterwards grants a Bar, and afterwards fix binary, afterwards grant data.
+Is Therefore amount.
+Is Therefore an Bar.
 
 TERMS PER Thud Corge:
 "Thud Corge" is the amount.

@@ -143,9 +143,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combinor ( combinor ( combinand 
@@ -287,9 +285,7 @@
                                 ( symbols ( symbol ( type binary ) ) ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge-baz» ) ) ) 
+                                    ( setting be ( symbol «corge-baz» ) ) ) 
                                 ( predicate 
                                     ( filing file ( symbol ( type person ) ) 
                                         ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand 

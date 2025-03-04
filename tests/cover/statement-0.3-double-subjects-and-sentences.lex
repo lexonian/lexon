@@ -42,8 +42,9 @@ The Filing Office may appoint a Filing Office.
 
 Clause: Super Certify.
 The Filer or the Filing Office may certify the File Number.
-The Filer or the Filer may appoint the Filing Office as themselves. 
-The Filer may certify the File Number.
+The Filer may appoint themselves as the Filing Office. 
+The Filer or the Debtor may appoint themselves as the Filing Office. 
+The Filer or the Filer may certify the File Number.
 The Filer may certify the Filer.
 The Filing Office may appoint a Filing Office.
 

@@ -259,9 +259,7 @@
                                         ( predicate 
                                             ( appointment appoint ( symbol «baz» ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol «baz» ) ) ) 
+                                            ( setting be ( symbol «baz» ) ) ) 
                                         ( predicate 
                                             ( declaration declare ( symbol ( type amount ) ) ) ) 
                                         ( predicate 
@@ -297,9 +295,7 @@
                                                                     equal fixed ) ) ) 
                                                         ( combinator or- ) ) ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol ( type data ) ) ) ) 
+                                            ( setting be ( symbol ( type data ) ) ) ) 
                                         ( predicate 
                                             ( sending send 
                                                 ( expression ( combination ( combination ( combinor ( combinor ( combinand 
@@ -382,9 +378,7 @@
                                         ( predicate 
                                             ( grantment grant ( symbol «baz» ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol «baz» ) ) ) 
+                                            ( setting be ( symbol «baz» ) ) ) 
                                         ( predicate 
                                             ( payment pay 
                                                 ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
@@ -512,9 +506,7 @@
                                                 preposition 
                                                 ( expression ( combination ( combinor ( combinand expiration ) ) ) ) ) ) 
                                         ( predicate 
-                                            ( setting 
-                                                ( illocutor be ) 
-                                                ( symbol ( type data ) ) ) ) 
+                                            ( setting be ( symbol ( type data ) ) ) ) 
                                         ( predicate 
                                             ( filing file ( symbol «baz» ) ) ) 
                                         ( predicate 

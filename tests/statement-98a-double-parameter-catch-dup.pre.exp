@@ -46,7 +46,7 @@ statement 98a double parameter catch dup  41:   The «Filing Office» may appoin
 
 statement 98a double parameter catch dup  43:   Clause: «Super Certify».
 statement 98a double parameter catch dup  44:   The «Filer» or the «Filing Office» may certify the «File Number».
-statement 98a double parameter catch dup  45:   The «Filer» or the «Filer» may appoint the «Filing Office» as themselves.
+statement 98a double parameter catch dup  45:   The «Filer» or the «Debtor» may appoint themselves as the «Filing Office».
 statement 98a double parameter catch dup  46:   The «Filer» may certify the «File Number».
 statement 98a double parameter catch dup  47:   The «Filer» may certify the «Filer».
 statement 98a double parameter catch dup  48:   The «Filing Office» may appoint a «Filing Office».

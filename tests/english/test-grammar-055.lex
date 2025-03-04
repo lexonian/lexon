@@ -5,13 +5,13 @@ PREAMBLE:  Aenean commodo.
 TERMS:
 "Bar" is a binary.
 A Bar May given that the current time equal to 123, a amount is filed then register this Bar as data.
-Is defined as Then a text.
+Is Then a text.
 
 PER Baz Plugh:
 "Baz Plugh" is this Bar.
 
 CLAUSE: Corge.
-A "Corge" is as: Corge And Person Past Or A data Has passed Neither The then current time Minutes In the past Seconds Past the Corge.
+A "Corge" is: Corge And Person Past Or A data Has passed Neither The then current time Minutes In the past Seconds Past the Corge.
 
 PER Corge:.
 

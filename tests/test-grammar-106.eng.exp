@@ -197,9 +197,7 @@
                                                 ( combinator neither ) ) 
                                             ( combinator or- ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «baz» ) ) ) 
+                                ( setting be ( symbol «baz» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol ( type time ) ) 
                                     ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -264,9 +262,7 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type data ) ) ) ) 
+                                ( setting be ( symbol ( type data ) ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type binary ) ) ) ) 
                             ( predicate 
@@ -354,9 +350,7 @@
                                                         ( comparison-operator later ) 
                                                         ( scalar-expression 123 ) ) ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «baz» ) ) ) 
+                                ( setting be ( symbol «baz» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol «baz» ) 
                                     ( expression ( combination ( combination ( combinor ( combinand ( symbol ( type data ) ) ) ) ) 
@@ -599,9 +593,7 @@
                             ( predicate 
                                 ( grantment grant ( symbol ( type person ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «baz» ) ) ) 
+                                ( setting be ( symbol «baz» ) ) ) 
                             ( predicate 
                                 ( notification notify 
                                     ( object ) 

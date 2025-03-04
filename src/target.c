@@ -85,8 +85,11 @@
 #include <assert.h>
 
 /*JS */ #define EOL ";"
+/*JS */ #define CALLER "caller"
 /*Sol*/ #define EOL ";"
+/*Sol*/ #define CALLER "payable(msg.sender)"
 /*Sop*/ #define EOL ""
+/*Sop*/ #define CALLER "Call.caller"
 
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
@@ -749,8 +752,9 @@ static bool in(char *hay, char *needle) {
 /*T*/	} Fix;
 /*T*/
 /*T*/	typedef struct Setting {
-/*T*/		struct Illocutor *Illocutor;
-/*T*/		struct Symbol *Symbol;
+		struct Be *Be;
+		struct Symbol *Symbol;
+		Literal *Literal;
 /*T*/	} Setting;
 /*T*/
 /*T*/	typedef struct Illocutor {
@@ -900,6 +904,7 @@ static bool in(char *hay, char *needle) {
 /*T*/		struct Negation *Negation;
 /*T*/		struct Existence *Existence;
 /*T*/		struct Point_In_Time *Point_In_Time;
+/*T*/		Literal *Literal;
 /*T*/	} Combinand;
 /*T*/
 /*T*/	typedef struct Combinator {
@@ -2159,7 +2164,7 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		if(main_uses_termination) padcat(1, 2, &adders, "if (this.check_termination()) return undefined;"); // this == main
 /*JS */		padcat(1, 2, &adders, "return this.", list, "[this.", count, " += 1] = this.", class, "(%2b%);");
 /*JS */		padcat(1, 1, &adders, "}");
-/*Sol*/		padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name), "(%2%) public returns(", Covenant->Name, ") {");
+/*Sol*/		padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name), "(%2%) public returns(", class, ") {");
 /*Sol*/		padcat(0,0, &adders, "%15%");
 /*Sol*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
 /*Sol*/		padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ", class, "(this%2b,%%2b%);");
@@ -2916,16 +2921,16 @@ static bool is_payment(Predicates *predicates) {
 		assert(action);
 		assert(action->Subject);
 		assert(action->Subject->Symbols);
+		/* no subject */
 		if(!action->Subject->Symbols->Symbol)
 			error("missing subject for reflexive pronoun ", Reflexive->Literal);
+		/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 		if(action->Subject->Symbols->Symbols) {
-			char *msg = mtrac_strdup("");
-			concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-				action->Subject->Symbols->Symbols->Symbol->Name, " / ", Reflexive->Literal, ")");
-			error("don't use multiple subjects with a reflexive pronoun", msg);
-			mtrac_free(msg);
+			padcat(0,0,production, CALLER);
+			if(current_function) current_function->uses_caller = true;
 		}
-		xxx_symbol(production, action->Subject->Symbols->Symbol, false, indent+1);
+		else
+			xxx_symbol(production, action->Subject->Symbols->Symbol, false, indent+1);
 
 /*T*/		return true;
 /*T*/	}
@@ -3088,7 +3093,10 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Appointment) return false;
 /*T*/		if(opt_debug) printf("producing Appointment\n");
 
-		insert_parameter_and_set_member(production, &instructions, Appointment->Symbol, false, paratag, indent, __LINE__);
+		if(Appointment->Expression)
+			assign(production, indent, Appointment->Symbol, Appointment->Expression);
+		else
+			insert_parameter_and_set_member(production, &instructions, Appointment->Symbol, false, paratag, indent, __LINE__);
 
 /*JS */		log_entry(production, Appointment->Symbol->Name, "appointed", indent);
 
@@ -3126,9 +3134,27 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Setting) return false;
 /*T*/		if(opt_debug) printf("producing Setting\n");
 
-		assign(production, indent, Setting->Symbol, null); // null -> set true
+		padcat(1, indent, production, "");
+/*Sop*/		padcat(0, 0, production, "put(state{");
 
-/*JS */		log_entry(production, Setting->Symbol->Name, "state set", indent);
+/*Sop*/		miller = true;
+		xxx_symbol(production, action->Subject->Symbols->Symbol, true, indent+1); // true --> assign flag
+/*Sop*/		miller = false;
+
+		padcat(0, 0, production, " = ");
+
+		if(Setting->Symbol)
+			xxx_symbol(production, Setting->Symbol, false, indent+1);
+		else
+/*J+S*/			padcat(0, 0, production, "true");
+/*Sop*/			padcat(0, 0, production, ":§§:true:§:");
+
+/*Sop*/		padcat(0, 0, production, "})");
+		padcat(0, 0, production, EOL);
+
+/*S+S*/		is_stateful = true;
+
+/*JS */		log_entry(production, action->Subject->Symbols->Symbol->Name, "set", indent);
 
 /*T*/		return true;
 /*T*/	}
@@ -3388,9 +3414,20 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Expression) return false;
 /*T*/		if(opt_debug) printf("producing Expression\n");
 
-/*Sop*/		if(!no_literal && !require_mandat && !conditional_expression && !payment_expression) padcat(0, 0, production, ":§§:");
+/*Sop*/		/* determine whether the resulting expression must be wrapped as 'optional' type, i.e., have a */
+/*Sop*/		/*   Some() cast around it. This uses a lot of hardwired knowledge of the grammar structure.   */
+/*Sop*/
+/*Sop*/		bool symbol = active_subjects && !active_subjects->next // = single subject
+/*Sop*/			&& (Expression->Combination && Expression->Combination->Combinor // expression is simply a symbol
+/*Sop*/			&& Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Symbol
+/*Sop*/			|| Expression->Combination && Expression->Combination->Combinor // or a reflexive pronoun for a subject
+/*Sop*/			&& Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Reflexive);
+/*Sop*/
+/*Sop*/		bool wrap = !symbol && !no_literal && !require_mandat && !conditional_expression && !payment_expression;
+/*Sop*/
+/*Sop*/		if(wrap) padcat(0, 0, production, ":§§:");
 /*T*/		xxx_combination(production, Expression->Combination, indent+1);
-/*Sop*/		if(!no_literal && !require_mandat && !conditional_expression && !payment_expression) padcat(0, 0, production, ":§:");
+/*Sop*/		if(wrap) padcat(0, 0, production, ":§:");
 
 /*T*/		return true;
 /*T*/	}
@@ -3547,13 +3584,14 @@ static bool is_payment(Predicates *predicates) {
 			}
 			mtrac_free(varname);
 		}
-/*T*/		xxx_expiration(production, Combinand->Expiration, indent+1);
 /*T*/		xxx_timeliness(production, Combinand->Timeliness, indent+1);
+/*T*/		xxx_reflexive(production, Combinand->Reflexive, indent+1);
 /*T*/		xxx_description(production, Combinand->Description, indent+1);
 /*T*/		xxx_scalar_comparison(production, Combinand->Scalar_Comparison, indent+1);
 /*T*/		xxx_negation(production, Combinand->Negation, indent+1);
 /*T*/		xxx_existence(production, Combinand->Existence, indent+1);
 /*T*/		xxx_point_in_time(production, Combinand->Point_In_Time, indent+1);
+/*T*/		xxx_expiration(production, Combinand->Expiration, indent+1);
 
 /*T*/		return true;
 /*T*/	}

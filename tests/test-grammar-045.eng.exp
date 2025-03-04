@@ -203,9 +203,7 @@
                                 ( predicate 
                                     ( appointment appoint ( symbol «corge» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol «corge» ) ) ) 
                                 ( predicate 

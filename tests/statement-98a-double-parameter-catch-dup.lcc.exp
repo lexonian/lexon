@@ -136,7 +136,7 @@
                                     ( subject 
                                         ( symbols 
                                             ( symbols ( symbol «filer» ) ) 
-                                            ( symbol «filer» ) 
+                                            ( symbol «debtor» ) 
                                             catena ) ) 
                                     ( predicates 
                                         ( predicate 

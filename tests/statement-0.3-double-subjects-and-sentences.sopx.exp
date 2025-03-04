@@ -8,7 +8,7 @@
  **
  **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.10 beta 2 - English / Reyes
  **
  **	backend:     sophia 0.3.102 beta 2
  **
@@ -51,7 +51,7 @@
    • <<secured_party or filing_office or filer>> ⟶   triple_certify(<file_number : option(string)>, <filing_office : option(address)>, <reminder_fee : option(int)>)
    • <<filing_office>> ⟶   value_certify(<reminder_fee : option(int)>)
    • <<filer>> ⟶   alternate_certify(<file_number : option(string)>, <filing_office : option(address)>)
-   • <<filing_office or filer>> ⟶   super_certify(<file_number : option(string)>, <filing_office : option(address)>, <filer : option(address)>)
+   • <<filing_office or filer>> ⟶   super_certify(<file_number : option(string)>, <filer : option(address)>, <filing_office : option(address)>)
    • <<filing_office>> ⟶   set_file_date()
    • <<filing_office>> ⟶   set_lapse(<lapse_date : option(int)>)
    • <<filing_office>> ⟶   set_continuation_start(<continuation_window_start : option(int)>)
@@ -251,20 +251,23 @@ main contract UCCFinancingStatement =
     /*
      |  Clause: Super Certify.
      |  The Filer or the Filing Office may certify the File Number.
-     |  The Filer or the Filer may appoint the Filing Office as themselves. 
-     |  The Filer may certify the File Number.
+     |  The Filer may appoint themselves as the Filing Office. 
+     |  The Filer or the Debtor may appoint themselves as the Filing Office. 
+     |  The Filer or the Filer may certify the File Number.
      |  The Filer may certify the Filer.
      |  The Filing Office may appoint a Filing Office.
      */
 
-    stateful entrypoint super_certify(file_number : string, filing_office : address, filer : address) =
+    stateful entrypoint super_certify(file_number : string, filer : address, filing_office : address) =
         check_termination()
-        require(Some(Call.caller) == state.filing_office || Some(Call.caller) == state.filer, "not permitted")
+        require(Some(Call.caller) == state.filing_office || Some(Call.caller) == state.filer || Some(Call.caller) == state.debtor, "not permitted")
         if(Some(Call.caller) == state.filing_office || Some(Call.caller) == state.filer)
             put(state{file_number = Some(file_number)})
-        if(Some(Call.caller) == state.filer || Some(Call.caller) == state.filer)
-            put(state{filing_office = Some(filing_office)})
         if(Some(Call.caller) == state.filer)
+            put(state{filing_office = state.filer})
+        if(Some(Call.caller) == state.debtor || Some(Call.caller) == state.filer)
+            put(state{filing_office = Some(Call.caller)})
+        if(Some(Call.caller) == state.filer || Some(Call.caller) == state.filer)
             put(state{file_number = Some(file_number)})
         if(Some(Call.caller) == state.filer)
             put(state{filer = Some(filer)})

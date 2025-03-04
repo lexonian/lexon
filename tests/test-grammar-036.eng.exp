@@ -227,9 +227,7 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol ( type person ) ) 
                                     ( contract all-contracts ) ) ) 
@@ -244,9 +242,7 @@
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type time ) ) ) ) 
+                                ( setting be ( symbol ( type time ) ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -272,9 +268,7 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type time ) ) ) ) 
+                                ( setting be ( symbol ( type time ) ) ) ) 
                             ( predicate 
                                 ( notification notify 
                                     ( object ) 

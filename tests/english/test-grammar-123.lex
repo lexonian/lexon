@@ -10,7 +10,7 @@ TERMS PER Plugh:.
 
 An "Plugh" is this Thud.
 An "Plugh" is this Thud.
-This Thud Be defined as Therefore an Plugh.
+This Thud Be Therefore an Plugh.
 
 PER Plugh:.
 

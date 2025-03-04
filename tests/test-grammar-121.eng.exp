@@ -363,9 +363,7 @@
                                         preposition 
                                         ( object reflexive ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «fred» ) ) ) 
+                                    ( setting be ( symbol «fred» ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol «fred» ) ) ) 
                                 ( predicate 
@@ -703,9 +701,7 @@
                                     ( registration register ( symbol ( type text ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «fred» ) ) ) 
+                                    ( setting be ( symbol «fred» ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
@@ -833,9 +829,7 @@
                                             ( predicate 
                                                 ( filing file ( symbol «plugh» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type binary ) ) ) ) 
+                                                ( setting be ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 
@@ -1040,9 +1034,7 @@
                                                 ( filing file ( symbol «plugh» ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh» ) ) ) 
+                                                ( setting be ( symbol «plugh» ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type time ) ) 
                                                     ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand ( symbol ( type binary ) ) 
@@ -1069,9 +1061,7 @@
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type person ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh» ) ) ) 
+                                                ( setting be ( symbol «plugh» ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combinor ( combinor ( combinor ( combinand expiration ) ) 
@@ -1116,9 +1106,7 @@
                                                     ( object reflexive ) 
                                                     from-escrow ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh» ) ) ) 
+                                                ( setting be ( symbol «plugh» ) ) ) 
                                             ( predicate 
                                                 ( appointment appoint ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
@@ -1264,9 +1252,7 @@
                                                     preposition 
                                                     ( object reflexive ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «plugh» ) ) ) 
+                                                ( setting be ( symbol «plugh» ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combinor ( combinand 
@@ -1284,9 +1270,7 @@
                                                     ( contract 
                                                         ( this-contract «grault» ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( certification certify ( symbol «plugh» ) ) ) 
                                             ( predicate 
@@ -1595,9 +1579,7 @@
                                                     preposition 
                                                     ( object ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( termination terminate 
                                                     ( this-contract «grault» ) ) ) 

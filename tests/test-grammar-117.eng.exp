@@ -159,9 +159,7 @@
                                         preposition 
                                         ( object ( symbol ( type person ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol ( type text ) ) ) ) 
                                 ( predicate 

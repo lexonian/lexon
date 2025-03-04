@@ -148,9 +148,7 @@
                                     preposition 
                                     ( object ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -165,9 +163,7 @@
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combination ( combinor ( combinand 
@@ -187,9 +183,7 @@
                                     preposition 
                                     ( object ( symbol ( type time ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type person ) ) ) ) 
                             ( predicate 
@@ -333,9 +327,7 @@
                                     preposition 
                                     ( object reflexive ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type data ) ) ) ) 
+                                ( setting be ( symbol ( type data ) ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol ( type person ) ) 
                                     ( expression ( combination ( combination ( combination ( combinor ( combinand 
@@ -708,9 +700,7 @@
                                                 ( registration register ( symbol ( type text ) ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
@@ -794,9 +784,7 @@
                                                                         ( negator ) 
                                                                         ( symbol ( type time ) ) ) ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «xyzzy» ) ) ) 
+                                                ( setting be ( symbol «xyzzy» ) ) ) 
                                             ( predicate 
                                                 ( termination terminate 
                                                     ( this-contract «bar» ) ) ) 
@@ -1220,9 +1208,7 @@
                                                                 ( combinand ( symbol «xyzzy» ) ) 
                                                                 ( combinator or- ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( payment pay preposition 
                                                     ( object ) 

@@ -149,9 +149,7 @@
                                                     preposition 
                                                     ( object ( symbol ( type binary ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type amount ) ) 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand 
@@ -356,9 +354,7 @@
                                                 ( certification certify ( symbol «baz» ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( grantment grant ( symbol «baz» ) ) ) 
                                             ( predicate 
@@ -1102,16 +1098,12 @@
                                         preposition 
                                         ( object ( symbol «corge» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type time ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type text ) ) ) ) 
+                                    ( setting be ( symbol ( type text ) ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol ( type data ) ) ) ) 
                                 ( predicate 
@@ -1367,9 +1359,7 @@
                                         ( object reflexive ) 
                                         escrow ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol ( type data ) ) ) 

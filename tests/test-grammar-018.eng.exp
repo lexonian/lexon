@@ -143,9 +143,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combinor ( combinor ( combinand 
@@ -722,9 +720,7 @@
                                         preposition 
                                         ( object ( symbol ( type text ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type amount ) ) ) ) 
+                                    ( setting be ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol «garply-qux» ) ) ) 
                                 ( predicate 
@@ -758,13 +754,9 @@
                                     ( filing file ( symbol ( type person ) ) 
                                         ( expression ( combination ( combinor ( combinand ( symbol ( type person ) ) ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( filing file ( symbol «garply-qux» ) 
                                         ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand 

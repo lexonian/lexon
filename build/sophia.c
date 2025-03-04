@@ -29,6 +29,7 @@
 #include <assert.h>
 
 #define EOL ""
+#define CALLER "Call.caller"
 
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
@@ -666,8 +667,9 @@ typedef struct Fix {
 } Fix;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
+	Literal *Literal;
 } Setting;
 
 typedef struct Illocutor {
@@ -817,6 +819,7 @@ typedef struct Combinand {
 	struct Negation *Negation;
 	struct Existence *Existence;
 	struct Point_In_Time *Point_In_Time;
+	Literal *Literal;
 } Combinand;
 
 typedef struct Combinator {
@@ -2532,21 +2535,17 @@ bool sophia_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	assert(action);
 	assert(action->Subject);
 	assert(action->Subject->Symbols);
+	/* no subject */
 	if (!action->Subject->Symbols->Symbol)
 		error("missing subject for reflexive pronoun ",
 		      Reflexive->Literal);
+	/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 	if (action->Subject->Symbols->Symbols) {
-		char *msg = mtrac_strdup("");
-
-		concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-		       action->Subject->Symbols->Symbols->Symbol->Name, " / ",
-		       Reflexive->Literal, ")");
-		error("don't use multiple subjects with a reflexive pronoun",
-		      msg);
-		mtrac_free(msg);
-	}
-	sophia_symbol(production, action->Subject->Symbols->Symbol, false,
-		      indent + 1);
+		padcat(0, 0, production, CALLER);
+		if (current_function) current_function->uses_caller = true;
+	} else
+		sophia_symbol(production, action->Subject->Symbols->Symbol,
+			      false, indent + 1);
 
 	return true;
 }
@@ -2696,9 +2695,13 @@ bool sophia_appointment(char **production, Appointment *Appointment, int indent)
 	if (!Appointment) return false;
 	if (opt_debug) printf("producing Appointment\n");
 
-	insert_parameter_and_set_member(production, &instructions,
-					Appointment->Symbol, false, paratag,
-					indent, __LINE__);
+	if (Appointment->Expression)
+		assign(production, indent, Appointment->Symbol,
+		       Appointment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Appointment->Symbol, false,
+						paratag, indent, __LINE__);
 
 	return true;
 }
@@ -2735,7 +2738,24 @@ bool sophia_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 
-	assign(production, indent, Setting->Symbol, null);	// null -> set true
+	padcat(1, indent, production, "");
+	padcat(0, 0, production, "put(state{");
+
+	miller = true;
+	sophia_symbol(production, action->Subject->Symbols->Symbol, true, indent + 1);	// true --> assign flag
+	miller = false;
+
+	padcat(0, 0, production, " = ");
+
+	if (Setting->Symbol)
+		sophia_symbol(production, Setting->Symbol, false, indent + 1);
+	else
+		padcat(0, 0, production, ":§§:true:§:");
+
+	padcat(0, 0, production, "})");
+	padcat(0, 0, production, EOL);
+
+	is_stateful = true;
 
 	return true;
 }
@@ -2977,11 +2997,21 @@ bool sophia_expression(char **production, Expression *Expression, int indent) {
 	if (!Expression) return false;
 	if (opt_debug) printf("producing Expression\n");
 
-	if (!no_literal && !require_mandat && !conditional_expression
-	    && !payment_expression) padcat(0, 0, production, ":§§:");
+	/* determine whether the resulting expression must be wrapped as 'optional' type, i.e., have a */
+	/*   Some() cast around it. This uses a lot of hardwired knowledge of the grammar structure.   */
+
+	bool symbol = active_subjects && !active_subjects->next	// = single subject
+		&& (Expression->Combination && Expression->Combination->Combinor	// expression is simply a symbol
+		    && Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Symbol || Expression->Combination && Expression->Combination->Combinor	// or a reflexive pronoun for a subject
+		    && Expression->Combination->Combinor->Combinand
+		    && Expression->Combination->Combinor->Combinand->Reflexive);
+
+	bool wrap = !symbol && !no_literal && !require_mandat
+		&& !conditional_expression && !payment_expression;
+
+	if (wrap) padcat(0, 0, production, ":§§:");
 	sophia_combination(production, Expression->Combination, indent + 1);
-	if (!no_literal && !require_mandat && !conditional_expression
-	    && !payment_expression) padcat(0, 0, production, ":§:");
+	if (wrap) padcat(0, 0, production, ":§:");
 
 	return true;
 }
@@ -3166,14 +3196,15 @@ bool sophia_combinand(char **production, Combinand *Combinand, int indent) {
 		}
 		mtrac_free(varname);
 	}
-	sophia_expiration(production, Combinand->Expiration, indent + 1);
 	sophia_timeliness(production, Combinand->Timeliness, indent + 1);
+	sophia_reflexive(production, Combinand->Reflexive, indent + 1);
 	sophia_description(production, Combinand->Description, indent + 1);
 	sophia_scalar_comparison(production, Combinand->Scalar_Comparison,
 				 indent + 1);
 	sophia_negation(production, Combinand->Negation, indent + 1);
 	sophia_existence(production, Combinand->Existence, indent + 1);
 	sophia_point_in_time(production, Combinand->Point_In_Time, indent + 1);
+	sophia_expiration(production, Combinand->Expiration, indent + 1);
 
 	return true;
 }

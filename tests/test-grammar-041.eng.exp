@@ -34,9 +34,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( appointment appoint ( symbol ( type text ) ) ) ) 
                             ( predicate 
@@ -102,9 +100,7 @@
                                                         ( symbol ( type time ) ) ) ) 
                                                 ( combinator or- ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( declaration declare ( symbol ( type binary ) ) 
                                     ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand expiration ) ) 
@@ -900,17 +896,13 @@
                                                                             ( symbol «fred-garply» ) ) ) ) 
                                                                 ( combinator and ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred-garply» ) ) ) 
+                                                ( setting be ( symbol «fred-garply» ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol «fred-garply» ) 
                                                     ( contract 
                                                         ( this-contract «bar» ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand 
@@ -1004,9 +996,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «fred-garply» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol «fred-garply» ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinand 

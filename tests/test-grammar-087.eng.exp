@@ -538,9 +538,7 @@
                                         preposition 
                                         ( object ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type amount ) ) ) ) 
+                                    ( setting be ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol ( type time ) ) ) ) 
                                 ( predicate 
@@ -607,13 +605,9 @@
                                     ( filing file ( symbol ( type amount ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
@@ -659,9 +653,7 @@
                                     ( registration register ( symbol ( type text ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «garply» ) ) ) 
+                                    ( setting be ( symbol «garply» ) ) ) 
                                 ( predicate 
                                     ( filing file ( symbol «garply» ) 
                                         ( contract 

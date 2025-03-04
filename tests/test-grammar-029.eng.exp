@@ -168,13 +168,9 @@
                                                             ( symbol «bar» ) ) ) ) ) 
                                             ( combinator or- ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -375,9 +371,7 @@
                                                         ( comparison-operator later ) 
                                                         ( scalar-expression ( symbol «bar» ) ) ) ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) ) 
                         permission 
                         ( condition if 
                             ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -668,9 +662,7 @@
                                             ( symbols ( symbol «fred-corge» ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combinor ( combinand ( symbol ( type text ) ) 
@@ -720,9 +712,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol «fred-corge» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type binary ) ) ) ) 
+                                                ( setting be ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand ( symbol «fred-corge» ) 
@@ -866,9 +856,7 @@
                                     ( fixture fix ( symbol ( type amount ) ) 
                                         ( contract all-contracts ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol ( type binary ) ) ) 

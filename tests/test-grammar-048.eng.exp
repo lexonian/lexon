@@ -115,9 +115,7 @@
                                                     ( object ( symbol «foo-bar» ) ) 
                                                     escrow ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object ) 
@@ -184,15 +182,11 @@
                                             ( symbols ( symbol «foo-bar» ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type binary ) ) ) ) 
+                                                ( setting be ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
                                                 ( termination terminate all-contracts ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol «foo-bar» ) 
                                                     ( contract 
@@ -295,9 +289,7 @@
                                             ( predicate 
                                                 ( termination terminate all-contracts ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «foo-bar» ) ) ) 
+                                                ( setting be ( symbol «foo-bar» ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type person ) ) 
                                                     ( expression ( combination ( combinor ( combinand 
@@ -396,9 +388,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type binary ) ) ) ) 
+                                                ( setting be ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol ( type binary ) ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -494,9 +484,7 @@
                                                                                 ( scalar-expression ( symbol «foo-bar» ) ) 
                                                                                 ( time-unit seconds ) ) ) ) ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «foo-bar» ) ) ) 
+                                                ( setting be ( symbol «foo-bar» ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol ( type time ) ) 
                                                     ( expression ( combination ( combination ( combinor ( combinand 
@@ -628,9 +616,7 @@
                                                             ( scalar-expression ( symbol ( type amount ) ) ) ) ) 
                                                     ( combinator neither ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type text ) ) ) ) 
+                                    ( setting be ( symbol ( type text ) ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol ( type time ) ) ) ) 
                                 ( predicate 
@@ -776,9 +762,7 @@
                                 ( predicate 
                                     ( grantment grant ( symbol «xyzzy-waldo» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «xyzzy-waldo» ) ) ) 
+                                    ( setting be ( symbol «xyzzy-waldo» ) ) ) 
                                 ( predicate 
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 

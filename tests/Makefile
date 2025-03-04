@@ -168,7 +168,7 @@ define testrun
 		    fi ; \
 		fi ; \
 		if [[ -f compdiff ]] || [[ -f compall ]] ; then \
-			if [[ -f compdiff ]] && [[ -f $$coktag ]] && [[ `$(MD5) $$testfile` == `cat $$coktag` ]] ; then \
+			if [[ -f compdiff ]] && [[ -f $$coktag ]] && [[ `$(MD5) unvers.tmp` == `cat $$coktag` ]] ; then \
 				if [[ ! -f concise ]] ; then \
 					printf "$(ok)» syntax check up to date √ $(dim)\n" ; \
 				else \
@@ -207,7 +207,7 @@ define testrun
 						if (( $$s1ret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; \
 						else printf "  $(err)failed #$(off)\n" ; fi ; \
 					fi ; \
-					if (( $$s0ret == 0 )) && (( $$s1ret == 0 )) ; then $(MD5) $$testfile > $$coktag ; \
+					if (( $$s0ret == 0 )) && (( $$s1ret == 0 )) ; then $(MD5) unvers.tmp > $$coktag ; \
 					else rm -f $$coktag ; fi ; \
 				elif [[ "$(4)" =~ .*solidity.* ]] ; then \
 					if [[ ! -f concise ]] ; then \
@@ -216,10 +216,10 @@ define testrun
 					solcjs --bin $$testfile ; \
 					sret=$$? ; \
 					if [[ -f concise ]] ; then \
-						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) $$testfile > $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
 					else \
-						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) $$testfile > $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
 					fi ; \
 				elif [[ "$(4)" =~ .*sophia.* ]] ; then \
@@ -229,10 +229,10 @@ define testrun
 					aesophia_cli $$testfile > tmp ; \
 					sret=$$? ; \
 					if [[ -f concise ]] ; then \
-						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) $$testfile > $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
 					else \
-						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) $$testfile > $$coktag ; fi ; \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
 						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
 					fi ; \
 				fi ; \
@@ -245,7 +245,7 @@ define testrun
 	  		; printf "$(ok)› updated √$(off)\n\n" ; \
 		    fi ; \
 		elif (( $$dret == 1 )) && [[ ! -f noupdate ]] ; then \
-		    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff: " -n 1 -r ; echo \
+		    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff, natice compilation synta(X) check : " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
 				; elif [[ $$REPLY =~ ^[Rr]$$ ]] ; then echo "Result now ($$testfile -- version tags are ignored):" ; $(call sep,_,132) ; cat $$testfile ; $(call sep,_,132) \
@@ -261,6 +261,7 @@ define testrun
 				; elif [[ $$REPLY =~ ^[Kk]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; break \
 				; elif [[ $$REPLY =~ ^[Ii]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; touch noupdate ; break \
 				; elif [[ $$REPLY =~ ^[Qq]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; fi ; quit=1 ; break 2 \
+				; elif [[ $$REPLY =~ ^[Xx]$$ ]] ; then $(call native_compile,$(1),$(2),$(3),$(4)) \
 				; fi \
 		    ; done ; \
 		elif [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; \
@@ -270,6 +271,71 @@ define testrun
 	    ; echo $$testnumber > testnumber.tmp \
 	    ; if (( $$quit == 1 )) ; then touch quit.tmp ; fi ; \
 	fi
+endef
+
+define native_compile
+			    if (( $$failer2 > 0 )) ; then \
+				if [[ "$(4)" =~ .*javascript.* ]] || [[ "$(4)" =~ .*solidity.* ]] || [[ "$(4)" =~ .*sophia.* ]] ; then \
+			    		rm -f $$coktag ; \
+			        	if [[ -f concise ]] ; then printf "$(ok) $(off)" ; \
+					else printf "  $(ok)skipped expected error √$(off)\n" ; fi ; \
+				fi ; \
+			    else \
+				if [[ "$(4)" =~ .*javascript.* ]] ; then \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» node instantiation of $$testfile .. $(dim)" ; \
+					fi ; \
+					node -e "contract = require('./$$testfile')" ; \
+					s0ret=$$? ; \
+					if [[ -f concise ]] ; then \
+						if (( $$s0ret == 0 )) ; then printf "$(ok)+$(off)" ; \
+						else printf "$(err)#$(off)" ; fi ; \
+					else \
+						if (( $$s0ret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; \
+						else printf "  $(err)failed #$(off)\n" ; fi ; \
+					fi ; \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» linting of $$testfile .. $(dim)" ; \
+					fi ; \
+					npx eslint $$testfile ; \
+					s1ret=$$? ; \
+					if [[ -f concise ]] ; then \
+						if (( $$s1ret == 0 )) ; then printf "$(ok)+ $(off)" ; \
+						else printf "$(err)# $(off)" ; fi ; \
+					else \
+						if (( $$s1ret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; \
+						else printf "  $(err)failed #$(off)\n" ; fi ; \
+					fi ; \
+					if (( $$s0ret == 0 )) && (( $$s1ret == 0 )) ; then $(MD5) unvers.tmp > $$coktag ; \
+					else rm -f $$coktag ; fi ; \
+				elif [[ "$(4)" =~ .*solidity.* ]] ; then \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» solidity compilation of $$testfile .. $(dim)" ; \
+					fi ; \
+					solcjs --bin $$testfile ; \
+					sret=$$? ; \
+					if [[ -f concise ]] ; then \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
+					else \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					fi ; \
+				elif [[ "$(4)" =~ .*sophia.* ]] ; then \
+					if [[ ! -f concise ]] ; then \
+						printf "$(ok)» sophia compilation of $$testfile .. $(dim)" ; \
+					fi ; \
+					aesophia_cli $$testfile > tmp ; \
+					sret=$$? ; \
+					if [[ -f concise ]] ; then \
+						if (( $$sret == 0 )) ; then printf "$(ok)+ $(off)" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "$(err)# $(off)" ; rm -f $$coktag ; fi ; \
+					else \
+						if (( $$sret == 0 )) ; then printf "  $(ok)ok √$(off)\n" ; $(MD5) unvers.tmp > $$coktag ; fi ; \
+						if (( $$sret == 1 )) ; then printf "  $(err)failed #$(off)\n" ; rm -f $$coktag ; fi ; \
+					fi ; \
+				fi ; \
+			    fi
 endef
 
 define focustest

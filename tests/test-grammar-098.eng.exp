@@ -70,9 +70,7 @@
                                     preposition 
                                     ( object ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -84,9 +82,7 @@
                                 ( registration register ( symbol «bar» ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol ( type person ) ) 
                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinor ( combinand 
@@ -180,9 +176,7 @@
                                 ( registration register ( symbol ( type text ) ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol ( type time ) ) 
                                     ( contract 
@@ -233,13 +227,9 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type amount ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol ( type binary ) ) 
                                     ( expression ( combination ( combination ( combinor ( combinand 
@@ -319,15 +309,11 @@
                                 ( declaration declare ( symbol ( type data ) ) 
                                     ( contract all-contracts ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type time ) ) ) ) 
+                                ( setting be ( symbol ( type time ) ) ) ) 
                             ( predicate 
                                 ( termination terminate all-contracts ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol ( type binary ) ) 
                                     ( contract 
