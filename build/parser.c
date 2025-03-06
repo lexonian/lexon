@@ -128,244 +128,248 @@ enum yysymbol_kind_t
   YYSYMBOL_APPOINT = 35,                   /* APPOINT  */
   YYSYMBOL_APPOINTS = 36,                  /* APPOINTS  */
   YYSYMBOL_AS = 37,                        /* AS  */
-  YYSYMBOL_AT = 38,                        /* AT  */
-  YYSYMBOL_BE = 39,                        /* BE  */
-  YYSYMBOL_BEEN = 40,                      /* BEEN  */
-  YYSYMBOL_BEING = 41,                     /* BEING  */
-  YYSYMBOL_BINARY = 42,                    /* BINARY  */
-  YYSYMBOL_CERTIFIED = 43,                 /* CERTIFIED  */
-  YYSYMBOL_CERTIFIES = 44,                 /* CERTIFIES  */
-  YYSYMBOL_CERTIFY = 45,                   /* CERTIFY  */
-  YYSYMBOL_COMING = 46,                    /* COMING  */
-  YYSYMBOL_CONTRACT = 47,                  /* CONTRACT  */
-  YYSYMBOL_CONTRACTS = 48,                 /* CONTRACTS  */
-  YYSYMBOL_CURRENT = 49,                   /* CURRENT  */
-  YYSYMBOL_DATA = 50,                      /* DATA  */
-  YYSYMBOL_DAY = 51,                       /* DAY  */
-  YYSYMBOL_DAYS = 52,                      /* DAYS  */
-  YYSYMBOL_DECLARE = 53,                   /* DECLARE  */
-  YYSYMBOL_DECLARED = 54,                  /* DECLARED  */
-  YYSYMBOL_DECLARES = 55,                  /* DECLARES  */
-  YYSYMBOL_DEFINED = 56,                   /* DEFINED  */
-  YYSYMBOL_EQUAL = 57,                     /* EQUAL  */
-  YYSYMBOL_EQUALING = 58,                  /* EQUALING  */
-  YYSYMBOL_ESCROW = 59,                    /* ESCROW  */
-  YYSYMBOL_FILE_ = 60,                     /* FILE_  */
-  YYSYMBOL_FILED = 61,                     /* FILED  */
-  YYSYMBOL_FILES = 62,                     /* FILES  */
-  YYSYMBOL_FIX = 63,                       /* FIX  */
-  YYSYMBOL_FIXED = 64,                     /* FIXED  */
-  YYSYMBOL_FIXES = 65,                     /* FIXES  */
-  YYSYMBOL_FOR = 66,                       /* FOR  */
-  YYSYMBOL_FROM = 67,                      /* FROM  */
-  YYSYMBOL_GIVEN = 68,                     /* GIVEN  */
-  YYSYMBOL_GRANT = 69,                     /* GRANT  */
-  YYSYMBOL_GRANTS = 70,                    /* GRANTS  */
-  YYSYMBOL_GREATER = 71,                   /* GREATER  */
-  YYSYMBOL_HAS = 72,                       /* HAS  */
-  YYSYMBOL_HERSELF = 73,                   /* HERSELF  */
-  YYSYMBOL_HIMSELF = 74,                   /* HIMSELF  */
-  YYSYMBOL_HOUR = 75,                      /* HOUR  */
-  YYSYMBOL_HOURS = 76,                     /* HOURS  */
-  YYSYMBOL_IF = 77,                        /* IF  */
-  YYSYMBOL_IN = 78,                        /* IN  */
-  YYSYMBOL_INCOMING = 79,                  /* INCOMING  */
-  YYSYMBOL_INTO = 80,                      /* INTO  */
-  YYSYMBOL_IS = 81,                        /* IS  */
-  YYSYMBOL_ITSELF = 82,                    /* ITSELF  */
-  YYSYMBOL_LEAST = 83,                     /* LEAST  */
-  YYSYMBOL_LESS = 84,                      /* LESS  */
-  YYSYMBOL_LIES = 85,                      /* LIES  */
-  YYSYMBOL_MAY = 86,                       /* MAY  */
-  YYSYMBOL_MILLISECOND = 87,               /* MILLISECOND  */
-  YYSYMBOL_MILLISECONDS = 88,              /* MILLISECONDS  */
-  YYSYMBOL_MINUTE = 89,                    /* MINUTE  */
-  YYSYMBOL_MINUTES = 90,                   /* MINUTES  */
-  YYSYMBOL_MONTH = 91,                     /* MONTH  */
-  YYSYMBOL_MONTHS = 92,                    /* MONTHS  */
-  YYSYMBOL_MYSELF = 93,                    /* MYSELF  */
-  YYSYMBOL_NEITHER = 94,                   /* NEITHER  */
-  YYSYMBOL_NEW = 95,                       /* NEW  */
-  YYSYMBOL_NEXT = 96,                      /* NEXT  */
-  YYSYMBOL_NO = 97,                        /* NO  */
-  YYSYMBOL_NOR = 98,                       /* NOR  */
-  YYSYMBOL_NOT = 99,                       /* NOT  */
-  YYSYMBOL_NOTIFIES = 100,                 /* NOTIFIES  */
-  YYSYMBOL_NOTIFY = 101,                   /* NOTIFY  */
-  YYSYMBOL_NOW = 102,                      /* NOW  */
-  YYSYMBOL_OF = 103,                       /* OF  */
-  YYSYMBOL_OFF = 104,                      /* OFF  */
-  YYSYMBOL_ON = 105,                       /* ON  */
-  YYSYMBOL_ONESELF = 106,                  /* ONESELF  */
-  YYSYMBOL_OR = 107,                       /* OR  */
-  YYSYMBOL_OURSELVES = 108,                /* OURSELVES  */
-  YYSYMBOL_PASSED = 109,                   /* PASSED  */
-  YYSYMBOL_PAST = 110,                     /* PAST  */
-  YYSYMBOL_PAY = 111,                      /* PAY  */
-  YYSYMBOL_PAYS = 112,                     /* PAYS  */
-  YYSYMBOL_PERSON = 113,                   /* PERSON  */
-  YYSYMBOL_PROVIDED = 114,                 /* PROVIDED  */
-  YYSYMBOL_REGISTER = 115,                 /* REGISTER  */
-  YYSYMBOL_REGISTERS = 116,                /* REGISTERS  */
-  YYSYMBOL_REMAINDER = 117,                /* REMAINDER  */
-  YYSYMBOL_REPAY = 118,                    /* REPAY  */
-  YYSYMBOL_REPAYS = 119,                   /* REPAYS  */
-  YYSYMBOL_RESPECTIVE = 120,               /* RESPECTIVE  */
-  YYSYMBOL_RETURN = 121,                   /* RETURN  */
-  YYSYMBOL_RETURNS = 122,                  /* RETURNS  */
-  YYSYMBOL_SECOND = 123,                   /* SECOND  */
-  YYSYMBOL_SECONDS = 124,                  /* SECONDS  */
-  YYSYMBOL_SEND = 125,                     /* SEND  */
-  YYSYMBOL_SENDS = 126,                    /* SENDS  */
-  YYSYMBOL_SIGNED = 127,                   /* SIGNED  */
-  YYSYMBOL_SMALLER = 128,                  /* SMALLER  */
-  YYSYMBOL_SO = 129,                       /* SO  */
-  YYSYMBOL_TERMINATE = 130,                /* TERMINATE  */
-  YYSYMBOL_TERMINATES = 131,               /* TERMINATES  */
-  YYSYMBOL_TEXT = 132,                     /* TEXT  */
-  YYSYMBOL_THAN = 133,                     /* THAN  */
-  YYSYMBOL_THAT = 134,                     /* THAT  */
-  YYSYMBOL_THE = 135,                      /* THE  */
-  YYSYMBOL_THEMSELF = 136,                 /* THEMSELF  */
-  YYSYMBOL_THEMSELVES = 137,               /* THEMSELVES  */
-  YYSYMBOL_THEN = 138,                     /* THEN  */
-  YYSYMBOL_THERE = 139,                    /* THERE  */
-  YYSYMBOL_THEREFOR = 140,                 /* THEREFOR  */
-  YYSYMBOL_THEREFORE = 141,                /* THEREFORE  */
-  YYSYMBOL_THESE = 142,                    /* THESE  */
-  YYSYMBOL_THIS = 143,                     /* THIS  */
-  YYSYMBOL_TIME = 144,                     /* TIME  */
-  YYSYMBOL_TO = 145,                       /* TO  */
-  YYSYMBOL_TRANSFER = 146,                 /* TRANSFER  */
-  YYSYMBOL_TRANSFERS = 147,                /* TRANSFERS  */
-  YYSYMBOL_TRUE = 148,                     /* TRUE  */
-  YYSYMBOL_WAS = 149,                      /* WAS  */
-  YYSYMBOL_WEEK = 150,                     /* WEEK  */
-  YYSYMBOL_WEEKS = 151,                    /* WEEKS  */
-  YYSYMBOL_WITH = 152,                     /* WITH  */
-  YYSYMBOL_YEAR = 153,                     /* YEAR  */
-  YYSYMBOL_YEARS = 154,                    /* YEARS  */
-  YYSYMBOL_YES = 155,                      /* YES  */
-  YYSYMBOL_YET = 156,                      /* YET  */
-  YYSYMBOL_YOURSELF = 157,                 /* YOURSELF  */
-  YYSYMBOL_YOURSELVES = 158,               /* YOURSELVES  */
-  YYSYMBOL_YYACCEPT = 159,                 /* $accept  */
-  YYSYMBOL_Document = 160,                 /* Document  */
-  YYSYMBOL_Head = 161,                     /* Head  */
-  YYSYMBOL_Lex = 162,                      /* Lex  */
-  YYSYMBOL_Lexon = 163,                    /* Lexon  */
-  YYSYMBOL_Authors = 164,                  /* Authors  */
-  YYSYMBOL_Comment = 165,                  /* Comment  */
-  YYSYMBOL_Preamble = 166,                 /* Preamble  */
-  YYSYMBOL_Terms = 167,                    /* Terms  */
-  YYSYMBOL_Covenants = 168,                /* Covenants  */
-  YYSYMBOL_Covenant = 169,                 /* Covenant  */
-  YYSYMBOL_Provisions = 170,               /* Provisions  */
-  YYSYMBOL_Definitions = 171,              /* Definitions  */
-  YYSYMBOL_Definition = 172,               /* Definition  */
-  YYSYMBOL_Type_Term = 173,                /* Type_Term  */
-  YYSYMBOL_Type = 174,                     /* Type  */
-  YYSYMBOL_Person = 175,                   /* Person  */
-  YYSYMBOL_Amount = 176,                   /* Amount  */
-  YYSYMBOL_Time = 177,                     /* Time  */
-  YYSYMBOL_Binary = 178,                   /* Binary  */
-  YYSYMBOL_Text = 179,                     /* Text  */
-  YYSYMBOL_Data = 180,                     /* Data  */
-  YYSYMBOL_This_Contract = 181,            /* This_Contract  */
-  YYSYMBOL_All_Contracts = 182,            /* All_Contracts  */
-  YYSYMBOL_This = 183,                     /* This  */
-  YYSYMBOL_Clauses = 184,                  /* Clauses  */
-  YYSYMBOL_Clause = 185,                   /* Clause  */
-  YYSYMBOL_Body = 186,                     /* Body  */
-  YYSYMBOL_Function = 187,                 /* Function  */
-  YYSYMBOL_Statements = 188,               /* Statements  */
-  YYSYMBOL_Statement = 189,                /* Statement  */
-  YYSYMBOL_Action = 190,                   /* Action  */
-  YYSYMBOL_Subject = 191,                  /* Subject  */
-  YYSYMBOL_Symbols = 192,                  /* Symbols  */
-  YYSYMBOL_Symbol = 193,                   /* Symbol  */
-  YYSYMBOL_Catena = 194,                   /* Catena  */
-  YYSYMBOL_Object = 195,                   /* Object  */
-  YYSYMBOL_Reflexive = 196,                /* Reflexive  */
-  YYSYMBOL_Contract = 197,                 /* Contract  */
-  YYSYMBOL_Predicates = 198,               /* Predicates  */
-  YYSYMBOL_Predicate = 199,                /* Predicate  */
-  YYSYMBOL_Permission = 200,               /* Permission  */
-  YYSYMBOL_Certification = 201,            /* Certification  */
-  YYSYMBOL_Certify = 202,                  /* Certify  */
-  YYSYMBOL_Declaration = 203,              /* Declaration  */
-  YYSYMBOL_Declare = 204,                  /* Declare  */
-  YYSYMBOL_Filing = 205,                   /* Filing  */
-  YYSYMBOL_File = 206,                     /* File  */
-  YYSYMBOL_Registration = 207,             /* Registration  */
-  YYSYMBOL_Register = 208,                 /* Register  */
-  YYSYMBOL_Grantment = 209,                /* Grantment  */
-  YYSYMBOL_Grant = 210,                    /* Grant  */
-  YYSYMBOL_Appointment = 211,              /* Appointment  */
-  YYSYMBOL_Appoint = 212,                  /* Appoint  */
-  YYSYMBOL_Acceptance = 213,               /* Acceptance  */
-  YYSYMBOL_Accept = 214,                   /* Accept  */
-  YYSYMBOL_Fixture = 215,                  /* Fixture  */
-  YYSYMBOL_Fix = 216,                      /* Fix  */
-  YYSYMBOL_Fixed = 217,                    /* Fixed  */
-  YYSYMBOL_Setting = 218,                  /* Setting  */
-  YYSYMBOL_Illocutor = 219,                /* Illocutor  */
-  YYSYMBOL_Be = 220,                       /* Be  */
-  YYSYMBOL_Payment = 221,                  /* Payment  */
-  YYSYMBOL_Pay = 222,                      /* Pay  */
-  YYSYMBOL_Preposition = 223,              /* Preposition  */
-  YYSYMBOL_Escrow = 224,                   /* Escrow  */
-  YYSYMBOL_From_Escrow = 225,              /* From_Escrow  */
-  YYSYMBOL_Sending = 226,                  /* Sending  */
-  YYSYMBOL_Send = 227,                     /* Send  */
-  YYSYMBOL_Notification = 228,             /* Notification  */
-  YYSYMBOL_Notify = 229,                   /* Notify  */
-  YYSYMBOL_Termination = 230,              /* Termination  */
-  YYSYMBOL_Terminate = 231,                /* Terminate  */
-  YYSYMBOL_Flagging = 232,                 /* Flagging  */
-  YYSYMBOL_Condition = 233,                /* Condition  */
-  YYSYMBOL_If = 234,                       /* If  */
-  YYSYMBOL_Expression = 235,               /* Expression  */
-  YYSYMBOL_Scalar_Comparison = 236,        /* Scalar_Comparison  */
-  YYSYMBOL_Comparison_Operator = 237,      /* Comparison_Operator  */
-  YYSYMBOL_Equal = 238,                    /* Equal  */
-  YYSYMBOL_Greater = 239,                  /* Greater  */
-  YYSYMBOL_Less = 240,                     /* Less  */
-  YYSYMBOL_Later = 241,                    /* Later  */
-  YYSYMBOL_Scalar_Expression = 242,        /* Scalar_Expression  */
-  YYSYMBOL_Combination = 243,              /* Combination  */
-  YYSYMBOL_Combinor = 244,                 /* Combinor  */
-  YYSYMBOL_Combinand = 245,                /* Combinand  */
-  YYSYMBOL_Combinator = 246,               /* Combinator  */
-  YYSYMBOL_Or_ = 247,                      /* Or_  */
-  YYSYMBOL_And = 248,                      /* And  */
-  YYSYMBOL_Neither = 249,                  /* Neither  */
-  YYSYMBOL_Nor = 250,                      /* Nor  */
-  YYSYMBOL_Existence = 251,                /* Existence  */
-  YYSYMBOL_Negation = 252,                 /* Negation  */
-  YYSYMBOL_Negator = 253,                  /* Negator  */
-  YYSYMBOL_Being = 254,                    /* Being  */
-  YYSYMBOL_True = 255,                     /* True  */
-  YYSYMBOL_Article = 256,                  /* Article  */
-  YYSYMBOL_New = 257,                      /* New  */
-  YYSYMBOL_Point_In_Time = 258,            /* Point_In_Time  */
-  YYSYMBOL_Current_Time = 259,             /* Current_Time  */
-  YYSYMBOL_Relative_Time = 260,            /* Relative_Time  */
-  YYSYMBOL_Duration = 261,                 /* Duration  */
-  YYSYMBOL_Time_Unit = 262,                /* Time_Unit  */
-  YYSYMBOL_Years = 263,                    /* Years  */
-  YYSYMBOL_Months = 264,                   /* Months  */
-  YYSYMBOL_Weeks = 265,                    /* Weeks  */
-  YYSYMBOL_Days = 266,                     /* Days  */
-  YYSYMBOL_Hours = 267,                    /* Hours  */
-  YYSYMBOL_Minutes = 268,                  /* Minutes  */
-  YYSYMBOL_Seconds = 269,                  /* Seconds  */
-  YYSYMBOL_Milliseconds = 270,             /* Milliseconds  */
-  YYSYMBOL_Expiration = 271,               /* Expiration  */
-  YYSYMBOL_Timeliness = 272,               /* Timeliness  */
-  YYSYMBOL_Name = 273,                     /* Name  */
-  YYSYMBOL_Description = 274,              /* Description  */
-  YYSYMBOL_Scalar = 275                    /* Scalar  */
+  YYSYMBOL_ASSIGN = 38,                    /* ASSIGN  */
+  YYSYMBOL_ASSIGNS = 39,                   /* ASSIGNS  */
+  YYSYMBOL_AT = 40,                        /* AT  */
+  YYSYMBOL_BE = 41,                        /* BE  */
+  YYSYMBOL_BEEN = 42,                      /* BEEN  */
+  YYSYMBOL_BEING = 43,                     /* BEING  */
+  YYSYMBOL_BINARY = 44,                    /* BINARY  */
+  YYSYMBOL_CERTIFIED = 45,                 /* CERTIFIED  */
+  YYSYMBOL_CERTIFIES = 46,                 /* CERTIFIES  */
+  YYSYMBOL_CERTIFY = 47,                   /* CERTIFY  */
+  YYSYMBOL_COMING = 48,                    /* COMING  */
+  YYSYMBOL_CONTRACT = 49,                  /* CONTRACT  */
+  YYSYMBOL_CONTRACTS = 50,                 /* CONTRACTS  */
+  YYSYMBOL_CURRENT = 51,                   /* CURRENT  */
+  YYSYMBOL_DATA = 52,                      /* DATA  */
+  YYSYMBOL_DAY = 53,                       /* DAY  */
+  YYSYMBOL_DAYS = 54,                      /* DAYS  */
+  YYSYMBOL_DECLARE = 55,                   /* DECLARE  */
+  YYSYMBOL_DECLARED = 56,                  /* DECLARED  */
+  YYSYMBOL_DECLARES = 57,                  /* DECLARES  */
+  YYSYMBOL_DEFINED = 58,                   /* DEFINED  */
+  YYSYMBOL_EQUAL = 59,                     /* EQUAL  */
+  YYSYMBOL_EQUALING = 60,                  /* EQUALING  */
+  YYSYMBOL_ESCROW = 61,                    /* ESCROW  */
+  YYSYMBOL_FILE_ = 62,                     /* FILE_  */
+  YYSYMBOL_FILED = 63,                     /* FILED  */
+  YYSYMBOL_FILES = 64,                     /* FILES  */
+  YYSYMBOL_FIX = 65,                       /* FIX  */
+  YYSYMBOL_FIXED = 66,                     /* FIXED  */
+  YYSYMBOL_FIXES = 67,                     /* FIXES  */
+  YYSYMBOL_FOR = 68,                       /* FOR  */
+  YYSYMBOL_FROM = 69,                      /* FROM  */
+  YYSYMBOL_GIVEN = 70,                     /* GIVEN  */
+  YYSYMBOL_GRANT = 71,                     /* GRANT  */
+  YYSYMBOL_GRANTS = 72,                    /* GRANTS  */
+  YYSYMBOL_GREATER = 73,                   /* GREATER  */
+  YYSYMBOL_HAS = 74,                       /* HAS  */
+  YYSYMBOL_HERSELF = 75,                   /* HERSELF  */
+  YYSYMBOL_HIMSELF = 76,                   /* HIMSELF  */
+  YYSYMBOL_HOUR = 77,                      /* HOUR  */
+  YYSYMBOL_HOURS = 78,                     /* HOURS  */
+  YYSYMBOL_IF = 79,                        /* IF  */
+  YYSYMBOL_IN = 80,                        /* IN  */
+  YYSYMBOL_INCOMING = 81,                  /* INCOMING  */
+  YYSYMBOL_INTO = 82,                      /* INTO  */
+  YYSYMBOL_IS = 83,                        /* IS  */
+  YYSYMBOL_ITSELF = 84,                    /* ITSELF  */
+  YYSYMBOL_LEAST = 85,                     /* LEAST  */
+  YYSYMBOL_LESS = 86,                      /* LESS  */
+  YYSYMBOL_LIES = 87,                      /* LIES  */
+  YYSYMBOL_MAY = 88,                       /* MAY  */
+  YYSYMBOL_MILLISECOND = 89,               /* MILLISECOND  */
+  YYSYMBOL_MILLISECONDS = 90,              /* MILLISECONDS  */
+  YYSYMBOL_MINUTE = 91,                    /* MINUTE  */
+  YYSYMBOL_MINUTES = 92,                   /* MINUTES  */
+  YYSYMBOL_MONTH = 93,                     /* MONTH  */
+  YYSYMBOL_MONTHS = 94,                    /* MONTHS  */
+  YYSYMBOL_MYSELF = 95,                    /* MYSELF  */
+  YYSYMBOL_NEITHER = 96,                   /* NEITHER  */
+  YYSYMBOL_NEW = 97,                       /* NEW  */
+  YYSYMBOL_NEXT = 98,                      /* NEXT  */
+  YYSYMBOL_NO = 99,                        /* NO  */
+  YYSYMBOL_NOR = 100,                      /* NOR  */
+  YYSYMBOL_NOT = 101,                      /* NOT  */
+  YYSYMBOL_NOTIFIES = 102,                 /* NOTIFIES  */
+  YYSYMBOL_NOTIFY = 103,                   /* NOTIFY  */
+  YYSYMBOL_NOW = 104,                      /* NOW  */
+  YYSYMBOL_OF = 105,                       /* OF  */
+  YYSYMBOL_OFF = 106,                      /* OFF  */
+  YYSYMBOL_ON = 107,                       /* ON  */
+  YYSYMBOL_ONESELF = 108,                  /* ONESELF  */
+  YYSYMBOL_OR = 109,                       /* OR  */
+  YYSYMBOL_OURSELVES = 110,                /* OURSELVES  */
+  YYSYMBOL_PASSED = 111,                   /* PASSED  */
+  YYSYMBOL_PAST = 112,                     /* PAST  */
+  YYSYMBOL_PAY = 113,                      /* PAY  */
+  YYSYMBOL_PAYS = 114,                     /* PAYS  */
+  YYSYMBOL_PERSON = 115,                   /* PERSON  */
+  YYSYMBOL_PROVIDED = 116,                 /* PROVIDED  */
+  YYSYMBOL_REGISTER = 117,                 /* REGISTER  */
+  YYSYMBOL_REGISTERS = 118,                /* REGISTERS  */
+  YYSYMBOL_REMAINDER = 119,                /* REMAINDER  */
+  YYSYMBOL_REPAY = 120,                    /* REPAY  */
+  YYSYMBOL_REPAYS = 121,                   /* REPAYS  */
+  YYSYMBOL_RESPECTIVE = 122,               /* RESPECTIVE  */
+  YYSYMBOL_RETURN = 123,                   /* RETURN  */
+  YYSYMBOL_RETURNS = 124,                  /* RETURNS  */
+  YYSYMBOL_SECOND = 125,                   /* SECOND  */
+  YYSYMBOL_SECONDS = 126,                  /* SECONDS  */
+  YYSYMBOL_SEND = 127,                     /* SEND  */
+  YYSYMBOL_SENDS = 128,                    /* SENDS  */
+  YYSYMBOL_SIGNED = 129,                   /* SIGNED  */
+  YYSYMBOL_SMALLER = 130,                  /* SMALLER  */
+  YYSYMBOL_SO = 131,                       /* SO  */
+  YYSYMBOL_TERMINATE = 132,                /* TERMINATE  */
+  YYSYMBOL_TERMINATES = 133,               /* TERMINATES  */
+  YYSYMBOL_TEXT = 134,                     /* TEXT  */
+  YYSYMBOL_THAN = 135,                     /* THAN  */
+  YYSYMBOL_THAT = 136,                     /* THAT  */
+  YYSYMBOL_THE = 137,                      /* THE  */
+  YYSYMBOL_THEMSELF = 138,                 /* THEMSELF  */
+  YYSYMBOL_THEMSELVES = 139,               /* THEMSELVES  */
+  YYSYMBOL_THEN = 140,                     /* THEN  */
+  YYSYMBOL_THERE = 141,                    /* THERE  */
+  YYSYMBOL_THEREFOR = 142,                 /* THEREFOR  */
+  YYSYMBOL_THEREFORE = 143,                /* THEREFORE  */
+  YYSYMBOL_THESE = 144,                    /* THESE  */
+  YYSYMBOL_THIS = 145,                     /* THIS  */
+  YYSYMBOL_TIME = 146,                     /* TIME  */
+  YYSYMBOL_TO = 147,                       /* TO  */
+  YYSYMBOL_TRANSFER = 148,                 /* TRANSFER  */
+  YYSYMBOL_TRANSFERS = 149,                /* TRANSFERS  */
+  YYSYMBOL_TRUE = 150,                     /* TRUE  */
+  YYSYMBOL_WAS = 151,                      /* WAS  */
+  YYSYMBOL_WEEK = 152,                     /* WEEK  */
+  YYSYMBOL_WEEKS = 153,                    /* WEEKS  */
+  YYSYMBOL_WITH = 154,                     /* WITH  */
+  YYSYMBOL_YEAR = 155,                     /* YEAR  */
+  YYSYMBOL_YEARS = 156,                    /* YEARS  */
+  YYSYMBOL_YES = 157,                      /* YES  */
+  YYSYMBOL_YET = 158,                      /* YET  */
+  YYSYMBOL_YOURSELF = 159,                 /* YOURSELF  */
+  YYSYMBOL_YOURSELVES = 160,               /* YOURSELVES  */
+  YYSYMBOL_YYACCEPT = 161,                 /* $accept  */
+  YYSYMBOL_Document = 162,                 /* Document  */
+  YYSYMBOL_Head = 163,                     /* Head  */
+  YYSYMBOL_Lex = 164,                      /* Lex  */
+  YYSYMBOL_Lexon = 165,                    /* Lexon  */
+  YYSYMBOL_Authors = 166,                  /* Authors  */
+  YYSYMBOL_Comment = 167,                  /* Comment  */
+  YYSYMBOL_Preamble = 168,                 /* Preamble  */
+  YYSYMBOL_Terms = 169,                    /* Terms  */
+  YYSYMBOL_Covenants = 170,                /* Covenants  */
+  YYSYMBOL_Covenant = 171,                 /* Covenant  */
+  YYSYMBOL_Provisions = 172,               /* Provisions  */
+  YYSYMBOL_Definitions = 173,              /* Definitions  */
+  YYSYMBOL_Definition = 174,               /* Definition  */
+  YYSYMBOL_Type_Term = 175,                /* Type_Term  */
+  YYSYMBOL_Type = 176,                     /* Type  */
+  YYSYMBOL_Person = 177,                   /* Person  */
+  YYSYMBOL_Amount = 178,                   /* Amount  */
+  YYSYMBOL_Time = 179,                     /* Time  */
+  YYSYMBOL_Binary = 180,                   /* Binary  */
+  YYSYMBOL_Text = 181,                     /* Text  */
+  YYSYMBOL_Data = 182,                     /* Data  */
+  YYSYMBOL_This_Contract = 183,            /* This_Contract  */
+  YYSYMBOL_All_Contracts = 184,            /* All_Contracts  */
+  YYSYMBOL_This = 185,                     /* This  */
+  YYSYMBOL_Clauses = 186,                  /* Clauses  */
+  YYSYMBOL_Clause = 187,                   /* Clause  */
+  YYSYMBOL_Body = 188,                     /* Body  */
+  YYSYMBOL_Function = 189,                 /* Function  */
+  YYSYMBOL_Statements = 190,               /* Statements  */
+  YYSYMBOL_Statement = 191,                /* Statement  */
+  YYSYMBOL_Action = 192,                   /* Action  */
+  YYSYMBOL_Subject = 193,                  /* Subject  */
+  YYSYMBOL_Symbols = 194,                  /* Symbols  */
+  YYSYMBOL_Symbol = 195,                   /* Symbol  */
+  YYSYMBOL_Catena = 196,                   /* Catena  */
+  YYSYMBOL_Object = 197,                   /* Object  */
+  YYSYMBOL_Reflexive = 198,                /* Reflexive  */
+  YYSYMBOL_Contract = 199,                 /* Contract  */
+  YYSYMBOL_Predicates = 200,               /* Predicates  */
+  YYSYMBOL_Predicate = 201,                /* Predicate  */
+  YYSYMBOL_Permission = 202,               /* Permission  */
+  YYSYMBOL_Certification = 203,            /* Certification  */
+  YYSYMBOL_Certify = 204,                  /* Certify  */
+  YYSYMBOL_Declaration = 205,              /* Declaration  */
+  YYSYMBOL_Declare = 206,                  /* Declare  */
+  YYSYMBOL_Filing = 207,                   /* Filing  */
+  YYSYMBOL_File = 208,                     /* File  */
+  YYSYMBOL_Registration = 209,             /* Registration  */
+  YYSYMBOL_Register = 210,                 /* Register  */
+  YYSYMBOL_Grantment = 211,                /* Grantment  */
+  YYSYMBOL_Grant = 212,                    /* Grant  */
+  YYSYMBOL_Appointment = 213,              /* Appointment  */
+  YYSYMBOL_Appoint = 214,                  /* Appoint  */
+  YYSYMBOL_Assignment = 215,               /* Assignment  */
+  YYSYMBOL_Assign = 216,                   /* Assign  */
+  YYSYMBOL_Acceptance = 217,               /* Acceptance  */
+  YYSYMBOL_Accept = 218,                   /* Accept  */
+  YYSYMBOL_Fixture = 219,                  /* Fixture  */
+  YYSYMBOL_Fix = 220,                      /* Fix  */
+  YYSYMBOL_Fixed = 221,                    /* Fixed  */
+  YYSYMBOL_Setting = 222,                  /* Setting  */
+  YYSYMBOL_Illocutor = 223,                /* Illocutor  */
+  YYSYMBOL_Be = 224,                       /* Be  */
+  YYSYMBOL_Payment = 225,                  /* Payment  */
+  YYSYMBOL_Pay = 226,                      /* Pay  */
+  YYSYMBOL_Preposition = 227,              /* Preposition  */
+  YYSYMBOL_Escrow = 228,                   /* Escrow  */
+  YYSYMBOL_From_Escrow = 229,              /* From_Escrow  */
+  YYSYMBOL_Sending = 230,                  /* Sending  */
+  YYSYMBOL_Send = 231,                     /* Send  */
+  YYSYMBOL_Notification = 232,             /* Notification  */
+  YYSYMBOL_Notify = 233,                   /* Notify  */
+  YYSYMBOL_Termination = 234,              /* Termination  */
+  YYSYMBOL_Terminate = 235,                /* Terminate  */
+  YYSYMBOL_Flagging = 236,                 /* Flagging  */
+  YYSYMBOL_Condition = 237,                /* Condition  */
+  YYSYMBOL_If = 238,                       /* If  */
+  YYSYMBOL_Expression = 239,               /* Expression  */
+  YYSYMBOL_Scalar_Comparison = 240,        /* Scalar_Comparison  */
+  YYSYMBOL_Comparison_Operator = 241,      /* Comparison_Operator  */
+  YYSYMBOL_Equal = 242,                    /* Equal  */
+  YYSYMBOL_Greater = 243,                  /* Greater  */
+  YYSYMBOL_Less = 244,                     /* Less  */
+  YYSYMBOL_Later = 245,                    /* Later  */
+  YYSYMBOL_Scalar_Expression = 246,        /* Scalar_Expression  */
+  YYSYMBOL_Combination = 247,              /* Combination  */
+  YYSYMBOL_Combinor = 248,                 /* Combinor  */
+  YYSYMBOL_Combinand = 249,                /* Combinand  */
+  YYSYMBOL_Combinator = 250,               /* Combinator  */
+  YYSYMBOL_Or_ = 251,                      /* Or_  */
+  YYSYMBOL_And = 252,                      /* And  */
+  YYSYMBOL_Neither = 253,                  /* Neither  */
+  YYSYMBOL_Nor = 254,                      /* Nor  */
+  YYSYMBOL_Existence = 255,                /* Existence  */
+  YYSYMBOL_Negation = 256,                 /* Negation  */
+  YYSYMBOL_Negator = 257,                  /* Negator  */
+  YYSYMBOL_Being = 258,                    /* Being  */
+  YYSYMBOL_True = 259,                     /* True  */
+  YYSYMBOL_Article = 260,                  /* Article  */
+  YYSYMBOL_New = 261,                      /* New  */
+  YYSYMBOL_Point_In_Time = 262,            /* Point_In_Time  */
+  YYSYMBOL_Current_Time = 263,             /* Current_Time  */
+  YYSYMBOL_Relative_Time = 264,            /* Relative_Time  */
+  YYSYMBOL_Duration = 265,                 /* Duration  */
+  YYSYMBOL_Time_Unit = 266,                /* Time_Unit  */
+  YYSYMBOL_Years = 267,                    /* Years  */
+  YYSYMBOL_Months = 268,                   /* Months  */
+  YYSYMBOL_Weeks = 269,                    /* Weeks  */
+  YYSYMBOL_Days = 270,                     /* Days  */
+  YYSYMBOL_Hours = 271,                    /* Hours  */
+  YYSYMBOL_Minutes = 272,                  /* Minutes  */
+  YYSYMBOL_Seconds = 273,                  /* Seconds  */
+  YYSYMBOL_Milliseconds = 274,             /* Milliseconds  */
+  YYSYMBOL_Expiration = 275,               /* Expiration  */
+  YYSYMBOL_Timeliness = 276,               /* Timeliness  */
+  YYSYMBOL_Name = 277,                     /* Name  */
+  YYSYMBOL_Description = 278,              /* Description  */
+  YYSYMBOL_Scalar = 279                    /* Scalar  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -628,16 +632,16 @@ typedef int yytype_uint16;
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   4329
+#define YYLAST   4596
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  159
+#define YYNTOKENS  161
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  117
+#define YYNNTS  119
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  467
+#define YYNRULES  472
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  821
+#define YYNSTATES  829
 /* YYMAXRHS -- Maximum number of symbols on right-hand side of rule.  */
 #define YYMAXRHS 12
 /* YYMAXLEFT -- Maximum number of symbols to the left of a handle
@@ -645,7 +649,7 @@ typedef int yytype_uint16;
 #define YYMAXLEFT 0
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   413
+#define YYMAXUTOK   415
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -699,153 +703,154 @@ static const yytype_uint8 yytranslate[] =
      125,   126,   127,   128,   129,   130,   131,   132,   133,   134,
      135,   136,   137,   138,   139,   140,   141,   142,   143,   144,
      145,   146,   147,   148,   149,   150,   151,   152,   153,   154,
-     155,   156,   157,   158
+     155,   156,   157,   158,   159,   160
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,  1125,  1125,  1126,  1132,  1133,  1134,  1135,  1136,  1137,
-    1138,  1139,  1140,  1141,  1142,  1143,  1144,  1145,  1146,  1147,
-    1153,  1159,  1165,  1166,  1172,  1173,  1179,  1185,  1186,  1187,
-    1188,  1189,  1190,  1191,  1192,  1198,  1199,  1205,  1206,  1207,
-    1208,  1214,  1215,  1216,  1217,  1223,  1224,  1230,  1231,  1232,
-    1233,  1239,  1240,  1246,  1247,  1248,  1249,  1250,  1251,  1257,
-    1263,  1269,  1275,  1281,  1287,  1293,  1294,  1300,  1306,  1307,
-    1313,  1314,  1320,  1326,  1327,  1333,  1334,  1335,  1336,  1342,
-    1343,  1349,  1350,  1356,  1357,  1358,  1359,  1360,  1361,  1362,
-    1363,  1364,  1365,  1366,  1372,  1378,  1379,  1385,  1386,  1387,
-    1388,  1389,  1390,  1391,  1392,  1398,  1399,  1405,  1406,  1407,
-    1408,  1414,  1415,  1416,  1417,  1418,  1419,  1420,  1421,  1422,
-    1423,  1429,  1430,  1436,  1437,  1438,  1439,  1440,  1441,  1442,
-    1443,  1444,  1445,  1446,  1447,  1448,  1449,  1455,  1456,  1457,
-    1458,  1459,  1460,  1461,  1462,  1463,  1464,  1465,  1466,  1467,
-    1473,  1479,  1480,  1481,  1482,  1483,  1489,  1490,  1496,  1497,
-    1498,  1499,  1500,  1506,  1507,  1513,  1514,  1515,  1516,  1517,
-    1518,  1519,  1520,  1521,  1522,  1528,  1529,  1535,  1536,  1537,
-    1538,  1539,  1545,  1546,  1552,  1558,  1559,  1565,  1566,  1572,
-    1573,  1579,  1580,  1581,  1587,  1588,  1594,  1595,  1596,  1602,
-    1603,  1609,  1615,  1616,  1617,  1618,  1619,  1620,  1626,  1627,
-    1628,  1629,  1635,  1636,  1642,  1643,  1644,  1645,  1651,  1652,
-    1653,  1654,  1655,  1656,  1657,  1658,  1664,  1665,  1666,  1672,
-    1673,  1674,  1675,  1681,  1682,  1683,  1684,  1690,  1696,  1697,
-    1703,  1704,  1710,  1711,  1717,  1718,  1724,  1725,  1731,  1732,
-    1733,  1734,  1735,  1736,  1737,  1738,  1744,  1745,  1746,  1752,
-    1753,  1754,  1760,  1766,  1772,  1773,  1774,  1775,  1781,  1782,
-    1783,  1784,  1785,  1786,  1787,  1788,  1789,  1795,  1796,  1797,
-    1798,  1799,  1800,  1801,  1802,  1808,  1809,  1810,  1811,  1812,
-    1813,  1814,  1815,  1816,  1817,  1818,  1819,  1820,  1821,  1822,
-    1823,  1824,  1825,  1826,  1827,  1828,  1829,  1830,  1831,  1832,
-    1833,  1834,  1835,  1836,  1837,  1838,  1839,  1840,  1841,  1842,
-    1843,  1844,  1845,  1846,  1847,  1848,  1849,  1850,  1851,  1852,
-    1853,  1854,  1855,  1856,  1857,  1858,  1859,  1860,  1861,  1862,
-    1863,  1864,  1865,  1866,  1867,  1868,  1869,  1870,  1871,  1877,
-    1878,  1879,  1880,  1886,  1887,  1888,  1889,  1890,  1896,  1897,
-    1898,  1904,  1905,  1911,  1912,  1913,  1914,  1915,  1916,  1917,
-    1918,  1919,  1920,  1921,  1927,  1928,  1929,  1930,  1936,  1942,
-    1948,  1954,  1960,  1961,  1962,  1963,  1969,  1970,  1971,  1972,
-    1978,  1979,  1980,  1981,  1987,  1988,  1989,  1995,  1996,  1997,
-    1998,  1999,  2000,  2001,  2002,  2003,  2009,  2010,  2011,  2017,
-    2018,  2019,  2020,  2026,  2027,  2033,  2034,  2035,  2036,  2037,
-    2043,  2044,  2045,  2046,  2047,  2053,  2059,  2060,  2061,  2062,
-    2063,  2064,  2065,  2066,  2072,  2073,  2079,  2080,  2086,  2087,
-    2093,  2094,  2100,  2101,  2107,  2108,  2114,  2115,  2121,  2122,
-    2128,  2129,  2130,  2136,  2137,  2138,  2139,  2140,  2141,  2142,
-    2143,  2144,  2145,  2146,  2147,  2151,  2154,  2157
+       0,  1143,  1143,  1144,  1150,  1151,  1152,  1153,  1154,  1155,
+    1156,  1157,  1158,  1159,  1160,  1161,  1162,  1163,  1164,  1165,
+    1171,  1177,  1183,  1184,  1190,  1191,  1197,  1203,  1204,  1205,
+    1206,  1207,  1208,  1209,  1210,  1216,  1217,  1223,  1224,  1225,
+    1226,  1232,  1233,  1234,  1235,  1241,  1242,  1248,  1249,  1250,
+    1251,  1257,  1258,  1264,  1265,  1266,  1267,  1268,  1269,  1275,
+    1281,  1287,  1293,  1299,  1305,  1311,  1312,  1318,  1324,  1325,
+    1331,  1332,  1338,  1344,  1345,  1351,  1352,  1353,  1354,  1360,
+    1361,  1367,  1368,  1374,  1375,  1376,  1377,  1378,  1379,  1380,
+    1381,  1382,  1383,  1384,  1390,  1396,  1397,  1403,  1404,  1405,
+    1406,  1407,  1408,  1409,  1410,  1416,  1417,  1423,  1424,  1425,
+    1426,  1432,  1433,  1434,  1435,  1436,  1437,  1438,  1439,  1440,
+    1441,  1447,  1448,  1454,  1455,  1456,  1457,  1458,  1459,  1460,
+    1461,  1462,  1463,  1464,  1465,  1466,  1467,  1473,  1474,  1475,
+    1476,  1477,  1478,  1479,  1480,  1481,  1482,  1483,  1484,  1485,
+    1486,  1492,  1498,  1499,  1500,  1501,  1502,  1508,  1509,  1515,
+    1516,  1517,  1518,  1519,  1525,  1526,  1532,  1533,  1534,  1535,
+    1536,  1537,  1538,  1539,  1540,  1541,  1547,  1548,  1554,  1555,
+    1556,  1557,  1558,  1564,  1565,  1571,  1577,  1578,  1584,  1585,
+    1591,  1592,  1598,  1599,  1605,  1606,  1612,  1613,  1614,  1620,
+    1621,  1627,  1628,  1629,  1635,  1636,  1642,  1648,  1649,  1650,
+    1651,  1652,  1653,  1659,  1660,  1661,  1662,  1668,  1669,  1675,
+    1676,  1677,  1678,  1684,  1685,  1686,  1687,  1688,  1689,  1690,
+    1691,  1697,  1698,  1699,  1705,  1706,  1707,  1708,  1714,  1715,
+    1716,  1717,  1723,  1729,  1730,  1736,  1737,  1743,  1744,  1750,
+    1751,  1757,  1758,  1764,  1765,  1766,  1767,  1768,  1769,  1770,
+    1771,  1777,  1778,  1779,  1785,  1786,  1787,  1793,  1799,  1805,
+    1806,  1807,  1808,  1814,  1815,  1816,  1817,  1818,  1819,  1820,
+    1821,  1822,  1828,  1829,  1830,  1831,  1832,  1833,  1834,  1835,
+    1841,  1842,  1843,  1844,  1845,  1846,  1847,  1848,  1849,  1850,
+    1851,  1852,  1853,  1854,  1855,  1856,  1857,  1858,  1859,  1860,
+    1861,  1862,  1863,  1864,  1865,  1866,  1867,  1868,  1869,  1870,
+    1871,  1872,  1873,  1874,  1875,  1876,  1877,  1878,  1879,  1880,
+    1881,  1882,  1883,  1884,  1885,  1886,  1887,  1888,  1889,  1890,
+    1891,  1892,  1893,  1894,  1895,  1896,  1897,  1898,  1899,  1900,
+    1901,  1902,  1903,  1904,  1910,  1911,  1912,  1913,  1919,  1920,
+    1921,  1922,  1923,  1929,  1930,  1931,  1937,  1938,  1944,  1945,
+    1946,  1947,  1948,  1949,  1950,  1951,  1952,  1953,  1954,  1960,
+    1961,  1962,  1963,  1969,  1975,  1981,  1987,  1993,  1994,  1995,
+    1996,  2002,  2003,  2004,  2005,  2011,  2012,  2013,  2014,  2020,
+    2021,  2022,  2028,  2029,  2030,  2031,  2032,  2033,  2034,  2035,
+    2036,  2042,  2043,  2044,  2050,  2051,  2052,  2053,  2059,  2060,
+    2066,  2067,  2068,  2069,  2070,  2076,  2077,  2078,  2079,  2080,
+    2086,  2092,  2093,  2094,  2095,  2096,  2097,  2098,  2099,  2105,
+    2106,  2112,  2113,  2119,  2120,  2126,  2127,  2133,  2134,  2140,
+    2141,  2147,  2148,  2154,  2155,  2161,  2162,  2163,  2169,  2170,
+    2171,  2172,  2173,  2174,  2175,  2176,  2177,  2178,  2179,  2180,
+    2184,  2187,  2190
 };
 #endif
 
-#define YYPACT_NINF (-401)
-#define YYTABLE_NINF (-364)
+#define YYPACT_NINF (-409)
+#define YYTABLE_NINF (-369)
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      17,    58,    42,    26,   530,    87,  -401,    63,    87,    77,
-      74,  -401,  -401,  -401,   226,  -401,  2427,  -401,    94,   103,
-     143,   174,   218,   222,   254,   560,   475,   209,  -401,  -401,
-     250,  -401,   266,    63,   299,  -401,     8,    87,   258,   226,
-    -401,   305,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,   253,    13,   325,  -401,  2506,  -401,
-    -401,  3547,    23,  -401,  2739,   -22,  -401,   490,    31,  -401,
-      87,   340,   340,   340,   340,   340,   340,   475,   209,  -401,
-     209,  -401,  -401,  -401,   290,  -401,    95,    63,  -401,   350,
-      87,  -401,    87,  2796,  -401,  -401,  -401,   325,  -401,  1097,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,   360,  -401,  2002,  -401,  2633,  -401,  2633,  -401,  2534,
-    -401,  2633,  -401,  3061,  -401,  1779,  -401,  3061,  -401,  2633,
-    -401,  2660,  -401,  1016,  -401,  1779,  -401,  1867,  -401,   -11,
-    -401,  -401,  3061,  2854,  3061,   364,  -401,   341,  -401,    31,
-    -401,  -401,  -401,   382,  -401,   396,   402,   405,   410,   412,
-     414,   209,  -401,  -401,  -401,   214,    63,  -401,  -401,   125,
-     422,   420,  2912,  3061,   433,  -401,  3262,  3350,   306,  -401,
-    -401,   371,  2100,  1779,   394,  -401,  -401,  1125,  2973,  1234,
-    3017,  2633,  1343,   274,  1452,  3041,  -401,  -401,  -401,   335,
-    -401,  -401,   339,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,   283,  -401,  -401,   333,  -401,  -401,  1935,  -401,   333,
-     244,   417,  -401,  4069,  -401,   453,   189,  -401,  -401,  3061,
-     145,  4125,  -401,  -401,   158,  -401,  -401,  -401,  1561,   429,
-     443,  2816,  3061,  3061,  -401,   245,   -12,   379,   248,  4014,
-     249,  1779,   200,   249,  -401,   428,  -401,   249,  -401,  -401,
-    -401,  -401,  3061,   495,   502,  -401,  -401,  -401,  -401,   434,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,   507,  -401,   514,
-     122,  -401,    63,  -401,   126,  2493,  3061,   519,   528,  -401,
-    3962,  3153,   366,  -401,   381,  2188,  -401,  -401,  2276,  3962,
-     461,     1,  -401,  1779,  -401,  3061,  -401,   494,  -401,  3061,
-    -401,  1670,   492,   498,  -401,   500,  -401,  1779,  -401,  3061,
-    -401,  -401,  -401,   397,  -401,     2,   517,  2874,  3061,   511,
-     406,  -401,   163,   404,   -72,  -401,   506,   506,    56,  -401,
-    -401,  2874,  3061,  -401,  -401,  3061,  -401,  -401,     4,  -401,
-    -401,   309,    18,   534,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,  -401,  -401,  2701,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-     907,  -401,  -401,  -401,  -401,  1779,  -401,  -401,  -401,  -401,
-    -401,  -401,  3061,   444,  3061,  1779,  -401,  1779,  3061,  3061,
-    3061,  -401,  -401,  -401,  -401,   478,   109,   454,   259,   487,
-    -401,  -401,  -401,  1867,   249,  1867,   249,  1867,  -401,  1779,
-     588,  -401,  -401,   214,  -401,  -401,  -401,  -401,    63,  -401,
-      87,  -401,  -401,  2572,   846,   589,  -401,  -401,  -401,  3962,
-    3459,   464,   451,  -401,  3656,  -401,  2364,  3962,   509,  3962,
-     516,   522,  -401,   457,  -401,  -401,  -401,  1779,  -401,   557,
-    -401,   558,  -401,  1779,  3061,  -401,  -401,  -401,   455,   551,
-     460,  -401,  -401,   462,  -401,  -401,   -38,   463,   225,  -401,
-     450,   418,  -401,  -401,  -401,  -401,  -401,  -401,   543,   508,
-    -401,  -401,  -401,  -401,  -401,  -401,   539,   570,   -29,    33,
-      34,   529,   573,    39,  -401,  4175,  -401,  -401,  1779,  -401,
-    -401,   505,  -401,  -401,  -401,  -401,  -401,  -401,   482,  -401,
-     515,   564,   491,  -401,  1867,  -401,  1867,  -401,  -401,  -401,
-     626,   627,  -401,   622,    87,  -401,  -401,  3962,   503,  -401,
-    3765,  3962,  3962,  -401,  3962,   526,   545,  -401,   550,  -401,
-    -401,  -401,  -401,  1779,  3061,  -401,  -401,  -401,   489,  -401,
-    -401,  -401,   531,  -401,   483,   532,  -401,  -401,   485,  -401,
-     533,   512,   575,  -401,   565,   576,   608,   566,   610,   195,
-     571,  -401,   577,  -401,  3061,   600,   527,  -401,   604,  -401,
-    -401,  -401,  -401,   253,   655,  -401,  3874,  3962,  -401,  -401,
-    -401,   580,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-     510,  -401,  -401,  -401,   536,  -401,   537,   594,   255,   583,
-     544,    37,    -4,   292,  -401,  -401,  -401,   612,  -401,   663,
-     253,  3962,  -401,  -401,  -401,  -401,  -401,  -401,   547,   548,
-      51,    92,   301,    55,   549,   637,   555,    61,   556,    73,
-     127,  -401,  1779,   682,   772,  -401,  -401,    80,   561,   645,
-     562,    84,   563,   100,   162,   568,   647,   567,   569,   106,
-     579,   652,   118,   584,   657,   590,   136,   696,  -401,  1779,
-     698,   591,   662,   578,   592,   137,   593,   676,   140,   595,
-     683,   597,   141,   599,   598,  -401,   601,   602,   686,   605,
-     611,   613,   699,   614,   615,   148,   618,   707,  -401,   701,
-    -401,   617,   624,  -401,   621,   629,   714,   628,   635,   636,
-     725,   634,   640,   168,   642,   731,  -401,   641,  -401,   646,
-     653,  -401,   654,   656,   658,  -401,   659,   660,   734,   661,
-     665,  -401,  -401,   664,  -401,   675,   681,  -401,   677,   679,
-     685,  -401,   684,   687,   744,   690,   688,  -401,  -401,   691,
-    -401,  -401,   692,  -401,   693,   700,  -401,   694,  -401,  -401,
-     697,  -401,  -401,   702,  -401,   703,   704,  -401,   705,  -401,
-    -401,  -401,   706,  -401,  -401,  -401,  -401,   708,  -401,  -401,
-    -401
+      -4,    31,    79,    74,   573,   183,  -409,    75,   183,   136,
+     157,  -409,  -409,  -409,    48,  -409,  2728,  -409,   219,   233,
+     255,   258,   261,   265,   271,   500,   347,   222,  -409,  -409,
+     295,  -409,   297,    75,   327,  -409,   167,   183,   321,    48,
+    -409,   341,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,    19,   203,   336,  -409,  2846,  -409,
+    -409,  3832,    14,  -409,  2985,   114,  -409,   109,     1,  -409,
+     183,   345,   345,   345,   345,   345,   345,   347,   222,  -409,
+     222,  -409,  -409,  -409,   282,  -409,   230,    75,  -409,   356,
+     183,  -409,   183,  3008,  -409,  -409,  -409,   336,  -409,   733,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,   424,  -409,  2268,  -409,  2927,  -409,  2927,
+    -409,  2531,  -409,  2927,  -409,  3308,  -409,  2047,  -409,  2047,
+    -409,  3308,  -409,  2927,  -409,  2950,  -409,  1085,  -409,  2047,
+    -409,  2151,  -409,   -12,  -409,  -409,  3308,  3140,  3308,   367,
+    -409,   342,  -409,     1,  -409,  -409,  -409,   364,  -409,   380,
+     383,   388,   394,   431,   435,   222,  -409,  -409,  -409,   278,
+      75,  -409,  -409,   248,   445,   472,  3166,  3308,   481,  -409,
+    3517,  3617,   354,  -409,  -409,   443,  2368,  2047,   442,  -409,
+    -409,  1222,  3236,  1359,  3283,  2927,  1497,  2331,  1635,  3306,
+    -409,  -409,  -409,   385,  -409,  -409,   390,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -409,   235,  -409,  -409,   343,  -409,
+    -409,   452,  -409,   343,   239,   468,  -409,  4384,  -409,   517,
+     216,  -409,  -409,  3308,   870,  4440,  -409,  -409,    29,  -409,
+    -409,  -409,  2217,   499,  1772,   503,   507,  3085,  3308,  3308,
+    -409,   153,   -33,   429,   311,  4329,   221,  2047,    83,   221,
+    -409,   480,  -409,   221,  -409,  -409,  -409,  -409,  3308,   540,
+     544,  -409,  -409,  -409,  -409,   467,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,   551,  -409,   552,   -10,  -409,    75,  -409,
+     250,  2788,  3308,   553,   559,  -409,  4277,  3400,   434,  -409,
+     461,  2468,  -409,  -409,  2568,  4277,   463,     3,  -409,  2047,
+    -409,  3308,  -409,   526,  -409,  3308,  -409,  1909,  2431,   529,
+    -409,   533,  -409,  2047,  -409,  3308,  -409,  -409,  -409,   420,
+    -409,   -50,   527,  3108,  3308,   518,   433,  -409,   324,   382,
+     328,  -409,   510,   510,    17,  -409,  -409,  3108,  3308,  -409,
+    -409,  3308,  -409,  -409,   -23,  -409,  -409,   447,   -14,   541,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,   664,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,   948,  -409,  -409,  -409,
+    -409,  2047,  -409,  -409,  -409,  -409,  -409,  -409,  3308,   448,
+    3308,  3308,  2047,  -409,  2047,  3308,  3308,  3308,  -409,  -409,
+    -409,  -409,   477,   -47,   454,   273,   489,  -409,  -409,  -409,
+    2151,   221,  2151,   221,  2151,  -409,  2047,   594,  -409,  -409,
+     278,  -409,  -409,  -409,  -409,    75,  -409,   183,  -409,  -409,
+    2869,   548,   595,  -409,  -409,  -409,  4277,  3732,   470,   457,
+    -409,  3947,  -409,  2668,  4277,   497,  4277,   504,   506,  -409,
+     459,  -409,  -409,  -409,  2047,  -409,   563,  -409,   564,  -409,
+    2047,  3308,  -409,  -409,  -409,   462,   556,   465,  -409,  -409,
+     469,  -409,  -409,   -36,   473,   -44,  -409,   451,   407,  -409,
+    -409,  -409,  -409,  -409,  -409,   546,   509,  -409,  -409,  -409,
+    -409,  -409,  -409,   549,   578,   -22,    15,    23,   537,   583,
+     -11,  -409,   850,  -409,  -409,  2047,  -409,  -409,   519,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,   493,  -409,   530,   572,
+     501,  -409,  2151,  -409,  2151,  -409,  -409,  -409,   634,   636,
+    -409,   631,   183,  -409,  -409,  4277,   511,  -409,  4062,  4277,
+    4277,  -409,  4277,   521,   525,  -409,   528,  -409,  -409,  -409,
+    -409,  2047,  3308,  -409,  -409,  -409,   495,  -409,  -409,  -409,
+     532,  -409,   486,   539,  -409,  -409,   491,  -409,   547,   512,
+     580,  -409,   570,   584,   613,   574,   615,   -48,   579,  -409,
+     581,  -409,  3308,   598,   531,  -409,   606,  -409,  -409,  -409,
+    -409,    19,   660,  -409,  4177,  4277,  -409,  -409,  -409,   535,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,   513,  -409,
+    -409,  -409,   538,  -409,   542,   597,   164,   586,   550,    42,
+      80,   319,  -409,  -409,  -409,   617,  -409,   674,    19,  4277,
+    -409,  -409,  -409,  -409,  -409,  -409,   555,   561,    52,   139,
+     338,    67,   562,   638,   567,    91,   569,   105,   165,  -409,
+    2047,   690,   811,  -409,  -409,   126,   571,   657,   577,   130,
+     587,   142,   218,   589,   659,   575,   590,   146,   591,   661,
+     152,   593,   666,   599,   172,   708,  -409,  2047,   710,   600,
+     681,   592,   601,   173,   602,   685,   178,   603,   691,   607,
+     186,   604,   608,  -409,   605,   611,   693,   612,   621,   622,
+     699,   618,   624,   188,   626,   716,  -409,   757,  -409,   628,
+     635,  -409,   632,   640,   723,   641,   650,   653,   744,   655,
+     658,   199,   662,   748,  -409,   665,  -409,   667,   663,  -409,
+     668,   670,   669,  -409,   671,   677,   751,   682,   679,  -409,
+    -409,   689,  -409,   692,   695,  -409,   694,   697,   696,  -409,
+     701,   698,   752,   702,   709,  -409,  -409,   703,  -409,  -409,
+     706,  -409,   711,   714,  -409,   712,  -409,  -409,   715,  -409,
+    -409,   718,  -409,   719,   721,  -409,   722,  -409,  -409,  -409,
+     725,  -409,  -409,  -409,  -409,   726,  -409,  -409,  -409
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -854,122 +859,122 @@ static const yytype_int16 yypact[] =
 static const yytype_int16 yydefact[] =
 {
        0,     0,     0,     0,     4,     0,     1,     0,     0,     0,
-       0,   406,   407,   408,     2,    27,    41,    45,     0,     0,
-       0,     0,     0,     0,     0,    12,     8,     6,     5,   465,
+       0,   411,   412,   413,     2,    27,    41,    45,     0,     0,
+       0,     0,     0,     0,     0,    12,     8,     6,     5,   470,
        0,    28,     0,     0,     0,    31,     0,     0,     0,     3,
-      35,     0,    60,   212,    62,   411,    64,   412,   213,   409,
-     410,    59,    63,    69,    68,    61,    46,   101,    53,    54,
+      35,     0,    60,   217,    62,   416,    64,   417,   218,   414,
+     415,    59,    63,    69,    68,    61,    46,   101,    53,    54,
       55,    56,    57,    58,     0,     0,    42,    70,    43,    79,
-      81,     0,    94,    95,     0,   208,    82,     0,     0,    97,
+      81,     0,    94,    95,     0,   213,    82,     0,     0,    97,
        0,     0,     0,     0,     0,     0,     0,    16,    14,    13,
       10,     9,     7,    20,     0,    32,     0,     0,    29,     0,
        0,    36,     0,     0,    65,    66,    71,    44,    80,     0,
-     194,   195,   189,   190,   157,   156,   163,   164,   175,   176,
-     199,   200,   185,   186,   150,   243,   242,   218,   219,   182,
-     183,   222,   223,   220,   221,   238,   239,   246,   247,   224,
-     225,     0,   136,     0,   137,     0,   138,     0,   139,     0,
-     140,     0,   141,     0,   142,     0,   143,     0,   144,     0,
-     145,     0,   146,     0,   147,     0,   148,     0,   149,     0,
-     106,   105,     0,     0,     0,     0,   209,   210,   103,     0,
-      99,   102,    98,     0,   466,     0,     0,     0,     0,     0,
-       0,    18,    17,    15,    11,     0,     0,    33,    30,     0,
-       0,     0,     0,     0,     0,    83,     0,     0,     0,   259,
-     261,     0,     0,     0,     0,   121,   122,   151,     0,   158,
-       0,     0,   165,     0,   177,     0,   184,   467,   356,     0,
-     113,   114,   213,   116,   111,   392,   390,   419,   115,   118,
-     451,   408,   117,   120,     0,   112,   119,   353,   366,     0,
-       0,     0,   369,     0,   262,   358,   361,   371,   370,     0,
-       0,   372,   413,   414,     0,   373,   367,   354,   191,   196,
-       0,     0,     0,     0,   202,   356,     0,     0,   408,   363,
-       0,     0,     0,     0,   109,   408,   107,   240,   108,   244,
-     245,    96,     0,     0,     0,   248,   211,   104,   100,     0,
-      22,    23,    24,    25,    21,    26,    19,     0,    51,     0,
-       0,    34,     0,    37,     0,     0,     0,     0,     0,   252,
-       0,     0,     0,   123,     0,     0,   260,    84,     0,     0,
-       0,   256,    67,     0,   152,     0,   154,     0,   159,     0,
-     161,   168,     0,     0,   166,     0,   171,     0,   178,     0,
-     180,   450,   452,     0,   357,     0,     0,     0,     0,   274,
-     268,   270,     0,   394,   390,   396,     0,     0,     0,   364,
-     365,     0,     0,   393,   391,     0,   440,   441,     0,   442,
-     443,   271,     0,     0,   448,   449,   444,   445,   436,   437,
-     446,   447,   438,   439,   434,   435,     0,   264,   265,   266,
-     267,   425,   426,   427,   428,   429,   430,   431,   432,   433,
-       0,   379,   380,   381,   378,     0,   374,   375,   376,   377,
-     386,   368,     0,     0,   420,     0,   192,     0,     0,     0,
-       0,   205,   203,   204,   233,     0,     0,     0,   357,     0,
-     227,   228,   226,     0,     0,     0,     0,     0,   110,     0,
-       0,   250,   249,     0,    47,    49,    52,    38,     0,    39,
-       0,    72,    74,    73,     0,     0,   254,   253,   124,     0,
-       0,     0,     0,   127,     0,    89,     0,     0,     0,     0,
-       0,     0,    85,     0,   257,   153,   155,     0,   162,     0,
-     169,     0,   173,     0,     0,   179,   181,   415,     0,     0,
-       0,   383,   388,   275,   269,   395,     0,   272,     0,   453,
-     457,     0,   201,   382,   387,   401,   399,   400,   402,     0,
-     397,   398,   385,   384,   389,   188,     0,     0,     0,     0,
-       0,     0,     0,     0,   353,   263,   355,   359,     0,   362,
-     424,     0,   421,   193,   197,   198,   206,   207,     0,   235,
-       0,     0,     0,   217,     0,   214,     0,   237,   241,   251,
-       0,     0,    40,     0,     0,   255,   128,     0,     0,   131,
-       0,     0,     0,   125,     0,     0,     0,    90,     0,    87,
-      86,   258,   160,     0,     0,   167,   172,   417,     0,   416,
-     276,   455,     0,   273,   461,     0,   458,   454,   459,   403,
-     404,   277,     0,   349,     0,     0,     0,     0,     0,     0,
-       0,   351,     0,   360,   422,     0,     0,   230,     0,   215,
-     216,    48,    50,     0,     0,   132,     0,     0,   129,   135,
-     126,     0,    92,    91,    88,   170,   174,   418,   456,   462,
-     463,   460,   405,   278,   279,   350,   281,     0,     0,     0,
-       0,     0,     0,     0,   352,   423,   234,     0,   232,     0,
-       0,     0,   133,   130,    93,   464,   280,   282,   283,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   236,     0,     0,     0,   134,   284,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   285,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,    75,     0,
-       0,     0,     0,   317,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   289,     0,   286,   287,     0,     0,   293,
-       0,     0,     0,   301,     0,     0,     0,     0,    76,     0,
-      77,   321,     0,   318,   319,     0,     0,   325,     0,     0,
-       0,   333,     0,     0,     0,     0,   290,   291,   288,   297,
-       0,   294,   295,   305,     0,   302,   303,     0,     0,   309,
-       0,    78,   322,   323,   320,   329,     0,   326,   327,   337,
-       0,   334,   335,     0,     0,   341,     0,   292,   298,   299,
-     296,   306,   307,   304,   313,     0,   310,   311,   324,   330,
-     331,   328,   338,   339,   336,   345,     0,   342,   343,   300,
-     308,   314,   315,   312,   332,   340,   346,   347,   344,   316,
-     348
+     199,   200,   190,   191,   194,   195,   158,   157,   164,   165,
+     176,   177,   204,   205,   186,   187,   151,   248,   247,   223,
+     224,   183,   184,   227,   228,   225,   226,   243,   244,   251,
+     252,   229,   230,     0,   136,     0,   137,     0,   138,     0,
+     139,     0,   140,     0,   141,     0,   142,     0,   143,     0,
+     144,     0,   145,     0,   146,     0,   147,     0,   148,     0,
+     149,     0,   150,     0,   106,   105,     0,     0,     0,     0,
+     214,   215,   103,     0,    99,   102,    98,     0,   471,     0,
+       0,     0,     0,     0,     0,    18,    17,    15,    11,     0,
+       0,    33,    30,     0,     0,     0,     0,     0,     0,    83,
+       0,     0,     0,   264,   266,     0,     0,     0,     0,   121,
+     122,   152,     0,   159,     0,     0,   166,     0,   178,     0,
+     185,   472,   361,     0,   113,   114,   218,   116,   111,   397,
+     395,   424,   115,   118,   456,   413,   117,   120,     0,   112,
+     119,   358,   371,     0,     0,     0,   374,     0,   267,   363,
+     366,   376,   375,     0,     0,   377,   418,   419,     0,   378,
+     372,   359,   358,     0,   196,   201,     0,     0,     0,     0,
+     207,   361,     0,     0,   413,   368,     0,     0,     0,     0,
+     109,   413,   107,   245,   108,   249,   250,    96,     0,     0,
+       0,   253,   216,   104,   100,     0,    22,    23,    24,    25,
+      21,    26,    19,     0,    51,     0,     0,    34,     0,    37,
+       0,     0,     0,     0,     0,   257,     0,     0,     0,   123,
+       0,     0,   265,    84,     0,     0,     0,   261,    67,     0,
+     153,     0,   155,     0,   160,     0,   162,   169,     0,     0,
+     167,     0,   172,     0,   179,     0,   181,   455,   457,     0,
+     362,     0,     0,     0,     0,   279,   273,   275,     0,   399,
+     395,   401,     0,     0,     0,   369,   370,     0,     0,   398,
+     396,     0,   445,   446,     0,   447,   448,   276,     0,     0,
+     453,   454,   449,   450,   441,   442,   451,   452,   443,   444,
+     439,   440,     0,   269,   270,   271,   272,   430,   431,   432,
+     433,   434,   435,   436,   437,   438,     0,   384,   385,   386,
+     383,     0,   379,   380,   381,   382,   391,   373,     0,     0,
+     425,     0,     0,   197,     0,     0,     0,     0,   210,   208,
+     209,   238,     0,     0,     0,   362,     0,   232,   233,   231,
+       0,     0,     0,     0,     0,   110,     0,     0,   255,   254,
+       0,    47,    49,    52,    38,     0,    39,     0,    72,    74,
+      73,     0,     0,   259,   258,   124,     0,     0,     0,     0,
+     127,     0,    89,     0,     0,     0,     0,     0,     0,    85,
+       0,   262,   154,   156,     0,   163,     0,   170,     0,   174,
+       0,     0,   180,   182,   420,     0,     0,     0,   388,   393,
+     280,   274,   400,     0,   277,     0,   458,   462,     0,   206,
+     387,   392,   406,   404,   405,   407,     0,   402,   403,   390,
+     389,   394,   189,     0,     0,     0,     0,     0,     0,     0,
+       0,   358,   268,   360,   364,     0,   367,   429,     0,   426,
+     193,   198,   202,   203,   211,   212,     0,   240,     0,     0,
+       0,   222,     0,   219,     0,   242,   246,   256,     0,     0,
+      40,     0,     0,   260,   128,     0,     0,   131,     0,     0,
+       0,   125,     0,     0,     0,    90,     0,    87,    86,   263,
+     161,     0,     0,   168,   173,   422,     0,   421,   281,   460,
+       0,   278,   466,     0,   463,   459,   464,   408,   409,   282,
+       0,   354,     0,     0,     0,     0,     0,     0,     0,   356,
+       0,   365,   427,     0,     0,   235,     0,   220,   221,    48,
+      50,     0,     0,   132,     0,     0,   129,   135,   126,     0,
+      92,    91,    88,   171,   175,   423,   461,   467,   468,   465,
+     410,   283,   284,   355,   286,     0,     0,     0,     0,     0,
+       0,     0,   357,   428,   239,     0,   237,     0,     0,     0,
+     133,   130,    93,   469,   285,   287,   288,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   241,
+       0,     0,     0,   134,   289,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,   290,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    75,     0,     0,     0,
+       0,   322,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   294,     0,   291,   292,     0,     0,   298,     0,     0,
+       0,   306,     0,     0,     0,     0,    76,     0,    77,   326,
+       0,   323,   324,     0,     0,   330,     0,     0,     0,   338,
+       0,     0,     0,     0,   295,   296,   293,   302,     0,   299,
+     300,   310,     0,   307,   308,     0,     0,   314,     0,    78,
+     327,   328,   325,   334,     0,   331,   332,   342,     0,   339,
+     340,     0,     0,   346,     0,   297,   303,   304,   301,   311,
+     312,   309,   318,     0,   315,   316,   329,   335,   336,   333,
+     343,   344,   341,   350,     0,   347,   348,   305,   313,   319,
+     320,   317,   337,   345,   351,   352,   349,   321,   353
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -401,  -401,  -401,  -401,  -401,   765,   176,    -5,  -401,  -401,
-     752,    19,  -401,   803,   376,   -53,  -401,  -401,  -401,  -401,
-    -401,  -401,   -15,   668,  -401,   766,   219,  -401,  -401,   518,
-     -65,  -401,  -401,  -401,   286,  -401,  -195,  -128,   334,  -100,
-    -175,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,   476,  -401,
-     -62,    -7,  -401,  -401,  -275,  -401,   581,  -401,  -401,  -401,
-    -401,  -401,  -401,  -401,   643,  -401,    69,  -401,  -401,   596,
-    -401,  -401,  -401,   452,  -400,   432,  -401,   442,  -401,  -401,
-    -401,  -401,  -401,  -401,   229,  -401,  -401,    -3,   -63,   465,
-    -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,  -401,
-    -401,  -401,  -114,  -401,    11,   -16,  -401
+    -409,  -409,  -409,  -409,  -409,   771,    21,    13,  -409,  -409,
+     758,    34,  -409,   829,   389,   -28,  -409,  -409,  -409,  -409,
+    -409,  -409,    28,   683,  -409,   790,    76,  -409,  -409,   543,
+     -65,  -409,  -409,  -409,   182,  -409,  -272,  -161,   247,   -67,
+    -198,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+     492,  -409,   -62,    -7,  -409,  -409,  -234,  -409,   582,  -409,
+    -409,  -409,  -409,  -409,  -409,  -409,   651,  -409,   -42,  -409,
+    -409,   609,  -409,  -409,  -409,   466,  -408,   450,  -409,   453,
+    -409,  -409,  -409,  -409,  -409,  -409,   123,  -409,  -409,    -3,
+     -72,   471,  -409,  -409,  -409,  -409,  -409,  -409,  -409,  -409,
+    -409,  -409,  -409,  -409,  -220,  -409,    11,   -59,  -409
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
        0,     2,     3,     4,    25,    26,    27,    28,    14,    39,
-      40,    15,    16,    17,   307,    57,    58,    59,    60,    61,
-      62,    63,   215,   216,    65,    66,    67,   461,   462,    68,
-      69,    70,    71,    72,   279,   172,   287,   248,   249,   141,
-     142,   143,   144,   145,   146,   147,   148,   149,   150,   151,
-     152,   153,   154,   155,   156,   157,   158,   159,   513,   160,
-      74,   250,   162,   163,   443,   280,   281,   164,   165,   166,
-     167,   168,   169,    76,   212,   213,   251,   252,   396,   366,
-     398,   399,   400,   253,   254,   255,   256,   415,   416,   417,
-     418,   419,   257,   258,   259,   368,   522,   109,    78,   261,
-     262,   263,   264,   401,   402,   403,   404,   405,   406,   407,
-     408,   409,   265,   370,    79,   266,   267
+      40,    15,    16,    17,   313,    57,    58,    59,    60,    61,
+      62,    63,   219,   220,    65,    66,    67,   468,   469,    68,
+      69,    70,    71,    72,   285,   176,   293,   252,   253,   143,
+     144,   145,   146,   147,   148,   149,   150,   151,   152,   153,
+     154,   155,   156,   157,   158,   159,   160,   161,   162,   163,
+     520,   164,    74,   254,   166,   167,   450,   286,   287,   168,
+     169,   170,   171,   172,   173,    76,   216,   217,   255,   256,
+     402,   372,   404,   405,   406,   257,   258,   259,   260,   421,
+     422,   423,   424,   425,   261,   262,   263,   374,   529,   109,
+      78,   265,   266,   267,   268,   407,   408,   409,   410,   411,
+     412,   413,   414,   415,   269,   376,    79,   270,   271
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -977,1017 +982,1072 @@ static const yytype_int16 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      18,    64,   103,   108,    18,   483,    18,   445,   447,    75,
-     537,    97,   449,    77,   179,   176,    30,     8,   214,    32,
-      89,    91,    92,    29,   178,   181,    31,   170,    35,     7,
-      18,   323,    11,    18,   177,     8,     1,   509,   510,   288,
-      12,    29,     6,   211,     9,   526,   179,   434,    99,    10,
-      11,   498,    95,    64,   603,    98,   178,    75,    12,   531,
-     104,    75,    42,     5,   161,   185,   186,   187,   188,   189,
-     190,   591,     8,    44,   605,   607,   105,   676,   674,    36,
-      33,    46,   192,   193,   511,   194,     8,    11,   180,   182,
-     515,   183,   688,    18,    18,    12,   695,    29,   196,   516,
-      34,    11,   700,    80,     8,   435,   604,   324,    81,    12,
-     517,   200,   330,   201,   703,   197,   198,   518,   592,    11,
-     180,   711,   611,   436,   677,   716,   297,    12,   312,   458,
-     171,    53,    54,   369,     8,     8,   161,   527,   613,   484,
-     499,   719,   308,    13,    51,   468,   473,   727,    82,    11,
-      11,   532,   260,    42,   289,    29,   184,    12,    12,   731,
-     260,    13,   260,    52,    44,   369,   606,   608,   549,   554,
-     675,   556,    46,   690,   612,    55,    42,   736,   745,    83,
-     309,   749,   754,   519,   689,   422,   306,    44,   696,   767,
-     298,    45,   310,    18,   701,    46,    18,   179,    13,   161,
-     161,    88,    90,   505,   520,   161,   704,   178,   705,   783,
-     260,   521,    13,   712,   260,   311,   260,   717,   313,   260,
-     691,   260,   411,    84,    47,   478,   550,    85,   480,   481,
-      13,    24,   282,   720,   283,    51,   423,   357,    11,   728,
-      49,    50,   371,   721,   421,    42,    12,    37,   553,    38,
-     555,   732,   557,    93,    52,   706,    44,   456,    51,    86,
-      13,    13,   506,   191,    46,   260,    55,   276,   424,   737,
-     746,   180,   351,   750,   755,    94,   650,    52,   260,   100,
-     440,   768,   331,   412,    29,   106,   334,   413,   338,    55,
-     722,   344,    43,   348,   566,   569,   414,   353,    11,   573,
-      64,   784,    73,   441,    96,    42,    12,   438,    75,    18,
-     102,    18,   464,   161,   161,   288,    44,   288,   161,   288,
-      45,   161,   161,   651,    46,  -229,   106,    51,   652,   440,
-     260,   457,   353,   459,    48,   594,   669,   426,   260,  -231,
-      41,   373,   354,   374,   260,   442,    52,   528,  -229,    13,
-     444,   184,   441,    47,    73,   199,    53,    54,    55,   619,
-     175,   620,  -231,   205,   206,   439,   507,   295,   355,    49,
-      50,   195,    43,   678,   327,   206,   575,   576,   296,   578,
-     529,   595,   692,   670,   475,   206,   356,    51,   671,   204,
-    -229,   299,   625,   530,   442,   628,   629,   630,   108,   300,
-     308,   179,   485,   355,  -231,   301,    52,   260,   302,    13,
-     490,   178,   260,   303,    48,   304,   495,   305,    55,   345,
-     679,   356,   260,   315,   260,   680,   288,   314,   288,   693,
-     235,   217,   236,   219,   694,   222,   319,   224,   561,   226,
-     326,   247,   332,   268,   351,   269,   260,   274,    64,   352,
-     310,   662,   663,   286,   375,    18,    75,   410,   291,   293,
-     294,   507,   161,   161,   482,   206,   427,   161,  -271,   161,
-     161,   563,   161,   358,   631,   180,   367,   562,   372,   218,
-     428,   220,   437,   223,   260,   225,   685,   448,   317,   318,
-     260,    21,    22,   270,   543,   474,   544,    24,   451,    80,
-      29,  -213,    29,   508,   336,   452,   340,   341,   367,   346,
-     454,   350,   577,   206,   352,   453,    11,   455,   558,   579,
-     206,    42,   466,    42,    12,   580,   206,   597,   598,   632,
-     206,   467,    44,   487,    44,   260,    45,   493,    45,   494,
-      46,   497,    46,    19,    20,   420,    21,    22,   633,   206,
-      23,   504,    24,   634,   206,   342,   582,   431,   432,   433,
-     161,   659,   585,   161,   161,   161,   500,   161,   503,    47,
-     512,    47,   533,    19,    20,   624,    21,    22,   450,   541,
-     260,   548,    24,   664,   206,    49,    50,    49,    50,   551,
-     552,   559,   565,   570,   571,   581,   583,   584,   684,   587,
-     588,    73,   465,    51,   589,    51,   596,   590,   593,   599,
-     601,   602,   600,   609,   610,   614,    75,   615,   616,   161,
-     161,   486,    52,   617,    52,   488,   618,    13,   492,   621,
-     622,   623,   626,   637,    55,   496,    55,   491,   642,   639,
-     638,   641,   640,   501,   502,   643,   644,   646,   645,   647,
-     648,   649,   635,    75,   161,   653,   260,   523,   524,   656,
-     654,   525,   657,   658,   660,   668,   665,   672,   682,   666,
-     667,   681,   673,    29,   184,   227,   687,   697,   698,   260,
-     686,   260,   534,   699,   702,   708,   714,    11,   724,   713,
-     715,   718,   214,   730,    42,    12,   723,   726,   734,   738,
-     725,   740,    43,   742,   771,    44,   260,   729,   540,    45,
-     542,   743,   733,    46,   545,   546,   547,   748,   735,   741,
-     744,   747,   228,   751,   752,   753,   757,   760,   683,   286,
-     759,   286,   756,   286,   758,   229,   230,   231,   761,   762,
-     764,   763,    47,   766,   232,   233,   769,   765,   770,    73,
-     772,   707,   773,   710,   774,   776,   234,   775,    49,    50,
-     235,   777,   236,   778,   779,   237,   780,   781,   782,   238,
-     785,   239,   786,   240,   787,   795,    51,   709,   739,   788,
-     586,   789,    29,   184,   227,   806,   792,   790,   794,   791,
-      87,   101,   793,   797,   796,    52,    11,   798,   241,   242,
-     243,   214,   244,    42,    12,    53,    54,    55,   799,   800,
-     801,    43,   802,   803,    44,   805,   808,   804,    45,    56,
-     245,   246,    46,   807,   809,   810,   811,   813,   812,   560,
-     814,   228,   817,   463,   107,   815,   816,   290,   818,   819,
-     286,   820,   286,   514,   229,   230,   231,   539,   535,   397,
-     325,    47,   538,   232,   233,   564,    29,     0,     0,     0,
-       0,   536,     0,   446,     0,   234,     0,    49,    50,   235,
-     636,   236,     0,     0,   237,     0,     0,    42,   238,     0,
-     239,     0,   240,     0,     0,    51,     0,     0,    44,     0,
-       0,     0,    45,     0,     0,     0,    46,     0,     0,     0,
-     655,     0,     0,     0,    52,     0,     0,   241,   242,   243,
-       0,   244,     0,     0,    53,    54,    55,    29,   184,   227,
-       0,     0,     0,     0,     0,    47,     0,     0,     0,   245,
-     246,    11,     0,     0,     0,     0,   214,     0,    42,    12,
-     411,    49,    50,     0,     0,     0,    43,     0,     0,    44,
-       0,     0,     0,    45,     0,     0,     0,    46,     0,    51,
-       0,     0,     0,     0,     0,     0,   228,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,    52,   229,
-     230,   231,     0,     0,     0,     0,    47,     0,   232,   233,
-      55,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     234,   412,    49,    50,   235,   413,   236,     0,     0,   237,
-       0,     0,     0,   238,   414,   239,     0,   240,     0,     0,
-      51,     0,     0,     0,     0,     0,    29,   184,   227,     0,
+      18,   505,   103,   108,    18,   183,    18,   490,   544,    75,
+     294,    29,   329,    77,   557,     1,    30,   218,   174,    32,
+     533,    42,   189,   190,   191,   192,   193,   194,   441,   538,
+      18,   375,    42,    18,    44,   658,     5,   183,    89,    91,
+      92,    31,    46,    35,    64,    44,    88,    90,    99,   182,
+     185,   522,   375,    46,   452,   454,   428,    75,   613,   456,
+      43,    75,   523,   611,   165,   375,   615,    95,   602,    37,
+      98,    38,   558,   524,   619,   599,   105,     7,   215,     6,
+     525,   182,   659,     8,     8,   682,   442,   660,   184,   186,
+     506,   187,     9,    18,    18,   696,    64,    10,    11,    11,
+     196,   197,    48,   198,   443,    51,    12,    12,   195,   429,
+     703,   204,   534,   205,   603,   612,    51,   273,    80,    29,
+     184,   539,   600,   175,    52,   288,   620,   289,   475,   480,
+     201,   202,    53,    54,   708,    52,    55,   621,   165,    33,
+      42,   430,   106,   491,   330,     8,   526,    55,   711,   336,
+     614,   180,   282,    44,   264,   303,   264,    45,   616,    34,
+      11,    46,    36,   684,   264,   447,   264,   527,    12,   719,
+      97,   314,   181,   724,   528,   337,     8,   683,   561,   340,
+     563,   344,   565,   106,   350,   727,   354,   697,   448,   735,
+      47,    11,   183,    29,   304,   739,   316,    18,    73,    12,
+      18,   295,   704,   165,   165,   427,    49,    50,   312,   165,
+     685,    13,    13,    29,   264,   744,   753,   562,   264,   564,
+     264,   757,   698,   264,    51,   264,   709,   315,    80,   762,
+     449,   775,   433,   200,   317,  -234,   182,   319,    81,     8,
+     712,   363,   791,    52,    24,   451,   377,   677,   713,   417,
+      73,   318,   104,   465,    11,    55,   179,     8,  -234,     8,
+      82,   720,    12,    83,   485,   725,    84,   487,   488,   699,
+      85,   264,    11,    13,    11,   184,    86,   728,   574,   577,
+      12,   736,    12,   581,   264,   208,   359,   740,   463,   294,
+     627,   294,   628,   294,   678,   714,   360,   492,    93,   679,
+    -234,   729,    11,   447,    13,   497,    94,   745,   754,    42,
+      12,   502,   418,   758,    75,    18,   419,    18,   471,   165,
+     165,   763,    44,   776,   165,   420,   448,   165,   165,   221,
+      46,   223,    96,   226,   792,   228,   264,   230,   379,   251,
+     380,   272,   100,   274,   264,   275,   102,   280,   730,    64,
+     264,    41,   464,   292,   466,  -236,   188,   361,   297,   299,
+     300,   203,   359,    21,    22,   199,   512,    13,   449,    24,
+     301,   364,   445,   305,   373,   362,   378,   633,  -236,   302,
+     636,   637,   638,   306,    43,    13,   307,    13,   323,   324,
+     551,   308,   552,    51,   222,   373,   224,   309,   227,   183,
+     229,   294,   686,   294,   342,   108,   346,   347,   373,   352,
+     276,   356,    52,   264,   566,    13,   583,   584,   264,   586,
+    -236,   700,    53,    54,    55,   513,    48,   209,   210,   264,
+     446,   264,   314,   361,   310,   357,   670,   671,   311,   516,
+     517,   514,   239,   182,   240,   426,   333,   210,  -276,   687,
+     320,   362,   590,   264,   688,  -188,  -188,   316,   593,   438,
+     439,   440,    18,    75,   482,   210,   489,   210,   701,   165,
+     165,   693,   348,   702,   165,   321,   165,   165,   571,   165,
+     457,  -218,   184,   515,   325,  -368,   518,   535,   569,  -368,
+     332,   264,   338,    43,   358,   365,   357,   264,    64,   570,
+     585,   210,   358,    73,   472,   381,   514,   587,   210,   588,
+     210,   366,   367,    19,    20,   639,    21,    22,   605,   606,
+     536,   416,    24,   493,   640,   210,   368,   495,   641,   210,
+     499,   642,   210,   537,   444,   369,   431,   503,   672,   210,
+     434,   455,   264,   458,   435,   508,   509,   459,  -368,   643,
+     460,   239,  -368,   370,   461,   462,   473,   572,    29,   530,
+     531,  -368,   474,   532,   244,   481,   504,   494,   165,   667,
+     500,   165,   165,   165,   501,   165,   519,   510,   507,    42,
+     511,   540,   556,   632,   541,   548,    19,    20,   264,    21,
+      22,   559,    44,    23,   560,    24,    45,   567,   573,   589,
+      46,   578,   579,   371,   591,   592,   692,   596,   595,   604,
+     547,   597,   549,   550,   607,   608,   598,   553,   554,   555,
+     601,   610,   609,   617,    75,   691,   618,   165,   165,    47,
+     623,   622,   292,   625,   292,   624,   292,   629,   626,   630,
+     631,   645,   634,   646,   647,    49,    50,   651,   715,   649,
+     718,   648,    73,   652,   650,   653,   655,   654,   657,   664,
+     656,    75,   165,    51,   264,   661,   662,   666,   665,   668,
+     676,   673,   680,   674,    29,   747,   231,   675,   689,   690,
+     681,   706,    52,   594,    29,   188,   231,   264,    11,   264,
+     694,   695,   705,   716,    55,    42,    12,   707,    11,   710,
+     722,   721,   732,   218,   738,    42,    12,   723,    44,   742,
+     733,   746,    45,   748,   264,    43,    46,   726,    44,   731,
+     734,   737,    45,   741,   750,   232,    46,   751,   756,   743,
+     749,   752,   755,   759,   760,   232,   768,   761,   765,   764,
+     766,   767,   772,    29,   292,    47,   292,   769,   233,   234,
+     235,   770,   771,   773,   774,    47,   777,   236,   237,   778,
+     779,    49,    50,   780,    42,   781,   784,   782,   241,   238,
+     783,    49,    50,   239,   644,   240,   785,    44,   241,    51,
+     786,    45,   242,   787,   243,    46,   244,   788,   790,    51,
+     789,   794,   793,   797,   803,   814,    87,   101,    52,   800,
+     795,   245,   796,   798,   663,   799,   801,   802,    52,   805,
+      55,   245,   246,   247,    47,   248,   717,   804,    53,    54,
+      55,    29,   188,   231,   806,   808,   811,   807,   813,   809,
+      49,    50,   810,   249,   250,    11,   812,   815,   817,   816,
+     218,   818,    42,    12,   820,    56,   819,   821,    51,   568,
+     822,   825,    43,   823,   824,    44,   296,   826,   107,    45,
+     827,   828,   331,    46,   470,   521,   403,    52,   542,   545,
+     453,   546,   232,   543,     0,     0,     0,     0,     0,    55,
+      29,   188,     0,     0,     0,   233,   234,   235,     0,     0,
+       0,     0,    47,     0,   236,   237,     0,     0,     0,     0,
+       0,    42,     0,   382,   383,     0,   238,     0,    49,    50,
+     239,     0,   240,     0,    44,   241,     0,     0,    45,   242,
+       0,   243,    46,   244,     0,     0,    51,   385,   386,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   390,
+     391,   392,   393,   394,   395,    52,     0,     0,   245,   246,
+     247,    47,   248,     0,     0,    53,    54,    55,    29,   188,
+     231,     0,     0,     0,     0,     0,     0,    49,    50,     0,
+     249,   250,    11,     0,     0,   396,   397,   218,     0,    42,
+      12,   417,     0,     0,     0,    51,     0,     0,     0,    43,
+       0,     0,    44,     0,     0,     0,    45,     0,     0,     0,
+      46,     0,   398,   399,    52,   400,   401,     0,     0,   232,
+       0,     0,     0,     0,     0,     0,    55,     0,     0,     0,
+       0,     0,   233,   234,   235,     0,     0,     0,     0,    47,
+       0,   236,   237,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,   238,   418,    49,    50,   239,   419,   240,
+       0,     0,   241,     0,     0,     0,   242,   420,   243,     0,
+     244,     0,     0,    51,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    52,     0,     0,   245,   246,   247,     0,   248,
+       0,     0,    53,    54,    55,    29,   188,   231,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   249,   250,    11,
+       0,     0,     0,     0,   218,     0,    42,    12,     0,     0,
+       0,     0,     0,     0,     0,     0,    43,     0,     0,    44,
+       0,     0,     0,    45,     0,     0,     0,    46,     0,     0,
+       0,     0,     0,     0,     0,     0,   281,     0,     0,     0,
+       0,     0,     0,     0,   282,     0,     0,     0,     0,   233,
+     234,   235,     0,     0,     0,     0,    47,     0,   236,   237,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     238,     0,    49,    50,   239,     0,   240,     0,     0,   241,
+       0,     0,     0,   242,     0,   243,     0,   244,     0,     0,
+      51,     0,     0,     0,   283,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,    52,
-      11,     0,   241,   242,   243,   214,   244,    42,    12,    53,
-      54,    55,     0,     0,     0,    43,     0,     0,    44,     0,
-       0,     0,    45,     0,   245,   246,    46,     0,     0,     0,
-       0,     0,     0,     0,     0,   275,     0,     0,     0,     0,
-       0,     0,     0,   276,     0,     0,     0,     0,   229,   230,
-     231,     0,     0,     0,     0,    47,     0,   232,   233,     0,
-       0,     0,     0,     0,     0,     0,     0,    29,     0,   234,
-       0,    49,    50,   235,     0,   236,     0,     0,   237,     0,
-       0,     0,   238,     0,   239,     0,   240,     0,    42,    51,
-       0,     0,     0,   277,     0,    29,   184,   227,     0,    44,
-       0,     0,     0,    45,     0,     0,     0,    46,    52,    11,
-       0,   278,   242,   243,   214,   244,    42,    12,    53,    54,
-      55,     0,   333,     0,    43,     0,     0,    44,     0,     0,
-       0,    45,     0,   245,   246,    46,    47,     0,     0,     0,
-       0,     0,     0,     0,   228,     0,     0,     0,     0,     0,
-       0,     0,    49,    50,     0,     0,     0,   229,   230,   231,
-       0,     0,     0,     0,    47,     0,   232,   233,     0,     0,
-      51,     0,     0,     0,     0,     0,     0,     0,   234,     0,
-      49,    50,   235,     0,   236,     0,     0,   237,     0,    52,
-       0,   238,     0,   239,     0,   240,     0,     0,    51,     0,
-       0,    55,     0,     0,    29,   184,   227,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    52,    11,     0,
-     241,   242,   243,   214,   244,    42,    12,    53,    54,    55,
+       0,     0,   284,   246,   247,     0,   248,     0,     0,    53,
+      54,    55,    29,   188,   231,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   249,   250,    11,     0,     0,     0,
+       0,   218,     0,    42,    12,     0,     0,     0,     0,   339,
        0,     0,     0,    43,     0,     0,    44,     0,     0,     0,
-      45,     0,   245,   246,    46,     0,     0,     0,     0,     0,
-       0,     0,     0,   228,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   229,   230,   231,     0,
-       0,     0,     0,    47,     0,   232,   233,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   234,     0,    49,
-      50,   235,     0,   236,     0,     0,   237,     0,     0,     0,
-     238,     0,   239,     0,   240,     0,     0,    51,     0,     0,
-       0,     0,     0,    29,   184,   227,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    52,    11,     0,   241,
-     242,   243,   214,   244,    42,    12,    53,    54,    55,   337,
-       0,     0,    43,     0,     0,    44,     0,     0,     0,    45,
-       0,   245,   246,    46,     0,     0,     0,     0,     0,     0,
-       0,     0,   228,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,   229,   230,   231,     0,     0,
-       0,     0,    47,     0,   232,   233,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   234,     0,    49,    50,
-     235,     0,   236,     0,     0,   237,     0,     0,     0,   238,
-       0,   239,     0,   240,     0,     0,    51,     0,     0,     0,
-       0,     0,    29,   184,   227,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,    52,    11,     0,   241,   242,
-     243,   214,   244,    42,    12,    53,    54,    55,   343,   347,
-       0,    43,     0,     0,    44,     0,     0,     0,    45,     0,
-     245,   246,    46,     0,     0,     0,     0,     0,     0,     0,
-       0,   228,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   229,   230,   231,     0,     0,     0,
-       0,    47,     0,   232,   233,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,   234,     0,    49,    50,   235,
-       0,   236,     0,     0,   237,     0,     0,     0,   238,     0,
-     239,     0,   240,     0,     0,    51,     0,     0,     0,     0,
-       0,    29,   184,   227,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    52,    11,     0,   241,   242,   243,
-     214,   244,    42,    12,    53,    54,    55,     0,   425,     0,
-      43,     0,     0,    44,     0,     0,     0,    45,     0,   245,
-     246,    46,     0,     0,     0,     0,     0,     0,     0,     0,
-     228,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   229,   230,   231,     0,     0,     0,     0,
-      47,     0,   232,   233,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   234,     0,    49,    50,   235,     0,
-     236,     0,     0,   237,     0,     0,     0,   238,     0,   239,
-       0,   240,     0,     0,    51,     0,     0,     0,     0,     0,
-      29,   184,   227,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    52,    11,     0,   241,   242,   243,   214,
-     244,    42,    12,    53,    54,    55,     0,     0,     0,    43,
-       0,     0,    44,     0,     0,     0,    45,     0,   245,   246,
-      46,     0,     0,     0,     0,     0,     0,     0,     0,   228,
+      45,     0,     0,     0,    46,     0,     0,     0,     0,     0,
+       0,     0,     0,   232,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,   233,   234,   235,     0,
+       0,     0,     0,    47,     0,   236,   237,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   238,     0,    49,
+      50,   239,     0,   240,     0,     0,   241,     0,     0,     0,
+     242,     0,   243,     0,   244,     0,     0,    51,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   229,   230,   231,     0,     0,     0,     0,    47,
-       0,   232,   233,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   234,     0,    49,    50,   235,     0,   236,
-       0,     0,   237,     0,     0,     0,   238,     0,   239,     0,
-     240,     0,     0,    51,     0,     0,     0,     0,     0,    29,
-     184,   227,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    52,    11,     0,   241,   242,   243,   214,   244,
-      42,    12,    53,    54,    55,   489,     0,     0,    43,     0,
-       0,    44,     0,     0,     0,    45,     0,   245,   246,    46,
-       0,     0,     0,     0,     0,     0,     0,     0,   228,     0,
+       0,     0,     0,     0,     0,     0,    52,     0,     0,   245,
+     246,   247,     0,   248,     0,     0,    53,    54,    55,    29,
+     188,   231,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   249,   250,    11,     0,     0,     0,     0,   218,     0,
+      42,    12,     0,     0,     0,     0,     0,     0,     0,     0,
+      43,     0,     0,    44,     0,     0,     0,    45,     0,     0,
+       0,    46,     0,     0,     0,     0,     0,     0,     0,     0,
+     232,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,   233,   234,   235,     0,     0,     0,     0,
+      47,     0,   236,   237,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   238,     0,    49,    50,   239,     0,
+     240,     0,     0,   241,     0,     0,     0,   242,     0,   243,
+       0,   244,     0,     0,    51,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   229,   230,   231,     0,     0,     0,     0,    47,     0,
-     232,   233,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   234,     0,    49,    50,   235,    29,   236,     0,
-       0,   237,     0,     0,     0,   238,     0,   239,     0,   240,
-       0,    11,    51,     0,     0,     0,     0,     0,    42,    12,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    44,
-       0,    52,     0,    45,   241,   242,   243,    46,   244,     0,
-       0,    53,    54,    55,     0,     0,   284,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   245,   246,  -187,  -187,
-     230,   231,     0,     0,     0,     0,    47,     0,     0,   233,
+       0,     0,     0,    52,     0,     0,   245,   246,   247,     0,
+     248,     0,     0,    53,    54,    55,   343,    29,   188,   231,
+       0,     0,     0,     0,     0,     0,     0,     0,   249,   250,
+       0,    11,     0,     0,     0,     0,   218,     0,    42,    12,
+       0,     0,     0,     0,     0,     0,     0,     0,    43,     0,
+       0,    44,     0,     0,     0,    45,     0,     0,     0,    46,
+       0,     0,     0,     0,     0,     0,     0,     0,   232,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     234,     0,    49,    50,     0,     0,     0,     0,  -363,     0,
-       0,     0,  -363,   238,    43,   239,   359,     0,     0,     0,
+       0,   233,   234,   235,     0,     0,     0,     0,    47,     0,
+     236,   237,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   238,     0,    49,    50,   239,     0,   240,     0,
+       0,   241,     0,     0,     0,   242,     0,   243,     0,   244,
+       0,     0,    51,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,    52,     0,     0,   245,   246,   247,     0,   248,     0,
+       0,    53,    54,    55,   349,    29,   188,   231,     0,     0,
+       0,     0,     0,     0,     0,     0,   249,   250,     0,    11,
+       0,     0,     0,     0,   218,     0,    42,    12,     0,     0,
+       0,     0,   353,     0,     0,     0,    43,     0,     0,    44,
+       0,     0,     0,    45,     0,     0,     0,    46,     0,     0,
+       0,     0,     0,     0,     0,     0,   232,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   233,
+     234,   235,     0,     0,     0,     0,    47,     0,   236,   237,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     238,     0,    49,    50,   239,     0,   240,     0,     0,   241,
+       0,     0,     0,   242,     0,   243,     0,   244,     0,     0,
       51,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   360,   361,     0,     0,     0,     0,     0,    52,
-       0,     0,   285,   242,   243,     0,   207,   362,     0,     0,
-       0,    55,     0,     0,     0,     0,   363,     0,     0,     0,
-       0,     0,     0,     0,   245,   246,     0,   110,   111,  -363,
-       0,     0,   235,  -363,   364,     0,     0,   112,   113,     0,
-       0,    43,  -363,     0,     0,   240,   114,   115,     0,     0,
-       0,     0,     0,     0,     0,   116,     0,   117,     0,     0,
-       0,     0,   118,     0,   119,   120,     0,   121,     0,     0,
-     208,   122,   123,     0,     0,     0,     0,     0,     0,   209,
-       0,     0,     0,    48,   365,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    52,
+       0,     0,   245,   246,   247,     0,   248,     0,     0,    53,
+      54,    55,    29,   188,   231,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   249,   250,    11,     0,     0,     0,
+       0,   218,     0,    42,    12,     0,     0,     0,     0,   432,
+       0,     0,     0,    43,     0,     0,    44,     0,     0,     0,
+      45,     0,     0,     0,    46,     0,     0,     0,     0,     0,
+       0,     0,     0,   232,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,   233,   234,   235,     0,
+       0,     0,     0,    47,     0,   236,   237,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   238,     0,    49,
+      50,   239,     0,   240,     0,     0,   241,     0,     0,     0,
+     242,     0,   243,     0,   244,     0,     0,    51,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   125,   126,   328,   329,     0,     0,     0,     0,
-       0,     0,     0,   127,   128,     0,   210,   129,   130,     0,
-     131,   132,     0,   133,   134,   110,   111,   135,   136,     0,
-       0,     0,   137,   138,     0,   112,   113,     0,     0,    43,
-       0,     0,     0,     0,   114,   115,     0,     0,   139,   140,
-       0,     0,     0,   116,     0,   117,     0,     0,     0,     0,
-     118,     0,   119,   120,     0,   121,     0,     0,     0,   122,
-     123,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    52,     0,     0,   245,
+     246,   247,     0,   248,     0,     0,    53,    54,    55,    29,
+     188,   231,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   249,   250,    11,     0,     0,     0,     0,   218,     0,
+      42,    12,     0,     0,     0,     0,     0,     0,     0,     0,
+      43,     0,     0,    44,     0,     0,     0,    45,     0,     0,
+       0,    46,     0,     0,     0,     0,     0,     0,     0,     0,
+     232,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,   233,   234,   235,     0,     0,     0,     0,
+      47,     0,   236,   237,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   238,     0,    49,    50,   239,     0,
+     240,     0,     0,   241,     0,     0,     0,   242,     0,   243,
+       0,   244,     0,     0,    51,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    52,     0,     0,   245,   246,   247,     0,
+     248,     0,     0,    53,    54,    55,   496,    29,   188,   231,
+       0,     0,     0,     0,     0,     0,     0,     0,   249,   250,
+       0,    11,     0,     0,     0,     0,   218,     0,    42,    12,
+       0,     0,     0,     0,     0,     0,     0,     0,    43,     0,
+       0,    44,     0,     0,     0,    45,     0,     0,     0,    46,
+       0,     0,     0,     0,     0,     0,     0,     0,   232,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   233,   234,   235,     0,     0,     0,     0,    47,     0,
+     236,   237,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   238,     0,    49,    50,   239,     0,   240,     0,
+       0,   241,     0,     0,     0,   242,     0,   243,     0,   244,
+       0,    29,    51,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    11,     0,     0,     0,     0,
+       0,    52,    42,    12,   245,   246,   247,     0,   248,     0,
+       0,    53,    54,    55,     0,    44,     0,     0,     0,    45,
+       0,     0,     0,    46,     0,     0,   249,   250,     0,     0,
+       0,     0,   290,     0,     0,     0,     0,     0,     0,     0,
+    -192,  -192,     0,     0,     0,     0,   234,   235,     0,     0,
+       0,     0,    47,     0,     0,   237,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,   238,     0,    49,    50,
+    -368,     0,     0,     0,  -368,     0,     0,     0,    43,   242,
+     365,   243,     0,     0,     0,     0,    51,     0,     0,     0,
+       0,     0,   211,     0,     0,     0,   366,   367,     0,     0,
+       0,     0,     0,     0,     0,    52,     0,     0,   291,   246,
+     247,   368,     0,   110,   111,     0,     0,    55,     0,     0,
+     369,     0,     0,   112,   113,     0,   114,   115,     0,    43,
+     249,   250,     0,  -368,   116,   117,   239,  -368,   370,     0,
+       0,     0,     0,   118,     0,   119,  -368,     0,     0,   244,
+     120,     0,   121,   122,     0,   123,     0,     0,   212,   124,
+     125,    29,     0,     0,     0,     0,     0,   213,     0,     0,
+       0,    48,     0,     0,     0,    11,     0,     0,     0,     0,
+       0,     0,    42,    12,     0,     0,     0,     0,   371,     0,
+     127,   128,   334,   335,     0,    44,     0,     0,     0,    45,
+       0,   129,   130,    46,   214,   131,   132,     0,   133,   134,
+       0,   135,   136,   110,   111,   137,   138,     0,     0,     0,
+     139,   140,     0,   112,   113,     0,   114,   115,     0,    43,
+       0,     0,    47,     0,   116,   117,   141,   142,     0,     0,
+       0,     0,     0,   118,     0,   119,     0,     0,    49,    50,
+     120,     0,   121,   122,     0,   123,     0,     0,     0,   124,
+     125,    29,     0,     0,     0,     0,    51,     0,     0,     0,
+       0,    48,     0,     0,     0,    11,     0,     0,     0,     0,
+       0,     0,    42,    12,     0,    52,     0,     0,    13,     0,
+     127,   128,   483,   484,     0,    44,     0,    55,   351,    45,
+       0,   129,   130,    46,     0,   131,   132,     0,   133,   134,
+       0,   135,   136,   110,   111,   137,   138,     0,     0,     0,
+     139,   140,     0,   112,   113,     0,   114,   115,     0,    43,
+       0,     0,    47,     0,   116,   117,   141,   142,     0,     0,
+       0,     0,     0,   118,     0,   119,     0,     0,    49,    50,
+     120,     0,   121,   122,     0,   123,     0,     0,     0,   124,
+     125,    29,     0,     0,     0,     0,    51,     0,     0,     0,
+       0,    48,     0,     0,     0,    11,     0,     0,     0,     0,
+     218,     0,    42,    12,     0,    52,     0,     0,    13,     0,
+     127,   128,     0,   486,     0,    44,     0,    55,   498,    45,
+       0,   129,   130,    46,     0,   131,   132,     0,   133,   134,
+       0,   135,   136,   110,   111,   137,   138,     0,     0,   225,
+     139,   140,     0,   112,   113,     0,   114,   115,     0,    43,
+       0,     0,    47,     0,   116,   117,   141,   142,     0,     0,
+       0,     0,     0,   118,     0,   119,     0,     0,    49,    50,
+     120,     0,   121,   122,     0,   123,     0,     0,     0,   124,
+     125,     0,     0,     0,     0,     0,    51,     0,     0,     0,
        0,    48,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   476,   477,     0,     0,     0,     0,     0,     0,
-     125,   126,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   127,   128,   110,   111,   129,   130,     0,   131,   132,
-       0,   133,   134,   112,   113,   135,   136,    43,     0,     0,
-     137,   138,   114,   115,     0,     0,     0,     0,     0,     0,
-       0,   116,     0,   117,     0,     0,   139,   140,   118,     0,
-     119,   120,     0,   121,     0,     0,     0,   122,   123,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    48,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   479,     0,     0,     0,     0,     0,     0,   125,   126,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,   127,
-     128,   110,   111,   129,   130,     0,   131,   132,     0,   133,
-     134,   112,   113,   135,   136,    43,     0,     0,   137,   138,
-     114,   115,     0,     0,     0,     0,     0,     0,     0,   116,
-       0,   117,     0,     0,   139,   140,   118,     0,   119,   120,
-       0,   121,     0,     0,     0,   122,   123,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    48,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,   574,
-       0,     0,     0,     0,     0,     0,   125,   126,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   127,   128,   110,
-     111,   129,   130,     0,   131,   132,     0,   133,   134,   112,
-     113,   135,   136,    43,     0,     0,   137,   138,   114,   115,
-       0,     0,     0,     0,     0,     0,     0,   116,     0,   117,
-       0,     0,   139,   140,   118,     0,   119,   120,     0,   121,
-       0,     0,     0,   122,   123,     0,     8,    29,     0,     0,
-       0,     0,    41,     0,     0,    48,     0,     0,     0,     0,
-       0,    11,     0,     0,     0,     0,     0,     0,    42,    12,
-       0,     0,     0,     0,   125,   126,    43,     0,     0,    44,
-       0,     0,     0,    45,     0,   127,   128,    46,     0,   129,
-     130,     0,   131,   132,     0,   133,   134,     0,     0,   135,
-     136,     0,     0,     0,   137,   138,     0,     0,     0,     0,
-       0,     0,   460,    29,     0,     0,    47,     0,    48,     0,
-     139,   140,     0,     0,     0,     0,    29,    11,     0,     0,
-       0,    41,    49,    50,    42,    12,     0,     0,     0,     0,
-      11,     0,    43,     0,     0,    44,     0,    42,    12,    45,
-      51,     0,     0,    46,    29,    43,     0,     0,    44,     0,
-       0,     0,    45,     0,     0,     0,    46,     0,    11,    52,
-       0,     0,    13,   214,     0,    42,    12,     0,     0,    53,
-      54,    55,    47,     0,    48,     0,    44,     0,     0,     0,
-      45,     0,    29,     0,    46,    47,     0,    48,    49,    50,
-       0,     0,     0,     0,     0,     0,    11,     0,     0,     0,
-     221,    49,    50,    42,    12,     0,    51,     0,     0,     0,
-       0,    43,     0,    47,    44,     0,     0,     0,    45,    51,
-       0,     0,    46,     0,     0,    52,     0,     0,    13,    49,
-      50,     0,     0,     0,     0,    53,    54,    55,    52,     0,
-       0,    13,     0,    29,     0,     0,     0,    51,    53,    54,
-      55,    47,     0,    48,     0,     0,     0,    11,     0,     0,
-       0,     0,   214,     0,    42,    12,    52,    49,    50,    13,
-      29,     0,     0,     0,     0,    44,    53,    54,    55,    45,
-       0,     0,     0,    46,    11,    51,     0,     0,     0,     0,
-       0,    42,    12,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    44,     0,    52,     0,    45,    13,     0,     0,
-      46,    29,    47,   227,    53,    54,    55,     0,     0,     0,
-       0,     0,     0,     0,     0,    11,     0,     0,    49,    50,
-       0,     0,    42,    12,     0,     0,     0,     0,     0,    47,
-       0,     0,     0,    44,     0,     0,    51,    45,     0,    29,
-       0,    46,     0,     0,     0,    49,    50,     0,     0,     0,
-     228,     0,     0,    11,     0,    52,     0,     0,    13,     0,
-      42,    12,     0,    51,     0,    53,    54,    55,     0,     0,
-      47,    44,     0,     0,     0,    45,     0,     0,     0,    46,
-       0,     0,    52,     0,     0,    13,    49,    50,   271,     0,
-     272,   273,     0,   237,    55,     0,    29,     0,     0,     0,
-       0,     0,     0,     0,    51,     0,     0,     0,    47,     0,
-      11,     0,     0,     0,     0,     0,    29,    42,    12,     0,
-       0,     0,     0,    52,    49,    50,   241,     0,    44,     0,
-      11,     0,    45,     0,     0,    55,    46,    42,    12,     0,
-       0,     0,    51,     0,     0,     0,     0,     0,    44,     0,
-       0,     0,    45,     0,    29,     0,    46,     0,     0,     0,
-       0,    52,     0,     0,    13,    47,     0,   173,    11,     0,
-     174,     0,     0,    55,    29,    42,    12,     0,     0,     0,
-       0,    49,    50,     0,     0,    47,    44,     0,    11,     0,
-      45,     0,     0,     0,    46,    42,    12,     0,     0,    51,
-       0,    49,    50,     0,     0,     0,    44,     0,     0,     0,
-      45,     0,    29,     0,    46,     0,     0,     0,    52,    51,
-       0,    13,     0,    47,   202,     0,    11,   203,     0,     0,
-      55,     0,     0,    42,    12,     0,     0,     0,    52,    49,
-      50,    13,     0,    47,    44,     0,   429,   430,    45,     0,
-      55,     0,    46,     0,     0,     0,     0,    51,     0,    49,
-      50,   373,     0,   374,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    29,     0,     0,    52,    51,     0,    13,
-       0,    47,     0,     0,     0,   292,     0,    11,    55,     0,
-       0,     0,     0,     0,    42,    12,    52,    49,    50,    13,
-     335,     0,     0,     0,     0,    44,     0,     0,    55,    45,
-       0,     0,     0,    46,     0,    51,     0,    29,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    11,     0,     0,    52,     0,     0,    13,    42,    12,
-       0,    29,    47,   316,   339,     0,    55,     0,     0,    44,
-       0,     0,     0,    45,     0,    11,     0,    46,    49,    50,
-       0,    29,    42,    12,     0,     0,     0,     0,   349,     0,
-       0,     0,     0,    44,     0,    11,    51,    45,     0,     0,
-       0,    46,    42,    12,     0,     0,    47,     0,     0,     0,
-       0,     0,     0,    44,     0,    52,     0,    45,    13,     0,
-       0,    46,    49,    50,     0,     0,     0,    55,     0,     0,
-      47,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      51,     0,     0,     0,     0,     0,    49,    50,     0,     0,
-      47,     0,     0,     0,     0,     0,     0,     0,     0,    52,
-       0,     0,    13,     0,    51,     0,    49,    50,     0,     0,
-       0,    55,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    52,    51,     0,    13,     0,   110,   111,
-       0,   469,     0,   470,     0,    55,     0,     0,   112,   113,
-       0,     0,    43,    52,     0,     0,    13,   114,   115,     0,
-       0,     0,     0,     0,     0,    55,   116,     0,   117,     0,
-       0,     0,     0,   118,     0,   119,   120,     0,   121,     0,
-       0,     0,   122,   123,     0,     0,     0,     0,     0,     0,
-     471,     0,     0,     0,    48,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   125,   126,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   127,   128,     0,     0,   129,   130,
-       0,   131,   132,     0,   133,   134,     0,     0,   135,   136,
-       0,     0,     0,   137,   138,     0,     0,   110,   111,     0,
-     320,     0,     0,     0,     0,   321,     0,   112,   113,   139,
-     140,    43,     0,     0,     0,   472,   114,   115,     0,     0,
-       0,     0,     0,     0,     0,   116,     0,   117,     0,     0,
-       0,     0,   118,     0,   119,   120,     0,   121,     0,     0,
-       0,   122,   123,     0,     0,     0,     0,     0,     0,   322,
+       0,     0,     0,     0,     0,    52,     0,     0,    13,     0,
+     127,   128,     0,   582,     0,    53,    54,    55,     0,     0,
+       0,   129,   130,     0,     0,   131,   132,     0,   133,   134,
+       0,   135,   136,   110,   111,   137,   138,     0,     0,     0,
+     139,   140,     0,   112,   113,     0,   114,   115,     0,    43,
+       0,     0,     0,     0,   116,   117,   141,   142,     0,     0,
+       0,     0,     0,   118,     0,   119,     0,     0,     0,     0,
+     120,     0,   121,   122,     0,   123,     0,     8,    29,   124,
+     125,     0,     0,    41,     0,     0,     0,     0,     0,     0,
+       0,    48,    11,     0,     0,     0,     0,     0,     0,    42,
+      12,     0,     0,     0,     0,     0,     0,     0,     0,    43,
+     127,   128,    44,     0,     0,     0,    45,     0,     0,     0,
+      46,   129,   130,     0,     0,   131,   132,     0,   133,   134,
+       0,   135,   136,     0,     0,   137,   138,   467,    29,     0,
+     139,   140,     0,     0,     0,     0,     0,     0,     0,    47,
+       0,    48,    11,     0,     0,     0,   141,   142,     0,    42,
+      12,     0,     0,     0,     0,    49,    50,     0,     0,    43,
+       0,     0,    44,     0,     0,     0,    45,     0,     0,     0,
+      46,     0,     0,    51,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    29,     0,     0,     0,
+       0,    41,    52,     0,     0,    13,     0,     0,     0,    47,
+      11,    48,    53,    54,    55,     0,     0,    42,    12,    29,
+       0,     0,     0,     0,     0,    49,    50,    43,     0,     0,
+      44,     0,     0,    11,    45,     0,     0,     0,    46,     0,
+      42,    12,     0,    51,     0,     0,     0,     0,     0,     0,
+      43,     0,     0,    44,     0,     0,     0,    45,     0,     0,
+       0,    46,    52,     0,     0,    13,     0,    47,     0,    48,
+       0,     0,    53,    54,    55,     0,     0,    29,     0,     0,
+       0,     0,     0,    49,    50,     0,     0,     0,     0,     0,
+      47,    11,    48,     0,     0,     0,   218,     0,    42,    12,
+      29,    51,     0,     0,     0,     0,    49,    50,     0,     0,
+       0,    44,     0,     0,    11,    45,     0,     0,     0,    46,
+      52,    42,    12,    13,    51,     0,     0,     0,     0,     0,
+      53,    54,    55,     0,    44,    29,     0,     0,    45,     0,
+       0,     0,    46,    52,     0,     0,    13,     0,    47,    11,
+       0,     0,     0,    53,    54,    55,    42,    12,    29,     0,
+       0,     0,     0,     0,    49,    50,     0,     0,     0,    44,
+       0,    47,    11,    45,     0,     0,     0,    46,     0,    42,
+      12,     0,    51,     0,     0,     0,     0,    49,    50,     0,
+       0,     0,    44,     0,     0,     0,    45,     0,     0,     0,
+      46,    52,     0,     0,    13,    51,    47,     0,     0,     0,
+       0,    53,    54,    55,     0,     0,     0,     0,     0,     0,
+       0,     0,    49,    50,    52,     0,     0,    13,     0,    47,
+     277,     0,   278,   279,     0,    29,    55,     0,     0,     0,
+      51,     0,     0,     0,     0,    49,    50,     0,     0,    11,
+       0,     0,     0,     0,     0,     0,    42,    12,    29,    52,
+       0,     0,    13,    51,     0,   177,     0,     0,   178,    44,
+       0,    55,    11,    45,     0,     0,     0,    46,     0,    42,
+      12,     0,    52,     0,     0,    13,     0,     0,   206,     0,
+      29,   207,    44,     0,    55,     0,    45,     0,     0,     0,
+      46,     0,     0,     0,    11,     0,    47,     0,     0,     0,
+       0,    42,    12,     0,     0,     0,    29,     0,     0,     0,
+       0,     0,    49,    50,    44,     0,     0,     0,    45,    47,
+      11,     0,    46,     0,     0,     0,     0,    42,    12,     0,
+      51,     0,     0,     0,     0,    49,    50,   379,     0,   380,
+      44,     0,     0,     0,    45,     0,     0,     0,    46,    52,
+       0,    47,    13,    51,     0,     0,     0,   436,   437,     0,
+       0,    55,     0,     0,     0,     0,     0,    49,    50,     0,
+       0,     0,    52,     0,     0,    13,    29,    47,     0,     0,
+       0,     0,     0,     0,    55,    51,     0,     0,     0,     0,
+      11,     0,     0,    49,    50,     0,     0,    42,    12,     0,
+       0,     0,     0,   341,    52,     0,     0,    13,     0,     0,
+      44,    51,     0,   298,    45,     0,    55,     0,    46,     0,
+       0,     0,     0,    29,     0,     0,     0,     0,     0,     0,
+      52,     0,     0,    13,     0,     0,     0,    11,     0,   322,
+       0,     0,    55,     0,    42,    12,    29,    47,    29,     0,
+     345,     0,     0,     0,     0,     0,     0,    44,     0,     0,
+      11,    45,    11,    49,    50,    46,     0,    42,    12,    42,
+      12,     0,     0,   355,     0,     0,     0,     0,     0,     0,
+      44,    51,    44,     0,    45,     0,    45,     0,    46,     0,
+      46,     0,     0,     0,    47,     0,     0,     0,     0,     0,
+      52,     0,     0,    13,     0,     0,     0,     0,     0,     0,
+      49,    50,    55,     0,     0,     0,     0,    47,     0,    47,
+       0,     0,     0,     0,     0,     0,     0,     0,    51,     0,
+       0,     0,     0,    49,    50,    49,    50,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,    52,     0,     0,
+      13,    51,     0,    51,     0,   110,   111,     0,   476,    55,
+     477,     0,     0,     0,     0,   112,   113,     0,   114,   115,
+      52,    43,    52,    13,     0,    13,   116,   117,     0,     0,
+       0,     0,    55,     0,    55,   118,     0,   119,     0,     0,
+       0,     0,   120,     0,   121,   122,     0,   123,     0,     0,
+       0,   124,   125,     0,     0,     0,     0,     0,     0,   478,
        0,     0,     0,    48,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   125,   126,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   127,   128,   110,   111,   129,   130,     0,
-     131,   132,     0,   133,   134,   112,   113,   135,   136,    43,
-       0,     0,   137,   138,   114,   115,     0,     0,     0,     0,
-       0,     0,     0,   116,     0,   117,     0,     0,   139,   140,
-     118,     0,   119,   120,     0,   121,     0,     0,   208,   122,
-     123,     0,     0,     0,     0,     0,     0,   209,     0,     0,
-       0,    48,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     125,   126,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   127,   128,     0,   210,   129,   130,     0,   131,   132,
-       0,   133,   134,     0,     0,   135,   136,     0,     0,     0,
-     137,   138,     0,     0,   110,   111,     0,   567,     0,     0,
-       0,     0,     0,     0,   112,   113,   139,   140,    43,     0,
-       0,     0,     0,   114,   115,     0,     0,     0,     0,     0,
-       0,     0,   116,     0,   117,     0,     0,     0,     0,   118,
-       0,   119,   120,     0,   121,     0,     0,     0,   122,   123,
-       0,     0,     0,     0,     0,     0,   568,     0,     0,     0,
+       0,     0,   127,   128,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,   129,   130,     0,     0,   131,   132,     0,
+     133,   134,     0,   135,   136,     0,     0,   137,   138,     0,
+       0,     0,   139,   140,     0,     0,     0,     0,     0,     0,
+       0,     0,   110,   111,     0,   326,     0,     0,   141,   142,
+     327,     0,   112,   113,   479,   114,   115,     0,    43,     0,
+       0,     0,     0,   116,   117,     0,     0,     0,     0,     0,
+       0,     0,   118,     0,   119,     0,     0,     0,     0,   120,
+       0,   121,   122,     0,   123,     0,     0,     0,   124,   125,
+       0,     0,     0,     0,     0,     0,   328,     0,     0,     0,
       48,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,   125,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   127,
+     128,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     129,   130,     0,     0,   131,   132,     0,   133,   134,     0,
+     135,   136,   110,   111,   137,   138,     0,     0,     0,   139,
+     140,     0,   112,   113,     0,   114,   115,     0,    43,     0,
+       0,     0,     0,   116,   117,   141,   142,     0,     0,     0,
+       0,     0,   118,     0,   119,     0,     0,     0,     0,   120,
+       0,   121,   122,     0,   123,     0,     0,   212,   124,   125,
+       0,     0,     0,     0,     0,     0,   213,     0,     0,     0,
+      48,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   127,
+     128,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     129,   130,     0,   214,   131,   132,     0,   133,   134,     0,
+     135,   136,     0,     0,   137,   138,     0,     0,     0,   139,
+     140,     0,     0,     0,     0,     0,     0,   110,   111,     0,
+     575,     0,     0,     0,     0,   141,   142,   112,   113,     0,
+     114,   115,     0,    43,     0,     0,     0,     0,   116,   117,
+       0,     0,     0,     0,     0,     0,     0,   118,     0,   119,
+       0,     0,     0,     0,   120,     0,   121,   122,     0,   123,
+       0,     0,     0,   124,   125,     0,     0,     0,     0,     0,
+       0,   576,     0,     0,     0,    48,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   127,   128,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,   129,   130,     0,     0,   131,
+     132,     0,   133,   134,     0,   135,   136,   110,   111,   137,
+     138,     0,     0,     0,   139,   140,     0,   112,   113,     0,
+     114,   115,     0,    43,     0,     0,     0,     0,   116,   117,
+     141,   142,     0,     0,     0,     0,     0,   118,     0,   119,
+       0,     0,     0,     0,   120,     0,   121,   122,     0,   123,
+       0,     0,     0,   124,   125,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    48,     0,     0,     0,     0,
      126,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     127,   128,   110,   111,   129,   130,     0,   131,   132,     0,
-     133,   134,   112,   113,   135,   136,    43,     0,     0,   137,
-     138,   114,   115,     0,     0,     0,     0,     0,     0,     0,
-     116,     0,   117,     0,     0,   139,   140,   118,     0,   119,
-     120,     0,   121,     0,     0,     0,   122,   123,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,    48,     0,
-       0,     0,     0,   124,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   125,   126,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   127,   128,
-       0,     0,   129,   130,     0,   131,   132,     0,   133,   134,
-       0,     0,   135,   136,     0,     0,     0,   137,   138,     0,
-       0,   110,   111,     0,   572,     0,     0,     0,     0,     0,
-       0,   112,   113,   139,   140,    43,     0,     0,     0,     0,
-     114,   115,     0,     0,     0,     0,     0,     0,     0,   116,
-       0,   117,     0,     0,     0,     0,   118,     0,   119,   120,
-       0,   121,     0,     0,     0,   122,   123,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    48,     0,     0,
+       0,     0,     0,     0,   127,   128,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,   129,   130,     0,     0,   131,
+     132,     0,   133,   134,     0,   135,   136,     0,     0,   137,
+     138,     0,     0,     0,   139,   140,     0,     0,     0,     0,
+       0,     0,   110,   111,     0,   580,     0,     0,     0,     0,
+     141,   142,   112,   113,     0,   114,   115,     0,    43,     0,
+       0,     0,     0,   116,   117,     0,     0,     0,     0,     0,
+       0,     0,   118,     0,   119,     0,     0,     0,     0,   120,
+       0,   121,   122,     0,   123,     0,     0,     0,   124,   125,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   125,   126,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   127,   128,     0,
-       0,   129,   130,     0,   131,   132,     0,   133,   134,     0,
-       0,   135,   136,     0,     0,     0,   137,   138,     0,     0,
-     110,   111,     0,   627,     0,     0,     0,     0,     0,     0,
-     112,   113,   139,   140,    43,     0,     0,     0,     0,   114,
-     115,     0,     0,     0,     0,     0,     0,     0,   116,     0,
-     117,     0,     0,     0,     0,   118,     0,   119,   120,     0,
-     121,     0,     0,     0,   122,   123,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    48,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,   125,   126,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   127,   128,     0,     0,
-     129,   130,     0,   131,   132,     0,   133,   134,     0,     0,
-     135,   136,     0,     0,     0,   137,   138,     0,     0,   110,
-     111,     0,   661,     0,     0,     0,     0,     0,     0,   112,
-     113,   139,   140,    43,     0,     0,     0,     0,   114,   115,
-       0,     0,     0,     0,     0,     0,     0,   116,     0,   117,
-       0,     0,     0,     0,   118,     0,   119,   120,     0,   121,
-       0,     0,     0,   122,   123,     0,     0,     0,     0,     0,
+      48,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   127,
+     128,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     129,   130,     0,     0,   131,   132,     0,   133,   134,     0,
+     135,   136,     0,     0,   137,   138,     0,     0,     0,   139,
+     140,     0,     0,     0,     0,     0,     0,   110,   111,     0,
+     635,     0,     0,     0,     0,   141,   142,   112,   113,     0,
+     114,   115,     0,    43,     0,     0,     0,     0,   116,   117,
+       0,     0,     0,     0,     0,     0,     0,   118,     0,   119,
+       0,     0,     0,     0,   120,     0,   121,   122,     0,   123,
+       0,     0,     0,   124,   125,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,    48,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   125,   126,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,   127,   128,   110,   111,   129,
-     130,     0,   131,   132,     0,   133,   134,   112,   113,   135,
-     136,    43,     0,     0,   137,   138,   114,   115,     0,     0,
-       0,     0,     0,     0,     0,   116,     0,   117,     0,     0,
-     139,   140,   118,     0,   119,   120,     0,   121,     0,     0,
-       0,   122,   123,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    48,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    43,     0,   359,     0,     0,     0,     0,
-       0,     0,   125,   126,     0,  -353,  -353,     0,     0,     0,
-       0,   360,   361,   127,   128,     0,     0,   129,   130,     0,
-     131,   132,     0,   133,   134,  -353,   362,   135,   136,  -353,
-    -353,     0,   137,   138,     0,   363,     0,     0,  -353,  -353,
-       0,  -353,  -353,  -353,  -353,  -353,  -353,     0,   139,   140,
-     359,   235,     0,   364,     0,     0,     0,     0,     0,     0,
-     376,   377,     0,     0,   240,     0,   360,   361,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,  -353,  -353,     0,
-     378,     0,     0,     0,   379,   380,     0,     0,     0,     0,
-     381,     0,     0,   382,   383,     0,   384,   385,   386,   387,
-     388,   389,     0,   365,  -353,  -353,  -355,  -353,  -353,     0,
-       0,     0,     0,     0,     0,     0,  -355,  -355,     0,     0,
-       0,     0,  -355,  -355,     0,     0,     0,     0,     0,     0,
-       0,     0,   390,   391,     0,     0,  -355,     0,     0,     0,
-    -355,  -355,     0,     0,     0,     0,  -355,     0,     0,  -355,
-    -355,     0,  -355,  -355,  -355,  -355,  -355,  -355,     0,   392,
-     393,     0,   394,   395,     0,     0,   376,   377,     0,     0,
+       0,     0,     0,     0,   127,   128,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,   129,   130,     0,     0,   131,
+     132,     0,   133,   134,     0,   135,   136,     0,     0,   137,
+     138,     0,     0,     0,   139,   140,     0,     0,     0,     0,
+       0,     0,   110,   111,     0,   669,     0,     0,     0,     0,
+     141,   142,   112,   113,     0,   114,   115,     0,    43,     0,
+       0,     0,     0,   116,   117,     0,     0,     0,     0,     0,
+       0,     0,   118,     0,   119,     0,     0,     0,     0,   120,
+       0,   121,   122,     0,   123,     0,     0,     0,   124,   125,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,  -355,  -355,
-     379,   380,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   384,   385,   386,   387,   388,   389,     0,     0,
-       0,     0,     0,     0,     0,  -355,  -355,     0,  -355,  -355,
+      48,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   127,
+     128,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     129,   130,     0,     0,   131,   132,     0,   133,   134,     0,
+     135,   136,   110,   111,   137,   138,     0,     0,     0,   139,
+     140,     0,   112,   113,     0,   114,   115,     0,    43,     0,
+       0,     0,     0,   116,   117,   141,   142,     0,     0,     0,
+       0,     0,   118,     0,   119,     0,     0,     0,     0,   120,
+       0,   121,   122,     0,   123,     0,     0,     0,   124,   125,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   390,   391,
+      48,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      43,     0,   365,     0,     0,     0,     0,     0,     0,   127,
+     128,     0,  -358,  -358,     0,     0,     0,     0,   366,   367,
+     129,   130,     0,     0,   131,   132,     0,   133,   134,     0,
+     135,   136,  -358,   368,   137,   138,  -358,  -358,     0,   139,
+     140,     0,   369,     0,     0,  -358,  -358,     0,  -358,  -358,
+    -358,  -358,  -358,  -358,     0,   141,   142,   365,   239,     0,
+     370,     0,     0,     0,     0,     0,     0,   382,   383,     0,
+       0,   244,     0,   366,   367,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,  -358,  -358,     0,   384,     0,     0,
+       0,   385,   386,     0,     0,     0,     0,   387,     0,     0,
+     388,   389,     0,   390,   391,   392,   393,   394,   395,     0,
+     371,  -358,  -358,  -360,  -358,  -358,     0,     0,     0,     0,
+       0,     0,     0,  -360,  -360,     0,     0,     0,     0,  -360,
+    -360,     0,     0,     0,     0,     0,     0,     0,     0,   396,
+     397,     0,     0,  -360,     0,     0,     0,  -360,  -360,     0,
+       0,     0,     0,  -360,     0,     0,  -360,  -360,     0,  -360,
+    -360,  -360,  -360,  -360,  -360,     0,   398,   399,     0,   400,
+     401,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,  -360,  -360,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,   392,   393,     0,   394,   395
+       0,     0,  -360,  -360,     0,  -360,  -360
 };
 
 static const yytype_int16 yycheck[] =
 {
-       3,    16,    64,    68,     7,     4,     9,   282,   283,    16,
-     410,     3,   287,    16,    77,    37,     5,     9,    29,     8,
-      25,    26,    27,    10,    77,    78,     7,     4,     9,     3,
-      33,   206,    24,    36,    56,     9,    19,   109,   110,   167,
-      32,    10,     0,   143,    18,    41,   109,    59,    37,    23,
-      24,    49,    33,    68,    83,    36,   109,    64,    32,    41,
-      47,    68,    31,     5,    71,    81,    82,    83,    84,    85,
-      86,   109,     9,    42,    41,    41,    65,    81,    41,     5,
-       3,    50,    87,    88,   156,    90,     9,    24,    77,    78,
-      34,    80,    41,    96,    97,    32,    41,    10,     3,    43,
-      23,    24,    41,     9,     9,   117,   135,   207,     5,    32,
-      54,   100,   212,   102,    41,    96,    97,    61,   156,    24,
-     109,    41,    83,   135,   128,    41,   179,    32,     3,     3,
-     107,   142,   143,   247,     9,     9,   143,   133,   538,   138,
-     138,    41,   195,   135,   113,   320,   321,    41,     5,    24,
-      24,   133,   155,    31,   169,    10,    11,    32,    32,    41,
-     163,   135,   165,   132,    42,   279,   133,   133,    59,   444,
-     133,   446,    50,    81,   135,   144,    31,    41,    41,     5,
-     195,    41,    41,   127,   133,    27,   191,    42,   133,    41,
-     179,    46,   195,   196,   133,    50,   199,   260,   135,   206,
-     207,    25,    26,    40,   148,   212,   133,   260,    81,    41,
-     213,   155,   135,   133,   217,   196,   219,   133,   199,   222,
-     128,   224,    33,     5,    79,   325,   117,     5,   328,   329,
-     135,    22,   163,   133,   165,   113,    78,   244,    24,   133,
-      95,    96,   249,    81,   260,    31,    32,    21,   443,    23,
-     445,   133,   447,     3,   132,   128,    42,   310,   113,     5,
-     135,   135,    99,    87,    50,   268,   144,    67,   110,   133,
-     133,   260,   109,   133,   133,     9,    81,   132,   281,    21,
-      80,   133,   213,    94,    10,    66,   217,    98,   219,   144,
-     128,   222,    39,   224,   469,   470,   107,    49,    24,   474,
-     315,   133,    16,   103,     5,    31,    32,    59,   315,   312,
-       5,   314,   315,   320,   321,   443,    42,   445,   325,   447,
-      46,   328,   329,   128,    50,    80,   107,   113,   133,    80,
-     333,   312,    49,   314,    81,   110,    81,   268,   341,    80,
-      15,    97,    59,    99,   347,   145,   132,    38,   103,   135,
-     281,    11,   103,    79,    68,     5,   142,   143,   144,   554,
-      74,   556,   103,     3,     4,   117,    57,     3,   120,    95,
-      96,    81,    39,    81,     3,     4,   476,   477,    37,   479,
-      71,   156,    81,   128,     3,     4,   138,   113,   133,   103,
-     145,     9,   567,    84,   145,   570,   571,   572,   463,     3,
-     453,   464,   333,   120,   145,     3,   132,   410,     3,   135,
-     341,   464,   415,     3,    81,     3,   347,     3,   144,   145,
-     128,   138,   425,     3,   427,   133,   554,     5,   556,   128,
-      97,   145,    99,   147,   133,   149,     3,   151,   453,   153,
-     134,   155,    48,   157,   109,   159,   449,   161,   463,   110,
-     453,   626,   627,   167,    37,   458,   463,     4,   172,   173,
-     174,    57,   469,   470,     3,     4,    37,   474,    64,   476,
-     477,   460,   479,   244,   574,   464,   247,   458,   249,   145,
-      37,   147,   103,   149,   487,   151,   661,    59,   202,   203,
-     493,    16,    17,   159,   425,   129,   427,    22,     3,     9,
-      10,    97,    10,    99,   218,     3,   220,   221,   279,   223,
-       3,   225,     3,     4,   110,    81,    24,     3,   449,     3,
-       4,    31,     3,    31,    32,     3,     4,   109,   110,     3,
-       4,     3,    42,    39,    42,   538,    46,    39,    46,    39,
-      50,   144,    50,    13,    14,   259,    16,    17,     3,     4,
-      20,   145,    22,     3,     4,   221,   487,   271,   272,   273,
-     567,   623,   493,   570,   571,   572,    49,   574,    57,    79,
-      64,    79,    38,    13,    14,   564,    16,    17,   292,   135,
-     583,   103,    22,     3,     4,    95,    96,    95,    96,   135,
-     103,     3,     3,   129,   143,   138,    39,    39,   660,   144,
-      49,   315,   316,   113,   144,   113,   156,   145,   145,    66,
-      71,    41,   104,    84,    41,   110,   623,   135,   103,   626,
-     627,   335,   132,    59,   132,   339,   135,   135,   342,     3,
-       3,     9,   129,   144,   144,   349,   144,   145,   105,   156,
-     109,   156,   110,   357,   358,   133,    71,    71,    83,    41,
-      84,    41,   583,   660,   661,    84,   659,   371,   372,    59,
-      83,   375,   135,    59,     9,    71,   156,    84,     5,   133,
-     133,    59,   128,    10,    11,    12,   128,   128,    41,   682,
-     133,   684,   396,   128,   128,     3,    41,    24,    41,   128,
-     128,   128,    29,    41,    31,    32,   128,   128,    41,     3,
-     133,     3,    39,    41,     3,    42,   709,   128,   422,    46,
-     424,   133,   128,    50,   428,   429,   430,    41,   128,   128,
-     128,   128,    59,   128,    41,   128,   128,    41,   659,   443,
-     128,   445,   133,   447,   133,    72,    73,    74,   133,   128,
-      41,   128,    79,   128,    81,    82,   128,   133,    41,   463,
-     133,   682,   128,   684,   133,    41,    93,   128,    95,    96,
-      97,   133,    99,   128,   128,   102,    41,   133,   128,   106,
-     128,   108,    41,   110,   133,    41,   113,     5,   709,   133,
-     494,   128,    10,    11,    12,    41,   128,   133,   128,   133,
-      25,    39,   133,   128,   133,   132,    24,   133,   135,   136,
-     137,    29,   139,    31,    32,   142,   143,   144,   133,   128,
-     133,    39,   133,   128,    42,   128,   128,   133,    46,    16,
-     157,   158,    50,   133,   133,   133,   133,   133,   128,   453,
-     133,    59,   128,   315,    68,   133,   133,   169,   133,   133,
-     554,   133,   556,   367,    72,    73,    74,   415,   396,   253,
-     207,    79,   410,    81,    82,     9,    10,    -1,    -1,    -1,
-      -1,   396,    -1,   282,    -1,    93,    -1,    95,    96,    97,
-     584,    99,    -1,    -1,   102,    -1,    -1,    31,   106,    -1,
-     108,    -1,   110,    -1,    -1,   113,    -1,    -1,    42,    -1,
-      -1,    -1,    46,    -1,    -1,    -1,    50,    -1,    -1,    -1,
-     614,    -1,    -1,    -1,   132,    -1,    -1,   135,   136,   137,
-      -1,   139,    -1,    -1,   142,   143,   144,    10,    11,    12,
-      -1,    -1,    -1,    -1,    -1,    79,    -1,    -1,    -1,   157,
-     158,    24,    -1,    -1,    -1,    -1,    29,    -1,    31,    32,
-      33,    95,    96,    -1,    -1,    -1,    39,    -1,    -1,    42,
-      -1,    -1,    -1,    46,    -1,    -1,    -1,    50,    -1,   113,
-      -1,    -1,    -1,    -1,    -1,    -1,    59,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   132,    72,
-      73,    74,    -1,    -1,    -1,    -1,    79,    -1,    81,    82,
-     144,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      93,    94,    95,    96,    97,    98,    99,    -1,    -1,   102,
-      -1,    -1,    -1,   106,   107,   108,    -1,   110,    -1,    -1,
-     113,    -1,    -1,    -1,    -1,    -1,    10,    11,    12,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   132,
-      24,    -1,   135,   136,   137,    29,   139,    31,    32,   142,
-     143,   144,    -1,    -1,    -1,    39,    -1,    -1,    42,    -1,
-      -1,    -1,    46,    -1,   157,   158,    50,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    59,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    67,    -1,    -1,    -1,    -1,    72,    73,
-      74,    -1,    -1,    -1,    -1,    79,    -1,    81,    82,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    10,    -1,    93,
-      -1,    95,    96,    97,    -1,    99,    -1,    -1,   102,    -1,
-      -1,    -1,   106,    -1,   108,    -1,   110,    -1,    31,   113,
-      -1,    -1,    -1,   117,    -1,    10,    11,    12,    -1,    42,
-      -1,    -1,    -1,    46,    -1,    -1,    -1,    50,   132,    24,
-      -1,   135,   136,   137,    29,   139,    31,    32,   142,   143,
-     144,    -1,    37,    -1,    39,    -1,    -1,    42,    -1,    -1,
-      -1,    46,    -1,   157,   158,    50,    79,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    59,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    95,    96,    -1,    -1,    -1,    72,    73,    74,
-      -1,    -1,    -1,    -1,    79,    -1,    81,    82,    -1,    -1,
-     113,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    93,    -1,
-      95,    96,    97,    -1,    99,    -1,    -1,   102,    -1,   132,
-      -1,   106,    -1,   108,    -1,   110,    -1,    -1,   113,    -1,
-      -1,   144,    -1,    -1,    10,    11,    12,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,   132,    24,    -1,
-     135,   136,   137,    29,   139,    31,    32,   142,   143,   144,
-      -1,    -1,    -1,    39,    -1,    -1,    42,    -1,    -1,    -1,
-      46,    -1,   157,   158,    50,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    59,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    72,    73,    74,    -1,
-      -1,    -1,    -1,    79,    -1,    81,    82,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    93,    -1,    95,
-      96,    97,    -1,    99,    -1,    -1,   102,    -1,    -1,    -1,
-     106,    -1,   108,    -1,   110,    -1,    -1,   113,    -1,    -1,
-      -1,    -1,    -1,    10,    11,    12,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,   132,    24,    -1,   135,
-     136,   137,    29,   139,    31,    32,   142,   143,   144,   145,
-      -1,    -1,    39,    -1,    -1,    42,    -1,    -1,    -1,    46,
-      -1,   157,   158,    50,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    59,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    72,    73,    74,    -1,    -1,
-      -1,    -1,    79,    -1,    81,    82,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    93,    -1,    95,    96,
-      97,    -1,    99,    -1,    -1,   102,    -1,    -1,    -1,   106,
-      -1,   108,    -1,   110,    -1,    -1,   113,    -1,    -1,    -1,
-      -1,    -1,    10,    11,    12,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,   132,    24,    -1,   135,   136,
-     137,    29,   139,    31,    32,   142,   143,   144,   145,    37,
-      -1,    39,    -1,    -1,    42,    -1,    -1,    -1,    46,    -1,
-     157,   158,    50,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    59,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    72,    73,    74,    -1,    -1,    -1,
-      -1,    79,    -1,    81,    82,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    93,    -1,    95,    96,    97,
-      -1,    99,    -1,    -1,   102,    -1,    -1,    -1,   106,    -1,
-     108,    -1,   110,    -1,    -1,   113,    -1,    -1,    -1,    -1,
-      -1,    10,    11,    12,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,   132,    24,    -1,   135,   136,   137,
-      29,   139,    31,    32,   142,   143,   144,    -1,    37,    -1,
-      39,    -1,    -1,    42,    -1,    -1,    -1,    46,    -1,   157,
-     158,    50,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      59,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    72,    73,    74,    -1,    -1,    -1,    -1,
-      79,    -1,    81,    82,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    93,    -1,    95,    96,    97,    -1,
-      99,    -1,    -1,   102,    -1,    -1,    -1,   106,    -1,   108,
-      -1,   110,    -1,    -1,   113,    -1,    -1,    -1,    -1,    -1,
-      10,    11,    12,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,   132,    24,    -1,   135,   136,   137,    29,
-     139,    31,    32,   142,   143,   144,    -1,    -1,    -1,    39,
-      -1,    -1,    42,    -1,    -1,    -1,    46,    -1,   157,   158,
-      50,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    59,
+       3,    51,    64,    68,     7,    77,     9,     4,   416,    16,
+     171,    10,   210,    16,    61,    19,     5,    29,     4,     8,
+      43,    31,    81,    82,    83,    84,    85,    86,    61,    43,
+      33,   251,    31,    36,    44,    83,     5,   109,    25,    26,
+      27,     7,    52,     9,    16,    44,    25,    26,    37,    77,
+      78,    34,   272,    52,   288,   289,    27,    64,    43,   293,
+      41,    68,    45,    85,    71,   285,    43,    33,   112,    21,
+      36,    23,   119,    56,    85,   111,    65,     3,   145,     0,
+      63,   109,   130,     9,     9,    43,   119,   135,    77,    78,
+     140,    80,    18,    96,    97,    43,    68,    23,    24,    24,
+      87,    88,    83,    90,   137,   115,    32,    32,    87,    80,
+      43,   100,   135,   102,   158,   137,   115,   159,     9,    10,
+     109,   135,   158,   109,   134,   167,   137,   169,   326,   327,
+      96,    97,   144,   145,    43,   134,   146,   545,   145,     3,
+      31,   112,    66,   140,   211,     9,   129,   146,    43,   216,
+     135,    37,    69,    44,   157,   183,   159,    48,   135,    23,
+      24,    52,     5,    83,   167,    82,   169,   150,    32,    43,
+       3,   199,    58,    43,   157,   217,     9,   135,   450,   221,
+     452,   223,   454,   107,   226,    43,   228,   135,   105,    43,
+      81,    24,   264,    10,   183,    43,   199,   200,    16,    32,
+     203,   173,   135,   210,   211,   264,    97,    98,   195,   216,
+     130,   137,   137,    10,   217,    43,    43,   451,   221,   453,
+     223,    43,    83,   226,   115,   228,   135,   199,     9,    43,
+     147,    43,   274,     3,   200,    82,   264,   203,     5,     9,
+     135,   248,    43,   134,    22,   287,   253,    83,    83,    33,
+      68,     3,    49,     3,    24,   146,    74,     9,   105,     9,
+       5,   135,    32,     5,   331,   135,     5,   334,   335,   130,
+       5,   274,    24,   137,    24,   264,     5,   135,   476,   477,
+      32,   135,    32,   481,   287,   103,    51,   135,   316,   450,
+     562,   452,   564,   454,   130,   130,    61,   339,     3,   135,
+     147,    83,    24,    82,   137,   347,     9,   135,   135,    31,
+      32,   353,    96,   135,   321,   318,   100,   320,   321,   326,
+     327,   135,    44,   135,   331,   109,   105,   334,   335,   147,
+      52,   149,     5,   151,   135,   153,   339,   155,    99,   157,
+     101,   159,    21,   161,   347,   163,     5,   165,   130,   321,
+     353,    15,   318,   171,   320,    82,    11,   122,   176,   177,
+     178,     5,    51,    16,    17,    83,    42,   137,   147,    22,
+       3,   248,    61,     9,   251,   140,   253,   575,   105,    37,
+     578,   579,   580,     3,    41,   137,     3,   137,   206,   207,
+     432,     3,   434,   115,   147,   272,   149,     3,   151,   471,
+     153,   562,    83,   564,   222,   470,   224,   225,   285,   227,
+     163,   229,   134,   416,   456,   137,   483,   484,   421,   486,
+     147,    83,   144,   145,   146,   101,    83,     3,     4,   432,
+     119,   434,   460,   122,     3,   111,   634,   635,     3,   111,
+     112,    59,    99,   471,   101,   263,     3,     4,    66,   130,
+       5,   140,   494,   456,   135,     3,     4,   460,   500,   277,
+     278,   279,   465,   470,     3,     4,     3,     4,   130,   476,
+     477,   669,   225,   135,   481,     3,   483,   484,   467,   486,
+     298,    99,   471,   101,     3,    33,   158,    40,   460,    37,
+     136,   494,    50,    41,   112,    43,   111,   500,   470,   465,
+       3,     4,   112,   321,   322,    37,    59,     3,     4,     3,
+       4,    59,    60,    13,    14,   582,    16,    17,   111,   112,
+      73,     4,    22,   341,     3,     4,    74,   345,     3,     4,
+     348,     3,     4,    86,   105,    83,    37,   355,     3,     4,
+      37,    61,   545,     3,    37,   363,   364,     3,    96,   591,
+      83,    99,   100,   101,     3,     3,     3,     9,    10,   377,
+     378,   109,     3,   381,   112,   131,   146,    41,   575,   631,
+      41,   578,   579,   580,    41,   582,    66,    59,    51,    31,
+     147,    40,   105,   572,   402,   137,    13,    14,   591,    16,
+      17,   137,    44,    20,   105,    22,    48,     3,     3,   140,
+      52,   131,   145,   151,    41,    41,   668,    51,   146,   158,
+     428,   146,   430,   431,    68,   106,   147,   435,   436,   437,
+     147,    43,    73,    86,   631,   667,    43,   634,   635,    81,
+     137,   112,   450,    61,   452,   105,   454,     3,   137,     3,
+       9,   146,   131,   111,   158,    97,    98,   135,   690,   158,
+     692,   112,   470,    73,   107,    85,    43,    73,    43,    61,
+      86,   668,   669,   115,   667,    86,    85,    61,   137,     9,
+      73,   158,    86,   135,    10,   717,    12,   135,    61,     5,
+     130,    43,   134,   501,    10,    11,    12,   690,    24,   692,
+     135,   130,   130,     3,   146,    31,    32,   130,    24,   130,
+      43,   130,    43,    29,    43,    31,    32,   130,    44,    43,
+     135,     3,    48,     3,   717,    41,    52,   130,    44,   130,
+     130,   130,    48,   130,    43,    61,    52,   135,    43,   130,
+     130,   130,   130,   130,    43,    61,    43,   130,   130,   135,
+     135,   130,    43,    10,   562,    81,   564,   135,    74,    75,
+      76,   130,   130,   135,   130,    81,   130,    83,    84,    43,
+       3,    97,    98,   135,    31,   130,    43,   135,   104,    95,
+     130,    97,    98,    99,   592,   101,   135,    44,   104,   115,
+     130,    48,   108,   130,   110,    52,   112,    43,   130,   115,
+     135,    43,   130,   130,    43,    43,    25,    39,   134,   130,
+     135,   137,   135,   135,   622,   135,   135,   130,   134,   130,
+     146,   137,   138,   139,    81,   141,     5,   135,   144,   145,
+     146,    10,    11,    12,   135,   130,   130,   135,   130,   135,
+      97,    98,   135,   159,   160,    24,   135,   135,   135,   130,
+      29,   135,    31,    32,   130,    16,   135,   135,   115,   460,
+     135,   130,    41,   135,   135,    44,   173,   135,    68,    48,
+     135,   135,   211,    52,   321,   373,   257,   134,   402,   416,
+     288,   421,    61,   402,    -1,    -1,    -1,    -1,    -1,   146,
+      10,    11,    -1,    -1,    -1,    74,    75,    76,    -1,    -1,
+      -1,    -1,    81,    -1,    83,    84,    -1,    -1,    -1,    -1,
+      -1,    31,    -1,    53,    54,    -1,    95,    -1,    97,    98,
+      99,    -1,   101,    -1,    44,   104,    -1,    -1,    48,   108,
+      -1,   110,    52,   112,    -1,    -1,   115,    77,    78,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    89,
+      90,    91,    92,    93,    94,   134,    -1,    -1,   137,   138,
+     139,    81,   141,    -1,    -1,   144,   145,   146,    10,    11,
+      12,    -1,    -1,    -1,    -1,    -1,    -1,    97,    98,    -1,
+     159,   160,    24,    -1,    -1,   125,   126,    29,    -1,    31,
+      32,    33,    -1,    -1,    -1,   115,    -1,    -1,    -1,    41,
+      -1,    -1,    44,    -1,    -1,    -1,    48,    -1,    -1,    -1,
+      52,    -1,   152,   153,   134,   155,   156,    -1,    -1,    61,
+      -1,    -1,    -1,    -1,    -1,    -1,   146,    -1,    -1,    -1,
+      -1,    -1,    74,    75,    76,    -1,    -1,    -1,    -1,    81,
+      -1,    83,    84,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    95,    96,    97,    98,    99,   100,   101,
+      -1,    -1,   104,    -1,    -1,    -1,   108,   109,   110,    -1,
+     112,    -1,    -1,   115,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    72,    73,    74,    -1,    -1,    -1,    -1,    79,
-      -1,    81,    82,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    93,    -1,    95,    96,    97,    -1,    99,
-      -1,    -1,   102,    -1,    -1,    -1,   106,    -1,   108,    -1,
-     110,    -1,    -1,   113,    -1,    -1,    -1,    -1,    -1,    10,
+      -1,    -1,   134,    -1,    -1,   137,   138,   139,    -1,   141,
+      -1,    -1,   144,   145,   146,    10,    11,    12,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,   159,   160,    24,
+      -1,    -1,    -1,    -1,    29,    -1,    31,    32,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    41,    -1,    -1,    44,
+      -1,    -1,    -1,    48,    -1,    -1,    -1,    52,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    61,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    69,    -1,    -1,    -1,    -1,    74,
+      75,    76,    -1,    -1,    -1,    -1,    81,    -1,    83,    84,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      95,    -1,    97,    98,    99,    -1,   101,    -1,    -1,   104,
+      -1,    -1,    -1,   108,    -1,   110,    -1,   112,    -1,    -1,
+     115,    -1,    -1,    -1,   119,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   134,
+      -1,    -1,   137,   138,   139,    -1,   141,    -1,    -1,   144,
+     145,   146,    10,    11,    12,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,   159,   160,    24,    -1,    -1,    -1,
+      -1,    29,    -1,    31,    32,    -1,    -1,    -1,    -1,    37,
+      -1,    -1,    -1,    41,    -1,    -1,    44,    -1,    -1,    -1,
+      48,    -1,    -1,    -1,    52,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    61,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    74,    75,    76,    -1,
+      -1,    -1,    -1,    81,    -1,    83,    84,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    95,    -1,    97,
+      98,    99,    -1,   101,    -1,    -1,   104,    -1,    -1,    -1,
+     108,    -1,   110,    -1,   112,    -1,    -1,   115,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,   134,    -1,    -1,   137,
+     138,   139,    -1,   141,    -1,    -1,   144,   145,   146,    10,
       11,    12,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,   132,    24,    -1,   135,   136,   137,    29,   139,
-      31,    32,   142,   143,   144,   145,    -1,    -1,    39,    -1,
-      -1,    42,    -1,    -1,    -1,    46,    -1,   157,   158,    50,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    59,    -1,
+      -1,   159,   160,    24,    -1,    -1,    -1,    -1,    29,    -1,
+      31,    32,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      41,    -1,    -1,    44,    -1,    -1,    -1,    48,    -1,    -1,
+      -1,    52,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      61,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    74,    75,    76,    -1,    -1,    -1,    -1,
+      81,    -1,    83,    84,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    95,    -1,    97,    98,    99,    -1,
+     101,    -1,    -1,   104,    -1,    -1,    -1,   108,    -1,   110,
+      -1,   112,    -1,    -1,   115,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    72,    73,    74,    -1,    -1,    -1,    -1,    79,    -1,
-      81,    82,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    93,    -1,    95,    96,    97,    10,    99,    -1,
-      -1,   102,    -1,    -1,    -1,   106,    -1,   108,    -1,   110,
-      -1,    24,   113,    -1,    -1,    -1,    -1,    -1,    31,    32,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    42,
-      -1,   132,    -1,    46,   135,   136,   137,    50,   139,    -1,
-      -1,   142,   143,   144,    -1,    -1,    59,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,   157,   158,     3,     4,
-      73,    74,    -1,    -1,    -1,    -1,    79,    -1,    -1,    82,
+      -1,    -1,    -1,   134,    -1,    -1,   137,   138,   139,    -1,
+     141,    -1,    -1,   144,   145,   146,   147,    10,    11,    12,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   159,   160,
+      -1,    24,    -1,    -1,    -1,    -1,    29,    -1,    31,    32,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    41,    -1,
+      -1,    44,    -1,    -1,    -1,    48,    -1,    -1,    -1,    52,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    61,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      93,    -1,    95,    96,    -1,    -1,    -1,    -1,    33,    -1,
-      -1,    -1,    37,   106,    39,   108,    41,    -1,    -1,    -1,
-     113,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    57,    58,    -1,    -1,    -1,    -1,    -1,   132,
-      -1,    -1,   135,   136,   137,    -1,     4,    72,    -1,    -1,
-      -1,   144,    -1,    -1,    -1,    -1,    81,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,   157,   158,    -1,    25,    26,    94,
-      -1,    -1,    97,    98,    99,    -1,    -1,    35,    36,    -1,
-      -1,    39,   107,    -1,    -1,   110,    44,    45,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    53,    -1,    55,    -1,    -1,
-      -1,    -1,    60,    -1,    62,    63,    -1,    65,    -1,    -1,
-      68,    69,    70,    -1,    -1,    -1,    -1,    -1,    -1,    77,
-      -1,    -1,    -1,    81,   149,    -1,    -1,    -1,    -1,    -1,
+      -1,    74,    75,    76,    -1,    -1,    -1,    -1,    81,    -1,
+      83,    84,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    95,    -1,    97,    98,    99,    -1,   101,    -1,
+      -1,   104,    -1,    -1,    -1,   108,    -1,   110,    -1,   112,
+      -1,    -1,   115,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,   100,   101,     4,     5,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,   111,   112,    -1,   114,   115,   116,    -1,
-     118,   119,    -1,   121,   122,    25,    26,   125,   126,    -1,
-      -1,    -1,   130,   131,    -1,    35,    36,    -1,    -1,    39,
-      -1,    -1,    -1,    -1,    44,    45,    -1,    -1,   146,   147,
-      -1,    -1,    -1,    53,    -1,    55,    -1,    -1,    -1,    -1,
-      60,    -1,    62,    63,    -1,    65,    -1,    -1,    -1,    69,
-      70,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    81,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,     4,     5,    -1,    -1,    -1,    -1,    -1,    -1,
-     100,   101,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,   111,   112,    25,    26,   115,   116,    -1,   118,   119,
-      -1,   121,   122,    35,    36,   125,   126,    39,    -1,    -1,
-     130,   131,    44,    45,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    53,    -1,    55,    -1,    -1,   146,   147,    60,    -1,
-      62,    63,    -1,    65,    -1,    -1,    -1,    69,    70,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    81,
+      -1,   134,    -1,    -1,   137,   138,   139,    -1,   141,    -1,
+      -1,   144,   145,   146,   147,    10,    11,    12,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,   159,   160,    -1,    24,
+      -1,    -1,    -1,    -1,    29,    -1,    31,    32,    -1,    -1,
+      -1,    -1,    37,    -1,    -1,    -1,    41,    -1,    -1,    44,
+      -1,    -1,    -1,    48,    -1,    -1,    -1,    52,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    61,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    74,
+      75,    76,    -1,    -1,    -1,    -1,    81,    -1,    83,    84,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,     5,    -1,    -1,    -1,    -1,    -1,    -1,   100,   101,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,
-     112,    25,    26,   115,   116,    -1,   118,   119,    -1,   121,
-     122,    35,    36,   125,   126,    39,    -1,    -1,   130,   131,
-      44,    45,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    53,
-      -1,    55,    -1,    -1,   146,   147,    60,    -1,    62,    63,
-      -1,    65,    -1,    -1,    -1,    69,    70,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    81,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,     5,
-      -1,    -1,    -1,    -1,    -1,    -1,   100,   101,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,   112,    25,
-      26,   115,   116,    -1,   118,   119,    -1,   121,   122,    35,
-      36,   125,   126,    39,    -1,    -1,   130,   131,    44,    45,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    53,    -1,    55,
-      -1,    -1,   146,   147,    60,    -1,    62,    63,    -1,    65,
-      -1,    -1,    -1,    69,    70,    -1,     9,    10,    -1,    -1,
-      -1,    -1,    15,    -1,    -1,    81,    -1,    -1,    -1,    -1,
-      -1,    24,    -1,    -1,    -1,    -1,    -1,    -1,    31,    32,
-      -1,    -1,    -1,    -1,   100,   101,    39,    -1,    -1,    42,
-      -1,    -1,    -1,    46,    -1,   111,   112,    50,    -1,   115,
-     116,    -1,   118,   119,    -1,   121,   122,    -1,    -1,   125,
-     126,    -1,    -1,    -1,   130,   131,    -1,    -1,    -1,    -1,
-      -1,    -1,     9,    10,    -1,    -1,    79,    -1,    81,    -1,
-     146,   147,    -1,    -1,    -1,    -1,    10,    24,    -1,    -1,
-      -1,    15,    95,    96,    31,    32,    -1,    -1,    -1,    -1,
-      24,    -1,    39,    -1,    -1,    42,    -1,    31,    32,    46,
-     113,    -1,    -1,    50,    10,    39,    -1,    -1,    42,    -1,
-      -1,    -1,    46,    -1,    -1,    -1,    50,    -1,    24,   132,
-      -1,    -1,   135,    29,    -1,    31,    32,    -1,    -1,   142,
-     143,   144,    79,    -1,    81,    -1,    42,    -1,    -1,    -1,
-      46,    -1,    10,    -1,    50,    79,    -1,    81,    95,    96,
-      -1,    -1,    -1,    -1,    -1,    -1,    24,    -1,    -1,    -1,
-      66,    95,    96,    31,    32,    -1,   113,    -1,    -1,    -1,
-      -1,    39,    -1,    79,    42,    -1,    -1,    -1,    46,   113,
-      -1,    -1,    50,    -1,    -1,   132,    -1,    -1,   135,    95,
-      96,    -1,    -1,    -1,    -1,   142,   143,   144,   132,    -1,
-      -1,   135,    -1,    10,    -1,    -1,    -1,   113,   142,   143,
-     144,    79,    -1,    81,    -1,    -1,    -1,    24,    -1,    -1,
-      -1,    -1,    29,    -1,    31,    32,   132,    95,    96,   135,
-      10,    -1,    -1,    -1,    -1,    42,   142,   143,   144,    46,
-      -1,    -1,    -1,    50,    24,   113,    -1,    -1,    -1,    -1,
-      -1,    31,    32,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    42,    -1,   132,    -1,    46,   135,    -1,    -1,
-      50,    10,    79,    12,   142,   143,   144,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    24,    -1,    -1,    95,    96,
-      -1,    -1,    31,    32,    -1,    -1,    -1,    -1,    -1,    79,
-      -1,    -1,    -1,    42,    -1,    -1,   113,    46,    -1,    10,
-      -1,    50,    -1,    -1,    -1,    95,    96,    -1,    -1,    -1,
-      59,    -1,    -1,    24,    -1,   132,    -1,    -1,   135,    -1,
-      31,    32,    -1,   113,    -1,   142,   143,   144,    -1,    -1,
-      79,    42,    -1,    -1,    -1,    46,    -1,    -1,    -1,    50,
-      -1,    -1,   132,    -1,    -1,   135,    95,    96,   138,    -1,
-     140,   141,    -1,   102,   144,    -1,    10,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,   113,    -1,    -1,    -1,    79,    -1,
-      24,    -1,    -1,    -1,    -1,    -1,    10,    31,    32,    -1,
-      -1,    -1,    -1,   132,    95,    96,   135,    -1,    42,    -1,
-      24,    -1,    46,    -1,    -1,   144,    50,    31,    32,    -1,
-      -1,    -1,   113,    -1,    -1,    -1,    -1,    -1,    42,    -1,
-      -1,    -1,    46,    -1,    10,    -1,    50,    -1,    -1,    -1,
-      -1,   132,    -1,    -1,   135,    79,    -1,   138,    24,    -1,
-     141,    -1,    -1,   144,    10,    31,    32,    -1,    -1,    -1,
-      -1,    95,    96,    -1,    -1,    79,    42,    -1,    24,    -1,
-      46,    -1,    -1,    -1,    50,    31,    32,    -1,    -1,   113,
-      -1,    95,    96,    -1,    -1,    -1,    42,    -1,    -1,    -1,
-      46,    -1,    10,    -1,    50,    -1,    -1,    -1,   132,   113,
-      -1,   135,    -1,    79,   138,    -1,    24,   141,    -1,    -1,
-     144,    -1,    -1,    31,    32,    -1,    -1,    -1,   132,    95,
-      96,   135,    -1,    79,    42,    -1,   140,   141,    46,    -1,
-     144,    -1,    50,    -1,    -1,    -1,    -1,   113,    -1,    95,
-      96,    97,    -1,    99,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    10,    -1,    -1,   132,   113,    -1,   135,
-      -1,    79,    -1,    -1,    -1,   141,    -1,    24,   144,    -1,
-      -1,    -1,    -1,    -1,    31,    32,   132,    95,    96,   135,
-      37,    -1,    -1,    -1,    -1,    42,    -1,    -1,   144,    46,
-      -1,    -1,    -1,    50,    -1,   113,    -1,    10,    -1,    -1,
+      95,    -1,    97,    98,    99,    -1,   101,    -1,    -1,   104,
+      -1,    -1,    -1,   108,    -1,   110,    -1,   112,    -1,    -1,
+     115,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   134,
+      -1,    -1,   137,   138,   139,    -1,   141,    -1,    -1,   144,
+     145,   146,    10,    11,    12,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,   159,   160,    24,    -1,    -1,    -1,
+      -1,    29,    -1,    31,    32,    -1,    -1,    -1,    -1,    37,
+      -1,    -1,    -1,    41,    -1,    -1,    44,    -1,    -1,    -1,
+      48,    -1,    -1,    -1,    52,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    61,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    74,    75,    76,    -1,
+      -1,    -1,    -1,    81,    -1,    83,    84,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    95,    -1,    97,
+      98,    99,    -1,   101,    -1,    -1,   104,    -1,    -1,    -1,
+     108,    -1,   110,    -1,   112,    -1,    -1,   115,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    24,    -1,    -1,   132,    -1,    -1,   135,    31,    32,
-      -1,    10,    79,   141,    37,    -1,   144,    -1,    -1,    42,
-      -1,    -1,    -1,    46,    -1,    24,    -1,    50,    95,    96,
-      -1,    10,    31,    32,    -1,    -1,    -1,    -1,    37,    -1,
-      -1,    -1,    -1,    42,    -1,    24,   113,    46,    -1,    -1,
-      -1,    50,    31,    32,    -1,    -1,    79,    -1,    -1,    -1,
-      -1,    -1,    -1,    42,    -1,   132,    -1,    46,   135,    -1,
-      -1,    50,    95,    96,    -1,    -1,    -1,   144,    -1,    -1,
-      79,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-     113,    -1,    -1,    -1,    -1,    -1,    95,    96,    -1,    -1,
-      79,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   132,
-      -1,    -1,   135,    -1,   113,    -1,    95,    96,    -1,    -1,
-      -1,   144,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,   132,   113,    -1,   135,    -1,    25,    26,
-      -1,    28,    -1,    30,    -1,   144,    -1,    -1,    35,    36,
-      -1,    -1,    39,   132,    -1,    -1,   135,    44,    45,    -1,
-      -1,    -1,    -1,    -1,    -1,   144,    53,    -1,    55,    -1,
-      -1,    -1,    -1,    60,    -1,    62,    63,    -1,    65,    -1,
-      -1,    -1,    69,    70,    -1,    -1,    -1,    -1,    -1,    -1,
-      77,    -1,    -1,    -1,    81,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,   134,    -1,    -1,   137,
+     138,   139,    -1,   141,    -1,    -1,   144,   145,   146,    10,
+      11,    12,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,   159,   160,    24,    -1,    -1,    -1,    -1,    29,    -1,
+      31,    32,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      41,    -1,    -1,    44,    -1,    -1,    -1,    48,    -1,    -1,
+      -1,    52,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      61,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    74,    75,    76,    -1,    -1,    -1,    -1,
+      81,    -1,    83,    84,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    95,    -1,    97,    98,    99,    -1,
+     101,    -1,    -1,   104,    -1,    -1,    -1,   108,    -1,   110,
+      -1,   112,    -1,    -1,   115,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,   100,   101,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,   111,   112,    -1,    -1,   115,   116,
-      -1,   118,   119,    -1,   121,   122,    -1,    -1,   125,   126,
-      -1,    -1,    -1,   130,   131,    -1,    -1,    25,    26,    -1,
-      28,    -1,    -1,    -1,    -1,    33,    -1,    35,    36,   146,
-     147,    39,    -1,    -1,    -1,   152,    44,    45,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    53,    -1,    55,    -1,    -1,
-      -1,    -1,    60,    -1,    62,    63,    -1,    65,    -1,    -1,
-      -1,    69,    70,    -1,    -1,    -1,    -1,    -1,    -1,    77,
-      -1,    -1,    -1,    81,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,   134,    -1,    -1,   137,   138,   139,    -1,
+     141,    -1,    -1,   144,   145,   146,   147,    10,    11,    12,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   159,   160,
+      -1,    24,    -1,    -1,    -1,    -1,    29,    -1,    31,    32,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    41,    -1,
+      -1,    44,    -1,    -1,    -1,    48,    -1,    -1,    -1,    52,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    61,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,   100,   101,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,   111,   112,    25,    26,   115,   116,    -1,
-     118,   119,    -1,   121,   122,    35,    36,   125,   126,    39,
-      -1,    -1,   130,   131,    44,    45,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    53,    -1,    55,    -1,    -1,   146,   147,
-      60,    -1,    62,    63,    -1,    65,    -1,    -1,    68,    69,
-      70,    -1,    -1,    -1,    -1,    -1,    -1,    77,    -1,    -1,
-      -1,    81,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    74,    75,    76,    -1,    -1,    -1,    -1,    81,    -1,
+      83,    84,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    95,    -1,    97,    98,    99,    -1,   101,    -1,
+      -1,   104,    -1,    -1,    -1,   108,    -1,   110,    -1,   112,
+      -1,    10,   115,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    24,    -1,    -1,    -1,    -1,
+      -1,   134,    31,    32,   137,   138,   139,    -1,   141,    -1,
+      -1,   144,   145,   146,    -1,    44,    -1,    -1,    -1,    48,
+      -1,    -1,    -1,    52,    -1,    -1,   159,   160,    -1,    -1,
+      -1,    -1,    61,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+       3,     4,    -1,    -1,    -1,    -1,    75,    76,    -1,    -1,
+      -1,    -1,    81,    -1,    -1,    84,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    95,    -1,    97,    98,
+      33,    -1,    -1,    -1,    37,    -1,    -1,    -1,    41,   108,
+      43,   110,    -1,    -1,    -1,    -1,   115,    -1,    -1,    -1,
+      -1,    -1,     4,    -1,    -1,    -1,    59,    60,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,   134,    -1,    -1,   137,   138,
+     139,    74,    -1,    25,    26,    -1,    -1,   146,    -1,    -1,
+      83,    -1,    -1,    35,    36,    -1,    38,    39,    -1,    41,
+     159,   160,    -1,    96,    46,    47,    99,   100,   101,    -1,
+      -1,    -1,    -1,    55,    -1,    57,   109,    -1,    -1,   112,
+      62,    -1,    64,    65,    -1,    67,    -1,    -1,    70,    71,
+      72,    10,    -1,    -1,    -1,    -1,    -1,    79,    -1,    -1,
+      -1,    83,    -1,    -1,    -1,    24,    -1,    -1,    -1,    -1,
+      -1,    -1,    31,    32,    -1,    -1,    -1,    -1,   151,    -1,
+     102,   103,     4,     5,    -1,    44,    -1,    -1,    -1,    48,
+      -1,   113,   114,    52,   116,   117,   118,    -1,   120,   121,
+      -1,   123,   124,    25,    26,   127,   128,    -1,    -1,    -1,
+     132,   133,    -1,    35,    36,    -1,    38,    39,    -1,    41,
+      -1,    -1,    81,    -1,    46,    47,   148,   149,    -1,    -1,
+      -1,    -1,    -1,    55,    -1,    57,    -1,    -1,    97,    98,
+      62,    -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,
+      72,    10,    -1,    -1,    -1,    -1,   115,    -1,    -1,    -1,
+      -1,    83,    -1,    -1,    -1,    24,    -1,    -1,    -1,    -1,
+      -1,    -1,    31,    32,    -1,   134,    -1,    -1,   137,    -1,
+     102,   103,     4,     5,    -1,    44,    -1,   146,   147,    48,
+      -1,   113,   114,    52,    -1,   117,   118,    -1,   120,   121,
+      -1,   123,   124,    25,    26,   127,   128,    -1,    -1,    -1,
+     132,   133,    -1,    35,    36,    -1,    38,    39,    -1,    41,
+      -1,    -1,    81,    -1,    46,    47,   148,   149,    -1,    -1,
+      -1,    -1,    -1,    55,    -1,    57,    -1,    -1,    97,    98,
+      62,    -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,
+      72,    10,    -1,    -1,    -1,    -1,   115,    -1,    -1,    -1,
+      -1,    83,    -1,    -1,    -1,    24,    -1,    -1,    -1,    -1,
+      29,    -1,    31,    32,    -1,   134,    -1,    -1,   137,    -1,
+     102,   103,    -1,     5,    -1,    44,    -1,   146,   147,    48,
+      -1,   113,   114,    52,    -1,   117,   118,    -1,   120,   121,
+      -1,   123,   124,    25,    26,   127,   128,    -1,    -1,    68,
+     132,   133,    -1,    35,    36,    -1,    38,    39,    -1,    41,
+      -1,    -1,    81,    -1,    46,    47,   148,   149,    -1,    -1,
+      -1,    -1,    -1,    55,    -1,    57,    -1,    -1,    97,    98,
+      62,    -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,
+      72,    -1,    -1,    -1,    -1,    -1,   115,    -1,    -1,    -1,
+      -1,    83,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,   134,    -1,    -1,   137,    -1,
+     102,   103,    -1,     5,    -1,   144,   145,   146,    -1,    -1,
+      -1,   113,   114,    -1,    -1,   117,   118,    -1,   120,   121,
+      -1,   123,   124,    25,    26,   127,   128,    -1,    -1,    -1,
+     132,   133,    -1,    35,    36,    -1,    38,    39,    -1,    41,
+      -1,    -1,    -1,    -1,    46,    47,   148,   149,    -1,    -1,
+      -1,    -1,    -1,    55,    -1,    57,    -1,    -1,    -1,    -1,
+      62,    -1,    64,    65,    -1,    67,    -1,     9,    10,    71,
+      72,    -1,    -1,    15,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    83,    24,    -1,    -1,    -1,    -1,    -1,    -1,    31,
+      32,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    41,
+     102,   103,    44,    -1,    -1,    -1,    48,    -1,    -1,    -1,
+      52,   113,   114,    -1,    -1,   117,   118,    -1,   120,   121,
+      -1,   123,   124,    -1,    -1,   127,   128,     9,    10,    -1,
+     132,   133,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    81,
+      -1,    83,    24,    -1,    -1,    -1,   148,   149,    -1,    31,
+      32,    -1,    -1,    -1,    -1,    97,    98,    -1,    -1,    41,
+      -1,    -1,    44,    -1,    -1,    -1,    48,    -1,    -1,    -1,
+      52,    -1,    -1,   115,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    10,    -1,    -1,    -1,
+      -1,    15,   134,    -1,    -1,   137,    -1,    -1,    -1,    81,
+      24,    83,   144,   145,   146,    -1,    -1,    31,    32,    10,
+      -1,    -1,    -1,    -1,    -1,    97,    98,    41,    -1,    -1,
+      44,    -1,    -1,    24,    48,    -1,    -1,    -1,    52,    -1,
+      31,    32,    -1,   115,    -1,    -1,    -1,    -1,    -1,    -1,
+      41,    -1,    -1,    44,    -1,    -1,    -1,    48,    -1,    -1,
+      -1,    52,   134,    -1,    -1,   137,    -1,    81,    -1,    83,
+      -1,    -1,   144,   145,   146,    -1,    -1,    10,    -1,    -1,
+      -1,    -1,    -1,    97,    98,    -1,    -1,    -1,    -1,    -1,
+      81,    24,    83,    -1,    -1,    -1,    29,    -1,    31,    32,
+      10,   115,    -1,    -1,    -1,    -1,    97,    98,    -1,    -1,
+      -1,    44,    -1,    -1,    24,    48,    -1,    -1,    -1,    52,
+     134,    31,    32,   137,   115,    -1,    -1,    -1,    -1,    -1,
+     144,   145,   146,    -1,    44,    10,    -1,    -1,    48,    -1,
+      -1,    -1,    52,   134,    -1,    -1,   137,    -1,    81,    24,
+      -1,    -1,    -1,   144,   145,   146,    31,    32,    10,    -1,
+      -1,    -1,    -1,    -1,    97,    98,    -1,    -1,    -1,    44,
+      -1,    81,    24,    48,    -1,    -1,    -1,    52,    -1,    31,
+      32,    -1,   115,    -1,    -1,    -1,    -1,    97,    98,    -1,
+      -1,    -1,    44,    -1,    -1,    -1,    48,    -1,    -1,    -1,
+      52,   134,    -1,    -1,   137,   115,    81,    -1,    -1,    -1,
+      -1,   144,   145,   146,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    97,    98,   134,    -1,    -1,   137,    -1,    81,
+     140,    -1,   142,   143,    -1,    10,   146,    -1,    -1,    -1,
+     115,    -1,    -1,    -1,    -1,    97,    98,    -1,    -1,    24,
+      -1,    -1,    -1,    -1,    -1,    -1,    31,    32,    10,   134,
+      -1,    -1,   137,   115,    -1,   140,    -1,    -1,   143,    44,
+      -1,   146,    24,    48,    -1,    -1,    -1,    52,    -1,    31,
+      32,    -1,   134,    -1,    -1,   137,    -1,    -1,   140,    -1,
+      10,   143,    44,    -1,   146,    -1,    48,    -1,    -1,    -1,
+      52,    -1,    -1,    -1,    24,    -1,    81,    -1,    -1,    -1,
+      -1,    31,    32,    -1,    -1,    -1,    10,    -1,    -1,    -1,
+      -1,    -1,    97,    98,    44,    -1,    -1,    -1,    48,    81,
+      24,    -1,    52,    -1,    -1,    -1,    -1,    31,    32,    -1,
+     115,    -1,    -1,    -1,    -1,    97,    98,    99,    -1,   101,
+      44,    -1,    -1,    -1,    48,    -1,    -1,    -1,    52,   134,
+      -1,    81,   137,   115,    -1,    -1,    -1,   142,   143,    -1,
+      -1,   146,    -1,    -1,    -1,    -1,    -1,    97,    98,    -1,
+      -1,    -1,   134,    -1,    -1,   137,    10,    81,    -1,    -1,
+      -1,    -1,    -1,    -1,   146,   115,    -1,    -1,    -1,    -1,
+      24,    -1,    -1,    97,    98,    -1,    -1,    31,    32,    -1,
+      -1,    -1,    -1,    37,   134,    -1,    -1,   137,    -1,    -1,
+      44,   115,    -1,   143,    48,    -1,   146,    -1,    52,    -1,
+      -1,    -1,    -1,    10,    -1,    -1,    -1,    -1,    -1,    -1,
+     134,    -1,    -1,   137,    -1,    -1,    -1,    24,    -1,   143,
+      -1,    -1,   146,    -1,    31,    32,    10,    81,    10,    -1,
+      37,    -1,    -1,    -1,    -1,    -1,    -1,    44,    -1,    -1,
+      24,    48,    24,    97,    98,    52,    -1,    31,    32,    31,
+      32,    -1,    -1,    37,    -1,    -1,    -1,    -1,    -1,    -1,
+      44,   115,    44,    -1,    48,    -1,    48,    -1,    52,    -1,
+      52,    -1,    -1,    -1,    81,    -1,    -1,    -1,    -1,    -1,
+     134,    -1,    -1,   137,    -1,    -1,    -1,    -1,    -1,    -1,
+      97,    98,   146,    -1,    -1,    -1,    -1,    81,    -1,    81,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   115,    -1,
+      -1,    -1,    -1,    97,    98,    97,    98,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,   134,    -1,    -1,
+     137,   115,    -1,   115,    -1,    25,    26,    -1,    28,   146,
+      30,    -1,    -1,    -1,    -1,    35,    36,    -1,    38,    39,
+     134,    41,   134,   137,    -1,   137,    46,    47,    -1,    -1,
+      -1,    -1,   146,    -1,   146,    55,    -1,    57,    -1,    -1,
+      -1,    -1,    62,    -1,    64,    65,    -1,    67,    -1,    -1,
+      -1,    71,    72,    -1,    -1,    -1,    -1,    -1,    -1,    79,
+      -1,    -1,    -1,    83,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-     100,   101,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,   111,   112,    -1,   114,   115,   116,    -1,   118,   119,
-      -1,   121,   122,    -1,    -1,   125,   126,    -1,    -1,    -1,
-     130,   131,    -1,    -1,    25,    26,    -1,    28,    -1,    -1,
-      -1,    -1,    -1,    -1,    35,    36,   146,   147,    39,    -1,
-      -1,    -1,    -1,    44,    45,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    53,    -1,    55,    -1,    -1,    -1,    -1,    60,
-      -1,    62,    63,    -1,    65,    -1,    -1,    -1,    69,    70,
-      -1,    -1,    -1,    -1,    -1,    -1,    77,    -1,    -1,    -1,
-      81,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   100,
-     101,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-     111,   112,    25,    26,   115,   116,    -1,   118,   119,    -1,
-     121,   122,    35,    36,   125,   126,    39,    -1,    -1,   130,
-     131,    44,    45,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      53,    -1,    55,    -1,    -1,   146,   147,    60,    -1,    62,
-      63,    -1,    65,    -1,    -1,    -1,    69,    70,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    81,    -1,
-      -1,    -1,    -1,    86,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,   100,   101,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,   112,
-      -1,    -1,   115,   116,    -1,   118,   119,    -1,   121,   122,
-      -1,    -1,   125,   126,    -1,    -1,    -1,   130,   131,    -1,
-      -1,    25,    26,    -1,    28,    -1,    -1,    -1,    -1,    -1,
-      -1,    35,    36,   146,   147,    39,    -1,    -1,    -1,    -1,
-      44,    45,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    53,
-      -1,    55,    -1,    -1,    -1,    -1,    60,    -1,    62,    63,
-      -1,    65,    -1,    -1,    -1,    69,    70,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    81,    -1,    -1,
+      -1,    -1,   102,   103,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,   113,   114,    -1,    -1,   117,   118,    -1,
+     120,   121,    -1,   123,   124,    -1,    -1,   127,   128,    -1,
+      -1,    -1,   132,   133,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    25,    26,    -1,    28,    -1,    -1,   148,   149,
+      33,    -1,    35,    36,   154,    38,    39,    -1,    41,    -1,
+      -1,    -1,    -1,    46,    47,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    55,    -1,    57,    -1,    -1,    -1,    -1,    62,
+      -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,    72,
+      -1,    -1,    -1,    -1,    -1,    -1,    79,    -1,    -1,    -1,
+      83,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   102,
+     103,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+     113,   114,    -1,    -1,   117,   118,    -1,   120,   121,    -1,
+     123,   124,    25,    26,   127,   128,    -1,    -1,    -1,   132,
+     133,    -1,    35,    36,    -1,    38,    39,    -1,    41,    -1,
+      -1,    -1,    -1,    46,    47,   148,   149,    -1,    -1,    -1,
+      -1,    -1,    55,    -1,    57,    -1,    -1,    -1,    -1,    62,
+      -1,    64,    65,    -1,    67,    -1,    -1,    70,    71,    72,
+      -1,    -1,    -1,    -1,    -1,    -1,    79,    -1,    -1,    -1,
+      83,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   102,
+     103,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+     113,   114,    -1,   116,   117,   118,    -1,   120,   121,    -1,
+     123,   124,    -1,    -1,   127,   128,    -1,    -1,    -1,   132,
+     133,    -1,    -1,    -1,    -1,    -1,    -1,    25,    26,    -1,
+      28,    -1,    -1,    -1,    -1,   148,   149,    35,    36,    -1,
+      38,    39,    -1,    41,    -1,    -1,    -1,    -1,    46,    47,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    55,    -1,    57,
+      -1,    -1,    -1,    -1,    62,    -1,    64,    65,    -1,    67,
+      -1,    -1,    -1,    71,    72,    -1,    -1,    -1,    -1,    -1,
+      -1,    79,    -1,    -1,    -1,    83,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,   100,   101,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,   112,    -1,
-      -1,   115,   116,    -1,   118,   119,    -1,   121,   122,    -1,
-      -1,   125,   126,    -1,    -1,    -1,   130,   131,    -1,    -1,
-      25,    26,    -1,    28,    -1,    -1,    -1,    -1,    -1,    -1,
-      35,    36,   146,   147,    39,    -1,    -1,    -1,    -1,    44,
-      45,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    53,    -1,
-      55,    -1,    -1,    -1,    -1,    60,    -1,    62,    63,    -1,
-      65,    -1,    -1,    -1,    69,    70,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    81,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,   102,   103,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,   113,   114,    -1,    -1,   117,
+     118,    -1,   120,   121,    -1,   123,   124,    25,    26,   127,
+     128,    -1,    -1,    -1,   132,   133,    -1,    35,    36,    -1,
+      38,    39,    -1,    41,    -1,    -1,    -1,    -1,    46,    47,
+     148,   149,    -1,    -1,    -1,    -1,    -1,    55,    -1,    57,
+      -1,    -1,    -1,    -1,    62,    -1,    64,    65,    -1,    67,
+      -1,    -1,    -1,    71,    72,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    83,    -1,    -1,    -1,    -1,
+      88,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,   102,   103,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,   113,   114,    -1,    -1,   117,
+     118,    -1,   120,   121,    -1,   123,   124,    -1,    -1,   127,
+     128,    -1,    -1,    -1,   132,   133,    -1,    -1,    -1,    -1,
+      -1,    -1,    25,    26,    -1,    28,    -1,    -1,    -1,    -1,
+     148,   149,    35,    36,    -1,    38,    39,    -1,    41,    -1,
+      -1,    -1,    -1,    46,    47,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    55,    -1,    57,    -1,    -1,    -1,    -1,    62,
+      -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,    72,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,   100,   101,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,   111,   112,    -1,    -1,
-     115,   116,    -1,   118,   119,    -1,   121,   122,    -1,    -1,
-     125,   126,    -1,    -1,    -1,   130,   131,    -1,    -1,    25,
-      26,    -1,    28,    -1,    -1,    -1,    -1,    -1,    -1,    35,
-      36,   146,   147,    39,    -1,    -1,    -1,    -1,    44,    45,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    53,    -1,    55,
-      -1,    -1,    -1,    -1,    60,    -1,    62,    63,    -1,    65,
-      -1,    -1,    -1,    69,    70,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    81,    -1,    -1,    -1,    -1,
+      83,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   102,
+     103,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+     113,   114,    -1,    -1,   117,   118,    -1,   120,   121,    -1,
+     123,   124,    -1,    -1,   127,   128,    -1,    -1,    -1,   132,
+     133,    -1,    -1,    -1,    -1,    -1,    -1,    25,    26,    -1,
+      28,    -1,    -1,    -1,    -1,   148,   149,    35,    36,    -1,
+      38,    39,    -1,    41,    -1,    -1,    -1,    -1,    46,    47,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    55,    -1,    57,
+      -1,    -1,    -1,    -1,    62,    -1,    64,    65,    -1,    67,
+      -1,    -1,    -1,    71,    72,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    83,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,   100,   101,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,   111,   112,    25,    26,   115,
-     116,    -1,   118,   119,    -1,   121,   122,    35,    36,   125,
-     126,    39,    -1,    -1,   130,   131,    44,    45,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    53,    -1,    55,    -1,    -1,
-     146,   147,    60,    -1,    62,    63,    -1,    65,    -1,    -1,
-      -1,    69,    70,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    81,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    39,    -1,    41,    -1,    -1,    -1,    -1,
-      -1,    -1,   100,   101,    -1,    51,    52,    -1,    -1,    -1,
-      -1,    57,    58,   111,   112,    -1,    -1,   115,   116,    -1,
-     118,   119,    -1,   121,   122,    71,    72,   125,   126,    75,
-      76,    -1,   130,   131,    -1,    81,    -1,    -1,    84,    85,
-      -1,    87,    88,    89,    90,    91,    92,    -1,   146,   147,
-      41,    97,    -1,    99,    -1,    -1,    -1,    -1,    -1,    -1,
-      51,    52,    -1,    -1,   110,    -1,    57,    58,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,   123,   124,    -1,
-      71,    -1,    -1,    -1,    75,    76,    -1,    -1,    -1,    -1,
-      81,    -1,    -1,    84,    85,    -1,    87,    88,    89,    90,
-      91,    92,    -1,   149,   150,   151,    41,   153,   154,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    51,    52,    -1,    -1,
-      -1,    -1,    57,    58,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,   123,   124,    -1,    -1,    71,    -1,    -1,    -1,
-      75,    76,    -1,    -1,    -1,    -1,    81,    -1,    -1,    84,
-      85,    -1,    87,    88,    89,    90,    91,    92,    -1,   150,
-     151,    -1,   153,   154,    -1,    -1,    51,    52,    -1,    -1,
+      -1,    -1,    -1,    -1,   102,   103,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,   113,   114,    -1,    -1,   117,
+     118,    -1,   120,   121,    -1,   123,   124,    -1,    -1,   127,
+     128,    -1,    -1,    -1,   132,   133,    -1,    -1,    -1,    -1,
+      -1,    -1,    25,    26,    -1,    28,    -1,    -1,    -1,    -1,
+     148,   149,    35,    36,    -1,    38,    39,    -1,    41,    -1,
+      -1,    -1,    -1,    46,    47,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    55,    -1,    57,    -1,    -1,    -1,    -1,    62,
+      -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,    72,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   123,   124,
-      75,    76,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    87,    88,    89,    90,    91,    92,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,   150,   151,    -1,   153,   154,
+      83,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   102,
+     103,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+     113,   114,    -1,    -1,   117,   118,    -1,   120,   121,    -1,
+     123,   124,    25,    26,   127,   128,    -1,    -1,    -1,   132,
+     133,    -1,    35,    36,    -1,    38,    39,    -1,    41,    -1,
+      -1,    -1,    -1,    46,    47,   148,   149,    -1,    -1,    -1,
+      -1,    -1,    55,    -1,    57,    -1,    -1,    -1,    -1,    62,
+      -1,    64,    65,    -1,    67,    -1,    -1,    -1,    71,    72,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   123,   124,
+      83,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      41,    -1,    43,    -1,    -1,    -1,    -1,    -1,    -1,   102,
+     103,    -1,    53,    54,    -1,    -1,    -1,    -1,    59,    60,
+     113,   114,    -1,    -1,   117,   118,    -1,   120,   121,    -1,
+     123,   124,    73,    74,   127,   128,    77,    78,    -1,   132,
+     133,    -1,    83,    -1,    -1,    86,    87,    -1,    89,    90,
+      91,    92,    93,    94,    -1,   148,   149,    43,    99,    -1,
+     101,    -1,    -1,    -1,    -1,    -1,    -1,    53,    54,    -1,
+      -1,   112,    -1,    59,    60,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,   125,   126,    -1,    73,    -1,    -1,
+      -1,    77,    78,    -1,    -1,    -1,    -1,    83,    -1,    -1,
+      86,    87,    -1,    89,    90,    91,    92,    93,    94,    -1,
+     151,   152,   153,    43,   155,   156,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    53,    54,    -1,    -1,    -1,    -1,    59,
+      60,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   125,
+     126,    -1,    -1,    73,    -1,    -1,    -1,    77,    78,    -1,
+      -1,    -1,    -1,    83,    -1,    -1,    86,    87,    -1,    89,
+      90,    91,    92,    93,    94,    -1,   152,   153,    -1,   155,
+     156,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,   125,   126,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,   150,   151,    -1,   153,   154
+      -1,    -1,   152,   153,    -1,   155,   156
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int16 yystos[] =
 {
-       0,    19,   160,   161,   162,     5,     0,     3,     9,    18,
-      23,    24,    32,   135,   167,   170,   171,   172,   256,    13,
-      14,    16,    17,    20,    22,   163,   164,   165,   166,    10,
-     273,   170,   273,     3,    23,   170,     5,    21,    23,   168,
-     169,    15,    31,    39,    42,    46,    50,    79,    81,    95,
-      96,   113,   132,   142,   143,   144,   172,   174,   175,   176,
-     177,   178,   179,   180,   181,   183,   184,   185,   188,   189,
-     190,   191,   192,   193,   219,   220,   232,   256,   257,   273,
-       9,     5,     5,     5,     5,     5,     5,   164,   165,   166,
-     165,   166,   166,     3,     9,   170,     5,     3,   170,   273,
-      21,   169,     5,   219,    47,   273,   185,   184,   189,   256,
-      25,    26,    35,    36,    44,    45,    53,    55,    60,    62,
-      63,    65,    69,    70,    86,   100,   101,   111,   112,   115,
-     116,   118,   119,   121,   122,   125,   126,   130,   131,   146,
-     147,   198,   199,   200,   201,   202,   203,   204,   205,   206,
+       0,    19,   162,   163,   164,     5,     0,     3,     9,    18,
+      23,    24,    32,   137,   169,   172,   173,   174,   260,    13,
+      14,    16,    17,    20,    22,   165,   166,   167,   168,    10,
+     277,   172,   277,     3,    23,   172,     5,    21,    23,   170,
+     171,    15,    31,    41,    44,    48,    52,    81,    83,    97,
+      98,   115,   134,   144,   145,   146,   174,   176,   177,   178,
+     179,   180,   181,   182,   183,   185,   186,   187,   190,   191,
+     192,   193,   194,   195,   223,   224,   236,   260,   261,   277,
+       9,     5,     5,     5,     5,     5,     5,   166,   167,   168,
+     167,   168,   168,     3,     9,   172,     5,     3,   172,   277,
+      21,   171,     5,   223,    49,   277,   187,   186,   191,   260,
+      25,    26,    35,    36,    38,    39,    46,    47,    55,    57,
+      62,    64,    65,    67,    71,    72,    88,   102,   103,   113,
+     114,   117,   118,   120,   121,   123,   124,   127,   128,   132,
+     133,   148,   149,   200,   201,   202,   203,   204,   205,   206,
      207,   208,   209,   210,   211,   212,   213,   214,   215,   216,
-     218,   220,   221,   222,   226,   227,   228,   229,   230,   231,
-       4,   107,   194,   138,   141,   193,    37,    56,   174,   257,
-     273,   174,   273,   273,    11,   274,   274,   274,   274,   274,
-     274,   165,   166,   166,   166,    81,     3,   170,   170,     5,
-     273,   273,   138,   141,   193,     3,     4,     4,    68,    77,
-     114,   198,   233,   234,    29,   181,   182,   193,   197,   193,
-     197,    66,   193,   197,   193,   197,   193,    12,    59,    72,
-      73,    74,    81,    82,    93,    97,    99,   102,   106,   108,
-     110,   135,   136,   137,   139,   157,   158,   193,   196,   197,
-     220,   235,   236,   242,   243,   244,   245,   251,   252,   253,
-     256,   258,   259,   260,   261,   271,   274,   275,   193,   193,
-     197,   138,   140,   141,   193,    59,    67,   117,   135,   193,
-     224,   225,   235,   235,    59,   135,   193,   195,   196,   181,
-     182,   193,   141,   193,   193,     3,    37,   174,   273,     9,
-       3,     3,     3,     3,     3,     3,   166,   173,   174,   181,
-     256,   170,     3,   170,     5,     3,   141,   193,   193,     3,
-      28,    33,    77,   199,   198,   233,   134,     3,     4,     5,
-     198,   235,    48,    37,   235,    37,   193,   145,   235,    37,
-     193,   193,   197,   145,   235,   145,   193,    37,   235,    37,
-     193,   109,   110,    49,    59,   120,   138,   220,   253,    41,
-      57,    58,    72,    81,    99,   149,   238,   253,   254,   271,
-     272,   220,   253,    97,    99,    37,    51,    52,    71,    75,
-      76,    81,    84,    85,    87,    88,    89,    90,    91,    92,
-     123,   124,   150,   151,   153,   154,   237,   238,   239,   240,
-     241,   262,   263,   264,   265,   266,   267,   268,   269,   270,
-       4,    33,    94,    98,   107,   246,   247,   248,   249,   250,
-     193,   274,    27,    78,   110,    37,   235,    37,    37,   140,
-     141,   193,   193,   193,    59,   117,   135,   103,    59,   117,
-      80,   103,   145,   223,   235,   223,   225,   223,    59,   223,
-     193,     3,     3,    81,     3,     3,   174,   170,     3,   170,
-       9,   186,   187,   188,   256,   193,     3,     3,   199,    28,
-      30,    77,   152,   199,   129,     3,     4,     5,   198,     5,
-     198,   198,     3,     4,   138,   235,   193,    39,   193,   145,
-     235,   145,   193,    39,    39,   235,   193,   144,    49,   138,
-      49,   193,   193,    57,   145,    40,    99,    57,    99,   109,
-     110,   156,    64,   217,   217,    34,    43,    54,    61,   127,
-     148,   155,   255,   193,   193,   193,    41,   133,    38,    71,
-      84,    41,   133,    38,   193,   242,   258,   243,   246,   244,
-     193,   135,   193,   235,   235,   193,   193,   193,   103,    59,
-     117,   135,   103,   195,   223,   195,   223,   195,   235,     3,
-     173,   181,   170,   273,     9,     3,   199,    28,    77,   199,
-     129,   143,    28,   199,     5,   198,   198,     3,   198,     3,
-       3,   138,   235,    39,    39,   235,   193,   144,    49,   144,
-     145,   109,   156,   145,   110,   156,   156,   109,   110,    66,
-     104,    71,    41,    83,   135,    41,   133,    41,   133,    84,
-      41,    83,   135,   243,   110,   135,   103,    59,   135,   195,
-     195,     3,     3,     9,   273,   199,   129,    28,   199,   199,
-     199,   198,     3,     3,     3,   235,   193,   144,   109,   156,
-     110,   156,   105,   133,    71,    83,    71,    41,    84,    41,
-      81,   128,   133,    84,    83,   193,    59,   135,    59,   219,
-       9,    28,   199,   199,     3,   156,   133,   133,    71,    81,
-     128,   133,    84,   128,    41,   133,    81,   128,    81,   128,
-     133,    59,     5,   235,   219,   199,   133,   128,    41,   133,
-      81,   128,    81,   128,   133,    41,   133,   128,    41,   128,
-      41,   133,   128,    41,   133,    81,   128,   235,     3,     5,
-     235,    41,   133,   128,    41,   128,    41,   133,   128,    41,
-     133,    81,   128,   128,    41,   133,   128,    41,   133,   128,
-      41,    41,   133,   128,    41,   128,    41,   133,     3,   235,
-       3,   128,    41,   133,   128,    41,   133,   128,    41,    41,
-     133,   128,    41,   128,    41,   133,   133,   128,   133,   128,
-      41,   133,   128,   128,    41,   133,   128,    41,   133,   128,
-      41,     3,   133,   128,   133,   128,    41,   133,   128,   128,
-      41,   133,   128,    41,   133,   128,    41,   133,   133,   128,
-     133,   133,   128,   133,   128,    41,   133,   128,   133,   133,
-     128,   133,   133,   128,   133,   128,    41,   133,   128,   133,
-     133,   133,   128,   133,   133,   133,   133,   128,   133,   133,
-     133
+     217,   218,   219,   220,   222,   224,   225,   226,   230,   231,
+     232,   233,   234,   235,     4,   109,   196,   140,   143,   195,
+      37,    58,   176,   261,   277,   176,   277,   277,    11,   278,
+     278,   278,   278,   278,   278,   167,   168,   168,   168,    83,
+       3,   172,   172,     5,   277,   277,   140,   143,   195,     3,
+       4,     4,    70,    79,   116,   200,   237,   238,    29,   183,
+     184,   195,   199,   195,   199,    68,   195,   199,   195,   199,
+     195,    12,    61,    74,    75,    76,    83,    84,    95,    99,
+     101,   104,   108,   110,   112,   137,   138,   139,   141,   159,
+     160,   195,   198,   199,   224,   239,   240,   246,   247,   248,
+     249,   255,   256,   257,   260,   262,   263,   264,   265,   275,
+     278,   279,   195,   239,   195,   195,   199,   140,   142,   143,
+     195,    61,    69,   119,   137,   195,   228,   229,   239,   239,
+      61,   137,   195,   197,   198,   183,   184,   195,   143,   195,
+     195,     3,    37,   176,   277,     9,     3,     3,     3,     3,
+       3,     3,   168,   175,   176,   183,   260,   172,     3,   172,
+       5,     3,   143,   195,   195,     3,    28,    33,    79,   201,
+     200,   237,   136,     3,     4,     5,   200,   239,    50,    37,
+     239,    37,   195,   147,   239,    37,   195,   195,   199,   147,
+     239,   147,   195,    37,   239,    37,   195,   111,   112,    51,
+      61,   122,   140,   224,   257,    43,    59,    60,    74,    83,
+     101,   151,   242,   257,   258,   275,   276,   224,   257,    99,
+     101,    37,    53,    54,    73,    77,    78,    83,    86,    87,
+      89,    90,    91,    92,    93,    94,   125,   126,   152,   153,
+     155,   156,   241,   242,   243,   244,   245,   266,   267,   268,
+     269,   270,   271,   272,   273,   274,     4,    33,    96,   100,
+     109,   250,   251,   252,   253,   254,   195,   278,    27,    80,
+     112,    37,    37,   239,    37,    37,   142,   143,   195,   195,
+     195,    61,   119,   137,   105,    61,   119,    82,   105,   147,
+     227,   239,   227,   229,   227,    61,   227,   195,     3,     3,
+      83,     3,     3,   176,   172,     3,   172,     9,   188,   189,
+     190,   260,   195,     3,     3,   201,    28,    30,    79,   154,
+     201,   131,     3,     4,     5,   200,     5,   200,   200,     3,
+       4,   140,   239,   195,    41,   195,   147,   239,   147,   195,
+      41,    41,   239,   195,   146,    51,   140,    51,   195,   195,
+      59,   147,    42,   101,    59,   101,   111,   112,   158,    66,
+     221,   221,    34,    45,    56,    63,   129,   150,   157,   259,
+     195,   195,   195,    43,   135,    40,    73,    86,    43,   135,
+      40,   195,   246,   262,   247,   250,   248,   195,   137,   195,
+     195,   239,   239,   195,   195,   195,   105,    61,   119,   137,
+     105,   197,   227,   197,   227,   197,   239,     3,   175,   183,
+     172,   277,     9,     3,   201,    28,    79,   201,   131,   145,
+      28,   201,     5,   200,   200,     3,   200,     3,     3,   140,
+     239,    41,    41,   239,   195,   146,    51,   146,   147,   111,
+     158,   147,   112,   158,   158,   111,   112,    68,   106,    73,
+      43,    85,   137,    43,   135,    43,   135,    86,    43,    85,
+     137,   247,   112,   137,   105,    61,   137,   197,   197,     3,
+       3,     9,   277,   201,   131,    28,   201,   201,   201,   200,
+       3,     3,     3,   239,   195,   146,   111,   158,   112,   158,
+     107,   135,    73,    85,    73,    43,    86,    43,    83,   130,
+     135,    86,    85,   195,    61,   137,    61,   223,     9,    28,
+     201,   201,     3,   158,   135,   135,    73,    83,   130,   135,
+      86,   130,    43,   135,    83,   130,    83,   130,   135,    61,
+       5,   239,   223,   201,   135,   130,    43,   135,    83,   130,
+      83,   130,   135,    43,   135,   130,    43,   130,    43,   135,
+     130,    43,   135,    83,   130,   239,     3,     5,   239,    43,
+     135,   130,    43,   130,    43,   135,   130,    43,   135,    83,
+     130,   130,    43,   135,   130,    43,   135,   130,    43,    43,
+     135,   130,    43,   130,    43,   135,     3,   239,     3,   130,
+      43,   135,   130,    43,   135,   130,    43,    43,   135,   130,
+      43,   130,    43,   135,   135,   130,   135,   130,    43,   135,
+     130,   130,    43,   135,   130,    43,   135,   130,    43,     3,
+     135,   130,   135,   130,    43,   135,   130,   130,    43,   135,
+     130,    43,   135,   130,    43,   135,   135,   130,   135,   135,
+     130,   135,   130,    43,   135,   130,   135,   135,   130,   135,
+     135,   130,   135,   130,    43,   135,   130,   135,   135,   135,
+     130,   135,   135,   135,   135,   130,   135,   135,   135
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int16 yyr1[] =
 {
-       0,   159,   160,   160,   161,   161,   161,   161,   161,   161,
-     161,   161,   161,   161,   161,   161,   161,   161,   161,   161,
-     162,   163,   164,   164,   165,   165,   166,   167,   167,   167,
-     167,   167,   167,   167,   167,   168,   168,   169,   169,   169,
-     169,   170,   170,   170,   170,   171,   171,   172,   172,   172,
-     172,   173,   173,   174,   174,   174,   174,   174,   174,   175,
-     176,   177,   178,   179,   180,   181,   181,   182,   183,   183,
-     184,   184,   185,   186,   186,   187,   187,   187,   187,   188,
-     188,   189,   189,   190,   190,   190,   190,   190,   190,   190,
-     190,   190,   190,   190,   191,   192,   192,   193,   193,   193,
-     193,   193,   193,   193,   193,   194,   194,   195,   195,   195,
-     195,   196,   196,   196,   196,   196,   196,   196,   196,   196,
-     196,   197,   197,   198,   198,   198,   198,   198,   198,   198,
-     198,   198,   198,   198,   198,   198,   198,   199,   199,   199,
-     199,   199,   199,   199,   199,   199,   199,   199,   199,   199,
-     200,   201,   201,   201,   201,   201,   202,   202,   203,   203,
-     203,   203,   203,   204,   204,   205,   205,   205,   205,   205,
-     205,   205,   205,   205,   205,   206,   206,   207,   207,   207,
-     207,   207,   208,   208,   209,   210,   210,   211,   211,   212,
-     212,   213,   213,   213,   214,   214,   215,   215,   215,   216,
-     216,   217,   218,   218,   218,   218,   218,   218,   219,   219,
-     219,   219,   220,   220,   221,   221,   221,   221,   222,   222,
-     222,   222,   222,   222,   222,   222,   223,   223,   223,   224,
-     224,   224,   224,   225,   225,   225,   225,   226,   227,   227,
-     228,   228,   229,   229,   230,   230,   231,   231,   232,   232,
-     232,   232,   232,   232,   232,   232,   233,   233,   233,   234,
-     234,   234,   235,   236,   237,   237,   237,   237,   238,   238,
-     238,   238,   238,   238,   238,   238,   238,   239,   239,   239,
-     239,   239,   239,   239,   239,   240,   240,   240,   240,   240,
-     240,   240,   240,   240,   240,   240,   240,   240,   240,   240,
-     240,   240,   240,   240,   240,   240,   240,   240,   240,   240,
-     240,   240,   240,   240,   240,   240,   240,   240,   240,   240,
-     240,   240,   240,   240,   240,   240,   240,   240,   240,   240,
-     240,   240,   240,   240,   240,   240,   240,   240,   240,   240,
-     240,   240,   240,   240,   240,   240,   240,   240,   240,   241,
-     241,   241,   241,   242,   242,   242,   242,   242,   243,   243,
-     243,   244,   244,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   246,   246,   246,   246,   247,   248,
-     249,   250,   251,   251,   251,   251,   252,   252,   252,   252,
-     253,   253,   253,   253,   254,   254,   254,   255,   255,   255,
-     255,   255,   255,   255,   255,   255,   256,   256,   256,   257,
-     257,   257,   257,   258,   258,   259,   259,   259,   259,   259,
-     260,   260,   260,   260,   260,   261,   262,   262,   262,   262,
-     262,   262,   262,   262,   263,   263,   264,   264,   265,   265,
-     266,   266,   267,   267,   268,   268,   269,   269,   270,   270,
-     271,   271,   271,   272,   272,   272,   272,   272,   272,   272,
-     272,   272,   272,   272,   272,   273,   274,   275
+       0,   161,   162,   162,   163,   163,   163,   163,   163,   163,
+     163,   163,   163,   163,   163,   163,   163,   163,   163,   163,
+     164,   165,   166,   166,   167,   167,   168,   169,   169,   169,
+     169,   169,   169,   169,   169,   170,   170,   171,   171,   171,
+     171,   172,   172,   172,   172,   173,   173,   174,   174,   174,
+     174,   175,   175,   176,   176,   176,   176,   176,   176,   177,
+     178,   179,   180,   181,   182,   183,   183,   184,   185,   185,
+     186,   186,   187,   188,   188,   189,   189,   189,   189,   190,
+     190,   191,   191,   192,   192,   192,   192,   192,   192,   192,
+     192,   192,   192,   192,   193,   194,   194,   195,   195,   195,
+     195,   195,   195,   195,   195,   196,   196,   197,   197,   197,
+     197,   198,   198,   198,   198,   198,   198,   198,   198,   198,
+     198,   199,   199,   200,   200,   200,   200,   200,   200,   200,
+     200,   200,   200,   200,   200,   200,   200,   201,   201,   201,
+     201,   201,   201,   201,   201,   201,   201,   201,   201,   201,
+     201,   202,   203,   203,   203,   203,   203,   204,   204,   205,
+     205,   205,   205,   205,   206,   206,   207,   207,   207,   207,
+     207,   207,   207,   207,   207,   207,   208,   208,   209,   209,
+     209,   209,   209,   210,   210,   211,   212,   212,   213,   213,
+     214,   214,   215,   215,   216,   216,   217,   217,   217,   218,
+     218,   219,   219,   219,   220,   220,   221,   222,   222,   222,
+     222,   222,   222,   223,   223,   223,   223,   224,   224,   225,
+     225,   225,   225,   226,   226,   226,   226,   226,   226,   226,
+     226,   227,   227,   227,   228,   228,   228,   228,   229,   229,
+     229,   229,   230,   231,   231,   232,   232,   233,   233,   234,
+     234,   235,   235,   236,   236,   236,   236,   236,   236,   236,
+     236,   237,   237,   237,   238,   238,   238,   239,   240,   241,
+     241,   241,   241,   242,   242,   242,   242,   242,   242,   242,
+     242,   242,   243,   243,   243,   243,   243,   243,   243,   243,
+     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
+     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
+     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
+     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
+     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
+     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
+     244,   244,   244,   244,   245,   245,   245,   245,   246,   246,
+     246,   246,   246,   247,   247,   247,   248,   248,   249,   249,
+     249,   249,   249,   249,   249,   249,   249,   249,   249,   250,
+     250,   250,   250,   251,   252,   253,   254,   255,   255,   255,
+     255,   256,   256,   256,   256,   257,   257,   257,   257,   258,
+     258,   258,   259,   259,   259,   259,   259,   259,   259,   259,
+     259,   260,   260,   260,   261,   261,   261,   261,   262,   262,
+     263,   263,   263,   263,   263,   264,   264,   264,   264,   264,
+     265,   266,   266,   266,   266,   266,   266,   266,   266,   267,
+     267,   268,   268,   269,   269,   270,   270,   271,   271,   272,
+     272,   273,   273,   274,   274,   275,   275,   275,   276,   276,
+     276,   276,   276,   276,   276,   276,   276,   276,   276,   276,
+     277,   278,   279
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -2008,38 +2068,39 @@ static const yytype_int8 yyr2[] =
        1,     1,     1,     3,     4,     5,     6,     4,     5,     6,
        7,     5,     6,     7,     8,     6,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     2,     3,     4,     3,     4,     1,     1,     2,     3,
-       5,     3,     4,     1,     1,     2,     3,     5,     3,     4,
-       6,     3,     5,     4,     6,     1,     1,     2,     3,     4,
-       3,     4,     1,     1,     2,     1,     1,     2,     4,     1,
-       1,     2,     3,     4,     1,     1,     2,     4,     4,     1,
-       1,     1,     2,     3,     3,     3,     4,     4,     1,     2,
-       2,     3,     1,     1,     4,     5,     5,     4,     1,     1,
+       1,     1,     2,     3,     4,     3,     4,     1,     1,     2,
+       3,     5,     3,     4,     1,     1,     2,     3,     5,     3,
+       4,     6,     3,     5,     4,     6,     1,     1,     2,     3,
+       4,     3,     4,     1,     1,     2,     1,     1,     2,     4,
+       1,     1,     2,     4,     1,     1,     2,     3,     4,     1,
+       1,     2,     4,     4,     1,     1,     1,     2,     3,     3,
+       3,     4,     4,     1,     2,     2,     3,     1,     1,     4,
+       5,     5,     4,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     4,     2,     5,     2,     5,
+       3,     6,     4,     1,     1,     2,     4,     1,     1,     2,
+       2,     1,     1,     3,     4,     4,     5,     4,     5,     5,
+       6,     2,     3,     4,     1,     2,     1,     1,     3,     1,
+       1,     1,     1,     1,     2,     1,     1,     2,     3,     1,
+       2,     3,     3,     4,     4,     5,     4,     5,     5,     6,
+       6,     7,     7,     8,     7,     8,     8,     9,     7,     8,
+       8,     9,     8,     9,     9,    10,     7,     8,     8,     9,
+       8,     9,     9,    10,     8,     9,     9,    10,     9,    10,
+      10,    11,     7,     8,     8,     9,     8,     9,     9,    10,
+       8,     9,     9,    10,     9,    10,    10,    11,     8,     9,
+       9,    10,     9,    10,    10,    11,     9,    10,    10,    11,
+      10,    11,    11,    12,     3,     4,     3,     4,     1,     1,
+       1,     1,     2,     1,     3,     4,     1,     3,     1,     2,
+       2,     1,     1,     2,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     3,     3,     3,
+       3,     2,     3,     3,     3,     1,     2,     1,     2,     1,
+       2,     1,     1,     1,     1,     1,     1,     1,     2,     2,
+       3,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       3,     4,     4,     5,     1,     2,     3,     4,     5,     3,
+       2,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       4,     2,     5,     2,     5,     3,     6,     4,     1,     1,
-       2,     4,     1,     1,     2,     2,     1,     1,     3,     4,
-       4,     5,     4,     5,     5,     6,     2,     3,     4,     1,
-       2,     1,     1,     3,     1,     1,     1,     1,     1,     2,
-       1,     1,     2,     3,     1,     2,     3,     3,     4,     4,
-       5,     4,     5,     5,     6,     6,     7,     7,     8,     7,
-       8,     8,     9,     7,     8,     8,     9,     8,     9,     9,
-      10,     7,     8,     8,     9,     8,     9,     9,    10,     8,
-       9,     9,    10,     9,    10,    10,    11,     7,     8,     8,
-       9,     8,     9,     9,    10,     8,     9,     9,    10,     9,
-      10,    10,    11,     8,     9,     9,    10,     9,    10,    10,
-      11,     9,    10,    10,    11,    10,    11,    11,    12,     3,
-       4,     3,     4,     1,     1,     1,     1,     2,     1,     3,
-       4,     1,     3,     1,     2,     2,     1,     1,     2,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     3,     3,     3,     3,     2,     3,     3,     3,
-       1,     2,     1,     2,     1,     2,     1,     1,     1,     1,
-       1,     1,     1,     2,     2,     3,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     3,     4,     4,     5,     1,
-       2,     3,     4,     5,     3,     2,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       2,     1,     2,     2,     3,     3,     4,     2,     3,     3,
-       4,     3,     4,     4,     5,     1,     1,     1
+       1,     1,     1,     1,     1,     2,     1,     2,     2,     3,
+       3,     4,     2,     3,     3,     4,     3,     4,     4,     5,
+       1,     1,     1
 };
 
 
@@ -2092,7 +2153,8 @@ static const yytype_int8 yydprec[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0
 };
 
 /* YYMERGER[RULE-NUM] -- Index of merging function for rule #RULE-NUM.  */
@@ -2144,7 +2206,8 @@ static const yytype_int8 yymerger[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0
 };
 
 /* YYIMMEDIATE[RULE-NUM] -- True iff rule #RULE-NUM is not to be deferred, as
@@ -2197,7 +2260,8 @@ static const yybool yyimmediate[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0
 };
 
 /* YYCONFLP[YYPACT[STATE-NUM]] -- Pointer into YYCONFL of start of
@@ -2206,7 +2270,7 @@ static const yybool yyimmediate[] =
    yyconfl is terminated by a rule number of 0.  */
 static const yytype_int8 yyconflp[] =
 {
-       0,     0,     0,     0,     0,    26,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,    36,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2251,12 +2315,16 @@ static const yytype_int8 yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    11,     0,     0,
+       0,     0,     0,     0,     0,     0,     1,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    38,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     3,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     5,     7,     0,     0,     0,     0,     0,     0,     0,
+       0,    11,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     9,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    28,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2399,15 +2467,11 @@ static const yytype_int8 yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     1,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     3,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     5,     7,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     9,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2428,11 +2492,15 @@ static const yytype_int8 yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,    15,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      17,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    19,    21,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      23,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2611,11 +2679,8 @@ static const yytype_int8 yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    15,     0,    17,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    19,    21,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,    23,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2626,7 +2691,6 @@ static const yytype_int8 yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    13,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2638,16 +2702,44 @@ static const yytype_int8 yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      25,     0,    27,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    29,    31,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    33,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    13,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0
 };
 
 /* YYCONFL[I] -- lists of conflicting rule numbers, each terminated by
    0, pointed into by YYCONFLP.  */
 static const short yyconfl[] =
 {
-       0,   363,     0,   353,     0,   353,     0,   353,     0,   353,
-       0,   358,     0,   372,     0,   363,     0,   353,     0,   353,
-       0,   353,     0,   353,   363,     0,   256,     0,   213,     0
+       0,   368,     0,   358,     0,   358,     0,   358,     0,   358,
+       0,   363,     0,   377,     0,   368,     0,   358,     0,   358,
+       0,   358,     0,   358,     0,   368,     0,   358,     0,   358,
+       0,   358,     0,   358,   368,     0,   261,     0,   218,     0
 };
 
 
@@ -2835,38 +2927,39 @@ yysymbol_name (yysymbol_kind_t yysymbol)
   "AUTHOR", "AUTHORS", "CLAUSE", "COMMENT", "COMMENTS", "GENERAL", "LEX",
   "LEXON", "PER", "PREAMBLE", "TERMS", "A", "ACCEPT", "ACCEPTS", "AFTER",
   "AFTERWARDS", "ALL", "ALSO", "AMOUNT", "AN", "AND", "ANNOUNCED",
-  "APPOINT", "APPOINTS", "AS", "AT", "BE", "BEEN", "BEING", "BINARY",
-  "CERTIFIED", "CERTIFIES", "CERTIFY", "COMING", "CONTRACT", "CONTRACTS",
-  "CURRENT", "DATA", "DAY", "DAYS", "DECLARE", "DECLARED", "DECLARES",
-  "DEFINED", "EQUAL", "EQUALING", "ESCROW", "FILE_", "FILED", "FILES",
-  "FIX", "FIXED", "FIXES", "FOR", "FROM", "GIVEN", "GRANT", "GRANTS",
-  "GREATER", "HAS", "HERSELF", "HIMSELF", "HOUR", "HOURS", "IF", "IN",
-  "INCOMING", "INTO", "IS", "ITSELF", "LEAST", "LESS", "LIES", "MAY",
-  "MILLISECOND", "MILLISECONDS", "MINUTE", "MINUTES", "MONTH", "MONTHS",
-  "MYSELF", "NEITHER", "NEW", "NEXT", "NO", "NOR", "NOT", "NOTIFIES",
-  "NOTIFY", "NOW", "OF", "OFF", "ON", "ONESELF", "OR", "OURSELVES",
-  "PASSED", "PAST", "PAY", "PAYS", "PERSON", "PROVIDED", "REGISTER",
-  "REGISTERS", "REMAINDER", "REPAY", "REPAYS", "RESPECTIVE", "RETURN",
-  "RETURNS", "SECOND", "SECONDS", "SEND", "SENDS", "SIGNED", "SMALLER",
-  "SO", "TERMINATE", "TERMINATES", "TEXT", "THAN", "THAT", "THE",
-  "THEMSELF", "THEMSELVES", "THEN", "THERE", "THEREFOR", "THEREFORE",
-  "THESE", "THIS", "TIME", "TO", "TRANSFER", "TRANSFERS", "TRUE", "WAS",
-  "WEEK", "WEEKS", "WITH", "YEAR", "YEARS", "YES", "YET", "YOURSELF",
-  "YOURSELVES", "$accept", "Document", "Head", "Lex", "Lexon", "Authors",
-  "Comment", "Preamble", "Terms", "Covenants", "Covenant", "Provisions",
-  "Definitions", "Definition", "Type_Term", "Type", "Person", "Amount",
-  "Time", "Binary", "Text", "Data", "This_Contract", "All_Contracts",
-  "This", "Clauses", "Clause", "Body", "Function", "Statements",
-  "Statement", "Action", "Subject", "Symbols", "Symbol", "Catena",
-  "Object", "Reflexive", "Contract", "Predicates", "Predicate",
+  "APPOINT", "APPOINTS", "AS", "ASSIGN", "ASSIGNS", "AT", "BE", "BEEN",
+  "BEING", "BINARY", "CERTIFIED", "CERTIFIES", "CERTIFY", "COMING",
+  "CONTRACT", "CONTRACTS", "CURRENT", "DATA", "DAY", "DAYS", "DECLARE",
+  "DECLARED", "DECLARES", "DEFINED", "EQUAL", "EQUALING", "ESCROW",
+  "FILE_", "FILED", "FILES", "FIX", "FIXED", "FIXES", "FOR", "FROM",
+  "GIVEN", "GRANT", "GRANTS", "GREATER", "HAS", "HERSELF", "HIMSELF",
+  "HOUR", "HOURS", "IF", "IN", "INCOMING", "INTO", "IS", "ITSELF", "LEAST",
+  "LESS", "LIES", "MAY", "MILLISECOND", "MILLISECONDS", "MINUTE",
+  "MINUTES", "MONTH", "MONTHS", "MYSELF", "NEITHER", "NEW", "NEXT", "NO",
+  "NOR", "NOT", "NOTIFIES", "NOTIFY", "NOW", "OF", "OFF", "ON", "ONESELF",
+  "OR", "OURSELVES", "PASSED", "PAST", "PAY", "PAYS", "PERSON", "PROVIDED",
+  "REGISTER", "REGISTERS", "REMAINDER", "REPAY", "REPAYS", "RESPECTIVE",
+  "RETURN", "RETURNS", "SECOND", "SECONDS", "SEND", "SENDS", "SIGNED",
+  "SMALLER", "SO", "TERMINATE", "TERMINATES", "TEXT", "THAN", "THAT",
+  "THE", "THEMSELF", "THEMSELVES", "THEN", "THERE", "THEREFOR",
+  "THEREFORE", "THESE", "THIS", "TIME", "TO", "TRANSFER", "TRANSFERS",
+  "TRUE", "WAS", "WEEK", "WEEKS", "WITH", "YEAR", "YEARS", "YES", "YET",
+  "YOURSELF", "YOURSELVES", "$accept", "Document", "Head", "Lex", "Lexon",
+  "Authors", "Comment", "Preamble", "Terms", "Covenants", "Covenant",
+  "Provisions", "Definitions", "Definition", "Type_Term", "Type", "Person",
+  "Amount", "Time", "Binary", "Text", "Data", "This_Contract",
+  "All_Contracts", "This", "Clauses", "Clause", "Body", "Function",
+  "Statements", "Statement", "Action", "Subject", "Symbols", "Symbol",
+  "Catena", "Object", "Reflexive", "Contract", "Predicates", "Predicate",
   "Permission", "Certification", "Certify", "Declaration", "Declare",
   "Filing", "File", "Registration", "Register", "Grantment", "Grant",
-  "Appointment", "Appoint", "Acceptance", "Accept", "Fixture", "Fix",
-  "Fixed", "Setting", "Illocutor", "Be", "Payment", "Pay", "Preposition",
-  "Escrow", "From_Escrow", "Sending", "Send", "Notification", "Notify",
-  "Termination", "Terminate", "Flagging", "Condition", "If", "Expression",
-  "Scalar_Comparison", "Comparison_Operator", "Equal", "Greater", "Less",
-  "Later", "Scalar_Expression", "Combination", "Combinor", "Combinand",
+  "Appointment", "Appoint", "Assignment", "Assign", "Acceptance", "Accept",
+  "Fixture", "Fix", "Fixed", "Setting", "Illocutor", "Be", "Payment",
+  "Pay", "Preposition", "Escrow", "From_Escrow", "Sending", "Send",
+  "Notification", "Notify", "Termination", "Terminate", "Flagging",
+  "Condition", "If", "Expression", "Scalar_Comparison",
+  "Comparison_Operator", "Equal", "Greater", "Less", "Later",
+  "Scalar_Expression", "Combination", "Combinor", "Combinand",
   "Combinator", "Or_", "And", "Neither", "Nor", "Existence", "Negation",
   "Negator", "Being", "True", "Article", "New", "Point_In_Time",
   "Current_Time", "Relative_Time", "Duration", "Time_Unit", "Years",
@@ -3122,2803 +3215,2833 @@ yyuserAction (yyRuleNum yyrule, int yyrhslen, yyGLRStackItem* yyvsp,
   switch (yyrule)
     {
   case 2: /* Document: Head Terms  */
-#line 1125 "parser.y"
+#line 1143 "parser.y"
                                                                   { NEW(Document, *((Literal **)&yylval)); Document->Head=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Head); Document->Terms=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Terms); root=process_document(Document); }
-#line 3128 "parser.c"
+#line 3221 "parser.c"
     break;
 
   case 3: /* Document: Head Terms Covenants  */
-#line 1126 "parser.y"
+#line 1144 "parser.y"
                                                                   { NEW(Document, *((Literal **)&yylval)); Document->Head=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Head); Document->Terms=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terms); Document->Covenants=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Covenants); root=process_document(Document); }
-#line 3134 "parser.c"
+#line 3227 "parser.c"
     break;
 
   case 4: /* Head: Lex  */
-#line 1132 "parser.y"
+#line 1150 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Lex); ((*yyvalp).Head)=process_head(Head); }
-#line 3140 "parser.c"
+#line 3233 "parser.c"
     break;
 
   case 5: /* Head: Lex Preamble  */
-#line 1133 "parser.y"
+#line 1151 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3146 "parser.c"
+#line 3239 "parser.c"
     break;
 
   case 6: /* Head: Lex Comment  */
-#line 1134 "parser.y"
+#line 1152 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
-#line 3152 "parser.c"
+#line 3245 "parser.c"
     break;
 
   case 7: /* Head: Lex Comment Preamble  */
-#line 1135 "parser.y"
+#line 1153 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3158 "parser.c"
+#line 3251 "parser.c"
     break;
 
   case 8: /* Head: Lex Authors  */
-#line 1136 "parser.y"
+#line 1154 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Authors); ((*yyvalp).Head)=process_head(Head); }
-#line 3164 "parser.c"
+#line 3257 "parser.c"
     break;
 
   case 9: /* Head: Lex Authors Preamble  */
-#line 1137 "parser.y"
+#line 1155 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3170 "parser.c"
+#line 3263 "parser.c"
     break;
 
   case 10: /* Head: Lex Authors Comment  */
-#line 1138 "parser.y"
+#line 1156 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
-#line 3176 "parser.c"
+#line 3269 "parser.c"
     break;
 
   case 11: /* Head: Lex Authors Comment Preamble  */
-#line 1139 "parser.y"
+#line 1157 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3182 "parser.c"
+#line 3275 "parser.c"
     break;
 
   case 12: /* Head: Lex Lexon  */
-#line 1140 "parser.y"
+#line 1158 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Lexon); ((*yyvalp).Head)=process_head(Head); }
-#line 3188 "parser.c"
+#line 3281 "parser.c"
     break;
 
   case 13: /* Head: Lex Lexon Preamble  */
-#line 1141 "parser.y"
+#line 1159 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lexon); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3194 "parser.c"
+#line 3287 "parser.c"
     break;
 
   case 14: /* Head: Lex Lexon Comment  */
-#line 1142 "parser.y"
+#line 1160 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lexon); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
-#line 3200 "parser.c"
+#line 3293 "parser.c"
     break;
 
   case 15: /* Head: Lex Lexon Comment Preamble  */
-#line 1143 "parser.y"
+#line 1161 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lexon); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3206 "parser.c"
+#line 3299 "parser.c"
     break;
 
   case 16: /* Head: Lex Lexon Authors  */
-#line 1144 "parser.y"
+#line 1162 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Authors); ((*yyvalp).Head)=process_head(Head); }
-#line 3212 "parser.c"
+#line 3305 "parser.c"
     break;
 
   case 17: /* Head: Lex Lexon Authors Preamble  */
-#line 1145 "parser.y"
+#line 1163 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3218 "parser.c"
+#line 3311 "parser.c"
     break;
 
   case 18: /* Head: Lex Lexon Authors Comment  */
-#line 1146 "parser.y"
+#line 1164 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
-#line 3224 "parser.c"
+#line 3317 "parser.c"
     break;
 
   case 19: /* Head: Lex Lexon Authors Comment Preamble  */
-#line 1147 "parser.y"
+#line 1165 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
-#line 3230 "parser.c"
+#line 3323 "parser.c"
     break;
 
   case 20: /* Lex: LEX Colon Name Separator  */
-#line 1153 "parser.y"
+#line 1171 "parser.y"
                                                                   { NEW(Lex, *((Literal **)&yylval)); Lex->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Name); ((*yyvalp).Lex)=process_lex(Lex); }
-#line 3236 "parser.c"
+#line 3329 "parser.c"
     break;
 
   case 21: /* Lexon: LEXON Colon Description Separator  */
-#line 1159 "parser.y"
+#line 1177 "parser.y"
                                                                   { NEW(Lexon, *((Literal **)&yylval)); Lexon->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Lexon)=process_lexon(Lexon); }
-#line 3242 "parser.c"
+#line 3335 "parser.c"
     break;
 
   case 22: /* Authors: AUTHOR Colon Description Separator  */
-#line 1165 "parser.y"
+#line 1183 "parser.y"
                                                                   { NEW(Authors, *((Literal **)&yylval)); Authors->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Authors)=process_authors(Authors); }
-#line 3248 "parser.c"
+#line 3341 "parser.c"
     break;
 
   case 23: /* Authors: AUTHORS Colon Description Separator  */
-#line 1166 "parser.y"
+#line 1184 "parser.y"
                                                                   { NEW(Authors, *((Literal **)&yylval)); Authors->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Authors)=process_authors(Authors); }
-#line 3254 "parser.c"
+#line 3347 "parser.c"
     break;
 
   case 24: /* Comment: COMMENT Colon Description Separator  */
-#line 1172 "parser.y"
+#line 1190 "parser.y"
                                                                   { NEW(Comment, *((Literal **)&yylval)); Comment->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Comment)=process_comment(Comment); }
-#line 3260 "parser.c"
+#line 3353 "parser.c"
     break;
 
   case 25: /* Comment: COMMENTS Colon Description Separator  */
-#line 1173 "parser.y"
+#line 1191 "parser.y"
                                                                   { NEW(Comment, *((Literal **)&yylval)); Comment->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Comment)=process_comment(Comment); }
-#line 3266 "parser.c"
+#line 3359 "parser.c"
     break;
 
   case 26: /* Preamble: PREAMBLE Colon Description Separator  */
-#line 1179 "parser.y"
+#line 1197 "parser.y"
                                                                   { NEW(Preamble, *((Literal **)&yylval)); Preamble->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Preamble)=process_preamble(Preamble); }
-#line 3272 "parser.c"
+#line 3365 "parser.c"
     break;
 
   case 27: /* Terms: Provisions  */
-#line 1185 "parser.y"
+#line 1203 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3278 "parser.c"
+#line 3371 "parser.c"
     break;
 
   case 28: /* Terms: Separator Provisions  */
-#line 1186 "parser.y"
+#line 1204 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3284 "parser.c"
+#line 3377 "parser.c"
     break;
 
   case 29: /* Terms: TERMS Colon Provisions  */
-#line 1187 "parser.y"
+#line 1205 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3290 "parser.c"
+#line 3383 "parser.c"
     break;
 
   case 30: /* Terms: TERMS Colon Separator Provisions  */
-#line 1188 "parser.y"
+#line 1206 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3296 "parser.c"
+#line 3389 "parser.c"
     break;
 
   case 31: /* Terms: GENERAL Provisions  */
-#line 1189 "parser.y"
+#line 1207 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3302 "parser.c"
+#line 3395 "parser.c"
     break;
 
   case 32: /* Terms: GENERAL Separator Provisions  */
-#line 1190 "parser.y"
+#line 1208 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3308 "parser.c"
+#line 3401 "parser.c"
     break;
 
   case 33: /* Terms: GENERAL TERMS Colon Provisions  */
-#line 1191 "parser.y"
+#line 1209 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3314 "parser.c"
+#line 3407 "parser.c"
     break;
 
   case 34: /* Terms: GENERAL TERMS Colon Separator Provisions  */
-#line 1192 "parser.y"
+#line 1210 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
-#line 3320 "parser.c"
+#line 3413 "parser.c"
     break;
 
   case 35: /* Covenants: Covenant  */
-#line 1198 "parser.y"
+#line 1216 "parser.y"
                                                                   { NEW(Covenants, *((Literal **)&yylval)); Covenants->Covenant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Covenant); ((*yyvalp).Covenants)=process_covenants(Covenants); }
-#line 3326 "parser.c"
+#line 3419 "parser.c"
     break;
 
   case 36: /* Covenants: Covenants Covenant  */
-#line 1199 "parser.y"
+#line 1217 "parser.y"
                                                                   { NEW(Covenants, *((Literal **)&yylval)); Covenants->Covenants=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Covenants); Covenants->Covenant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Covenant); ((*yyvalp).Covenants)=process_covenants(Covenants); }
-#line 3332 "parser.c"
+#line 3425 "parser.c"
     break;
 
   case 37: /* Covenant: PER Name Colon Provisions  */
-#line 1205 "parser.y"
+#line 1223 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
-#line 3338 "parser.c"
+#line 3431 "parser.c"
     break;
 
   case 38: /* Covenant: PER Name Colon Separator Provisions  */
-#line 1206 "parser.y"
+#line 1224 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
-#line 3344 "parser.c"
+#line 3437 "parser.c"
     break;
 
   case 39: /* Covenant: TERMS PER Name Colon Provisions  */
-#line 1207 "parser.y"
+#line 1225 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
-#line 3350 "parser.c"
+#line 3443 "parser.c"
     break;
 
   case 40: /* Covenant: TERMS PER Name Colon Separator Provisions  */
-#line 1208 "parser.y"
+#line 1226 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
-#line 3356 "parser.c"
+#line 3449 "parser.c"
     break;
 
   case 41: /* Provisions: Definitions  */
-#line 1214 "parser.y"
+#line 1232 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Definitions); ((*yyvalp).Provisions)=process_provisions(Provisions); }
-#line 3362 "parser.c"
+#line 3455 "parser.c"
     break;
 
   case 42: /* Provisions: Definitions Clauses  */
-#line 1215 "parser.y"
+#line 1233 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Definitions); Provisions->Clauses=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clauses); ((*yyvalp).Provisions)=process_provisions(Provisions); }
-#line 3368 "parser.c"
+#line 3461 "parser.c"
     break;
 
   case 43: /* Provisions: Definitions Statements  */
-#line 1216 "parser.y"
+#line 1234 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Definitions); Provisions->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statements); ((*yyvalp).Provisions)=process_provisions(Provisions); }
-#line 3374 "parser.c"
+#line 3467 "parser.c"
     break;
 
   case 44: /* Provisions: Definitions Statements Clauses  */
-#line 1217 "parser.y"
+#line 1235 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Definitions); Provisions->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Statements); Provisions->Clauses=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clauses); ((*yyvalp).Provisions)=process_provisions(Provisions); }
-#line 3380 "parser.c"
+#line 3473 "parser.c"
     break;
 
   case 45: /* Definitions: Definition  */
-#line 1223 "parser.y"
+#line 1241 "parser.y"
                                                                   { NEW(Definitions, *((Literal **)&yylval)); Definitions->Definition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Definition); ((*yyvalp).Definitions)=process_definitions(Definitions); }
-#line 3386 "parser.c"
+#line 3479 "parser.c"
     break;
 
   case 46: /* Definitions: Definitions Definition  */
-#line 1224 "parser.y"
+#line 1242 "parser.y"
                                                                   { NEW(Definitions, *((Literal **)&yylval)); Definitions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Definitions); Definitions->Definition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Definition); ((*yyvalp).Definitions)=process_definitions(Definitions); }
-#line 3392 "parser.c"
+#line 3485 "parser.c"
     break;
 
   case 47: /* Definition: Quote Name Quote IS Type_Term Separator  */
-#line 1230 "parser.y"
+#line 1248 "parser.y"
                                                                   { NEW(Definition, *((Literal **)&yylval)); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->Type_Term=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Type_Term); ((*yyvalp).Definition)=process_definition(Definition); }
-#line 3398 "parser.c"
+#line 3491 "parser.c"
     break;
 
   case 48: /* Definition: Article Quote Name Quote IS Type_Term Separator  */
-#line 1231 "parser.y"
+#line 1249 "parser.y"
                                                                   { NEW(Definition, *((Literal **)&yylval)); Definition->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Article); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->Type_Term=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Type_Term); ((*yyvalp).Definition)=process_definition(Definition); }
-#line 3404 "parser.c"
+#line 3497 "parser.c"
     break;
 
   case 49: /* Definition: Quote Name Quote IS This_Contract Separator  */
-#line 1232 "parser.y"
+#line 1250 "parser.y"
                                                                   { NEW(Definition, *((Literal **)&yylval)); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Definition)=process_definition(Definition); }
-#line 3410 "parser.c"
+#line 3503 "parser.c"
     break;
 
   case 50: /* Definition: Article Quote Name Quote IS This_Contract Separator  */
-#line 1233 "parser.y"
+#line 1251 "parser.y"
                                                                       { NEW(Definition, *((Literal **)&yylval)); Definition->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Article); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Definition)=process_definition(Definition); }
-#line 3416 "parser.c"
+#line 3509 "parser.c"
     break;
 
   case 51: /* Type_Term: Type  */
-#line 1239 "parser.y"
+#line 1257 "parser.y"
                                                                   { NEW(Type_Term, *((Literal **)&yylval)); Type_Term->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Type_Term)=process_type_term(Type_Term); }
-#line 3422 "parser.c"
+#line 3515 "parser.c"
     break;
 
   case 52: /* Type_Term: Article Type  */
-#line 1240 "parser.y"
+#line 1258 "parser.y"
                                                                   { NEW(Type_Term, *((Literal **)&yylval)); Type_Term->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Type_Term->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Type_Term)=process_type_term(Type_Term); }
-#line 3428 "parser.c"
+#line 3521 "parser.c"
     break;
 
   case 53: /* Type: Person  */
-#line 1246 "parser.y"
+#line 1264 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Person=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Person); ((*yyvalp).Type)=process_type(Type); }
-#line 3434 "parser.c"
+#line 3527 "parser.c"
     break;
 
   case 54: /* Type: Amount  */
-#line 1247 "parser.y"
+#line 1265 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Amount=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Amount); ((*yyvalp).Type)=process_type(Type); }
-#line 3440 "parser.c"
+#line 3533 "parser.c"
     break;
 
   case 55: /* Type: Time  */
-#line 1248 "parser.y"
+#line 1266 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Time); ((*yyvalp).Type)=process_type(Type); }
-#line 3446 "parser.c"
+#line 3539 "parser.c"
     break;
 
   case 56: /* Type: Binary  */
-#line 1249 "parser.y"
+#line 1267 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Binary=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Binary); ((*yyvalp).Type)=process_type(Type); }
-#line 3452 "parser.c"
+#line 3545 "parser.c"
     break;
 
   case 57: /* Type: Text  */
-#line 1250 "parser.y"
+#line 1268 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Text=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Text); ((*yyvalp).Type)=process_type(Type); }
-#line 3458 "parser.c"
+#line 3551 "parser.c"
     break;
 
   case 58: /* Type: Data  */
-#line 1251 "parser.y"
+#line 1269 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Data=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Data); ((*yyvalp).Type)=process_type(Type); }
-#line 3464 "parser.c"
+#line 3557 "parser.c"
     break;
 
   case 59: /* Person: PERSON  */
-#line 1257 "parser.y"
+#line 1275 "parser.y"
                                                                   { NEW(Person, *((Literal **)&yylval)); ((*yyvalp).Person)=process_person(Person); }
-#line 3470 "parser.c"
+#line 3563 "parser.c"
     break;
 
   case 60: /* Amount: AMOUNT  */
-#line 1263 "parser.y"
+#line 1281 "parser.y"
                                                                   { NEW(Amount, *((Literal **)&yylval)); ((*yyvalp).Amount)=process_amount(Amount); }
-#line 3476 "parser.c"
+#line 3569 "parser.c"
     break;
 
   case 61: /* Time: TIME  */
-#line 1269 "parser.y"
+#line 1287 "parser.y"
                                                                   { NEW(Time, *((Literal **)&yylval)); ((*yyvalp).Time)=process_time(Time); }
-#line 3482 "parser.c"
+#line 3575 "parser.c"
     break;
 
   case 62: /* Binary: BINARY  */
-#line 1275 "parser.y"
+#line 1293 "parser.y"
                                                                   { NEW(Binary, *((Literal **)&yylval)); ((*yyvalp).Binary)=process_binary(Binary); }
-#line 3488 "parser.c"
+#line 3581 "parser.c"
     break;
 
   case 63: /* Text: TEXT  */
-#line 1281 "parser.y"
+#line 1299 "parser.y"
                                                                   { NEW(Text, *((Literal **)&yylval)); ((*yyvalp).Text)=process_text(Text); }
-#line 3494 "parser.c"
+#line 3587 "parser.c"
     break;
 
   case 64: /* Data: DATA  */
-#line 1287 "parser.y"
+#line 1305 "parser.y"
                                                                   { NEW(Data, *((Literal **)&yylval)); ((*yyvalp).Data)=process_data(Data); }
-#line 3500 "parser.c"
+#line 3593 "parser.c"
     break;
 
   case 65: /* This_Contract: This CONTRACT  */
-#line 1293 "parser.y"
+#line 1311 "parser.y"
                                                                   { NEW(This_Contract, *((Literal **)&yylval)); This_Contract->This=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This); ((*yyvalp).This_Contract)=process_this_contract(This_Contract); }
-#line 3506 "parser.c"
+#line 3599 "parser.c"
     break;
 
   case 66: /* This_Contract: This Name  */
-#line 1294 "parser.y"
+#line 1312 "parser.y"
                                                                   { NEW(This_Contract, *((Literal **)&yylval)); This_Contract->This=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This); This_Contract->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).This_Contract)=process_this_contract(This_Contract); }
-#line 3512 "parser.c"
+#line 3605 "parser.c"
     break;
 
   case 67: /* All_Contracts: ALL CONTRACTS  */
-#line 1300 "parser.y"
+#line 1318 "parser.y"
                                                                   { NEW(All_Contracts, *((Literal **)&yylval)); ((*yyvalp).All_Contracts)=process_all_contracts(All_Contracts); }
-#line 3518 "parser.c"
+#line 3611 "parser.c"
     break;
 
   case 68: /* This: THIS  */
-#line 1306 "parser.y"
+#line 1324 "parser.y"
                                                                   { NEW(This, *((Literal **)&yylval)); ((*yyvalp).This)=process_this(This); }
-#line 3524 "parser.c"
+#line 3617 "parser.c"
     break;
 
   case 69: /* This: THESE  */
-#line 1307 "parser.y"
+#line 1325 "parser.y"
                                                                   { NEW(This, *((Literal **)&yylval)); ((*yyvalp).This)=process_this(This); }
-#line 3530 "parser.c"
+#line 3623 "parser.c"
     break;
 
   case 70: /* Clauses: Clause  */
-#line 1313 "parser.y"
+#line 1331 "parser.y"
                                                                   { NEW(Clauses, *((Literal **)&yylval)); Clauses->Clause=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clause); ((*yyvalp).Clauses)=process_clauses(Clauses); }
-#line 3536 "parser.c"
+#line 3629 "parser.c"
     break;
 
   case 71: /* Clauses: Clauses Clause  */
-#line 1314 "parser.y"
+#line 1332 "parser.y"
                                                                   { NEW(Clauses, *((Literal **)&yylval)); Clauses->Clauses=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Clauses); Clauses->Clause=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clause); ((*yyvalp).Clauses)=process_clauses(Clauses); }
-#line 3542 "parser.c"
+#line 3635 "parser.c"
     break;
 
   case 72: /* Clause: CLAUSE Colon Name Separator Body  */
-#line 1320 "parser.y"
+#line 1338 "parser.y"
                                                                   { NEW(Clause, *((Literal **)&yylval)); Clause->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Name); Clause->Body=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Body); ((*yyvalp).Clause)=process_clause(Clause); }
-#line 3548 "parser.c"
+#line 3641 "parser.c"
     break;
 
   case 73: /* Body: Statements  */
-#line 1326 "parser.y"
+#line 1344 "parser.y"
                                                                   { NEW(Body, *((Literal **)&yylval)); Body->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statements); ((*yyvalp).Body)=process_body(Body); }
-#line 3554 "parser.c"
+#line 3647 "parser.c"
     break;
 
   case 74: /* Body: Function  */
-#line 1327 "parser.y"
+#line 1345 "parser.y"
                                                                   { NEW(Body, *((Literal **)&yylval)); Body->Function=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Function); ((*yyvalp).Body)=process_body(Body); }
-#line 3560 "parser.c"
+#line 3653 "parser.c"
     break;
 
   case 75: /* Function: Quote Name Quote Illocutor Expression Separator  */
-#line 1333 "parser.y"
+#line 1351 "parser.y"
                                                                    { NEW(Function, *((Literal **)&yylval)); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
-#line 3566 "parser.c"
+#line 3659 "parser.c"
     break;
 
   case 76: /* Function: Quote Name Quote Illocutor Colon Expression Separator  */
-#line 1334 "parser.y"
+#line 1352 "parser.y"
                                                                          { NEW(Function, *((Literal **)&yylval)); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
-#line 3572 "parser.c"
+#line 3665 "parser.c"
     break;
 
   case 77: /* Function: Article Quote Name Quote Illocutor Expression Separator  */
-#line 1335 "parser.y"
+#line 1353 "parser.y"
                                                                           { NEW(Function, *((Literal **)&yylval)); Function->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Article); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
-#line 3578 "parser.c"
+#line 3671 "parser.c"
     break;
 
   case 78: /* Function: Article Quote Name Quote Illocutor Colon Expression Separator  */
-#line 1336 "parser.y"
+#line 1354 "parser.y"
                                                                                 { NEW(Function, *((Literal **)&yylval)); Function->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-7)].yystate.yysemantics.yyval.Article); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
-#line 3584 "parser.c"
+#line 3677 "parser.c"
     break;
 
   case 79: /* Statements: Statement  */
-#line 1342 "parser.y"
+#line 1360 "parser.y"
                                                                   { NEW(Statements, *((Literal **)&yylval)); Statements->Statement=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statement); ((*yyvalp).Statements)=process_statements(Statements); }
-#line 3590 "parser.c"
+#line 3683 "parser.c"
     break;
 
   case 80: /* Statements: Statements Statement  */
-#line 1343 "parser.y"
+#line 1361 "parser.y"
                                                                   { NEW(Statements, *((Literal **)&yylval)); Statements->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Statements); Statements->Statement=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statement); ((*yyvalp).Statements)=process_statements(Statements); }
-#line 3596 "parser.c"
+#line 3689 "parser.c"
     break;
 
   case 81: /* Statement: Action  */
-#line 1349 "parser.y"
+#line 1367 "parser.y"
                                                                   { NEW(Statement, *((Literal **)&yylval)); Statement->Action=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Action); ((*yyvalp).Statement)=process_statement(Statement); }
-#line 3602 "parser.c"
+#line 3695 "parser.c"
     break;
 
   case 82: /* Statement: Flagging  */
-#line 1350 "parser.y"
+#line 1368 "parser.y"
                                                                   { NEW(Statement, *((Literal **)&yylval)); Statement->Flagging=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Flagging); ((*yyvalp).Statement)=process_statement(Statement); }
-#line 3608 "parser.c"
+#line 3701 "parser.c"
     break;
 
   case 83: /* Action: Subject Predicates Separator  */
-#line 1356 "parser.y"
+#line 1374 "parser.y"
                                                                   { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Subject); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3614 "parser.c"
+#line 3707 "parser.c"
     break;
 
   case 84: /* Action: Subject Permission Predicates Separator  */
-#line 1357 "parser.y"
+#line 1375 "parser.y"
                                                                   { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Permission); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3620 "parser.c"
+#line 3713 "parser.c"
     break;
 
   case 85: /* Action: Subject Permission Condition Predicates Separator  */
-#line 1358 "parser.y"
+#line 1376 "parser.y"
                                                                     { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3626 "parser.c"
+#line 3719 "parser.c"
     break;
 
   case 86: /* Action: Subject Permission Condition Colon Predicates Separator  */
-#line 1359 "parser.y"
+#line 1377 "parser.y"
                                                                           { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3632 "parser.c"
+#line 3725 "parser.c"
     break;
 
   case 87: /* Action: Subject Permission Condition Comma Predicates Separator  */
-#line 1360 "parser.y"
+#line 1378 "parser.y"
                                                                           { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3638 "parser.c"
+#line 3731 "parser.c"
     break;
 
   case 88: /* Action: Subject Permission Condition Comma Colon Predicates Separator  */
-#line 1361 "parser.y"
+#line 1379 "parser.y"
                                                                                 { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3644 "parser.c"
+#line 3737 "parser.c"
     break;
 
   case 89: /* Action: Subject Permission Comma Predicates Separator  */
-#line 1362 "parser.y"
+#line 1380 "parser.y"
                                                                   { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Permission); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3650 "parser.c"
+#line 3743 "parser.c"
     break;
 
   case 90: /* Action: Subject Permission Comma Condition Predicates Separator  */
-#line 1363 "parser.y"
+#line 1381 "parser.y"
                                                                           { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3656 "parser.c"
+#line 3749 "parser.c"
     break;
 
   case 91: /* Action: Subject Permission Comma Condition Colon Predicates Separator  */
-#line 1364 "parser.y"
+#line 1382 "parser.y"
                                                                                 { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3662 "parser.c"
+#line 3755 "parser.c"
     break;
 
   case 92: /* Action: Subject Permission Comma Condition Comma Predicates Separator  */
-#line 1365 "parser.y"
+#line 1383 "parser.y"
                                                                                 { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3668 "parser.c"
+#line 3761 "parser.c"
     break;
 
   case 93: /* Action: Subject Permission Comma Condition Comma Colon Predicates Separator  */
-#line 1366 "parser.y"
+#line 1384 "parser.y"
                                                                                       { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-7)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Condition); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
-#line 3674 "parser.c"
+#line 3767 "parser.c"
     break;
 
   case 94: /* Subject: Symbols  */
-#line 1372 "parser.y"
+#line 1390 "parser.y"
                                                                   { NEW(Subject, *((Literal **)&yylval)); Subject->Symbols=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbols); ((*yyvalp).Subject)=process_subject(Subject); }
-#line 3680 "parser.c"
+#line 3773 "parser.c"
     break;
 
   case 95: /* Symbols: Symbol  */
-#line 1378 "parser.y"
+#line 1396 "parser.y"
                                                                   { NEW(Symbols, *((Literal **)&yylval)); Symbols->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Symbols)=process_symbols(Symbols); }
-#line 3686 "parser.c"
+#line 3779 "parser.c"
     break;
 
   case 96: /* Symbols: Symbols Catena Symbol  */
-#line 1379 "parser.y"
+#line 1397 "parser.y"
                                                                   { NEW(Symbols, *((Literal **)&yylval)); Symbols->Symbols=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbols); Symbols->Catena=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Catena); Symbols->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Symbols)=process_symbols(Symbols); }
-#line 3692 "parser.c"
+#line 3785 "parser.c"
     break;
 
   case 97: /* Symbol: Name  */
-#line 1385 "parser.y"
+#line 1403 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3698 "parser.c"
+#line 3791 "parser.c"
     break;
 
   case 98: /* Symbol: New Name  */
-#line 1386 "parser.y"
+#line 1404 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3704 "parser.c"
+#line 3797 "parser.c"
     break;
 
   case 99: /* Symbol: Article Name  */
-#line 1387 "parser.y"
+#line 1405 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3710 "parser.c"
+#line 3803 "parser.c"
     break;
 
   case 100: /* Symbol: Article New Name  */
-#line 1388 "parser.y"
+#line 1406 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Article); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3716 "parser.c"
+#line 3809 "parser.c"
     break;
 
   case 101: /* Symbol: Type  */
-#line 1389 "parser.y"
+#line 1407 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3722 "parser.c"
+#line 3815 "parser.c"
     break;
 
   case 102: /* Symbol: New Type  */
-#line 1390 "parser.y"
+#line 1408 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3728 "parser.c"
+#line 3821 "parser.c"
     break;
 
   case 103: /* Symbol: Article Type  */
-#line 1391 "parser.y"
+#line 1409 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3734 "parser.c"
+#line 3827 "parser.c"
     break;
 
   case 104: /* Symbol: Article New Type  */
-#line 1392 "parser.y"
+#line 1410 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Article); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
-#line 3740 "parser.c"
+#line 3833 "parser.c"
     break;
 
   case 105: /* Catena: OR  */
-#line 1398 "parser.y"
+#line 1416 "parser.y"
                                                                   { NEW(Catena, *((Literal **)&yylval)); ((*yyvalp).Catena)=process_catena(Catena); }
-#line 3746 "parser.c"
+#line 3839 "parser.c"
     break;
 
   case 106: /* Catena: Comma  */
-#line 1399 "parser.y"
+#line 1417 "parser.y"
                                                                   { NEW(Catena, *((Literal **)&yylval)); ((*yyvalp).Catena)=process_catena(Catena); }
-#line 3752 "parser.c"
+#line 3845 "parser.c"
     break;
 
   case 107: /* Object: Symbol  */
-#line 1405 "parser.y"
+#line 1423 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); Object->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Object)=process_object(Object); }
-#line 3758 "parser.c"
+#line 3851 "parser.c"
     break;
 
   case 108: /* Object: Reflexive  */
-#line 1406 "parser.y"
+#line 1424 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); Object->Reflexive=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Reflexive); ((*yyvalp).Object)=process_object(Object); }
-#line 3764 "parser.c"
+#line 3857 "parser.c"
     break;
 
   case 109: /* Object: ESCROW  */
-#line 1407 "parser.y"
+#line 1425 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); ((*yyvalp).Object)=process_object(Object); }
-#line 3770 "parser.c"
+#line 3863 "parser.c"
     break;
 
   case 110: /* Object: THE ESCROW  */
-#line 1408 "parser.y"
+#line 1426 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); ((*yyvalp).Object)=process_object(Object); }
-#line 3776 "parser.c"
+#line 3869 "parser.c"
     break;
 
   case 111: /* Reflexive: MYSELF  */
-#line 1414 "parser.y"
+#line 1432 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3782 "parser.c"
+#line 3875 "parser.c"
     break;
 
   case 112: /* Reflexive: YOURSELF  */
-#line 1415 "parser.y"
+#line 1433 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3788 "parser.c"
+#line 3881 "parser.c"
     break;
 
   case 113: /* Reflexive: HERSELF  */
-#line 1416 "parser.y"
+#line 1434 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3794 "parser.c"
+#line 3887 "parser.c"
     break;
 
   case 114: /* Reflexive: HIMSELF  */
-#line 1417 "parser.y"
+#line 1435 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3800 "parser.c"
+#line 3893 "parser.c"
     break;
 
   case 115: /* Reflexive: ONESELF  */
-#line 1418 "parser.y"
+#line 1436 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3806 "parser.c"
+#line 3899 "parser.c"
     break;
 
   case 116: /* Reflexive: ITSELF  */
-#line 1419 "parser.y"
+#line 1437 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3812 "parser.c"
+#line 3905 "parser.c"
     break;
 
   case 117: /* Reflexive: THEMSELF  */
-#line 1420 "parser.y"
+#line 1438 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3818 "parser.c"
+#line 3911 "parser.c"
     break;
 
   case 118: /* Reflexive: OURSELVES  */
-#line 1421 "parser.y"
+#line 1439 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3824 "parser.c"
+#line 3917 "parser.c"
     break;
 
   case 119: /* Reflexive: YOURSELVES  */
-#line 1422 "parser.y"
+#line 1440 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3830 "parser.c"
+#line 3923 "parser.c"
     break;
 
   case 120: /* Reflexive: THEMSELVES  */
-#line 1423 "parser.y"
+#line 1441 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
-#line 3836 "parser.c"
+#line 3929 "parser.c"
     break;
 
   case 121: /* Contract: This_Contract  */
-#line 1429 "parser.y"
+#line 1447 "parser.y"
                                                                   { NEW(Contract, *((Literal **)&yylval)); Contract->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Contract)=process_contract(Contract); }
-#line 3842 "parser.c"
+#line 3935 "parser.c"
     break;
 
   case 122: /* Contract: All_Contracts  */
-#line 1430 "parser.y"
+#line 1448 "parser.y"
                                                                   { NEW(Contract, *((Literal **)&yylval)); Contract->All_Contracts=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.All_Contracts); ((*yyvalp).Contract)=process_contract(Contract); }
-#line 3848 "parser.c"
+#line 3941 "parser.c"
     break;
 
   case 123: /* Predicates: Predicates Comma Predicate  */
-#line 1436 "parser.y"
+#line 1454 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3854 "parser.c"
+#line 3947 "parser.c"
     break;
 
   case 124: /* Predicates: Predicates Comma AFTERWARDS Predicate  */
-#line 1437 "parser.y"
+#line 1455 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3860 "parser.c"
+#line 3953 "parser.c"
     break;
 
   case 125: /* Predicates: Predicates Comma IF SO Predicate  */
-#line 1438 "parser.y"
+#line 1456 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3866 "parser.c"
+#line 3959 "parser.c"
     break;
 
   case 126: /* Predicates: Predicates Comma IF SO AFTERWARDS Predicate  */
-#line 1439 "parser.y"
+#line 1457 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3872 "parser.c"
+#line 3965 "parser.c"
     break;
 
   case 127: /* Predicates: Predicates Comma AND Predicate  */
-#line 1440 "parser.y"
+#line 1458 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3878 "parser.c"
+#line 3971 "parser.c"
     break;
 
   case 128: /* Predicates: Predicates Comma AND AFTERWARDS Predicate  */
-#line 1441 "parser.y"
+#line 1459 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3884 "parser.c"
+#line 3977 "parser.c"
     break;
 
   case 129: /* Predicates: Predicates Comma AND IF SO Predicate  */
-#line 1442 "parser.y"
+#line 1460 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3890 "parser.c"
+#line 3983 "parser.c"
     break;
 
   case 130: /* Predicates: Predicates Comma AND IF SO AFTERWARDS Predicate  */
-#line 1443 "parser.y"
+#line 1461 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3896 "parser.c"
+#line 3989 "parser.c"
     break;
 
   case 131: /* Predicates: Predicates Comma AND ALSO Predicate  */
-#line 1444 "parser.y"
+#line 1462 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3902 "parser.c"
+#line 3995 "parser.c"
     break;
 
   case 132: /* Predicates: Predicates Comma AND ALSO AFTERWARDS Predicate  */
-#line 1445 "parser.y"
+#line 1463 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3908 "parser.c"
+#line 4001 "parser.c"
     break;
 
   case 133: /* Predicates: Predicates Comma AND ALSO IF SO Predicate  */
-#line 1446 "parser.y"
+#line 1464 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3914 "parser.c"
+#line 4007 "parser.c"
     break;
 
   case 134: /* Predicates: Predicates Comma AND ALSO IF SO AFTERWARDS Predicate  */
-#line 1447 "parser.y"
+#line 1465 "parser.y"
                                                                        { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-7)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3920 "parser.c"
+#line 4013 "parser.c"
     break;
 
   case 135: /* Predicates: Predicates Comma AND WITH THIS Predicate  */
-#line 1448 "parser.y"
+#line 1466 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3926 "parser.c"
+#line 4019 "parser.c"
     break;
 
   case 136: /* Predicates: Predicate  */
-#line 1449 "parser.y"
+#line 1467 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
-#line 3932 "parser.c"
+#line 4025 "parser.c"
     break;
 
   case 137: /* Predicate: Certification  */
-#line 1455 "parser.y"
+#line 1473 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Certification=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Certification); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3938 "parser.c"
+#line 4031 "parser.c"
     break;
 
   case 138: /* Predicate: Declaration  */
-#line 1456 "parser.y"
+#line 1474 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Declaration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Declaration); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3944 "parser.c"
+#line 4037 "parser.c"
     break;
 
   case 139: /* Predicate: Filing  */
-#line 1457 "parser.y"
+#line 1475 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Filing=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Filing); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3950 "parser.c"
+#line 4043 "parser.c"
     break;
 
   case 140: /* Predicate: Registration  */
-#line 1458 "parser.y"
+#line 1476 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Registration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Registration); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3956 "parser.c"
+#line 4049 "parser.c"
     break;
 
   case 141: /* Predicate: Grantment  */
-#line 1459 "parser.y"
+#line 1477 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Grantment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Grantment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3962 "parser.c"
+#line 4055 "parser.c"
     break;
 
   case 142: /* Predicate: Appointment  */
-#line 1460 "parser.y"
+#line 1478 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Appointment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Appointment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3968 "parser.c"
+#line 4061 "parser.c"
     break;
 
-  case 143: /* Predicate: Acceptance  */
-#line 1461 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Acceptance=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Acceptance); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3974 "parser.c"
-    break;
-
-  case 144: /* Predicate: Fixture  */
-#line 1462 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Fixture=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixture); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3980 "parser.c"
-    break;
-
-  case 145: /* Predicate: Setting  */
-#line 1463 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Setting=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Setting); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3986 "parser.c"
-    break;
-
-  case 146: /* Predicate: Payment  */
-#line 1464 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Payment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Payment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3992 "parser.c"
-    break;
-
-  case 147: /* Predicate: Sending  */
-#line 1465 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Sending=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Sending); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 3998 "parser.c"
-    break;
-
-  case 148: /* Predicate: Notification  */
-#line 1466 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Notification=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Notification); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 4004 "parser.c"
-    break;
-
-  case 149: /* Predicate: Termination  */
-#line 1467 "parser.y"
-                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Termination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Termination); ((*yyvalp).Predicate)=process_predicate(Predicate); }
-#line 4010 "parser.c"
-    break;
-
-  case 150: /* Permission: MAY  */
-#line 1473 "parser.y"
-                                                                  { NEW(Permission, *((Literal **)&yylval)); ((*yyvalp).Permission)=process_permission(Permission); }
-#line 4016 "parser.c"
-    break;
-
-  case 151: /* Certification: Certify Symbol  */
+  case 143: /* Predicate: Assignment  */
 #line 1479 "parser.y"
-                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
-#line 4022 "parser.c"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Assignment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Assignment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4067 "parser.c"
     break;
 
-  case 152: /* Certification: Certify Symbol Expression  */
+  case 144: /* Predicate: Acceptance  */
 #line 1480 "parser.y"
-                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Certification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Certification)=process_certification(Certification); }
-#line 4028 "parser.c"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Acceptance=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Acceptance); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4073 "parser.c"
     break;
 
-  case 153: /* Certification: Certify Symbol AS Expression  */
+  case 145: /* Predicate: Fixture  */
 #line 1481 "parser.y"
-                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Certification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Certification)=process_certification(Certification); }
-#line 4034 "parser.c"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Fixture=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixture); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4079 "parser.c"
     break;
 
-  case 154: /* Certification: Certify Contract Symbol  */
+  case 146: /* Predicate: Setting  */
 #line 1482 "parser.y"
-                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Certify); Certification->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
-#line 4040 "parser.c"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Setting=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Setting); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4085 "parser.c"
     break;
 
-  case 155: /* Certification: Certify Contract AS Symbol  */
+  case 147: /* Predicate: Payment  */
 #line 1483 "parser.y"
-                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Certify); Certification->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
-#line 4046 "parser.c"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Payment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Payment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4091 "parser.c"
     break;
 
-  case 156: /* Certify: CERTIFY  */
-#line 1489 "parser.y"
-                                                                  { NEW(Certify, *((Literal **)&yylval)); ((*yyvalp).Certify)=process_certify(Certify); }
-#line 4052 "parser.c"
+  case 148: /* Predicate: Sending  */
+#line 1484 "parser.y"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Sending=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Sending); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4097 "parser.c"
     break;
 
-  case 157: /* Certify: CERTIFIES  */
-#line 1490 "parser.y"
-                                                                  { NEW(Certify, *((Literal **)&yylval)); ((*yyvalp).Certify)=process_certify(Certify); }
-#line 4058 "parser.c"
+  case 149: /* Predicate: Notification  */
+#line 1485 "parser.y"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Notification=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Notification); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4103 "parser.c"
     break;
 
-  case 158: /* Declaration: Declare Symbol  */
-#line 1496 "parser.y"
-                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
-#line 4064 "parser.c"
+  case 150: /* Predicate: Termination  */
+#line 1486 "parser.y"
+                                                                  { NEW(Predicate, *((Literal **)&yylval)); Predicate->Termination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Termination); ((*yyvalp).Predicate)=process_predicate(Predicate); }
+#line 4109 "parser.c"
     break;
 
-  case 159: /* Declaration: Declare Symbol Expression  */
-#line 1497 "parser.y"
-                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Declaration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Declaration)=process_declaration(Declaration); }
-#line 4070 "parser.c"
+  case 151: /* Permission: MAY  */
+#line 1492 "parser.y"
+                                                                  { NEW(Permission, *((Literal **)&yylval)); ((*yyvalp).Permission)=process_permission(Permission); }
+#line 4115 "parser.c"
     break;
 
-  case 160: /* Declaration: Declare Symbol TO BE Expression  */
+  case 152: /* Certification: Certify Symbol  */
 #line 1498 "parser.y"
-                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Declaration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Declaration)=process_declaration(Declaration); }
-#line 4076 "parser.c"
+                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
+#line 4121 "parser.c"
     break;
 
-  case 161: /* Declaration: Declare Contract Symbol  */
+  case 153: /* Certification: Certify Symbol Expression  */
 #line 1499 "parser.y"
-                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Declare); Declaration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
-#line 4082 "parser.c"
+                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Certification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Certification)=process_certification(Certification); }
+#line 4127 "parser.c"
     break;
 
-  case 162: /* Declaration: Declare Contract AS Symbol  */
+  case 154: /* Certification: Certify Symbol AS Expression  */
 #line 1500 "parser.y"
-                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Declare); Declaration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
-#line 4088 "parser.c"
+                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Certification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Certification)=process_certification(Certification); }
+#line 4133 "parser.c"
     break;
 
-  case 163: /* Declare: DECLARE  */
-#line 1506 "parser.y"
-                                                                  { NEW(Declare, *((Literal **)&yylval)); ((*yyvalp).Declare)=process_declare(Declare); }
-#line 4094 "parser.c"
+  case 155: /* Certification: Certify Contract Symbol  */
+#line 1501 "parser.y"
+                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Certify); Certification->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
+#line 4139 "parser.c"
     break;
 
-  case 164: /* Declare: DECLARES  */
-#line 1507 "parser.y"
-                                                                  { NEW(Declare, *((Literal **)&yylval)); ((*yyvalp).Declare)=process_declare(Declare); }
-#line 4100 "parser.c"
+  case 156: /* Certification: Certify Contract AS Symbol  */
+#line 1502 "parser.y"
+                                                                  { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Certify); Certification->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
+#line 4145 "parser.c"
     break;
 
-  case 165: /* Filing: File Symbol  */
-#line 1513 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4106 "parser.c"
+  case 157: /* Certify: CERTIFY  */
+#line 1508 "parser.y"
+                                                                  { NEW(Certify, *((Literal **)&yylval)); ((*yyvalp).Certify)=process_certify(Certify); }
+#line 4151 "parser.c"
     break;
 
-  case 166: /* Filing: File Symbol Expression  */
-#line 1514 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4112 "parser.c"
+  case 158: /* Certify: CERTIFIES  */
+#line 1509 "parser.y"
+                                                                  { NEW(Certify, *((Literal **)&yylval)); ((*yyvalp).Certify)=process_certify(Certify); }
+#line 4157 "parser.c"
     break;
 
-  case 167: /* Filing: File Symbol TO BE Expression  */
+  case 159: /* Declaration: Declare Symbol  */
 #line 1515 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4118 "parser.c"
+                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
+#line 4163 "parser.c"
     break;
 
-  case 168: /* Filing: File FOR Symbol  */
+  case 160: /* Declaration: Declare Symbol Expression  */
 #line 1516 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4124 "parser.c"
+                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Declaration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Declaration)=process_declaration(Declaration); }
+#line 4169 "parser.c"
     break;
 
-  case 169: /* Filing: File FOR Symbol Expression  */
+  case 161: /* Declaration: Declare Symbol TO BE Expression  */
 #line 1517 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4130 "parser.c"
+                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Declaration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Declaration)=process_declaration(Declaration); }
+#line 4175 "parser.c"
     break;
 
-  case 170: /* Filing: File FOR Symbol TO BE Expression  */
+  case 162: /* Declaration: Declare Contract Symbol  */
 #line 1518 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4136 "parser.c"
+                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Declare); Declaration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
+#line 4181 "parser.c"
     break;
 
-  case 171: /* Filing: File Contract Symbol  */
+  case 163: /* Declaration: Declare Contract AS Symbol  */
 #line 1519 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4142 "parser.c"
+                                                                  { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Declare); Declaration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
+#line 4187 "parser.c"
     break;
 
-  case 172: /* Filing: File Contract TO BE Symbol  */
-#line 1520 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4148 "parser.c"
+  case 164: /* Declare: DECLARE  */
+#line 1525 "parser.y"
+                                                                  { NEW(Declare, *((Literal **)&yylval)); ((*yyvalp).Declare)=process_declare(Declare); }
+#line 4193 "parser.c"
     break;
 
-  case 173: /* Filing: File FOR Contract Symbol  */
-#line 1521 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4154 "parser.c"
+  case 165: /* Declare: DECLARES  */
+#line 1526 "parser.y"
+                                                                  { NEW(Declare, *((Literal **)&yylval)); ((*yyvalp).Declare)=process_declare(Declare); }
+#line 4199 "parser.c"
     break;
 
-  case 174: /* Filing: File FOR Contract TO BE Symbol  */
-#line 1522 "parser.y"
-                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
-#line 4160 "parser.c"
+  case 166: /* Filing: File Symbol  */
+#line 1532 "parser.y"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4205 "parser.c"
     break;
 
-  case 175: /* File: FILE_  */
-#line 1528 "parser.y"
-                                                                  { NEW(File, *((Literal **)&yylval)); ((*yyvalp).File)=process_file(File); }
-#line 4166 "parser.c"
+  case 167: /* Filing: File Symbol Expression  */
+#line 1533 "parser.y"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4211 "parser.c"
     break;
 
-  case 176: /* File: FILES  */
-#line 1529 "parser.y"
-                                                                  { NEW(File, *((Literal **)&yylval)); ((*yyvalp).File)=process_file(File); }
-#line 4172 "parser.c"
+  case 168: /* Filing: File Symbol TO BE Expression  */
+#line 1534 "parser.y"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4217 "parser.c"
     break;
 
-  case 177: /* Registration: Register Symbol  */
+  case 169: /* Filing: File FOR Symbol  */
 #line 1535 "parser.y"
-                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
-#line 4178 "parser.c"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4223 "parser.c"
     break;
 
-  case 178: /* Registration: Register Symbol Expression  */
+  case 170: /* Filing: File FOR Symbol Expression  */
 #line 1536 "parser.y"
-                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Registration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Registration)=process_registration(Registration); }
-#line 4184 "parser.c"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4229 "parser.c"
     break;
 
-  case 179: /* Registration: Register Symbol AS Expression  */
+  case 171: /* Filing: File FOR Symbol TO BE Expression  */
 #line 1537 "parser.y"
-                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Registration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Registration)=process_registration(Registration); }
-#line 4190 "parser.c"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4235 "parser.c"
     break;
 
-  case 180: /* Registration: Register Contract Symbol  */
+  case 172: /* Filing: File Contract Symbol  */
 #line 1538 "parser.y"
-                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Register); Registration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
-#line 4196 "parser.c"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4241 "parser.c"
     break;
 
-  case 181: /* Registration: Register Contract AS Symbol  */
+  case 173: /* Filing: File Contract TO BE Symbol  */
 #line 1539 "parser.y"
-                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Register); Registration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
-#line 4202 "parser.c"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4247 "parser.c"
     break;
 
-  case 182: /* Register: REGISTER  */
-#line 1545 "parser.y"
-                                                                  { NEW(Register, *((Literal **)&yylval)); ((*yyvalp).Register)=process_register(Register); }
-#line 4208 "parser.c"
+  case 174: /* Filing: File FOR Contract Symbol  */
+#line 1540 "parser.y"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4253 "parser.c"
     break;
 
-  case 183: /* Register: REGISTERS  */
-#line 1546 "parser.y"
-                                                                  { NEW(Register, *((Literal **)&yylval)); ((*yyvalp).Register)=process_register(Register); }
-#line 4214 "parser.c"
+  case 175: /* Filing: File FOR Contract TO BE Symbol  */
+#line 1541 "parser.y"
+                                                                  { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
+#line 4259 "parser.c"
     break;
 
-  case 184: /* Grantment: Grant Symbol  */
-#line 1552 "parser.y"
-                                                                  { NEW(Grantment, *((Literal **)&yylval)); Grantment->Grant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Grant); Grantment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Grantment)=process_grantment(Grantment); }
-#line 4220 "parser.c"
+  case 176: /* File: FILE_  */
+#line 1547 "parser.y"
+                                                                  { NEW(File, *((Literal **)&yylval)); ((*yyvalp).File)=process_file(File); }
+#line 4265 "parser.c"
     break;
 
-  case 185: /* Grant: GRANT  */
+  case 177: /* File: FILES  */
+#line 1548 "parser.y"
+                                                                  { NEW(File, *((Literal **)&yylval)); ((*yyvalp).File)=process_file(File); }
+#line 4271 "parser.c"
+    break;
+
+  case 178: /* Registration: Register Symbol  */
+#line 1554 "parser.y"
+                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
+#line 4277 "parser.c"
+    break;
+
+  case 179: /* Registration: Register Symbol Expression  */
+#line 1555 "parser.y"
+                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Registration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Registration)=process_registration(Registration); }
+#line 4283 "parser.c"
+    break;
+
+  case 180: /* Registration: Register Symbol AS Expression  */
+#line 1556 "parser.y"
+                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Registration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Registration)=process_registration(Registration); }
+#line 4289 "parser.c"
+    break;
+
+  case 181: /* Registration: Register Contract Symbol  */
+#line 1557 "parser.y"
+                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Register); Registration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
+#line 4295 "parser.c"
+    break;
+
+  case 182: /* Registration: Register Contract AS Symbol  */
 #line 1558 "parser.y"
-                                                                  { NEW(Grant, *((Literal **)&yylval)); ((*yyvalp).Grant)=process_grant(Grant); }
-#line 4226 "parser.c"
+                                                                  { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Register); Registration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
+#line 4301 "parser.c"
     break;
 
-  case 186: /* Grant: GRANTS  */
-#line 1559 "parser.y"
-                                                                  { NEW(Grant, *((Literal **)&yylval)); ((*yyvalp).Grant)=process_grant(Grant); }
-#line 4232 "parser.c"
+  case 183: /* Register: REGISTER  */
+#line 1564 "parser.y"
+                                                                  { NEW(Register, *((Literal **)&yylval)); ((*yyvalp).Register)=process_register(Register); }
+#line 4307 "parser.c"
     break;
 
-  case 187: /* Appointment: Appoint Symbol  */
+  case 184: /* Register: REGISTERS  */
 #line 1565 "parser.y"
+                                                                  { NEW(Register, *((Literal **)&yylval)); ((*yyvalp).Register)=process_register(Register); }
+#line 4313 "parser.c"
+    break;
+
+  case 185: /* Grantment: Grant Symbol  */
+#line 1571 "parser.y"
+                                                                  { NEW(Grantment, *((Literal **)&yylval)); Grantment->Grant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Grant); Grantment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Grantment)=process_grantment(Grantment); }
+#line 4319 "parser.c"
+    break;
+
+  case 186: /* Grant: GRANT  */
+#line 1577 "parser.y"
+                                                                  { NEW(Grant, *((Literal **)&yylval)); ((*yyvalp).Grant)=process_grant(Grant); }
+#line 4325 "parser.c"
+    break;
+
+  case 187: /* Grant: GRANTS  */
+#line 1578 "parser.y"
+                                                                  { NEW(Grant, *((Literal **)&yylval)); ((*yyvalp).Grant)=process_grant(Grant); }
+#line 4331 "parser.c"
+    break;
+
+  case 188: /* Appointment: Appoint Symbol  */
+#line 1584 "parser.y"
                                                                   { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Appoint); Appointment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Appointment)=process_appointment(Appointment); }
-#line 4238 "parser.c"
+#line 4337 "parser.c"
     break;
 
-  case 188: /* Appointment: Appoint Expression AS Symbol  */
-#line 1566 "parser.y"
+  case 189: /* Appointment: Appoint Expression AS Symbol  */
+#line 1585 "parser.y"
                                                                   { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Appoint); Appointment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Appointment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Appointment)=process_appointment(Appointment); }
-#line 4244 "parser.c"
+#line 4343 "parser.c"
     break;
 
-  case 189: /* Appoint: APPOINT  */
-#line 1572 "parser.y"
+  case 190: /* Appoint: APPOINT  */
+#line 1591 "parser.y"
                                                                   { NEW(Appoint, *((Literal **)&yylval)); ((*yyvalp).Appoint)=process_appoint(Appoint); }
-#line 4250 "parser.c"
+#line 4349 "parser.c"
     break;
 
-  case 190: /* Appoint: APPOINTS  */
-#line 1573 "parser.y"
+  case 191: /* Appoint: APPOINTS  */
+#line 1592 "parser.y"
                                                                   { NEW(Appoint, *((Literal **)&yylval)); ((*yyvalp).Appoint)=process_appoint(Appoint); }
-#line 4256 "parser.c"
+#line 4355 "parser.c"
     break;
 
-  case 191: /* Acceptance: Accept Symbol  */
-#line 1579 "parser.y"
+  case 192: /* Assignment: Assign Symbol  */
+#line 1598 "parser.y"
+                                                                  { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Assign); Assignment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Assignment)=process_assignment(Assignment); }
+#line 4361 "parser.c"
+    break;
+
+  case 193: /* Assignment: Assign Expression AS Symbol  */
+#line 1599 "parser.y"
+                                                                  { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Assign); Assignment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Assignment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Assignment)=process_assignment(Assignment); }
+#line 4367 "parser.c"
+    break;
+
+  case 194: /* Assign: ASSIGN  */
+#line 1605 "parser.y"
+                                                                  { NEW(Assign, *((Literal **)&yylval)); ((*yyvalp).Assign)=process_assign(Assign); }
+#line 4373 "parser.c"
+    break;
+
+  case 195: /* Assign: ASSIGNS  */
+#line 1606 "parser.y"
+                                                                  { NEW(Assign, *((Literal **)&yylval)); ((*yyvalp).Assign)=process_assign(Assign); }
+#line 4379 "parser.c"
+    break;
+
+  case 196: /* Acceptance: Accept Symbol  */
+#line 1612 "parser.y"
                                                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Accept); Acceptance->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Acceptance)=process_acceptance(Acceptance); }
-#line 4262 "parser.c"
+#line 4385 "parser.c"
     break;
 
-  case 192: /* Acceptance: Accept Symbol Expression  */
-#line 1580 "parser.y"
+  case 197: /* Acceptance: Accept Symbol Expression  */
+#line 1613 "parser.y"
                                                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Accept); Acceptance->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Acceptance->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Acceptance)=process_acceptance(Acceptance); }
-#line 4268 "parser.c"
+#line 4391 "parser.c"
     break;
 
-  case 193: /* Acceptance: Accept Symbol AS Expression  */
-#line 1581 "parser.y"
+  case 198: /* Acceptance: Accept Symbol AS Expression  */
+#line 1614 "parser.y"
                                                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Accept); Acceptance->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Acceptance->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Acceptance)=process_acceptance(Acceptance); }
-#line 4274 "parser.c"
+#line 4397 "parser.c"
     break;
 
-  case 194: /* Accept: ACCEPT  */
-#line 1587 "parser.y"
-                                                                  { NEW(Accept, *((Literal **)&yylval)); ((*yyvalp).Accept)=process_accept(Accept); }
-#line 4280 "parser.c"
-    break;
-
-  case 195: /* Accept: ACCEPTS  */
-#line 1588 "parser.y"
-                                                                  { NEW(Accept, *((Literal **)&yylval)); ((*yyvalp).Accept)=process_accept(Accept); }
-#line 4286 "parser.c"
-    break;
-
-  case 196: /* Fixture: Fix Symbol  */
-#line 1594 "parser.y"
-                                                                  { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Fix); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Fixture)=process_fixture(Fixture); }
-#line 4292 "parser.c"
-    break;
-
-  case 197: /* Fixture: Fix Symbol AS Expression  */
-#line 1595 "parser.y"
-                                                                  { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Fix); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Fixture->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Fixture)=process_fixture(Fixture); }
-#line 4298 "parser.c"
-    break;
-
-  case 198: /* Fixture: Fix Contract AS Symbol  */
-#line 1596 "parser.y"
-                                                                  { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Fix); Fixture->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Fixture)=process_fixture(Fixture); }
-#line 4304 "parser.c"
-    break;
-
-  case 199: /* Fix: FIX  */
-#line 1602 "parser.y"
-                                                                  { NEW(Fix, *((Literal **)&yylval)); ((*yyvalp).Fix)=process_fix(Fix); }
-#line 4310 "parser.c"
-    break;
-
-  case 200: /* Fix: FIXES  */
-#line 1603 "parser.y"
-                                                                  { NEW(Fix, *((Literal **)&yylval)); ((*yyvalp).Fix)=process_fix(Fix); }
-#line 4316 "parser.c"
-    break;
-
-  case 201: /* Fixed: FIXED  */
-#line 1609 "parser.y"
-                                                                  { NEW(Fixed, *((Literal **)&yylval)); ((*yyvalp).Fixed)=process_fixed(Fixed); }
-#line 4322 "parser.c"
-    break;
-
-  case 202: /* Setting: Be Symbol  */
-#line 1615 "parser.y"
-                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
-#line 4328 "parser.c"
-    break;
-
-  case 203: /* Setting: Be THEREFOR Symbol  */
-#line 1616 "parser.y"
-                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
-#line 4334 "parser.c"
-    break;
-
-  case 204: /* Setting: Be THEREFORE Symbol  */
-#line 1617 "parser.y"
-                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
-#line 4340 "parser.c"
-    break;
-
-  case 205: /* Setting: Be THEN Symbol  */
-#line 1618 "parser.y"
-                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
-#line 4346 "parser.c"
-    break;
-
-  case 206: /* Setting: Be THEN THEREFOR Symbol  */
-#line 1619 "parser.y"
-                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
-#line 4352 "parser.c"
-    break;
-
-  case 207: /* Setting: Be THEN THEREFORE Symbol  */
+  case 199: /* Accept: ACCEPT  */
 #line 1620 "parser.y"
-                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
-#line 4358 "parser.c"
+                                                                  { NEW(Accept, *((Literal **)&yylval)); ((*yyvalp).Accept)=process_accept(Accept); }
+#line 4403 "parser.c"
     break;
 
-  case 208: /* Illocutor: Be  */
-#line 1626 "parser.y"
-                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
-#line 4364 "parser.c"
+  case 200: /* Accept: ACCEPTS  */
+#line 1621 "parser.y"
+                                                                  { NEW(Accept, *((Literal **)&yylval)); ((*yyvalp).Accept)=process_accept(Accept); }
+#line 4409 "parser.c"
     break;
 
-  case 209: /* Illocutor: Be AS  */
+  case 201: /* Fixture: Fix Symbol  */
 #line 1627 "parser.y"
-                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
-#line 4370 "parser.c"
+                                                                  { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Fix); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Fixture)=process_fixture(Fixture); }
+#line 4415 "parser.c"
     break;
 
-  case 210: /* Illocutor: Be DEFINED  */
+  case 202: /* Fixture: Fix Symbol AS Expression  */
 #line 1628 "parser.y"
-                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
-#line 4376 "parser.c"
+                                                                  { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Fix); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Fixture->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Fixture)=process_fixture(Fixture); }
+#line 4421 "parser.c"
     break;
 
-  case 211: /* Illocutor: Be DEFINED AS  */
+  case 203: /* Fixture: Fix Contract AS Symbol  */
 #line 1629 "parser.y"
-                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
-#line 4382 "parser.c"
+                                                                  { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Fix); Fixture->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Fixture)=process_fixture(Fixture); }
+#line 4427 "parser.c"
     break;
 
-  case 212: /* Be: BE  */
+  case 204: /* Fix: FIX  */
 #line 1635 "parser.y"
-                                                                  { NEW(Be, *((Literal **)&yylval)); ((*yyvalp).Be)=process_be(Be); }
-#line 4388 "parser.c"
+                                                                  { NEW(Fix, *((Literal **)&yylval)); ((*yyvalp).Fix)=process_fix(Fix); }
+#line 4433 "parser.c"
     break;
 
-  case 213: /* Be: IS  */
+  case 205: /* Fix: FIXES  */
 #line 1636 "parser.y"
-                                                                  { NEW(Be, *((Literal **)&yylval)); ((*yyvalp).Be)=process_be(Be); }
-#line 4394 "parser.c"
+                                                                  { NEW(Fix, *((Literal **)&yylval)); ((*yyvalp).Fix)=process_fix(Fix); }
+#line 4439 "parser.c"
     break;
 
-  case 214: /* Payment: Pay Expression Preposition Object  */
+  case 206: /* Fixed: FIXED  */
 #line 1642 "parser.y"
-                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Pay); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
-#line 4400 "parser.c"
+                                                                  { NEW(Fixed, *((Literal **)&yylval)); ((*yyvalp).Fixed)=process_fixed(Fixed); }
+#line 4445 "parser.c"
     break;
 
-  case 215: /* Payment: Pay From_Escrow Expression Preposition Object  */
-#line 1643 "parser.y"
-                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Pay); Payment->From_Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.From_Escrow); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
-#line 4406 "parser.c"
+  case 207: /* Setting: Be Symbol  */
+#line 1648 "parser.y"
+                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
+#line 4451 "parser.c"
     break;
 
-  case 216: /* Payment: Pay Expression From_Escrow Preposition Object  */
-#line 1644 "parser.y"
-                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Pay); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Expression); Payment->From_Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.From_Escrow); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
-#line 4412 "parser.c"
+  case 208: /* Setting: Be THEREFOR Symbol  */
+#line 1649 "parser.y"
+                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
+#line 4457 "parser.c"
     break;
 
-  case 217: /* Payment: Pay Escrow Preposition Object  */
-#line 1645 "parser.y"
-                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Pay); Payment->Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Escrow); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
-#line 4418 "parser.c"
+  case 209: /* Setting: Be THEREFORE Symbol  */
+#line 1650 "parser.y"
+                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
+#line 4463 "parser.c"
     break;
 
-  case 218: /* Pay: PAY  */
+  case 210: /* Setting: Be THEN Symbol  */
 #line 1651 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4424 "parser.c"
+                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
+#line 4469 "parser.c"
     break;
 
-  case 219: /* Pay: PAYS  */
+  case 211: /* Setting: Be THEN THEREFOR Symbol  */
 #line 1652 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4430 "parser.c"
+                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
+#line 4475 "parser.c"
     break;
 
-  case 220: /* Pay: RETURN  */
+  case 212: /* Setting: Be THEN THEREFORE Symbol  */
 #line 1653 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4436 "parser.c"
+                                                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
+#line 4481 "parser.c"
     break;
 
-  case 221: /* Pay: RETURNS  */
-#line 1654 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4442 "parser.c"
+  case 213: /* Illocutor: Be  */
+#line 1659 "parser.y"
+                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
+#line 4487 "parser.c"
     break;
 
-  case 222: /* Pay: REPAY  */
-#line 1655 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4448 "parser.c"
+  case 214: /* Illocutor: Be AS  */
+#line 1660 "parser.y"
+                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
+#line 4493 "parser.c"
     break;
 
-  case 223: /* Pay: REPAYS  */
-#line 1656 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4454 "parser.c"
+  case 215: /* Illocutor: Be DEFINED  */
+#line 1661 "parser.y"
+                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
+#line 4499 "parser.c"
     break;
 
-  case 224: /* Pay: TRANSFER  */
-#line 1657 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4460 "parser.c"
+  case 216: /* Illocutor: Be DEFINED AS  */
+#line 1662 "parser.y"
+                                                                  { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
+#line 4505 "parser.c"
     break;
 
-  case 225: /* Pay: TRANSFERS  */
-#line 1658 "parser.y"
-                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
-#line 4466 "parser.c"
+  case 217: /* Be: BE  */
+#line 1668 "parser.y"
+                                                                  { NEW(Be, *((Literal **)&yylval)); ((*yyvalp).Be)=process_be(Be); }
+#line 4511 "parser.c"
     break;
 
-  case 226: /* Preposition: TO  */
-#line 1664 "parser.y"
-                                                                  { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
-#line 4472 "parser.c"
+  case 218: /* Be: IS  */
+#line 1669 "parser.y"
+                                                                  { NEW(Be, *((Literal **)&yylval)); ((*yyvalp).Be)=process_be(Be); }
+#line 4517 "parser.c"
     break;
 
-  case 227: /* Preposition: INTO  */
-#line 1665 "parser.y"
-                                                                  { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
-#line 4478 "parser.c"
-    break;
-
-  case 228: /* Preposition: OF  */
-#line 1666 "parser.y"
-                                                                  { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
-#line 4484 "parser.c"
-    break;
-
-  case 229: /* Escrow: ESCROW  */
-#line 1672 "parser.y"
-                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
-#line 4490 "parser.c"
-    break;
-
-  case 230: /* Escrow: REMAINDER OF THE ESCROW  */
-#line 1673 "parser.y"
-                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
-#line 4496 "parser.c"
-    break;
-
-  case 231: /* Escrow: THE ESCROW  */
-#line 1674 "parser.y"
-                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
-#line 4502 "parser.c"
-    break;
-
-  case 232: /* Escrow: THE REMAINDER OF THE ESCROW  */
+  case 219: /* Payment: Pay Expression Preposition Object  */
 #line 1675 "parser.y"
-                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
-#line 4508 "parser.c"
+                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Pay); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
+#line 4523 "parser.c"
     break;
 
-  case 233: /* From_Escrow: FROM ESCROW  */
-#line 1681 "parser.y"
-                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
-#line 4514 "parser.c"
+  case 220: /* Payment: Pay From_Escrow Expression Preposition Object  */
+#line 1676 "parser.y"
+                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Pay); Payment->From_Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.From_Escrow); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
+#line 4529 "parser.c"
     break;
 
-  case 234: /* From_Escrow: FROM REMAINDER OF THE ESCROW  */
-#line 1682 "parser.y"
-                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
-#line 4520 "parser.c"
+  case 221: /* Payment: Pay Expression From_Escrow Preposition Object  */
+#line 1677 "parser.y"
+                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Pay); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Expression); Payment->From_Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.From_Escrow); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
+#line 4535 "parser.c"
     break;
 
-  case 235: /* From_Escrow: FROM THE ESCROW  */
-#line 1683 "parser.y"
-                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
-#line 4526 "parser.c"
+  case 222: /* Payment: Pay Escrow Preposition Object  */
+#line 1678 "parser.y"
+                                                                  { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Pay); Payment->Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Escrow); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
+#line 4541 "parser.c"
     break;
 
-  case 236: /* From_Escrow: FROM THE REMAINDER OF THE ESCROW  */
+  case 223: /* Pay: PAY  */
 #line 1684 "parser.y"
-                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
-#line 4532 "parser.c"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4547 "parser.c"
     break;
 
-  case 237: /* Sending: Send Expression Preposition Object  */
+  case 224: /* Pay: PAYS  */
+#line 1685 "parser.y"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4553 "parser.c"
+    break;
+
+  case 225: /* Pay: RETURN  */
+#line 1686 "parser.y"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4559 "parser.c"
+    break;
+
+  case 226: /* Pay: RETURNS  */
+#line 1687 "parser.y"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4565 "parser.c"
+    break;
+
+  case 227: /* Pay: REPAY  */
+#line 1688 "parser.y"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4571 "parser.c"
+    break;
+
+  case 228: /* Pay: REPAYS  */
+#line 1689 "parser.y"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4577 "parser.c"
+    break;
+
+  case 229: /* Pay: TRANSFER  */
 #line 1690 "parser.y"
-                                                                  { NEW(Sending, *((Literal **)&yylval)); Sending->Send=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Send); Sending->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Sending->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Sending->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Sending)=process_sending(Sending); }
-#line 4538 "parser.c"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4583 "parser.c"
     break;
 
-  case 238: /* Send: SEND  */
-#line 1696 "parser.y"
-                                                                  { NEW(Send, *((Literal **)&yylval)); ((*yyvalp).Send)=process_send(Send); }
-#line 4544 "parser.c"
+  case 230: /* Pay: TRANSFERS  */
+#line 1691 "parser.y"
+                                                                  { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
+#line 4589 "parser.c"
     break;
 
-  case 239: /* Send: SENDS  */
+  case 231: /* Preposition: TO  */
 #line 1697 "parser.y"
-                                                                  { NEW(Send, *((Literal **)&yylval)); ((*yyvalp).Send)=process_send(Send); }
-#line 4550 "parser.c"
+                                                                  { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
+#line 4595 "parser.c"
     break;
 
-  case 240: /* Notification: Notify Object  */
-#line 1703 "parser.y"
-                                                                  { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Notify); Notification->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Notification)=process_notification(Notification); }
-#line 4556 "parser.c"
+  case 232: /* Preposition: INTO  */
+#line 1698 "parser.y"
+                                                                  { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
+#line 4601 "parser.c"
     break;
 
-  case 241: /* Notification: Notify Object Preposition Expression  */
-#line 1704 "parser.y"
-                                                                  { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Notify); Notification->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Object); Notification->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Notification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Notification)=process_notification(Notification); }
-#line 4562 "parser.c"
+  case 233: /* Preposition: OF  */
+#line 1699 "parser.y"
+                                                                  { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
+#line 4607 "parser.c"
     break;
 
-  case 242: /* Notify: NOTIFY  */
-#line 1710 "parser.y"
-                                                                  { NEW(Notify, *((Literal **)&yylval)); ((*yyvalp).Notify)=process_notify(Notify); }
-#line 4568 "parser.c"
+  case 234: /* Escrow: ESCROW  */
+#line 1705 "parser.y"
+                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
+#line 4613 "parser.c"
     break;
 
-  case 243: /* Notify: NOTIFIES  */
-#line 1711 "parser.y"
-                                                                  { NEW(Notify, *((Literal **)&yylval)); ((*yyvalp).Notify)=process_notify(Notify); }
-#line 4574 "parser.c"
+  case 235: /* Escrow: REMAINDER OF THE ESCROW  */
+#line 1706 "parser.y"
+                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
+#line 4619 "parser.c"
     break;
 
-  case 244: /* Termination: Terminate This_Contract  */
+  case 236: /* Escrow: THE ESCROW  */
+#line 1707 "parser.y"
+                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
+#line 4625 "parser.c"
+    break;
+
+  case 237: /* Escrow: THE REMAINDER OF THE ESCROW  */
+#line 1708 "parser.y"
+                                                                  { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
+#line 4631 "parser.c"
+    break;
+
+  case 238: /* From_Escrow: FROM ESCROW  */
+#line 1714 "parser.y"
+                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
+#line 4637 "parser.c"
+    break;
+
+  case 239: /* From_Escrow: FROM REMAINDER OF THE ESCROW  */
+#line 1715 "parser.y"
+                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
+#line 4643 "parser.c"
+    break;
+
+  case 240: /* From_Escrow: FROM THE ESCROW  */
+#line 1716 "parser.y"
+                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
+#line 4649 "parser.c"
+    break;
+
+  case 241: /* From_Escrow: FROM THE REMAINDER OF THE ESCROW  */
 #line 1717 "parser.y"
-                                                                  { NEW(Termination, *((Literal **)&yylval)); Termination->Terminate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terminate); Termination->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Termination)=process_termination(Termination); }
-#line 4580 "parser.c"
+                                                                  { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
+#line 4655 "parser.c"
     break;
 
-  case 245: /* Termination: Terminate All_Contracts  */
-#line 1718 "parser.y"
-                                                                  { NEW(Termination, *((Literal **)&yylval)); Termination->Terminate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terminate); Termination->All_Contracts=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.All_Contracts); ((*yyvalp).Termination)=process_termination(Termination); }
-#line 4586 "parser.c"
+  case 242: /* Sending: Send Expression Preposition Object  */
+#line 1723 "parser.y"
+                                                                  { NEW(Sending, *((Literal **)&yylval)); Sending->Send=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Send); Sending->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Sending->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Sending->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Sending)=process_sending(Sending); }
+#line 4661 "parser.c"
     break;
 
-  case 246: /* Terminate: TERMINATE  */
-#line 1724 "parser.y"
-                                                                  { NEW(Terminate, *((Literal **)&yylval)); ((*yyvalp).Terminate)=process_terminate(Terminate); }
-#line 4592 "parser.c"
+  case 243: /* Send: SEND  */
+#line 1729 "parser.y"
+                                                                  { NEW(Send, *((Literal **)&yylval)); ((*yyvalp).Send)=process_send(Send); }
+#line 4667 "parser.c"
     break;
 
-  case 247: /* Terminate: TERMINATES  */
-#line 1725 "parser.y"
-                                                                  { NEW(Terminate, *((Literal **)&yylval)); ((*yyvalp).Terminate)=process_terminate(Terminate); }
-#line 4598 "parser.c"
+  case 244: /* Send: SENDS  */
+#line 1730 "parser.y"
+                                                                  { NEW(Send, *((Literal **)&yylval)); ((*yyvalp).Send)=process_send(Send); }
+#line 4673 "parser.c"
     break;
 
-  case 248: /* Flagging: Illocutor Symbol Separator  */
-#line 1731 "parser.y"
-                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4604 "parser.c"
-    break;
-
-  case 249: /* Flagging: Illocutor THEREFORE Symbol Separator  */
-#line 1732 "parser.y"
-                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4610 "parser.c"
-    break;
-
-  case 250: /* Flagging: Illocutor THEN Symbol Separator  */
-#line 1733 "parser.y"
-                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4616 "parser.c"
-    break;
-
-  case 251: /* Flagging: Illocutor THEN THEREFORE Symbol Separator  */
-#line 1734 "parser.y"
-                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4622 "parser.c"
-    break;
-
-  case 252: /* Flagging: This_Contract Illocutor Symbol Separator  */
-#line 1735 "parser.y"
-                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4628 "parser.c"
-    break;
-
-  case 253: /* Flagging: This_Contract Illocutor THEREFORE Symbol Separator  */
+  case 245: /* Notification: Notify Object  */
 #line 1736 "parser.y"
-                                                                     { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4634 "parser.c"
+                                                                  { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Notify); Notification->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Notification)=process_notification(Notification); }
+#line 4679 "parser.c"
     break;
 
-  case 254: /* Flagging: This_Contract Illocutor THEN Symbol Separator  */
+  case 246: /* Notification: Notify Object Preposition Expression  */
 #line 1737 "parser.y"
-                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4640 "parser.c"
+                                                                  { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Notify); Notification->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Object); Notification->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Notification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Notification)=process_notification(Notification); }
+#line 4685 "parser.c"
     break;
 
-  case 255: /* Flagging: This_Contract Illocutor THEN THEREFORE Symbol Separator  */
-#line 1738 "parser.y"
-                                                                          { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
-#line 4646 "parser.c"
+  case 247: /* Notify: NOTIFY  */
+#line 1743 "parser.y"
+                                                                  { NEW(Notify, *((Literal **)&yylval)); ((*yyvalp).Notify)=process_notify(Notify); }
+#line 4691 "parser.c"
     break;
 
-  case 256: /* Condition: If Expression  */
+  case 248: /* Notify: NOTIFIES  */
 #line 1744 "parser.y"
-                                                                  { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
-#line 4652 "parser.c"
+                                                                  { NEW(Notify, *((Literal **)&yylval)); ((*yyvalp).Notify)=process_notify(Notify); }
+#line 4697 "parser.c"
     break;
 
-  case 257: /* Condition: If Expression THEN  */
-#line 1745 "parser.y"
-                                                                  { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
-#line 4658 "parser.c"
+  case 249: /* Termination: Terminate This_Contract  */
+#line 1750 "parser.y"
+                                                                  { NEW(Termination, *((Literal **)&yylval)); Termination->Terminate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terminate); Termination->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Termination)=process_termination(Termination); }
+#line 4703 "parser.c"
     break;
 
-  case 258: /* Condition: If Expression Comma THEN  */
-#line 1746 "parser.y"
-                                                                  { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
-#line 4664 "parser.c"
+  case 250: /* Termination: Terminate All_Contracts  */
+#line 1751 "parser.y"
+                                                                  { NEW(Termination, *((Literal **)&yylval)); Termination->Terminate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terminate); Termination->All_Contracts=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.All_Contracts); ((*yyvalp).Termination)=process_termination(Termination); }
+#line 4709 "parser.c"
     break;
 
-  case 259: /* If: IF  */
-#line 1752 "parser.y"
-                                                                  { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
-#line 4670 "parser.c"
+  case 251: /* Terminate: TERMINATE  */
+#line 1757 "parser.y"
+                                                                  { NEW(Terminate, *((Literal **)&yylval)); ((*yyvalp).Terminate)=process_terminate(Terminate); }
+#line 4715 "parser.c"
     break;
 
-  case 260: /* If: GIVEN THAT  */
-#line 1753 "parser.y"
-                                                                  { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
-#line 4676 "parser.c"
+  case 252: /* Terminate: TERMINATES  */
+#line 1758 "parser.y"
+                                                                  { NEW(Terminate, *((Literal **)&yylval)); ((*yyvalp).Terminate)=process_terminate(Terminate); }
+#line 4721 "parser.c"
     break;
 
-  case 261: /* If: PROVIDED  */
-#line 1754 "parser.y"
-                                                                  { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
-#line 4682 "parser.c"
+  case 253: /* Flagging: Illocutor Symbol Separator  */
+#line 1764 "parser.y"
+                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4727 "parser.c"
     break;
 
-  case 262: /* Expression: Combination  */
-#line 1760 "parser.y"
-                                                                  { NEW(Expression, *((Literal **)&yylval)); Expression->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Expression)=process_expression(Expression); }
-#line 4688 "parser.c"
+  case 254: /* Flagging: Illocutor THEREFORE Symbol Separator  */
+#line 1765 "parser.y"
+                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4733 "parser.c"
     break;
 
-  case 263: /* Scalar_Comparison: Scalar_Expression Comparison_Operator Scalar_Expression  */
+  case 255: /* Flagging: Illocutor THEN Symbol Separator  */
 #line 1766 "parser.y"
-                                                                          { NEW(Scalar_Comparison, *((Literal **)&yylval)); Scalar_Comparison->Scalar_Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Scalar_Expression); Scalar_Comparison->Comparison_Operator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comparison_Operator); Scalar_Comparison->Scalar_Expression2=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar_Expression); ((*yyvalp).Scalar_Comparison)=process_scalar_comparison(Scalar_Comparison); }
-#line 4694 "parser.c"
+                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4739 "parser.c"
     break;
 
-  case 264: /* Comparison_Operator: Equal  */
-#line 1772 "parser.y"
-                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Equal=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Equal); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
-#line 4700 "parser.c"
+  case 256: /* Flagging: Illocutor THEN THEREFORE Symbol Separator  */
+#line 1767 "parser.y"
+                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4745 "parser.c"
     break;
 
-  case 265: /* Comparison_Operator: Greater  */
-#line 1773 "parser.y"
-                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Greater=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Greater); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
-#line 4706 "parser.c"
+  case 257: /* Flagging: This_Contract Illocutor Symbol Separator  */
+#line 1768 "parser.y"
+                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4751 "parser.c"
     break;
 
-  case 266: /* Comparison_Operator: Less  */
-#line 1774 "parser.y"
-                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Less=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Less); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
-#line 4712 "parser.c"
+  case 258: /* Flagging: This_Contract Illocutor THEREFORE Symbol Separator  */
+#line 1769 "parser.y"
+                                                                     { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4757 "parser.c"
     break;
 
-  case 267: /* Comparison_Operator: Later  */
-#line 1775 "parser.y"
-                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Later=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Later); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
-#line 4718 "parser.c"
+  case 259: /* Flagging: This_Contract Illocutor THEN Symbol Separator  */
+#line 1770 "parser.y"
+                                                                  { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4763 "parser.c"
     break;
 
-  case 268: /* Equal: EQUAL  */
-#line 1781 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4724 "parser.c"
+  case 260: /* Flagging: This_Contract Illocutor THEN THEREFORE Symbol Separator  */
+#line 1771 "parser.y"
+                                                                          { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
+#line 4769 "parser.c"
     break;
 
-  case 269: /* Equal: EQUAL TO  */
-#line 1782 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4730 "parser.c"
+  case 261: /* Condition: If Expression  */
+#line 1777 "parser.y"
+                                                                  { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
+#line 4775 "parser.c"
     break;
 
-  case 270: /* Equal: EQUALING  */
-#line 1783 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4736 "parser.c"
+  case 262: /* Condition: If Expression THEN  */
+#line 1778 "parser.y"
+                                                                  { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
+#line 4781 "parser.c"
     break;
 
-  case 271: /* Equal: IS  */
-#line 1784 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4742 "parser.c"
+  case 263: /* Condition: If Expression Comma THEN  */
+#line 1779 "parser.y"
+                                                                  { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
+#line 4787 "parser.c"
     break;
 
-  case 272: /* Equal: IS EQUAL  */
+  case 264: /* If: IF  */
 #line 1785 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4748 "parser.c"
+                                                                  { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
+#line 4793 "parser.c"
     break;
 
-  case 273: /* Equal: IS EQUAL TO  */
+  case 265: /* If: GIVEN THAT  */
 #line 1786 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4754 "parser.c"
+                                                                  { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
+#line 4799 "parser.c"
     break;
 
-  case 274: /* Equal: BEING  */
+  case 266: /* If: PROVIDED  */
 #line 1787 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4760 "parser.c"
+                                                                  { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
+#line 4805 "parser.c"
     break;
 
-  case 275: /* Equal: BEING EQUAL  */
-#line 1788 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4766 "parser.c"
+  case 267: /* Expression: Combination  */
+#line 1793 "parser.y"
+                                                                  { NEW(Expression, *((Literal **)&yylval)); Expression->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Expression)=process_expression(Expression); }
+#line 4811 "parser.c"
     break;
 
-  case 276: /* Equal: BEING EQUAL TO  */
-#line 1789 "parser.y"
-                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
-#line 4772 "parser.c"
-    break;
-
-  case 277: /* Greater: GREATER BEING GREATER  */
-#line 1795 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4778 "parser.c"
-    break;
-
-  case 278: /* Greater: GREATER BEING GREATER THAN  */
-#line 1796 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4784 "parser.c"
-    break;
-
-  case 279: /* Greater: GREATER THAN BEING GREATER  */
-#line 1797 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4790 "parser.c"
-    break;
-
-  case 280: /* Greater: GREATER THAN BEING GREATER THAN  */
-#line 1798 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4796 "parser.c"
-    break;
-
-  case 281: /* Greater: IS GREATER BEING GREATER  */
+  case 268: /* Scalar_Comparison: Scalar_Expression Comparison_Operator Scalar_Expression  */
 #line 1799 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4802 "parser.c"
+                                                                          { NEW(Scalar_Comparison, *((Literal **)&yylval)); Scalar_Comparison->Scalar_Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Scalar_Expression); Scalar_Comparison->Comparison_Operator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comparison_Operator); Scalar_Comparison->Scalar_Expression2=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar_Expression); ((*yyvalp).Scalar_Comparison)=process_scalar_comparison(Scalar_Comparison); }
+#line 4817 "parser.c"
     break;
 
-  case 282: /* Greater: IS GREATER BEING GREATER THAN  */
-#line 1800 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4808 "parser.c"
+  case 269: /* Comparison_Operator: Equal  */
+#line 1805 "parser.y"
+                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Equal=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Equal); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
+#line 4823 "parser.c"
     break;
 
-  case 283: /* Greater: IS GREATER THAN BEING GREATER  */
-#line 1801 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4814 "parser.c"
+  case 270: /* Comparison_Operator: Greater  */
+#line 1806 "parser.y"
+                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Greater=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Greater); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
+#line 4829 "parser.c"
     break;
 
-  case 284: /* Greater: IS GREATER THAN BEING GREATER THAN  */
-#line 1802 "parser.y"
-                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
-#line 4820 "parser.c"
+  case 271: /* Comparison_Operator: Less  */
+#line 1807 "parser.y"
+                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Less=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Less); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
+#line 4835 "parser.c"
     break;
 
-  case 285: /* Less: LESS BEING LESS SMALLER BEING SMALLER  */
+  case 272: /* Comparison_Operator: Later  */
 #line 1808 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4826 "parser.c"
+                                                                  { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Later=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Later); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
+#line 4841 "parser.c"
     break;
 
-  case 286: /* Less: LESS BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1809 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4832 "parser.c"
-    break;
-
-  case 287: /* Less: LESS BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1810 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4838 "parser.c"
-    break;
-
-  case 288: /* Less: LESS BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1811 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4844 "parser.c"
-    break;
-
-  case 289: /* Less: LESS BEING LESS IS SMALLER BEING SMALLER  */
-#line 1812 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4850 "parser.c"
-    break;
-
-  case 290: /* Less: LESS BEING LESS IS SMALLER BEING SMALLER THAN  */
-#line 1813 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4856 "parser.c"
-    break;
-
-  case 291: /* Less: LESS BEING LESS IS SMALLER THAN BEING SMALLER  */
+  case 273: /* Equal: EQUAL  */
 #line 1814 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4862 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4847 "parser.c"
     break;
 
-  case 292: /* Less: LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
+  case 274: /* Equal: EQUAL TO  */
 #line 1815 "parser.y"
-                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4868 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4853 "parser.c"
     break;
 
-  case 293: /* Less: LESS BEING LESS THAN SMALLER BEING SMALLER  */
+  case 275: /* Equal: EQUALING  */
 #line 1816 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4874 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4859 "parser.c"
     break;
 
-  case 294: /* Less: LESS BEING LESS THAN SMALLER BEING SMALLER THAN  */
+  case 276: /* Equal: IS  */
 #line 1817 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4880 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4865 "parser.c"
     break;
 
-  case 295: /* Less: LESS BEING LESS THAN SMALLER THAN BEING SMALLER  */
+  case 277: /* Equal: IS EQUAL  */
 #line 1818 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4886 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4871 "parser.c"
     break;
 
-  case 296: /* Less: LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
+  case 278: /* Equal: IS EQUAL TO  */
 #line 1819 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4892 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4877 "parser.c"
     break;
 
-  case 297: /* Less: LESS BEING LESS THAN IS SMALLER BEING SMALLER  */
+  case 279: /* Equal: BEING  */
 #line 1820 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4898 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4883 "parser.c"
     break;
 
-  case 298: /* Less: LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
+  case 280: /* Equal: BEING EQUAL  */
 #line 1821 "parser.y"
-                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4904 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4889 "parser.c"
     break;
 
-  case 299: /* Less: LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
+  case 281: /* Equal: BEING EQUAL TO  */
 #line 1822 "parser.y"
-                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4910 "parser.c"
+                                                                  { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
+#line 4895 "parser.c"
     break;
 
-  case 300: /* Less: LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1823 "parser.y"
-                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4916 "parser.c"
-    break;
-
-  case 301: /* Less: LESS THAN BEING LESS SMALLER BEING SMALLER  */
-#line 1824 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4922 "parser.c"
-    break;
-
-  case 302: /* Less: LESS THAN BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1825 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4928 "parser.c"
-    break;
-
-  case 303: /* Less: LESS THAN BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1826 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4934 "parser.c"
-    break;
-
-  case 304: /* Less: LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1827 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4940 "parser.c"
-    break;
-
-  case 305: /* Less: LESS THAN BEING LESS IS SMALLER BEING SMALLER  */
+  case 282: /* Greater: GREATER BEING GREATER  */
 #line 1828 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4946 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4901 "parser.c"
     break;
 
-  case 306: /* Less: LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN  */
+  case 283: /* Greater: GREATER BEING GREATER THAN  */
 #line 1829 "parser.y"
-                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4952 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4907 "parser.c"
     break;
 
-  case 307: /* Less: LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER  */
+  case 284: /* Greater: GREATER THAN BEING GREATER  */
 #line 1830 "parser.y"
-                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4958 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4913 "parser.c"
     break;
 
-  case 308: /* Less: LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
+  case 285: /* Greater: GREATER THAN BEING GREATER THAN  */
 #line 1831 "parser.y"
-                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4964 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4919 "parser.c"
     break;
 
-  case 309: /* Less: LESS THAN BEING LESS THAN SMALLER BEING SMALLER  */
+  case 286: /* Greater: IS GREATER BEING GREATER  */
 #line 1832 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4970 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4925 "parser.c"
     break;
 
-  case 310: /* Less: LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN  */
+  case 287: /* Greater: IS GREATER BEING GREATER THAN  */
 #line 1833 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4976 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4931 "parser.c"
     break;
 
-  case 311: /* Less: LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER  */
+  case 288: /* Greater: IS GREATER THAN BEING GREATER  */
 #line 1834 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4982 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4937 "parser.c"
     break;
 
-  case 312: /* Less: LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
+  case 289: /* Greater: IS GREATER THAN BEING GREATER THAN  */
 #line 1835 "parser.y"
-                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4988 "parser.c"
+                                                                  { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
+#line 4943 "parser.c"
     break;
 
-  case 313: /* Less: LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1836 "parser.y"
-                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 4994 "parser.c"
-    break;
-
-  case 314: /* Less: LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
-#line 1837 "parser.y"
-                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5000 "parser.c"
-    break;
-
-  case 315: /* Less: LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
-#line 1838 "parser.y"
-                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5006 "parser.c"
-    break;
-
-  case 316: /* Less: LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1839 "parser.y"
-                                                                                { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5012 "parser.c"
-    break;
-
-  case 317: /* Less: IS LESS BEING LESS SMALLER BEING SMALLER  */
-#line 1840 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5018 "parser.c"
-    break;
-
-  case 318: /* Less: IS LESS BEING LESS SMALLER BEING SMALLER THAN  */
+  case 290: /* Less: LESS BEING LESS SMALLER BEING SMALLER  */
 #line 1841 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5024 "parser.c"
+#line 4949 "parser.c"
     break;
 
-  case 319: /* Less: IS LESS BEING LESS SMALLER THAN BEING SMALLER  */
+  case 291: /* Less: LESS BEING LESS SMALLER BEING SMALLER THAN  */
 #line 1842 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5030 "parser.c"
+#line 4955 "parser.c"
     break;
 
-  case 320: /* Less: IS LESS BEING LESS SMALLER THAN BEING SMALLER THAN  */
+  case 292: /* Less: LESS BEING LESS SMALLER THAN BEING SMALLER  */
 #line 1843 "parser.y"
-                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5036 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 4961 "parser.c"
     break;
 
-  case 321: /* Less: IS LESS BEING LESS IS SMALLER BEING SMALLER  */
+  case 293: /* Less: LESS BEING LESS SMALLER THAN BEING SMALLER THAN  */
 #line 1844 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5042 "parser.c"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 4967 "parser.c"
     break;
 
-  case 322: /* Less: IS LESS BEING LESS IS SMALLER BEING SMALLER THAN  */
+  case 294: /* Less: LESS BEING LESS IS SMALLER BEING SMALLER  */
 #line 1845 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5048 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 4973 "parser.c"
     break;
 
-  case 323: /* Less: IS LESS BEING LESS IS SMALLER THAN BEING SMALLER  */
+  case 295: /* Less: LESS BEING LESS IS SMALLER BEING SMALLER THAN  */
 #line 1846 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5054 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 4979 "parser.c"
     break;
 
-  case 324: /* Less: IS LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
+  case 296: /* Less: LESS BEING LESS IS SMALLER THAN BEING SMALLER  */
 #line 1847 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5060 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 4985 "parser.c"
     break;
 
-  case 325: /* Less: IS LESS BEING LESS THAN SMALLER BEING SMALLER  */
+  case 297: /* Less: LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
 #line 1848 "parser.y"
-                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5066 "parser.c"
+                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 4991 "parser.c"
     break;
 
-  case 326: /* Less: IS LESS BEING LESS THAN SMALLER BEING SMALLER THAN  */
+  case 298: /* Less: LESS BEING LESS THAN SMALLER BEING SMALLER  */
 #line 1849 "parser.y"
-                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5072 "parser.c"
-    break;
-
-  case 327: /* Less: IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER  */
-#line 1850 "parser.y"
-                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5078 "parser.c"
-    break;
-
-  case 328: /* Less: IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
-#line 1851 "parser.y"
-                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5084 "parser.c"
-    break;
-
-  case 329: /* Less: IS LESS BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1852 "parser.y"
-                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5090 "parser.c"
-    break;
-
-  case 330: /* Less: IS LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
-#line 1853 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5096 "parser.c"
-    break;
-
-  case 331: /* Less: IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
-#line 1854 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5102 "parser.c"
-    break;
-
-  case 332: /* Less: IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1855 "parser.y"
-                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5108 "parser.c"
-    break;
-
-  case 333: /* Less: IS LESS THAN BEING LESS SMALLER BEING SMALLER  */
-#line 1856 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5114 "parser.c"
+#line 4997 "parser.c"
     break;
 
-  case 334: /* Less: IS LESS THAN BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1857 "parser.y"
-                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5120 "parser.c"
-    break;
-
-  case 335: /* Less: IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1858 "parser.y"
-                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5126 "parser.c"
-    break;
-
-  case 336: /* Less: IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1859 "parser.y"
-                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5132 "parser.c"
-    break;
-
-  case 337: /* Less: IS LESS THAN BEING LESS IS SMALLER BEING SMALLER  */
-#line 1860 "parser.y"
+  case 299: /* Less: LESS BEING LESS THAN SMALLER BEING SMALLER THAN  */
+#line 1850 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5138 "parser.c"
+#line 5003 "parser.c"
     break;
 
-  case 338: /* Less: IS LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN  */
+  case 300: /* Less: LESS BEING LESS THAN SMALLER THAN BEING SMALLER  */
+#line 1851 "parser.y"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5009 "parser.c"
+    break;
+
+  case 301: /* Less: LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
+#line 1852 "parser.y"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5015 "parser.c"
+    break;
+
+  case 302: /* Less: LESS BEING LESS THAN IS SMALLER BEING SMALLER  */
+#line 1853 "parser.y"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5021 "parser.c"
+    break;
+
+  case 303: /* Less: LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
+#line 1854 "parser.y"
+                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5027 "parser.c"
+    break;
+
+  case 304: /* Less: LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
+#line 1855 "parser.y"
+                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5033 "parser.c"
+    break;
+
+  case 305: /* Less: LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
+#line 1856 "parser.y"
+                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5039 "parser.c"
+    break;
+
+  case 306: /* Less: LESS THAN BEING LESS SMALLER BEING SMALLER  */
+#line 1857 "parser.y"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5045 "parser.c"
+    break;
+
+  case 307: /* Less: LESS THAN BEING LESS SMALLER BEING SMALLER THAN  */
+#line 1858 "parser.y"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5051 "parser.c"
+    break;
+
+  case 308: /* Less: LESS THAN BEING LESS SMALLER THAN BEING SMALLER  */
+#line 1859 "parser.y"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5057 "parser.c"
+    break;
+
+  case 309: /* Less: LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN  */
+#line 1860 "parser.y"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5063 "parser.c"
+    break;
+
+  case 310: /* Less: LESS THAN BEING LESS IS SMALLER BEING SMALLER  */
 #line 1861 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5144 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5069 "parser.c"
     break;
 
-  case 339: /* Less: IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER  */
+  case 311: /* Less: LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN  */
 #line 1862 "parser.y"
-                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5150 "parser.c"
+                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5075 "parser.c"
     break;
 
-  case 340: /* Less: IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
+  case 312: /* Less: LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER  */
 #line 1863 "parser.y"
-                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5156 "parser.c"
+                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5081 "parser.c"
     break;
 
-  case 341: /* Less: IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER  */
+  case 313: /* Less: LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
 #line 1864 "parser.y"
-                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5162 "parser.c"
+                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5087 "parser.c"
     break;
 
-  case 342: /* Less: IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN  */
+  case 314: /* Less: LESS THAN BEING LESS THAN SMALLER BEING SMALLER  */
 #line 1865 "parser.y"
-                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5168 "parser.c"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5093 "parser.c"
     break;
 
-  case 343: /* Less: IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER  */
+  case 315: /* Less: LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN  */
 #line 1866 "parser.y"
-                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5174 "parser.c"
-    break;
-
-  case 344: /* Less: IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
-#line 1867 "parser.y"
-                                                                               { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5180 "parser.c"
-    break;
-
-  case 345: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1868 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5186 "parser.c"
+#line 5099 "parser.c"
     break;
 
-  case 346: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
+  case 316: /* Less: LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER  */
+#line 1867 "parser.y"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5105 "parser.c"
+    break;
+
+  case 317: /* Less: LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
+#line 1868 "parser.y"
+                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5111 "parser.c"
+    break;
+
+  case 318: /* Less: LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER  */
 #line 1869 "parser.y"
-                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5192 "parser.c"
+                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5117 "parser.c"
     break;
 
-  case 347: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
+  case 319: /* Less: LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
 #line 1870 "parser.y"
-                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5198 "parser.c"
+                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5123 "parser.c"
     break;
 
-  case 348: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
+  case 320: /* Less: LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
 #line 1871 "parser.y"
-                                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
-#line 5204 "parser.c"
+                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5129 "parser.c"
     break;
 
-  case 349: /* Later: IS AT LEAST  */
+  case 321: /* Less: LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
+#line 1872 "parser.y"
+                                                                                { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5135 "parser.c"
+    break;
+
+  case 322: /* Less: IS LESS BEING LESS SMALLER BEING SMALLER  */
+#line 1873 "parser.y"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5141 "parser.c"
+    break;
+
+  case 323: /* Less: IS LESS BEING LESS SMALLER BEING SMALLER THAN  */
+#line 1874 "parser.y"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5147 "parser.c"
+    break;
+
+  case 324: /* Less: IS LESS BEING LESS SMALLER THAN BEING SMALLER  */
+#line 1875 "parser.y"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5153 "parser.c"
+    break;
+
+  case 325: /* Less: IS LESS BEING LESS SMALLER THAN BEING SMALLER THAN  */
+#line 1876 "parser.y"
+                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5159 "parser.c"
+    break;
+
+  case 326: /* Less: IS LESS BEING LESS IS SMALLER BEING SMALLER  */
 #line 1877 "parser.y"
-                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
-#line 5210 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5165 "parser.c"
     break;
 
-  case 350: /* Later: IS AT THE LEAST  */
+  case 327: /* Less: IS LESS BEING LESS IS SMALLER BEING SMALLER THAN  */
 #line 1878 "parser.y"
-                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
-#line 5216 "parser.c"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5171 "parser.c"
     break;
 
-  case 351: /* Later: LIES AT LEAST  */
+  case 328: /* Less: IS LESS BEING LESS IS SMALLER THAN BEING SMALLER  */
 #line 1879 "parser.y"
-                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
-#line 5222 "parser.c"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5177 "parser.c"
     break;
 
-  case 352: /* Later: LIES AT THE LEAST  */
+  case 329: /* Less: IS LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
 #line 1880 "parser.y"
-                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
-#line 5228 "parser.c"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5183 "parser.c"
     break;
 
-  case 353: /* Scalar_Expression: Symbol  */
+  case 330: /* Less: IS LESS BEING LESS THAN SMALLER BEING SMALLER  */
+#line 1881 "parser.y"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5189 "parser.c"
+    break;
+
+  case 331: /* Less: IS LESS BEING LESS THAN SMALLER BEING SMALLER THAN  */
+#line 1882 "parser.y"
+                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5195 "parser.c"
+    break;
+
+  case 332: /* Less: IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER  */
+#line 1883 "parser.y"
+                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5201 "parser.c"
+    break;
+
+  case 333: /* Less: IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
+#line 1884 "parser.y"
+                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5207 "parser.c"
+    break;
+
+  case 334: /* Less: IS LESS BEING LESS THAN IS SMALLER BEING SMALLER  */
+#line 1885 "parser.y"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5213 "parser.c"
+    break;
+
+  case 335: /* Less: IS LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
 #line 1886 "parser.y"
-                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
-#line 5234 "parser.c"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5219 "parser.c"
     break;
 
-  case 354: /* Scalar_Expression: Scalar  */
+  case 336: /* Less: IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
 #line 1887 "parser.y"
-                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Scalar=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
-#line 5240 "parser.c"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5225 "parser.c"
     break;
 
-  case 355: /* Scalar_Expression: Point_In_Time  */
+  case 337: /* Less: IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
 #line 1888 "parser.y"
-                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Point_In_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Point_In_Time); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
-#line 5246 "parser.c"
+                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5231 "parser.c"
     break;
 
-  case 356: /* Scalar_Expression: ESCROW  */
+  case 338: /* Less: IS LESS THAN BEING LESS SMALLER BEING SMALLER  */
 #line 1889 "parser.y"
-                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
-#line 5252 "parser.c"
+                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5237 "parser.c"
     break;
 
-  case 357: /* Scalar_Expression: THE ESCROW  */
+  case 339: /* Less: IS LESS THAN BEING LESS SMALLER BEING SMALLER THAN  */
 #line 1890 "parser.y"
-                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
-#line 5258 "parser.c"
+                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5243 "parser.c"
     break;
 
-  case 358: /* Combination: Combinor  */
+  case 340: /* Less: IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER  */
+#line 1891 "parser.y"
+                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5249 "parser.c"
+    break;
+
+  case 341: /* Less: IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN  */
+#line 1892 "parser.y"
+                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5255 "parser.c"
+    break;
+
+  case 342: /* Less: IS LESS THAN BEING LESS IS SMALLER BEING SMALLER  */
+#line 1893 "parser.y"
+                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5261 "parser.c"
+    break;
+
+  case 343: /* Less: IS LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN  */
+#line 1894 "parser.y"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5267 "parser.c"
+    break;
+
+  case 344: /* Less: IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER  */
+#line 1895 "parser.y"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5273 "parser.c"
+    break;
+
+  case 345: /* Less: IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
 #line 1896 "parser.y"
-                                                                  { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinor); ((*yyvalp).Combination)=process_combination(Combination); }
-#line 5264 "parser.c"
+                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5279 "parser.c"
     break;
 
-  case 359: /* Combination: Combinor Comma Combination  */
+  case 346: /* Less: IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER  */
 #line 1897 "parser.y"
-                                                                  { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Combinor); Combination->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Combination)=process_combination(Combination); }
-#line 5270 "parser.c"
+                                                                     { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5285 "parser.c"
     break;
 
-  case 360: /* Combination: Combinor Comma Combinator Combination  */
+  case 347: /* Less: IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN  */
 #line 1898 "parser.y"
-                                                                  { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Combinor); Combination->Combinator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Combinator); Combination->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Combination)=process_combination(Combination); }
-#line 5276 "parser.c"
+                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5291 "parser.c"
     break;
 
-  case 361: /* Combinor: Combinand  */
+  case 348: /* Less: IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER  */
+#line 1899 "parser.y"
+                                                                          { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5297 "parser.c"
+    break;
+
+  case 349: /* Less: IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
+#line 1900 "parser.y"
+                                                                               { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5303 "parser.c"
+    break;
+
+  case 350: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER  */
+#line 1901 "parser.y"
+                                                                        { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5309 "parser.c"
+    break;
+
+  case 351: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
+#line 1902 "parser.y"
+                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5315 "parser.c"
+    break;
+
+  case 352: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
+#line 1903 "parser.y"
+                                                                             { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5321 "parser.c"
+    break;
+
+  case 353: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
 #line 1904 "parser.y"
-                                                                  { NEW(Combinor, *((Literal **)&yylval)); Combinor->Combinand=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinand); ((*yyvalp).Combinor)=process_combinor(Combinor); }
-#line 5282 "parser.c"
+                                                                                  { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
+#line 5327 "parser.c"
     break;
 
-  case 362: /* Combinor: Combinand Combinator Combinor  */
-#line 1905 "parser.y"
-                                                                  { NEW(Combinor, *((Literal **)&yylval)); Combinor->Combinand=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Combinand); Combinor->Combinator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Combinator); Combinor->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinor); ((*yyvalp).Combinor)=process_combinor(Combinor); }
-#line 5288 "parser.c"
+  case 354: /* Later: IS AT LEAST  */
+#line 1910 "parser.y"
+                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
+#line 5333 "parser.c"
     break;
 
-  case 363: /* Combinand: Symbol  */
+  case 355: /* Later: IS AT THE LEAST  */
 #line 1911 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5294 "parser.c"
+                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
+#line 5339 "parser.c"
     break;
 
-  case 364: /* Combinand: Symbol Expiration  */
+  case 356: /* Later: LIES AT LEAST  */
 #line 1912 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Combinand->Expiration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expiration); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5300 "parser.c"
+                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
+#line 5345 "parser.c"
     break;
 
-  case 365: /* Combinand: Symbol Timeliness  */
+  case 357: /* Later: LIES AT THE LEAST  */
 #line 1913 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Combinand->Timeliness=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Timeliness); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5306 "parser.c"
+                                                                  { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
+#line 5351 "parser.c"
     break;
 
-  case 366: /* Combinand: Reflexive  */
-#line 1914 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Reflexive=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Reflexive); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5312 "parser.c"
-    break;
-
-  case 367: /* Combinand: Description  */
-#line 1915 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Description); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5318 "parser.c"
-    break;
-
-  case 368: /* Combinand: Article Description  */
-#line 1916 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Combinand->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Description); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5324 "parser.c"
-    break;
-
-  case 369: /* Combinand: Scalar_Comparison  */
-#line 1917 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar_Comparison); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5330 "parser.c"
-    break;
-
-  case 370: /* Combinand: Negation  */
-#line 1918 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Negation); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5336 "parser.c"
-    break;
-
-  case 371: /* Combinand: Existence  */
+  case 358: /* Scalar_Expression: Symbol  */
 #line 1919 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Existence=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Existence); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5342 "parser.c"
+                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
+#line 5357 "parser.c"
     break;
 
-  case 372: /* Combinand: Point_In_Time  */
+  case 359: /* Scalar_Expression: Scalar  */
 #line 1920 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Point_In_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Point_In_Time); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5348 "parser.c"
+                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Scalar=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
+#line 5363 "parser.c"
     break;
 
-  case 373: /* Combinand: Expiration  */
+  case 360: /* Scalar_Expression: Point_In_Time  */
 #line 1921 "parser.y"
-                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Expiration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expiration); ((*yyvalp).Combinand)=process_combinand(Combinand); }
-#line 5354 "parser.c"
+                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Point_In_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Point_In_Time); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
+#line 5369 "parser.c"
     break;
 
-  case 374: /* Combinator: Or_  */
-#line 1927 "parser.y"
-                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->Or_=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Or_); ((*yyvalp).Combinator)=process_combinator(Combinator); }
-#line 5360 "parser.c"
+  case 361: /* Scalar_Expression: ESCROW  */
+#line 1922 "parser.y"
+                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
+#line 5375 "parser.c"
     break;
 
-  case 375: /* Combinator: And  */
-#line 1928 "parser.y"
-                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->And=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.And); ((*yyvalp).Combinator)=process_combinator(Combinator); }
-#line 5366 "parser.c"
+  case 362: /* Scalar_Expression: THE ESCROW  */
+#line 1923 "parser.y"
+                                                                  { NEW(Scalar_Expression, *((Literal **)&yylval)); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
+#line 5381 "parser.c"
     break;
 
-  case 376: /* Combinator: Neither  */
+  case 363: /* Combination: Combinor  */
 #line 1929 "parser.y"
-                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->Neither=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Neither); ((*yyvalp).Combinator)=process_combinator(Combinator); }
-#line 5372 "parser.c"
+                                                                  { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinor); ((*yyvalp).Combination)=process_combination(Combination); }
+#line 5387 "parser.c"
     break;
 
-  case 377: /* Combinator: Nor  */
+  case 364: /* Combination: Combinor Comma Combination  */
 #line 1930 "parser.y"
-                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->Nor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Nor); ((*yyvalp).Combinator)=process_combinator(Combinator); }
-#line 5378 "parser.c"
+                                                                  { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Combinor); Combination->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Combination)=process_combination(Combination); }
+#line 5393 "parser.c"
     break;
 
-  case 378: /* Or_: OR  */
-#line 1936 "parser.y"
-                                                                  { NEW(Or_, *((Literal **)&yylval)); ((*yyvalp).Or_)=process_or_(Or_); }
-#line 5384 "parser.c"
+  case 365: /* Combination: Combinor Comma Combinator Combination  */
+#line 1931 "parser.y"
+                                                                  { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Combinor); Combination->Combinator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Combinator); Combination->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Combination)=process_combination(Combination); }
+#line 5399 "parser.c"
     break;
 
-  case 379: /* And: AND  */
-#line 1942 "parser.y"
-                                                                  { NEW(And, *((Literal **)&yylval)); ((*yyvalp).And)=process_and(And); }
-#line 5390 "parser.c"
+  case 366: /* Combinor: Combinand  */
+#line 1937 "parser.y"
+                                                                  { NEW(Combinor, *((Literal **)&yylval)); Combinor->Combinand=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinand); ((*yyvalp).Combinor)=process_combinor(Combinor); }
+#line 5405 "parser.c"
     break;
 
-  case 380: /* Neither: NEITHER  */
+  case 367: /* Combinor: Combinand Combinator Combinor  */
+#line 1938 "parser.y"
+                                                                  { NEW(Combinor, *((Literal **)&yylval)); Combinor->Combinand=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Combinand); Combinor->Combinator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Combinator); Combinor->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinor); ((*yyvalp).Combinor)=process_combinor(Combinor); }
+#line 5411 "parser.c"
+    break;
+
+  case 368: /* Combinand: Symbol  */
+#line 1944 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5417 "parser.c"
+    break;
+
+  case 369: /* Combinand: Symbol Expiration  */
+#line 1945 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Combinand->Expiration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expiration); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5423 "parser.c"
+    break;
+
+  case 370: /* Combinand: Symbol Timeliness  */
+#line 1946 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Combinand->Timeliness=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Timeliness); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5429 "parser.c"
+    break;
+
+  case 371: /* Combinand: Reflexive  */
+#line 1947 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Reflexive=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Reflexive); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5435 "parser.c"
+    break;
+
+  case 372: /* Combinand: Description  */
 #line 1948 "parser.y"
-                                                                  { NEW(Neither, *((Literal **)&yylval)); ((*yyvalp).Neither)=process_neither(Neither); }
-#line 5396 "parser.c"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Description); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5441 "parser.c"
     break;
 
-  case 381: /* Nor: NOR  */
+  case 373: /* Combinand: Article Description  */
+#line 1949 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Combinand->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Description); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5447 "parser.c"
+    break;
+
+  case 374: /* Combinand: Scalar_Comparison  */
+#line 1950 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar_Comparison); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5453 "parser.c"
+    break;
+
+  case 375: /* Combinand: Negation  */
+#line 1951 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Negation); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5459 "parser.c"
+    break;
+
+  case 376: /* Combinand: Existence  */
+#line 1952 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Existence=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Existence); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5465 "parser.c"
+    break;
+
+  case 377: /* Combinand: Point_In_Time  */
+#line 1953 "parser.y"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Point_In_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Point_In_Time); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5471 "parser.c"
+    break;
+
+  case 378: /* Combinand: Expiration  */
 #line 1954 "parser.y"
-                                                                  { NEW(Nor, *((Literal **)&yylval)); ((*yyvalp).Nor)=process_nor(Nor); }
-#line 5402 "parser.c"
+                                                                  { NEW(Combinand, *((Literal **)&yylval)); Combinand->Expiration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expiration); ((*yyvalp).Combinand)=process_combinand(Combinand); }
+#line 5477 "parser.c"
     break;
 
-  case 382: /* Existence: Symbol Equal Fixed  */
+  case 379: /* Combinator: Or_  */
 #line 1960 "parser.y"
-                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Existence->Equal=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Equal); Existence->Fixed=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixed); ((*yyvalp).Existence)=process_existence(Existence); }
-#line 5408 "parser.c"
+                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->Or_=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Or_); ((*yyvalp).Combinator)=process_combinator(Combinator); }
+#line 5483 "parser.c"
     break;
 
-  case 383: /* Existence: THERE Be Symbol  */
+  case 380: /* Combinator: And  */
 #line 1961 "parser.y"
-                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Existence)=process_existence(Existence); }
-#line 5414 "parser.c"
+                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->And=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.And); ((*yyvalp).Combinator)=process_combinator(Combinator); }
+#line 5489 "parser.c"
     break;
 
-  case 384: /* Existence: Contract Be Symbol  */
+  case 381: /* Combinator: Neither  */
 #line 1962 "parser.y"
-                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Existence->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Existence)=process_existence(Existence); }
-#line 5420 "parser.c"
+                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->Neither=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Neither); ((*yyvalp).Combinator)=process_combinator(Combinator); }
+#line 5495 "parser.c"
     break;
 
-  case 385: /* Existence: Symbol Being True  */
+  case 382: /* Combinator: Nor  */
 #line 1963 "parser.y"
-                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Existence->Being=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Being); Existence->True=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.True); ((*yyvalp).Existence)=process_existence(Existence); }
-#line 5426 "parser.c"
+                                                                  { NEW(Combinator, *((Literal **)&yylval)); Combinator->Nor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Nor); ((*yyvalp).Combinator)=process_combinator(Combinator); }
+#line 5501 "parser.c"
     break;
 
-  case 386: /* Negation: Negator Symbol  */
+  case 383: /* Or_: OR  */
 #line 1969 "parser.y"
-                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
-#line 5432 "parser.c"
+                                                                  { NEW(Or_, *((Literal **)&yylval)); ((*yyvalp).Or_)=process_or_(Or_); }
+#line 5507 "parser.c"
     break;
 
-  case 387: /* Negation: Symbol Negator Fixed  */
-#line 1970 "parser.y"
-                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Fixed=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixed); ((*yyvalp).Negation)=process_negation(Negation); }
-#line 5438 "parser.c"
+  case 384: /* And: AND  */
+#line 1975 "parser.y"
+                                                                  { NEW(And, *((Literal **)&yylval)); ((*yyvalp).And)=process_and(And); }
+#line 5513 "parser.c"
     break;
 
-  case 388: /* Negation: THERE Negator Symbol  */
-#line 1971 "parser.y"
-                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
-#line 5444 "parser.c"
-    break;
-
-  case 389: /* Negation: Contract Negator Symbol  */
-#line 1972 "parser.y"
-                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
-#line 5450 "parser.c"
-    break;
-
-  case 390: /* Negator: NOT  */
-#line 1978 "parser.y"
-                                                                  { NEW(Negator, *((Literal **)&yylval)); ((*yyvalp).Negator)=process_negator(Negator); }
-#line 5456 "parser.c"
-    break;
-
-  case 391: /* Negator: Be NOT  */
-#line 1979 "parser.y"
-                                                                  { NEW(Negator, *((Literal **)&yylval)); Negator->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Negator)=process_negator(Negator); }
-#line 5462 "parser.c"
-    break;
-
-  case 392: /* Negator: NO  */
-#line 1980 "parser.y"
-                                                                  { NEW(Negator, *((Literal **)&yylval)); ((*yyvalp).Negator)=process_negator(Negator); }
-#line 5468 "parser.c"
-    break;
-
-  case 393: /* Negator: Be NO  */
+  case 385: /* Neither: NEITHER  */
 #line 1981 "parser.y"
-                                                                  { NEW(Negator, *((Literal **)&yylval)); Negator->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Negator)=process_negator(Negator); }
-#line 5474 "parser.c"
+                                                                  { NEW(Neither, *((Literal **)&yylval)); ((*yyvalp).Neither)=process_neither(Neither); }
+#line 5519 "parser.c"
     break;
 
-  case 394: /* Being: IS  */
+  case 386: /* Nor: NOR  */
 #line 1987 "parser.y"
-                                                                  { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
-#line 5480 "parser.c"
+                                                                  { NEW(Nor, *((Literal **)&yylval)); ((*yyvalp).Nor)=process_nor(Nor); }
+#line 5525 "parser.c"
     break;
 
-  case 395: /* Being: HAS BEEN  */
-#line 1988 "parser.y"
-                                                                  { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
-#line 5486 "parser.c"
+  case 387: /* Existence: Symbol Equal Fixed  */
+#line 1993 "parser.y"
+                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Existence->Equal=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Equal); Existence->Fixed=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixed); ((*yyvalp).Existence)=process_existence(Existence); }
+#line 5531 "parser.c"
     break;
 
-  case 396: /* Being: WAS  */
-#line 1989 "parser.y"
-                                                                  { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
-#line 5492 "parser.c"
+  case 388: /* Existence: THERE Be Symbol  */
+#line 1994 "parser.y"
+                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Existence)=process_existence(Existence); }
+#line 5537 "parser.c"
     break;
 
-  case 397: /* True: TRUE  */
+  case 389: /* Existence: Contract Be Symbol  */
 #line 1995 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5498 "parser.c"
+                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Existence->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Existence)=process_existence(Existence); }
+#line 5543 "parser.c"
     break;
 
-  case 398: /* True: YES  */
+  case 390: /* Existence: Symbol Being True  */
 #line 1996 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5504 "parser.c"
+                                                                  { NEW(Existence, *((Literal **)&yylval)); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Existence->Being=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Being); Existence->True=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.True); ((*yyvalp).Existence)=process_existence(Existence); }
+#line 5549 "parser.c"
     break;
 
-  case 399: /* True: CERTIFIED  */
-#line 1997 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5510 "parser.c"
-    break;
-
-  case 400: /* True: DECLARED  */
-#line 1998 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5516 "parser.c"
-    break;
-
-  case 401: /* True: ANNOUNCED  */
-#line 1999 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5522 "parser.c"
-    break;
-
-  case 402: /* True: FILED  */
-#line 2000 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5528 "parser.c"
-    break;
-
-  case 403: /* True: FILED FOR  */
-#line 2001 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5534 "parser.c"
-    break;
-
-  case 404: /* True: SIGNED OFF  */
+  case 391: /* Negation: Negator Symbol  */
 #line 2002 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5540 "parser.c"
+                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
+#line 5555 "parser.c"
     break;
 
-  case 405: /* True: SIGNED OFF ON  */
+  case 392: /* Negation: Symbol Negator Fixed  */
 #line 2003 "parser.y"
-                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
-#line 5546 "parser.c"
+                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Fixed=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixed); ((*yyvalp).Negation)=process_negation(Negation); }
+#line 5561 "parser.c"
     break;
 
-  case 406: /* Article: A  */
-#line 2009 "parser.y"
-                                                                  { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
-#line 5552 "parser.c"
+  case 393: /* Negation: THERE Negator Symbol  */
+#line 2004 "parser.y"
+                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
+#line 5567 "parser.c"
     break;
 
-  case 407: /* Article: AN  */
-#line 2010 "parser.y"
-                                                                  { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
-#line 5558 "parser.c"
+  case 394: /* Negation: Contract Negator Symbol  */
+#line 2005 "parser.y"
+                                                                  { NEW(Negation, *((Literal **)&yylval)); Negation->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
+#line 5573 "parser.c"
     break;
 
-  case 408: /* Article: THE  */
+  case 395: /* Negator: NOT  */
 #line 2011 "parser.y"
-                                                                  { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
-#line 5564 "parser.c"
+                                                                  { NEW(Negator, *((Literal **)&yylval)); ((*yyvalp).Negator)=process_negator(Negator); }
+#line 5579 "parser.c"
     break;
 
-  case 409: /* New: NEW  */
-#line 2017 "parser.y"
-                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
-#line 5570 "parser.c"
+  case 396: /* Negator: Be NOT  */
+#line 2012 "parser.y"
+                                                                  { NEW(Negator, *((Literal **)&yylval)); Negator->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Negator)=process_negator(Negator); }
+#line 5585 "parser.c"
     break;
 
-  case 410: /* New: NEXT  */
-#line 2018 "parser.y"
-                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
-#line 5576 "parser.c"
+  case 397: /* Negator: NO  */
+#line 2013 "parser.y"
+                                                                  { NEW(Negator, *((Literal **)&yylval)); ((*yyvalp).Negator)=process_negator(Negator); }
+#line 5591 "parser.c"
     break;
 
-  case 411: /* New: COMING  */
-#line 2019 "parser.y"
-                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
-#line 5582 "parser.c"
+  case 398: /* Negator: Be NO  */
+#line 2014 "parser.y"
+                                                                  { NEW(Negator, *((Literal **)&yylval)); Negator->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Negator)=process_negator(Negator); }
+#line 5597 "parser.c"
     break;
 
-  case 412: /* New: INCOMING  */
+  case 399: /* Being: IS  */
 #line 2020 "parser.y"
-                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
-#line 5588 "parser.c"
+                                                                  { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
+#line 5603 "parser.c"
     break;
 
-  case 413: /* Point_In_Time: Current_Time  */
-#line 2026 "parser.y"
-                                                                  { NEW(Point_In_Time, *((Literal **)&yylval)); Point_In_Time->Current_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Current_Time); ((*yyvalp).Point_In_Time)=process_point_in_time(Point_In_Time); }
-#line 5594 "parser.c"
+  case 400: /* Being: HAS BEEN  */
+#line 2021 "parser.y"
+                                                                  { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
+#line 5609 "parser.c"
     break;
 
-  case 414: /* Point_In_Time: Relative_Time  */
-#line 2027 "parser.y"
-                                                                  { NEW(Point_In_Time, *((Literal **)&yylval)); Point_In_Time->Relative_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Relative_Time); ((*yyvalp).Point_In_Time)=process_point_in_time(Point_In_Time); }
-#line 5600 "parser.c"
+  case 401: /* Being: WAS  */
+#line 2022 "parser.y"
+                                                                  { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
+#line 5615 "parser.c"
     break;
 
-  case 415: /* Current_Time: THE CURRENT TIME  */
+  case 402: /* True: TRUE  */
+#line 2028 "parser.y"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5621 "parser.c"
+    break;
+
+  case 403: /* True: YES  */
+#line 2029 "parser.y"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5627 "parser.c"
+    break;
+
+  case 404: /* True: CERTIFIED  */
+#line 2030 "parser.y"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5633 "parser.c"
+    break;
+
+  case 405: /* True: DECLARED  */
+#line 2031 "parser.y"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5639 "parser.c"
+    break;
+
+  case 406: /* True: ANNOUNCED  */
+#line 2032 "parser.y"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5645 "parser.c"
+    break;
+
+  case 407: /* True: FILED  */
 #line 2033 "parser.y"
-                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
-#line 5606 "parser.c"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5651 "parser.c"
     break;
 
-  case 416: /* Current_Time: THE THEN CURRENT TIME  */
+  case 408: /* True: FILED FOR  */
 #line 2034 "parser.y"
-                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
-#line 5612 "parser.c"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5657 "parser.c"
     break;
 
-  case 417: /* Current_Time: THE RESPECTIVE CURRENT TIME  */
+  case 409: /* True: SIGNED OFF  */
 #line 2035 "parser.y"
-                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
-#line 5618 "parser.c"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5663 "parser.c"
     break;
 
-  case 418: /* Current_Time: THE RESPECTIVE THEN CURRENT TIME  */
+  case 410: /* True: SIGNED OFF ON  */
 #line 2036 "parser.y"
-                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
-#line 5624 "parser.c"
+                                                                  { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
+#line 5669 "parser.c"
     break;
 
-  case 419: /* Current_Time: NOW  */
-#line 2037 "parser.y"
-                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
-#line 5630 "parser.c"
+  case 411: /* Article: A  */
+#line 2042 "parser.y"
+                                                                  { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
+#line 5675 "parser.c"
     break;
 
-  case 420: /* Relative_Time: Duration PAST  */
+  case 412: /* Article: AN  */
 #line 2043 "parser.y"
-                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Duration); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
-#line 5636 "parser.c"
+                                                                  { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
+#line 5681 "parser.c"
     break;
 
-  case 421: /* Relative_Time: Duration PAST Symbol  */
+  case 413: /* Article: THE  */
 #line 2044 "parser.y"
-                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
-#line 5642 "parser.c"
+                                                                  { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
+#line 5687 "parser.c"
     break;
 
-  case 422: /* Relative_Time: Duration IN THE PAST  */
-#line 2045 "parser.y"
-                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Duration); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
-#line 5648 "parser.c"
+  case 414: /* New: NEW  */
+#line 2050 "parser.y"
+                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
+#line 5693 "parser.c"
     break;
 
-  case 423: /* Relative_Time: Duration IN THE PAST Symbol  */
-#line 2046 "parser.y"
-                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
-#line 5654 "parser.c"
+  case 415: /* New: NEXT  */
+#line 2051 "parser.y"
+                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
+#line 5699 "parser.c"
     break;
 
-  case 424: /* Relative_Time: Duration AFTER Symbol  */
-#line 2047 "parser.y"
-                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
-#line 5660 "parser.c"
+  case 416: /* New: COMING  */
+#line 2052 "parser.y"
+                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
+#line 5705 "parser.c"
     break;
 
-  case 425: /* Duration: Scalar_Expression Time_Unit  */
+  case 417: /* New: INCOMING  */
 #line 2053 "parser.y"
-                                                                  { NEW(Duration, *((Literal **)&yylval)); Duration->Scalar_Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Scalar_Expression); Duration->Time_Unit=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Time_Unit); ((*yyvalp).Duration)=process_duration(Duration); }
-#line 5666 "parser.c"
+                                                                  { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
+#line 5711 "parser.c"
     break;
 
-  case 426: /* Time_Unit: Years  */
+  case 418: /* Point_In_Time: Current_Time  */
 #line 2059 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Years=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Years); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5672 "parser.c"
+                                                                  { NEW(Point_In_Time, *((Literal **)&yylval)); Point_In_Time->Current_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Current_Time); ((*yyvalp).Point_In_Time)=process_point_in_time(Point_In_Time); }
+#line 5717 "parser.c"
     break;
 
-  case 427: /* Time_Unit: Months  */
+  case 419: /* Point_In_Time: Relative_Time  */
 #line 2060 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Months=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Months); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5678 "parser.c"
+                                                                  { NEW(Point_In_Time, *((Literal **)&yylval)); Point_In_Time->Relative_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Relative_Time); ((*yyvalp).Point_In_Time)=process_point_in_time(Point_In_Time); }
+#line 5723 "parser.c"
     break;
 
-  case 428: /* Time_Unit: Weeks  */
-#line 2061 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Weeks=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Weeks); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5684 "parser.c"
-    break;
-
-  case 429: /* Time_Unit: Days  */
-#line 2062 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Days=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Days); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5690 "parser.c"
-    break;
-
-  case 430: /* Time_Unit: Hours  */
-#line 2063 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Hours=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Hours); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5696 "parser.c"
-    break;
-
-  case 431: /* Time_Unit: Minutes  */
-#line 2064 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Minutes=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Minutes); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5702 "parser.c"
-    break;
-
-  case 432: /* Time_Unit: Seconds  */
-#line 2065 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Seconds=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Seconds); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5708 "parser.c"
-    break;
-
-  case 433: /* Time_Unit: Milliseconds  */
+  case 420: /* Current_Time: THE CURRENT TIME  */
 #line 2066 "parser.y"
-                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Milliseconds=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Milliseconds); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
-#line 5714 "parser.c"
+                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
+#line 5729 "parser.c"
     break;
 
-  case 434: /* Years: YEAR  */
-#line 2072 "parser.y"
-                                                                  { NEW(Years, *((Literal **)&yylval)); ((*yyvalp).Years)=process_years(Years); }
-#line 5720 "parser.c"
+  case 421: /* Current_Time: THE THEN CURRENT TIME  */
+#line 2067 "parser.y"
+                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
+#line 5735 "parser.c"
     break;
 
-  case 435: /* Years: YEARS  */
-#line 2073 "parser.y"
-                                                                  { NEW(Years, *((Literal **)&yylval)); ((*yyvalp).Years)=process_years(Years); }
-#line 5726 "parser.c"
+  case 422: /* Current_Time: THE RESPECTIVE CURRENT TIME  */
+#line 2068 "parser.y"
+                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
+#line 5741 "parser.c"
     break;
 
-  case 436: /* Months: MONTH  */
+  case 423: /* Current_Time: THE RESPECTIVE THEN CURRENT TIME  */
+#line 2069 "parser.y"
+                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
+#line 5747 "parser.c"
+    break;
+
+  case 424: /* Current_Time: NOW  */
+#line 2070 "parser.y"
+                                                                  { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
+#line 5753 "parser.c"
+    break;
+
+  case 425: /* Relative_Time: Duration PAST  */
+#line 2076 "parser.y"
+                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Duration); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
+#line 5759 "parser.c"
+    break;
+
+  case 426: /* Relative_Time: Duration PAST Symbol  */
+#line 2077 "parser.y"
+                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
+#line 5765 "parser.c"
+    break;
+
+  case 427: /* Relative_Time: Duration IN THE PAST  */
+#line 2078 "parser.y"
+                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Duration); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
+#line 5771 "parser.c"
+    break;
+
+  case 428: /* Relative_Time: Duration IN THE PAST Symbol  */
 #line 2079 "parser.y"
-                                                                  { NEW(Months, *((Literal **)&yylval)); ((*yyvalp).Months)=process_months(Months); }
-#line 5732 "parser.c"
+                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
+#line 5777 "parser.c"
     break;
 
-  case 437: /* Months: MONTHS  */
+  case 429: /* Relative_Time: Duration AFTER Symbol  */
 #line 2080 "parser.y"
-                                                                  { NEW(Months, *((Literal **)&yylval)); ((*yyvalp).Months)=process_months(Months); }
-#line 5738 "parser.c"
+                                                                  { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
+#line 5783 "parser.c"
     break;
 
-  case 438: /* Weeks: WEEK  */
+  case 430: /* Duration: Scalar_Expression Time_Unit  */
 #line 2086 "parser.y"
-                                                                  { NEW(Weeks, *((Literal **)&yylval)); ((*yyvalp).Weeks)=process_weeks(Weeks); }
-#line 5744 "parser.c"
+                                                                  { NEW(Duration, *((Literal **)&yylval)); Duration->Scalar_Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Scalar_Expression); Duration->Time_Unit=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Time_Unit); ((*yyvalp).Duration)=process_duration(Duration); }
+#line 5789 "parser.c"
     break;
 
-  case 439: /* Weeks: WEEKS  */
-#line 2087 "parser.y"
-                                                                  { NEW(Weeks, *((Literal **)&yylval)); ((*yyvalp).Weeks)=process_weeks(Weeks); }
-#line 5750 "parser.c"
+  case 431: /* Time_Unit: Years  */
+#line 2092 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Years=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Years); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5795 "parser.c"
     break;
 
-  case 440: /* Days: DAY  */
+  case 432: /* Time_Unit: Months  */
 #line 2093 "parser.y"
-                                                                  { NEW(Days, *((Literal **)&yylval)); ((*yyvalp).Days)=process_days(Days); }
-#line 5756 "parser.c"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Months=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Months); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5801 "parser.c"
     break;
 
-  case 441: /* Days: DAYS  */
+  case 433: /* Time_Unit: Weeks  */
 #line 2094 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Weeks=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Weeks); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5807 "parser.c"
+    break;
+
+  case 434: /* Time_Unit: Days  */
+#line 2095 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Days=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Days); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5813 "parser.c"
+    break;
+
+  case 435: /* Time_Unit: Hours  */
+#line 2096 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Hours=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Hours); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5819 "parser.c"
+    break;
+
+  case 436: /* Time_Unit: Minutes  */
+#line 2097 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Minutes=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Minutes); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5825 "parser.c"
+    break;
+
+  case 437: /* Time_Unit: Seconds  */
+#line 2098 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Seconds=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Seconds); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5831 "parser.c"
+    break;
+
+  case 438: /* Time_Unit: Milliseconds  */
+#line 2099 "parser.y"
+                                                                  { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Milliseconds=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Milliseconds); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
+#line 5837 "parser.c"
+    break;
+
+  case 439: /* Years: YEAR  */
+#line 2105 "parser.y"
+                                                                  { NEW(Years, *((Literal **)&yylval)); ((*yyvalp).Years)=process_years(Years); }
+#line 5843 "parser.c"
+    break;
+
+  case 440: /* Years: YEARS  */
+#line 2106 "parser.y"
+                                                                  { NEW(Years, *((Literal **)&yylval)); ((*yyvalp).Years)=process_years(Years); }
+#line 5849 "parser.c"
+    break;
+
+  case 441: /* Months: MONTH  */
+#line 2112 "parser.y"
+                                                                  { NEW(Months, *((Literal **)&yylval)); ((*yyvalp).Months)=process_months(Months); }
+#line 5855 "parser.c"
+    break;
+
+  case 442: /* Months: MONTHS  */
+#line 2113 "parser.y"
+                                                                  { NEW(Months, *((Literal **)&yylval)); ((*yyvalp).Months)=process_months(Months); }
+#line 5861 "parser.c"
+    break;
+
+  case 443: /* Weeks: WEEK  */
+#line 2119 "parser.y"
+                                                                  { NEW(Weeks, *((Literal **)&yylval)); ((*yyvalp).Weeks)=process_weeks(Weeks); }
+#line 5867 "parser.c"
+    break;
+
+  case 444: /* Weeks: WEEKS  */
+#line 2120 "parser.y"
+                                                                  { NEW(Weeks, *((Literal **)&yylval)); ((*yyvalp).Weeks)=process_weeks(Weeks); }
+#line 5873 "parser.c"
+    break;
+
+  case 445: /* Days: DAY  */
+#line 2126 "parser.y"
                                                                   { NEW(Days, *((Literal **)&yylval)); ((*yyvalp).Days)=process_days(Days); }
-#line 5762 "parser.c"
+#line 5879 "parser.c"
     break;
 
-  case 442: /* Hours: HOUR  */
-#line 2100 "parser.y"
+  case 446: /* Days: DAYS  */
+#line 2127 "parser.y"
+                                                                  { NEW(Days, *((Literal **)&yylval)); ((*yyvalp).Days)=process_days(Days); }
+#line 5885 "parser.c"
+    break;
+
+  case 447: /* Hours: HOUR  */
+#line 2133 "parser.y"
                                                                   { NEW(Hours, *((Literal **)&yylval)); ((*yyvalp).Hours)=process_hours(Hours); }
-#line 5768 "parser.c"
+#line 5891 "parser.c"
     break;
 
-  case 443: /* Hours: HOURS  */
-#line 2101 "parser.y"
+  case 448: /* Hours: HOURS  */
+#line 2134 "parser.y"
                                                                   { NEW(Hours, *((Literal **)&yylval)); ((*yyvalp).Hours)=process_hours(Hours); }
-#line 5774 "parser.c"
+#line 5897 "parser.c"
     break;
 
-  case 444: /* Minutes: MINUTE  */
-#line 2107 "parser.y"
-                                                                  { NEW(Minutes, *((Literal **)&yylval)); ((*yyvalp).Minutes)=process_minutes(Minutes); }
-#line 5780 "parser.c"
-    break;
-
-  case 445: /* Minutes: MINUTES  */
-#line 2108 "parser.y"
-                                                                  { NEW(Minutes, *((Literal **)&yylval)); ((*yyvalp).Minutes)=process_minutes(Minutes); }
-#line 5786 "parser.c"
-    break;
-
-  case 446: /* Seconds: SECOND  */
-#line 2114 "parser.y"
-                                                                  { NEW(Seconds, *((Literal **)&yylval)); ((*yyvalp).Seconds)=process_seconds(Seconds); }
-#line 5792 "parser.c"
-    break;
-
-  case 447: /* Seconds: SECONDS  */
-#line 2115 "parser.y"
-                                                                  { NEW(Seconds, *((Literal **)&yylval)); ((*yyvalp).Seconds)=process_seconds(Seconds); }
-#line 5798 "parser.c"
-    break;
-
-  case 448: /* Milliseconds: MILLISECOND  */
-#line 2121 "parser.y"
-                                                                  { NEW(Milliseconds, *((Literal **)&yylval)); ((*yyvalp).Milliseconds)=process_milliseconds(Milliseconds); }
-#line 5804 "parser.c"
-    break;
-
-  case 449: /* Milliseconds: MILLISECONDS  */
-#line 2122 "parser.y"
-                                                                  { NEW(Milliseconds, *((Literal **)&yylval)); ((*yyvalp).Milliseconds)=process_milliseconds(Milliseconds); }
-#line 5810 "parser.c"
-    break;
-
-  case 450: /* Expiration: HAS PASSED  */
-#line 2128 "parser.y"
-                                                                  { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
-#line 5816 "parser.c"
-    break;
-
-  case 451: /* Expiration: PAST  */
-#line 2129 "parser.y"
-                                                                  { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
-#line 5822 "parser.c"
-    break;
-
-  case 452: /* Expiration: IS PAST  */
-#line 2130 "parser.y"
-                                                                  { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
-#line 5828 "parser.c"
-    break;
-
-  case 453: /* Timeliness: NOT PASSED  */
-#line 2136 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5834 "parser.c"
-    break;
-
-  case 454: /* Timeliness: NOT YET PASSED  */
-#line 2137 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5840 "parser.c"
-    break;
-
-  case 455: /* Timeliness: HAS NOT PASSED  */
-#line 2138 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5846 "parser.c"
-    break;
-
-  case 456: /* Timeliness: HAS NOT YET PASSED  */
-#line 2139 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5852 "parser.c"
-    break;
-
-  case 457: /* Timeliness: NOT PAST  */
+  case 449: /* Minutes: MINUTE  */
 #line 2140 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5858 "parser.c"
+                                                                  { NEW(Minutes, *((Literal **)&yylval)); ((*yyvalp).Minutes)=process_minutes(Minutes); }
+#line 5903 "parser.c"
     break;
 
-  case 458: /* Timeliness: NOT PAST YET  */
+  case 450: /* Minutes: MINUTES  */
 #line 2141 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5864 "parser.c"
+                                                                  { NEW(Minutes, *((Literal **)&yylval)); ((*yyvalp).Minutes)=process_minutes(Minutes); }
+#line 5909 "parser.c"
     break;
 
-  case 459: /* Timeliness: NOT YET PAST  */
-#line 2142 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5870 "parser.c"
-    break;
-
-  case 460: /* Timeliness: NOT YET PAST YET  */
-#line 2143 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5876 "parser.c"
-    break;
-
-  case 461: /* Timeliness: IS NOT PAST  */
-#line 2144 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5882 "parser.c"
-    break;
-
-  case 462: /* Timeliness: IS NOT PAST YET  */
-#line 2145 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5888 "parser.c"
-    break;
-
-  case 463: /* Timeliness: IS NOT YET PAST  */
-#line 2146 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5894 "parser.c"
-    break;
-
-  case 464: /* Timeliness: IS NOT YET PAST YET  */
+  case 451: /* Seconds: SECOND  */
 #line 2147 "parser.y"
-                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
-#line 5900 "parser.c"
+                                                                  { NEW(Seconds, *((Literal **)&yylval)); ((*yyvalp).Seconds)=process_seconds(Seconds); }
+#line 5915 "parser.c"
     break;
 
-  case 465: /* Name: NAME  */
-#line 2151 "parser.y"
-                                                                { ((*yyvalp).Name)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.NAME); }
-#line 5906 "parser.c"
+  case 452: /* Seconds: SECONDS  */
+#line 2148 "parser.y"
+                                                                  { NEW(Seconds, *((Literal **)&yylval)); ((*yyvalp).Seconds)=process_seconds(Seconds); }
+#line 5921 "parser.c"
     break;
 
-  case 466: /* Description: DESCRIPTION  */
+  case 453: /* Milliseconds: MILLISECOND  */
 #line 2154 "parser.y"
+                                                                  { NEW(Milliseconds, *((Literal **)&yylval)); ((*yyvalp).Milliseconds)=process_milliseconds(Milliseconds); }
+#line 5927 "parser.c"
+    break;
+
+  case 454: /* Milliseconds: MILLISECONDS  */
+#line 2155 "parser.y"
+                                                                  { NEW(Milliseconds, *((Literal **)&yylval)); ((*yyvalp).Milliseconds)=process_milliseconds(Milliseconds); }
+#line 5933 "parser.c"
+    break;
+
+  case 455: /* Expiration: HAS PASSED  */
+#line 2161 "parser.y"
+                                                                  { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
+#line 5939 "parser.c"
+    break;
+
+  case 456: /* Expiration: PAST  */
+#line 2162 "parser.y"
+                                                                  { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
+#line 5945 "parser.c"
+    break;
+
+  case 457: /* Expiration: IS PAST  */
+#line 2163 "parser.y"
+                                                                  { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
+#line 5951 "parser.c"
+    break;
+
+  case 458: /* Timeliness: NOT PASSED  */
+#line 2169 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5957 "parser.c"
+    break;
+
+  case 459: /* Timeliness: NOT YET PASSED  */
+#line 2170 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5963 "parser.c"
+    break;
+
+  case 460: /* Timeliness: HAS NOT PASSED  */
+#line 2171 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5969 "parser.c"
+    break;
+
+  case 461: /* Timeliness: HAS NOT YET PASSED  */
+#line 2172 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5975 "parser.c"
+    break;
+
+  case 462: /* Timeliness: NOT PAST  */
+#line 2173 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5981 "parser.c"
+    break;
+
+  case 463: /* Timeliness: NOT PAST YET  */
+#line 2174 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5987 "parser.c"
+    break;
+
+  case 464: /* Timeliness: NOT YET PAST  */
+#line 2175 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5993 "parser.c"
+    break;
+
+  case 465: /* Timeliness: NOT YET PAST YET  */
+#line 2176 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 5999 "parser.c"
+    break;
+
+  case 466: /* Timeliness: IS NOT PAST  */
+#line 2177 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 6005 "parser.c"
+    break;
+
+  case 467: /* Timeliness: IS NOT PAST YET  */
+#line 2178 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 6011 "parser.c"
+    break;
+
+  case 468: /* Timeliness: IS NOT YET PAST  */
+#line 2179 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 6017 "parser.c"
+    break;
+
+  case 469: /* Timeliness: IS NOT YET PAST YET  */
+#line 2180 "parser.y"
+                                                                  { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
+#line 6023 "parser.c"
+    break;
+
+  case 470: /* Name: NAME  */
+#line 2184 "parser.y"
+                                                                { ((*yyvalp).Name)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.NAME); }
+#line 6029 "parser.c"
+    break;
+
+  case 471: /* Description: DESCRIPTION  */
+#line 2187 "parser.y"
                                                                                 { ((*yyvalp).Description)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.DESCRIPTION); }
-#line 5912 "parser.c"
+#line 6035 "parser.c"
     break;
 
-  case 467: /* Scalar: SCALAR  */
-#line 2157 "parser.y"
+  case 472: /* Scalar: SCALAR  */
+#line 2190 "parser.y"
                                                                 { ((*yyvalp).Scalar)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.SCALAR); }
-#line 5918 "parser.c"
+#line 6041 "parser.c"
     break;
 
 
-#line 5922 "parser.c"
+#line 6045 "parser.c"
 
       default: break;
     }
@@ -7600,7 +7723,7 @@ yypdumpstack (yyGLRStack* yystackp)
 
 
 
-#line 2162 "parser.y"
+#line 2195 "parser.y"
 
 
 /* Epilogue */
@@ -7923,6 +8046,7 @@ Predicate *process_predicate(Predicate *Predicate) {
 	// Predicate->Registration
 	// Predicate->Grantment
 	// Predicate->Appointment
+	// Predicate->Assignment
 	// Predicate->Acceptance
 	// Predicate->Fixture
 	// Predicate->Setting
@@ -8017,6 +8141,19 @@ Appointment *process_appointment(Appointment *Appointment) {
 Appoint *process_appoint(Appoint *Appoint) {
 	if(opt_debug_actions) printf("actions: parsing Appoint '%s'\n", Appoint->Literal);
 	return Appoint;
+}
+
+Assignment *process_assignment(Assignment *Assignment) {
+	if(opt_debug_actions) printf("actions: parsing Assignment '%s'\n", Assignment->Literal);
+	// Assignment->Assign
+	// Assignment->Symbol
+	// Assignment->Expression
+	return Assignment;
+}
+
+Assign *process_assign(Assign *Assign) {
+	if(opt_debug_actions) printf("actions: parsing Assign '%s'\n", Assign->Literal);
+	return Assign;
 }
 
 Acceptance *process_acceptance(Acceptance *Acceptance) {

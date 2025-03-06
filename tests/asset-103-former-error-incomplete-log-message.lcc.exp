@@ -1,0 +1,37 @@
+( document 
+    ( head 
+        ( lex «asset» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «id» ( type text ) ) 
+                ( definition «creator» ( type person ) ) 
+                ( definition «owner» ( type person ) ) ) 
+            ( clauses 
+                ( clause «transfer» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «owner» new ) 
+                                                ( expression ( combination ( combinor ( combinand ( symbol ( type person ) ) ) ) ) ) ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «creator» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «id» ) ) ) ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «owner» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( setting be ( symbol «creator» ) ) ) ) ) ) ) ) ) )

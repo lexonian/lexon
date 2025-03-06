@@ -47,7 +47,6 @@ main contract UCCFinancingStatement =
             notification_statement = "",
             terminated = false
         }
-        
     
 
 
@@ -65,6 +64,7 @@ main contract UCCFinancingStatement =
 
     stateful function termination() =
         put(state{terminated = true})
+
 
     function check_termination() =
         require(!state.terminated, "contract system terminated before")

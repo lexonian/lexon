@@ -34,7 +34,6 @@ main contract EvaluationLicenseSystem : Main =
     entrypoint get_state() : state =
         state
 
-        
     
 
     stateful entrypoint add_license(licensee : address, description_of_goods : string) : address =
@@ -137,6 +136,7 @@ contract License =
 
     stateful function termination() =
         put(state{terminated = true})
+
 
     function check_termination() =
         require(!state.terminated, "covenant terminated before")

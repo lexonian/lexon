@@ -791,6 +791,8 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 "appoint"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINT; }
 "appoints"							{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return APPOINTS; }
 "as"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AS; }
+"assign"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ASSIGN; }
+"assigns"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return ASSIGNS; }
 "at"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return AT; }
 "be"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BE; }
 "been"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return BEEN; }
@@ -934,6 +936,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 <DESCRIPTION_>{
 [^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 ›{space}*\"?{space}*\.?({space}*\n)*				{ D; DX(Separator); BEGIN(MAIN); return Separator; }
+›{space}*\"?{space}*/[,;]					{ D;                BEGIN(MAIN); }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 }
 
@@ -1323,7 +1326,7 @@ void parsargs(int argc, char **argv) {
     int option_index = 0;
     opt_summarized = mtrac_strdup("");
     while ((c = getopt_long(argc, argv,
-    		"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M0123",
+    		"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M01234",
 		long_options, &option_index)) != -1) {
 	if(c == '?') { fprintf(stderr, "parameter error"); exit(1); }
 
@@ -5342,6 +5345,7 @@ const char *own =
 	"<DESCRIPTION_>{\n"
 	"[^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }\n"
 	"›{space}*\\\"?{space}*\\.?({space}*\\n)*				{ D; DX(Separator); BEGIN(MAIN); return Separator; }\n"
+	"›{space}*\\\"?{space}*/[,;]					{ D;                BEGIN(MAIN); }\n"
 	"<<EOF>>								{ D; syntax(\"unexpected end of file - precompiler description quote error\", yytext); }\n"
 	"}\n"
 	"\n"
@@ -5731,7 +5735,7 @@ const char *own =
 	"    int option_index = 0;\n"
 	"    opt_summarized = mtrac_strdup(\"\");\n"
 	"    while ((c = getopt_long(argc, argv,\n"
-	"    		\"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M0123\",\n"
+	"    		\"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M01234\",\n"
 	"		long_options, &option_index)) != -1) {\n"
 	"	if(c == '?') { fprintf(stderr, \"parameter error\"); exit(1); }\n"
 	"\n"
@@ -9114,6 +9118,7 @@ const char *owngrm =
 	"		or registration\n"
 	"		or grantment\n"
 	"		or appointment\n"
+	"		or assignment \n"
 	"		or acceptance\n"
 	"		or fixture\n"
 	"		or setting\n"
@@ -9170,6 +9175,14 @@ const char *owngrm =
 	"   		or appoint expression \"as\" symbol\n"
 	"\n"
 	"   appoint:	\"appoint\" or \"appoints\"\n"
+	"\n"
+	"\n"
+	"## ASSIGNMENT PREDICATE\n"
+	"\n"
+	"   assignment:	assign symbol\n"
+	"   		or assign expression \"as\" symbol\n"
+	"\n"
+	"   assign:	\"assign\" or \"assigns\"\n"
 	"\n"
 	"\n"
 	"## ACCEPTANCE PREDICATE\n"

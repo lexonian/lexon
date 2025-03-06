@@ -1,0 +1,17 @@
+
+precompilation:
+---------------
+
+asset 102  js  assignment of parameter with underscore   1:   LEX: «Asset».
+
+asset 102  js  assignment of parameter with underscore   3:   "«Id»" is a text.
+asset 102  js  assignment of parameter with underscore   4:   "«Creator»" is a person.
+asset 102  js  assignment of parameter with underscore   5:   "«Owner»" is a person.
+
+asset 102  js  assignment of parameter with underscore   7:   The «Creator» fixes the «Id».
+asset 102  js  assignment of parameter with underscore   8:   The «Owner» is the «Creator».
+
+asset 102  js  assignment of parameter with underscore  10:   CLAUSE: «Transfer».
+asset 102  js  assignment of parameter with underscore  11:   The «Owner» may appoint a person as new «Owner».
+
+

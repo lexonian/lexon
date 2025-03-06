@@ -22,6 +22,8 @@
 SHELL := /bin/bash
 VPATH = bin:grammar:src:build
 MAKEFLAGS += --no-print-directory
+path = $(FILE)
+file = $(notdir FILE)
 
 # installation location
 ifeq ($(PREFIX),)
@@ -248,6 +250,21 @@ ifeq (,$(wildcard .nosample))
 	@echo
 endif
 
+test:
+ifneq ($(FILE),)
+	@printf "$(ok)» test file $(path)$(off)\n"
+	@mkdir -p tmp
+	bin/lexon --javascript -x $(path) > tmp/$(file).jsx
+	npx eslint tmp/$(file).jsx
+	bin/lexon --solidity -x $(path) > tmp/$(file).sol
+	solcjs --bin tmp/$(file).sol
+	bin/lexon --sophia -x $(path) > tmp/$(file).aes
+	aesophia_cli tmp/$(file).aes 
+	@printf "$(ok)ok √$(off)\n"
+else
+	@printf "$(ok)usage: make test FILE=<filename>$(off)\n"
+endif
+
 check: focustest deeptest
 
 devcheck: envtest grammarcheck memtest focustest deeptest
@@ -406,7 +423,7 @@ cleanlog:
 
 clean:
 	@printf "\n\n$(hi)▫️  clean built and generated files $(off)\n\n"
-	rm -f .????????
+	rm -f .D???????
 	rm -f bin/lexccc
 	rm -f bin/lexon
 	rm -rf build
@@ -648,6 +665,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample check comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample test check comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

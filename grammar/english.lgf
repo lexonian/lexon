@@ -151,6 +151,7 @@
 		or registration
 		or grantment
 		or appointment
+		or assignment 
 		or acceptance
 		or fixture
 		or setting
@@ -207,6 +208,14 @@
    		or appoint expression "as" symbol
 
    appoint:	"appoint" or "appoints"
+
+
+## ASSIGNMENT PREDICATE
+
+   assignment:	assign symbol
+   		or assign expression "as" symbol
+
+   assign:	"assign" or "assigns"
 
 
 ## ACCEPTANCE PREDICATE

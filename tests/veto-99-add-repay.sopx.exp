@@ -1,0 +1,130 @@
+/** Lexon-generated Sophia code
+ **
+ **	code:        Veto
+ **
+ **	file:        cover/veto-99-add-repay.lex
+ **
+ **	compiler:    lexon 0.3 beta 2
+ **
+ **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **
+ **	backend:     sophia 0.3.102 beta 2
+ **
+ **	target:      sophia 8+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <receiver : option(address)>, <time : option(int)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<receiver>> ⟶   draw()
+   • <<officiator>> ⟶   veto()
+ */
+
+@compiler >=8
+
+include "Option.aes"
+
+/**
+ **
+ **	Main Veto contract system
+ **
+ **/
+
+/*
+ | 	LEX Veto
+ | 
+ | 	"Payer" is a person.
+ | 	"Receiver" is a person.
+ | 	"Officiator" is a person.
+ | 	"Time" is a time.
+ | 
+ | 	The Payer pays an amount into escrow, appoints the Receiver, and fixes a Time.
+ */
+
+
+payable main contract Veto =
+    record state = {
+        
+            payer : option(address),
+            receiver : option(address),
+            officiator : option(address),
+            time : option(int)
+        }
+    entrypoint init(receiver : address, time : int) = {
+            payer = Some(Call.caller),
+            receiver = Some(receiver),
+            officiator = None,
+            time = Some(time)
+        }
+        
+    
+
+    /* built-in caller assertion */
+
+    function permit(option_authorized : option(address), name : string) =
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+
+    /* Draw clause */
+
+    /*
+     |  CLAUSE: Draw.
+     |  The Receiver may, if the Time has passed, repay the escrow to themselves.
+     */
+
+    stateful entrypoint draw() =
+        permit(state.receiver, "Receiver")
+        if(Option.force_msg(state.time, "Time") =< Chain.timestamp)
+            transfer(Option.force_msg(state.receiver, "reflexive pronoun"), Contract.balance)
+
+
+    /* Veto clause */
+
+    /*
+     |  CLAUSE: Veto.
+     |  The Officiator may repay the escrow to the Payer.
+     */
+
+    stateful entrypoint veto() =
+        if(state.officiator == None) put(state{officiator = Some(Call.caller)})
+        permit(state.officiator, "Officiator")
+        transfer(Option.force_msg(state.payer, "Payer"), Contract.balance)
+
+/* end */

@@ -129,7 +129,7 @@ define testrun
 		; else \
 			failer=0 \
 		; fi \
-		; failer2=`grep -c -E "%ERR" $$filename` \
+		; failer2=`grep -c -E "%.?.?.?ERR" $$filename` \
 		; $(2) \
 		; $(3) $(4) $$filename &> tmp \
 		; $(5) >> tmp 2>&1 \
@@ -178,7 +178,7 @@ define testrun
 			    if (( $$failer2 > 0 )) ; then \
 				if [[ "$(4)" =~ .*javascript.* ]] || [[ "$(4)" =~ .*solidity.* ]] || [[ "$(4)" =~ .*sophia.* ]] ; then \
 			    		rm -f $$coktag ; \
-			        	if [[ -f concise ]] ; then printf "$(ok) $(off)" ; \
+			        	if [[ -f concise ]] ; then printf "$(ok): $(off)" ; \
 					else printf "  $(ok)skipped expected error √$(off)\n" ; fi ; \
 				fi ; \
 			    else \
@@ -669,8 +669,11 @@ _test:
 	@cat tag.now
 	@printf "\n	+   success: lexon compilation result has not changed, it matches stored expectations\n"
 	@printf "	.   skipped: lexon compilation test skipped winding forward to first fail of last run\n"
+	@printf "	#   failure: lexon compilation result did not match the stored expectation on file\n"
 	@printf "	$(ok)+$(off)   syntax check passed: native compilation of lexon output has no errors\n"
+	@printf "	$(ok):$(off)   syntax check skipped: lexon output is an expected error message\n" 
 	@printf "	$(ok)•$(off)   syntax check skipped: lexon output hash had not changed since prior run\n"
+	@printf "	$(err)#$(off)   syntax check failed: native compilation of lexon output failed\n"
 	@printf "\n	Expectation files are verbatim prior lexon output. Syntax checks use separate hashes.\n"
 	@printf "	Hashes are always updated after native compilation, even if expectation files are not.\n"
 	@rm -f *.tmp
@@ -678,9 +681,9 @@ _test:
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
 	@$(call testrun,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
 	@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
-	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
-	@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
+	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,%JSERR)
+	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,%SOLERR)
+	@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,%SOPERR)
 	@$(call testrun,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
 	@$(call testrun,precompile,:,../bin/lexon,-P,:,grep -l %PRE $(files),.pre.exp,%PREERR)
 	@$(call testrun,gui generator info,:,../bin/lexon,-U,:,grep -l %GEN $(files),.gen.exp,%GENERR)

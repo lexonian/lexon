@@ -1,0 +1,84 @@
+
+precompilation:
+---------------
+
+statement multi sentence clause   1:   LEX: «UCC Financing Statement».
+
+statement multi sentence clause   3:   LEXON: ‹0.2.12›.
+
+statement multi sentence clause   5:   "«Financing Statement»" is this contract.
+statement multi sentence clause   6:   "«File Number»" is data.
+statement multi sentence clause   7:   "«Initial Statement Date»" is a time.
+statement multi sentence clause   8:   "«Filer»" is a person.
+statement multi sentence clause   9:   "«Debtor»" is a person.
+statement multi sentence clause  10:   "«Secured Party»" is a person.
+statement multi sentence clause  11:   "«Filing Office»" is a person.
+statement multi sentence clause  12:   "«Collateral»" is data.
+statement multi sentence clause  13:   "«Digital Asset Collateral»" is an amount.
+statement multi sentence clause  14:   "«Reminder Fee»" is an amount.
+statement multi sentence clause  15:   "«Continuation Window Start»" is a time.
+statement multi sentence clause  16:   "«Continuation Statement Date»" is a time.
+statement multi sentence clause  17:   "«Continuation Statement Filing Number»" is data.
+statement multi sentence clause  18:   "«Lapse Date»" is a time.
+statement multi sentence clause  19:   "«Default»" is a binary.
+statement multi sentence clause  20:   "«Continuation Statement»" is a binary.
+statement multi sentence clause  21:   "«Termination Statement»" is a binary.
+statement multi sentence clause  22:   "«Termination Statement Time»" is a time.
+statement multi sentence clause  23:   "«Notification Statement»" is a text.
+
+statement multi sentence clause  25:   The «Filer» fixes the «Filing Office», fixes the «Debtor», fixes the «Secured Party», and fixes the «Collateral».
+
+statement multi sentence clause  27:   Clause: «Certify».
+statement multi sentence clause  28:   The «Filing Office» may certify the «File Number».
+
+statement multi sentence clause  30:   Clause: «Set File Date».
+statement multi sentence clause  31:   The «Filing Office» may fix the «Initial Statement Date» as the current time.
+
+statement multi sentence clause  33:   Clause: «Set Lapse».
+statement multi sentence clause  34:   The «Filing Office» may fix the «Lapse Date».
+
+statement multi sentence clause  36:   Clause: «Set Continuation Start».
+statement multi sentence clause  37:   The «Filing Office» may fix the «Continuation Window Start».
+
+statement multi sentence clause  39:   Clause: «Pay Fee».
+statement multi sentence clause  40:   The «Secured Party» may pay a «Reminder Fee» into escrow.
+
+statement multi sentence clause  42:   Clause: «Notice».
+statement multi sentence clause  43:   The «Filing Office» may fix the «Notification Statement».
+
+statement multi sentence clause  45:   Clause: «Notify».
+statement multi sentence clause  46:   The «Filing Office» may, if the «Continuation Window Start» has passed, notify the «Secured Party» of the «Notification Statement».
+statement multi sentence clause  47:   The «Filing Office» may, if the «Continuation Window Start» has passed, notify the «Secured Party».
+statement multi sentence clause  48:   The «Filing Office» notifies the «Secured Party» of the «Notification Statement».
+
+statement multi sentence clause  50:   Clause: «Pay Escrow In».
+statement multi sentence clause  51:   The «Debtor» may pay the «Digital Asset Collateral» into escrow.
+
+statement multi sentence clause  53:   Clause: «Fail to Pay».
+statement multi sentence clause  54:   The «Secured Party» may declare «Default».
+
+statement multi sentence clause  56:   Clause: «Take Possession».
+statement multi sentence clause  57:   The «Filing Office» may, if «Default» is declared, pay the «Digital Asset Collateral» to the «Secured Party».
+
+statement multi sentence clause  59:   Clause: «File Continuation».
+statement multi sentence clause  60:   The «Secured Party» may file the «Continuation Statement».
+
+statement multi sentence clause  62:   Clause: «Set Continuation Lapse».
+statement multi sentence clause  63:   The «Filing Office» may, if the «Continuation Statement» is filed, fix the «Continuation Statement Date».
+
+statement multi sentence clause  65:   Clause: «File Termination».
+statement multi sentence clause  66:   The «Secured Party» may file a «Termination Statement», and certify the «Termination Statement Time» as the then current time.
+
+statement multi sentence clause  68:   Clause: «Release Escrow».
+statement multi sentence clause  69:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Digital Asset Collateral» to the «Debtor».
+
+statement multi sentence clause  71:   Clause: «Release Reminder Fee».
+statement multi sentence clause  72:   The «Filing Office» may, if the «Termination Statement» is filed, return the «Reminder Fee» to the «Secured Party».
+
+statement multi sentence clause  74:   Clause: «Termination Period».
+statement multi sentence clause  75:   "«Termination Period»" is defined as 365 days after the «Termination Statement Time».
+
+statement multi sentence clause  77:   Clause: «Terminate and Clear».
+statement multi sentence clause  78:   The «Filing Office» may, if the «Termination Period» has passed, terminate this contract.
+
+

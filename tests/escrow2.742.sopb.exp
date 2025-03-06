@@ -15,7 +15,6 @@ payable main contract Escrow =
             arbiter = arbiter,
             service_fee = service_fee
         }
-        
     
 
 

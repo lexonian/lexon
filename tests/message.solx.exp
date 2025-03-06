@@ -9,7 +9,7 @@ pragma solidity ^0.8.17;
  **
  **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
  **	backend:     solidity 0.3.102 beta 2
  **
@@ -124,7 +124,7 @@ contract CreatorMessaging {
     function send_message(string memory _message) public {
         permit(owner);
         message = _message;
-        notify(creator, message);
+        notify(creator, _message);
     }
 
 
@@ -138,7 +138,7 @@ contract CreatorMessaging {
     function send_confirmation(string memory _confirmation) public {
         permit(creator);
         confirmation = _confirmation;
-        notify(owner, confirmation);
+        notify(owner, _confirmation);
     }
 }
 

@@ -787,6 +787,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 <DESCRIPTION_>{
 [^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 ›{space}*\"?{space}*\.?({space}*\n)*				{ D; DX(Separator); BEGIN(MAIN); return Separator; }
+›{space}*\"?{space}*/[,;]					{ D;                BEGIN(MAIN); }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 }
 
@@ -1176,7 +1177,7 @@ void parsargs(int argc, char **argv) {
     int option_index = 0;
     opt_summarized = mtrac_strdup("");
     while ((c = getopt_long(argc, argv,
-    		"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M0123",
+    		"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M01234",
 		long_options, &option_index)) != -1) {
 	if(c == '?') { fprintf(stderr, "parameter error"); exit(1); }
 

@@ -17,7 +17,6 @@ payable main contract Escrow =
             amount = Call.value,
             fee = fee
         }
-        
     
 
 

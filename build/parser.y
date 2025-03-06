@@ -301,6 +301,7 @@ typedef struct Predicate {
 	struct Registration *Registration;
 	struct Grantment *Grantment;
 	struct Appointment *Appointment;
+	struct Assignment *Assignment;
 	struct Acceptance *Acceptance;
 	struct Fixture *Fixture;
 	struct Setting *Setting;
@@ -383,6 +384,17 @@ typedef struct Appointment {
 typedef struct Appoint {
 	Literal *Literal;
 } Appoint;
+
+typedef struct Assignment {
+	struct Assign *Assign;
+	struct Symbol *Symbol;
+	struct Expression *Expression;
+	Literal *Literal;
+} Assignment;
+
+typedef struct Assign {
+	Literal *Literal;
+} Assign;
 
 typedef struct Acceptance {
 	struct Accept *Accept;
@@ -769,6 +781,8 @@ Grantment *process_grantment(Grantment *Grantment);
 Grant *process_grant(Grant *Grant);
 Appointment *process_appointment(Appointment *Appointment);
 Appoint *process_appoint(Appoint *Appoint);
+Assignment *process_assignment(Assignment *Assignment);
+Assign *process_assign(Assign *Assign);
 Acceptance *process_acceptance(Acceptance *Acceptance);
 Accept *process_accept(Accept *Accept);
 Fixture *process_fixture(Fixture *Fixture);
@@ -880,6 +894,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token APPOINT
 	%token APPOINTS
 	%token AS
+	%token ASSIGN
+	%token ASSIGNS
 	%token AT
 	%token BE
 	%token BEEN
@@ -1010,6 +1026,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Appoint *> Appoint
 	%nterm <Appointment *> Appointment
 	%nterm <Article *> Article
+	%nterm <Assign *> Assign
+	%nterm <Assignment *> Assignment
 	%nterm <Authors *> Authors
 	%nterm <Be *> Be
 	%nterm <Being *> Being
@@ -1458,6 +1476,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 		| Registration                                    { NEW(Predicate, *((Literal **)&yylval)); Predicate->Registration=$Registration; $$=process_predicate(Predicate); }
 		| Grantment                                       { NEW(Predicate, *((Literal **)&yylval)); Predicate->Grantment=$Grantment; $$=process_predicate(Predicate); }
 		| Appointment                                     { NEW(Predicate, *((Literal **)&yylval)); Predicate->Appointment=$Appointment; $$=process_predicate(Predicate); }
+		| Assignment                                      { NEW(Predicate, *((Literal **)&yylval)); Predicate->Assignment=$Assignment; $$=process_predicate(Predicate); }
 		| Acceptance                                      { NEW(Predicate, *((Literal **)&yylval)); Predicate->Acceptance=$Acceptance; $$=process_predicate(Predicate); }
 		| Fixture                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Fixture=$Fixture; $$=process_predicate(Predicate); }
 		| Setting                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Setting=$Setting; $$=process_predicate(Predicate); }
@@ -1571,6 +1590,20 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	Appoint:	
 		  APPOINT                                         { NEW(Appoint, *((Literal **)&yylval)); $$=process_appoint(Appoint); }
 		| APPOINTS                                        { NEW(Appoint, *((Literal **)&yylval)); $$=process_appoint(Appoint); }
+		;
+
+
+	
+	Assignment:	
+		  Assign Symbol                                   { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=$Assign; Assignment->Symbol=$Symbol; $$=process_assignment(Assignment); }
+		| Assign Expression AS Symbol                     { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=$Assign; Assignment->Expression=$Expression; Assignment->Symbol=$Symbol; $$=process_assignment(Assignment); }
+		;
+
+
+	
+	Assign:	
+		  ASSIGN                                          { NEW(Assign, *((Literal **)&yylval)); $$=process_assign(Assign); }
+		| ASSIGNS                                         { NEW(Assign, *((Literal **)&yylval)); $$=process_assign(Assign); }
 		;
 
 
@@ -2481,6 +2514,7 @@ Predicate *process_predicate(Predicate *Predicate) {
 	// Predicate->Registration
 	// Predicate->Grantment
 	// Predicate->Appointment
+	// Predicate->Assignment
 	// Predicate->Acceptance
 	// Predicate->Fixture
 	// Predicate->Setting
@@ -2575,6 +2609,19 @@ Appointment *process_appointment(Appointment *Appointment) {
 Appoint *process_appoint(Appoint *Appoint) {
 	if(opt_debug_actions) printf("actions: parsing Appoint '%s'\n", Appoint->Literal);
 	return Appoint;
+}
+
+Assignment *process_assignment(Assignment *Assignment) {
+	if(opt_debug_actions) printf("actions: parsing Assignment '%s'\n", Assignment->Literal);
+	// Assignment->Assign
+	// Assignment->Symbol
+	// Assignment->Expression
+	return Assignment;
+}
+
+Assign *process_assign(Assign *Assign) {
+	if(opt_debug_actions) printf("actions: parsing Assign '%s'\n", Assign->Literal);
+	return Assign;
 }
 
 Acceptance *process_acceptance(Acceptance *Acceptance) {
