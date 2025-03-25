@@ -4,7 +4,7 @@ PREAMBLE:  Aenean commodo.
 
 TERMS:
 "Bar" is data.
- Bar, text, person May given that an binary is at least Bar,: Notifies escrow into a binary, the data nor the current time and has passed, Bar is past, the person, neither there not binary, and also if so afterwards terminates this Bar, and with this register Bar the respective then current time is at least the respective then current time, and is past nor 123 year after an time nor an Bar was yes and the text seconds past an Bar neither binary year in the past or has passed.
+ Bar, text, person May given that an binary is at least Bar: Notifies escrow into a binary, the data nor the current time and has passed, Bar is past, the person, neither there not binary, and also if so afterwards terminates this Bar, and with this register Bar the respective then current time is at least the respective then current time, and is past nor 123 year after an time nor an Bar was yes and the text seconds past an Bar neither binary year in the past or has passed.
 Is Then amount.
 
 PER Garply Qux:.

@@ -12,7 +12,7 @@ Text May, return Bar second past an binary equal to 123 nor now from the escrow 
 PER Corge:
 "Corge" is this Bar.
 This Bar Be Then therefore Corge.
-An amount Or an time Or time, Corge Or data, an binary, an Corge, an time May provided has passed neither person,: Declares Corge binary nor the respective current time is at least an data and an amount has passed, or the current time, the binary is past neither has passed, and an Corge has passed neither the text has passed.
+An amount Or an time Or time, Corge Or data, an binary, an Corge, an time May provided has passed neither person: Declares Corge binary nor the respective current time is at least an data and an amount has passed, or the current time, the binary is past neither has passed, and an Corge has passed neither the text has passed.
 Be Then therefore a Corge.
 Be The data.
 Is Then therefore the Corge.

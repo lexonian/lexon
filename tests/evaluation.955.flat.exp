@@ -285,20 +285,22 @@
                 ⎸   ⎸                   ↳  permission 
                 ⎸   ⎸                   ⎸ 
                 ⎸   ⎸                   ↳  condition 
-                ⎸   ⎸                       ↳  if 
-                ⎸   ⎸                       ⎸ 
-                ⎸   ⎸                       ↳  expression 
-                ⎸   ⎸                           ↳  combination 
-                ⎸   ⎸                               ↳  combinor 
-                ⎸   ⎸                                   ↳  combinand 
-                ⎸   ⎸                                       ↳  existence 
-                ⎸   ⎸                                           ↳  symbol «factually-breached»  
-                ⎸   ⎸                                           ⎸ 
-                ⎸   ⎸                                           ↳  be 
-                ⎸   ⎸                                           ⎸ 
-                ⎸   ⎸                                           ↳  contract 
-                ⎸   ⎸                                               ↳  this-contract 
-                ⎸   ⎸                                                   ↳  this «license»              
+                ⎸   ⎸                   ⎸   ↳  if 
+                ⎸   ⎸                   ⎸   ⎸ 
+                ⎸   ⎸                   ⎸   ↳  expression 
+                ⎸   ⎸                   ⎸       ↳  combination 
+                ⎸   ⎸                   ⎸           ↳  combinor 
+                ⎸   ⎸                   ⎸               ↳  combinand 
+                ⎸   ⎸                   ⎸                   ↳  existence 
+                ⎸   ⎸                   ⎸                       ↳  symbol «factually-breached»  
+                ⎸   ⎸                   ⎸                       ⎸ 
+                ⎸   ⎸                   ⎸                       ↳  be 
+                ⎸   ⎸                   ⎸                       ⎸ 
+                ⎸   ⎸                   ⎸                       ↳  contract 
+                ⎸   ⎸                   ⎸                           ↳  this-contract 
+                ⎸   ⎸                   ⎸                               ↳  this «license»         
+                ⎸   ⎸                   ⎸ 
+                ⎸   ⎸                   ↳  punctuation      
                 ⎸   ⎸ 
                 ⎸   ↳  clause «factually-breached» 
                 ⎸   ⎸   ↳  body 

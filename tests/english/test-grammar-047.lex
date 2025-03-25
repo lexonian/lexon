@@ -6,7 +6,7 @@ TERMS:
 "Bar" is the binary.
 This Bar Is Then the data.
 Be Then therefore Bar.
-The Bar Or a Bar May given that Bar and now and 123 seconds after Bar second in the past neither there is not Bar, then,: Appoints person, and if so appoints an Bar, and with this register an binary is past, or the amount nor an Bar not fixed, an Bar being equal now months in the past, neither amount, or the current time, the respective current time, and an amount is past, nor Bar has passed and there be Bar, amount, if so afterwards terminates all contracts.
+The Bar Or a Bar May given that Bar and now and 123 seconds after Bar second in the past neither there is not Bar, then: Appoints person, and if so appoints an Bar, and with this register an binary is past, or the amount nor an Bar not fixed, an Bar being equal now months in the past, neither amount, or the current time, the respective current time, and an amount is past, nor Bar has passed and there be Bar, amount, if so afterwards terminates all contracts.
 
 PER Xyzzy:.
 

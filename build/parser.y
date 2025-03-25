@@ -245,8 +245,13 @@ typedef struct Action {
 	struct Predicates *Predicates;
 	struct Permission *Permission;
 	struct Condition *Condition;
+	struct Punctuation *Punctuation;
 	Literal *Literal;
 } Action;
+
+typedef struct Punctuation {
+	Literal *Literal;
+} Punctuation;
 
 typedef struct Subject {
 	struct Symbols *Symbols;
@@ -759,6 +764,7 @@ Function *process_function(Function *Function);
 Statements *process_statements(Statements *Statements);
 Statement *process_statement(Statement *Statement);
 Action *process_action(Action *Action);
+Punctuation *process_punctuation(Punctuation *Punctuation);
 Subject *process_subject(Subject *Subject);
 Symbols *process_symbols(Symbols *Symbols);
 Symbol *process_symbol(Symbol *Symbol);
@@ -869,17 +875,6 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Description *> Description
 	%token <Scalar *> SCALAR
 	%nterm <Scalar *> Scalar
-	%token AUTHOR
-	%token AUTHORS
-	%token CLAUSE
-	%token COMMENT
-	%token COMMENTS
-	%token GENERAL
-	%token LEX
-	%token LEXON
-	%token PER
-	%token PREAMBLE
-	%token TERMS
 	%token A
 	%token ACCEPT
 	%token ACCEPTS
@@ -897,6 +892,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token ASSIGN
 	%token ASSIGNS
 	%token AT
+	%token AUTHOR
+	%token AUTHORS
 	%token BE
 	%token BEEN
 	%token BEING
@@ -904,7 +901,10 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token CERTIFIED
 	%token CERTIFIES
 	%token CERTIFY
+	%token CLAUSE
 	%token COMING
+	%token COMMENT
+	%token COMMENTS
 	%token CONTRACT
 	%token CONTRACTS
 	%token CURRENT
@@ -926,6 +926,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token FIXES
 	%token FOR
 	%token FROM
+	%token GENERAL
 	%token GIVEN
 	%token GRANT
 	%token GRANTS
@@ -943,6 +944,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token ITSELF
 	%token LEAST
 	%token LESS
+	%token LEX
+	%token LEXON
 	%token LIES
 	%token MAY
 	%token MILLISECOND
@@ -971,7 +974,9 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token PAST
 	%token PAY
 	%token PAYS
+	%token PER
 	%token PERSON
+	%token PREAMBLE
 	%token PROVIDED
 	%token REGISTER
 	%token REGISTERS
@@ -990,6 +995,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token SO
 	%token TERMINATE
 	%token TERMINATES
+	%token TERMS
 	%token TEXT
 	%token THAN
 	%token THAT
@@ -1103,6 +1109,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Predicates *> Predicates
 	%nterm <Preposition *> Preposition
 	%nterm <Provisions *> Provisions
+	%nterm <Punctuation *> Punctuation
 	%nterm <Reflexive *> Reflexive
 	%nterm <Register *> Register
 	%nterm <Registration *> Registration
@@ -1373,15 +1380,22 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	Action:	
 		  Subject Predicates Separator                    { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Predicates=$Predicates; $$=process_action(Action); }
 		| Subject Permission Predicates Separator         { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Comma Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Comma Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
+		| Subject Permission Condition Punctuation Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Punctuation=$Punctuation; Action->Predicates=$Predicates; $$=process_action(Action); }
 		| Subject Permission Comma Predicates Separator   { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Comma Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Comma Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
+		| Subject Permission Comma Condition Punctuation Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Punctuation=$Punctuation; Action->Predicates=$Predicates; $$=process_action(Action); }
+		;
+
+
+	
+	Punctuation:	
+		  Comma                                           { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Colon                                           { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		|  THEN                                           { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		|  THEN Colon                                     { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Comma THEN                                      { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Comma THEN Colon                                { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		|  THEN Comma                                     { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Comma THEN Comma                                { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
 		;
 
 
@@ -1775,8 +1789,6 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	
 	Condition:	
 		  If Expression                                   { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
-		| If Expression THEN                              { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
-		| If Expression Comma THEN                        { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
 		;
 
 
@@ -2449,7 +2461,13 @@ Action *process_action(Action *Action) {
 	// Action->Predicates
 	// Action->Permission
 	// Action->Condition
+	// Action->Punctuation
 	return Action;
+}
+
+Punctuation *process_punctuation(Punctuation *Punctuation) {
+	if(opt_debug_actions) printf("actions: parsing Punctuation '%s'\n", Punctuation->Literal);
+	return Punctuation;
 }
 
 Subject *process_subject(Subject *Subject) {

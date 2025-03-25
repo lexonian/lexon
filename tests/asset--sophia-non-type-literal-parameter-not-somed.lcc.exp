@@ -1,0 +1,73 @@
+( document 
+    ( head 
+        ( lex «asset» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «id» ( type text ) ) 
+                ( definition «creator» ( type person ) ) 
+                ( definition «owner» ( type person ) ) 
+                ( definition «someone» ( type person ) ) ) 
+            ( clauses 
+                ( clause «transfer-i» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( assignment assign ( symbol «owner» new ) 
+                                                ( expression ( combination ( combinor ( combinand ( symbol ( type person ) ) ) ) ) ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «transfer-ii» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( assignment assign ( symbol «owner» new ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «transfer-iii» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( assignment assign ( symbol «owner» new ) 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «creator» ) ) ) ) ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «transfer-iv» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «owner» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( assignment assign ( symbol «owner» new ) 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «someone» ) ) ) ) ) ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «creator» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( fixture fix ( symbol «id» ) ) ) ) ) ) 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «owner» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( setting be ( symbol «creator» ) ) ) ) ) ) ) ) ) )

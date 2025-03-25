@@ -117,31 +117,32 @@ help:
 	# * the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
 
 build:
-	@if (! $(MAKE) -s -o lexccc -q lexccc.c build/.parser & ! $(MAKE) -s lexccc) ; \
-		then printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
+	@# the conditional building replaces lexccc with build/.lexccc as dependency
+	@# to enable cycle2-only building as default, with no lexccc present. 
+	@if (! $(MAKE) -s -o lexccc -q build/.lexccc build/.parser build/core.c) ; then \
+		printf "\n$(hi)▫️  cycle 1: build compiler compiler $(off)\n\n" ; \
 		$(MAKE) lexccc ; \
 	fi
-	@if (! $(MAKE) -s -o lexccc -q lexon) ; \
-		then printf "\n$(hi)▫️  cycle 2: build compiler $(off)\n\n" ; \
-		$(MAKE) -o lexccc lexon ; \
+	@if (! $(MAKE) -s -q lexon) ; then \
+		printf "\n$(hi)▫️  cycle 2: build compiler $(off)\n\n" ; \
+		$(MAKE) lexon ; \
 	fi
-	@if [[ ! -e build/.built ]] ; \
-		then printf "$(ok)build done: bin/lexon.$(off)\n\n" ; \
+	@if [[ ! -e build/.built ]] ; then \
+		printf "$(ok)build done: bin/lexon.$(off)\n\n" ; \
 		touch build/.built ; \
 	fi
 
-lexccc: lexccc.c
-
+lexccc build/.lexccc: build/lexccc.c
 	@mkdir -p bin
 	cd build ; gcc -std=c99 -o ../bin/lexccc lexccc.c
+	@touch build/.lexccc
 	@echo
 
-lexccc.c: src/lexon.l
-
+build/lexccc.c: src/lexon.l
 	@mkdir -p build
 	cd build ; lex -o lexccc.c ../src/lexon.l
 
-build/.parser: lexccc src/lexon.l grammar/english.lgf
+build/.parser: build/.lexccc src/lexon.l grammar/english.lgf
 	@printf "$(ok)» frontend $(off)\n\n"
 	@mkdir -p build
 	@rm -f build/.built
@@ -182,7 +183,7 @@ build/.backend:
 
 build/scanner.c build/parser.h build/parser.c: | build/.parser
 
-build/core.c: lexccc grammar/english.lgf $(wildcard src/core.c)
+build/core.c: build/.lexccc grammar/english.lgf $(wildcard src/core.c)
 	@if [[ -e src/core.c ]] ; then \
 		printf "$(ok)» using core target module from src/$(off)\n" ; \
 		cp src/core.c build/ ; \
@@ -250,7 +251,7 @@ ifeq (,$(wildcard .nosample))
 	@echo
 endif
 
-test:
+test: build
 ifneq ($(FILE),)
 	@printf "$(ok)» test file $(path)$(off)\n"
 	@mkdir -p tmp
@@ -425,6 +426,7 @@ clean:
 	@printf "\n\n$(hi)▫️  clean built and generated files $(off)\n\n"
 	rm -f .D???????
 	rm -f bin/lexccc
+	rm -f build/.lexccc
 	rm -f bin/lexon
 	rm -rf build
 	@echo
@@ -543,23 +545,6 @@ diffclean:
 	@git branch
 	@git status
 
-devclean: clean
-	mkdir -p .bin.bak
-	-mv bin/lexon_* .bin.bak
-	@rm -rf bin
-	@echo
-	@echo .:
-	@ls -A
-	@echo
-	@echo bin:
-	@if [ -e bin ] ; then ls bin ; else echo "[not present]" ; fi
-	@echo
-	@echo build:
-	@if [ -e build ] ; then ls build ; else echo "[not present]" ; fi
-	@echo
-	@echo src:
-	@ls -A src
-	@echo
 	@printf "$(ok)√ deep cleaned for dev branch$(off)\n"
 	@printf "Deleted all pre-built and gererated files except test expectations.\n\n"
 	@git branch

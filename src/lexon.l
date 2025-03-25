@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 2"
+#define program_vers "0.3 beta 3"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -646,8 +646,8 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^{space}*LAW{space}*:?{space}*					{ D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
  /* ---> 2ND CYCLE LGF GENERATED TYPE NAMES HERE ---> */
  /* <--- TO HERE <--- */
+^{space}*PREAMBLE{space}*(:|\.)*{space}*			{ D; lineno(); concat(&buf, trim(yytext), ": ‹"); BEGIN(LONGQUOTE); }
 ^{space}*{word}{space}*:{space}*				{ D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
-^{space}*PREAMBLE{space}*(:|\.)*{space}*			{ D; lineno(); concat(&buf, trim(yytext), " ‹"); BEGIN(LONGQUOTE); }
 ^{space}*{word}{space}*						{ D; lineno(); concat(&buf, trim(yytext), " "); }
 ^{space}*(A|AN|THE)?{space}*(\"|“|”){space}*			{ D; lineno(); concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
 \.{space}*(A|AN|THE)?{space}*(\"|“|”){space}*			{ D;           concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
@@ -730,6 +730,8 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 
 <LONGQUOTE>{
 .*                                                              { D; concat(&buf, yytext); }
+\n+/(TERM|GENERAL)						{ D; concat(&buf, "›."); concat(&buf, yytext); line+=strlen(yytext); plhd=lhd; lhd=false; BEGIN(TRIM); }
+\n+/(A|AN|THE)?{space}*{quote}                                                     { D; concat(&buf, "›."); concat(&buf, yytext); line+=strlen(yytext); plhd=lhd; lhd=false; BEGIN(TRIM); }
 \n                                                              { D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 ({space}*\n){3}                                                 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 }
@@ -957,12 +959,15 @@ int main(int argc, char **argv) {
 	if(opt_jurisdictions) {
 		if(opt_verbose || opt_debug) printf("• jurisdictions\n");
 		dump_laws();
+		exit(0);
 	} else if(opt_grammar) {
 		if(opt_verbose || opt_debug) printf("• grammar\n");
 		printf("%s\n", owngrm);
+		exit(0);
 	} else if(opt_manual) {
 		if(opt_verbose || opt_debug) printf("• manual\n");
 		printf("%s\n", manual);
+		exit(0);
 	} else if(opt_geninfo || opt_keywords || opt_samples || opt_bootstrap || opt_yacc || opt_bnf || opt_template) {
 		if(opt_verbose || opt_debug) printf("• scanning\n");
 		do_main_pass = false;
@@ -1851,9 +1856,10 @@ const char *literal_symbol(char *token) {
 char _up[1001];
 char *UP(const char *token) {
 	strncpy(_up, token, 1000);
+	_up[1000] = 0;
 	char *c = _up;
 	bool sep = true;
-	while(*c) { if(sep) *c = toupper(*c); sep = *c == '_'; c++; }
+	while(*c) { if(sep) *c = toupper(*c); else *c = tolower(*c); sep = *c == '_'; c++; }
 	return _up;
 }
 
@@ -1931,6 +1937,14 @@ void rump(char **buf, char *filename) {
 	mtrac_free(copy);
 	replace(buf, ".lex", "");
 	replace(buf, "-", " ");
+}
+
+static bool in(char *hay, char *needle) { // ◊ unify w/target.c
+        char *tagged = mtrac_strdup("");
+        mtrac_concat(&tagged, ":", needle, ":");
+        bool in = !!strstr(hay, tagged);
+        mtrac_free(tagged);
+        return in;
 }
 
 void include(char *scanned) {
@@ -2458,16 +2472,19 @@ void margin() {
 		size_t margin = strcspn(p, ":\n");
 		if(margin && *(p + margin) == ':' && margin < max) {
 			p += margin;
-			while(*--p != ' ')
-				if(p < p0) {
-					/* would break the line counter: a line did not, as all should, start '.* .*:' */
-					fprintf(stderr, "margin scan buffer:\n%s\n\n", buf);
-					fprintf(stderr, "parser error at: '%.*s' ...\n", 25, p0);
-					exit(31);
-				}
-			size_t pos = p - buf;
-			replace_first_from(&buf, " ", space + margin -1, p);
-			p = buf + pos;
+			///while(*--p != ' ')
+			///	if(p < p0) {
+			///		/* would break the line counter: a line did not, as all should, start '.* .*:' */
+			///		fprintf(stderr, "margin scan buffer:\n%s\n\n", buf);
+			///		fprintf(stderr, "parser error at: '%.*s' ...\n", 25, p0); // ◊ make canonical error message
+			///		exit(31);
+			///	}
+			while(*--p != ' ' && p > p0) ;
+			if(p > p0) {
+				size_t pos = p - buf;
+				replace_first_from(&buf, " ", space + margin -1, p);
+				p = buf + pos;
+			}
 		}
 		if(!(p = strchr(p,'\n'))) break;
 		p0 = ++p;
@@ -2980,9 +2997,13 @@ void produce_grammar(struct definition *definition) {
 		bool has_leaf = !!definition->tokens;
 		bool recursive = in_list(definition->tokens, definition->name) && !definition->tokens->next->next;
 		char *match = _mtrac_dupcat("", ",", definition->name, ",", null);
-		char *no_break_list = ",Type,Symbol,Combination,Combinand,Combinor,Combinator";
+		char *no_break_list = ",Type,Symbol,Combination,Combinand,Combinor,Combinator,";
 		bool no_break = !!strstr(no_break_list, match);
-		bool skip = !!strstr(",Type_Term,Body", match);
+		bool skip = !!strstr(",Type_Term,Punctuation,", match); // core lang
+		char *drop_list = ""; // ":Punctuation:"; // tree 
+		char *cut_list = ""; // "::Article:"; // flat tree
+		char *skid_list = ""; // ":Catena:Type_Term:Body:Provisions:"; // flat tree
+		char *hide_list = ""; //":Definition:Symbol:"; // flat tree
 		mtrac_free(match);
 
 		char *production_name = mtrac_strdup(LOW(dash_spaced(definition->name)));
@@ -2999,14 +3020,24 @@ void produce_grammar(struct definition *definition) {
 		}
 		concat(&templ, "/*T*/\t\tbool terse = opt_produce_terse && (skipped || (1 == 0");
 		token = definition->tokens;
-		while(token) { concat(&templ, " + (!!", definition->name, "->", token->string, "?1:0)"); token = token->next; }
+		while(token) {
+			if(!in(cut_list, token->string) && !in(skid_list, token->string))
+				concat(&templ, " + (!!", definition->name, "->", token->string, "?1:0)");
+			token = token->next;
+		}
 		concat(&templ, "));\n");
 
 		/* tree: produce actual node name, for tree display */
+		bool hide = in(hide_list, definition->name);
 		concat(&templ, "/*T*/\t\tif(opt_produce_tree) {\n");
-		concat(&templ, "/*T*/\t\t\tif(!(opt_produce_flat && has_more_recursion) && !terse)\n");
-		concat(&templ, "/*T*/\t\t\t\t", "padcat(", definition==grammar?"0":"1", ", indent, production, \"",
-			definition!=grammar?"↳  ":"   ", "\", color, \"", production_name, "\", off, \" \");\n"); // ↳
+		if(in(skid_list, definition->name))
+			concat(&templ, "/*T*/\t\t\tif(!opt_produce_flat");
+		else
+			concat(&templ, "/*T*/\t\t\tif(!(opt_produce_flat && has_more_recursion)");
+		concat(&templ, " && !terse)\n");
+		concat(&templ, "/*T*/\t\t\t\t", "padcat(", definition==grammar?"0":"1", ", indent, production, \"", definition!=grammar?"↳  ":"   ", "\""); // ↳
+		if(!hide) concat(&templ, ", color, \"", production_name, "\", off, \" \"");
+		concat(&templ, ");\n");
 
 		/* core: skips some, unpacks the binary nesting and uses less lines */
 		concat(&templ, "/*T*/\t\t} else {\n");
@@ -3101,12 +3132,19 @@ void produce_grammar(struct definition *definition) {
 				concat(&templ, "/*T*/\t\t", stopped?"\t":"", "sibbling_follows = !!(");
 				stringlist *succ = token->next;
 				stringlist *start = succ;
-				if(!succ)
-					concat(&templ, "false");
+				bool any = false;
 				while(succ) {
-					concat(&templ, succ!=start?" || ":"", definition->name, "->", succ->string);
+					if(!in(drop_list, succ->string)) {
+						if(!in(cut_list, succ->string) && !in(skid_list, succ->string))
+							concat(&templ, succ!=start?" || ":"", definition->name, "->", succ->string);
+						else
+							concat(&templ, succ!=start?" || ":"", "!opt_produce_flat && ", definition->name, "->", succ->string);
+						any = true;
+					}
 					succ = succ->next;
 				}
+				if(!any)
+					concat(&templ, "false");
 				concat(&templ, ");\n");
 				if(!recursive || !namesake)
 					concat(&templ, "/*T*/\t\t", stopped?"\t":"",
@@ -3133,19 +3171,30 @@ void produce_grammar(struct definition *definition) {
 
 
 			/* *** actual call to the leaf *** */
-			char *type = lowdup(types->string);
-			char *name = lowdup(definition->name);
-			concat(&templ, "/*T*/\t\t", stopped?"\t":"", opt_langprefix, "_", type,
-				"(production, ",
-				definition->name, "->", token->string,
-				", indent+irx, ",
-				namesake?"false, ":"true, ",
-				recursive?"sibbling_follows && skipped":"false", namesake?"|| sibbling":"",
-				", subhighlight || opt_values && !!strstr(opt_values, \"", name, "\")",
-				", opt_subvalues && !!strstr(opt_subvalues, \"", name, "\")", ");\n",
-				"/*T*/\t\t", stopped?"\t":"", "subhighlight = false;\n");
-			mtrac_free(type);
-			mtrac_free(name);
+			if(!in(drop_list, token->string)) {
+				char *type = lowdup(types->string);
+				char *name = lowdup(definition->name);
+				bool cut = in(cut_list, token->string);
+				char *tabs = "\t\t";
+				if(cut) {
+					concat(&templ, "/*T*/\t\tif(!opt_produce_flat) {");
+					tabs = "\t\t\t";
+				}
+				concat(&templ, "/*T*/", tabs, stopped?"\t":"", opt_langprefix, "_", type,
+					"(production, ",
+					definition->name, "->", token->string,
+					", indent+irx, ",
+					namesake?"false, ":"true, ",
+					recursive?"sibbling_follows && skipped":"false", namesake?"|| sibbling":"",
+					", subhighlight || opt_values && !!strstr(opt_values, \"", name, "\")",
+					", opt_subvalues && !!strstr(opt_subvalues, \"", name, "\")", ");\n",
+					"/*T*/", tabs, stopped?"\t":"", "subhighlight = false;\n");
+				if(cut) {
+					concat(&templ, "/*T*/\t\t}");
+				}
+				mtrac_free(type);
+				mtrac_free(name);
+			}
 
 			/* delayed grid shift for skipped recursives */
 			if(recursive && namesake) {

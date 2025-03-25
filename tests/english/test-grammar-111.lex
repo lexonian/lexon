@@ -52,4 +52,4 @@ CLAUSE: Garply.
 An "Garply" be 123 is 123, there be not amount, the then current time lies at least the data.
 
 CLAUSE: Garply Plugh Bar.
- Garply Plugh Bar May provided the binary neither past neither Garply Plugh Bar is no fixed and 123 years in the past Garply Plugh Bar or 123 is 123 or be no Garply Plugh Bar, then,: Grant Garply Plugh Bar, fix all contracts as Garply Plugh Bar, if so certify Garply Plugh Bar as a person equal to Garply Plugh Bar neither the amount has passed, and if so afterwards files for Garply Plugh Bar a Garply Plugh Bar be not fixed, if so afterwards declares the text is past.
+ Garply Plugh Bar May provided the binary neither past neither Garply Plugh Bar is no fixed and 123 years in the past Garply Plugh Bar or 123 is 123 or be no Garply Plugh Bar, then: Grant Garply Plugh Bar, fix all contracts as Garply Plugh Bar, if so certify Garply Plugh Bar as a person equal to Garply Plugh Bar neither the amount has passed, and if so afterwards files for Garply Plugh Bar a Garply Plugh Bar be not fixed, if so afterwards declares the text is past.

@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.102 beta 2"
+#define backend_version "javascript 0.3.103 beta 3"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -142,6 +142,7 @@ static char *command_init = null;
 static char *fixed = null;	       // list of variables that have been set
 static char *args = null;	       // list of variables that come in as paremeters
 static char *functions = null;
+
 static char *safedup(const char *name) {
 	assert(name);
 	char *_safe = mtrac_malloc(strlen(name) + 3);
@@ -369,7 +370,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) {	// ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 
 	mtrac_concat(&tagged, ":", needle, ":");
@@ -1958,7 +1959,6 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 	padcat(1, indent + 2, production, "return new ", class,
 	       "(this%2,%%2%);%16%");
 	padcat(1, indent, production, "};");
-
 	padcat(2, indent, production, "class ", class, " {");
 	padcat(2, indent + 1, production, "constructor(%2%) {");
 
@@ -2787,9 +2787,11 @@ static void assign(char **production, int indent, Symbol *symbol,
 	js_symbol(production, symbol, true, indent);	// true --> assign flag
 	padcat(0, 0, production, " = ");
 
-	if (expression)
+	if (expression) {
+
 		js_expression(production, expression, indent + 1);
-	else
+
+	} else
 		padcat(0, 0, production, "true");
 
 	padcat(0, 0, production, EOL);
@@ -2929,6 +2931,8 @@ bool js_assignment(char **production, Assignment *Assignment, int indent) {
 	if (!Assignment) return false;
 	if (opt_debug) printf("producing Assignment\n");
 
+	preassign_mark(production, indent);
+
 	if (Assignment->Expression)
 		assign(production, indent, Assignment->Symbol,
 		       Assignment->Expression);
@@ -2938,6 +2942,8 @@ bool js_assignment(char **production, Assignment *Assignment, int indent) {
 						paratag, indent, __LINE__);
 
 	log_entry(production, Assignment->Symbol->Name, "assigned", indent);
+
+	delete_preassign_mark(production);
 
 	return true;
 }
@@ -3355,10 +3361,15 @@ bool js_combinor(char **production, Combinor *Combinor, int indent) {
 bool js_combinand(char **production, Combinand *Combinand, int indent) {
 	if (!Combinand) return false;
 
+	bool is_type_literal_parameter = false;
+
 	if (Combinand->Symbol) {
 		char *funcname = Combinand->Symbol->Name;
 
-		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
+		if (!funcname) {
+			funcname = Combinand->Symbol->Type->Literal;
+			is_type_literal_parameter = true;
+		}
 		assert(funcname);
 		char *varname = snakedup(funcname);
 		bool is_parameter = !in(fixed, varname) && !in(functions, funcname);	// ◊ insufficient concept, depending on order

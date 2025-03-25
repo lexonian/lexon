@@ -279,8 +279,13 @@ typedef struct Action {
 	struct Predicates *Predicates;
 	struct Permission *Permission;
 	struct Condition *Condition;
+	struct Punctuation *Punctuation;
 	Literal *Literal;
 } Action;
+
+typedef struct Punctuation {
+	Literal *Literal;
+} Punctuation;
 
 typedef struct Subject {
 	struct Symbols *Symbols;
@@ -793,6 +798,7 @@ Function *process_function(Function *Function);
 Statements *process_statements(Statements *Statements);
 Statement *process_statement(Statement *Statement);
 Action *process_action(Action *Action);
+Punctuation *process_punctuation(Punctuation *Punctuation);
 Subject *process_subject(Subject *Subject);
 Symbols *process_symbols(Symbols *Symbols);
 Symbol *process_symbol(Symbol *Symbol);
@@ -878,7 +884,7 @@ Milliseconds *process_milliseconds(Milliseconds *Milliseconds);
 Expiration *process_expiration(Expiration *Expiration);
 Timeliness *process_timeliness(Timeliness *Timeliness);
 
-#line 882 "parser.h"
+#line 888 "parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -899,127 +905,127 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
     NAME = 265,                    /* NAME  */
     DESCRIPTION = 266,             /* DESCRIPTION  */
     SCALAR = 267,                  /* SCALAR  */
-    AUTHOR = 268,                  /* AUTHOR  */
-    AUTHORS = 269,                 /* AUTHORS  */
-    CLAUSE = 270,                  /* CLAUSE  */
-    COMMENT = 271,                 /* COMMENT  */
-    COMMENTS = 272,                /* COMMENTS  */
-    GENERAL = 273,                 /* GENERAL  */
-    LEX = 274,                     /* LEX  */
-    LEXON = 275,                   /* LEXON  */
-    PER = 276,                     /* PER  */
-    PREAMBLE = 277,                /* PREAMBLE  */
-    TERMS = 278,                   /* TERMS  */
-    A = 279,                       /* A  */
-    ACCEPT = 280,                  /* ACCEPT  */
-    ACCEPTS = 281,                 /* ACCEPTS  */
-    AFTER = 282,                   /* AFTER  */
-    AFTERWARDS = 283,              /* AFTERWARDS  */
-    ALL = 284,                     /* ALL  */
-    ALSO = 285,                    /* ALSO  */
-    AMOUNT = 286,                  /* AMOUNT  */
-    AN = 287,                      /* AN  */
-    AND = 288,                     /* AND  */
-    ANNOUNCED = 289,               /* ANNOUNCED  */
-    APPOINT = 290,                 /* APPOINT  */
-    APPOINTS = 291,                /* APPOINTS  */
-    AS = 292,                      /* AS  */
-    ASSIGN = 293,                  /* ASSIGN  */
-    ASSIGNS = 294,                 /* ASSIGNS  */
-    AT = 295,                      /* AT  */
-    BE = 296,                      /* BE  */
-    BEEN = 297,                    /* BEEN  */
-    BEING = 298,                   /* BEING  */
-    BINARY = 299,                  /* BINARY  */
-    CERTIFIED = 300,               /* CERTIFIED  */
-    CERTIFIES = 301,               /* CERTIFIES  */
-    CERTIFY = 302,                 /* CERTIFY  */
-    COMING = 303,                  /* COMING  */
-    CONTRACT = 304,                /* CONTRACT  */
-    CONTRACTS = 305,               /* CONTRACTS  */
-    CURRENT = 306,                 /* CURRENT  */
-    DATA = 307,                    /* DATA  */
-    DAY = 308,                     /* DAY  */
-    DAYS = 309,                    /* DAYS  */
-    DECLARE = 310,                 /* DECLARE  */
-    DECLARED = 311,                /* DECLARED  */
-    DECLARES = 312,                /* DECLARES  */
-    DEFINED = 313,                 /* DEFINED  */
-    EQUAL = 314,                   /* EQUAL  */
-    EQUALING = 315,                /* EQUALING  */
-    ESCROW = 316,                  /* ESCROW  */
-    FILE_ = 317,                   /* FILE_  */
-    FILED = 318,                   /* FILED  */
-    FILES = 319,                   /* FILES  */
-    FIX = 320,                     /* FIX  */
-    FIXED = 321,                   /* FIXED  */
-    FIXES = 322,                   /* FIXES  */
-    FOR = 323,                     /* FOR  */
-    FROM = 324,                    /* FROM  */
-    GIVEN = 325,                   /* GIVEN  */
-    GRANT = 326,                   /* GRANT  */
-    GRANTS = 327,                  /* GRANTS  */
-    GREATER = 328,                 /* GREATER  */
-    HAS = 329,                     /* HAS  */
-    HERSELF = 330,                 /* HERSELF  */
-    HIMSELF = 331,                 /* HIMSELF  */
-    HOUR = 332,                    /* HOUR  */
-    HOURS = 333,                   /* HOURS  */
-    IF = 334,                      /* IF  */
-    IN = 335,                      /* IN  */
-    INCOMING = 336,                /* INCOMING  */
-    INTO = 337,                    /* INTO  */
-    IS = 338,                      /* IS  */
-    ITSELF = 339,                  /* ITSELF  */
-    LEAST = 340,                   /* LEAST  */
-    LESS = 341,                    /* LESS  */
-    LIES = 342,                    /* LIES  */
-    MAY = 343,                     /* MAY  */
-    MILLISECOND = 344,             /* MILLISECOND  */
-    MILLISECONDS = 345,            /* MILLISECONDS  */
-    MINUTE = 346,                  /* MINUTE  */
-    MINUTES = 347,                 /* MINUTES  */
-    MONTH = 348,                   /* MONTH  */
-    MONTHS = 349,                  /* MONTHS  */
-    MYSELF = 350,                  /* MYSELF  */
-    NEITHER = 351,                 /* NEITHER  */
-    NEW = 352,                     /* NEW  */
-    NEXT = 353,                    /* NEXT  */
-    NO = 354,                      /* NO  */
-    NOR = 355,                     /* NOR  */
-    NOT = 356,                     /* NOT  */
-    NOTIFIES = 357,                /* NOTIFIES  */
-    NOTIFY = 358,                  /* NOTIFY  */
-    NOW = 359,                     /* NOW  */
-    OF = 360,                      /* OF  */
-    OFF = 361,                     /* OFF  */
-    ON = 362,                      /* ON  */
-    ONESELF = 363,                 /* ONESELF  */
-    OR = 364,                      /* OR  */
-    OURSELVES = 365,               /* OURSELVES  */
-    PASSED = 366,                  /* PASSED  */
-    PAST = 367,                    /* PAST  */
-    PAY = 368,                     /* PAY  */
-    PAYS = 369,                    /* PAYS  */
-    PERSON = 370,                  /* PERSON  */
-    PROVIDED = 371,                /* PROVIDED  */
-    REGISTER = 372,                /* REGISTER  */
-    REGISTERS = 373,               /* REGISTERS  */
-    REMAINDER = 374,               /* REMAINDER  */
-    REPAY = 375,                   /* REPAY  */
-    REPAYS = 376,                  /* REPAYS  */
-    RESPECTIVE = 377,              /* RESPECTIVE  */
-    RETURN = 378,                  /* RETURN  */
-    RETURNS = 379,                 /* RETURNS  */
-    SECOND = 380,                  /* SECOND  */
-    SECONDS = 381,                 /* SECONDS  */
-    SEND = 382,                    /* SEND  */
-    SENDS = 383,                   /* SENDS  */
-    SIGNED = 384,                  /* SIGNED  */
-    SMALLER = 385,                 /* SMALLER  */
-    SO = 386,                      /* SO  */
-    TERMINATE = 387,               /* TERMINATE  */
-    TERMINATES = 388,              /* TERMINATES  */
+    A = 268,                       /* A  */
+    ACCEPT = 269,                  /* ACCEPT  */
+    ACCEPTS = 270,                 /* ACCEPTS  */
+    AFTER = 271,                   /* AFTER  */
+    AFTERWARDS = 272,              /* AFTERWARDS  */
+    ALL = 273,                     /* ALL  */
+    ALSO = 274,                    /* ALSO  */
+    AMOUNT = 275,                  /* AMOUNT  */
+    AN = 276,                      /* AN  */
+    AND = 277,                     /* AND  */
+    ANNOUNCED = 278,               /* ANNOUNCED  */
+    APPOINT = 279,                 /* APPOINT  */
+    APPOINTS = 280,                /* APPOINTS  */
+    AS = 281,                      /* AS  */
+    ASSIGN = 282,                  /* ASSIGN  */
+    ASSIGNS = 283,                 /* ASSIGNS  */
+    AT = 284,                      /* AT  */
+    AUTHOR = 285,                  /* AUTHOR  */
+    AUTHORS = 286,                 /* AUTHORS  */
+    BE = 287,                      /* BE  */
+    BEEN = 288,                    /* BEEN  */
+    BEING = 289,                   /* BEING  */
+    BINARY = 290,                  /* BINARY  */
+    CERTIFIED = 291,               /* CERTIFIED  */
+    CERTIFIES = 292,               /* CERTIFIES  */
+    CERTIFY = 293,                 /* CERTIFY  */
+    CLAUSE = 294,                  /* CLAUSE  */
+    COMING = 295,                  /* COMING  */
+    COMMENT = 296,                 /* COMMENT  */
+    COMMENTS = 297,                /* COMMENTS  */
+    CONTRACT = 298,                /* CONTRACT  */
+    CONTRACTS = 299,               /* CONTRACTS  */
+    CURRENT = 300,                 /* CURRENT  */
+    DATA = 301,                    /* DATA  */
+    DAY = 302,                     /* DAY  */
+    DAYS = 303,                    /* DAYS  */
+    DECLARE = 304,                 /* DECLARE  */
+    DECLARED = 305,                /* DECLARED  */
+    DECLARES = 306,                /* DECLARES  */
+    DEFINED = 307,                 /* DEFINED  */
+    EQUAL = 308,                   /* EQUAL  */
+    EQUALING = 309,                /* EQUALING  */
+    ESCROW = 310,                  /* ESCROW  */
+    FILE_ = 311,                   /* FILE_  */
+    FILED = 312,                   /* FILED  */
+    FILES = 313,                   /* FILES  */
+    FIX = 314,                     /* FIX  */
+    FIXED = 315,                   /* FIXED  */
+    FIXES = 316,                   /* FIXES  */
+    FOR = 317,                     /* FOR  */
+    FROM = 318,                    /* FROM  */
+    GENERAL = 319,                 /* GENERAL  */
+    GIVEN = 320,                   /* GIVEN  */
+    GRANT = 321,                   /* GRANT  */
+    GRANTS = 322,                  /* GRANTS  */
+    GREATER = 323,                 /* GREATER  */
+    HAS = 324,                     /* HAS  */
+    HERSELF = 325,                 /* HERSELF  */
+    HIMSELF = 326,                 /* HIMSELF  */
+    HOUR = 327,                    /* HOUR  */
+    HOURS = 328,                   /* HOURS  */
+    IF = 329,                      /* IF  */
+    IN = 330,                      /* IN  */
+    INCOMING = 331,                /* INCOMING  */
+    INTO = 332,                    /* INTO  */
+    IS = 333,                      /* IS  */
+    ITSELF = 334,                  /* ITSELF  */
+    LEAST = 335,                   /* LEAST  */
+    LESS = 336,                    /* LESS  */
+    LEX = 337,                     /* LEX  */
+    LEXON = 338,                   /* LEXON  */
+    LIES = 339,                    /* LIES  */
+    MAY = 340,                     /* MAY  */
+    MILLISECOND = 341,             /* MILLISECOND  */
+    MILLISECONDS = 342,            /* MILLISECONDS  */
+    MINUTE = 343,                  /* MINUTE  */
+    MINUTES = 344,                 /* MINUTES  */
+    MONTH = 345,                   /* MONTH  */
+    MONTHS = 346,                  /* MONTHS  */
+    MYSELF = 347,                  /* MYSELF  */
+    NEITHER = 348,                 /* NEITHER  */
+    NEW = 349,                     /* NEW  */
+    NEXT = 350,                    /* NEXT  */
+    NO = 351,                      /* NO  */
+    NOR = 352,                     /* NOR  */
+    NOT = 353,                     /* NOT  */
+    NOTIFIES = 354,                /* NOTIFIES  */
+    NOTIFY = 355,                  /* NOTIFY  */
+    NOW = 356,                     /* NOW  */
+    OF = 357,                      /* OF  */
+    OFF = 358,                     /* OFF  */
+    ON = 359,                      /* ON  */
+    ONESELF = 360,                 /* ONESELF  */
+    OR = 361,                      /* OR  */
+    OURSELVES = 362,               /* OURSELVES  */
+    PASSED = 363,                  /* PASSED  */
+    PAST = 364,                    /* PAST  */
+    PAY = 365,                     /* PAY  */
+    PAYS = 366,                    /* PAYS  */
+    PER = 367,                     /* PER  */
+    PERSON = 368,                  /* PERSON  */
+    PREAMBLE = 369,                /* PREAMBLE  */
+    PROVIDED = 370,                /* PROVIDED  */
+    REGISTER = 371,                /* REGISTER  */
+    REGISTERS = 372,               /* REGISTERS  */
+    REMAINDER = 373,               /* REMAINDER  */
+    REPAY = 374,                   /* REPAY  */
+    REPAYS = 375,                  /* REPAYS  */
+    RESPECTIVE = 376,              /* RESPECTIVE  */
+    RETURN = 377,                  /* RETURN  */
+    RETURNS = 378,                 /* RETURNS  */
+    SECOND = 379,                  /* SECOND  */
+    SECONDS = 380,                 /* SECONDS  */
+    SEND = 381,                    /* SEND  */
+    SENDS = 382,                   /* SENDS  */
+    SIGNED = 383,                  /* SIGNED  */
+    SMALLER = 384,                 /* SMALLER  */
+    SO = 385,                      /* SO  */
+    TERMINATE = 386,               /* TERMINATE  */
+    TERMINATES = 387,              /* TERMINATES  */
+    TERMS = 388,                   /* TERMS  */
     TEXT = 389,                    /* TEXT  */
     THAN = 390,                    /* THAN  */
     THAT = 391,                    /* THAT  */
@@ -1145,6 +1151,7 @@ union YYSTYPE
   Predicates * Predicates;                 /* Predicates  */
   Preposition * Preposition;               /* Preposition  */
   Provisions * Provisions;                 /* Provisions  */
+  Punctuation * Punctuation;               /* Punctuation  */
   Reflexive * Reflexive;                   /* Reflexive  */
   Register * Register;                     /* Register  */
   Registration * Registration;             /* Registration  */
@@ -1177,7 +1184,7 @@ union YYSTYPE
   Weeks * Weeks;                           /* Weeks  */
   Years * Years;                           /* Years  */
 
-#line 1181 "parser.h"
+#line 1188 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

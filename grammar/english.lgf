@@ -104,7 +104,9 @@
 
 ## ACTION
 
-   action:	subject [permission [comma] [condition [comma] [":"]]] predicates separator
+   action:	subject [permission [comma] [condition punctuation]] predicates separator
+
+   punctuation:	comma or colon or [comma] "then" [colon] or [comma] "then" comma
 
 
 
@@ -294,7 +296,7 @@
 
 ## CONDITIONS
 
-   condition:	if expression [[comma] "then"]
+   condition:	if expression
 
    if:		"if" or "given" "that" or "provided"
 

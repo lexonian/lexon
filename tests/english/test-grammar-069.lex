@@ -13,7 +13,7 @@ TERMS PER Baz:.
 This Bar Is Therefore a binary.
 
 CLAUSE: Qux.
-Text, Qux May provided past and time neither a Qux past and text has passed nor a time, or amount was filed for neither this Bar is not the Qux, then,: Send Qux or all contracts is an Qux nor an Qux is past neither Qux, neither is past or an time into escrow, and also afterwards return Qux past and binary, and the respective then current time, Qux equal to 123 and a text equaling fixed, or the respective then current time minutes past, the current time, neither has passed neither 123 is at the least the respective current time, the person is past or the text past into escrow.
+Text, Qux May provided past and time neither a Qux past and text has passed nor a time, or amount was filed for neither this Bar is not the Qux, then: Send Qux or all contracts is an Qux nor an Qux is past neither Qux, neither is past or an time into escrow, and also afterwards return Qux past and binary, and the respective then current time, Qux equal to 123 and a text equaling fixed, or the respective then current time minutes past, the current time, neither has passed neither 123 is at the least the respective current time, the person is past or the text past into escrow.
 Person May, be then person, and declare Qux a time equal to fixed or 123 is at the least the Qux neither 123 is at the least 123 or amount week past Qux nor a Qux is past nor an Qux is past nor a Qux neither the then current time, and terminates this Bar, and also if so terminate this Bar.
 
 PER Qux:

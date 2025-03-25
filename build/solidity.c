@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.102 beta 2"
+#define backend_version "solidity 0.3.103 beta 3"
 #define target_version "solidity 0.8.17+"	// sync w/[5]
 #define CYCLE_2 true
 
@@ -140,6 +140,7 @@ static char *command_init = null;
 static char *fixed = null;	       // list of variables that have been set
 static char *args = null;	       // list of variables that come in as paremeters
 static char *functions = null;
+
 static char *safedup(const char *name) {
 	assert(name);
 	char *_safe = mtrac_malloc(strlen(name) + 3);
@@ -368,7 +369,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) {	// ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 
 	mtrac_concat(&tagged, ":", needle, ":");
@@ -1638,6 +1639,7 @@ bool sol_covenant(char **production, Covenant *Covenant, int indent) {
 	}
 
 	/* covenant constructor */
+
 	padcat(2, indent, production, "contract ", class, " {");
 	padcat(2, indent + 1, production, camel_spaced(module), " main;%27C%");	// %27C% member declarations
 	padcat(3, indent + 1, production, "%29C%constructor(", camel_spaced(module), " _main%2,%%2%) %28%{");	// %29C%: emits, %2%: paras, %28%: payable
@@ -2505,9 +2507,11 @@ static void assign(char **production, int indent, Symbol *symbol,
 	sol_symbol(production, symbol, true, indent);	// true --> assign flag
 	padcat(0, 0, production, " = ");
 
-	if (expression)
+	if (expression) {
+
 		sol_expression(production, expression, indent + 1);
-	else
+
+	} else
 		padcat(0, 0, production, "true");
 
 	padcat(0, 0, production, EOL);
@@ -2620,6 +2624,8 @@ bool sol_assignment(char **production, Assignment *Assignment, int indent) {
 	if (!Assignment) return false;
 	if (opt_debug) printf("producing Assignment\n");
 
+	preassign_mark(production, indent);
+
 	if (Assignment->Expression)
 		assign(production, indent, Assignment->Symbol,
 		       Assignment->Expression);
@@ -2627,6 +2633,8 @@ bool sol_assignment(char **production, Assignment *Assignment, int indent) {
 		insert_parameter_and_set_member(production, &instructions,
 						Assignment->Symbol, false,
 						paratag, indent, __LINE__);
+
+	delete_preassign_mark(production);
 
 	return true;
 }
@@ -3049,10 +3057,15 @@ bool sol_combinor(char **production, Combinor *Combinor, int indent) {
 bool sol_combinand(char **production, Combinand *Combinand, int indent) {
 	if (!Combinand) return false;
 
+	bool is_type_literal_parameter = false;
+
 	if (Combinand->Symbol) {
 		char *funcname = Combinand->Symbol->Name;
 
-		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
+		if (!funcname) {
+			funcname = Combinand->Symbol->Type->Literal;
+			is_type_literal_parameter = true;
+		}
 		assert(funcname);
 		char *varname = snakedup(funcname);
 		bool is_parameter = !in(fixed, varname) && !in(functions, funcname);	// ◊ insufficient concept, depending on order

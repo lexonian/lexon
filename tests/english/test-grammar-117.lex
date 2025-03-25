@@ -6,7 +6,7 @@ COMMENT:  Donec pede justo, fringilla.
 GENERAL TERMS:
 The "Qux Thud" is this Corge.
 This Corge Be Therefore a time.
-The text Or an amount May provided a binary is equal fixed or a binary,: Grants binary, and afterwards terminates this Corge, and also afterwards declares all contracts Qux Thud, and with this file amount to be not time nor 123 seconds in the past, afterwards declare this Corge as an amount.
+The text Or an amount May provided a binary is equal fixed or a binary: Grants binary, and afterwards terminates this Corge, and also afterwards declares all contracts Qux Thud, and with this file amount to be not time nor 123 seconds in the past, afterwards declare this Corge as an amount.
 
 CLAUSE: Grault Thud.
 Be Then an Grault Thud.

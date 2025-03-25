@@ -1,0 +1,23 @@
+
+precompilation:
+---------------
+
+escrow 103 long preamble text 2   1:   LEX: «Escrow».
+
+escrow 103 long preamble text 2   3:   Preamble: ‹This is a long preamble text
+delimited by quote in the first
+definition line›.
+escrow 103 long preamble text 2   6:   "«Payer»" is a person.
+escrow 103 long preamble text 2   7:   "«Payee»" is a person.
+escrow 103 long preamble text 2   8:   "«Arbiter»" is a person.
+escrow 103 long preamble text 2   9:   "«Fee»" is an amount.
+
+escrow 103 long preamble text 2  11:   The «Payer» pays an amount into escrow, appoints the «Payee», appoints the «Arbiter», and fixes the «Fee».
+
+escrow 103 long preamble text 2  13:   CLAUSE: «Pay Out».
+escrow 103 long preamble text 2  14:   The «Arbiter» may pay from escrow the «Fee» to themselves, and afterwards pay the remainder of the escrow to the «Payee».
+
+escrow 103 long preamble text 2  16:   CLAUSE: «Pay Back».
+escrow 103 long preamble text 2  17:   The «Arbiter» may pay from escrow the «Fee» to themselves, and afterwards return the remainder of the escrow to the «Payer».
+
+

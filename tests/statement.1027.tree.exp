@@ -300,16 +300,18 @@
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  permission 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸ 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  condition 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ↳  if 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ↳  expression 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                               ↳  combination 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                   ↳  combinor 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                       ↳  combinand 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                           ↳  symbol «continuation-window-start» 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                           ⎸   ↳  article  
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                           ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                           ↳  expiration           
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  if 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  expression 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸       ↳  combination 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸           ↳  combinor 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸               ↳  combinand 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                   ↳  symbol «continuation-window-start» 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                   ⎸   ↳  article  
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                   ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                   ↳  expiration      
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  punctuation      
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸ 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ↳  clause «pay-escrow-in» 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸       ↳  body 
@@ -389,18 +391,20 @@
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  permission 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸ 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  condition 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ↳  if 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ↳  expression 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                               ↳  combination 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                   ↳  combinor 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                       ↳  combinand 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                           ↳  existence 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ↳  symbol «default»  
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ↳  being 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ↳  true            
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  if 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  expression 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸       ↳  combination 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸           ↳  combinor 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸               ↳  combinand 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                   ↳  existence 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  symbol «default»  
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  being 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  true       
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  punctuation      
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸ 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ↳  clause «file-continuation» 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸   ⎸       ↳  body 
@@ -443,19 +447,21 @@
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  permission 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸ 
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  condition 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ↳  if 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                           ↳  expression 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                               ↳  combination 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                   ↳  combinor 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                       ↳  combinand 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                           ↳  existence 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ↳  symbol «continuation-statement» 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ⎸   ↳  article  
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ↳  being 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                                               ↳  true            
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  if 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  expression 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸       ↳  combination 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸           ↳  combinor 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸               ↳  combinand 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                   ↳  existence 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  symbol «continuation-statement» 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸   ↳  article  
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  being 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  true       
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸   ⎸   ⎸                       ↳  punctuation      
             ⎸   ⎸   ⎸   ⎸   ⎸   ⎸ 
             ⎸   ⎸   ⎸   ⎸   ⎸   ↳  clause «file-termination» 
             ⎸   ⎸   ⎸   ⎸   ⎸       ↳  body 
@@ -522,19 +528,21 @@
             ⎸   ⎸   ⎸   ⎸                       ↳  permission 
             ⎸   ⎸   ⎸   ⎸                       ⎸ 
             ⎸   ⎸   ⎸   ⎸                       ↳  condition 
-            ⎸   ⎸   ⎸   ⎸                           ↳  if 
-            ⎸   ⎸   ⎸   ⎸                           ⎸ 
-            ⎸   ⎸   ⎸   ⎸                           ↳  expression 
-            ⎸   ⎸   ⎸   ⎸                               ↳  combination 
-            ⎸   ⎸   ⎸   ⎸                                   ↳  combinor 
-            ⎸   ⎸   ⎸   ⎸                                       ↳  combinand 
-            ⎸   ⎸   ⎸   ⎸                                           ↳  existence 
-            ⎸   ⎸   ⎸   ⎸                                               ↳  symbol «termination-statement» 
-            ⎸   ⎸   ⎸   ⎸                                               ⎸   ↳  article  
-            ⎸   ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸   ⎸                                               ↳  being 
-            ⎸   ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸   ⎸                                               ↳  true            
+            ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  if 
+            ⎸   ⎸   ⎸   ⎸                       ⎸   ⎸ 
+            ⎸   ⎸   ⎸   ⎸                       ⎸   ↳  expression 
+            ⎸   ⎸   ⎸   ⎸                       ⎸       ↳  combination 
+            ⎸   ⎸   ⎸   ⎸                       ⎸           ↳  combinor 
+            ⎸   ⎸   ⎸   ⎸                       ⎸               ↳  combinand 
+            ⎸   ⎸   ⎸   ⎸                       ⎸                   ↳  existence 
+            ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  symbol «termination-statement» 
+            ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸   ↳  article  
+            ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  being 
+            ⎸   ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸                       ⎸                       ↳  true       
+            ⎸   ⎸   ⎸   ⎸                       ⎸ 
+            ⎸   ⎸   ⎸   ⎸                       ↳  punctuation      
             ⎸   ⎸   ⎸   ⎸ 
             ⎸   ⎸   ⎸   ↳  clause «release-reminder-service-fee» 
             ⎸   ⎸   ⎸       ↳  body 
@@ -567,19 +575,21 @@
             ⎸   ⎸   ⎸                       ↳  permission 
             ⎸   ⎸   ⎸                       ⎸ 
             ⎸   ⎸   ⎸                       ↳  condition 
-            ⎸   ⎸   ⎸                           ↳  if 
-            ⎸   ⎸   ⎸                           ⎸ 
-            ⎸   ⎸   ⎸                           ↳  expression 
-            ⎸   ⎸   ⎸                               ↳  combination 
-            ⎸   ⎸   ⎸                                   ↳  combinor 
-            ⎸   ⎸   ⎸                                       ↳  combinand 
-            ⎸   ⎸   ⎸                                           ↳  existence 
-            ⎸   ⎸   ⎸                                               ↳  symbol «termination-statement» 
-            ⎸   ⎸   ⎸                                               ⎸   ↳  article  
-            ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸                                               ↳  being 
-            ⎸   ⎸   ⎸                                               ⎸ 
-            ⎸   ⎸   ⎸                                               ↳  true            
+            ⎸   ⎸   ⎸                       ⎸   ↳  if 
+            ⎸   ⎸   ⎸                       ⎸   ⎸ 
+            ⎸   ⎸   ⎸                       ⎸   ↳  expression 
+            ⎸   ⎸   ⎸                       ⎸       ↳  combination 
+            ⎸   ⎸   ⎸                       ⎸           ↳  combinor 
+            ⎸   ⎸   ⎸                       ⎸               ↳  combinand 
+            ⎸   ⎸   ⎸                       ⎸                   ↳  existence 
+            ⎸   ⎸   ⎸                       ⎸                       ↳  symbol «termination-statement» 
+            ⎸   ⎸   ⎸                       ⎸                       ⎸   ↳  article  
+            ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸                       ⎸                       ↳  being 
+            ⎸   ⎸   ⎸                       ⎸                       ⎸ 
+            ⎸   ⎸   ⎸                       ⎸                       ↳  true       
+            ⎸   ⎸   ⎸                       ⎸ 
+            ⎸   ⎸   ⎸                       ↳  punctuation      
             ⎸   ⎸   ⎸ 
             ⎸   ⎸   ↳  clause «termination-period» 
             ⎸   ⎸       ↳  body 
@@ -623,16 +633,18 @@
             ⎸                       ↳  permission 
             ⎸                       ⎸ 
             ⎸                       ↳  condition 
-            ⎸                           ↳  if 
-            ⎸                           ⎸ 
-            ⎸                           ↳  expression 
-            ⎸                               ↳  combination 
-            ⎸                                   ↳  combinor 
-            ⎸                                       ↳  combinand 
-            ⎸                                           ↳  symbol «termination-period» 
-            ⎸                                           ⎸   ↳  article  
-            ⎸                                           ⎸ 
-            ⎸                                           ↳  expiration            
+            ⎸                       ⎸   ↳  if 
+            ⎸                       ⎸   ⎸ 
+            ⎸                       ⎸   ↳  expression 
+            ⎸                       ⎸       ↳  combination 
+            ⎸                       ⎸           ↳  combinor 
+            ⎸                       ⎸               ↳  combinand 
+            ⎸                       ⎸                   ↳  symbol «termination-period» 
+            ⎸                       ⎸                   ⎸   ↳  article  
+            ⎸                       ⎸                   ⎸ 
+            ⎸                       ⎸                   ↳  expiration      
+            ⎸                       ⎸ 
+            ⎸                       ↳  punctuation       
             ↳  statements 
                 ↳  statement 
                     ↳  action 

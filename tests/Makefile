@@ -119,6 +119,7 @@ define testrun
 			; fi \
 		; fi \
 		; echo -n "testing " >> test.log ; cat now.tmp | tr '\n' ' ' >> test.log \
+		; filerump=$$(basename "$$filename" .lex) \
 		; expfile=$$(basename "$$filename" .lex)$(7) \
 		; testfile=$$(basename "$$expfile" .exp).now \
 		; coktag=$$(basename "$$expfile" .exp).cok \
@@ -245,7 +246,7 @@ define testrun
 	  		; printf "$(ok)› updated √$(off)\n\n" ; \
 		    fi ; \
 		elif (( $$dret == 1 )) && [[ ! -f noupdate ]] ; then \
-		    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff, natice compilation synta(X) check : " -n 1 -r ; echo \
+		    while :; do echo; printf "$(hi) Update expectation file for $(3) $(4) $$filename? $(off)"; read -p "(U)pdate, (K)eep old, (I)gnore now, (A)rchive, (Q)uit, (R)esult, (E)xpected, (S)ource, (P)recompile, (D)iff, (F)ull side-by-side diff, ignore (W)hitespace diff, native (C)ompilation syntax check : " -n 1 -r ; echo \
 				; if   [[ $$REPLY =~ ^[Uu]$$ ]] ; then echo "previous expectation backed up in $$expfile.bak (version tags are ignored)" \
 					; mv $$expfile $$expfile.bak ; mv $$testfile $$expfile ;  $(call count,update) ; $(call discount,err) ; break \
 				; elif [[ $$REPLY =~ ^[Rr]$$ ]] ; then echo "Result now ($$testfile -- version tags are ignored):" ; $(call sep,_,132) ; cat $$testfile ; $(call sep,_,132) \
@@ -258,10 +259,12 @@ define testrun
 					; diff -B -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
 				; elif [[ $$REPLY =~ ^[Ww]$$ ]] ; then echo "Difference from expectation, ignoring whitespace (and version tags):" \
 					; diff -w -b -B -u $$expfile $$testfile | sed -e "s/^-/`printf "\033[31m"`-/" -e "s/^+/`printf "\033[36m"`+/" -e "s/$$/`printf "\033[0m"`/" \
+				; elif [[ $$REPLY =~ ^[Cc]$$ ]] ; then $(call native_compile,$(1),$(2),$(3),$(4)) \
 				; elif [[ $$REPLY =~ ^[Kk]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; break \
 				; elif [[ $$REPLY =~ ^[Ii]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; fi ; touch noupdate ; break \
+				; elif [[ $$REPLY =~ ^[Aa]$$ ]] ; then printf "$(warn)archiving $$filerump.*$(off)\n" \
+					; mkdir -p .archive ; mv $$filename .archive/ ; mv $$filerump.* .archive/ ; break \
 				; elif [[ $$REPLY =~ ^[Qq]$$ ]] ; then if [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; fi ; quit=1 ; break 2 \
-				; elif [[ $$REPLY =~ ^[Xx]$$ ]] ; then $(call native_compile,$(1),$(2),$(3),$(4)) \
 				; fi \
 		    ; done ; \
 		elif [[ ! -f lastfail ]] ; then echo "$(3) $(4) $$filename" > lastfail ; touch nopickup ; \
@@ -378,7 +381,7 @@ endef
 
 files=test-*.lex
 
-all: clean test
+all: clean deeptest
 	@echo tests done.
 
 one:
@@ -434,7 +437,7 @@ deeptest:
 	@touch concise
 	@touch noupdate
 	@touch nopickup
-	@touch showdiff
+	@rm -f showdiff
 	@rm -f compdiff
 	@rm -f compmiss
 	@rm -f compall
@@ -566,98 +569,6 @@ _recheck:
 	@rm -f autoupdate
 	@$(MAKE) _test
 
-_test_proto:
-	@echo
-	@printf "$(ok)» regression tests$(off)\n"
-	@echo ===================
-	@printf "\nexpectations from:\n"
-	@cat tag.exp
-	@rm -f *.tmp
-	$(call init)
-	@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
-	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
-	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
-	@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
-	@if [[ ! -f quit.tmp ]] ; then \
-		echo ; \
-		ok=`cat ok.tmp` ; \
-		err=`cat err.tmp` ; \
-		warn=`cat warn.tmp` ; \
-		skip=`cat skip.tmp` ; \
-		update=`cat update.tmp` ; \
-		rm -f perfect ; \
-		echo ; \
-		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
-		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
-		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
-		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
-		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
-			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
-		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
-		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
-			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
-		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
-			echo ; \
-			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
-			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
-			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
-			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
-		fi ; \
-	fi
-	@echo
-
-
-
-___test_proto2:
-	@echo
-	@printf "$(ok)» regression tests$(off)\n"
-	@echo ===================
-	@printf "\nexpectations from:\n"
-	@cat tag.exp
-	@rm -f *.tmp
-	$(call init)
-	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
-	@$(call testrun,solidity barebone,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
-	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
-	@if [[ ! -f quit.tmp ]] ; then \
-		echo ; \
-		ok=`cat ok.tmp` ; \
-		err=`cat err.tmp` ; \
-		warn=`cat warn.tmp` ; \
-		skip=`cat skip.tmp` ; \
-		update=`cat update.tmp` ; \
-		rm -f perfect ; \
-		echo ; \
-		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
-		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
-		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
-		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
-		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
-			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
-		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
-		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
-			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
-		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
-			echo ; \
-			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
-			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
-			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
-			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
-		fi ; \
-	fi
-	@echo
-
-
 _test:
 	@echo
 	@printf "$(ok)» regression tests$(off)\n"
@@ -670,10 +581,12 @@ _test:
 	@printf "\n	+   success: lexon compilation result has not changed, it matches stored expectations\n"
 	@printf "	.   skipped: lexon compilation test skipped winding forward to first fail of last run\n"
 	@printf "	#   failure: lexon compilation result did not match the stored expectation on file\n"
+ifneq (,$(wildcard comp*))
 	@printf "	$(ok)+$(off)   syntax check passed: native compilation of lexon output has no errors\n"
 	@printf "	$(ok):$(off)   syntax check skipped: lexon output is an expected error message\n" 
 	@printf "	$(ok)•$(off)   syntax check skipped: lexon output hash had not changed since prior run\n"
 	@printf "	$(err)#$(off)   syntax check failed: native compilation of lexon output failed\n"
+endif
 	@printf "\n	Expectation files are verbatim prior lexon output. Syntax checks use separate hashes.\n"
 	@printf "	Hashes are always updated after native compilation, even if expectation files are not.\n"
 	@rm -f *.tmp
@@ -704,170 +617,6 @@ _test:
 	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
 	@$(call testrun,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
 	@$(call testrun,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
-	@if [[ ! -f quit.tmp ]] ; then \
-		echo ; \
-		ok=`cat ok.tmp` ; \
-		err=`cat err.tmp` ; \
-		warn=`cat warn.tmp` ; \
-		skip=`cat skip.tmp` ; \
-		update=`cat update.tmp` ; \
-		rm -f perfect ; \
-		echo ; \
-		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
-		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
-		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
-		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
-		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
-			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
-		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
-		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
-			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
-		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
-			echo ; \
-			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
-			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
-			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
-			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
-		fi ; \
-	fi
-	@echo
-
-
-_test_solidity:
-	@echo
-	@printf "$(ok)» regression tests$(off)\n"
-	@echo ===================
-	@printf "\nexpectations from:\n"
-	@cat tag.exp
-	$(call tag,tag.now)
-	@printf "\ncurrent setup:\n"
-	@cat tag.now
-	@rm -f *.tmp
-	$(call init)
-	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
-	#@$(call testrun,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
-	#@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
-	#@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,)
-	#@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
-	#@$(call testrun,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
-	#@$(call testrun,precompile,:,../bin/lexon,-P,:,grep -l %PRE $(files),.pre.exp,%PREERR)
-	#@$(call testrun,gui generator info,:,../bin/lexon,-U,:,grep -l %GEN $(files),.gen.exp,%GENERR)
-	#@$(call testrun,circular includes,:,../bin/lexon,-C -P,:,grep -l %PRE $(files),.cir.exp,%CIRERR)
-	#@$(call testrun,repeat includes,:,../bin/lexon,-R -P,:,grep -l %PRE $(files),.rep.exp,%REPERR)
-	#@$(call testrun,circular and repeat,:,../bin/lexon,-R -C -P,:,grep -l %PRE $(files),.car.exp,%CARERR)
-	#@$(call testrun,jurisdictions list,:,../bin/lexon,-J,:,ls -1 test-hello-00.lex,.jur.exp,)
-	#@$(call testrun,jurisdiction parsing,:,../bin/lexon,-P,:,grep -l %JUR test-*.lex,.jur.exp,)
-	#@$(call testrun,lxf extension grammar production,:,../bin/lexon,,:,grep -l %LXF test-*.lex,.lxf.exp,%LXFERR)
-	#@$(call testrun,lgf lexon grammar production,:,../bin/lexon,-B,:,ls -1 test-*.lgf,.lgf.exp,%LGFERR)
-	#@$(call testrun,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,)
-	#@$(call testrun,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
-	#@$(call testrun,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
-	#@$(call testrun,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
-	#@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
-	#@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
-	@$(call testrun,solidity barebone,:,../bin/lexon,--solidity -b,:,ls -1 lexon/*.lex,.solb.exp,)
-	@$(call testrun,solidity full-feature,:,../bin/lexon,--solidity -x,:,ls -1 lexon/*.lex,.solx.exp,)
-	#@$(call testrun,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
-	#@$(call testrun,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
-	@if [[ ! -f quit.tmp ]] ; then \
-		echo ; \
-		ok=`cat ok.tmp` ; \
-		err=`cat err.tmp` ; \
-		warn=`cat warn.tmp` ; \
-		skip=`cat skip.tmp` ; \
-		update=`cat update.tmp` ; \
-		rm -f perfect ; \
-		echo ; \
-		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
-		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
-		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
-		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
-		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
-			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
-		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
-		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
-			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
-		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
-			echo ; \
-			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
-			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
-			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
-			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
-		fi ; \
-	fi
-	@echo
-
-_test_sophia:
-	@echo
-	@printf "$(ok)» regression tests$(off)\n"
-	@echo ===================
-	@printf "\nexpectations from:\n"
-	@cat tag.exp
-	$(call tag,tag.now)
-	@printf "\ncurrent setup:\n"
-	@cat tag.now
-	@rm -f *.tmp
-	$(call init)
-	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
-	@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
-	@$(call testrun,sophia barebone,:,../bin/lexon,--sophia -b,:,ls -1 lexon/*.lex,.sopb.exp,)
-	@$(call testrun,sophia full-feature,:,../bin/lexon,--sophia -x,:,ls -1 lexon/*.lex,.sopx.exp,)
-	@if [[ ! -f quit.tmp ]] ; then \
-		echo ; \
-		ok=`cat ok.tmp` ; \
-		err=`cat err.tmp` ; \
-		warn=`cat warn.tmp` ; \
-		skip=`cat skip.tmp` ; \
-		update=`cat update.tmp` ; \
-		rm -f perfect ; \
-		echo ; \
-		echo "OK: $$ok - errors: $$err - warnings: $$warn - updates: $$update - skipped: $$skip" ; \
-		if (( $$err == 1 )) ; then printf "$(err)### $$err error #############################################$(off)\n"; fi ; \
-		if (( $$err > 1 ))  ; then printf "$(err)### $$err errors ############################################$(off)\n"; fi ; \
-		if (( $$warn > 0 )) ; then printf "$(hi)/// $$warn warnings //////////////////////////////////////////$(off)\n"; fi ; \
-		if (( $$skip > 0 )) ; then printf "$(hi)||| $$skip tests skipped |||||||||||||||||||||||||||||||||||||$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)### no tests ###############################################$(off)\n"; fi ; \
-		if (( $$ok == 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip != 0 )) \
-			; then printf "$(ok)### all skipped ############################################$(off)\n"; fi ; \
-		if (( $$ok != 0 )) && (( $$err == 0 )) && (( $$warn == 0 )) && (( $$update == 0 )) && (( $$skip == 0 )) \
-			; then printf "$(hi)=== perfect ================================================$(off)\n"; touch perfect ; fi ; \
-		printf "Processed %'.f lines of source, %'.f lines of output, %'.f lines of expectations, running %'.f tests vs %'.f+ files.\n" \
-			`cat testlines.tmp` `cat nowlines.tmp` `cat explines.tmp` $$((`cat testnumber.tmp` - `cat skip.tmp`)) $$((`ls -1 *.lex | wc -w | sed 's/ //g'` + `ls -1 english/*.lex | wc -w | sed 's/ //g'` + `ls -1 lexon/*.lex | wc -w | sed 's/ //g'`)) ; \
-		if (( $$err != 0 )) || (( $$warn != 0 )) ; then \
-			echo ; \
-			printf "Regarding failing tests, unless you changed the source code of Lexon itself, they should have worked.\n" ; \
-			printf "➡︎ If you are developing, you can rebuild all expectations at once with 'make expectations'.\n" ; \
-			if [[ -f noupdate ]] ; then printf "➡︎ Better yet, run 'make update' to update test expectations one by one and interactively. You will be able to list the source and outputs.\n" ; fi ; \
-			if [[ -f lastfail ]] && [[ -f nopickup ]] ; then printf "➡︎ When developing, run 'make recheck' to skip tests before the first error. It otherwise works like 'make update'.\n" ; fi ; \
-		fi ; \
-	fi
-	@echo
-
-_test_javascript:
-	@echo
-	@printf "$(ok)» regression tests$(off)\n"
-	@echo ===================
-	@printf "\nexpectations from:\n"
-	@cat tag.exp
-	$(call tag,tag.now)
-	@printf "\ncurrent setup:\n"
-	@cat tag.now
-	@rm -f *.tmp
-	$(call init)
-	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
-	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,)
-	@$(call testrun,javascript barebone,:,../bin/lexon,--javascript -b,:,ls -1 lexon/*.lex,.jsb.exp,)
-	@$(call testrun,javascript full-feature,:,../bin/lexon,--javascript -x,:,ls -1 lexon/*.lex,.jsx.exp,)
 	@if [[ ! -f quit.tmp ]] ; then \
 		echo ; \
 		ok=`cat ok.tmp` ; \

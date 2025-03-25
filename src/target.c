@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.102 beta 2"
+/*JS */ #define backend_version "javascript 0.3.103 beta 3"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.102 beta 2"
+/*Sol*/ #define backend_version "solidity 0.3.103 beta 3"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.102 beta 2"
+/*Sop*/ #define backend_version "sophia 0.3.103 beta 3"
 /*Sop*/ #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -196,7 +196,8 @@ static char *command_init = null;
 static char *fixed = null; // list of variables that have been set
 static char *args = null; // list of variables that come in as paremeters
 static char *functions = null;
-/*Sop*/	static bool miller = false;
+/*Sop*/	static bool lvalue = false; // for hardening, lvalue
+/*Sop*/	static bool rvalue = false; // for hardening, rvalue to be assigned to lvalue
 
 static char *safedup(const char *name) {
 	assert(name);
@@ -440,7 +441,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) { // ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 	mtrac_concat(&tagged, ":", needle, ":");
 	bool in = !!strstr(hay, tagged);
@@ -1289,12 +1290,12 @@ static bool is_payment(Predicates *predicates) {
 		if(!in(functions, Name)) {
 /*JS */			padcat(0, 0, production, global && (!main_constructor_body || class) ?"main.":"this.", safe);
 /*Sol*/			padcat(0, 0, production, global && class?"main.":"", safe, global && class ? "()":"");
-/*Sop*/			padcat(0, 0, production, !miller?"state.":"", global && !miller?"global.":"", safe);
+/*Sop*/			padcat(0, 0, production, !lvalue?"state.":"", global && !lvalue?"global.":"", safe);
 		} else {
 			bind *bind = register_bind(safe, Name);
 /*JS */			padcat(0, 0, production, global && (!main_constructor_body || class) ?"main.":"this.", bind->tag);
 /*Sol*/			padcat(0, 0, production, global && class?"main.":"", bind->tag);
-/*Sop*/			padcat(0, 0, production, global && !miller?"state.":"", bind->tag);
+/*Sop*/			padcat(0, 0, production, global && !lvalue?"state.":"", bind->tag);
 		}
 /*Sop*/		if(opt_harden && require_force) padcat(0, 0, production, ", \"", Name, " not set\")");
 
@@ -2085,7 +2086,6 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		assert(active_subjects == null);
 /*JS */		padcat(1, indent+2, production, "return new ", class, "(this%2,%%2%);%16%");
 /*JS */		padcat(1, indent  , production, "};");
-
 /*JS */		padcat(2, indent  , production, "class ", class, " {");
 /*JS */		padcat(2, indent+1, production, "constructor(%2%) {");
 /*Sol*/		padcat(2, indent  , production, "contract ", class, " {");
@@ -2983,15 +2983,17 @@ static bool is_payment(Predicates *predicates) {
 		padcat(1, indent, production, "");
 /*Sop*/		padcat(0, 0, production, "put(state{");
 
-/*Sop*/		miller = true;
+/*Sop*/		lvalue = true;
 		xxx_symbol(production, symbol, true, indent); // true --> assign flag
-/*Sop*/		miller = false;
+/*Sop*/		lvalue = false;
 
 		padcat(0, 0, production, " = ");
 
-		if(expression)
+		if(expression) {
+/*Sop*/			rvalue = true;
 			xxx_expression(production, expression, indent+1);
-		else
+/*Sop*/			rvalue = false;
+		} else
 /*J+S*/			padcat(0, 0, production, "true");
 /*Sop*/			padcat(0, 0, production, ":§§:true:§:");
 
@@ -3119,12 +3121,16 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Assignment) return false;
 /*T*/		if(opt_debug) printf("producing Assignment\n");
 
+		preassign_mark(production, indent);
+
 		if(Assignment->Expression)
 			assign(production, indent, Assignment->Symbol, Assignment->Expression);
 		else
 			insert_parameter_and_set_member(production, &instructions, Assignment->Symbol, false, paratag, indent, __LINE__);
 
 /*JS */		log_entry(production, Assignment->Symbol->Name, "assigned", indent);
+
+		delete_preassign_mark(production);
 
 /*T*/		return true;
 /*T*/	}
@@ -3163,9 +3169,9 @@ static bool is_payment(Predicates *predicates) {
 		padcat(1, indent, production, "");
 /*Sop*/		padcat(0, 0, production, "put(state{");
 
-/*Sop*/		miller = true;
+/*Sop*/		lvalue = true;
 		xxx_symbol(production, action->Subject->Symbols->Symbol, true, indent+1); // true --> assign flag
-/*Sop*/		miller = false;
+/*Sop*/		lvalue = false;
 
 		padcat(0, 0, production, " = ");
 
@@ -3451,7 +3457,19 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/			|| Expression->Combination && Expression->Combination->Combinor // or a reflexive pronoun for a subject
 /*Sop*/			&& Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Reflexive);
 /*Sop*/
-/*Sop*/		bool wrap = !symbol && !no_literal && !require_mandat && !conditional_expression && !payment_expression;
+/*Sop*/		bool is_parameter = false;
+/*Sop*/		bool is_type_literal_parameter = false;
+/*Sop*/		if(symbol && Expression->Combination->Combinor->Combinand->Symbol) {
+/*Sop*/			char *name = Expression->Combination->Combinor->Combinand->Symbol->Name ?
+/*Sop*/				Expression->Combination->Combinor->Combinand->Symbol->Name :
+/*Sop*/				Expression->Combination->Combinor->Combinand->Symbol->Type->Literal;
+/*Sop*/			assert(name);
+/*Sop*/			char *varname = snakedup(name);                                                                                                     
+/*Sop*/			is_parameter = !in(fixed, varname) && !in(functions, name); // ◊ insufficient concept, depending on order    
+/*Sop*/			is_type_literal_parameter = is_parameter && !Expression->Combination->Combinor->Combinand->Symbol->Name;
+/*Sop*/			mtrac_free(varname);
+/*Sop*/		}
+/*Sop*/		bool wrap = (!symbol || is_type_literal_parameter) && !no_literal && !require_mandat && !conditional_expression && !payment_expression;
 /*Sop*/
 /*Sop*/		if(wrap) padcat(0, 0, production, ":§§:");
 /*T*/		xxx_combination(production, Expression->Combination, indent+1);
@@ -3587,9 +3605,10 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_combinand(char **production, Combinand *Combinand, int indent) {
 /*T*/		if(!Combinand) return false;
 
+		bool is_type_literal_parameter = false;
 		if(Combinand->Symbol) {
 			char *funcname = Combinand->Symbol->Name;
-			if(!funcname) funcname = Combinand->Symbol->Type->Literal;
+			if(!funcname) { funcname = Combinand->Symbol->Type->Literal; is_type_literal_parameter = true; }
 			assert(funcname);
 			char *varname = snakedup(funcname);
 			bool is_parameter = !in(fixed, varname) && !in(functions, funcname); // ◊ insufficient concept, depending on order
@@ -3605,12 +3624,12 @@ static bool is_payment(Predicates *predicates) {
 
 			/* produce the literal (name, or type name for variables that are named verbatim a type) */
 			if(!no_literal) {
-/*Sop*/				if(opt_harden) { padcat(0, 0, production, "Option.force_msg("); uses_option = true; } // ◊ fails
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) { padcat(0, 0, production, "Option.force_msg("); uses_option = true; }
 /*Sol*/				if(is_parameter) padcat(0,0,production,"_");
 				xxx_symbol(production, Combinand->Symbol, false, indent+1);
-/*Sop*/				if(opt_harden) padcat(0, 0, production, ", \"");
-/*Sop*/				if(opt_harden) xxx_noun(production, Combinand->Symbol, indent+1);
-/*Sop*/				if(opt_harden) padcat(0, 0, production, "\")", EOL);
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) padcat(0, 0, production, ", \"");
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) xxx_noun(production, Combinand->Symbol, indent+1);
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) padcat(0, 0, production, "\")", EOL);
 			}
 			mtrac_free(varname);
 		}

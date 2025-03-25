@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.102 beta 2"
+#define backend_version "sophia 0.3.103 beta 3"
 #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -142,7 +142,8 @@ static bool beyond_assignment = false;
 static char *fixed = null;	       // list of variables that have been set
 static char *args = null;	       // list of variables that come in as paremeters
 static char *functions = null;
-static bool miller = false;
+static bool lvalue = false;	       // for hardening, lvalue
+static bool rvalue = false;	       // for hardening, rvalue to be assigned to lvalue
 
 static char *safedup(const char *name) {
 	assert(name);
@@ -354,7 +355,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) {	// ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 
 	mtrac_concat(&tagged, ":", needle, ":");
@@ -1166,11 +1167,11 @@ bool sophia_name(char **production, Name *Name, bool assign, int indent) {
 	}
 
 	if (!in(functions, Name)) {
-		padcat(0, 0, production, !miller ? "state." : "",
-		       global &&!miller ? "global." : "", safe);
+		padcat(0, 0, production, !lvalue ? "state." : "",
+		       global &&!lvalue ? "global." : "", safe);
 	} else {
 		bind *bind = register_bind(safe, Name);
-		padcat(0, 0, production, global &&!miller ? "state." : "",
+		padcat(0, 0, production, global &&!lvalue ? "state." : "",
 		       bind->tag);
 	}
 	if (opt_harden
@@ -1701,6 +1702,7 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	}
 
 	/* covenant constructor */
+
 	padcat(2, indent, production, "%28%contract ", class, " =");	// %28%: payable
 	padcat(2, indent + 1, production, "record state = {");
 	padcat(1, indent + 3, production, "global : main_state,");
@@ -2599,15 +2601,17 @@ static void assign(char **production, int indent, Symbol *symbol,
 	padcat(1, indent, production, "");
 	padcat(0, 0, production, "put(state{");
 
-	miller = true;
+	lvalue = true;
 	sophia_symbol(production, symbol, true, indent);	// true --> assign flag
-	miller = false;
+	lvalue = false;
 
 	padcat(0, 0, production, " = ");
 
-	if (expression)
+	if (expression) {
+		rvalue = true;
 		sophia_expression(production, expression, indent + 1);
-	else
+		rvalue = false;
+	} else
 		padcat(0, 0, production, ":§§:true:§:");
 
 	padcat(0, 0, production, "})");
@@ -2722,6 +2726,8 @@ bool sophia_assignment(char **production, Assignment *Assignment, int indent) {
 	if (!Assignment) return false;
 	if (opt_debug) printf("producing Assignment\n");
 
+	preassign_mark(production, indent);
+
 	if (Assignment->Expression)
 		assign(production, indent, Assignment->Symbol,
 		       Assignment->Expression);
@@ -2729,6 +2735,8 @@ bool sophia_assignment(char **production, Assignment *Assignment, int indent) {
 		insert_parameter_and_set_member(production, &instructions,
 						Assignment->Symbol, false,
 						paratag, indent, __LINE__);
+
+	delete_preassign_mark(production);
 
 	return true;
 }
@@ -2768,9 +2776,9 @@ bool sophia_setting(char **production, Setting *Setting, int indent) {
 	padcat(1, indent, production, "");
 	padcat(0, 0, production, "put(state{");
 
-	miller = true;
+	lvalue = true;
 	sophia_symbol(production, action->Subject->Symbols->Symbol, true, indent + 1);	// true --> assign flag
-	miller = false;
+	lvalue = false;
 
 	padcat(0, 0, production, " = ");
 
@@ -3037,8 +3045,27 @@ bool sophia_expression(char **production, Expression *Expression, int indent) {
 		    && Expression->Combination->Combinor->Combinand
 		    && Expression->Combination->Combinor->Combinand->Reflexive);
 
-	bool wrap = !symbol && !no_literal && !require_mandat
-		&& !conditional_expression && !payment_expression;
+	bool is_parameter = false;
+	bool is_type_literal_parameter = false;
+
+	if (symbol && Expression->Combination->Combinor->Combinand->Symbol) {
+		char *name =
+			Expression->Combination->Combinor->Combinand->Symbol->
+			Name ? Expression->Combination->Combinor->Combinand->
+			Symbol->Name : Expression->Combination->Combinor->
+			Combinand->Symbol->Type->Literal;
+		assert(name);
+		char *varname = snakedup(name);
+
+		is_parameter = !in(fixed, varname) && !in(functions, name);	// ◊ insufficient concept, depending on order    
+		is_type_literal_parameter = is_parameter
+			&& !Expression->Combination->Combinor->Combinand->
+			Symbol->Name;
+		mtrac_free(varname);
+	}
+	bool wrap = (!symbol || is_type_literal_parameter) && !no_literal
+		&& !require_mandat && !conditional_expression
+		&& !payment_expression;
 
 	if (wrap) padcat(0, 0, production, ":§§:");
 	sophia_combination(production, Expression->Combination, indent + 1);
@@ -3191,10 +3218,15 @@ bool sophia_combinor(char **production, Combinor *Combinor, int indent) {
 bool sophia_combinand(char **production, Combinand *Combinand, int indent) {
 	if (!Combinand) return false;
 
+	bool is_type_literal_parameter = false;
+
 	if (Combinand->Symbol) {
 		char *funcname = Combinand->Symbol->Name;
 
-		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
+		if (!funcname) {
+			funcname = Combinand->Symbol->Type->Literal;
+			is_type_literal_parameter = true;
+		}
 		assert(funcname);
 		char *varname = snakedup(funcname);
 		bool is_parameter = !in(fixed, varname) && !in(functions, funcname);	// ◊ insufficient concept, depending on order
@@ -3214,18 +3246,21 @@ bool sophia_combinand(char **production, Combinand *Combinand, int indent) {
 
 		/* produce the literal (name, or type name for variables that are named verbatim a type) */
 		if (!no_literal) {
-			if (opt_harden) {
+			if (opt_harden && !is_type_literal_parameter && !rvalue) {
 				padcat(0, 0, production, "Option.force_msg(");
 				uses_option = true;
-			}	       // ◊ fails
+			}
 
 			sophia_symbol(production, Combinand->Symbol, false,
 				      indent + 1);
-			if (opt_harden) padcat(0, 0, production, ", \"");
-			if (opt_harden) sophia_noun(production,
+			if (opt_harden && !is_type_literal_parameter
+			    && !rvalue) padcat(0, 0, production, ", \"");
+			if (opt_harden && !is_type_literal_parameter
+			    && !rvalue) sophia_noun(production,
 						    Combinand->Symbol,
 						    indent + 1);
-			if (opt_harden) padcat(0, 0, production, "\")", EOL);
+			if (opt_harden && !is_type_literal_parameter
+			    && !rvalue) padcat(0, 0, production, "\")", EOL);
 		}
 		mtrac_free(varname);
 	}
