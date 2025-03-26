@@ -15,7 +15,7 @@
 ##
 ##	english.lgf — Lexon controlled English grammar
 ##
-##	Version 0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+##	Version 0.2.20 / subset 0.3.11 beta 3 - English / Reyes
 ##
 ##	This document is in Lexon Grammar Form, a variation of BNF.
 ##	Square brackets indicate optionality, 'or' separates variants.
@@ -104,7 +104,9 @@
 
 ## ACTION
 
-   action:	subject [permission [comma] [condition [comma] [":"]]] predicates separator
+   action:	subject [permission [comma] [condition punctuation]] predicates separator
+
+   punctuation:	comma or colon or [comma] "then" [colon] or [comma] "then" comma
 
 
 
@@ -151,6 +153,7 @@
 		or registration
 		or grantment
 		or appointment
+		or assignment 
 		or acceptance
 		or fixture
 		or setting
@@ -203,9 +206,18 @@
 
 ## APPOINTMENT PREDICATE
 
-   appointment:	appoint symbol [["as"] expression]
+   appointment:	appoint symbol
+   		or appoint expression "as" symbol
 
    appoint:	"appoint" or "appoints"
+
+
+## ASSIGNMENT PREDICATE
+
+   assignment:	assign symbol
+   		or assign expression "as" symbol
+
+   assign:	"assign" or "assigns"
 
 
 ## ACCEPTANCE PREDICATE
@@ -227,7 +239,7 @@
 
 ## FIXTURE PREDICATE / PASSIVE
 
-   setting:	illocutor ["then"] ["therefor"["e"]] symbol
+   setting:	be ["then"] ["therefor"["e"]] symbol
 
    illocutor: 	be ["defined"] ["as"]
 
@@ -240,7 +252,10 @@
 		or pay expression from_escrow preposition object
 		or pay escrow preposition object
 
-   pay:		"pay" or "pays" or "return" or "returns" or "repay" or "repays"
+   pay:		"pay" or "pays"
+   		or "return" or "returns"
+		or "repay" or "repays"
+		or "transfer" or "transfers"
 
    preposition:	"to" or "into" or "of"
 
@@ -281,7 +296,7 @@
 
 ## CONDITIONS
 
-   condition:	if expression [[comma] "then"]
+   condition:	if expression
 
    if:		"if" or "given" "that" or "provided"
 

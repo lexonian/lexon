@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.100 beta 1"
+#define backend_version "javascript 0.3.103 beta 3"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -29,6 +29,7 @@
 #include <assert.h>
 
 #define EOL ";"
+#define CALLER "caller"
 
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
@@ -36,7 +37,7 @@
 
 int yylex(void);
 void yyerror(const char *);
-static void error(char *msg, char *cargo);
+static void error(char *msg, const char *cargo);
 
 #define NEW(type) \
 	if(opt_debug_tokens) fprintf(stderr, "tokens : creating node for " #type "\n"); \
@@ -137,10 +138,11 @@ static char *declarations = null;
 static char *initializations = null;
 static char *main_interface = null;
 static char *command_init = null;
-static bool beyond_assignment = false;
+
 static char *fixed = null;	       // list of variables that have been set
 static char *args = null;	       // list of variables that come in as paremeters
 static char *functions = null;
+
 static char *safedup(const char *name) {
 	assert(name);
 	char *_safe = mtrac_malloc(strlen(name) + 3);
@@ -368,7 +370,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) {	// ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 
 	mtrac_concat(&tagged, ":", needle, ":");
@@ -591,6 +593,7 @@ typedef struct Predicate {
 	struct Registration *Registration;
 	struct Grantment *Grantment;
 	struct Appointment *Appointment;
+	struct Assignment *Assignment;
 	struct Acceptance *Acceptance;
 	struct Fixture *Fixture;
 	struct Setting *Setting;
@@ -658,7 +661,19 @@ typedef struct Appointment {
 } Appointment;
 
 typedef struct Appoint {
+	Literal *Literal;
 } Appoint;
+
+typedef struct Assignment {
+	struct Assign *Assign;
+	struct Symbol *Symbol;
+	struct Expression *Expression;
+	Literal *Literal;
+} Assignment;
+
+typedef struct Assign {
+	Literal *Literal;
+} Assign;
 
 typedef struct Acceptance {
 	struct Accept *Accept;
@@ -681,8 +696,9 @@ typedef struct Fix {
 } Fix;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
+	Literal *Literal;
 } Setting;
 
 typedef struct Illocutor {
@@ -832,6 +848,7 @@ typedef struct Combinand {
 	struct Negation *Negation;
 	struct Existence *Existence;
 	struct Point_In_Time *Point_In_Time;
+	Literal *Literal;
 } Combinand;
 
 typedef struct Combinator {
@@ -998,6 +1015,7 @@ bool js_registration(char **production, Registration * Registration,
 		     int indent);
 bool js_grantment(char **production, Grantment * Grantment, int indent);
 bool js_appointment(char **production, Appointment * Appointment, int indent);
+bool js_assignment(char **production, Assignment * Assignment, int indent);
 bool js_acceptance(char **production, Acceptance * Acceptance, int indent);
 bool js_fixture(char **production, Fixture * Fixture, int indent);
 bool js_setting(char **production, Setting * Setting, int indent);
@@ -1130,23 +1148,11 @@ static bool enforce_same_subject = false;
 static list *active_subjects = null;
 static list *covenant_subjects = null;
 static bool no_action_in_group_yet = true;
-static bool uses_main = true;
 static bool uses_termination = false;
 static bool uses_transfer = false;
 static bool uses_notification = false;
 
 static bool has_subclasses = false;
-static void optional_caller(char **production) {
-	if (opt_log)
-		concat(production, !current_function
-		       && active_subjects ? SNAKE(active_subjects->
-						  item) : "caller", ", ");
-}
-
-bool js_walk(char **production) {
-	if (!root) return false;
-	return js_document(production, root, 0);
-}
 
 static Name *class = null;
 static bool main_constructor_body = true;
@@ -1154,6 +1160,20 @@ static bool main_contract = true;
 static bool covenant_constructor_body = false;
 static bool terms_body = true;
 static bool recital_of_terms = false;
+
+static void optional_caller(char **production) {
+	if (opt_log)
+		concat(production, active_subjects
+		       && (!current_function
+			   && !class) ? SNAKE(active_subjects->item) : "caller",
+		       ", ");
+}
+
+bool js_walk(char **production) {
+	if (!root) return false;
+	return js_document(production, root, 0);
+}
+
 bool js_name(char **production, Name *Name, bool assign, int indent) {
 	if (!Name) return false;
 
@@ -1163,13 +1183,13 @@ bool js_name(char **production, Name *Name, bool assign, int indent) {
 
 	if (!in(functions, Name)) {
 		padcat(0, 0, production,
-		       global &&!main_constructor_body ? "main." : "this.",
-		       safe);
+		       global &&(!main_constructor_body
+				 || class) ? "main." : "this.", safe);
 	} else {
 		bind *bind = register_bind(safe, Name);
 		padcat(0, 0, production,
-		       global &&!main_constructor_body ? "main." : "this.",
-		       bind->tag);
+		       global &&(!main_constructor_body
+				 || class) ? "main." : "this.", bind->tag);
 	}
 	if (assign) padcat(0, 0, &fixed, ":", safe, ":");
 	mtrac_free(safe);
@@ -1324,23 +1344,26 @@ bool js_document(char **production, Document *Document, int indent) {
 	if (!opt_bare) padcat(2, indent, production, "");
 	padcat(0, indent, production, "module.exports = class ", camel_spaced(module), " {%21%");	// %21%: member initialization by parameters
 	padcat(1, indent + 1, production, "constructor(%1%) {");	// sic not C. %1%: constructor parameters
-	padcat(1, 0, production, "%20%");	// %20%: closure 'main = this'
+	padcat(0, 0, production, "%20%");	// %20%: closure 'main = this'
 
 	main_constructor_body = true;
 	main_contract = true;
 	assert(active_subjects == null);
 	js_terms(production, Document->Terms, indent + 2);	// sets caller, uses methods variable for production string
-	main_constructor_body = false; // off for non-JS? ◊
 	main_contract = false;
 	assert(!active_subjects || active_subjects != covenant_subjects);
 	if (active_subjects) delete_list(active_subjects);
 	active_subjects = null;
-
 	replace(production, "%1%", parameters);
+
 	/* covenants
 	 * js: like all non-covenant clauses, the entire covenant class definition including all their clauses,
 	 * are hidden in the scope of the main, top level constructor */
+	main_constructor_body = true;  // sic! the main constructor in JS includes the covenant clauses.
 	js_covenants(production, Document->Covenants, indent + 2);
+
+	main_constructor_body = false; // sic! the main constructor in JS ends after the covenant is embedded.
+
 	/* note this must follow after the class definitions, to be able to use the main_constructor_bodys in `restorers` */
 	if (opt_persistence) {
 		if (opt_comment) padcat(2, indent + 2, production,
@@ -1643,7 +1666,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	/* if needed, create 'main' variable to provide 'this' for closures */
 	char *closure_this = mtrac_strdup("");
 
-	if (strstr(*production, "main.")) padcat(1, indent + 2, &closure_this,
+	if (strstr(*production, "main.")) padcat(2, indent + 2, &closure_this,
 						 "let main = this;");
 	replace(production, "%20%", closure_this);
 	mtrac_free(closure_this);
@@ -1749,7 +1772,7 @@ void inject_termination(char **production, char *prompt, int indent) {
 				    ".log(caller, '■ ", prompt,
 				    " terminated');");
 	padcat(1, indent, production, "}");
-	padcat(2, indent, production, "check_termination() {");
+	padcat(3, indent, production, "check_termination() {");
 	padcat(1, indent + 1, production, "if(!this.terminated) return false;");
 	if (opt_log
 	    || opt_feedback) padcat(1, indent + 2, production,
@@ -1759,6 +1782,7 @@ void inject_termination(char **production, char *prompt, int indent) {
 	padcat(1, indent, production, "}");
 
 }
+
 bool js_head(char **production, Head *Head, int indent) {
 	if (!Head) return false;
 	if (opt_debug) printf("producing Head\n");
@@ -1935,9 +1959,9 @@ bool js_covenant(char **production, Covenant *Covenant, int indent) {
 	padcat(1, indent + 2, production, "return new ", class,
 	       "(this%2,%%2%);%16%");
 	padcat(1, indent, production, "};");
-
 	padcat(2, indent, production, "class ", class, " {");
 	padcat(2, indent + 1, production, "constructor(%2%) {");
+
 	char *declarations_stack = declarations;
 	char *initializations_stack = initializations;
 	char *parameters_stack = parameters;
@@ -2066,16 +2090,15 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	if (opt_persistence
 	    && opt_comment) padcat(2, indent, production,
 				   "/* object members: skip for restoring serialized object */");
-	if (opt_persistence) padcat(1 + (opt_comment ? 0 : 1), indent++, production, "if(typeof ", main_constructor_body ? "%7%" : "caller", " !== 'undefined') {");	// (*)
+	if (opt_persistence) padcat(1 + (opt_comment ? 0 : 1), indent++, production, "if(typeof ", !class ? "%7%" : "caller", " !== 'undefined') {");	// (*)
 
-	if (main_constructor_body) padcat(1, indent, production,
-					  "this._escrow = 0;");
+	if (!class) padcat(1, indent, production, "this._escrow = 0;");
 	if (!global_definitions) global_definitions = Provisions->Definitions;
 	else covenant_definitions = Provisions->Definitions;	// (sic)
 	js_definitions(production, Provisions->Definitions, indent);
 
 	/* placeholder for this.terminated */
-	padcat(0, 0, production, main_constructor_body ? "%22%" : "%23%");
+	padcat(0, 0, production, "%22%");
 
 	if (opt_log
 	    && !class) padcat(1, indent, production, (!class ? "this" : "main"),
@@ -2103,7 +2126,9 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 
 	/* end of constructor code */
 	if (opt_persistence) padcat(1, --indent, production, "}");
-	if (!main_constructor_body) padcat(1, --indent, production, "}");	// end of constructor
+	if (class) padcat(1, --indent, production, "}");	// end of constructor
+	main_constructor_body = false;
+	covenant_constructor_body = false;
 
 	/* insert caller argumnet and 'payable' modifier */
 	replace(production, "%7%", caller ? caller : "caller");	// ! caller is not yet set at (*) above.
@@ -2114,16 +2139,13 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	/* add element this.terminated, if needed */
 	char *terminated = mtrac_strdup("");
 
-	if (uses_termination) padcat(1, indent + (main_constructor_body ? 0 : 2), &terminated, "this.terminated = false;");	// [3] ◊ unify
-	replace(production, main_constructor_body ? "%22%" : "%23%",
-		terminated);
+	if (uses_termination) padcat(1, (!class ? 2 : 4) + (opt_persistence ? 1 : 0), &terminated, "this.terminated = false;");	// [3] ◊ unify
+	replace(production, "%22%", terminated);
 	mtrac_free(terminated);
 
 	char *termination_test = mtrac_strdup("");
 
-	if (uses_termination) padcat(1,
-				     indent + (main_constructor_body ? 0 : 1),
-				     &termination_test,
+	if (uses_termination) padcat(1, class ? 4 : 2, &termination_test,
 				     "if(this.check_termination()) return undefined;");
 	replace(instance ? production : &methods,
 		main_constructor_body ? "%24%" : "%25%", termination_test);
@@ -2164,9 +2186,9 @@ const char *typemap(const char *lex_type, bool option_type, bool forpara,
 		    int line) {
 	if (!lex_type) return "undefined";	// assert ◊
 
-	printf("Unknown type at %d\n", line);	// ◊ make proper error call / fatal error / compiler error
-	exit(1);
-	return "[ ERROR: UNKNOWN TYPE ]";	// ◊ assert
+	fprintf(stderr, "Internal error, line %d. ", line);
+	error("Unknown type", lex_type);
+	return null;
 }
 
 const char *nullmap(const char *lex_type, bool defined_default) {
@@ -2231,8 +2253,8 @@ const char *type(const char *name, bool option_type, bool forpara, int line) {
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	printf("Unknown type for %s\n", name);	// ◊ make proper error call / fatal error / compiler error
-	exit(1);
+	error("Undefined category for name", name);
+	return null;
 }
 
 const char *nullvalue(const char *name, bool defined_default) {
@@ -2309,14 +2331,14 @@ bool js_clause(char **production, Clause *Clause, int indent) {
 	if (opt_comment) padcat(3, indent, production, "/* ", Clause->Name,
 				" clause */");
 
-	/* lexon clause text as extended code comment */
+	/* clause comments from lexon clause text */
 	if (opt_lexon_comments) {
 		char *clause = snakedup(Clause->Name);
 		char *c = mtrac_strdup(get_lexcom(clause));
 
 		mtrac_free(clause);
 		assert(c);
-		if (main_constructor_body) {
+		if (!main_constructor_body && !class) {
 			replace(&c, "\n", "\n    " LEXCOM1 " ");
 			padcat(2, 0, production,
 			       "    " LEXCOM0 "\n    " LEXCOM1 " ", c,
@@ -2409,7 +2431,6 @@ bool js_function(char **production, Function *Function, int indent) {
 	return true;
 }
 
-static char *subjnonmatch = null;
 static char *subjlatebind = null;
 bool js_statements(char **production, Statements *Statements, int indent) {
 	if (!Statements) return false;
@@ -2491,19 +2512,15 @@ bool js_action(char **production, Action *Action, int indent) {
 	no_action_in_group_yet = false;
 	ever = true;
 
-	assert(!subjnonmatch);
 	assert(!subjlatebind);
-	subjnonmatch = mtrac_strdup("");
 	subjlatebind = mtrac_strdup("");
-	padcat(0, 0, production, "%11%%12%");
+	padcat(0, 0, production, "%12%");
 
 	js_subject(production, Action->Subject, indent);
 
 	/* pre-insert the non-match comparisons and late bindings */
 
-	replace(production, "%11%", subjnonmatch);	// can be ""
 	replace(production, "%12%", subjlatebind);	// can be ""
-	mtrac_free(subjnonmatch), subjnonmatch = null;
 	mtrac_free(subjlatebind), subjlatebind = null;
 
 	/* check binding of the subject */
@@ -2618,31 +2635,23 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 			// ◊ into symbol coming in here
 			char *varname = snakedup(s->Symbol->Name);
 			char *lexname = s->Symbol->Name;
-			char *scope = (!in(globals, s->Symbol->Name) && class) ? "this." : "main.";	// ◊ unite with usual 'main_constructor_body?' ?
-			char *postscope = "";
+			char *scope = (in(globals, s->Symbol->Name) && class) ? "main." : "this.";	// ◊ unite with usual 'main_constructor_body?' ?
 
-			padcat(0, 0, para, first ? "<<" : " or ", varname);	//X unite with S+S?
+			padcat(0, 0, para, first ? "<<" : " or ", varname);
+			first = false;
 
 			/* binding of unbound person variable to caller parameter */
-			if (!main_constructor_body) {
+			if (!any && !main_constructor_body) {
 				char *safe = safedup(varname);
 
-				/* precondition that caller and all of the subjects cannot be the same */
-				if (first) padcat(2, indent, &subjnonmatch,
-						  "if(caller != ", scope, safe,
-						  postscope);
-				else padcat(0, 0, &subjnonmatch,
-					    " && caller != ", scope, safe,
-					    postscope);
 				/* produce bind code. Person in question must still be null, i.e., unbound */
 				if (!in(fixed, varname)) {
-					// ◊ add error when postscope is set == assignment not in the right class
-					padcat(1, indent + 1, &subjlatebind,
-					       !any ? "" : "else ", "if(",
-					       scope, safe, " == null) ", scope,
-					       safe, " = caller;");
+					// ◊ catch attempt to set global (main) value
+					padcat(1, indent, &subjlatebind, "if(",
+					       scope, safe, " == ", "null) ",
+					       scope, safe, " = caller;");
+					padcat(0, 0, &fixed, ":", safe, ":");
 					any = true;
-					padcat(0, 0, &fixed, ":", safe, ":");	// right? ◊
 				}
 				mtrac_free(safe);
 			}
@@ -2651,16 +2660,8 @@ bool js_subject(char **production, Subject *Subject, int indent) {
 		s = s->Symbols;
 		first = false;
 	}
-	if (strlen(*para)) padcat(0, 0, para, ">>");	// ◊ .. sometimes produces >>>>
-	if (any)
-		padcat(0, 0, &subjnonmatch, ") {"), padcat(1, indent,
-							   &subjlatebind,
-							   "}\n");
-	else
-		/* reset all when all in subjlatebind are actually constructor arguments, of the main or sub contract
-		 * This is known only after the loop has been traversed and 'any' is still false.  */
-		mtrac_free(subjnonmatch), subjnonmatch = mtrac_strdup("");
 
+	if (strlen(*para)) padcat(0, 0, para, ">>");	// ◊ .. sometimes produces >>>>
 	return true;
 }
 
@@ -2676,8 +2677,8 @@ bool js_symbol(char **production, Symbol *Symbol, bool assign, int indent) {
 	if (!Symbol) return false;
 
 	/* produce the name literal. Note that js_name adds 'this.'
-	 * or 'main.', which makes for a global scope, while the cases
-	 * that a type name is itself used as variable name, it is use
+	 * or 'main.', which makes for a global scope; while the cases
+	 * that a type name is itself used as variable name, it is used
 	 * unprefixed, for a local scope. */
 	if (Symbol->Name)
 		js_name(production, Symbol->Name, assign, indent);
@@ -2730,21 +2731,17 @@ bool js_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	assert(action);
 	assert(action->Subject);
 	assert(action->Subject->Symbols);
+	/* no subject */
 	if (!action->Subject->Symbols->Symbol)
 		error("missing subject for reflexive pronoun ",
 		      Reflexive->Literal);
+	/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 	if (action->Subject->Symbols->Symbols) {
-		char *msg = mtrac_strdup("");
-
-		concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-		       action->Subject->Symbols->Symbols->Symbol->Name, " / ",
-		       Reflexive->Literal, ")");
-		error("don't use multiple subjects with a reflexive pronoun",
-		      msg);
-		mtrac_free(msg);
-	}
-	js_symbol(production, action->Subject->Symbols->Symbol, false,
-		  indent + 1);
+		padcat(0, 0, production, CALLER);
+		if (current_function) current_function->uses_caller = true;
+	} else
+		js_symbol(production, action->Subject->Symbols->Symbol, false,
+			  indent + 1);
 
 	return true;
 }
@@ -2769,6 +2766,7 @@ bool js_predicate(char **production, Predicate *Predicate, int indent) {
 	js_registration(production, Predicate->Registration, indent);
 	js_grantment(production, Predicate->Grantment, indent);
 	js_appointment(production, Predicate->Appointment, indent);
+	js_assignment(production, Predicate->Assignment, indent);
 	js_acceptance(production, Predicate->Acceptance, indent);
 	js_fixture(production, Predicate->Fixture, indent);
 	js_setting(production, Predicate->Setting, indent);
@@ -2789,12 +2787,15 @@ static void assign(char **production, int indent, Symbol *symbol,
 	js_symbol(production, symbol, true, indent);	// true --> assign flag
 	padcat(0, 0, production, " = ");
 
-	if (expression)
+	if (expression) {
+
 		js_expression(production, expression, indent + 1);
-	else
+
+	} else
 		padcat(0, 0, production, "true");
 
 	padcat(0, 0, production, EOL);
+
 }
 
 	/* Support functions for predicates */
@@ -2803,8 +2804,9 @@ static void assign(char **production, int indent, Symbol *symbol,
 static void log_entry(char **production, char *name, char *action, int indent) {
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
-		       ".log(", recital_of_terms ? caller : "caller",
-		       ", \"✓ ", name, " ", action, "\");");
+		       ".log(", recital_of_terms
+		       && !class ? caller : "caller", ", \"✓ ", name, " ",
+		       action, "\");");
 		if (current_function) current_function->uses_caller |= class
 				|| !strcmp(caller, "caller");
 	}
@@ -2912,11 +2914,36 @@ bool js_appointment(char **production, Appointment *Appointment, int indent) {
 	if (!Appointment) return false;
 	if (opt_debug) printf("producing Appointment\n");
 
-	insert_parameter_and_set_member(production, &instructions,
-					Appointment->Symbol, false, paratag,
-					indent, __LINE__);
+	if (Appointment->Expression)
+		assign(production, indent, Appointment->Symbol,
+		       Appointment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Appointment->Symbol, false,
+						paratag, indent, __LINE__);
 
 	log_entry(production, Appointment->Symbol->Name, "appointed", indent);
+
+	return true;
+}
+
+bool js_assignment(char **production, Assignment *Assignment, int indent) {
+	if (!Assignment) return false;
+	if (opt_debug) printf("producing Assignment\n");
+
+	preassign_mark(production, indent);
+
+	if (Assignment->Expression)
+		assign(production, indent, Assignment->Symbol,
+		       Assignment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Assignment->Symbol, false,
+						paratag, indent, __LINE__);
+
+	log_entry(production, Assignment->Symbol->Name, "assigned", indent);
+
+	delete_preassign_mark(production);
 
 	return true;
 }
@@ -2957,9 +2984,19 @@ bool js_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 
-	assign(production, indent, Setting->Symbol, null);	// null -> set true
+	padcat(1, indent, production, "");
 
-	log_entry(production, Setting->Symbol->Name, "state set", indent);
+	js_symbol(production, action->Subject->Symbols->Symbol, true, indent + 1);	// true --> assign flag
+	padcat(0, 0, production, " = ");
+
+	if (Setting->Symbol)
+		js_symbol(production, Setting->Symbol, false, indent + 1);
+	else
+		padcat(0, 0, production, "true");
+
+	padcat(0, 0, production, EOL);
+	log_entry(production, action->Subject->Symbols->Symbol->Name, "set",
+		  indent);
 
 	return true;
 }
@@ -2986,7 +3023,6 @@ bool js_payment(char **production, Payment *Payment, int indent) {
 		js_from_escrow(production, Payment->From_Escrow, 0);
 	else
 		js_name(production, (Name *) subject, false, 0);
-
 	padcat(0, 0, production, ", ");
 	/* receiver */
 	if (!explicit_to_escrow) {
@@ -3005,7 +3041,7 @@ bool js_payment(char **production, Payment *Payment, int indent) {
 		payment_expression = false;
 	} else {
 		padcat(0, 0, production,
-		       main_constructor_body ? "this._escrow" : "main._escrow");
+		       !class ? "this._escrow" : "main._escrow");
 	}
 
 	padcat(0, 0, production, ")", EOL);
@@ -3046,7 +3082,6 @@ bool js_from_escrow(char **production, From_Escrow *From_Escrow, int indent) {
 bool js_sending(char **production, Sending *Sending, int indent) {
 	if (!Sending) return false;
 	if (opt_debug) printf("producing Sending\n");
-
 	preassign_mark(production, indent);
 	// ◊ change mech to allow for multiple pre-assignments
 	// ◊ get out of possible access block for multi-sentence clauses
@@ -3090,7 +3125,6 @@ bool js_send(char **production, Send *Send, int indent) {
 bool js_notification(char **production, Notification *Notification, int indent) {	// document it ◊
 	if (!Notification) return false;
 	if (opt_debug) printf("producing Notification\n");
-	beyond_assignment = true;      // ◊ make comprehensive
 
 	preassign_mark(production, indent);
 
@@ -3123,6 +3157,7 @@ bool js_notification(char **production, Notification *Notification, int indent) 
 bool js_notify(char **production, Notify *Notify, int indent) {
 	if (!Notify) return false;
 	if (opt_debug) printf("producing Notify\n");
+
 	uses_notification = true;
 
 	padcat(1, indent, production, (class ? "main." : "this."), "notify(");
@@ -3188,6 +3223,7 @@ bool js_if(char **production, If *If, int indent) {
 bool js_expression(char **production, Expression *Expression, int indent) {
 	if (!Expression) return false;
 	if (opt_debug) printf("producing Expression\n");
+
 	js_combination(production, Expression->Combination, indent + 1);
 	return true;
 }
@@ -3325,14 +3361,20 @@ bool js_combinor(char **production, Combinor *Combinor, int indent) {
 bool js_combinand(char **production, Combinand *Combinand, int indent) {
 	if (!Combinand) return false;
 
+	bool is_type_literal_parameter = false;
+
 	if (Combinand->Symbol) {
 		char *funcname = Combinand->Symbol->Name;
 
-		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
+		if (!funcname) {
+			funcname = Combinand->Symbol->Type->Literal;
+			is_type_literal_parameter = true;
+		}
 		assert(funcname);
 		char *varname = snakedup(funcname);
+		bool is_parameter = !in(fixed, varname) && !in(functions, funcname);	// ◊ insufficient concept, depending on order
 
-		if (!in(fixed, varname) && !in(functions, funcname)) {	// ◊ insufficient concept, depending on order
+		if (is_parameter) {
 			/* produce amounts/texts etc variables: take care that they
 			 * 1) become parameters, and 2) object elements with that parameter assigned
 			 * e.g., The Secured Party may pay a Reminder Fee into escrow. */
@@ -3345,23 +3387,23 @@ bool js_combinand(char **production, Combinand *Combinand, int indent) {
 							__LINE__);
 		}
 
-		/* produce the literal (name or type name for variables that are named verbatim a type) */
+		/* produce the literal (name, or type name for variables that are named verbatim a type) */
 		if (!no_literal) {
-
 			js_symbol(production, Combinand->Symbol, false,
 				  indent + 1);
 
 		}
 		mtrac_free(varname);
 	}
-	js_expiration(production, Combinand->Expiration, indent + 1);
 	js_timeliness(production, Combinand->Timeliness, indent + 1);
+	js_reflexive(production, Combinand->Reflexive, indent + 1);
 	js_description(production, Combinand->Description, indent + 1);
 	js_scalar_comparison(production, Combinand->Scalar_Comparison,
 			     indent + 1);
 	js_negation(production, Combinand->Negation, indent + 1);
 	js_existence(production, Combinand->Existence, indent + 1);
 	js_point_in_time(production, Combinand->Point_In_Time, indent + 1);
+	js_expiration(production, Combinand->Expiration, indent + 1);
 
 	return true;
 }
@@ -3642,12 +3684,9 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	// protect keywords
 	char *varname = safedup(pretty_varname);
 
-	// protect parameters with leading underscore (sol),
-	// or not because this. or main or state. will be prefixed (js, sop).
 	char *parameter_varname = mtrac_strdup("");
 
 	concat(&parameter_varname, pretty_varname);	// same because member gets 'this.' or 'main.' prefixed
-
 	// prepend type (sol, sop)
 	char *typed_varname = mtrac_strdup("");
 
@@ -3657,7 +3696,7 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	concat(&pretty_typed_varname, pretty_varname);	// not type added for js
 	char *typed_parameter_varname = mtrac_strdup("");
 
-	concat(&typed_parameter_varname, parameter_varname);	// not type added for js
+	concat(&typed_parameter_varname, parameter_varname);	// no type added for js
 
 	/* binding to msg.sender and msg.value */
 
@@ -3692,7 +3731,7 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	}
 	mtrac_free(search);
 	/* 2: Set the member to the parameter.  It's a member only if it's not a variable named for a type
-	 * (then found at Symbol->Type->Literal) */
+	 * (which has null for Symbol->Name and its name is found at Symbol->Type->Literal) */
 	if (symbol->Name) {
 		// ◊ into symbol coming in here
 		/* js: prep: we will (at [1]) look for, eg 'x = null;' in the previously produced */
@@ -3767,10 +3806,9 @@ void produce_access_conditions(int down, int indent, char **production,
 	padcat(0, 0, production, ") {");
 }
 
-void error(char *msg, char *cargo) {
-	printf("Lexon semantic error: %s %s%s%s.\n", msg, cargo ? "(" : "",
-	       cargo ? cargo : "", cargo ? ")" : "");
-	if (current_function) printf("In clause %s.\n", current_function->lexname);	// ◊ add file and line
+void error(char *msg, const char *cargo) {
+	fprintf(stderr, "Lexon » semantic error%s%s: %s %s%s%s.\n", current_function ? " in clause " : "", current_function ? current_function->lexname : "",	// ◊ add file and line
+		msg, cargo ? "(" : "", cargo ? cargo : "", cargo ? ")" : "");
 	exit(1);
 }
 

@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 1"
+#define program_vers "0.3 beta 3"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -103,7 +103,7 @@ void parsargs(int argc, char **argv);
 void syntax(char *message, char *violation);
 void yacc_printf(FILE *stream, char *format, ...);
 char *coredup(char *src);
-void process(char *ltrim, char *skip, char *mtrim, char *pif, char *rtrim);
+void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);
 void process2(char *pif, char *rtrim, char *open, char *close);
 void include(char *pif);
 int include_done();
@@ -583,10 +583,15 @@ percents [%]
 brackets [\[\]]
 space	 [ \t]
 white	 [ \t\n]
+category (is[ \t]+)?((an?|the)[ \t]+)?(person|amount|time|binary|text|data)
+contract (is[ \t]+)?this[ \t]+[^\"“”\n]+
+defined  (be|is)[: \t]+
 
 /* two compiler passes (PRE, MAIN), multiple sub scan states */
 %x BOFTRIM
 %x PRE
+%x NAME_PROCESSING
+%x QUOTED_TEXT
 %s MAIN
 
 %x TRIM
@@ -631,27 +636,31 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 ^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
-									 process(" \t", "TERMS PER", " \t", yytext, ": \t"); // make TERMS optional for process ◊
-									 concat(&buf, yytext); 
-									 concat(&buf, ":"); } // why is the : lost in the scan? (and needs re-adding here)  ◊
+									 process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t"); // ◊ separate TERMS PER
+									 concat(&buf, yytext);
+									 concat(&buf, ":"); } // ◊ why is the : lost in the scan? (and needs re-adding here)
 ^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
-									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", yytext, ". \t");
+									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", "", "", yytext, ". \t");
 									 concat(&buf, yytext); }
 ^{space}*INCLUDE{space}*:?{space}*				{ D; freeline(); BEGIN(INCLUDE); }
 ^{space}*LAW{space}*:?{space}*					{ D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
  /* ---> 2ND CYCLE LGF GENERATED TYPE NAMES HERE ---> */
  /* <--- TO HERE <--- */
+^{space}*PREAMBLE{space}*(:|\.)*{space}*			{ D; lineno(); concat(&buf, trim(yytext), ": ‹"); BEGIN(LONGQUOTE); }
 ^{space}*{word}{space}*:{space}*				{ D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
-^{space}*PREAMBLE{space}*(:|\.)*{space}*			{ D; lineno(); concat(&buf, trim(yytext), " ‹"); BEGIN(LONGQUOTE); }
 ^{space}*{word}{space}*						{ D; lineno(); concat(&buf, trim(yytext), " "); }
-(\"|“|”){term}(\"|“|”)						{ D; lineno(); process("\"“”", "", "", yytext, "\"“”"); concat(&buf, yytext); lhd=true; }
-{space}+                                   			{ D; concat(&buf, " "); }
+^{space}*(A|AN|THE)?{space}*(\"|“|”){space}*			{ D; lineno(); concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
+\.{space}*(A|AN|THE)?{space}*(\"|“|”){space}*			{ D;           concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
+[^.\n]{space}*(\"|“|”)						{ D;           concat(&buf, yytext); BEGIN(QUOTED_TEXT); }
+{space}+                                   			{ D;           concat(&buf, " "); }
 ^(\"|“|”) /* these 2 lines emulate ^[^"“”]: */			{ D; lineno(); concat(&buf, yytext); }
 ^.	 							{ D0; yyless(0); if(plhd && pretty) freeline(); }
 .								{ D; lineno(); concat(&buf, yytext); }
 <<EOF>>		        					{ D0; new_lexcom("_pre_", "");
-									if(include_done()) BEGIN(PRE);
-									else {
+									if(include_done()) {
+										// yy_set_bol(true); // ◊ added for no effect
+										BEGIN(PRE);
+									} else {
 										precompile();
 										if(do_main_pass) {
 											BEGIN(MAIN);
@@ -662,6 +671,17 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 											return 0;
 									} 
 								} // (*)
+}
+
+<NAME_PROCESSING>{
+{term}/(\"|“|”){space}*({category}|{contract}|{defined}) { D; process("", "", "", "", "", yytext, " \t"); concat(&buf, yytext); lhd=true; BEGIN(PRE); } // should be {term}/{space}* but that triggers a Flex (buggy) warning
+[^"“”]+/(\"|“|”)	/* description string */		{ D; concat(&buf, "‹", yytext, "›"); BEGIN(PRE); }
+.                                                               { D0; yyless(0); BEGIN(PRE); }
+}
+
+<QUOTED_TEXT>{
+[^"“”]+/(\"|“|”)						{ D; concat(&buf, "‹", yytext, "›"); BEGIN(PRE); }
+.                                                               { D0; yyless(0); BEGIN(PRE); } // ◊ error msg for empty text ""
 }
 
 <BOFTRIM>{
@@ -677,9 +697,10 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 ^.								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 .								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 <<EOF>>				  				{ D0; new_lexcom("_pre_", "");
-									if(include_done())
+									if(include_done()) {
+										// yy_set_bol(true); // ◊ added for no effect 
 										BEGIN(PRE);
-									else {
+									} else {
 										precompile();
 										if(do_main_pass) {
 											BEGIN(MAIN);
@@ -693,7 +714,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 
 }
 
-<NAMEQUOTE>{							// ◊ refactor: only used by LEX tag
+<NAMEQUOTE>{
 {letter}({letter}|{digit}|{space})*				{ D; process2(yytext, ". \t", "«", "»"); concat(&buf, yytext); BEGIN(PRE); }
 .								{ D; syntax("unexpected character in name", yytext); }
 \n								{ D; syntax("unexpected end of line instead of name", ""); }
@@ -709,11 +730,13 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 
 <LONGQUOTE>{
 .*                                                              { D; concat(&buf, yytext); }
+\n+/(TERM|GENERAL)						{ D; concat(&buf, "›."); concat(&buf, yytext); line+=strlen(yytext); plhd=lhd; lhd=false; BEGIN(TRIM); }
+\n+/(A|AN|THE)?{space}*{quote}                                                     { D; concat(&buf, "›."); concat(&buf, yytext); line+=strlen(yytext); plhd=lhd; lhd=false; BEGIN(TRIM); }
 \n                                                              { D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 ({space}*\n){3}                                                 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 }
 
-<INCLUDE>{path}/\n						{ D; input(); include(yytext); BEGIN(PRE); }
+<INCLUDE>{path}/\n						{ D; input(); include(yytext); yy_set_bol(true); BEGIN(PRE); }
 <INCLUDE>.							{ D; syntax("unexpected character in include filename and path", yytext); }
 <INCLUDE>\n							{ D; syntax("unexpected end of line instead of include filename and path", ""); }
 <INCLUDE><<EOF>>						{ D; syntax("unexpected end of file instead of include filename and path", yytext); }
@@ -739,7 +762,7 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 \.({space}*\n)*							{ D; DX(Separator); return Separator; }
 {white}+							{ D; }
 «								{ D; BEGIN(NAME_); }
-‹								{ D; BEGIN(DESCRIPTION_); }
+\"?{space}*‹							{ D; BEGIN(DESCRIPTION_); }
 {scalar}                                                        { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
  /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
  /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */
@@ -765,7 +788,8 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 
 <DESCRIPTION_>{
 [^›]+								{ D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
-›{space}*\.?({space}*\n)*					{ D; DX(Separator); BEGIN(MAIN); return Separator; }
+›{space}*\"?{space}*\.?({space}*\n)*				{ D; DX(Separator); BEGIN(MAIN); return Separator; }
+›{space}*\"?{space}*/[,;]					{ D;                BEGIN(MAIN); }
 <<EOF>>								{ D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 }
 
@@ -935,12 +959,15 @@ int main(int argc, char **argv) {
 	if(opt_jurisdictions) {
 		if(opt_verbose || opt_debug) printf("• jurisdictions\n");
 		dump_laws();
+		exit(0);
 	} else if(opt_grammar) {
 		if(opt_verbose || opt_debug) printf("• grammar\n");
 		printf("%s\n", owngrm);
+		exit(0);
 	} else if(opt_manual) {
 		if(opt_verbose || opt_debug) printf("• manual\n");
 		printf("%s\n", manual);
+		exit(0);
 	} else if(opt_geninfo || opt_keywords || opt_samples || opt_bootstrap || opt_yacc || opt_bnf || opt_template) {
 		if(opt_verbose || opt_debug) printf("• scanning\n");
 		do_main_pass = false;
@@ -1155,7 +1182,7 @@ void parsargs(int argc, char **argv) {
     int option_index = 0;
     opt_summarized = mtrac_strdup("");
     while ((c = getopt_long(argc, argv,
-    		"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M0123",
+    		"hVmuo:rjPWNJi:IUGBY::T::L::KS::F:H:E::n::kbyqfazl::sc::p::t::e::xwCRvQdD::M01234",
 		long_options, &option_index)) != -1) {
 	if(c == '?') { fprintf(stderr, "parameter error"); exit(1); }
 
@@ -1829,9 +1856,10 @@ const char *literal_symbol(char *token) {
 char _up[1001];
 char *UP(const char *token) {
 	strncpy(_up, token, 1000);
+	_up[1000] = 0;
 	char *c = _up;
 	bool sep = true;
-	while(*c) { if(sep) *c = toupper(*c); sep = *c == '_'; c++; }
+	while(*c) { if(sep) *c = toupper(*c); else *c = tolower(*c); sep = *c == '_'; c++; }
 	return _up;
 }
 
@@ -1909,6 +1937,14 @@ void rump(char **buf, char *filename) {
 	mtrac_free(copy);
 	replace(buf, ".lex", "");
 	replace(buf, "-", " ");
+}
+
+static bool in(char *hay, char *needle) { // ◊ unify w/target.c
+        char *tagged = mtrac_strdup("");
+        mtrac_concat(&tagged, ":", needle, ":");
+        bool in = !!strstr(hay, tagged);
+        mtrac_free(tagged);
+        return in;
 }
 
 void include(char *scanned) {
@@ -2115,10 +2151,12 @@ void delete_include_trace() {
 }
 
 /* add a symbol (name) to the symbols list, scanned directly from the code buffer */
-void process(char *ltrim, char *skip, char *mtrim, char *pif, char *rtrim) {
+void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {
 	pif += strspn(pif, ltrim);
-	pif += strlen(skip);
+	if(tolower(*pif) == tolower(*skip1)) pif += strlen(skip1);
 	pif += strspn(pif, mtrim);
+	if(tolower(*pif) == tolower(*skip2)) pif += strlen(skip2);
+	pif += strspn(pif, ctrim);
 	pif = mtrac_strdup(pif);
 	char *e = pif + strlen(pif);
 	while(strchr(rtrim, *--e)) ; *++e = 0;
@@ -2434,16 +2472,19 @@ void margin() {
 		size_t margin = strcspn(p, ":\n");
 		if(margin && *(p + margin) == ':' && margin < max) {
 			p += margin;
-			while(*--p != ' ')
-				if(p < p0) {
-					/* would break the line counter: a line did not, as all should, start '.* .*:' */
-					fprintf(stderr, "margin scan buffer:\n%s\n\n", buf);
-					fprintf(stderr, "parser error at: '%.*s' ...\n", 25, p0);
-					exit(31);
-				}
-			size_t pos = p - buf;
-			replace_first_from(&buf, " ", space + margin -1, p);
-			p = buf + pos;
+			///while(*--p != ' ')
+			///	if(p < p0) {
+			///		/* would break the line counter: a line did not, as all should, start '.* .*:' */
+			///		fprintf(stderr, "margin scan buffer:\n%s\n\n", buf);
+			///		fprintf(stderr, "parser error at: '%.*s' ...\n", 25, p0); // ◊ make canonical error message
+			///		exit(31);
+			///	}
+			while(*--p != ' ' && p > p0) ;
+			if(p > p0) {
+				size_t pos = p - buf;
+				replace_first_from(&buf, " ", space + margin -1, p);
+				p = buf + pos;
+			}
 		}
 		if(!(p = strchr(p,'\n'))) break;
 		p0 = ++p;
@@ -2956,9 +2997,13 @@ void produce_grammar(struct definition *definition) {
 		bool has_leaf = !!definition->tokens;
 		bool recursive = in_list(definition->tokens, definition->name) && !definition->tokens->next->next;
 		char *match = _mtrac_dupcat("", ",", definition->name, ",", null);
-		char *no_break_list = ",Type,Symbol,Combination,Combinand,Combinor,Combinator";
+		char *no_break_list = ",Type,Symbol,Combination,Combinand,Combinor,Combinator,";
 		bool no_break = !!strstr(no_break_list, match);
-		bool skip = !!strstr(",Type_Term,Body", match);
+		bool skip = !!strstr(",Type_Term,Punctuation,", match); // core lang
+		char *drop_list = ""; // ":Punctuation:"; // tree 
+		char *cut_list = ""; // "::Article:"; // flat tree
+		char *skid_list = ""; // ":Catena:Type_Term:Body:Provisions:"; // flat tree
+		char *hide_list = ""; //":Definition:Symbol:"; // flat tree
 		mtrac_free(match);
 
 		char *production_name = mtrac_strdup(LOW(dash_spaced(definition->name)));
@@ -2975,14 +3020,24 @@ void produce_grammar(struct definition *definition) {
 		}
 		concat(&templ, "/*T*/\t\tbool terse = opt_produce_terse && (skipped || (1 == 0");
 		token = definition->tokens;
-		while(token) { concat(&templ, " + (!!", definition->name, "->", token->string, "?1:0)"); token = token->next; }
+		while(token) {
+			if(!in(cut_list, token->string) && !in(skid_list, token->string))
+				concat(&templ, " + (!!", definition->name, "->", token->string, "?1:0)");
+			token = token->next;
+		}
 		concat(&templ, "));\n");
 
 		/* tree: produce actual node name, for tree display */
+		bool hide = in(hide_list, definition->name);
 		concat(&templ, "/*T*/\t\tif(opt_produce_tree) {\n");
-		concat(&templ, "/*T*/\t\t\tif(!(opt_produce_flat && has_more_recursion) && !terse)\n");
-		concat(&templ, "/*T*/\t\t\t\t", "padcat(", definition==grammar?"0":"1", ", indent, production, \"",
-			definition!=grammar?"↳  ":"   ", "\", color, \"", production_name, "\", off, \" \");\n"); // ↳
+		if(in(skid_list, definition->name))
+			concat(&templ, "/*T*/\t\t\tif(!opt_produce_flat");
+		else
+			concat(&templ, "/*T*/\t\t\tif(!(opt_produce_flat && has_more_recursion)");
+		concat(&templ, " && !terse)\n");
+		concat(&templ, "/*T*/\t\t\t\t", "padcat(", definition==grammar?"0":"1", ", indent, production, \"", definition!=grammar?"↳  ":"   ", "\""); // ↳
+		if(!hide) concat(&templ, ", color, \"", production_name, "\", off, \" \"");
+		concat(&templ, ");\n");
 
 		/* core: skips some, unpacks the binary nesting and uses less lines */
 		concat(&templ, "/*T*/\t\t} else {\n");
@@ -3077,12 +3132,19 @@ void produce_grammar(struct definition *definition) {
 				concat(&templ, "/*T*/\t\t", stopped?"\t":"", "sibbling_follows = !!(");
 				stringlist *succ = token->next;
 				stringlist *start = succ;
-				if(!succ)
-					concat(&templ, "false");
+				bool any = false;
 				while(succ) {
-					concat(&templ, succ!=start?" || ":"", definition->name, "->", succ->string);
+					if(!in(drop_list, succ->string)) {
+						if(!in(cut_list, succ->string) && !in(skid_list, succ->string))
+							concat(&templ, succ!=start?" || ":"", definition->name, "->", succ->string);
+						else
+							concat(&templ, succ!=start?" || ":"", "!opt_produce_flat && ", definition->name, "->", succ->string);
+						any = true;
+					}
 					succ = succ->next;
 				}
+				if(!any)
+					concat(&templ, "false");
 				concat(&templ, ");\n");
 				if(!recursive || !namesake)
 					concat(&templ, "/*T*/\t\t", stopped?"\t":"",
@@ -3109,19 +3171,30 @@ void produce_grammar(struct definition *definition) {
 
 
 			/* *** actual call to the leaf *** */
-			char *type = lowdup(types->string);
-			char *name = lowdup(definition->name);
-			concat(&templ, "/*T*/\t\t", stopped?"\t":"", opt_langprefix, "_", type,
-				"(production, ",
-				definition->name, "->", token->string,
-				", indent+irx, ",
-				namesake?"false, ":"true, ",
-				recursive?"sibbling_follows && skipped":"false", namesake?"|| sibbling":"",
-				", subhighlight || opt_values && !!strstr(opt_values, \"", name, "\")",
-				", opt_subvalues && !!strstr(opt_subvalues, \"", name, "\")", ");\n",
-				"/*T*/\t\t", stopped?"\t":"", "subhighlight = false;\n");
-			mtrac_free(type);
-			mtrac_free(name);
+			if(!in(drop_list, token->string)) {
+				char *type = lowdup(types->string);
+				char *name = lowdup(definition->name);
+				bool cut = in(cut_list, token->string);
+				char *tabs = "\t\t";
+				if(cut) {
+					concat(&templ, "/*T*/\t\tif(!opt_produce_flat) {");
+					tabs = "\t\t\t";
+				}
+				concat(&templ, "/*T*/", tabs, stopped?"\t":"", opt_langprefix, "_", type,
+					"(production, ",
+					definition->name, "->", token->string,
+					", indent+irx, ",
+					namesake?"false, ":"true, ",
+					recursive?"sibbling_follows && skipped":"false", namesake?"|| sibbling":"",
+					", subhighlight || opt_values && !!strstr(opt_values, \"", name, "\")",
+					", opt_subvalues && !!strstr(opt_subvalues, \"", name, "\")", ");\n",
+					"/*T*/", tabs, stopped?"\t":"", "subhighlight = false;\n");
+				if(cut) {
+					concat(&templ, "/*T*/\t\t}");
+				}
+				mtrac_free(type);
+				mtrac_free(name);
+			}
 
 			/* delayed grid shift for skipped recursives */
 			if(recursive && namesake) {
