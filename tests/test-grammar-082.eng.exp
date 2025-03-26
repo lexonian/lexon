@@ -51,9 +51,7 @@
                                                 catena ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «garply-qux-bar» ) ) ) ) ) ) 
+                                                ( setting be ( symbol «garply-qux-bar» ) ) ) ) ) ) 
                                 ( statement 
                                     ( action 
                                         ( subject 

@@ -1,0 +1,25 @@
+
+precompilation:
+---------------
+
+administration  sophia surplus force on rvalue expression   1:   LEX: «Administration».
+
+administration  sophia surplus force on rvalue expression   3:   "«Manager»" is a person.
+administration  sophia surplus force on rvalue expression   4:   "«Secretary»" is a person.
+administration  sophia surplus force on rvalue expression   5:   "«Proposed New Secretary»" is a person.
+administration  sophia surplus force on rvalue expression   6:   "«Accepted New Secretary»" is a person.
+
+administration  sophia surplus force on rvalue expression   8:   The «Manager» appoints the «Secretary».
+
+
+administration  sophia surplus force on rvalue expression  11:   CLAUSE: «New Secretary».
+administration  sophia surplus force on rvalue expression  12:   The «Manager» may, if the «Accepted New Secretary» is the «Proposed New Secretary», appoint the «Secretary» as «Accepted New Secretary».
+
+administration  sophia surplus force on rvalue expression  14:   CLAUSE: «New Manager».
+administration  sophia surplus force on rvalue expression  15:   The «Manager» may appoint a new «Manager».
+
+administration  sophia surplus force on rvalue expression  17:   CLAUSE: «Propose Secretary».
+administration  sophia surplus force on rvalue expression  18:   The «Secretary» may appoint a «Proposed New Secretary».
+
+
+

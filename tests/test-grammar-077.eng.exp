@@ -254,9 +254,7 @@
                                 ( predicate 
                                     ( registration register ( symbol «corge» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( payment pay 
                                         ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand 
@@ -526,9 +524,7 @@
                                                 ( termination terminate 
                                                     ( this-contract «bar» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol «grault-baz» ) 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
@@ -653,13 +649,9 @@
                                             ( predicate 
                                                 ( certification certify ( symbol «grault-baz» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «grault-baz» ) ) ) 
+                                                ( setting be ( symbol «grault-baz» ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combinor ( combinand expiration ) ) ) 
@@ -886,9 +878,7 @@
                                         ( object reflexive ) 
                                         from-escrow ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
@@ -991,9 +981,7 @@
                                         preposition 
                                         ( object ( symbol «corge» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) 
                                 ( predicate 
                                     ( fixture fix ( symbol «corge» ) ) ) 
                                 ( predicate 
@@ -1191,9 +1179,7 @@
                                         preposition 
                                         ( object ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( certification certify ( symbol «corge» ) 
                                         ( contract 

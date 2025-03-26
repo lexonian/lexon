@@ -202,13 +202,9 @@
                             ( predicate 
                                 ( appointment appoint ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand expiration ) ) 
@@ -408,9 +404,7 @@
                                                                     ( time-unit hours ) ) 
                                                                 ( symbol ( type amount ) ) ) ) ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge» ) ) ) 
+                                    ( setting be ( symbol «corge» ) ) ) 
                                 ( predicate 
                                     ( sending send 
                                         ( expression ( combination ( combinor ( combinand 

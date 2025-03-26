@@ -93,9 +93,7 @@
                                             ( symbols ( symbol «baz» ) ) ) 
                                         ( predicates 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 

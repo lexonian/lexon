@@ -1,0 +1,136 @@
+/** Lexon-generated Sophia code
+ **
+ **	code:        Administration
+ **
+ **	file:        cover/administration--sophia-surplus-force-on-rvalue-expression.lex
+ **
+ **	compiler:    lexon 0.3 beta 3
+ **
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+ **
+ **	backend:     sophia 0.3.103 beta 3c
+ **
+ **	target:      sophia 8+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <secretary : option(address)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<manager>> ⟶   new_secretary()
+   • <<manager>> ⟶   new_manager(<manager : option(address)>)
+   • <<secretary>> ⟶   propose_secretary(<proposed_new_secretary : option(address)>)
+ */
+
+@compiler >=8
+
+include "Option.aes"
+
+/**
+ **
+ **	Main Administration contract system
+ **
+ **/
+
+/*
+ | 	LEX Administration.
+ | 
+ | 	"Manager" is a person.
+ | 	"Secretary" is a person.
+ | 	"Proposed New Secretary" is a person.
+ | 	"Accepted New Secretary" is a person.
+ | 
+ | 	The Manager appoints the Secretary.
+ */
+
+
+main contract Administration =
+    record state = {
+        
+            manager : option(address),
+            secretary : option(address),
+            proposed_new_secretary : option(address),
+            accepted_new_secretary : option(address)
+        }
+    entrypoint init(secretary : address) = {
+            manager = Some(Call.caller),
+            secretary = Some(secretary),
+            proposed_new_secretary = None,
+            accepted_new_secretary = None
+        }
+    
+
+    /* built-in caller assertion */
+
+    function permit(option_authorized : option(address), name : string) =
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
+
+
+    /* New Secretary clause */
+
+    /*
+     |  CLAUSE: New Secretary.
+     |  The Manager may, if the Accepted New Secretary is the Proposed New Secretary, appoint the Secretary as Accepted New Secretary.
+     */
+
+    stateful entrypoint new_secretary() =
+        permit(state.manager, "Manager")
+        if((Option.force_msg(state.accepted_new_secretary, "Accepted New Secretary not set") == Option.force_msg(state.proposed_new_secretary, "Proposed New Secretary not set")))
+            put(state{accepted_new_secretary = state.secretary})
+
+
+    /* New Manager clause */
+
+    /*
+     |  CLAUSE: New Manager.
+     |  The Manager may appoint a new Manager.
+     */
+
+    stateful entrypoint new_manager(manager : address) =
+        permit(state.manager, "Manager")
+        put(state{manager = Some(manager)})
+
+
+    /* Propose Secretary clause */
+
+    /*
+     |  CLAUSE: Propose Secretary.
+     |  The Secretary may appoint a Proposed New Secretary.
+     */
+
+    stateful entrypoint propose_secretary(proposed_new_secretary : address) =
+        permit(state.secretary, "Secretary")
+        put(state{proposed_new_secretary = Some(proposed_new_secretary)})
+
+/* end */

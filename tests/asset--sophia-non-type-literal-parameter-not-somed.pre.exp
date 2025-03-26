@@ -1,0 +1,26 @@
+
+precompilation:
+---------------
+
+asset  sophia non type literal parameter not somed   1:   LEX: «Asset».
+
+asset  sophia non type literal parameter not somed   3:   "«Id»" is a text.
+asset  sophia non type literal parameter not somed   4:   "«Creator»" is a person.
+asset  sophia non type literal parameter not somed   5:   "«Owner»" is a person.
+asset  sophia non type literal parameter not somed   6:   "«Someone»" is a person.
+
+asset  sophia non type literal parameter not somed   8:   The «Creator» fixes the «Id».
+asset  sophia non type literal parameter not somed   9:   The «Owner» is the «Creator».
+
+asset  sophia non type literal parameter not somed  11:   CLAUSE: «Transfer I».
+asset  sophia non type literal parameter not somed  12:   The «Owner» may assign a person as the new «Owner».
+
+asset  sophia non type literal parameter not somed  14:   CLAUSE: «Transfer II».
+asset  sophia non type literal parameter not somed  15:   The «Owner» may assign a new «Owner».
+
+asset  sophia non type literal parameter not somed  17:   CLAUSE: «Transfer III».
+asset  sophia non type literal parameter not somed  18:   The «Owner» may assign the «Creator» as the new «Owner».
+
+asset  sophia non type literal parameter not somed  20:   CLAUSE: «Transfer IV».
+asset  sophia non type literal parameter not somed  21:   The «Owner» may assign «Someone» as the new «Owner».
+

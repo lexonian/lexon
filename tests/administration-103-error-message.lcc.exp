@@ -1,0 +1,85 @@
+( document 
+    ( head 
+        ( lex «administration» ) 
+        ( comment "%SOLERR %SOPERR") ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «manager» ( type person ) ) 
+                ( definition «secretary» ( type person ) ) 
+                ( definition «proposed-new-secretary» ( type person ) ) 
+                ( definition «accepted-new-secretary» ( type person ) ) ) 
+            ( clauses 
+                ( clause «new-secretary» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «manager» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «secretary» ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «new-manager» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «manager» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «manager» ) ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «manager» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( appointment appoint ( symbol «secretary» ) ) ) ) ) ) ) ) ) 
+    ( covenants 
+        ( covenant «member» 
+            ( provisions 
+                ( definitions 
+                    ( definition «proposal» ( type text ) ) ) 
+                ( clauses 
+                    ( clause «notify» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «member» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( sending send 
+                                                    ( expression ( combination ( combinor ( combinand ( symbol «proposal» ) ) ) ) ) 
+                                                    preposition 
+                                                    ( object ( symbol «manager» ) ) ) ) ) 
+                                        permission ) ) ) ) ) 
+                    ( clause «acknowledge» 
+                        ( body 
+                            ( statements 
+                                ( statement 
+                                    ( action 
+                                        ( subject 
+                                            ( symbols ( symbol «secretary» ) ) ) 
+                                        ( predicates 
+                                            ( predicate 
+                                                ( notification notify 
+                                                    ( object ( symbol «member» ) ) 
+                                                    preposition 
+                                                    ( expression ( combination ( combinor ( combinand "Acknowledgement the Proposal") ) ) ) ) ) ) 
+                                        permission ) ) ) ) ) ) 
+                ( statements 
+                    ( statement 
+                        ( action 
+                            ( subject 
+                                ( symbols ( symbol «secretary» ) ) ) 
+                            ( predicates 
+                                ( predicate 
+                                    ( certification certify ( symbol «member» ) ) ) ) 
+                            permission ) ) ) ) ) ) )

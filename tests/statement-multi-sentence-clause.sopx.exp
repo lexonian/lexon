@@ -1,0 +1,418 @@
+/** Lexon-generated Sophia code
+ **
+ **	code:        UCC Financing Statement
+ **
+ **	file:        cover/statement-multi-sentence-clause.lex
+ **
+ **	code tagged: 0.2.12
+ **
+ **	compiler:    lexon 0.3 beta 2
+ **
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+ **
+ **	backend:     sophia 0.3.102 beta 2
+ **
+ **	target:      sophia 8+
+ **
+ **	options:     --sophia  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Aeternity blockchain or testchain. An easy way to
+   get started is to copy-paste this code into  https://studio.aepps.com.  Replace the
+   <parameters> with literal values to interact with the contract via terminal.
+
+   LIKE ALL SMART CONTRACTS THIS CODE MUST BE AUDITED BEFORE USING IT IN PRODUCTION.
+
+   Note  that the instructions below  reflect your Lexon code,  as well as the options
+   used during compilation of the code: different clauses and options will result from
+   different input code.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used  during compilation – a list of options is available with
+   lexon -h.  The functions are given in the order of appearance, in the Lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an account for it for
+   the first time. This will require for the same account to be used for the same role
+   after this point. Else, the call will revert, i.e. cancelled and not go through.
+
+   Some clauses of the original Lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment. If you are using Aestudio, the
+   fields under the deploy button are where your values for them go before deploying.
+
+   <filing_office : option(address)>, <debtor : option(address)>, <secured_party : option(address)>, <collateral : option(string)>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<filing_office>> ⟶   certify(<file_number : option(string)>)
+   • <<filing_office>> ⟶   set_file_date()
+   • <<filing_office>> ⟶   set_lapse(<lapse_date : option(int)>)
+   • <<filing_office>> ⟶   set_continuation_start(<continuation_window_start : option(int)>)
+   • <<secured_party>> ⟶   pay_fee()
+   • <<filing_office>> ⟶   notice(<notification_statement : option(string)>)
+   • <<filing_office>> ⟶   _notify()
+   • <<debtor>> ⟶   pay_escrow_in()
+   • <<secured_party>> ⟶   fail_to_pay()
+   • <<filing_office>> ⟶   take_possession()
+   • <<secured_party>> ⟶   file_continuation(<continuation_statement : option(bool)>)
+   • <<filing_office>> ⟶   set_continuation_lapse(<continuation_statement_date : option(int)>)
+   • <<secured_party>> ⟶   file_termination(<termination_statement : option(bool)>)
+   • <<filing_office>> ⟶   release_escrow()
+   • <<filing_office>> ⟶   release_reminder_fee()
+   • anyone ⟶   termination_period()
+   • <<filing_office>> ⟶   terminate_and_clear()
+ */
+
+@compiler >=8
+
+include "Option.aes"
+
+/**
+ **
+ **	Main UCC Financing Statement contract system
+ **
+ **/
+
+/*
+ | 	LEX UCC Financing Statement.
+ | 
+ | 	LEXON: 0.2.12
+ | 
+ | 	"Financing Statement" is this contract. 
+ | 	"File Number" is data.
+ | 	"Initial Statement Date" is a time.
+ | 	"Filer" is a person. 
+ | 	"Debtor" is a person.
+ | 	"Secured Party" is a person.
+ | 	"Filing Office" is a person.
+ | 	"Collateral" is data.
+ | 	"Digital Asset Collateral" is an amount.
+ | 	"Reminder Fee" is an amount.
+ | 	"Continuation Window Start" is a time.
+ | 	"Continuation Statement Date" is a time.
+ | 	"Continuation Statement Filing Number" is data.
+ | 	"Lapse Date" is a time.
+ | 	"Default" is a binary.
+ | 	"Continuation Statement" is a binary.
+ | 	"Termination Statement" is a binary.
+ | 	"Termination Statement Time" is a time.
+ | 	"Notification Statement" is a text. 
+ | 
+ | 	The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral.
+ */
+
+
+main contract UCCFinancingStatement =
+    record state = {
+        
+            file_number : option(string),
+            initial_statement_date : option(int),
+            filer : option(address),
+            debtor : option(address),
+            secured_party : option(address),
+            filing_office : option(address),
+            collateral : option(string),
+            digital_asset_collateral : option(int),
+            reminder_fee : option(int),
+            continuation_window_start : option(int),
+            continuation_statement_date : option(int),
+            continuation_statement_filing_number : option(string),
+            lapse_date : option(int),
+            _default : option(bool),
+            continuation_statement : option(bool),
+            termination_statement : option(bool),
+            termination_statement_time : option(int),
+            notification_statement : option(string),
+            terminated : bool
+        }
+    datatype event = Message(indexed address, indexed address, string)
+
+    entrypoint init(filing_office : address, debtor : address, secured_party : address, collateral : string) = {
+            file_number = None,
+            initial_statement_date = None,
+            filer = Some(Call.caller),
+            debtor = Some(debtor),
+            secured_party = Some(secured_party),
+            filing_office = Some(filing_office),
+            collateral = Some(collateral),
+            digital_asset_collateral = None,
+            reminder_fee = None,
+            continuation_window_start = None,
+            continuation_statement_date = None,
+            continuation_statement_filing_number = None,
+            lapse_date = None,
+            _default = None,
+            continuation_statement = None,
+            termination_statement = None,
+            termination_statement_time = None,
+            notification_statement = None,
+            terminated = false
+        }
+    
+
+    /* built-in caller assertion */
+
+    function permit(option_authorized : option(address), name : string) =
+        switch(option_authorized)
+            None => abort(StringInternal.concat(name, " not set"))
+            Some(authorized) => if(Call.caller != authorized)
+                abort(StringInternal.concat(name, " only"))
+
+    /* built-in safe transfer */
+
+    stateful function transfer(to : address, amount : int) =
+        Chain.spend(to, amount)
+
+    /* built-in send message */
+
+    function notify(to : address, message : string) =
+        Chain.event(Message(Call.caller, to, message))
+
+
+    /* built-in termination of the contract system */
+
+    stateful function termination() =
+        put(state{terminated = true})
+
+
+    function check_termination() =
+        require(!state.terminated, "contract system terminated before")
+
+
+    /* Certify clause */
+
+    /*
+     |  Clause: Certify.
+     |  The Filing Office may certify the File Number.
+     */
+
+    stateful entrypoint certify(file_number : string) =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        put(state{file_number = Some(file_number)})
+
+
+    /* Set File Date clause */
+
+    /*
+     |  Clause: Set File Date.
+     |  The Filing Office may fix the Initial Statement Date as the current time.
+     */
+
+    stateful entrypoint set_file_date() =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        put(state{initial_statement_date = Some(Chain.timestamp)})
+
+
+    /* Set Lapse clause */
+
+    /*
+     |  Clause: Set Lapse.
+     |  The Filing Office may fix the Lapse Date.
+     */
+
+    stateful entrypoint set_lapse(lapse_date : int) =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        put(state{lapse_date = Some(lapse_date)})
+
+
+    /* Set Continuation Start clause */
+
+    /*
+     |  Clause: Set Continuation Start.
+     |  The Filing Office may fix the Continuation Window Start.
+     */
+
+    stateful entrypoint set_continuation_start(continuation_window_start : int) =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        put(state{continuation_window_start = Some(continuation_window_start)})
+
+
+    /* Pay Fee clause */
+
+    /*
+     |  Clause: Pay Fee.
+     |  The Secured Party may pay a Reminder Fee into escrow.
+     */
+
+    stateful payable entrypoint pay_fee() =
+        check_termination()
+        permit(state.secured_party, "Secured Party")
+        put(state{reminder_fee = Some(Option.default(0, state.reminder_fee) + Call.value)})
+
+
+    /* Notice clause */
+
+    /*
+     |  Clause: Notice.
+     |  The Filing Office may fix the Notification Statement.
+     */
+
+    stateful entrypoint notice(notification_statement : string) =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        put(state{notification_statement = Some(notification_statement)})
+
+
+    /* Notify clause */
+
+    /*
+     |  Clause: Notify.
+     |  The Filing Office may, if the Continuation Window Start has passed, notify the Secured Party of the Notification Statement.
+     |  The Filing Office may, if the Continuation Window Start has passed, notify the Secured Party.
+     |  The Filing Office notifies the Secured Party of the Notification Statement.
+     */
+
+    stateful entrypoint _notify() =
+        check_termination()
+        require(Some(Call.caller) == state.filing_office, "not permitted")
+        if(Some(Call.caller) == state.filing_office)
+            if(Option.force_msg(state.continuation_window_start, "Continuation Window Start") =< Chain.timestamp)
+                notify(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.notification_statement, "Notification Statement"))
+        if(Some(Call.caller) == state.filing_office)
+            if(Option.force_msg(state.continuation_window_start, "Continuation Window Start") =< Chain.timestamp)
+                notify(Option.force_msg(state.secured_party, "Secured Party"), "NOTIFICATION")
+        if(Some(Call.caller) == state.filing_office)
+            notify(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.notification_statement, "Notification Statement"))
+
+
+    /* Pay Escrow In clause */
+
+    /*
+     |  Clause: Pay Escrow In.
+     |  The Debtor may pay the Digital Asset Collateral into escrow.
+     */
+
+    stateful payable entrypoint pay_escrow_in() =
+        check_termination()
+        permit(state.debtor, "Debtor")
+        put(state{digital_asset_collateral = Some(Option.default(0, state.digital_asset_collateral) + Call.value)})
+
+
+    /* Fail to Pay clause */
+
+    /*
+     |  Clause: Fail to Pay.
+     |  The Secured Party may declare Default.
+     */
+
+    stateful entrypoint fail_to_pay() =
+        check_termination()
+        permit(state.secured_party, "Secured Party")
+        put(state{_default = Some(true)})
+
+
+    /* Take Possession clause */
+
+    /*
+     |  Clause: Take Possession.
+     |  The Filing Office may, if Default is declared, pay the Digital Asset Collateral to the Secured Party.
+     */
+
+    stateful entrypoint take_possession() =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        if(state._default == Some(true))
+            transfer(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.digital_asset_collateral, "Digital Asset Collateral"))
+
+
+    /* File Continuation clause */
+
+    /*
+     |  Clause: File Continuation.
+     |  The Secured Party may file the Continuation Statement.
+     */
+
+    stateful entrypoint file_continuation(continuation_statement : bool) =
+        check_termination()
+        permit(state.secured_party, "Secured Party")
+        put(state{continuation_statement = Some(continuation_statement)})
+
+
+    /* Set Continuation Lapse clause */
+
+    /*
+     |  Clause: Set Continuation Lapse.
+     |  The Filing Office may, if the Continuation Statement is filed, fix the Continuation Statement Date.
+     */
+
+    stateful entrypoint set_continuation_lapse(continuation_statement_date : int) =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        if(state.continuation_statement == Some(true))
+            put(state{continuation_statement_date = Some(continuation_statement_date)})
+
+
+    /* File Termination clause */
+
+    /*
+     |  Clause: File Termination.
+     |  The Secured Party may file a Termination Statement, and certify the Termination Statement Time as the then current time.
+     */
+
+    stateful entrypoint file_termination(termination_statement : bool) =
+        check_termination()
+        permit(state.secured_party, "Secured Party")
+        put(state{termination_statement = Some(termination_statement)})
+        put(state{termination_statement_time = Some(Chain.timestamp)})
+
+
+    /* Release Escrow clause */
+
+    /*
+     |  Clause: Release Escrow.
+     |  The Filing Office may, if the Termination Statement is filed, return the Digital Asset Collateral to the Debtor.
+     */
+
+    stateful entrypoint release_escrow() =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        if(state.termination_statement == Some(true))
+            transfer(Option.force_msg(state.debtor, "Debtor"), Option.force_msg(state.digital_asset_collateral, "Digital Asset Collateral"))
+
+
+    /* Release Reminder Fee clause */
+
+    /*
+     |  Clause: Release Reminder Fee.
+     |  The Filing Office may, if the Termination Statement is filed, return the Reminder Fee to the Secured Party.
+     */
+
+    stateful entrypoint release_reminder_fee() =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        if(state.termination_statement == Some(true))
+            transfer(Option.force_msg(state.secured_party, "Secured Party"), Option.force_msg(state.reminder_fee, "Reminder Fee"))
+
+
+    /* Termination Period clause */
+
+    /*
+     |  Clause: Termination Period.
+     |  "Termination Period" is defined as 365 days after the Termination Statement Time.
+     */
+
+    entrypoint termination_period() =
+        Some((Option.force_msg(state.termination_statement_time, "Termination Statement Time not set") + (365 * 86400000)))
+
+
+    /* Terminate and Clear clause */
+
+    /*
+     |  Clause: Terminate and Clear.
+     |  The Filing Office may, if the Termination Period has passed, terminate this contract.
+     */
+
+    stateful entrypoint terminate_and_clear() =
+        check_termination()
+        permit(state.filing_office, "Filing Office")
+        if(Option.force_msg(termination_period(), "Termination Period") =< Chain.timestamp)
+            termination()
+
+/* end */

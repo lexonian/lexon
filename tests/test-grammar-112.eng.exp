@@ -59,9 +59,7 @@
                                     ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) 
                                                     expiration ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «garply-plugh-bar» ) ) ) 
+                                ( setting be ( symbol «garply-plugh-bar» ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type amount ) ) ) ) 
                             ( predicate 

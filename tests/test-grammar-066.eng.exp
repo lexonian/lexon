@@ -20,9 +20,7 @@
                                     ( contract 
                                         ( this-contract «bar» ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type data ) ) ) ) 
                             ( predicate 
@@ -159,17 +157,11 @@
                                                             ( symbol ( type data ) ) ) ) ) 
                                                 ( combinator neither ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type data ) ) ) ) 
+                                ( setting be ( symbol ( type data ) ) ) ) 
                             ( predicate 
                                 ( grantment grant ( symbol ( type text ) ) ) ) 
                             ( predicate 
@@ -512,17 +504,13 @@
                                         ( object reflexive ) 
                                         escrow ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol «corge-thud» ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( certification certify ( symbol «corge-thud» ) 
                                         ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinand 
@@ -574,9 +562,7 @@
                                                     ( combinand expiration ) 
                                                     ( combinator or- ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol «corge-thud» ) ) ) 
                                 ( predicate 
@@ -584,9 +570,7 @@
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «corge-thud» ) ) ) 
+                                    ( setting be ( symbol «corge-thud» ) ) ) 
                                 ( predicate 
                                     ( payment pay preposition 
                                         ( object ) 

@@ -563,9 +563,7 @@
                                                                         ( contract 
                                                                             ( this-contract «bar» ) ) ) ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type text ) ) 
                                                     ( expression ( combination ( combination ( combination ( combination ( combinor ( combinand 
@@ -650,9 +648,7 @@
                                                 ( declaration declare ( symbol «fred» ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object reflexive ) 
@@ -721,9 +717,7 @@
                                                                 ( combinator and ) ) 
                                                             ( combinator nor ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «fred» ) ) ) 
+                                                ( setting be ( symbol «fred» ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol «fred» ) ) ) ) 
                                         permission 

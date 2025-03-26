@@ -1,0 +1,73 @@
+
+precompilation:
+---------------
+
+evaluation 101 text literal before comma and with period   1:   LEX: «Evaluation License System».
+evaluation 101 text literal before comma and with period   2:   LEXON: ‹0.2.1›.
+evaluation 101 text literal before comma and with period   3:   AUTHORS: ‹FLORIAN IDELBERGER, HENNING DIEDRICH›.
+evaluation 101 text literal before comma and with period   4:   PREAMBLE: ‹This is a licensing contract for a software evaluation.›.
+
+evaluation 101 text literal before comma and with period   6:   TERMS: 
+
+evaluation 101 text literal before comma and with period   8:   "«Licensor»" is a person.
+evaluation 101 text literal before comma and with period   9:   "«Arbiter»" is a person.
+evaluation 101 text literal before comma and with period  10:   "«Licensing Fee»" is an amount.
+evaluation 101 text literal before comma and with period  11:   "«Breach Fee»" is an amount.
+
+evaluation 101 text literal before comma and with period  13:   The «Licensor» appoints the «Arbiter»,
+evaluation 101 text literal before comma and with period  14:   fixes the «Licensing Fee»,
+evaluation 101 text literal before comma and with period  15:   and notifies the «Arbiter» of the "‹Commencement of Operations›",
+evaluation 101 text literal before comma and with period  16:   and fixes the «Breach Fee».
+
+evaluation 101 text literal before comma and with period  18:   CLAUSE: «Test».
+evaluation 101 text literal before comma and with period  19:   THe «Licensor» may terminate this contract.
+
+evaluation 101 text literal before comma and with period  21:   CLAUSE: «Foo».
+evaluation 101 text literal before comma and with period  22:   The «Licensor» may fix the «Breach Fee», and notify the «Arbiter» of the "‹Changed Fee.›"
+
+evaluation 101 text literal before comma and with period  24:   TERMS PER «License»:
+
+evaluation 101 text literal before comma and with period  26:   "«Description of Goods»" is a text.
+evaluation 101 text literal before comma and with period  27:   "«Licensee»" is a person.
+evaluation 101 text literal before comma and with period  28:   "«Paid»" is a binary.
+evaluation 101 text literal before comma and with period  29:   "«Commissioned»" is a binary.
+evaluation 101 text literal before comma and with period  30:   "«Comment Text»" is a text.
+evaluation 101 text literal before comma and with period  31:   "«Published»" is a binary.
+evaluation 101 text literal before comma and with period  32:   "«Permission to Comment»" is a binary.
+evaluation 101 text literal before comma and with period  33:   "«Notice Time»" is a time.
+evaluation 101 text literal before comma and with period  34:   "«License»" is this contract.
+
+evaluation 101 text literal before comma and with period  36:   The «Licensor» appoints the «Licensee», and fixes the «Description of Goods».
+
+evaluation 101 text literal before comma and with period  38:   CLAUSE: «Pay».
+evaluation 101 text literal before comma and with period  39:   The «Licensee» pays the «Licensing Fee» to the «Licensor»,
+evaluation 101 text literal before comma and with period  40:   and pays the «Breach Fee» into escrow.
+evaluation 101 text literal before comma and with period  41:   This «License» is therefore «Paid».
+
+evaluation 101 text literal before comma and with period  43:   CLAUSE: «Commission».
+evaluation 101 text literal before comma and with period  44:   The «Licensor» may certify this «License» as «Commissioned».
+
+evaluation 101 text literal before comma and with period  46:   CLAUSE: «Comment».
+evaluation 101 text literal before comma and with period  47:   The «Licensee» may register a «Comment Text».
+
+evaluation 101 text literal before comma and with period  49:   CLAUSE: «Publication».
+evaluation 101 text literal before comma and with period  50:   The «Licensee» may certify this «License» as «Published».
+
+evaluation 101 text literal before comma and with period  52:   CLAUSE: «Grant Permission to Comment».
+evaluation 101 text literal before comma and with period  53:   The «Licensee» may grant the «Permission to Comment».
+
+evaluation 101 text literal before comma and with period  55:   CLAUSE: «Declare Breach».
+evaluation 101 text literal before comma and with period  56:   The «Arbiter» may, if this «License» is «Factually Breached»:
+evaluation 101 text literal before comma and with period  57:   pay the «Breach Fee» to the «Licensor».
+
+evaluation 101 text literal before comma and with period  59:   CLAUSE: «Factually Breached».
+evaluation 101 text literal before comma and with period  60:   "«Factually Breached»" is defined as:
+evaluation 101 text literal before comma and with period  61:   this «License» is «Commissioned» and the «Comment Text» is not fixed,
+evaluation 101 text literal before comma and with period  62:   or this «License» is «Published» and there is no «Permission to Comment» and the «Notice Time» lies at least 24 hours in the past.
+
+evaluation 101 text literal before comma and with period  64:   CLAUSE: «Notice».
+evaluation 101 text literal before comma and with period  65:   The «Licensor» or the «Arbiter» may fix the «Notice Time» as the respective current time.
+
+evaluation 101 text literal before comma and with period  67:   CLAUSE: «Noticed».
+evaluation 101 text literal before comma and with period  68:   "«Noticed»" is defined as a «Notice Time» being fixed.
+

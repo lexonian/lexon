@@ -274,13 +274,9 @@
                                                     ( point-in-time current-time ) ) 
                                                 ( combinator nor ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( appointment appoint ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -306,9 +302,7 @@
                                     preposition 
                                     ( object ( symbol ( type person ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
                                 ( declaration declare ( symbol ( type data ) ) 
                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinand ( symbol ( type amount ) ) 
@@ -459,9 +453,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type person ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) ) ) ) ) ) ) ) ) 
     ( covenants 

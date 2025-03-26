@@ -1,0 +1,59 @@
+( document 
+    ( head 
+        ( lex «administration» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «manager» ( type person ) ) 
+                ( definition «secretary» ( type person ) ) 
+                ( definition «proposed-new-secretary» ( type person ) ) 
+                ( definition «accepted-new-secretary» ( type person ) ) ) 
+            ( clauses 
+                ( clause «new-secretary» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «manager» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «accepted-new-secretary» ) 
+                                                ( expression ( combination ( combinor ( combinand ( symbol «secretary» ) ) ) ) ) ) ) ) 
+                                    permission 
+                                    ( condition if 
+                                        ( expression ( combination ( combinor ( combinand 
+                                                        ( scalar-comparison 
+                                                            ( scalar-expression ( symbol «accepted-new-secretary» ) ) 
+                                                            ( comparison-operator equal ) 
+                                                            ( scalar-expression ( symbol «proposed-new-secretary» ) ) ) ) ) ) ) ) ) ) ) ) ) 
+                ( clause «new-manager» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «manager» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «manager» new ) ) ) ) 
+                                    permission ) ) ) ) ) 
+                ( clause «propose-secretary» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «secretary» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «proposed-new-secretary» ) ) ) ) 
+                                    permission ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «manager» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( appointment appoint ( symbol «secretary» ) ) ) ) ) ) ) ) ) )

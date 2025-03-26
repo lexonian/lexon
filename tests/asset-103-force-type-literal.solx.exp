@@ -1,0 +1,100 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
+
+/** Lexon-generated Solidity code
+ **
+ **	code:        Asset
+ **
+ **	file:        cover/asset-103-force-type-literal.lex
+ **
+ **	compiler:    lexon 0.3 beta 3
+ **
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+ **
+ **	backend:     solidity 0.3.103 beta 3c
+ **
+ **	target:      solidity 0.8.17+
+ **
+ **	options:     --solidity  --all-auxiliaries 
+ **
+
+
+   INSTRUCTIONS FOR USE:
+
+   Deploy this smart contract to the Ethereum blockchain or Goerli testchain.  Replace
+   the <parameters> with literal values to interact with the contract via terminal.
+
+   Note that the instructions below reflect your lexon code, as well as the parameters
+   used during compilation of the code: different functions and parameters will result
+   from different input.  Some functions are 'built-in' but only appear when needed as
+   per compiler options used during compilation  –  a list of which, is available with
+   lexon -h.  The functions are given in the order of appearance, in the lexon source.
+
+   The required caller is noted in double angle brackets << >>.  Some functions can be
+   called by anyone.  Note that roles are being defined by using an address for it for
+   the first time. This will require for the same address to be used for the same role
+   after this point. Else, the call will revert.
+
+   Some clauses of the original lexon source text do not appear in the comments below.
+   Namely, those without permission phrase, wherefore they are regarded as internal.
+
+   These are the constructor parameters for deployment:
+
+   <id : string>
+
+   These are the state progress functions that allow to interact with the contract:
+
+   • <<owner>> ⟶   _transfer(<person : address payable>)
+ */
+
+/**
+ **
+ **	Main Asset contract system
+ **
+ **/
+
+/*
+ | 	LEX Asset.
+ | 
+ | 	"Id" is a text.
+ | 	"Creator" is a person.
+ | 	"Owner" is a person.
+ | 
+ | 	The Creator fixes the Id.
+ | 	The Owner is the Creator.
+ */
+
+contract Asset {
+
+    string public id;
+    address payable public creator;
+    address payable public owner;
+
+
+    constructor(string memory _id) {
+        creator = payable(msg.sender);
+        id = _id;
+        owner = creator;
+    }
+
+    /* built-in caller assertion */
+
+    function permit(address payable _authorized) internal view {
+        require(msg.sender == _authorized, "not permitted");
+    }
+
+
+    /* Transfer clause */
+
+    /*
+     |  CLAUSE: Transfer.
+     |  The Owner may appoint a person as the new Owner.
+     */
+
+    function _transfer(address payable _person) public {
+        permit(owner);
+        owner = _person;
+    }
+}
+
+/* end */

@@ -4,11 +4,11 @@
  **
  **	file:        cover/example-0.3-burn.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.8.3 alpha 98 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
- **	backend:     sophia 0.3.99a U
+ **	backend:     sophia 0.3.102 beta 2
  **
  **	target:      sophia 8+
  **
@@ -75,7 +75,6 @@ payable main contract Burn =
             payer = Some(Call.caller),
             amount = Some(Call.value)
         }
-        
     
 
 /* end */

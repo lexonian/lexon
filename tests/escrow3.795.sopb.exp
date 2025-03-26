@@ -15,7 +15,6 @@ payable main contract Escrow =
             agent = agent,
             amount = Call.value
         }
-        
     
 
 

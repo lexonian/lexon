@@ -7,7 +7,7 @@ PREAMBLE:  Aenean commodo.
 "Qux Waldo" is this Bar.
 
 CLAUSE: Corge.
-The "Corge" be defined: Has passed.
+The "Corge" be: Has passed.
 
 PER Corge:.
 

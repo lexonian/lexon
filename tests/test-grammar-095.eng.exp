@@ -179,13 +179,9 @@
                             ( predicate 
                                 ( certification certify ( symbol ( type binary ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type data ) ) ) ) 
+                                ( setting be ( symbol ( type data ) ) ) ) 
                             ( predicate 
                                 ( payment pay 
                                     ( expression ( combination ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinand 

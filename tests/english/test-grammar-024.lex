@@ -5,7 +5,7 @@ PREAMBLE:  Aenean commodo.
 TERMS:
 "Bar" is data.
 The time, the data May, given that Bar nor a Bar neither Bar, the Bar has passed, amount being equal to fixed nor an text not fixed or a Bar is equal 123, has passed: Terminate this Bar, and if so afterwards terminate this Bar, and also declares a amount to be Bar not fixed, now neither all contracts is amount, Bar, if so certifies all contracts an person, and also certifies Bar, and afterwards terminates all contracts.
-This Bar Be as Therefore the data.
+This Bar Be Therefore the data.
 
 PER Xyzzy Qux:.
 

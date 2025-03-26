@@ -379,9 +379,7 @@
                                                     ( combinand expiration ) 
                                                     ( combinator nor ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type data ) ) ) ) 
+                                    ( setting be ( symbol ( type data ) ) ) ) 
                                 ( predicate 
                                     ( appointment appoint ( symbol ( type person ) ) ) ) 
                                 ( predicate 
@@ -426,9 +424,7 @@
                                         preposition 
                                         ( object reflexive ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «qux-plugh» ) ) ) ) 
+                                    ( setting be ( symbol «qux-plugh» ) ) ) ) 
                             permission 
                             ( condition if 
                                 ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 

@@ -58,9 +58,7 @@
                                     catena ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( payment pay 
                                         ( expression ( combination ( combinor ( combinand expiration ) ) ) ) 
@@ -149,9 +147,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «baz-garply» ) ) ) 
+                                    ( setting be ( symbol «baz-garply» ) ) ) 
                                 ( predicate 
                                     ( payment pay 
                                         ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand 

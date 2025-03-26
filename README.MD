@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 beta 2, grammar 0.2.20 / subset 0.3.10 beta 2 - English / Reyes
+	0.3 beta 3, grammar 0.2.20 / subset 0.3.11 beta 3 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**

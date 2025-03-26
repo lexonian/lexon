@@ -16,9 +16,7 @@
                                 catena ) ) 
                         ( predicates 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol ( type data ) ) ) ) 
                             ( predicate 

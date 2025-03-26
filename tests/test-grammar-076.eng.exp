@@ -144,9 +144,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «qux-baz» ) ) ) 
+                                    ( setting be ( symbol «qux-baz» ) ) ) 
                                 ( predicate 
                                     ( payment pay preposition 
                                         ( object ) 
@@ -158,9 +156,7 @@
                                 ( predicate 
                                     ( termination terminate all-contracts ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type person ) ) ) ) 
+                                    ( setting be ( symbol ( type person ) ) ) ) 
                                 ( predicate 
                                     ( termination terminate 
                                         ( this-contract «bar» ) ) ) 

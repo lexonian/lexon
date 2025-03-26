@@ -281,9 +281,7 @@
                                         ( contract 
                                             ( this-contract «bar» ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol «xyzzy» ) ) ) 
+                                    ( setting be ( symbol «xyzzy» ) ) ) 
                                 ( predicate 
                                     ( registration register ( symbol ( type data ) ) ) ) 
                                 ( predicate 
@@ -401,9 +399,7 @@
                                                     ( combinator neither ) ) 
                                                 ( combinator nor ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type binary ) ) ) ) 
+                                    ( setting be ( symbol ( type binary ) ) ) ) 
                                 ( predicate 
                                     ( notification notify 
                                         ( object ( symbol ( type text ) ) ) 
@@ -891,13 +887,9 @@
                                         ( object reflexive ) 
                                         escrow ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type time ) ) ) ) 
+                                    ( setting be ( symbol ( type time ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type amount ) ) ) ) 
+                                    ( setting be ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
                                     ( filing file ( symbol «xyzzy» ) 
                                         ( expression ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type data ) ) 

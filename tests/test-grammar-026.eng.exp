@@ -26,13 +26,9 @@
                                                         ( symbol ( type amount ) ) 
                                                         ( contract all-contracts ) ) ) ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combination ( combination ( combinor ( combinor ( combinor ( combinor ( combinand expiration ) ) 
@@ -74,9 +70,7 @@
                                 ( termination terminate 
                                     ( this-contract «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( sending send 
                                     ( expression ( combination ( combination ( combinor ( combinor ( combinor ( combinand ( symbol ( type data ) ) ) ) 

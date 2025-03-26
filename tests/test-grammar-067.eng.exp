@@ -143,9 +143,7 @@
                             ( predicate 
                                 ( certification certify ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
                                 ( appointment appoint ( symbol «bar» ) ) ) 
                             ( predicate 
@@ -300,9 +298,7 @@
                                                     expiration ) ) 
                                             ( combinator nor ) ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( filing file ( symbol ( type binary ) ) 
                                     ( contract all-contracts ) ) ) 

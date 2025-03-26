@@ -180,9 +180,7 @@
                                                             ( combinor ( combinand expiration ) ) 
                                                             ( combinator nor ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type time ) ) ) ) 
+                                                ( setting be ( symbol ( type time ) ) ) ) 
                                             ( predicate 
                                                 ( registration register ( symbol «baz» ) 
                                                     ( expression ( combination ( combination ( combinor ( combinand 

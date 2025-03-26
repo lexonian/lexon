@@ -143,9 +143,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combinor ( combinor ( combinand 
@@ -397,9 +395,7 @@
                                                     preposition 
                                                     ( object ( symbol ( type time ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol ( type binary ) ) ) ) 
                                             ( predicate 
@@ -551,9 +547,7 @@
                                                                 ( combinator neither ) ) 
                                                             ( combinator nor ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol ( type data ) ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinand ( symbol «baz» ) ) ) 
@@ -654,9 +648,7 @@
                                                                         equal fixed ) ) 
                                                                 ( combinator neither ) ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
@@ -730,9 +722,7 @@
                                             ( predicate 
                                                 ( grantment grant ( symbol ( type person ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type text ) ) ) ) 
+                                                ( setting be ( symbol ( type text ) ) ) ) 
                                             ( predicate 
                                                 ( declaration declare ( symbol ( type text ) ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinor ( combinand 
@@ -787,9 +777,7 @@
                                             ( predicate 
                                                 ( certification certify ( symbol ( type time ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( sending send 
                                                     ( expression ( combination ( combination ( combination ( combination ( combination ( combinor ( combinand 
@@ -867,9 +855,7 @@
                                                                         ( symbol «baz» ) ) ) ) 
                                                             ( combinator nor ) ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type person ) ) ) ) 
+                                                ( setting be ( symbol ( type person ) ) ) ) 
                                             ( predicate 
                                                 ( fixture fix ( symbol «baz» ) 
                                                     ( contract all-contracts ) ) ) 
@@ -1055,9 +1041,7 @@
                                                 ( filing file ( symbol ( type amount ) ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «baz» ) ) ) 
+                                                ( setting be ( symbol «baz» ) ) ) 
                                             ( predicate 
                                                 ( filing file ( symbol ( type person ) ) 
                                                     ( expression ( combination ( combinor ( combinor ( combinand 

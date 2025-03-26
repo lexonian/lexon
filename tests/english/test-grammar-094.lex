@@ -16,14 +16,14 @@ Be Then therefore Corge.
 A time May, provided amount, nor 123 is at the least 123 neither is past, then, terminate all contracts, and if so afterwards grants the amount, and if so file this Bar a Corge, and if so sends this Bar be no person, Corge be not fixed, and 123 milliseconds after data and the binary years in the past or all contracts be no a text nor text past nor Corge months past, this Bar is not a text, and the Corge or all contracts is Corge, and has passed, has passed to an person.
 
 CLAUSE: Grault Grault.
-A "Grault Grault" is defined: Binary Has passed Nor 123 milliseconds In the past Neither A Grault Grault Is past Or 123 seconds In the past person And Data Past Or Has passed.
+A "Grault Grault" is: Binary Has passed Nor 123 milliseconds In the past Neither A Grault Grault Is past Or 123 seconds In the past person And Data Past Or Has passed.
 
 PER Grault Grault:.
 
 "Grault Grault" is binary.
 "Grault Grault" is binary.
-Be as Then therefore Grault Grault.
-Is as A Grault Grault.
-This Bar Be as Then an amount.
+Be Then therefore Grault Grault.
+Is A Grault Grault.
+This Bar Be Then an amount.
 Amount May, if a amount has passed or has passed, neither a Grault Grault was signed off, declares this Bar the Grault Grault.
-Be as Therefore amount.
+Be Therefore amount.

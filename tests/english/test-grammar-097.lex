@@ -5,11 +5,11 @@ PREAMBLE:  Aenean commodo.
 TERMS:
 An "Bar" is this Bar.
 This Bar Is Therefore an Bar.
-Is defined as Then a binary.
+Is Then a binary.
 
 TERMS PER Garply:
 "Garply" is time.
-This Bar Be as Therefore time.
+This Bar Be Therefore time.
 
 TERMS PER Garply:.
 

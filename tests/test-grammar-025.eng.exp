@@ -32,9 +32,7 @@
                             ( predicate 
                                 ( declaration declare ( symbol ( type amount ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type binary ) ) ) ) 
+                                ( setting be ( symbol ( type binary ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) ) ) 
                             ( predicate 

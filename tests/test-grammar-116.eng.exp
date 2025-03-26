@@ -341,9 +341,7 @@
                                         ( expression ( combination ( combinor ( combinand 
                                                         ( point-in-time current-time ) ) ) ) ) ) ) 
                                 ( predicate 
-                                    ( setting 
-                                        ( illocutor be ) 
-                                        ( symbol ( type amount ) ) ) ) 
+                                    ( setting be ( symbol ( type amount ) ) ) ) 
                                 ( predicate 
                                     ( grantment grant ( symbol ( type binary ) ) ) ) 
                                 ( predicate 

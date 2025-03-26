@@ -4,7 +4,7 @@ PREAMBLE:  Aenean commodo.
 
 TERMS:
 A "Bar" is person.
-This Bar Be defined as Then a Bar.
+This Bar Be Then a Bar.
 
 TERMS PER Garply:.
 

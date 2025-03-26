@@ -285,9 +285,7 @@
                                             ( predicate 
                                                 ( registration register ( symbol «garply-grault» ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «garply-grault» ) ) ) 
+                                                ( setting be ( symbol «garply-grault» ) ) ) 
                                             ( predicate 
                                                 ( payment pay 
                                                     ( expression ( combination ( combinor ( combinand 

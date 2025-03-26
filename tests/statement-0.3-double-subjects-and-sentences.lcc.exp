@@ -134,9 +134,18 @@
                             ( statement 
                                 ( action 
                                     ( subject 
+                                        ( symbols ( symbol «filer» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( appointment appoint ( symbol «filing-office» ) 
+                                                ( expression ( combination ( combinor ( combinand reflexive ) ) ) ) ) ) ) 
+                                    permission ) ) 
+                            ( statement 
+                                ( action 
+                                    ( subject 
                                         ( symbols 
                                             ( symbols ( symbol «filer» ) ) 
-                                            ( symbol «filer» ) 
+                                            ( symbol «debtor» ) 
                                             catena ) ) 
                                     ( predicates 
                                         ( predicate 
@@ -146,7 +155,10 @@
                             ( statement 
                                 ( action 
                                     ( subject 
-                                        ( symbols ( symbol «filer» ) ) ) 
+                                        ( symbols 
+                                            ( symbols ( symbol «filer» ) ) 
+                                            ( symbol «filer» ) 
+                                            catena ) ) 
                                     ( predicates 
                                         ( predicate 
                                             ( certification certify ( symbol «file-number» ) ) ) ) 

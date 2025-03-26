@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.102 beta 2"
+#define backend_version "sophia 0.3.103 beta 3"
 #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -29,6 +29,7 @@
 #include <assert.h>
 
 #define EOL ""
+#define CALLER "Call.caller"
 
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
@@ -36,7 +37,7 @@
 
 int yylex(void);
 void yyerror(const char *);
-static void error(char *msg, char *cargo);
+static void error(char *msg, const char *cargo);
 
 #define NEW(type) \
 	if(opt_debug_tokens) fprintf(stderr, "tokens : creating node for " #type "\n"); \
@@ -141,7 +142,8 @@ static bool beyond_assignment = false;
 static char *fixed = null;	       // list of variables that have been set
 static char *args = null;	       // list of variables that come in as paremeters
 static char *functions = null;
-static bool miller = false;
+static bool lvalue = false;	       // for hardening, lvalue
+static bool rvalue = false;	       // for hardening, rvalue to be assigned to lvalue
 
 static char *safedup(const char *name) {
 	assert(name);
@@ -353,7 +355,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) {	// ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 
 	mtrac_concat(&tagged, ":", needle, ":");
@@ -576,6 +578,7 @@ typedef struct Predicate {
 	struct Registration *Registration;
 	struct Grantment *Grantment;
 	struct Appointment *Appointment;
+	struct Assignment *Assignment;
 	struct Acceptance *Acceptance;
 	struct Fixture *Fixture;
 	struct Setting *Setting;
@@ -643,7 +646,19 @@ typedef struct Appointment {
 } Appointment;
 
 typedef struct Appoint {
+	Literal *Literal;
 } Appoint;
+
+typedef struct Assignment {
+	struct Assign *Assign;
+	struct Symbol *Symbol;
+	struct Expression *Expression;
+	Literal *Literal;
+} Assignment;
+
+typedef struct Assign {
+	Literal *Literal;
+} Assign;
 
 typedef struct Acceptance {
 	struct Accept *Accept;
@@ -666,8 +681,9 @@ typedef struct Fix {
 } Fix;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
+	Literal *Literal;
 } Setting;
 
 typedef struct Illocutor {
@@ -817,6 +833,7 @@ typedef struct Combinand {
 	struct Negation *Negation;
 	struct Existence *Existence;
 	struct Point_In_Time *Point_In_Time;
+	Literal *Literal;
 } Combinand;
 
 typedef struct Combinator {
@@ -987,6 +1004,7 @@ bool sophia_registration(char **production, Registration * Registration,
 bool sophia_grantment(char **production, Grantment * Grantment, int indent);
 bool sophia_appointment(char **production, Appointment * Appointment,
 			int indent);
+bool sophia_assignment(char **production, Assignment * Assignment, int indent);
 bool sophia_acceptance(char **production, Acceptance * Acceptance, int indent);
 bool sophia_fixture(char **production, Fixture * Fixture, int indent);
 bool sophia_setting(char **production, Setting * Setting, int indent);
@@ -1149,11 +1167,11 @@ bool sophia_name(char **production, Name *Name, bool assign, int indent) {
 	}
 
 	if (!in(functions, Name)) {
-		padcat(0, 0, production, !miller ? "state." : "",
-		       global &&!miller ? "global." : "", safe);
+		padcat(0, 0, production, !lvalue ? "state." : "",
+		       global &&!lvalue ? "global." : "", safe);
 	} else {
 		bind *bind = register_bind(safe, Name);
-		padcat(0, 0, production, global &&!miller ? "state." : "",
+		padcat(0, 0, production, global &&!lvalue ? "state." : "",
 		       bind->tag);
 	}
 	if (opt_harden
@@ -1319,19 +1337,15 @@ bool sophia_document(char **production, Document *Document, int indent) {
 
 	/* sol, sop: end of main constructor */
 
-	padcat(1, indent + 2, production, "%42%");	// end of init2
 	padcat(1, indent + 1, production, "%34%");	// %34%: adders
 	replace(production, "%1%", parameters);
 
 	/* sop: command-dedicated, second constructor */
-	if (beyond_assignment) {
+	if (beyond_assignment)
 		replace(production, "%41%",
-			"\n    /* required additional constructor for statements beyond assignments */ \n    entrypoint init2() : state =");
-		replace(production, "%42%", "state");
-	} else {
+			"\n\n    /* additional constructor for statements */ \n    stateful entrypoint init2() =");
+	else
 		replace(production, "%41%", "");
-		replace(production, "%42%", "");
-	}
 
 	padcat(0, 0, production, "%31%");	// %31%: auxiliary functions
 
@@ -1688,6 +1702,7 @@ bool sophia_covenant(char **production, Covenant *Covenant, int indent) {
 	}
 
 	/* covenant constructor */
+
 	padcat(2, indent, production, "%28%contract ", class, " =");	// %28%: payable
 	padcat(2, indent + 1, production, "record state = {");
 	padcat(1, indent + 3, production, "global : main_state,");
@@ -1948,9 +1963,9 @@ const char *typemap(const char *lex_type, bool option_type, bool forpara,
 		if (!strcmp(lex_type, "data")) return "string";
 		if (!strcmp(lex_type, "binary")) return "bool";
 	}
-	printf("Unknown type at %d\n", line);	// ◊ make proper error call / fatal error / compiler error
-	exit(1);
-	return "[ ERROR: UNKNOWN TYPE ]";	// ◊ assert
+	fprintf(stderr, "Internal error, line %d. ", line);
+	error("Unknown type", lex_type);
+	return null;
 }
 
 const char *nullmap(const char *lex_type, bool defined_default) {
@@ -2018,8 +2033,8 @@ const char *type(const char *name, bool option_type, bool forpara, int line) {
 		if (!d
 		    && !covenants) covenants = true, d = covenant_definitions;
 	}
-	printf("Unknown type for %s\n", name);	// ◊ make proper error call / fatal error / compiler error
-	exit(1);
+	error("Undefined category for name", name);
+	return null;
 }
 
 const char *nullvalue(const char *name, bool defined_default) {
@@ -2464,8 +2479,8 @@ bool sophia_symbol(char **production, Symbol *Symbol, bool assign, int indent) {
 	if (!Symbol) return false;
 
 	/* produce the name literal. Note that sophia_name adds 'this.'
-	 * or 'main.', which makes for a global scope, while the cases
-	 * that a type name is itself used as variable name, it is use
+	 * or 'main.', which makes for a global scope; while the cases
+	 * that a type name is itself used as variable name, it is used
 	 * unprefixed, for a local scope. */
 	if (Symbol->Name)
 		sophia_name(production, Symbol->Name, assign, indent);
@@ -2532,21 +2547,17 @@ bool sophia_reflexive(char **production, Reflexive *Reflexive, int indent) {
 	assert(action);
 	assert(action->Subject);
 	assert(action->Subject->Symbols);
+	/* no subject */
 	if (!action->Subject->Symbols->Symbol)
 		error("missing subject for reflexive pronoun ",
 		      Reflexive->Literal);
+	/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 	if (action->Subject->Symbols->Symbols) {
-		char *msg = mtrac_strdup("");
-
-		concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-		       action->Subject->Symbols->Symbols->Symbol->Name, " / ",
-		       Reflexive->Literal, ")");
-		error("don't use multiple subjects with a reflexive pronoun",
-		      msg);
-		mtrac_free(msg);
-	}
-	sophia_symbol(production, action->Subject->Symbols->Symbol, false,
-		      indent + 1);
+		padcat(0, 0, production, CALLER);
+		if (current_function) current_function->uses_caller = true;
+	} else
+		sophia_symbol(production, action->Subject->Symbols->Symbol,
+			      false, indent + 1);
 
 	return true;
 }
@@ -2571,6 +2582,7 @@ bool sophia_predicate(char **production, Predicate *Predicate, int indent) {
 	sophia_registration(production, Predicate->Registration, indent);
 	sophia_grantment(production, Predicate->Grantment, indent);
 	sophia_appointment(production, Predicate->Appointment, indent);
+	sophia_assignment(production, Predicate->Assignment, indent);
 	sophia_acceptance(production, Predicate->Acceptance, indent);
 	sophia_fixture(production, Predicate->Fixture, indent);
 	sophia_setting(production, Predicate->Setting, indent);
@@ -2589,21 +2601,24 @@ static void assign(char **production, int indent, Symbol *symbol,
 	padcat(1, indent, production, "");
 	padcat(0, 0, production, "put(state{");
 
-	miller = true;
+	lvalue = true;
 	sophia_symbol(production, symbol, true, indent);	// true --> assign flag
-	miller = false;
+	lvalue = false;
 
 	padcat(0, 0, production, " = ");
 
-	if (expression)
+	if (expression) {
+		rvalue = true;
 		sophia_expression(production, expression, indent + 1);
-	else
+		rvalue = false;
+	} else
 		padcat(0, 0, production, ":§§:true:§:");
 
 	padcat(0, 0, production, "})");
 	padcat(0, 0, production, EOL);
 
 	is_stateful = true;
+	beyond_assignment |= main_constructor_body;
 }
 
 	/* Support functions for predicates */
@@ -2696,9 +2711,32 @@ bool sophia_appointment(char **production, Appointment *Appointment, int indent)
 	if (!Appointment) return false;
 	if (opt_debug) printf("producing Appointment\n");
 
-	insert_parameter_and_set_member(production, &instructions,
-					Appointment->Symbol, false, paratag,
-					indent, __LINE__);
+	if (Appointment->Expression)
+		assign(production, indent, Appointment->Symbol,
+		       Appointment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Appointment->Symbol, false,
+						paratag, indent, __LINE__);
+
+	return true;
+}
+
+bool sophia_assignment(char **production, Assignment *Assignment, int indent) {
+	if (!Assignment) return false;
+	if (opt_debug) printf("producing Assignment\n");
+
+	preassign_mark(production, indent);
+
+	if (Assignment->Expression)
+		assign(production, indent, Assignment->Symbol,
+		       Assignment->Expression);
+	else
+		insert_parameter_and_set_member(production, &instructions,
+						Assignment->Symbol, false,
+						paratag, indent, __LINE__);
+
+	delete_preassign_mark(production);
 
 	return true;
 }
@@ -2735,7 +2773,25 @@ bool sophia_setting(char **production, Setting *Setting, int indent) {
 	if (!Setting) return false;
 	if (opt_debug) printf("producing Setting\n");
 
-	assign(production, indent, Setting->Symbol, null);	// null -> set true
+	padcat(1, indent, production, "");
+	padcat(0, 0, production, "put(state{");
+
+	lvalue = true;
+	sophia_symbol(production, action->Subject->Symbols->Symbol, true, indent + 1);	// true --> assign flag
+	lvalue = false;
+
+	padcat(0, 0, production, " = ");
+
+	if (Setting->Symbol)
+		sophia_symbol(production, Setting->Symbol, false, indent + 1);
+	else
+		padcat(0, 0, production, ":§§:true:§:");
+
+	padcat(0, 0, production, "})");
+	padcat(0, 0, production, EOL);
+
+	is_stateful = true;
+	beyond_assignment |= main_constructor_body;
 
 	return true;
 }
@@ -2839,6 +2895,7 @@ bool sophia_sending(char **production, Sending *Sending, int indent) {
 	if (opt_debug) printf("producing Sending\n");
 
 	is_stateful = true;
+	// beyond_assignment = true;
 
 	preassign_mark(production, indent);
 	// ◊ change mech to allow for multiple pre-assignments
@@ -2877,7 +2934,8 @@ bool sophia_send(char **production, Send *Send, int indent) {
 bool sophia_notification(char **production, Notification *Notification, int indent) {	// document it ◊
 	if (!Notification) return false;
 	if (opt_debug) printf("producing Notification\n");
-	beyond_assignment = true;      // ◊ make comprehensive
+
+	beyond_assignment |= main_constructor_body;
 
 	preassign_mark(production, indent);
 
@@ -2906,6 +2964,7 @@ bool sophia_notification(char **production, Notification *Notification, int inde
 bool sophia_notify(char **production, Notify *Notify, int indent) {
 	if (!Notify) return false;
 	if (opt_debug) printf("producing Notify\n");
+
 	uses_notification = true;
 	is_stateful = true;
 	padcat(1, indent, production, "notify(");
@@ -2977,11 +3036,40 @@ bool sophia_expression(char **production, Expression *Expression, int indent) {
 	if (!Expression) return false;
 	if (opt_debug) printf("producing Expression\n");
 
-	if (!no_literal && !require_mandat && !conditional_expression
-	    && !payment_expression) padcat(0, 0, production, ":§§:");
+	/* determine whether the resulting expression must be wrapped as 'optional' type, i.e., have a */
+	/*   Some() cast around it. This uses a lot of hardwired knowledge of the grammar structure.   */
+
+	bool symbol = active_subjects && !active_subjects->next	// = single subject
+		&& (Expression->Combination && Expression->Combination->Combinor	// expression is simply a symbol
+		    && Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Symbol || Expression->Combination && Expression->Combination->Combinor	// or a reflexive pronoun for a subject
+		    && Expression->Combination->Combinor->Combinand
+		    && Expression->Combination->Combinor->Combinand->Reflexive);
+
+	bool is_parameter = false;
+	bool is_type_literal_parameter = false;
+
+	if (symbol && Expression->Combination->Combinor->Combinand->Symbol) {
+		char *name =
+			Expression->Combination->Combinor->Combinand->Symbol->
+			Name ? Expression->Combination->Combinor->Combinand->
+			Symbol->Name : Expression->Combination->Combinor->
+			Combinand->Symbol->Type->Literal;
+		assert(name);
+		char *varname = snakedup(name);
+
+		is_parameter = !in(fixed, varname) && !in(functions, name);	// ◊ insufficient concept, depending on order    
+		is_type_literal_parameter = is_parameter
+			&& !Expression->Combination->Combinor->Combinand->
+			Symbol->Name;
+		mtrac_free(varname);
+	}
+	bool wrap = (!symbol || is_type_literal_parameter) && !no_literal
+		&& !require_mandat && !conditional_expression
+		&& !payment_expression;
+
+	if (wrap) padcat(0, 0, production, ":§§:");
 	sophia_combination(production, Expression->Combination, indent + 1);
-	if (!no_literal && !require_mandat && !conditional_expression
-	    && !payment_expression) padcat(0, 0, production, ":§:");
+	if (wrap) padcat(0, 0, production, ":§:");
 
 	return true;
 }
@@ -3130,14 +3218,20 @@ bool sophia_combinor(char **production, Combinor *Combinor, int indent) {
 bool sophia_combinand(char **production, Combinand *Combinand, int indent) {
 	if (!Combinand) return false;
 
+	bool is_type_literal_parameter = false;
+
 	if (Combinand->Symbol) {
 		char *funcname = Combinand->Symbol->Name;
 
-		if (!funcname) funcname = Combinand->Symbol->Type->Literal;
+		if (!funcname) {
+			funcname = Combinand->Symbol->Type->Literal;
+			is_type_literal_parameter = true;
+		}
 		assert(funcname);
 		char *varname = snakedup(funcname);
+		bool is_parameter = !in(fixed, varname) && !in(functions, funcname);	// ◊ insufficient concept, depending on order
 
-		if (!in(fixed, varname) && !in(functions, funcname)) {	// ◊ insufficient concept, depending on order
+		if (is_parameter) {
 			/* produce amounts/texts etc variables: take care that they
 			 * 1) become parameters, and 2) object elements with that parameter assigned
 			 * e.g., The Secured Party may pay a Reminder Fee into escrow. */
@@ -3150,30 +3244,35 @@ bool sophia_combinand(char **production, Combinand *Combinand, int indent) {
 							__LINE__);
 		}
 
-		/* produce the literal (name or type name for variables that are named verbatim a type) */
+		/* produce the literal (name, or type name for variables that are named verbatim a type) */
 		if (!no_literal) {
-			if (opt_harden) {
+			if (opt_harden && !is_type_literal_parameter && !rvalue) {
 				padcat(0, 0, production, "Option.force_msg(");
 				uses_option = true;
 			}
+
 			sophia_symbol(production, Combinand->Symbol, false,
 				      indent + 1);
-			if (opt_harden) padcat(0, 0, production, ", \"");
-			if (opt_harden) sophia_noun(production,
+			if (opt_harden && !is_type_literal_parameter
+			    && !rvalue) padcat(0, 0, production, ", \"");
+			if (opt_harden && !is_type_literal_parameter
+			    && !rvalue) sophia_noun(production,
 						    Combinand->Symbol,
 						    indent + 1);
-			if (opt_harden) padcat(0, 0, production, "\")", EOL);
+			if (opt_harden && !is_type_literal_parameter
+			    && !rvalue) padcat(0, 0, production, "\")", EOL);
 		}
 		mtrac_free(varname);
 	}
-	sophia_expiration(production, Combinand->Expiration, indent + 1);
 	sophia_timeliness(production, Combinand->Timeliness, indent + 1);
+	sophia_reflexive(production, Combinand->Reflexive, indent + 1);
 	sophia_description(production, Combinand->Description, indent + 1);
 	sophia_scalar_comparison(production, Combinand->Scalar_Comparison,
 				 indent + 1);
 	sophia_negation(production, Combinand->Negation, indent + 1);
 	sophia_existence(production, Combinand->Existence, indent + 1);
 	sophia_point_in_time(production, Combinand->Point_In_Time, indent + 1);
+	sophia_expiration(production, Combinand->Expiration, indent + 1);
 
 	return true;
 }
@@ -3495,8 +3594,6 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	// protect keywords
 	char *varname = safedup(pretty_varname);
 
-	// protect parameters with leading underscore (sol),
-	// or not because this. or main or state. will be prefixed (js, sop).
 	char *parameter_varname = mtrac_strdup("");
 
 	concat(&parameter_varname, pretty_varname);	// same because member gets 'state.' prefixed
@@ -3566,7 +3663,7 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 	}
 
 	/* 2: Set the member to the parameter.  It's a member only if it's not a variable named for a type
-	 * (then found at Symbol->Type->Literal) */
+	 * (which has null for Symbol->Name and its name is found at Symbol->Type->Literal) */
 	if (symbol->Name) {
 		// ◊ into symbol coming in here
 		/* js: prep: we will (at [1]) look for, eg 'x = null;' in the previously produced */
@@ -3663,10 +3760,9 @@ void produce_access_conditions(int down, int indent, char **production,
 	if (!subjects) return;
 }
 
-void error(char *msg, char *cargo) {
-	printf("Lexon semantic error: %s %s%s%s.\n", msg, cargo ? "(" : "",
-	       cargo ? cargo : "", cargo ? ")" : "");
-	if (current_function) printf("In clause %s.\n", current_function->lexname);	// ◊ add file and line
+void error(char *msg, const char *cargo) {
+	fprintf(stderr, "Lexon » semantic error%s%s: %s %s%s%s.\n", current_function ? " in clause " : "", current_function ? current_function->lexname : "",	// ◊ add file and line
+		msg, cargo ? "(" : "", cargo ? cargo : "", cargo ? ")" : "");
 	exit(1);
 }
 

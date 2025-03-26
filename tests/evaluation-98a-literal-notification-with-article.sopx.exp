@@ -12,7 +12,7 @@
  **
  **	compiler:    lexon 0.3 beta 2
  **
- **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
  **	backend:     sophia 0.3.102 beta 2
  **
@@ -135,10 +135,10 @@ main contract EvaluationLicenseSystem : Main =
     entrypoint get_state() : state =
         state
 
-    /* required additional constructor for statements beyond assignments */ 
-    entrypoint init2() : state =
+
+    /* additional constructor for statements */ 
+    stateful entrypoint init2() =
         notify(Option.force_msg(state.arbiter, "Arbiter"), "NOTIFICATION")
-        state
     
 
     /* create new instance of License covenant, and register it with main */

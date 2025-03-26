@@ -14,12 +14,12 @@ CLAUSE: Plugh Fred.
 The "Plugh Fred" be: Plugh Fred Nor 123 months After person Or 123 lies at least the person Nor An person Past, the data is past, nor all contracts is not a text.
 
 CLAUSE: Xyzzy.
-"Xyzzy" is defined as is past and binary has been filed for.
+"Xyzzy" is is past and binary has been filed for.
 
 CLAUSE: Thud Fred.
-Be defined as A amount.
-This Garply Fred Bar Be defined Then therefore a text.
-Be as Then time.
+Be A amount.
+This Garply Fred Bar Be Then therefore a text.
+Be Then time.
 Is Thud Fred.
 
 PER Thud Fred:
@@ -35,4 +35,4 @@ The "Thud Fred" is this Garply Fred Bar.
 An "Thud Fred" is this Garply Fred Bar.
 
 CLAUSE: Foo Bar.
-"Foo Bar" is defined this Garply Fred Bar not time nor an Foo Bar, nor Foo Bar is declared.
+"Foo Bar" is this Garply Fred Bar not time nor an Foo Bar, nor Foo Bar is declared.

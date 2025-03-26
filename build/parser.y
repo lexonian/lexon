@@ -245,8 +245,13 @@ typedef struct Action {
 	struct Predicates *Predicates;
 	struct Permission *Permission;
 	struct Condition *Condition;
+	struct Punctuation *Punctuation;
 	Literal *Literal;
 } Action;
+
+typedef struct Punctuation {
+	Literal *Literal;
+} Punctuation;
 
 typedef struct Subject {
 	struct Symbols *Symbols;
@@ -301,6 +306,7 @@ typedef struct Predicate {
 	struct Registration *Registration;
 	struct Grantment *Grantment;
 	struct Appointment *Appointment;
+	struct Assignment *Assignment;
 	struct Acceptance *Acceptance;
 	struct Fixture *Fixture;
 	struct Setting *Setting;
@@ -384,6 +390,17 @@ typedef struct Appoint {
 	Literal *Literal;
 } Appoint;
 
+typedef struct Assignment {
+	struct Assign *Assign;
+	struct Symbol *Symbol;
+	struct Expression *Expression;
+	Literal *Literal;
+} Assignment;
+
+typedef struct Assign {
+	Literal *Literal;
+} Assign;
+
 typedef struct Acceptance {
 	struct Accept *Accept;
 	struct Symbol *Symbol;
@@ -412,7 +429,7 @@ typedef struct Fixed {
 } Fixed;
 
 typedef struct Setting {
-	struct Illocutor *Illocutor;
+	struct Be *Be;
 	struct Symbol *Symbol;
 	Literal *Literal;
 } Setting;
@@ -747,6 +764,7 @@ Function *process_function(Function *Function);
 Statements *process_statements(Statements *Statements);
 Statement *process_statement(Statement *Statement);
 Action *process_action(Action *Action);
+Punctuation *process_punctuation(Punctuation *Punctuation);
 Subject *process_subject(Subject *Subject);
 Symbols *process_symbols(Symbols *Symbols);
 Symbol *process_symbol(Symbol *Symbol);
@@ -769,6 +787,8 @@ Grantment *process_grantment(Grantment *Grantment);
 Grant *process_grant(Grant *Grant);
 Appointment *process_appointment(Appointment *Appointment);
 Appoint *process_appoint(Appoint *Appoint);
+Assignment *process_assignment(Assignment *Assignment);
+Assign *process_assign(Assign *Assign);
 Acceptance *process_acceptance(Acceptance *Acceptance);
 Accept *process_accept(Accept *Accept);
 Fixture *process_fixture(Fixture *Fixture);
@@ -855,17 +875,6 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Description *> Description
 	%token <Scalar *> SCALAR
 	%nterm <Scalar *> Scalar
-	%token AUTHOR
-	%token AUTHORS
-	%token CLAUSE
-	%token COMMENT
-	%token COMMENTS
-	%token GENERAL
-	%token LEX
-	%token LEXON
-	%token PER
-	%token PREAMBLE
-	%token TERMS
 	%token A
 	%token ACCEPT
 	%token ACCEPTS
@@ -880,7 +889,11 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token APPOINT
 	%token APPOINTS
 	%token AS
+	%token ASSIGN
+	%token ASSIGNS
 	%token AT
+	%token AUTHOR
+	%token AUTHORS
 	%token BE
 	%token BEEN
 	%token BEING
@@ -888,7 +901,10 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token CERTIFIED
 	%token CERTIFIES
 	%token CERTIFY
+	%token CLAUSE
 	%token COMING
+	%token COMMENT
+	%token COMMENTS
 	%token CONTRACT
 	%token CONTRACTS
 	%token CURRENT
@@ -910,6 +926,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token FIXES
 	%token FOR
 	%token FROM
+	%token GENERAL
 	%token GIVEN
 	%token GRANT
 	%token GRANTS
@@ -927,6 +944,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token ITSELF
 	%token LEAST
 	%token LESS
+	%token LEX
+	%token LEXON
 	%token LIES
 	%token MAY
 	%token MILLISECOND
@@ -955,7 +974,9 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token PAST
 	%token PAY
 	%token PAYS
+	%token PER
 	%token PERSON
+	%token PREAMBLE
 	%token PROVIDED
 	%token REGISTER
 	%token REGISTERS
@@ -974,6 +995,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token SO
 	%token TERMINATE
 	%token TERMINATES
+	%token TERMS
 	%token TEXT
 	%token THAN
 	%token THAT
@@ -1010,6 +1032,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Appoint *> Appoint
 	%nterm <Appointment *> Appointment
 	%nterm <Article *> Article
+	%nterm <Assign *> Assign
+	%nterm <Assignment *> Assignment
 	%nterm <Authors *> Authors
 	%nterm <Be *> Be
 	%nterm <Being *> Being
@@ -1085,6 +1109,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Predicates *> Predicates
 	%nterm <Preposition *> Preposition
 	%nterm <Provisions *> Provisions
+	%nterm <Punctuation *> Punctuation
 	%nterm <Reflexive *> Reflexive
 	%nterm <Register *> Register
 	%nterm <Registration *> Registration
@@ -1355,15 +1380,22 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	Action:	
 		  Subject Predicates Separator                    { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Predicates=$Predicates; $$=process_action(Action); }
 		| Subject Permission Predicates Separator         { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Comma Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Condition Comma Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
+		| Subject Permission Condition Punctuation Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Punctuation=$Punctuation; Action->Predicates=$Predicates; $$=process_action(Action); }
 		| Subject Permission Comma Predicates Separator   { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Comma Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
-		| Subject Permission Comma Condition Comma Colon Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Predicates=$Predicates; $$=process_action(Action); }
+		| Subject Permission Comma Condition Punctuation Predicates Separator { NEW(Action, *((Literal **)&yylval)); Action->Subject=$Subject; Action->Permission=$Permission; Action->Condition=$Condition; Action->Punctuation=$Punctuation; Action->Predicates=$Predicates; $$=process_action(Action); }
+		;
+
+
+	
+	Punctuation:	
+		  Comma                                           { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Colon                                           { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		|  THEN                                           { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		|  THEN Colon                                     { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Comma THEN                                      { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Comma THEN Colon                                { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		|  THEN Comma                                     { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
+		| Comma THEN Comma                                { NEW(Punctuation, *((Literal **)&yylval)); $$=process_punctuation(Punctuation); }
 		;
 
 
@@ -1458,6 +1490,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 		| Registration                                    { NEW(Predicate, *((Literal **)&yylval)); Predicate->Registration=$Registration; $$=process_predicate(Predicate); }
 		| Grantment                                       { NEW(Predicate, *((Literal **)&yylval)); Predicate->Grantment=$Grantment; $$=process_predicate(Predicate); }
 		| Appointment                                     { NEW(Predicate, *((Literal **)&yylval)); Predicate->Appointment=$Appointment; $$=process_predicate(Predicate); }
+		| Assignment                                      { NEW(Predicate, *((Literal **)&yylval)); Predicate->Assignment=$Assignment; $$=process_predicate(Predicate); }
 		| Acceptance                                      { NEW(Predicate, *((Literal **)&yylval)); Predicate->Acceptance=$Acceptance; $$=process_predicate(Predicate); }
 		| Fixture                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Fixture=$Fixture; $$=process_predicate(Predicate); }
 		| Setting                                         { NEW(Predicate, *((Literal **)&yylval)); Predicate->Setting=$Setting; $$=process_predicate(Predicate); }
@@ -1563,8 +1596,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	
 	Appointment:	
 		  Appoint Symbol                                  { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; $$=process_appointment(Appointment); }
-		| Appoint Symbol Expression                       { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
-		| Appoint Symbol AS Expression                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Symbol=$Symbol; Appointment->Expression=$Expression; $$=process_appointment(Appointment); }
+		| Appoint Expression AS Symbol                    { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=$Appoint; Appointment->Expression=$Expression; Appointment->Symbol=$Symbol; $$=process_appointment(Appointment); }
 		;
 
 
@@ -1572,6 +1604,20 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	Appoint:	
 		  APPOINT                                         { NEW(Appoint, *((Literal **)&yylval)); $$=process_appoint(Appoint); }
 		| APPOINTS                                        { NEW(Appoint, *((Literal **)&yylval)); $$=process_appoint(Appoint); }
+		;
+
+
+	
+	Assignment:	
+		  Assign Symbol                                   { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=$Assign; Assignment->Symbol=$Symbol; $$=process_assignment(Assignment); }
+		| Assign Expression AS Symbol                     { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=$Assign; Assignment->Expression=$Expression; Assignment->Symbol=$Symbol; $$=process_assignment(Assignment); }
+		;
+
+
+	
+	Assign:	
+		  ASSIGN                                          { NEW(Assign, *((Literal **)&yylval)); $$=process_assign(Assign); }
+		| ASSIGNS                                         { NEW(Assign, *((Literal **)&yylval)); $$=process_assign(Assign); }
 		;
 
 
@@ -1613,12 +1659,12 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 
 	
 	Setting:	
-		  Illocutor Symbol                                { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEREFOR Symbol                       { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEREFORE Symbol                      { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEN Symbol                           { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEN THEREFOR Symbol                  { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
-		| Illocutor THEN THEREFORE Symbol                 { NEW(Setting, *((Literal **)&yylval)); Setting->Illocutor=$Illocutor; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		  Be Symbol                                       { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEREFOR Symbol                              { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEREFORE Symbol                             { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEN Symbol                                  { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEN THEREFOR Symbol                         { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
+		| Be THEN THEREFORE Symbol                        { NEW(Setting, *((Literal **)&yylval)); Setting->Be=$Be; Setting->Symbol=$Symbol; $$=process_setting(Setting); }
 		;
 
 
@@ -1743,8 +1789,6 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	
 	Condition:	
 		  If Expression                                   { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
-		| If Expression THEN                              { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
-		| If Expression Comma THEN                        { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
 		;
 
 
@@ -2417,7 +2461,13 @@ Action *process_action(Action *Action) {
 	// Action->Predicates
 	// Action->Permission
 	// Action->Condition
+	// Action->Punctuation
 	return Action;
+}
+
+Punctuation *process_punctuation(Punctuation *Punctuation) {
+	if(opt_debug_actions) printf("actions: parsing Punctuation '%s'\n", Punctuation->Literal);
+	return Punctuation;
 }
 
 Subject *process_subject(Subject *Subject) {
@@ -2482,6 +2532,7 @@ Predicate *process_predicate(Predicate *Predicate) {
 	// Predicate->Registration
 	// Predicate->Grantment
 	// Predicate->Appointment
+	// Predicate->Assignment
 	// Predicate->Acceptance
 	// Predicate->Fixture
 	// Predicate->Setting
@@ -2578,6 +2629,19 @@ Appoint *process_appoint(Appoint *Appoint) {
 	return Appoint;
 }
 
+Assignment *process_assignment(Assignment *Assignment) {
+	if(opt_debug_actions) printf("actions: parsing Assignment '%s'\n", Assignment->Literal);
+	// Assignment->Assign
+	// Assignment->Symbol
+	// Assignment->Expression
+	return Assignment;
+}
+
+Assign *process_assign(Assign *Assign) {
+	if(opt_debug_actions) printf("actions: parsing Assign '%s'\n", Assign->Literal);
+	return Assign;
+}
+
 Acceptance *process_acceptance(Acceptance *Acceptance) {
 	if(opt_debug_actions) printf("actions: parsing Acceptance '%s'\n", Acceptance->Literal);
 	// Acceptance->Accept
@@ -2612,7 +2676,7 @@ Fixed *process_fixed(Fixed *Fixed) {
 
 Setting *process_setting(Setting *Setting) {
 	if(opt_debug_actions) printf("actions: parsing Setting '%s'\n", Setting->Literal);
-	// Setting->Illocutor
+	// Setting->Be
 	// Setting->Symbol
 	return Setting;
 }

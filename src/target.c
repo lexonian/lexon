@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.102 beta 2"
+/*JS */ #define backend_version "javascript 0.3.103 beta 3"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.102 beta 2"
+/*Sol*/ #define backend_version "solidity 0.3.103 beta 3"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.102 beta 2"
+/*Sop*/ #define backend_version "sophia 0.3.103 beta 3"
 /*Sop*/ #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -85,8 +85,11 @@
 #include <assert.h>
 
 /*JS */ #define EOL ";"
+/*JS */ #define CALLER "caller"
 /*Sol*/ #define EOL ";"
+/*Sol*/ #define CALLER "payable(msg.sender)"
 /*Sop*/ #define EOL ""
+/*Sop*/ #define CALLER "Call.caller"
 
 #define LEXCOM0 "/*"
 #define LEXCOM1 " | "
@@ -94,7 +97,7 @@
 
 int yylex(void);
 void yyerror(const char *);
-static void error(char *msg, char *cargo);
+static void error(char *msg, const char *cargo);
 
 #define NEW(type) \
 	if(opt_debug_tokens) fprintf(stderr, "tokens : creating node for " #type "\n"); \
@@ -189,11 +192,12 @@ static char *declarations = null;
 static char *initializations = null;
 static char *main_interface = null;
 static char *command_init = null;
-static bool beyond_assignment = false;
+/*Sop*/	static bool beyond_assignment = false;
 static char *fixed = null; // list of variables that have been set
 static char *args = null; // list of variables that come in as paremeters
 static char *functions = null;
-/*Sop*/	static bool miller = false;
+/*Sop*/	static bool lvalue = false; // for hardening, lvalue
+/*Sop*/	static bool rvalue = false; // for hardening, rvalue to be assigned to lvalue
 
 static char *safedup(const char *name) {
 	assert(name);
@@ -437,7 +441,7 @@ static void delete_bind_tree(bind *b) {
 	}
 }
 
-static bool in(char *hay, char *needle) {
+static bool in(char *hay, char *needle) { // ◊ unify w/lexon.l
 	char *tagged = mtrac_strdup("");
 	mtrac_concat(&tagged, ":", needle, ":");
 	bool in = !!strstr(hay, tagged);
@@ -659,6 +663,7 @@ static bool in(char *hay, char *needle) {
 /*T*/		struct Registration *Registration;
 /*T*/		struct Grantment *Grantment;
 /*T*/		struct Appointment *Appointment;
+/*T*/		struct Assignment *Assignment;
 /*T*/		struct Acceptance *Acceptance;
 /*T*/		struct Fixture *Fixture;
 /*T*/		struct Setting *Setting;
@@ -726,7 +731,19 @@ static bool in(char *hay, char *needle) {
 /*T*/	} Appointment;
 /*T*/
 /*T*/	typedef struct Appoint {
+/*T*/		Literal *Literal;
 /*T*/	} Appoint;
+/*T*/
+/*T*/	typedef struct Assignment {
+/*T*/		struct Assign *Assign;
+/*T*/		struct Symbol *Symbol;
+/*T*/		struct Expression *Expression;
+/*T*/		Literal *Literal;
+/*T*/	} Assignment;
+/*T*/
+/*T*/	typedef struct Assign {
+/*T*/		Literal *Literal;
+/*T*/	} Assign;
 /*T*/
 /*T*/	typedef struct Acceptance {
 /*T*/		struct Accept *Accept;
@@ -749,8 +766,9 @@ static bool in(char *hay, char *needle) {
 /*T*/	} Fix;
 /*T*/
 /*T*/	typedef struct Setting {
-/*T*/		struct Illocutor *Illocutor;
-/*T*/		struct Symbol *Symbol;
+		struct Be *Be;
+		struct Symbol *Symbol;
+		Literal *Literal;
 /*T*/	} Setting;
 /*T*/
 /*T*/	typedef struct Illocutor {
@@ -900,6 +918,7 @@ static bool in(char *hay, char *needle) {
 /*T*/		struct Negation *Negation;
 /*T*/		struct Existence *Existence;
 /*T*/		struct Point_In_Time *Point_In_Time;
+/*T*/		Literal *Literal;
 /*T*/	} Combinand;
 /*T*/
 /*T*/	typedef struct Combinator {
@@ -1062,6 +1081,7 @@ static const char *lexsymtype(Symbol *symbol);
 /*T*/	bool xxx_registration(char **production, Registration *Registration, int indent);
 /*T*/	bool xxx_grantment(char **production, Grantment *Grantment, int indent);
 /*T*/	bool xxx_appointment(char **production, Appointment *Appointment, int indent);
+/*T*/	bool xxx_assignment(char **production, Assignment *Assignment, int indent);
 /*T*/	bool xxx_acceptance(char **production, Acceptance *Acceptance, int indent);
 /*T*/	bool xxx_fixture(char **production, Fixture *Fixture, int indent);
 /*T*/	bool xxx_setting(char **production, Setting *Setting, int indent);
@@ -1270,12 +1290,12 @@ static bool is_payment(Predicates *predicates) {
 		if(!in(functions, Name)) {
 /*JS */			padcat(0, 0, production, global && (!main_constructor_body || class) ?"main.":"this.", safe);
 /*Sol*/			padcat(0, 0, production, global && class?"main.":"", safe, global && class ? "()":"");
-/*Sop*/			padcat(0, 0, production, !miller?"state.":"", global && !miller?"global.":"", safe);
+/*Sop*/			padcat(0, 0, production, !lvalue?"state.":"", global && !lvalue?"global.":"", safe);
 		} else {
 			bind *bind = register_bind(safe, Name);
 /*JS */			padcat(0, 0, production, global && (!main_constructor_body || class) ?"main.":"this.", bind->tag);
 /*Sol*/			padcat(0, 0, production, global && class?"main.":"", bind->tag);
-/*Sop*/			padcat(0, 0, production, global && !miller?"state.":"", bind->tag);
+/*Sop*/			padcat(0, 0, production, global && !lvalue?"state.":"", bind->tag);
 		}
 /*Sop*/		if(opt_harden && require_force) padcat(0, 0, production, ", \"", Name, " not set\")");
 
@@ -1445,18 +1465,14 @@ static bool is_payment(Predicates *predicates) {
 
 /*S+S*/		/* sol, sop: end of main constructor */
 /*Sol*/		padcat(1, indent+1, production, "}%34%"); // %34%: adders
-/*Sop*/		padcat(1, indent+2, production, "%42%"); // end of init2
 /*Sop*/		padcat(1, indent+1, production, "%34%"); // %34%: adders
 		replace(production, "%1%", parameters);
 
 /*Sop*/		/* sop: command-dedicated, second constructor */
-/*Sop*/		if(beyond_assignment) {
-/*Sop*/			replace(production, "%41%", "\n    /* required additional constructor for statements beyond assignments */ \n    entrypoint init2() : state =");
-/*Sop*/			replace(production, "%42%", "state");
-/*Sop*/		} else {
+/*Sop*/		if(beyond_assignment)
+/*Sop*/			replace(production, "%41%", "\n\n    /* additional constructor for statements */ \n    stateful entrypoint init2() =");
+/*Sop*/		else
 /*Sop*/			replace(production, "%41%", "");
-/*Sop*/			replace(production, "%42%", "");
-/*Sop*/		}
 
 /*S+S*/		padcat(0,0, production, "%31%"); // %31%: auxiliary functions
 
@@ -2070,7 +2086,6 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		assert(active_subjects == null);
 /*JS */		padcat(1, indent+2, production, "return new ", class, "(this%2,%%2%);%16%");
 /*JS */		padcat(1, indent  , production, "};");
-
 /*JS */		padcat(2, indent  , production, "class ", class, " {");
 /*JS */		padcat(2, indent+1, production, "constructor(%2%) {");
 /*Sol*/		padcat(2, indent  , production, "contract ", class, " {");
@@ -2159,7 +2174,7 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		if(main_uses_termination) padcat(1, 2, &adders, "if (this.check_termination()) return undefined;"); // this == main
 /*JS */		padcat(1, 2, &adders, "return this.", list, "[this.", count, " += 1] = this.", class, "(%2b%);");
 /*JS */		padcat(1, 1, &adders, "}");
-/*Sol*/		padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name), "(%2%) public returns(", Covenant->Name, ") {");
+/*Sol*/		padcat(C, 1, &adders, "function add_", SNAKE(Covenant->Name), "(%2%) public returns(", class, ") {");
 /*Sol*/		padcat(0,0, &adders, "%15%");
 /*Sol*/		if(main_uses_termination) padcat(1, 2, &adders, "check_termination()" EOL);
 /*Sol*/		padcat(1, 2, &adders, "return ", list, "[", count, " += 1] = new ", class, "(this%2b,%%2b%);");
@@ -2370,9 +2385,9 @@ static bool is_payment(Predicates *predicates) {
 /*Sop*/			if(!strcmp(lex_type,"data")) return "string";
 /*Sop*/			if(!strcmp(lex_type,"binary")) return "bool";
 /*Sop*/		}
-		printf("Unknown type at %d\n", line); // ◊ make proper error call / fatal error / compiler error
-		exit(1);
-		return "[ ERROR: UNKNOWN TYPE ]"; // ◊ assert
+		fprintf(stderr, "Internal error, line %d. " , line);
+		error("Unknown type", lex_type);
+		return null;
 	}
 
 	const char *nullmap(const char *lex_type, bool defined_default) {
@@ -2432,8 +2447,8 @@ static bool is_payment(Predicates *predicates) {
 			d = d->Definitions;
 			if(!d && !covenants) covenants = true, d = covenant_definitions;
 		}
-		printf("Unknown type for %s\n", name); // ◊ make proper error call / fatal error / compiler error
-		exit(1);
+		error("Undefined category for name", name);
+		return null;
 	}
 
 	const char *nullvalue(const char *name, bool defined_default) {
@@ -2855,8 +2870,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Symbol) return false;
 
 		/* produce the name literal. Note that xxx_name adds 'this.'
-		   or 'main.', which makes for a global scope, while the cases
-		   that a type name is itself used as variable name, it is use
+		   or 'main.', which makes for a global scope; while the cases
+		   that a type name is itself used as variable name, it is used
 		   unprefixed, for a local scope. */
 /*T*/		if(Symbol->Name)
 			xxx_name(production, Symbol->Name, assign, indent);
@@ -2916,16 +2931,16 @@ static bool is_payment(Predicates *predicates) {
 		assert(action);
 		assert(action->Subject);
 		assert(action->Subject->Symbols);
+		/* no subject */
 		if(!action->Subject->Symbols->Symbol)
 			error("missing subject for reflexive pronoun ", Reflexive->Literal);
+		/* multiple subjects: pick caller. It must implicitly be one of the subjects. */
 		if(action->Subject->Symbols->Symbols) {
-			char *msg = mtrac_strdup("");
-			concat(&msg, action->Subject->Symbols->Symbol->Name, ", ",
-				action->Subject->Symbols->Symbols->Symbol->Name, " / ", Reflexive->Literal, ")");
-			error("don't use multiple subjects with a reflexive pronoun", msg);
-			mtrac_free(msg);
+			padcat(0,0,production, CALLER);
+			if(current_function) current_function->uses_caller = true;
 		}
-		xxx_symbol(production, action->Subject->Symbols->Symbol, false, indent+1);
+		else
+			xxx_symbol(production, action->Subject->Symbols->Symbol, false, indent+1);
 
 /*T*/		return true;
 /*T*/	}
@@ -2950,6 +2965,7 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		xxx_registration(production, Predicate->Registration, indent);
 /*T*/		xxx_grantment(production, Predicate->Grantment, indent);
 /*T*/		xxx_appointment(production, Predicate->Appointment, indent);
+/*T*/		xxx_assignment(production, Predicate->Assignment, indent);
 /*T*/		xxx_acceptance(production, Predicate->Acceptance, indent);
 /*T*/		xxx_fixture(production, Predicate->Fixture, indent);
 /*T*/		xxx_setting(production, Predicate->Setting, indent);
@@ -2967,15 +2983,17 @@ static bool is_payment(Predicates *predicates) {
 		padcat(1, indent, production, "");
 /*Sop*/		padcat(0, 0, production, "put(state{");
 
-/*Sop*/		miller = true;
+/*Sop*/		lvalue = true;
 		xxx_symbol(production, symbol, true, indent); // true --> assign flag
-/*Sop*/		miller = false;
+/*Sop*/		lvalue = false;
 
 		padcat(0, 0, production, " = ");
 
-		if(expression)
+		if(expression) {
+/*Sop*/			rvalue = true;
 			xxx_expression(production, expression, indent+1);
-		else
+/*Sop*/			rvalue = false;
+		} else
 /*J+S*/			padcat(0, 0, production, "true");
 /*Sop*/			padcat(0, 0, production, ":§§:true:§:");
 
@@ -2983,6 +3001,7 @@ static bool is_payment(Predicates *predicates) {
 		padcat(0, 0, production, EOL);
 
 /*S+S*/		is_stateful = true;
+/*Sop*/		beyond_assignment |= main_constructor_body;
 }
 
 	/* Support functions for predicates */
@@ -3088,9 +3107,30 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Appointment) return false;
 /*T*/		if(opt_debug) printf("producing Appointment\n");
 
-		insert_parameter_and_set_member(production, &instructions, Appointment->Symbol, false, paratag, indent, __LINE__);
+		if(Appointment->Expression)
+			assign(production, indent, Appointment->Symbol, Appointment->Expression);
+		else
+			insert_parameter_and_set_member(production, &instructions, Appointment->Symbol, false, paratag, indent, __LINE__);
 
 /*JS */		log_entry(production, Appointment->Symbol->Name, "appointed", indent);
+
+/*T*/		return true;
+/*T*/	}
+/*T*/
+/*T*/	bool xxx_assignment(char **production, Assignment *Assignment, int indent) {
+/*T*/		if(!Assignment) return false;
+/*T*/		if(opt_debug) printf("producing Assignment\n");
+
+		preassign_mark(production, indent);
+
+		if(Assignment->Expression)
+			assign(production, indent, Assignment->Symbol, Assignment->Expression);
+		else
+			insert_parameter_and_set_member(production, &instructions, Assignment->Symbol, false, paratag, indent, __LINE__);
+
+/*JS */		log_entry(production, Assignment->Symbol->Name, "assigned", indent);
+
+		delete_preassign_mark(production);
 
 /*T*/		return true;
 /*T*/	}
@@ -3126,9 +3166,28 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Setting) return false;
 /*T*/		if(opt_debug) printf("producing Setting\n");
 
-		assign(production, indent, Setting->Symbol, null); // null -> set true
+		padcat(1, indent, production, "");
+/*Sop*/		padcat(0, 0, production, "put(state{");
 
-/*JS */		log_entry(production, Setting->Symbol->Name, "state set", indent);
+/*Sop*/		lvalue = true;
+		xxx_symbol(production, action->Subject->Symbols->Symbol, true, indent+1); // true --> assign flag
+/*Sop*/		lvalue = false;
+
+		padcat(0, 0, production, " = ");
+
+		if(Setting->Symbol)
+			xxx_symbol(production, Setting->Symbol, false, indent+1);
+		else
+/*J+S*/			padcat(0, 0, production, "true");
+/*Sop*/			padcat(0, 0, production, ":§§:true:§:");
+
+/*Sop*/		padcat(0, 0, production, "})");
+		padcat(0, 0, production, EOL);
+
+/*S+S*/		is_stateful = true;
+/*Sop*/		beyond_assignment |= main_constructor_body;
+
+/*JS */		log_entry(production, action->Subject->Symbols->Symbol->Name, "set", indent);
 
 /*T*/		return true;
 /*T*/	}
@@ -3239,6 +3298,7 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	        if(opt_debug) printf("producing Sending\n");
 
 /*S+S*/		is_stateful = true;
+/*Sop*/		// beyond_assignment = true;
 
 		preassign_mark(production, indent);
 		// ◊ change mech to allow for multiple pre-assignments
@@ -3269,7 +3329,7 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_send(char **production, Send *Send, int indent) {
 /*T*/	        if(!Send) return false;
 /*T*/	        if(opt_debug) printf("producing Send\n");
-/*Sol*/		beyond_assignment = true;
+
 		uses_notification = true;
 /*S+S*/		is_stateful = true;
 /*JS */		padcat(1, indent, production, (class?"main.":"this."), "notify(");
@@ -3282,7 +3342,8 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_notification(char **production, Notification *Notification, int indent) { // document it ◊
 /*T*/	        if(!Notification) return false;
 /*T*/	        if(opt_debug) printf("producing Notification\n");
-		beyond_assignment = true; // ◊ make comprehensive
+
+/*Sop*/		beyond_assignment |= main_constructor_body;
 
 		preassign_mark(production, indent);
 
@@ -3316,7 +3377,6 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	        if(!Notify) return false;
 /*T*/	        if(opt_debug) printf("producing Notify\n");
 
-/*Sol*/		beyond_assignment = true;
 		uses_notification = true;
 /*S+S*/		is_stateful = true;
 /*JS */		padcat(1, indent, production, (class?"main.":"this."), "notify(");
@@ -3388,9 +3448,32 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		if(!Expression) return false;
 /*T*/		if(opt_debug) printf("producing Expression\n");
 
-/*Sop*/		if(!no_literal && !require_mandat && !conditional_expression && !payment_expression) padcat(0, 0, production, ":§§:");
+/*Sop*/		/* determine whether the resulting expression must be wrapped as 'optional' type, i.e., have a */
+/*Sop*/		/*   Some() cast around it. This uses a lot of hardwired knowledge of the grammar structure.   */
+/*Sop*/
+/*Sop*/		bool symbol = active_subjects && !active_subjects->next // = single subject
+/*Sop*/			&& (Expression->Combination && Expression->Combination->Combinor // expression is simply a symbol
+/*Sop*/			&& Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Symbol
+/*Sop*/			|| Expression->Combination && Expression->Combination->Combinor // or a reflexive pronoun for a subject
+/*Sop*/			&& Expression->Combination->Combinor->Combinand && Expression->Combination->Combinor->Combinand->Reflexive);
+/*Sop*/
+/*Sop*/		bool is_parameter = false;
+/*Sop*/		bool is_type_literal_parameter = false;
+/*Sop*/		if(symbol && Expression->Combination->Combinor->Combinand->Symbol) {
+/*Sop*/			char *name = Expression->Combination->Combinor->Combinand->Symbol->Name ?
+/*Sop*/				Expression->Combination->Combinor->Combinand->Symbol->Name :
+/*Sop*/				Expression->Combination->Combinor->Combinand->Symbol->Type->Literal;
+/*Sop*/			assert(name);
+/*Sop*/			char *varname = snakedup(name);                                                                                                     
+/*Sop*/			is_parameter = !in(fixed, varname) && !in(functions, name); // ◊ insufficient concept, depending on order    
+/*Sop*/			is_type_literal_parameter = is_parameter && !Expression->Combination->Combinor->Combinand->Symbol->Name;
+/*Sop*/			mtrac_free(varname);
+/*Sop*/		}
+/*Sop*/		bool wrap = (!symbol || is_type_literal_parameter) && !no_literal && !require_mandat && !conditional_expression && !payment_expression;
+/*Sop*/
+/*Sop*/		if(wrap) padcat(0, 0, production, ":§§:");
 /*T*/		xxx_combination(production, Expression->Combination, indent+1);
-/*Sop*/		if(!no_literal && !require_mandat && !conditional_expression && !payment_expression) padcat(0, 0, production, ":§:");
+/*Sop*/		if(wrap) padcat(0, 0, production, ":§:");
 
 /*T*/		return true;
 /*T*/	}
@@ -3522,13 +3605,15 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_combinand(char **production, Combinand *Combinand, int indent) {
 /*T*/		if(!Combinand) return false;
 
+		bool is_type_literal_parameter = false;
 		if(Combinand->Symbol) {
 			char *funcname = Combinand->Symbol->Name;
-			if(!funcname) funcname = Combinand->Symbol->Type->Literal;
+			if(!funcname) { funcname = Combinand->Symbol->Type->Literal; is_type_literal_parameter = true; }
 			assert(funcname);
 			char *varname = snakedup(funcname);
+			bool is_parameter = !in(fixed, varname) && !in(functions, funcname); // ◊ insufficient concept, depending on order
 
-			if(!in(fixed, varname) && !in(functions, funcname)) { // ◊ insufficient concept, depending on order
+			if(is_parameter) {
 				/* produce amounts/texts etc variables: take care that they
 				   1) become parameters, and 2) object elements with that parameter assigned
 				   e.g., The Secured Party may pay a Reminder Fee into escrow. */
@@ -3537,23 +3622,25 @@ static bool is_payment(Predicates *predicates) {
 					Combinand->Symbol, payment_expression, paratag, indent+4, __LINE__);
 			}
 
-			/* produce the literal (name or type name for variables that are named verbatim a type) */
+			/* produce the literal (name, or type name for variables that are named verbatim a type) */
 			if(!no_literal) {
-/*Sop*/				if(opt_harden) { padcat(0, 0, production, "Option.force_msg("); uses_option = true; }
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) { padcat(0, 0, production, "Option.force_msg("); uses_option = true; }
+/*Sol*/				if(is_parameter) padcat(0,0,production,"_");
 				xxx_symbol(production, Combinand->Symbol, false, indent+1);
-/*Sop*/				if(opt_harden) padcat(0, 0, production, ", \"");
-/*Sop*/				if(opt_harden) xxx_noun(production, Combinand->Symbol, indent+1);
-/*Sop*/				if(opt_harden) padcat(0, 0, production, "\")", EOL);
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) padcat(0, 0, production, ", \"");
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) xxx_noun(production, Combinand->Symbol, indent+1);
+/*Sop*/				if(opt_harden && !is_type_literal_parameter && !rvalue) padcat(0, 0, production, "\")", EOL);
 			}
 			mtrac_free(varname);
 		}
-/*T*/		xxx_expiration(production, Combinand->Expiration, indent+1);
 /*T*/		xxx_timeliness(production, Combinand->Timeliness, indent+1);
+/*T*/		xxx_reflexive(production, Combinand->Reflexive, indent+1);
 /*T*/		xxx_description(production, Combinand->Description, indent+1);
 /*T*/		xxx_scalar_comparison(production, Combinand->Scalar_Comparison, indent+1);
 /*T*/		xxx_negation(production, Combinand->Negation, indent+1);
 /*T*/		xxx_existence(production, Combinand->Existence, indent+1);
 /*T*/		xxx_point_in_time(production, Combinand->Point_In_Time, indent+1);
+/*T*/		xxx_expiration(production, Combinand->Expiration, indent+1);
 
 /*T*/		return true;
 /*T*/	}
@@ -3885,11 +3972,10 @@ static bool is_payment(Predicates *predicates) {
 		// protect keywords
 		char *varname = safedup(pretty_varname);
 
-		// protect parameters with leading underscore (sol),
-		// or not because this. or main or state. will be prefixed (js, sop).
 		char *parameter_varname = mtrac_strdup("");
 /*JS */		concat(&parameter_varname, pretty_varname); // same because member gets 'this.' or 'main.' prefixed
-/*Sol*/		concat(&parameter_varname, "_", varname); // with safedup() above can lead to double underscore
+/*Sol*/		/* protect parameters with leading underscore */
+/*Sol*/		concat(&parameter_varname, "_", pretty_varname); // with safedup() above can lead to double underscore
 /*Sop*/		concat(&parameter_varname, pretty_varname); // same because member gets 'state.' prefixed
 
 		// prepend type (sol, sop)
@@ -3902,7 +3988,7 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		concat(&pretty_typed_varname, pretty_varname, " : ", type(pretty_varname, opt_harden, false, __LINE__));
 
 		char *typed_parameter_varname = mtrac_strdup("");
-/*JS */		concat(&typed_parameter_varname, parameter_varname); // not type added for js
+/*JS */		concat(&typed_parameter_varname, parameter_varname); // no type added for js
 /*Sol*/		concat(&typed_parameter_varname, type(pretty_varname, false, true, __LINE__), " ", parameter_varname);
 /*Sop*/		concat(&typed_parameter_varname, parameter_varname, " : ", type(pretty_varname, false, true, __LINE__));
 
@@ -3938,7 +4024,7 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		}
 
 		/* 2: Set the member to the parameter.  It's a member only if it's not a variable named for a type
-		   (then found at Symbol->Type->Literal) */
+		   (which has null for Symbol->Name and its name is found at Symbol->Type->Literal) */
 		if(symbol->Name) {
 			// ◊ into symbol coming in here
 			/* js: prep: we will (at [1]) look for, eg 'x = null;' in the previously produced */
@@ -4058,9 +4144,11 @@ static bool is_payment(Predicates *predicates) {
 
 	}
 
-	void error(char *msg, char *cargo) {
-		printf("Lexon semantic error: %s %s%s%s.\n", msg, cargo?"(":"", cargo?cargo:"", cargo?")":"");
-		if(current_function) printf("In clause %s.\n", current_function->lexname); // ◊ add file and line
+	void error(char *msg, const char *cargo) {
+		fprintf(stderr, "Lexon » semantic error%s%s: %s %s%s%s.\n",
+			current_function ? " in clause " : "", current_function ? current_function->lexname : "", // ◊ add file and line
+			msg, 
+			cargo ? "(" : "", cargo ? cargo : "", cargo ? ")" : "");
 		exit(1);
 	}
 

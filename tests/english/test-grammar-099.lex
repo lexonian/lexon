@@ -10,7 +10,7 @@ CLAUSE: Baz.
 A "Baz" be a text has passed, neither there not an Baz nor past neither there be no the amount or this Bar is a Baz neither there is the data.
 
 CLAUSE: Qux.
-A "Qux" be defined as: A Qux Past.
+A "Qux" be: A Qux Past.
 
 PER Plugh Grault:.
 

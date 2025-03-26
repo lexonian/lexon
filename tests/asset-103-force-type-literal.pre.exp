@@ -1,0 +1,17 @@
+
+precompilation:
+---------------
+
+asset 103 force type literal   1:   LEX: «Asset».
+
+asset 103 force type literal   3:   "«Id»" is a text.
+asset 103 force type literal   4:   "«Creator»" is a person.
+asset 103 force type literal   5:   "«Owner»" is a person.
+
+asset 103 force type literal   7:   The «Creator» fixes the «Id».
+asset 103 force type literal   8:   The «Owner» is the «Creator».
+
+asset 103 force type literal  10:   CLAUSE: «Transfer».
+asset 103 force type literal  11:   The «Owner» may appoint a person as the new «Owner».
+
+

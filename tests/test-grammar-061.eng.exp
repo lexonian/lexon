@@ -15,9 +15,7 @@
                             ( predicate 
                                 ( grantment grant ( symbol «bar» ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type data ) ) ) ) 
+                                ( setting be ( symbol ( type data ) ) ) ) 
                             ( predicate 
                                 ( certification certify ( symbol «bar» ) 
                                     ( contract 
@@ -39,13 +37,9 @@
                             ( predicate 
                                 ( grantment grant ( symbol ( type data ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type text ) ) ) ) 
+                                ( setting be ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol «bar» ) ) ) 
+                                ( setting be ( symbol «bar» ) ) ) 
                             ( predicate 
                                 ( registration register ( symbol «bar» ) 
                                     ( contract all-contracts ) ) ) 

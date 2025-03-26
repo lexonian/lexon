@@ -143,9 +143,7 @@
                             ( predicate 
                                 ( appointment appoint ( symbol ( type text ) ) ) ) 
                             ( predicate 
-                                ( setting 
-                                    ( illocutor be ) 
-                                    ( symbol ( type person ) ) ) ) 
+                                ( setting be ( symbol ( type person ) ) ) ) 
                             ( predicate 
                                 ( fixture fix ( symbol «bar» ) 
                                     ( expression ( combination ( combination ( combinor ( combinor ( combinand 
@@ -385,9 +383,7 @@
                                             ( predicate 
                                                 ( appointment appoint ( symbol ( type time ) ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol ( type data ) ) ) ) 
+                                                ( setting be ( symbol ( type data ) ) ) ) 
                                             ( predicate 
                                                 ( notification notify 
                                                     ( object ( symbol «garply-qux» ) ) 
@@ -434,9 +430,7 @@
                                                 ( declaration declare ( symbol «garply-qux» ) 
                                                     ( contract all-contracts ) ) ) 
                                             ( predicate 
-                                                ( setting 
-                                                    ( illocutor be ) 
-                                                    ( symbol «garply-qux» ) ) ) 
+                                                ( setting be ( symbol «garply-qux» ) ) ) 
                                             ( predicate 
                                                 ( termination terminate 
                                                     ( this-contract «bar» ) ) ) 
