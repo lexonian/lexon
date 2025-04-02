@@ -3,7 +3,7 @@
 # The test logic is in this file, the source in the *.lex files and others in this folder and the subfolders.
 
 SHELL := /bin/bash
-
+MAKEFLAGS += --no-print-directory --no-builtin-rules
 
 hi = \033[97m
 ok = \033[36m
@@ -431,8 +431,8 @@ expclean: clean
 deeptest:
 	@$(call log,DEEP TEST)
 	@echo
-	@echo Run all deep tests with a single-character bar indicating successes
-	@echo and failures and finale tally. No updates of expectations.
+	@echo Running all deep tests with a single-character bar indicating successes,
+	@echo failures and final tally.
 	@echo
 	@touch concise
 	@touch noupdate
@@ -592,8 +592,8 @@ endif
 	@rm -f *.tmp
 	$(call init)
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
-	@$(call testrun,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,)
-	@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,)
+	@$(call testrun,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,%PREERR)
+	@$(call testrun,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,%ERR)
 	@$(call testrun,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,%JSERR)
 	@$(call testrun,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,%SOLERR)
 	@$(call testrun,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,%SOPERR)
@@ -607,7 +607,7 @@ endif
 	@$(call testrun,jurisdiction parsing,:,../bin/lexon,-P,:,grep -l %JUR test-*.lex,.jur.exp,)
 	@$(call testrun,lxf extension grammar production,:,../bin/lexon,,:,grep -l %LXF test-*.lex,.lxf.exp,%LXFERR)
 	@$(call testrun,lgf lexon grammar production,:,../bin/lexon,-B,:,ls -1 test-*.lgf,.lgf.exp,%LGFERR)
-	@$(call testrun,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,)
+	@$(call testrun,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,%ERR)
 	@$(call testrun,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
 	@$(call testrun,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
 	@$(call testrun,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
@@ -686,9 +686,9 @@ _expects:
 	@flex -D WHITEBOX -o whitebox.c ../src/lexon.l
 	$(call buildexp,coverage precompile,:,../bin/lexon,-P,:,ls -1 cover/*.lex,.pre.exp,%PREERR)
 	$(call buildexp,coverage core,:,../bin/lexon,--core,:,ls -1 cover/*.lex,.lcc.exp,%ERR)
-	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,%ERR)
-	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,%ERR)
-	$(call buildexp,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,)
+	$(call buildexp,coverage javascript,:,../bin/lexon,--javascript -x,:,ls -1 cover/*.lex,.jsx.exp,%JSERR)
+	$(call buildexp,coverage solidity,:,../bin/lexon,--solidity -x,:,ls -1 cover/*.lex,.solx.exp,%SOLERR)
+	$(call buildexp,coverage sophia,:,../bin/lexon,--sophia -x,:,ls -1 cover/*.lex,.sopx.exp,%SOPERR)
 	$(call buildexp,memory,rm -f a.out,gcc,-include whitebox.c,./a.out,grep -l %MEM test-memory-*.c,.mem.exp,)
 	$(call buildexp,precompile,:,../bin/lexon,-P,:,grep -l %PRE test-*.lex,.pre.exp,%PREERR)
 	$(call buildexp,gui generator info,:,../bin/lexon,-U,:,grep -l %GEN test-*.lex,.gen.exp,%GENERR)
@@ -699,7 +699,7 @@ _expects:
 	$(call buildexp,jurisdiction parsing,:,../bin/lexon,-P,:,grep -l %JUR test-*.lex,.jur.exp,)
 	$(call buildexp,lxf grammar production,:,../bin/lexon,,:,grep -l %LXF test-*.lex,.lxf.exp,%LXFERR)
 	$(call buildexp,lgf lexon grammar production,:,../bin/lexon,-B,:,ls -1 test-*.lgf,.lgf.exp,%LGFERR)
-	$(call buildexp,english grammar parsing,:,../bin/lexon,,:,ls -1 english/test-*.lex,.eng.exp,%ERR)
+	$(call buildexp,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,%ERR)
 	$(call buildexp,core language,:,../bin/lexon,--core,:,ls -1 lexon/*.lex,.core.exp,)
 	$(call buildexp,tree,:,../bin/lexon,--tree,:,ls -1 lexon/*.lex,.tree.exp,)
 	$(call buildexp,flat tree,:,../bin/lexon,--flat --tree,:,ls -1 lexon/*.lex,.flat.exp,)
@@ -716,7 +716,7 @@ _expects:
 	if (( $$err > 0 )) ; then echo "Fails with error code < 2 are interpreted as ok. Check the real errors." ; fi ; \
 	if (( $$err > 0 )); then echo "### $$err errors #########################"; fi ; \
 	if (( $$ok == 0 )) && (( $$err == 0 )) ; then echo "### no tests #########################"; fi ; \
-	if (( $$ok != 0 )) && (( $$err == 0 )) ; then echo "==== perfect ===="; fi
+	if (( $$ok != 0 )) && (( $$err == 0 )) ; then echo "==== perfect ====="; fi
 	$(call tag,tag.exp)
 	@if [[ -f onlynew ]] ; then echo "(valid for newest only)" >> tag.exp ; fi
 	@cat tag.exp
@@ -742,7 +742,7 @@ grammar_expects:
 	@if [[ -f onlynew ]] ; then echo "(valid for newest only)" >> tag.exp ; fi
 	@cat tag.exp
 	$(call init)
-	$(call buildexp,english grammar parsing,:,../bin/lexon,,:,ls -1 english/test-*.lex,.eng.exp,%ERR)
+	$(call buildexp,english grammar parsing,:,../bin/lexon,-Dallow_double_names,:,ls -1 english/test-*.lex,.eng.exp,%ERR)
 	@echo ; \
 	ok=`cat ok.tmp` ; \
 	err=`cat err.tmp` ; \

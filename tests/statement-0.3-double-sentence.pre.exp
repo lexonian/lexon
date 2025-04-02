@@ -5,7 +5,7 @@ precompilation:
 statement 0.3 double sentence   1:   LEX: «UCC Financing Statement».
 
 statement 0.3 double sentence   3:   LEXON: ‹0.3 alpha 97›.
-statement 0.3 double sentence   4:   COMMENT: ‹%ERR›.
+statement 0.3 double sentence   4:   COMMENT: ‹% ERR - (used to fail for double sentence)›.
 
 statement 0.3 double sentence   6:   "«Financing Statement»" is this contract.
 statement 0.3 double sentence   7:   "«File Number»" is data.

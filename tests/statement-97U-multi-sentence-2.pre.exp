@@ -5,7 +5,7 @@ precompilation:
 statement 97U multi sentence 2   1:   LEX: «UCC Financing Statement».
 
 statement 97U multi sentence 2   3:   LEXON: ‹0.3 alpha 97›.
-statement 97U multi sentence 2   4:   COMMENT: ‹%ERR›.
+statement 97U multi sentence 2   4:   COMMENT: ‹% ERR - (used to fail for multi-sentence recital)›.
 
 statement 97U multi sentence 2   6:   "«Financing Statement»" is this contract.
 statement 97U multi sentence 2   7:   "«File Number»" is data.

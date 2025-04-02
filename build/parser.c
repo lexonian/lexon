@@ -711,54 +711,54 @@ static const yytype_uint8 yytranslate[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,  1150,  1150,  1151,  1157,  1158,  1159,  1160,  1161,  1162,
-    1163,  1164,  1165,  1166,  1167,  1168,  1169,  1170,  1171,  1172,
-    1178,  1184,  1190,  1191,  1197,  1198,  1204,  1210,  1211,  1212,
-    1213,  1214,  1215,  1216,  1217,  1223,  1224,  1230,  1231,  1232,
-    1233,  1239,  1240,  1241,  1242,  1248,  1249,  1255,  1256,  1257,
-    1258,  1264,  1265,  1271,  1272,  1273,  1274,  1275,  1276,  1282,
-    1288,  1294,  1300,  1306,  1312,  1318,  1319,  1325,  1331,  1332,
-    1338,  1339,  1345,  1351,  1352,  1358,  1359,  1360,  1361,  1367,
-    1368,  1374,  1375,  1381,  1382,  1383,  1384,  1385,  1391,  1392,
-    1393,  1394,  1395,  1396,  1397,  1398,  1404,  1410,  1411,  1417,
-    1418,  1419,  1420,  1421,  1422,  1423,  1424,  1430,  1431,  1437,
-    1438,  1439,  1440,  1446,  1447,  1448,  1449,  1450,  1451,  1452,
-    1453,  1454,  1455,  1461,  1462,  1468,  1469,  1470,  1471,  1472,
-    1473,  1474,  1475,  1476,  1477,  1478,  1479,  1480,  1481,  1487,
-    1488,  1489,  1490,  1491,  1492,  1493,  1494,  1495,  1496,  1497,
-    1498,  1499,  1500,  1506,  1512,  1513,  1514,  1515,  1516,  1522,
-    1523,  1529,  1530,  1531,  1532,  1533,  1539,  1540,  1546,  1547,
-    1548,  1549,  1550,  1551,  1552,  1553,  1554,  1555,  1561,  1562,
-    1568,  1569,  1570,  1571,  1572,  1578,  1579,  1585,  1591,  1592,
-    1598,  1599,  1605,  1606,  1612,  1613,  1619,  1620,  1626,  1627,
-    1628,  1634,  1635,  1641,  1642,  1643,  1649,  1650,  1656,  1662,
-    1663,  1664,  1665,  1666,  1667,  1673,  1674,  1675,  1676,  1682,
-    1683,  1689,  1690,  1691,  1692,  1698,  1699,  1700,  1701,  1702,
-    1703,  1704,  1705,  1711,  1712,  1713,  1719,  1720,  1721,  1722,
-    1728,  1729,  1730,  1731,  1737,  1743,  1744,  1750,  1751,  1757,
-    1758,  1764,  1765,  1771,  1772,  1778,  1779,  1780,  1781,  1782,
-    1783,  1784,  1785,  1791,  1797,  1798,  1799,  1805,  1811,  1817,
-    1818,  1819,  1820,  1826,  1827,  1828,  1829,  1830,  1831,  1832,
-    1833,  1834,  1840,  1841,  1842,  1843,  1844,  1845,  1846,  1847,
-    1853,  1854,  1855,  1856,  1857,  1858,  1859,  1860,  1861,  1862,
-    1863,  1864,  1865,  1866,  1867,  1868,  1869,  1870,  1871,  1872,
-    1873,  1874,  1875,  1876,  1877,  1878,  1879,  1880,  1881,  1882,
-    1883,  1884,  1885,  1886,  1887,  1888,  1889,  1890,  1891,  1892,
-    1893,  1894,  1895,  1896,  1897,  1898,  1899,  1900,  1901,  1902,
-    1903,  1904,  1905,  1906,  1907,  1908,  1909,  1910,  1911,  1912,
-    1913,  1914,  1915,  1916,  1922,  1923,  1924,  1925,  1931,  1932,
-    1933,  1934,  1935,  1941,  1942,  1943,  1949,  1950,  1956,  1957,
-    1958,  1959,  1960,  1961,  1962,  1963,  1964,  1965,  1966,  1972,
-    1973,  1974,  1975,  1981,  1987,  1993,  1999,  2005,  2006,  2007,
-    2008,  2014,  2015,  2016,  2017,  2023,  2024,  2025,  2026,  2032,
-    2033,  2034,  2040,  2041,  2042,  2043,  2044,  2045,  2046,  2047,
-    2048,  2054,  2055,  2056,  2062,  2063,  2064,  2065,  2071,  2072,
-    2078,  2079,  2080,  2081,  2082,  2088,  2089,  2090,  2091,  2092,
-    2098,  2104,  2105,  2106,  2107,  2108,  2109,  2110,  2111,  2117,
-    2118,  2124,  2125,  2131,  2132,  2138,  2139,  2145,  2146,  2152,
-    2153,  2159,  2160,  2166,  2167,  2173,  2174,  2175,  2181,  2182,
-    2183,  2184,  2185,  2186,  2187,  2188,  2189,  2190,  2191,  2192,
-    2196,  2199,  2202
+       0,  1152,  1152,  1153,  1159,  1160,  1161,  1162,  1163,  1164,
+    1165,  1166,  1167,  1168,  1169,  1170,  1171,  1172,  1173,  1174,
+    1180,  1186,  1192,  1193,  1199,  1200,  1206,  1212,  1213,  1214,
+    1215,  1216,  1217,  1218,  1219,  1225,  1226,  1232,  1233,  1234,
+    1235,  1241,  1242,  1243,  1244,  1250,  1251,  1257,  1258,  1259,
+    1260,  1266,  1267,  1273,  1274,  1275,  1276,  1277,  1278,  1284,
+    1290,  1296,  1302,  1308,  1314,  1320,  1321,  1327,  1333,  1334,
+    1340,  1341,  1347,  1353,  1354,  1360,  1361,  1362,  1363,  1369,
+    1370,  1376,  1377,  1383,  1384,  1385,  1386,  1387,  1393,  1394,
+    1395,  1396,  1397,  1398,  1399,  1400,  1406,  1412,  1413,  1419,
+    1420,  1421,  1422,  1423,  1424,  1425,  1426,  1432,  1433,  1439,
+    1440,  1441,  1442,  1448,  1449,  1450,  1451,  1452,  1453,  1454,
+    1455,  1456,  1457,  1463,  1464,  1470,  1471,  1472,  1473,  1474,
+    1475,  1476,  1477,  1478,  1479,  1480,  1481,  1482,  1483,  1489,
+    1490,  1491,  1492,  1493,  1494,  1495,  1496,  1497,  1498,  1499,
+    1500,  1501,  1502,  1508,  1514,  1515,  1516,  1517,  1518,  1524,
+    1525,  1531,  1532,  1533,  1534,  1535,  1541,  1542,  1548,  1549,
+    1550,  1551,  1552,  1553,  1554,  1555,  1556,  1557,  1563,  1564,
+    1570,  1571,  1572,  1573,  1574,  1580,  1581,  1587,  1593,  1594,
+    1600,  1601,  1607,  1608,  1614,  1615,  1621,  1622,  1628,  1629,
+    1630,  1636,  1637,  1643,  1644,  1645,  1651,  1652,  1658,  1664,
+    1665,  1666,  1667,  1668,  1669,  1675,  1676,  1677,  1678,  1684,
+    1685,  1691,  1692,  1693,  1694,  1700,  1701,  1702,  1703,  1704,
+    1705,  1706,  1707,  1713,  1714,  1715,  1721,  1722,  1723,  1724,
+    1730,  1731,  1732,  1733,  1739,  1745,  1746,  1752,  1753,  1759,
+    1760,  1766,  1767,  1773,  1774,  1780,  1781,  1782,  1783,  1784,
+    1785,  1786,  1787,  1793,  1799,  1800,  1801,  1807,  1813,  1819,
+    1820,  1821,  1822,  1828,  1829,  1830,  1831,  1832,  1833,  1834,
+    1835,  1836,  1842,  1843,  1844,  1845,  1846,  1847,  1848,  1849,
+    1855,  1856,  1857,  1858,  1859,  1860,  1861,  1862,  1863,  1864,
+    1865,  1866,  1867,  1868,  1869,  1870,  1871,  1872,  1873,  1874,
+    1875,  1876,  1877,  1878,  1879,  1880,  1881,  1882,  1883,  1884,
+    1885,  1886,  1887,  1888,  1889,  1890,  1891,  1892,  1893,  1894,
+    1895,  1896,  1897,  1898,  1899,  1900,  1901,  1902,  1903,  1904,
+    1905,  1906,  1907,  1908,  1909,  1910,  1911,  1912,  1913,  1914,
+    1915,  1916,  1917,  1918,  1924,  1925,  1926,  1927,  1933,  1934,
+    1935,  1936,  1937,  1943,  1944,  1945,  1951,  1952,  1958,  1959,
+    1960,  1961,  1962,  1963,  1964,  1965,  1966,  1967,  1968,  1974,
+    1975,  1976,  1977,  1983,  1989,  1995,  2001,  2007,  2008,  2009,
+    2010,  2016,  2017,  2018,  2019,  2025,  2026,  2027,  2028,  2034,
+    2035,  2036,  2042,  2043,  2044,  2045,  2046,  2047,  2048,  2049,
+    2050,  2056,  2057,  2058,  2064,  2065,  2066,  2067,  2073,  2074,
+    2080,  2081,  2082,  2083,  2084,  2090,  2091,  2092,  2093,  2094,
+    2100,  2106,  2107,  2108,  2109,  2110,  2111,  2112,  2113,  2119,
+    2120,  2126,  2127,  2133,  2134,  2140,  2141,  2147,  2148,  2154,
+    2155,  2161,  2162,  2168,  2169,  2175,  2176,  2177,  2183,  2184,
+    2185,  2186,  2187,  2188,  2189,  2190,  2191,  2192,  2193,  2194,
+    2198,  2201,  2204
 };
 #endif
 
@@ -3006,2827 +3006,2827 @@ yyuserAction (yyRuleNum yyrule, int yyrhslen, yyGLRStackItem* yyvsp,
   switch (yyrule)
     {
   case 2: /* Document: Head Terms  */
-#line 1150 "parser.y"
+#line 1152 "parser.y"
                                                                   { NEW(Document, *((Literal **)&yylval)); Document->Head=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Head); Document->Terms=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Terms); root=process_document(Document); }
 #line 3012 "parser.c"
     break;
 
   case 3: /* Document: Head Terms Covenants  */
-#line 1151 "parser.y"
+#line 1153 "parser.y"
                                                                   { NEW(Document, *((Literal **)&yylval)); Document->Head=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Head); Document->Terms=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terms); Document->Covenants=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Covenants); root=process_document(Document); }
 #line 3018 "parser.c"
     break;
 
   case 4: /* Head: Lex  */
-#line 1157 "parser.y"
+#line 1159 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Lex); ((*yyvalp).Head)=process_head(Head); }
 #line 3024 "parser.c"
     break;
 
   case 5: /* Head: Lex Preamble  */
-#line 1158 "parser.y"
+#line 1160 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3030 "parser.c"
     break;
 
   case 6: /* Head: Lex Comment  */
-#line 1159 "parser.y"
+#line 1161 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
 #line 3036 "parser.c"
     break;
 
   case 7: /* Head: Lex Comment Preamble  */
-#line 1160 "parser.y"
+#line 1162 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3042 "parser.c"
     break;
 
   case 8: /* Head: Lex Authors  */
-#line 1161 "parser.y"
+#line 1163 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Authors); ((*yyvalp).Head)=process_head(Head); }
 #line 3048 "parser.c"
     break;
 
   case 9: /* Head: Lex Authors Preamble  */
-#line 1162 "parser.y"
+#line 1164 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3054 "parser.c"
     break;
 
   case 10: /* Head: Lex Authors Comment  */
-#line 1163 "parser.y"
+#line 1165 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
 #line 3060 "parser.c"
     break;
 
   case 11: /* Head: Lex Authors Comment Preamble  */
-#line 1164 "parser.y"
+#line 1166 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3066 "parser.c"
     break;
 
   case 12: /* Head: Lex Lexon  */
-#line 1165 "parser.y"
+#line 1167 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Lexon); ((*yyvalp).Head)=process_head(Head); }
 #line 3072 "parser.c"
     break;
 
   case 13: /* Head: Lex Lexon Preamble  */
-#line 1166 "parser.y"
+#line 1168 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lexon); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3078 "parser.c"
     break;
 
   case 14: /* Head: Lex Lexon Comment  */
-#line 1167 "parser.y"
+#line 1169 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lexon); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
 #line 3084 "parser.c"
     break;
 
   case 15: /* Head: Lex Lexon Comment Preamble  */
-#line 1168 "parser.y"
+#line 1170 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lexon); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3090 "parser.c"
     break;
 
   case 16: /* Head: Lex Lexon Authors  */
-#line 1169 "parser.y"
+#line 1171 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Authors); ((*yyvalp).Head)=process_head(Head); }
 #line 3096 "parser.c"
     break;
 
   case 17: /* Head: Lex Lexon Authors Preamble  */
-#line 1170 "parser.y"
+#line 1172 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3102 "parser.c"
     break;
 
   case 18: /* Head: Lex Lexon Authors Comment  */
-#line 1171 "parser.y"
+#line 1173 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Comment); ((*yyvalp).Head)=process_head(Head); }
 #line 3108 "parser.c"
     break;
 
   case 19: /* Head: Lex Lexon Authors Comment Preamble  */
-#line 1172 "parser.y"
+#line 1174 "parser.y"
                                                                   { NEW(Head, *((Literal **)&yylval)); Head->Lex=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Lex); Head->Lexon=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Lexon); Head->Authors=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Authors); Head->Comment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comment); Head->Preamble=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Preamble); ((*yyvalp).Head)=process_head(Head); }
 #line 3114 "parser.c"
     break;
 
   case 20: /* Lex: LEX Colon Name Separator  */
-#line 1178 "parser.y"
+#line 1180 "parser.y"
                                                                   { NEW(Lex, *((Literal **)&yylval)); Lex->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Name); ((*yyvalp).Lex)=process_lex(Lex); }
 #line 3120 "parser.c"
     break;
 
   case 21: /* Lexon: LEXON Colon Description Separator  */
-#line 1184 "parser.y"
+#line 1186 "parser.y"
                                                                   { NEW(Lexon, *((Literal **)&yylval)); Lexon->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Lexon)=process_lexon(Lexon); }
 #line 3126 "parser.c"
     break;
 
   case 22: /* Authors: AUTHOR Colon Description Separator  */
-#line 1190 "parser.y"
+#line 1192 "parser.y"
                                                                   { NEW(Authors, *((Literal **)&yylval)); Authors->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Authors)=process_authors(Authors); }
 #line 3132 "parser.c"
     break;
 
   case 23: /* Authors: AUTHORS Colon Description Separator  */
-#line 1191 "parser.y"
+#line 1193 "parser.y"
                                                                   { NEW(Authors, *((Literal **)&yylval)); Authors->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Authors)=process_authors(Authors); }
 #line 3138 "parser.c"
     break;
 
   case 24: /* Comment: COMMENT Colon Description Separator  */
-#line 1197 "parser.y"
+#line 1199 "parser.y"
                                                                   { NEW(Comment, *((Literal **)&yylval)); Comment->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Comment)=process_comment(Comment); }
 #line 3144 "parser.c"
     break;
 
   case 25: /* Comment: COMMENTS Colon Description Separator  */
-#line 1198 "parser.y"
+#line 1200 "parser.y"
                                                                   { NEW(Comment, *((Literal **)&yylval)); Comment->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Comment)=process_comment(Comment); }
 #line 3150 "parser.c"
     break;
 
   case 26: /* Preamble: PREAMBLE Colon Description Separator  */
-#line 1204 "parser.y"
+#line 1206 "parser.y"
                                                                   { NEW(Preamble, *((Literal **)&yylval)); Preamble->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Description); ((*yyvalp).Preamble)=process_preamble(Preamble); }
 #line 3156 "parser.c"
     break;
 
   case 27: /* Terms: Provisions  */
-#line 1210 "parser.y"
+#line 1212 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3162 "parser.c"
     break;
 
   case 28: /* Terms: Separator Provisions  */
-#line 1211 "parser.y"
+#line 1213 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3168 "parser.c"
     break;
 
   case 29: /* Terms: TERMS Colon Provisions  */
-#line 1212 "parser.y"
+#line 1214 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3174 "parser.c"
     break;
 
   case 30: /* Terms: TERMS Colon Separator Provisions  */
-#line 1213 "parser.y"
+#line 1215 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3180 "parser.c"
     break;
 
   case 31: /* Terms: GENERAL Provisions  */
-#line 1214 "parser.y"
+#line 1216 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3186 "parser.c"
     break;
 
   case 32: /* Terms: GENERAL Separator Provisions  */
-#line 1215 "parser.y"
+#line 1217 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3192 "parser.c"
     break;
 
   case 33: /* Terms: GENERAL TERMS Colon Provisions  */
-#line 1216 "parser.y"
+#line 1218 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3198 "parser.c"
     break;
 
   case 34: /* Terms: GENERAL TERMS Colon Separator Provisions  */
-#line 1217 "parser.y"
+#line 1219 "parser.y"
                                                                   { NEW(Terms, *((Literal **)&yylval)); Terms->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Terms)=process_terms(Terms); }
 #line 3204 "parser.c"
     break;
 
   case 35: /* Covenants: Covenant  */
-#line 1223 "parser.y"
+#line 1225 "parser.y"
                                                                   { NEW(Covenants, *((Literal **)&yylval)); Covenants->Covenant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Covenant); ((*yyvalp).Covenants)=process_covenants(Covenants); }
 #line 3210 "parser.c"
     break;
 
   case 36: /* Covenants: Covenants Covenant  */
-#line 1224 "parser.y"
+#line 1226 "parser.y"
                                                                   { NEW(Covenants, *((Literal **)&yylval)); Covenants->Covenants=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Covenants); Covenants->Covenant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Covenant); ((*yyvalp).Covenants)=process_covenants(Covenants); }
 #line 3216 "parser.c"
     break;
 
   case 37: /* Covenant: PER Name Colon Provisions  */
-#line 1230 "parser.y"
+#line 1232 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
 #line 3222 "parser.c"
     break;
 
   case 38: /* Covenant: PER Name Colon Separator Provisions  */
-#line 1231 "parser.y"
+#line 1233 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
 #line 3228 "parser.c"
     break;
 
   case 39: /* Covenant: TERMS PER Name Colon Provisions  */
-#line 1232 "parser.y"
+#line 1234 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
 #line 3234 "parser.c"
     break;
 
   case 40: /* Covenant: TERMS PER Name Colon Separator Provisions  */
-#line 1233 "parser.y"
+#line 1235 "parser.y"
                                                                   { NEW(Covenant, *((Literal **)&yylval)); Covenant->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Name); Covenant->Provisions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Provisions); ((*yyvalp).Covenant)=process_covenant(Covenant); }
 #line 3240 "parser.c"
     break;
 
   case 41: /* Provisions: Definitions  */
-#line 1239 "parser.y"
+#line 1241 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Definitions); ((*yyvalp).Provisions)=process_provisions(Provisions); }
 #line 3246 "parser.c"
     break;
 
   case 42: /* Provisions: Definitions Clauses  */
-#line 1240 "parser.y"
+#line 1242 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Definitions); Provisions->Clauses=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clauses); ((*yyvalp).Provisions)=process_provisions(Provisions); }
 #line 3252 "parser.c"
     break;
 
   case 43: /* Provisions: Definitions Statements  */
-#line 1241 "parser.y"
+#line 1243 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Definitions); Provisions->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statements); ((*yyvalp).Provisions)=process_provisions(Provisions); }
 #line 3258 "parser.c"
     break;
 
   case 44: /* Provisions: Definitions Statements Clauses  */
-#line 1242 "parser.y"
+#line 1244 "parser.y"
                                                                   { NEW(Provisions, *((Literal **)&yylval)); Provisions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Definitions); Provisions->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Statements); Provisions->Clauses=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clauses); ((*yyvalp).Provisions)=process_provisions(Provisions); }
 #line 3264 "parser.c"
     break;
 
   case 45: /* Definitions: Definition  */
-#line 1248 "parser.y"
+#line 1250 "parser.y"
                                                                   { NEW(Definitions, *((Literal **)&yylval)); Definitions->Definition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Definition); ((*yyvalp).Definitions)=process_definitions(Definitions); }
 #line 3270 "parser.c"
     break;
 
   case 46: /* Definitions: Definitions Definition  */
-#line 1249 "parser.y"
+#line 1251 "parser.y"
                                                                   { NEW(Definitions, *((Literal **)&yylval)); Definitions->Definitions=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Definitions); Definitions->Definition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Definition); ((*yyvalp).Definitions)=process_definitions(Definitions); }
 #line 3276 "parser.c"
     break;
 
   case 47: /* Definition: Quote Name Quote IS Type_Term Separator  */
-#line 1255 "parser.y"
+#line 1257 "parser.y"
                                                                   { NEW(Definition, *((Literal **)&yylval)); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->Type_Term=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Type_Term); ((*yyvalp).Definition)=process_definition(Definition); }
 #line 3282 "parser.c"
     break;
 
   case 48: /* Definition: Article Quote Name Quote IS Type_Term Separator  */
-#line 1256 "parser.y"
+#line 1258 "parser.y"
                                                                   { NEW(Definition, *((Literal **)&yylval)); Definition->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Article); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->Type_Term=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Type_Term); ((*yyvalp).Definition)=process_definition(Definition); }
 #line 3288 "parser.c"
     break;
 
   case 49: /* Definition: Quote Name Quote IS This_Contract Separator  */
-#line 1257 "parser.y"
+#line 1259 "parser.y"
                                                                   { NEW(Definition, *((Literal **)&yylval)); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Definition)=process_definition(Definition); }
 #line 3294 "parser.c"
     break;
 
   case 50: /* Definition: Article Quote Name Quote IS This_Contract Separator  */
-#line 1258 "parser.y"
+#line 1260 "parser.y"
                                                                       { NEW(Definition, *((Literal **)&yylval)); Definition->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Article); Definition->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Definition->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Definition)=process_definition(Definition); }
 #line 3300 "parser.c"
     break;
 
   case 51: /* Type_Term: Type  */
-#line 1264 "parser.y"
+#line 1266 "parser.y"
                                                                   { NEW(Type_Term, *((Literal **)&yylval)); Type_Term->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Type_Term)=process_type_term(Type_Term); }
 #line 3306 "parser.c"
     break;
 
   case 52: /* Type_Term: Article Type  */
-#line 1265 "parser.y"
+#line 1267 "parser.y"
                                                                   { NEW(Type_Term, *((Literal **)&yylval)); Type_Term->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Type_Term->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Type_Term)=process_type_term(Type_Term); }
 #line 3312 "parser.c"
     break;
 
   case 53: /* Type: Person  */
-#line 1271 "parser.y"
+#line 1273 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Person=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Person); ((*yyvalp).Type)=process_type(Type); }
 #line 3318 "parser.c"
     break;
 
   case 54: /* Type: Amount  */
-#line 1272 "parser.y"
+#line 1274 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Amount=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Amount); ((*yyvalp).Type)=process_type(Type); }
 #line 3324 "parser.c"
     break;
 
   case 55: /* Type: Time  */
-#line 1273 "parser.y"
+#line 1275 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Time); ((*yyvalp).Type)=process_type(Type); }
 #line 3330 "parser.c"
     break;
 
   case 56: /* Type: Binary  */
-#line 1274 "parser.y"
+#line 1276 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Binary=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Binary); ((*yyvalp).Type)=process_type(Type); }
 #line 3336 "parser.c"
     break;
 
   case 57: /* Type: Text  */
-#line 1275 "parser.y"
+#line 1277 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Text=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Text); ((*yyvalp).Type)=process_type(Type); }
 #line 3342 "parser.c"
     break;
 
   case 58: /* Type: Data  */
-#line 1276 "parser.y"
+#line 1278 "parser.y"
                                                                   { NEW(Type, *((Literal **)&yylval)); Type->Data=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Data); ((*yyvalp).Type)=process_type(Type); }
 #line 3348 "parser.c"
     break;
 
   case 59: /* Person: PERSON  */
-#line 1282 "parser.y"
+#line 1284 "parser.y"
                                                                   { NEW(Person, *((Literal **)&yylval)); ((*yyvalp).Person)=process_person(Person); }
 #line 3354 "parser.c"
     break;
 
   case 60: /* Amount: AMOUNT  */
-#line 1288 "parser.y"
+#line 1290 "parser.y"
                                                                   { NEW(Amount, *((Literal **)&yylval)); ((*yyvalp).Amount)=process_amount(Amount); }
 #line 3360 "parser.c"
     break;
 
   case 61: /* Time: TIME  */
-#line 1294 "parser.y"
+#line 1296 "parser.y"
                                                                   { NEW(Time, *((Literal **)&yylval)); ((*yyvalp).Time)=process_time(Time); }
 #line 3366 "parser.c"
     break;
 
   case 62: /* Binary: BINARY  */
-#line 1300 "parser.y"
+#line 1302 "parser.y"
                                                                   { NEW(Binary, *((Literal **)&yylval)); ((*yyvalp).Binary)=process_binary(Binary); }
 #line 3372 "parser.c"
     break;
 
   case 63: /* Text: TEXT  */
-#line 1306 "parser.y"
+#line 1308 "parser.y"
                                                                   { NEW(Text, *((Literal **)&yylval)); ((*yyvalp).Text)=process_text(Text); }
 #line 3378 "parser.c"
     break;
 
   case 64: /* Data: DATA  */
-#line 1312 "parser.y"
+#line 1314 "parser.y"
                                                                   { NEW(Data, *((Literal **)&yylval)); ((*yyvalp).Data)=process_data(Data); }
 #line 3384 "parser.c"
     break;
 
   case 65: /* This_Contract: This CONTRACT  */
-#line 1318 "parser.y"
+#line 1320 "parser.y"
                                                                   { NEW(This_Contract, *((Literal **)&yylval)); This_Contract->This=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This); ((*yyvalp).This_Contract)=process_this_contract(This_Contract); }
 #line 3390 "parser.c"
     break;
 
   case 66: /* This_Contract: This Name  */
-#line 1319 "parser.y"
+#line 1321 "parser.y"
                                                                   { NEW(This_Contract, *((Literal **)&yylval)); This_Contract->This=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.This); This_Contract->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).This_Contract)=process_this_contract(This_Contract); }
 #line 3396 "parser.c"
     break;
 
   case 67: /* All_Contracts: ALL CONTRACTS  */
-#line 1325 "parser.y"
+#line 1327 "parser.y"
                                                                   { NEW(All_Contracts, *((Literal **)&yylval)); ((*yyvalp).All_Contracts)=process_all_contracts(All_Contracts); }
 #line 3402 "parser.c"
     break;
 
   case 68: /* This: THIS  */
-#line 1331 "parser.y"
+#line 1333 "parser.y"
                                                                   { NEW(This, *((Literal **)&yylval)); ((*yyvalp).This)=process_this(This); }
 #line 3408 "parser.c"
     break;
 
   case 69: /* This: THESE  */
-#line 1332 "parser.y"
+#line 1334 "parser.y"
                                                                   { NEW(This, *((Literal **)&yylval)); ((*yyvalp).This)=process_this(This); }
 #line 3414 "parser.c"
     break;
 
   case 70: /* Clauses: Clause  */
-#line 1338 "parser.y"
+#line 1340 "parser.y"
                                                                   { NEW(Clauses, *((Literal **)&yylval)); Clauses->Clause=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clause); ((*yyvalp).Clauses)=process_clauses(Clauses); }
 #line 3420 "parser.c"
     break;
 
   case 71: /* Clauses: Clauses Clause  */
-#line 1339 "parser.y"
+#line 1341 "parser.y"
                                                                   { NEW(Clauses, *((Literal **)&yylval)); Clauses->Clauses=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Clauses); Clauses->Clause=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Clause); ((*yyvalp).Clauses)=process_clauses(Clauses); }
 #line 3426 "parser.c"
     break;
 
   case 72: /* Clause: CLAUSE Colon Name Separator Body  */
-#line 1345 "parser.y"
+#line 1347 "parser.y"
                                                                   { NEW(Clause, *((Literal **)&yylval)); Clause->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Name); Clause->Body=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Body); ((*yyvalp).Clause)=process_clause(Clause); }
 #line 3432 "parser.c"
     break;
 
   case 73: /* Body: Statements  */
-#line 1351 "parser.y"
+#line 1353 "parser.y"
                                                                   { NEW(Body, *((Literal **)&yylval)); Body->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statements); ((*yyvalp).Body)=process_body(Body); }
 #line 3438 "parser.c"
     break;
 
   case 74: /* Body: Function  */
-#line 1352 "parser.y"
+#line 1354 "parser.y"
                                                                   { NEW(Body, *((Literal **)&yylval)); Body->Function=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Function); ((*yyvalp).Body)=process_body(Body); }
 #line 3444 "parser.c"
     break;
 
   case 75: /* Function: Quote Name Quote Illocutor Expression Separator  */
-#line 1358 "parser.y"
+#line 1360 "parser.y"
                                                                    { NEW(Function, *((Literal **)&yylval)); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
 #line 3450 "parser.c"
     break;
 
   case 76: /* Function: Quote Name Quote Illocutor Colon Expression Separator  */
-#line 1359 "parser.y"
+#line 1361 "parser.y"
                                                                          { NEW(Function, *((Literal **)&yylval)); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
 #line 3456 "parser.c"
     break;
 
   case 77: /* Function: Article Quote Name Quote Illocutor Expression Separator  */
-#line 1360 "parser.y"
+#line 1362 "parser.y"
                                                                           { NEW(Function, *((Literal **)&yylval)); Function->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Article); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
 #line 3462 "parser.c"
     break;
 
   case 78: /* Function: Article Quote Name Quote Illocutor Colon Expression Separator  */
-#line 1361 "parser.y"
+#line 1363 "parser.y"
                                                                                 { NEW(Function, *((Literal **)&yylval)); Function->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-7)].yystate.yysemantics.yyval.Article); Function->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Name); Function->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Function->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Function)=process_function(Function); }
 #line 3468 "parser.c"
     break;
 
   case 79: /* Statements: Statement  */
-#line 1367 "parser.y"
+#line 1369 "parser.y"
                                                                   { NEW(Statements, *((Literal **)&yylval)); Statements->Statement=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statement); ((*yyvalp).Statements)=process_statements(Statements); }
 #line 3474 "parser.c"
     break;
 
   case 80: /* Statements: Statements Statement  */
-#line 1368 "parser.y"
+#line 1370 "parser.y"
                                                                   { NEW(Statements, *((Literal **)&yylval)); Statements->Statements=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Statements); Statements->Statement=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Statement); ((*yyvalp).Statements)=process_statements(Statements); }
 #line 3480 "parser.c"
     break;
 
   case 81: /* Statement: Action  */
-#line 1374 "parser.y"
+#line 1376 "parser.y"
                                                                   { NEW(Statement, *((Literal **)&yylval)); Statement->Action=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Action); ((*yyvalp).Statement)=process_statement(Statement); }
 #line 3486 "parser.c"
     break;
 
   case 82: /* Statement: Flagging  */
-#line 1375 "parser.y"
+#line 1377 "parser.y"
                                                                   { NEW(Statement, *((Literal **)&yylval)); Statement->Flagging=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Flagging); ((*yyvalp).Statement)=process_statement(Statement); }
 #line 3492 "parser.c"
     break;
 
   case 83: /* Action: Subject Predicates Separator  */
-#line 1381 "parser.y"
+#line 1383 "parser.y"
                                                                   { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Subject); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
 #line 3498 "parser.c"
     break;
 
   case 84: /* Action: Subject Permission Predicates Separator  */
-#line 1382 "parser.y"
+#line 1384 "parser.y"
                                                                   { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Permission); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
 #line 3504 "parser.c"
     break;
 
   case 85: /* Action: Subject Permission Condition Punctuation Predicates Separator  */
-#line 1383 "parser.y"
+#line 1385 "parser.y"
                                                                                 { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Condition); Action->Punctuation=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Punctuation); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
 #line 3510 "parser.c"
     break;
 
   case 86: /* Action: Subject Permission Comma Predicates Separator  */
-#line 1384 "parser.y"
+#line 1386 "parser.y"
                                                                   { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Permission); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
 #line 3516 "parser.c"
     break;
 
   case 87: /* Action: Subject Permission Comma Condition Punctuation Predicates Separator  */
-#line 1385 "parser.y"
+#line 1387 "parser.y"
                                                                                       { NEW(Action, *((Literal **)&yylval)); Action->Subject=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Subject); Action->Permission=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Permission); Action->Condition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Condition); Action->Punctuation=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Punctuation); Action->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Predicates); ((*yyvalp).Action)=process_action(Action); }
 #line 3522 "parser.c"
     break;
 
   case 88: /* Punctuation: Comma  */
-#line 1391 "parser.y"
+#line 1393 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3528 "parser.c"
     break;
 
   case 89: /* Punctuation: Colon  */
-#line 1392 "parser.y"
+#line 1394 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3534 "parser.c"
     break;
 
   case 90: /* Punctuation: THEN  */
-#line 1393 "parser.y"
+#line 1395 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3540 "parser.c"
     break;
 
   case 91: /* Punctuation: THEN Colon  */
-#line 1394 "parser.y"
+#line 1396 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3546 "parser.c"
     break;
 
   case 92: /* Punctuation: Comma THEN  */
-#line 1395 "parser.y"
+#line 1397 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3552 "parser.c"
     break;
 
   case 93: /* Punctuation: Comma THEN Colon  */
-#line 1396 "parser.y"
+#line 1398 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3558 "parser.c"
     break;
 
   case 94: /* Punctuation: THEN Comma  */
-#line 1397 "parser.y"
+#line 1399 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3564 "parser.c"
     break;
 
   case 95: /* Punctuation: Comma THEN Comma  */
-#line 1398 "parser.y"
+#line 1400 "parser.y"
                                                                   { NEW(Punctuation, *((Literal **)&yylval)); ((*yyvalp).Punctuation)=process_punctuation(Punctuation); }
 #line 3570 "parser.c"
     break;
 
   case 96: /* Subject: Symbols  */
-#line 1404 "parser.y"
+#line 1406 "parser.y"
                                                                   { NEW(Subject, *((Literal **)&yylval)); Subject->Symbols=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbols); ((*yyvalp).Subject)=process_subject(Subject); }
 #line 3576 "parser.c"
     break;
 
   case 97: /* Symbols: Symbol  */
-#line 1410 "parser.y"
+#line 1412 "parser.y"
                                                                   { NEW(Symbols, *((Literal **)&yylval)); Symbols->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Symbols)=process_symbols(Symbols); }
 #line 3582 "parser.c"
     break;
 
   case 98: /* Symbols: Symbols Catena Symbol  */
-#line 1411 "parser.y"
+#line 1413 "parser.y"
                                                                   { NEW(Symbols, *((Literal **)&yylval)); Symbols->Symbols=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbols); Symbols->Catena=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Catena); Symbols->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Symbols)=process_symbols(Symbols); }
 #line 3588 "parser.c"
     break;
 
   case 99: /* Symbol: Name  */
-#line 1417 "parser.y"
+#line 1419 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3594 "parser.c"
     break;
 
   case 100: /* Symbol: New Name  */
-#line 1418 "parser.y"
+#line 1420 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3600 "parser.c"
     break;
 
   case 101: /* Symbol: Article Name  */
-#line 1419 "parser.y"
+#line 1421 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3606 "parser.c"
     break;
 
   case 102: /* Symbol: Article New Name  */
-#line 1420 "parser.y"
+#line 1422 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Article); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Name=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Name); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3612 "parser.c"
     break;
 
   case 103: /* Symbol: Type  */
-#line 1421 "parser.y"
+#line 1423 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3618 "parser.c"
     break;
 
   case 104: /* Symbol: New Type  */
-#line 1422 "parser.y"
+#line 1424 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3624 "parser.c"
     break;
 
   case 105: /* Symbol: Article Type  */
-#line 1423 "parser.y"
+#line 1425 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3630 "parser.c"
     break;
 
   case 106: /* Symbol: Article New Type  */
-#line 1424 "parser.y"
+#line 1426 "parser.y"
                                                                   { NEW(Symbol, *((Literal **)&yylval)); Symbol->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Article); Symbol->New=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.New); Symbol->Type=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Type); ((*yyvalp).Symbol)=process_symbol(Symbol); }
 #line 3636 "parser.c"
     break;
 
   case 107: /* Catena: OR  */
-#line 1430 "parser.y"
+#line 1432 "parser.y"
                                                                   { NEW(Catena, *((Literal **)&yylval)); ((*yyvalp).Catena)=process_catena(Catena); }
 #line 3642 "parser.c"
     break;
 
   case 108: /* Catena: Comma  */
-#line 1431 "parser.y"
+#line 1433 "parser.y"
                                                                   { NEW(Catena, *((Literal **)&yylval)); ((*yyvalp).Catena)=process_catena(Catena); }
 #line 3648 "parser.c"
     break;
 
   case 109: /* Object: Symbol  */
-#line 1437 "parser.y"
+#line 1439 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); Object->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Object)=process_object(Object); }
 #line 3654 "parser.c"
     break;
 
   case 110: /* Object: Reflexive  */
-#line 1438 "parser.y"
+#line 1440 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); Object->Reflexive=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Reflexive); ((*yyvalp).Object)=process_object(Object); }
 #line 3660 "parser.c"
     break;
 
   case 111: /* Object: ESCROW  */
-#line 1439 "parser.y"
+#line 1441 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); ((*yyvalp).Object)=process_object(Object); }
 #line 3666 "parser.c"
     break;
 
   case 112: /* Object: THE ESCROW  */
-#line 1440 "parser.y"
+#line 1442 "parser.y"
                                                                   { NEW(Object, *((Literal **)&yylval)); ((*yyvalp).Object)=process_object(Object); }
 #line 3672 "parser.c"
     break;
 
   case 113: /* Reflexive: MYSELF  */
-#line 1446 "parser.y"
+#line 1448 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3678 "parser.c"
     break;
 
   case 114: /* Reflexive: YOURSELF  */
-#line 1447 "parser.y"
+#line 1449 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3684 "parser.c"
     break;
 
   case 115: /* Reflexive: HERSELF  */
-#line 1448 "parser.y"
+#line 1450 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3690 "parser.c"
     break;
 
   case 116: /* Reflexive: HIMSELF  */
-#line 1449 "parser.y"
+#line 1451 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3696 "parser.c"
     break;
 
   case 117: /* Reflexive: ONESELF  */
-#line 1450 "parser.y"
+#line 1452 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3702 "parser.c"
     break;
 
   case 118: /* Reflexive: ITSELF  */
-#line 1451 "parser.y"
+#line 1453 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3708 "parser.c"
     break;
 
   case 119: /* Reflexive: THEMSELF  */
-#line 1452 "parser.y"
+#line 1454 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3714 "parser.c"
     break;
 
   case 120: /* Reflexive: OURSELVES  */
-#line 1453 "parser.y"
+#line 1455 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3720 "parser.c"
     break;
 
   case 121: /* Reflexive: YOURSELVES  */
-#line 1454 "parser.y"
+#line 1456 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3726 "parser.c"
     break;
 
   case 122: /* Reflexive: THEMSELVES  */
-#line 1455 "parser.y"
+#line 1457 "parser.y"
                                                                   { NEW(Reflexive, *((Literal **)&yylval)); ((*yyvalp).Reflexive)=process_reflexive(Reflexive); }
 #line 3732 "parser.c"
     break;
 
   case 123: /* Contract: This_Contract  */
-#line 1461 "parser.y"
+#line 1463 "parser.y"
                                                                   { NEW(Contract, *((Literal **)&yylval)); Contract->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Contract)=process_contract(Contract); }
 #line 3738 "parser.c"
     break;
 
   case 124: /* Contract: All_Contracts  */
-#line 1462 "parser.y"
+#line 1464 "parser.y"
                                                                   { NEW(Contract, *((Literal **)&yylval)); Contract->All_Contracts=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.All_Contracts); ((*yyvalp).Contract)=process_contract(Contract); }
 #line 3744 "parser.c"
     break;
 
   case 125: /* Predicates: Predicates Comma Predicate  */
-#line 1468 "parser.y"
+#line 1470 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3750 "parser.c"
     break;
 
   case 126: /* Predicates: Predicates Comma AFTERWARDS Predicate  */
-#line 1469 "parser.y"
+#line 1471 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3756 "parser.c"
     break;
 
   case 127: /* Predicates: Predicates Comma IF SO Predicate  */
-#line 1470 "parser.y"
+#line 1472 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3762 "parser.c"
     break;
 
   case 128: /* Predicates: Predicates Comma IF SO AFTERWARDS Predicate  */
-#line 1471 "parser.y"
+#line 1473 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3768 "parser.c"
     break;
 
   case 129: /* Predicates: Predicates Comma AND Predicate  */
-#line 1472 "parser.y"
+#line 1474 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3774 "parser.c"
     break;
 
   case 130: /* Predicates: Predicates Comma AND AFTERWARDS Predicate  */
-#line 1473 "parser.y"
+#line 1475 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3780 "parser.c"
     break;
 
   case 131: /* Predicates: Predicates Comma AND IF SO Predicate  */
-#line 1474 "parser.y"
+#line 1476 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3786 "parser.c"
     break;
 
   case 132: /* Predicates: Predicates Comma AND IF SO AFTERWARDS Predicate  */
-#line 1475 "parser.y"
+#line 1477 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3792 "parser.c"
     break;
 
   case 133: /* Predicates: Predicates Comma AND ALSO Predicate  */
-#line 1476 "parser.y"
+#line 1478 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3798 "parser.c"
     break;
 
   case 134: /* Predicates: Predicates Comma AND ALSO AFTERWARDS Predicate  */
-#line 1477 "parser.y"
+#line 1479 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3804 "parser.c"
     break;
 
   case 135: /* Predicates: Predicates Comma AND ALSO IF SO Predicate  */
-#line 1478 "parser.y"
+#line 1480 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-6)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3810 "parser.c"
     break;
 
   case 136: /* Predicates: Predicates Comma AND ALSO IF SO AFTERWARDS Predicate  */
-#line 1479 "parser.y"
+#line 1481 "parser.y"
                                                                        { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-7)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3816 "parser.c"
     break;
 
   case 137: /* Predicates: Predicates Comma AND WITH THIS Predicate  */
-#line 1480 "parser.y"
+#line 1482 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.Predicates); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3822 "parser.c"
     break;
 
   case 138: /* Predicates: Predicate  */
-#line 1481 "parser.y"
+#line 1483 "parser.y"
                                                                   { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Predicate); ((*yyvalp).Predicates)=process_predicates(Predicates); }
 #line 3828 "parser.c"
     break;
 
   case 139: /* Predicate: Certification  */
-#line 1487 "parser.y"
+#line 1489 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Certification=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Certification); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3834 "parser.c"
     break;
 
   case 140: /* Predicate: Declaration  */
-#line 1488 "parser.y"
+#line 1490 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Declaration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Declaration); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3840 "parser.c"
     break;
 
   case 141: /* Predicate: Filing  */
-#line 1489 "parser.y"
+#line 1491 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Filing=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Filing); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3846 "parser.c"
     break;
 
   case 142: /* Predicate: Registration  */
-#line 1490 "parser.y"
+#line 1492 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Registration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Registration); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3852 "parser.c"
     break;
 
   case 143: /* Predicate: Grantment  */
-#line 1491 "parser.y"
+#line 1493 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Grantment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Grantment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3858 "parser.c"
     break;
 
   case 144: /* Predicate: Appointment  */
-#line 1492 "parser.y"
+#line 1494 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Appointment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Appointment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3864 "parser.c"
     break;
 
   case 145: /* Predicate: Assignment  */
-#line 1493 "parser.y"
+#line 1495 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Assignment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Assignment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3870 "parser.c"
     break;
 
   case 146: /* Predicate: Acceptance  */
-#line 1494 "parser.y"
+#line 1496 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Acceptance=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Acceptance); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3876 "parser.c"
     break;
 
   case 147: /* Predicate: Fixture  */
-#line 1495 "parser.y"
+#line 1497 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Fixture=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixture); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3882 "parser.c"
     break;
 
   case 148: /* Predicate: Setting  */
-#line 1496 "parser.y"
+#line 1498 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Setting=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Setting); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3888 "parser.c"
     break;
 
   case 149: /* Predicate: Payment  */
-#line 1497 "parser.y"
+#line 1499 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Payment=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Payment); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3894 "parser.c"
     break;
 
   case 150: /* Predicate: Sending  */
-#line 1498 "parser.y"
+#line 1500 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Sending=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Sending); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3900 "parser.c"
     break;
 
   case 151: /* Predicate: Notification  */
-#line 1499 "parser.y"
+#line 1501 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Notification=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Notification); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3906 "parser.c"
     break;
 
   case 152: /* Predicate: Termination  */
-#line 1500 "parser.y"
+#line 1502 "parser.y"
                                                                   { NEW(Predicate, *((Literal **)&yylval)); Predicate->Termination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Termination); ((*yyvalp).Predicate)=process_predicate(Predicate); }
 #line 3912 "parser.c"
     break;
 
   case 153: /* Permission: MAY  */
-#line 1506 "parser.y"
+#line 1508 "parser.y"
                                                                   { NEW(Permission, *((Literal **)&yylval)); ((*yyvalp).Permission)=process_permission(Permission); }
 #line 3918 "parser.c"
     break;
 
   case 154: /* Certification: Certify Symbol  */
-#line 1512 "parser.y"
+#line 1514 "parser.y"
                                                                   { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
 #line 3924 "parser.c"
     break;
 
   case 155: /* Certification: Certify Symbol Expression  */
-#line 1513 "parser.y"
+#line 1515 "parser.y"
                                                                   { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Certification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Certification)=process_certification(Certification); }
 #line 3930 "parser.c"
     break;
 
   case 156: /* Certification: Certify Symbol AS Expression  */
-#line 1514 "parser.y"
+#line 1516 "parser.y"
                                                                   { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Certify); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Certification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Certification)=process_certification(Certification); }
 #line 3936 "parser.c"
     break;
 
   case 157: /* Certification: Certify Contract Symbol  */
-#line 1515 "parser.y"
+#line 1517 "parser.y"
                                                                   { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Certify); Certification->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
 #line 3942 "parser.c"
     break;
 
   case 158: /* Certification: Certify Contract AS Symbol  */
-#line 1516 "parser.y"
+#line 1518 "parser.y"
                                                                   { NEW(Certification, *((Literal **)&yylval)); Certification->Certify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Certify); Certification->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Certification->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Certification)=process_certification(Certification); }
 #line 3948 "parser.c"
     break;
 
   case 159: /* Certify: CERTIFY  */
-#line 1522 "parser.y"
+#line 1524 "parser.y"
                                                                   { NEW(Certify, *((Literal **)&yylval)); ((*yyvalp).Certify)=process_certify(Certify); }
 #line 3954 "parser.c"
     break;
 
   case 160: /* Certify: CERTIFIES  */
-#line 1523 "parser.y"
+#line 1525 "parser.y"
                                                                   { NEW(Certify, *((Literal **)&yylval)); ((*yyvalp).Certify)=process_certify(Certify); }
 #line 3960 "parser.c"
     break;
 
   case 161: /* Declaration: Declare Symbol  */
-#line 1529 "parser.y"
+#line 1531 "parser.y"
                                                                   { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
 #line 3966 "parser.c"
     break;
 
   case 162: /* Declaration: Declare Symbol Expression  */
-#line 1530 "parser.y"
+#line 1532 "parser.y"
                                                                   { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Declaration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Declaration)=process_declaration(Declaration); }
 #line 3972 "parser.c"
     break;
 
   case 163: /* Declaration: Declare Symbol TO BE Expression  */
-#line 1531 "parser.y"
+#line 1533 "parser.y"
                                                                   { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Declare); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Declaration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Declaration)=process_declaration(Declaration); }
 #line 3978 "parser.c"
     break;
 
   case 164: /* Declaration: Declare Contract Symbol  */
-#line 1532 "parser.y"
+#line 1534 "parser.y"
                                                                   { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Declare); Declaration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
 #line 3984 "parser.c"
     break;
 
   case 165: /* Declaration: Declare Contract AS Symbol  */
-#line 1533 "parser.y"
+#line 1535 "parser.y"
                                                                   { NEW(Declaration, *((Literal **)&yylval)); Declaration->Declare=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Declare); Declaration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Declaration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Declaration)=process_declaration(Declaration); }
 #line 3990 "parser.c"
     break;
 
   case 166: /* Declare: DECLARE  */
-#line 1539 "parser.y"
+#line 1541 "parser.y"
                                                                   { NEW(Declare, *((Literal **)&yylval)); ((*yyvalp).Declare)=process_declare(Declare); }
 #line 3996 "parser.c"
     break;
 
   case 167: /* Declare: DECLARES  */
-#line 1540 "parser.y"
+#line 1542 "parser.y"
                                                                   { NEW(Declare, *((Literal **)&yylval)); ((*yyvalp).Declare)=process_declare(Declare); }
 #line 4002 "parser.c"
     break;
 
   case 168: /* Filing: File Symbol  */
-#line 1546 "parser.y"
+#line 1548 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4008 "parser.c"
     break;
 
   case 169: /* Filing: File Symbol Expression  */
-#line 1547 "parser.y"
+#line 1549 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4014 "parser.c"
     break;
 
   case 170: /* Filing: File Symbol TO BE Expression  */
-#line 1548 "parser.y"
+#line 1550 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4020 "parser.c"
     break;
 
   case 171: /* Filing: File FOR Symbol  */
-#line 1549 "parser.y"
+#line 1551 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4026 "parser.c"
     break;
 
   case 172: /* Filing: File FOR Symbol Expression  */
-#line 1550 "parser.y"
+#line 1552 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4032 "parser.c"
     break;
 
   case 173: /* Filing: File FOR Symbol TO BE Expression  */
-#line 1551 "parser.y"
+#line 1553 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.File); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Symbol); Filing->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4038 "parser.c"
     break;
 
   case 174: /* Filing: File Contract Symbol  */
-#line 1552 "parser.y"
+#line 1554 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4044 "parser.c"
     break;
 
   case 175: /* Filing: File Contract TO BE Symbol  */
-#line 1553 "parser.y"
+#line 1555 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4050 "parser.c"
     break;
 
   case 176: /* Filing: File FOR Contract Symbol  */
-#line 1554 "parser.y"
+#line 1556 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4056 "parser.c"
     break;
 
   case 177: /* Filing: File FOR Contract TO BE Symbol  */
-#line 1555 "parser.y"
+#line 1557 "parser.y"
                                                                   { NEW(Filing, *((Literal **)&yylval)); Filing->File=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.File); Filing->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Contract); Filing->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Filing)=process_filing(Filing); }
 #line 4062 "parser.c"
     break;
 
   case 178: /* File: FILE_  */
-#line 1561 "parser.y"
+#line 1563 "parser.y"
                                                                   { NEW(File, *((Literal **)&yylval)); ((*yyvalp).File)=process_file(File); }
 #line 4068 "parser.c"
     break;
 
   case 179: /* File: FILES  */
-#line 1562 "parser.y"
+#line 1564 "parser.y"
                                                                   { NEW(File, *((Literal **)&yylval)); ((*yyvalp).File)=process_file(File); }
 #line 4074 "parser.c"
     break;
 
   case 180: /* Registration: Register Symbol  */
-#line 1568 "parser.y"
+#line 1570 "parser.y"
                                                                   { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
 #line 4080 "parser.c"
     break;
 
   case 181: /* Registration: Register Symbol Expression  */
-#line 1569 "parser.y"
+#line 1571 "parser.y"
                                                                   { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Registration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Registration)=process_registration(Registration); }
 #line 4086 "parser.c"
     break;
 
   case 182: /* Registration: Register Symbol AS Expression  */
-#line 1570 "parser.y"
+#line 1572 "parser.y"
                                                                   { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Register); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Registration->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Registration)=process_registration(Registration); }
 #line 4092 "parser.c"
     break;
 
   case 183: /* Registration: Register Contract Symbol  */
-#line 1571 "parser.y"
+#line 1573 "parser.y"
                                                                   { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Register); Registration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Contract); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
 #line 4098 "parser.c"
     break;
 
   case 184: /* Registration: Register Contract AS Symbol  */
-#line 1572 "parser.y"
+#line 1574 "parser.y"
                                                                   { NEW(Registration, *((Literal **)&yylval)); Registration->Register=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Register); Registration->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Registration->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Registration)=process_registration(Registration); }
 #line 4104 "parser.c"
     break;
 
   case 185: /* Register: REGISTER  */
-#line 1578 "parser.y"
+#line 1580 "parser.y"
                                                                   { NEW(Register, *((Literal **)&yylval)); ((*yyvalp).Register)=process_register(Register); }
 #line 4110 "parser.c"
     break;
 
   case 186: /* Register: REGISTERS  */
-#line 1579 "parser.y"
+#line 1581 "parser.y"
                                                                   { NEW(Register, *((Literal **)&yylval)); ((*yyvalp).Register)=process_register(Register); }
 #line 4116 "parser.c"
     break;
 
   case 187: /* Grantment: Grant Symbol  */
-#line 1585 "parser.y"
+#line 1587 "parser.y"
                                                                   { NEW(Grantment, *((Literal **)&yylval)); Grantment->Grant=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Grant); Grantment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Grantment)=process_grantment(Grantment); }
 #line 4122 "parser.c"
     break;
 
   case 188: /* Grant: GRANT  */
-#line 1591 "parser.y"
+#line 1593 "parser.y"
                                                                   { NEW(Grant, *((Literal **)&yylval)); ((*yyvalp).Grant)=process_grant(Grant); }
 #line 4128 "parser.c"
     break;
 
   case 189: /* Grant: GRANTS  */
-#line 1592 "parser.y"
+#line 1594 "parser.y"
                                                                   { NEW(Grant, *((Literal **)&yylval)); ((*yyvalp).Grant)=process_grant(Grant); }
 #line 4134 "parser.c"
     break;
 
   case 190: /* Appointment: Appoint Symbol  */
-#line 1598 "parser.y"
+#line 1600 "parser.y"
                                                                   { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Appoint); Appointment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Appointment)=process_appointment(Appointment); }
 #line 4140 "parser.c"
     break;
 
   case 191: /* Appointment: Appoint Expression AS Symbol  */
-#line 1599 "parser.y"
+#line 1601 "parser.y"
                                                                   { NEW(Appointment, *((Literal **)&yylval)); Appointment->Appoint=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Appoint); Appointment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Appointment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Appointment)=process_appointment(Appointment); }
 #line 4146 "parser.c"
     break;
 
   case 192: /* Appoint: APPOINT  */
-#line 1605 "parser.y"
+#line 1607 "parser.y"
                                                                   { NEW(Appoint, *((Literal **)&yylval)); ((*yyvalp).Appoint)=process_appoint(Appoint); }
 #line 4152 "parser.c"
     break;
 
   case 193: /* Appoint: APPOINTS  */
-#line 1606 "parser.y"
+#line 1608 "parser.y"
                                                                   { NEW(Appoint, *((Literal **)&yylval)); ((*yyvalp).Appoint)=process_appoint(Appoint); }
 #line 4158 "parser.c"
     break;
 
   case 194: /* Assignment: Assign Symbol  */
-#line 1612 "parser.y"
+#line 1614 "parser.y"
                                                                   { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Assign); Assignment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Assignment)=process_assignment(Assignment); }
 #line 4164 "parser.c"
     break;
 
   case 195: /* Assignment: Assign Expression AS Symbol  */
-#line 1613 "parser.y"
+#line 1615 "parser.y"
                                                                   { NEW(Assignment, *((Literal **)&yylval)); Assignment->Assign=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Assign); Assignment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Assignment->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Assignment)=process_assignment(Assignment); }
 #line 4170 "parser.c"
     break;
 
   case 196: /* Assign: ASSIGN  */
-#line 1619 "parser.y"
+#line 1621 "parser.y"
                                                                   { NEW(Assign, *((Literal **)&yylval)); ((*yyvalp).Assign)=process_assign(Assign); }
 #line 4176 "parser.c"
     break;
 
   case 197: /* Assign: ASSIGNS  */
-#line 1620 "parser.y"
+#line 1622 "parser.y"
                                                                   { NEW(Assign, *((Literal **)&yylval)); ((*yyvalp).Assign)=process_assign(Assign); }
 #line 4182 "parser.c"
     break;
 
   case 198: /* Acceptance: Accept Symbol  */
-#line 1626 "parser.y"
+#line 1628 "parser.y"
                                                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Accept); Acceptance->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Acceptance)=process_acceptance(Acceptance); }
 #line 4188 "parser.c"
     break;
 
   case 199: /* Acceptance: Accept Symbol Expression  */
-#line 1627 "parser.y"
+#line 1629 "parser.y"
                                                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Accept); Acceptance->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Acceptance->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Acceptance)=process_acceptance(Acceptance); }
 #line 4194 "parser.c"
     break;
 
   case 200: /* Acceptance: Accept Symbol AS Expression  */
-#line 1628 "parser.y"
+#line 1630 "parser.y"
                                                                   { NEW(Acceptance, *((Literal **)&yylval)); Acceptance->Accept=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Accept); Acceptance->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Acceptance->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Acceptance)=process_acceptance(Acceptance); }
 #line 4200 "parser.c"
     break;
 
   case 201: /* Accept: ACCEPT  */
-#line 1634 "parser.y"
+#line 1636 "parser.y"
                                                                   { NEW(Accept, *((Literal **)&yylval)); ((*yyvalp).Accept)=process_accept(Accept); }
 #line 4206 "parser.c"
     break;
 
   case 202: /* Accept: ACCEPTS  */
-#line 1635 "parser.y"
+#line 1637 "parser.y"
                                                                   { NEW(Accept, *((Literal **)&yylval)); ((*yyvalp).Accept)=process_accept(Accept); }
 #line 4212 "parser.c"
     break;
 
   case 203: /* Fixture: Fix Symbol  */
-#line 1641 "parser.y"
+#line 1643 "parser.y"
                                                                   { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Fix); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Fixture)=process_fixture(Fixture); }
 #line 4218 "parser.c"
     break;
 
   case 204: /* Fixture: Fix Symbol AS Expression  */
-#line 1642 "parser.y"
+#line 1644 "parser.y"
                                                                   { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Fix); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Fixture->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Fixture)=process_fixture(Fixture); }
 #line 4224 "parser.c"
     break;
 
   case 205: /* Fixture: Fix Contract AS Symbol  */
-#line 1643 "parser.y"
+#line 1645 "parser.y"
                                                                   { NEW(Fixture, *((Literal **)&yylval)); Fixture->Fix=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Fix); Fixture->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Fixture->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Fixture)=process_fixture(Fixture); }
 #line 4230 "parser.c"
     break;
 
   case 206: /* Fix: FIX  */
-#line 1649 "parser.y"
+#line 1651 "parser.y"
                                                                   { NEW(Fix, *((Literal **)&yylval)); ((*yyvalp).Fix)=process_fix(Fix); }
 #line 4236 "parser.c"
     break;
 
   case 207: /* Fix: FIXES  */
-#line 1650 "parser.y"
+#line 1652 "parser.y"
                                                                   { NEW(Fix, *((Literal **)&yylval)); ((*yyvalp).Fix)=process_fix(Fix); }
 #line 4242 "parser.c"
     break;
 
   case 208: /* Fixed: FIXED  */
-#line 1656 "parser.y"
+#line 1658 "parser.y"
                                                                   { NEW(Fixed, *((Literal **)&yylval)); ((*yyvalp).Fixed)=process_fixed(Fixed); }
 #line 4248 "parser.c"
     break;
 
   case 209: /* Setting: Be Symbol  */
-#line 1662 "parser.y"
+#line 1664 "parser.y"
                                                                   { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
 #line 4254 "parser.c"
     break;
 
   case 210: /* Setting: Be THEREFOR Symbol  */
-#line 1663 "parser.y"
+#line 1665 "parser.y"
                                                                   { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
 #line 4260 "parser.c"
     break;
 
   case 211: /* Setting: Be THEREFORE Symbol  */
-#line 1664 "parser.y"
+#line 1666 "parser.y"
                                                                   { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
 #line 4266 "parser.c"
     break;
 
   case 212: /* Setting: Be THEN Symbol  */
-#line 1665 "parser.y"
+#line 1667 "parser.y"
                                                                   { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
 #line 4272 "parser.c"
     break;
 
   case 213: /* Setting: Be THEN THEREFOR Symbol  */
-#line 1666 "parser.y"
+#line 1668 "parser.y"
                                                                   { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
 #line 4278 "parser.c"
     break;
 
   case 214: /* Setting: Be THEN THEREFORE Symbol  */
-#line 1667 "parser.y"
+#line 1669 "parser.y"
                                                                   { NEW(Setting, *((Literal **)&yylval)); Setting->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Be); Setting->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Setting)=process_setting(Setting); }
 #line 4284 "parser.c"
     break;
 
   case 215: /* Illocutor: Be  */
-#line 1673 "parser.y"
+#line 1675 "parser.y"
                                                                   { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
 #line 4290 "parser.c"
     break;
 
   case 216: /* Illocutor: Be AS  */
-#line 1674 "parser.y"
+#line 1676 "parser.y"
                                                                   { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
 #line 4296 "parser.c"
     break;
 
   case 217: /* Illocutor: Be DEFINED  */
-#line 1675 "parser.y"
+#line 1677 "parser.y"
                                                                   { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
 #line 4302 "parser.c"
     break;
 
   case 218: /* Illocutor: Be DEFINED AS  */
-#line 1676 "parser.y"
+#line 1678 "parser.y"
                                                                   { NEW(Illocutor, *((Literal **)&yylval)); Illocutor->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Be); ((*yyvalp).Illocutor)=process_illocutor(Illocutor); }
 #line 4308 "parser.c"
     break;
 
   case 219: /* Be: BE  */
-#line 1682 "parser.y"
+#line 1684 "parser.y"
                                                                   { NEW(Be, *((Literal **)&yylval)); ((*yyvalp).Be)=process_be(Be); }
 #line 4314 "parser.c"
     break;
 
   case 220: /* Be: IS  */
-#line 1683 "parser.y"
+#line 1685 "parser.y"
                                                                   { NEW(Be, *((Literal **)&yylval)); ((*yyvalp).Be)=process_be(Be); }
 #line 4320 "parser.c"
     break;
 
   case 221: /* Payment: Pay Expression Preposition Object  */
-#line 1689 "parser.y"
+#line 1691 "parser.y"
                                                                   { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Pay); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
 #line 4326 "parser.c"
     break;
 
   case 222: /* Payment: Pay From_Escrow Expression Preposition Object  */
-#line 1690 "parser.y"
+#line 1692 "parser.y"
                                                                   { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Pay); Payment->From_Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.From_Escrow); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
 #line 4332 "parser.c"
     break;
 
   case 223: /* Payment: Pay Expression From_Escrow Preposition Object  */
-#line 1691 "parser.y"
+#line 1693 "parser.y"
                                                                   { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Pay); Payment->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Expression); Payment->From_Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.From_Escrow); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
 #line 4338 "parser.c"
     break;
 
   case 224: /* Payment: Pay Escrow Preposition Object  */
-#line 1692 "parser.y"
+#line 1694 "parser.y"
                                                                   { NEW(Payment, *((Literal **)&yylval)); Payment->Pay=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Pay); Payment->Escrow=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Escrow); Payment->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Payment->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Payment)=process_payment(Payment); }
 #line 4344 "parser.c"
     break;
 
   case 225: /* Pay: PAY  */
-#line 1698 "parser.y"
+#line 1700 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4350 "parser.c"
     break;
 
   case 226: /* Pay: PAYS  */
-#line 1699 "parser.y"
+#line 1701 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4356 "parser.c"
     break;
 
   case 227: /* Pay: RETURN  */
-#line 1700 "parser.y"
+#line 1702 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4362 "parser.c"
     break;
 
   case 228: /* Pay: RETURNS  */
-#line 1701 "parser.y"
+#line 1703 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4368 "parser.c"
     break;
 
   case 229: /* Pay: REPAY  */
-#line 1702 "parser.y"
+#line 1704 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4374 "parser.c"
     break;
 
   case 230: /* Pay: REPAYS  */
-#line 1703 "parser.y"
+#line 1705 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4380 "parser.c"
     break;
 
   case 231: /* Pay: TRANSFER  */
-#line 1704 "parser.y"
+#line 1706 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4386 "parser.c"
     break;
 
   case 232: /* Pay: TRANSFERS  */
-#line 1705 "parser.y"
+#line 1707 "parser.y"
                                                                   { NEW(Pay, *((Literal **)&yylval)); ((*yyvalp).Pay)=process_pay(Pay); }
 #line 4392 "parser.c"
     break;
 
   case 233: /* Preposition: TO  */
-#line 1711 "parser.y"
+#line 1713 "parser.y"
                                                                   { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
 #line 4398 "parser.c"
     break;
 
   case 234: /* Preposition: INTO  */
-#line 1712 "parser.y"
+#line 1714 "parser.y"
                                                                   { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
 #line 4404 "parser.c"
     break;
 
   case 235: /* Preposition: OF  */
-#line 1713 "parser.y"
+#line 1715 "parser.y"
                                                                   { NEW(Preposition, *((Literal **)&yylval)); ((*yyvalp).Preposition)=process_preposition(Preposition); }
 #line 4410 "parser.c"
     break;
 
   case 236: /* Escrow: ESCROW  */
-#line 1719 "parser.y"
+#line 1721 "parser.y"
                                                                   { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
 #line 4416 "parser.c"
     break;
 
   case 237: /* Escrow: REMAINDER OF THE ESCROW  */
-#line 1720 "parser.y"
+#line 1722 "parser.y"
                                                                   { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
 #line 4422 "parser.c"
     break;
 
   case 238: /* Escrow: THE ESCROW  */
-#line 1721 "parser.y"
+#line 1723 "parser.y"
                                                                   { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
 #line 4428 "parser.c"
     break;
 
   case 239: /* Escrow: THE REMAINDER OF THE ESCROW  */
-#line 1722 "parser.y"
+#line 1724 "parser.y"
                                                                   { NEW(Escrow, *((Literal **)&yylval)); ((*yyvalp).Escrow)=process_escrow(Escrow); }
 #line 4434 "parser.c"
     break;
 
   case 240: /* From_Escrow: FROM ESCROW  */
-#line 1728 "parser.y"
+#line 1730 "parser.y"
                                                                   { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
 #line 4440 "parser.c"
     break;
 
   case 241: /* From_Escrow: FROM REMAINDER OF THE ESCROW  */
-#line 1729 "parser.y"
+#line 1731 "parser.y"
                                                                   { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
 #line 4446 "parser.c"
     break;
 
   case 242: /* From_Escrow: FROM THE ESCROW  */
-#line 1730 "parser.y"
+#line 1732 "parser.y"
                                                                   { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
 #line 4452 "parser.c"
     break;
 
   case 243: /* From_Escrow: FROM THE REMAINDER OF THE ESCROW  */
-#line 1731 "parser.y"
+#line 1733 "parser.y"
                                                                   { NEW(From_Escrow, *((Literal **)&yylval)); ((*yyvalp).From_Escrow)=process_from_escrow(From_Escrow); }
 #line 4458 "parser.c"
     break;
 
   case 244: /* Sending: Send Expression Preposition Object  */
-#line 1737 "parser.y"
+#line 1739 "parser.y"
                                                                   { NEW(Sending, *((Literal **)&yylval)); Sending->Send=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Send); Sending->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Expression); Sending->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Sending->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Sending)=process_sending(Sending); }
 #line 4464 "parser.c"
     break;
 
   case 245: /* Send: SEND  */
-#line 1743 "parser.y"
+#line 1745 "parser.y"
                                                                   { NEW(Send, *((Literal **)&yylval)); ((*yyvalp).Send)=process_send(Send); }
 #line 4470 "parser.c"
     break;
 
   case 246: /* Send: SENDS  */
-#line 1744 "parser.y"
+#line 1746 "parser.y"
                                                                   { NEW(Send, *((Literal **)&yylval)); ((*yyvalp).Send)=process_send(Send); }
 #line 4476 "parser.c"
     break;
 
   case 247: /* Notification: Notify Object  */
-#line 1750 "parser.y"
+#line 1752 "parser.y"
                                                                   { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Notify); Notification->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Object); ((*yyvalp).Notification)=process_notification(Notification); }
 #line 4482 "parser.c"
     break;
 
   case 248: /* Notification: Notify Object Preposition Expression  */
-#line 1751 "parser.y"
+#line 1753 "parser.y"
                                                                   { NEW(Notification, *((Literal **)&yylval)); Notification->Notify=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Notify); Notification->Object=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Object); Notification->Preposition=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Preposition); Notification->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Notification)=process_notification(Notification); }
 #line 4488 "parser.c"
     break;
 
   case 249: /* Notify: NOTIFY  */
-#line 1757 "parser.y"
+#line 1759 "parser.y"
                                                                   { NEW(Notify, *((Literal **)&yylval)); ((*yyvalp).Notify)=process_notify(Notify); }
 #line 4494 "parser.c"
     break;
 
   case 250: /* Notify: NOTIFIES  */
-#line 1758 "parser.y"
+#line 1760 "parser.y"
                                                                   { NEW(Notify, *((Literal **)&yylval)); ((*yyvalp).Notify)=process_notify(Notify); }
 #line 4500 "parser.c"
     break;
 
   case 251: /* Termination: Terminate This_Contract  */
-#line 1764 "parser.y"
+#line 1766 "parser.y"
                                                                   { NEW(Termination, *((Literal **)&yylval)); Termination->Terminate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terminate); Termination->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.This_Contract); ((*yyvalp).Termination)=process_termination(Termination); }
 #line 4506 "parser.c"
     break;
 
   case 252: /* Termination: Terminate All_Contracts  */
-#line 1765 "parser.y"
+#line 1767 "parser.y"
                                                                   { NEW(Termination, *((Literal **)&yylval)); Termination->Terminate=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Terminate); Termination->All_Contracts=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.All_Contracts); ((*yyvalp).Termination)=process_termination(Termination); }
 #line 4512 "parser.c"
     break;
 
   case 253: /* Terminate: TERMINATE  */
-#line 1771 "parser.y"
+#line 1773 "parser.y"
                                                                   { NEW(Terminate, *((Literal **)&yylval)); ((*yyvalp).Terminate)=process_terminate(Terminate); }
 #line 4518 "parser.c"
     break;
 
   case 254: /* Terminate: TERMINATES  */
-#line 1772 "parser.y"
+#line 1774 "parser.y"
                                                                   { NEW(Terminate, *((Literal **)&yylval)); ((*yyvalp).Terminate)=process_terminate(Terminate); }
 #line 4524 "parser.c"
     break;
 
   case 255: /* Flagging: Illocutor Symbol Separator  */
-#line 1778 "parser.y"
+#line 1780 "parser.y"
                                                                   { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4530 "parser.c"
     break;
 
   case 256: /* Flagging: Illocutor THEREFORE Symbol Separator  */
-#line 1779 "parser.y"
+#line 1781 "parser.y"
                                                                   { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4536 "parser.c"
     break;
 
   case 257: /* Flagging: Illocutor THEN Symbol Separator  */
-#line 1780 "parser.y"
+#line 1782 "parser.y"
                                                                   { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4542 "parser.c"
     break;
 
   case 258: /* Flagging: Illocutor THEN THEREFORE Symbol Separator  */
-#line 1781 "parser.y"
+#line 1783 "parser.y"
                                                                   { NEW(Flagging, *((Literal **)&yylval)); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4548 "parser.c"
     break;
 
   case 259: /* Flagging: This_Contract Illocutor Symbol Separator  */
-#line 1782 "parser.y"
+#line 1784 "parser.y"
                                                                   { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4554 "parser.c"
     break;
 
   case 260: /* Flagging: This_Contract Illocutor THEREFORE Symbol Separator  */
-#line 1783 "parser.y"
+#line 1785 "parser.y"
                                                                      { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4560 "parser.c"
     break;
 
   case 261: /* Flagging: This_Contract Illocutor THEN Symbol Separator  */
-#line 1784 "parser.y"
+#line 1786 "parser.y"
                                                                   { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4566 "parser.c"
     break;
 
   case 262: /* Flagging: This_Contract Illocutor THEN THEREFORE Symbol Separator  */
-#line 1785 "parser.y"
+#line 1787 "parser.y"
                                                                           { NEW(Flagging, *((Literal **)&yylval)); Flagging->This_Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-5)].yystate.yysemantics.yyval.This_Contract); Flagging->Illocutor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Illocutor); Flagging->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Flagging)=process_flagging(Flagging); }
 #line 4572 "parser.c"
     break;
 
   case 263: /* Condition: If Expression  */
-#line 1791 "parser.y"
+#line 1793 "parser.y"
                                                                   { NEW(Condition, *((Literal **)&yylval)); Condition->If=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.If); Condition->Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expression); ((*yyvalp).Condition)=process_condition(Condition); }
 #line 4578 "parser.c"
     break;
 
   case 264: /* If: IF  */
-#line 1797 "parser.y"
+#line 1799 "parser.y"
                                                                   { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
 #line 4584 "parser.c"
     break;
 
   case 265: /* If: GIVEN THAT  */
-#line 1798 "parser.y"
+#line 1800 "parser.y"
                                                                   { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
 #line 4590 "parser.c"
     break;
 
   case 266: /* If: PROVIDED  */
-#line 1799 "parser.y"
+#line 1801 "parser.y"
                                                                   { NEW(If, *((Literal **)&yylval)); ((*yyvalp).If)=process_if(If); }
 #line 4596 "parser.c"
     break;
 
   case 267: /* Expression: Combination  */
-#line 1805 "parser.y"
+#line 1807 "parser.y"
                                                                   { NEW(Expression, *((Literal **)&yylval)); Expression->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Expression)=process_expression(Expression); }
 #line 4602 "parser.c"
     break;
 
   case 268: /* Scalar_Comparison: Scalar_Expression Comparison_Operator Scalar_Expression  */
-#line 1811 "parser.y"
+#line 1813 "parser.y"
                                                                           { NEW(Scalar_Comparison, *((Literal **)&yylval)); Scalar_Comparison->Scalar_Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Scalar_Expression); Scalar_Comparison->Comparison_Operator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Comparison_Operator); Scalar_Comparison->Scalar_Expression2=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar_Expression); ((*yyvalp).Scalar_Comparison)=process_scalar_comparison(Scalar_Comparison); }
 #line 4608 "parser.c"
     break;
 
   case 269: /* Comparison_Operator: Equal  */
-#line 1817 "parser.y"
+#line 1819 "parser.y"
                                                                   { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Equal=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Equal); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
 #line 4614 "parser.c"
     break;
 
   case 270: /* Comparison_Operator: Greater  */
-#line 1818 "parser.y"
+#line 1820 "parser.y"
                                                                   { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Greater=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Greater); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
 #line 4620 "parser.c"
     break;
 
   case 271: /* Comparison_Operator: Less  */
-#line 1819 "parser.y"
+#line 1821 "parser.y"
                                                                   { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Less=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Less); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
 #line 4626 "parser.c"
     break;
 
   case 272: /* Comparison_Operator: Later  */
-#line 1820 "parser.y"
+#line 1822 "parser.y"
                                                                   { NEW(Comparison_Operator, *((Literal **)&yylval)); Comparison_Operator->Later=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Later); ((*yyvalp).Comparison_Operator)=process_comparison_operator(Comparison_Operator); }
 #line 4632 "parser.c"
     break;
 
   case 273: /* Equal: EQUAL  */
-#line 1826 "parser.y"
+#line 1828 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4638 "parser.c"
     break;
 
   case 274: /* Equal: EQUAL TO  */
-#line 1827 "parser.y"
+#line 1829 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4644 "parser.c"
     break;
 
   case 275: /* Equal: EQUALING  */
-#line 1828 "parser.y"
+#line 1830 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4650 "parser.c"
     break;
 
   case 276: /* Equal: IS  */
-#line 1829 "parser.y"
+#line 1831 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4656 "parser.c"
     break;
 
   case 277: /* Equal: IS EQUAL  */
-#line 1830 "parser.y"
+#line 1832 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4662 "parser.c"
     break;
 
   case 278: /* Equal: IS EQUAL TO  */
-#line 1831 "parser.y"
+#line 1833 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4668 "parser.c"
     break;
 
   case 279: /* Equal: BEING  */
-#line 1832 "parser.y"
+#line 1834 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4674 "parser.c"
     break;
 
   case 280: /* Equal: BEING EQUAL  */
-#line 1833 "parser.y"
+#line 1835 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4680 "parser.c"
     break;
 
   case 281: /* Equal: BEING EQUAL TO  */
-#line 1834 "parser.y"
+#line 1836 "parser.y"
                                                                   { NEW(Equal, *((Literal **)&yylval)); ((*yyvalp).Equal)=process_equal(Equal); }
 #line 4686 "parser.c"
     break;
 
   case 282: /* Greater: GREATER BEING GREATER  */
-#line 1840 "parser.y"
+#line 1842 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4692 "parser.c"
     break;
 
   case 283: /* Greater: GREATER BEING GREATER THAN  */
-#line 1841 "parser.y"
+#line 1843 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4698 "parser.c"
     break;
 
   case 284: /* Greater: GREATER THAN BEING GREATER  */
-#line 1842 "parser.y"
+#line 1844 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4704 "parser.c"
     break;
 
   case 285: /* Greater: GREATER THAN BEING GREATER THAN  */
-#line 1843 "parser.y"
+#line 1845 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4710 "parser.c"
     break;
 
   case 286: /* Greater: IS GREATER BEING GREATER  */
-#line 1844 "parser.y"
+#line 1846 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4716 "parser.c"
     break;
 
   case 287: /* Greater: IS GREATER BEING GREATER THAN  */
-#line 1845 "parser.y"
+#line 1847 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4722 "parser.c"
     break;
 
   case 288: /* Greater: IS GREATER THAN BEING GREATER  */
-#line 1846 "parser.y"
+#line 1848 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4728 "parser.c"
     break;
 
   case 289: /* Greater: IS GREATER THAN BEING GREATER THAN  */
-#line 1847 "parser.y"
+#line 1849 "parser.y"
                                                                   { NEW(Greater, *((Literal **)&yylval)); ((*yyvalp).Greater)=process_greater(Greater); }
 #line 4734 "parser.c"
     break;
 
   case 290: /* Less: LESS BEING LESS SMALLER BEING SMALLER  */
-#line 1853 "parser.y"
+#line 1855 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4740 "parser.c"
     break;
 
   case 291: /* Less: LESS BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1854 "parser.y"
+#line 1856 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4746 "parser.c"
     break;
 
   case 292: /* Less: LESS BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1855 "parser.y"
+#line 1857 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4752 "parser.c"
     break;
 
   case 293: /* Less: LESS BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1856 "parser.y"
+#line 1858 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4758 "parser.c"
     break;
 
   case 294: /* Less: LESS BEING LESS IS SMALLER BEING SMALLER  */
-#line 1857 "parser.y"
+#line 1859 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4764 "parser.c"
     break;
 
   case 295: /* Less: LESS BEING LESS IS SMALLER BEING SMALLER THAN  */
-#line 1858 "parser.y"
+#line 1860 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4770 "parser.c"
     break;
 
   case 296: /* Less: LESS BEING LESS IS SMALLER THAN BEING SMALLER  */
-#line 1859 "parser.y"
+#line 1861 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4776 "parser.c"
     break;
 
   case 297: /* Less: LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
-#line 1860 "parser.y"
+#line 1862 "parser.y"
                                                                       { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4782 "parser.c"
     break;
 
   case 298: /* Less: LESS BEING LESS THAN SMALLER BEING SMALLER  */
-#line 1861 "parser.y"
+#line 1863 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4788 "parser.c"
     break;
 
   case 299: /* Less: LESS BEING LESS THAN SMALLER BEING SMALLER THAN  */
-#line 1862 "parser.y"
+#line 1864 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4794 "parser.c"
     break;
 
   case 300: /* Less: LESS BEING LESS THAN SMALLER THAN BEING SMALLER  */
-#line 1863 "parser.y"
+#line 1865 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4800 "parser.c"
     break;
 
   case 301: /* Less: LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
-#line 1864 "parser.y"
+#line 1866 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4806 "parser.c"
     break;
 
   case 302: /* Less: LESS BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1865 "parser.y"
+#line 1867 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4812 "parser.c"
     break;
 
   case 303: /* Less: LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
-#line 1866 "parser.y"
+#line 1868 "parser.y"
                                                                       { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4818 "parser.c"
     break;
 
   case 304: /* Less: LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
-#line 1867 "parser.y"
+#line 1869 "parser.y"
                                                                       { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4824 "parser.c"
     break;
 
   case 305: /* Less: LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1868 "parser.y"
+#line 1870 "parser.y"
                                                                            { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4830 "parser.c"
     break;
 
   case 306: /* Less: LESS THAN BEING LESS SMALLER BEING SMALLER  */
-#line 1869 "parser.y"
+#line 1871 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4836 "parser.c"
     break;
 
   case 307: /* Less: LESS THAN BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1870 "parser.y"
+#line 1872 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4842 "parser.c"
     break;
 
   case 308: /* Less: LESS THAN BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1871 "parser.y"
+#line 1873 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4848 "parser.c"
     break;
 
   case 309: /* Less: LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1872 "parser.y"
+#line 1874 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4854 "parser.c"
     break;
 
   case 310: /* Less: LESS THAN BEING LESS IS SMALLER BEING SMALLER  */
-#line 1873 "parser.y"
+#line 1875 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4860 "parser.c"
     break;
 
   case 311: /* Less: LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN  */
-#line 1874 "parser.y"
+#line 1876 "parser.y"
                                                                       { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4866 "parser.c"
     break;
 
   case 312: /* Less: LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER  */
-#line 1875 "parser.y"
+#line 1877 "parser.y"
                                                                       { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4872 "parser.c"
     break;
 
   case 313: /* Less: LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
-#line 1876 "parser.y"
+#line 1878 "parser.y"
                                                                            { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4878 "parser.c"
     break;
 
   case 314: /* Less: LESS THAN BEING LESS THAN SMALLER BEING SMALLER  */
-#line 1877 "parser.y"
+#line 1879 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4884 "parser.c"
     break;
 
   case 315: /* Less: LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN  */
-#line 1878 "parser.y"
+#line 1880 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4890 "parser.c"
     break;
 
   case 316: /* Less: LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER  */
-#line 1879 "parser.y"
+#line 1881 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4896 "parser.c"
     break;
 
   case 317: /* Less: LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
-#line 1880 "parser.y"
+#line 1882 "parser.y"
                                                                              { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4902 "parser.c"
     break;
 
   case 318: /* Less: LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1881 "parser.y"
+#line 1883 "parser.y"
                                                                       { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4908 "parser.c"
     break;
 
   case 319: /* Less: LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
-#line 1882 "parser.y"
+#line 1884 "parser.y"
                                                                            { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4914 "parser.c"
     break;
 
   case 320: /* Less: LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
-#line 1883 "parser.y"
+#line 1885 "parser.y"
                                                                            { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4920 "parser.c"
     break;
 
   case 321: /* Less: LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1884 "parser.y"
+#line 1886 "parser.y"
                                                                                 { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4926 "parser.c"
     break;
 
   case 322: /* Less: IS LESS BEING LESS SMALLER BEING SMALLER  */
-#line 1885 "parser.y"
+#line 1887 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4932 "parser.c"
     break;
 
   case 323: /* Less: IS LESS BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1886 "parser.y"
+#line 1888 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4938 "parser.c"
     break;
 
   case 324: /* Less: IS LESS BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1887 "parser.y"
+#line 1889 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4944 "parser.c"
     break;
 
   case 325: /* Less: IS LESS BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1888 "parser.y"
+#line 1890 "parser.y"
                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4950 "parser.c"
     break;
 
   case 326: /* Less: IS LESS BEING LESS IS SMALLER BEING SMALLER  */
-#line 1889 "parser.y"
+#line 1891 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4956 "parser.c"
     break;
 
   case 327: /* Less: IS LESS BEING LESS IS SMALLER BEING SMALLER THAN  */
-#line 1890 "parser.y"
+#line 1892 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4962 "parser.c"
     break;
 
   case 328: /* Less: IS LESS BEING LESS IS SMALLER THAN BEING SMALLER  */
-#line 1891 "parser.y"
+#line 1893 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4968 "parser.c"
     break;
 
   case 329: /* Less: IS LESS BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
-#line 1892 "parser.y"
+#line 1894 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4974 "parser.c"
     break;
 
   case 330: /* Less: IS LESS BEING LESS THAN SMALLER BEING SMALLER  */
-#line 1893 "parser.y"
+#line 1895 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4980 "parser.c"
     break;
 
   case 331: /* Less: IS LESS BEING LESS THAN SMALLER BEING SMALLER THAN  */
-#line 1894 "parser.y"
+#line 1896 "parser.y"
                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4986 "parser.c"
     break;
 
   case 332: /* Less: IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER  */
-#line 1895 "parser.y"
+#line 1897 "parser.y"
                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4992 "parser.c"
     break;
 
   case 333: /* Less: IS LESS BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
-#line 1896 "parser.y"
+#line 1898 "parser.y"
                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 4998 "parser.c"
     break;
 
   case 334: /* Less: IS LESS BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1897 "parser.y"
+#line 1899 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5004 "parser.c"
     break;
 
   case 335: /* Less: IS LESS BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
-#line 1898 "parser.y"
+#line 1900 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5010 "parser.c"
     break;
 
   case 336: /* Less: IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
-#line 1899 "parser.y"
+#line 1901 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5016 "parser.c"
     break;
 
   case 337: /* Less: IS LESS BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1900 "parser.y"
+#line 1902 "parser.y"
                                                                              { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5022 "parser.c"
     break;
 
   case 338: /* Less: IS LESS THAN BEING LESS SMALLER BEING SMALLER  */
-#line 1901 "parser.y"
+#line 1903 "parser.y"
                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5028 "parser.c"
     break;
 
   case 339: /* Less: IS LESS THAN BEING LESS SMALLER BEING SMALLER THAN  */
-#line 1902 "parser.y"
+#line 1904 "parser.y"
                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5034 "parser.c"
     break;
 
   case 340: /* Less: IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER  */
-#line 1903 "parser.y"
+#line 1905 "parser.y"
                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5040 "parser.c"
     break;
 
   case 341: /* Less: IS LESS THAN BEING LESS SMALLER THAN BEING SMALLER THAN  */
-#line 1904 "parser.y"
+#line 1906 "parser.y"
                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5046 "parser.c"
     break;
 
   case 342: /* Less: IS LESS THAN BEING LESS IS SMALLER BEING SMALLER  */
-#line 1905 "parser.y"
+#line 1907 "parser.y"
                                                                    { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5052 "parser.c"
     break;
 
   case 343: /* Less: IS LESS THAN BEING LESS IS SMALLER BEING SMALLER THAN  */
-#line 1906 "parser.y"
+#line 1908 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5058 "parser.c"
     break;
 
   case 344: /* Less: IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER  */
-#line 1907 "parser.y"
+#line 1909 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5064 "parser.c"
     break;
 
   case 345: /* Less: IS LESS THAN BEING LESS IS SMALLER THAN BEING SMALLER THAN  */
-#line 1908 "parser.y"
+#line 1910 "parser.y"
                                                                              { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5070 "parser.c"
     break;
 
   case 346: /* Less: IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER  */
-#line 1909 "parser.y"
+#line 1911 "parser.y"
                                                                      { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5076 "parser.c"
     break;
 
   case 347: /* Less: IS LESS THAN BEING LESS THAN SMALLER BEING SMALLER THAN  */
-#line 1910 "parser.y"
+#line 1912 "parser.y"
                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5082 "parser.c"
     break;
 
   case 348: /* Less: IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER  */
-#line 1911 "parser.y"
+#line 1913 "parser.y"
                                                                           { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5088 "parser.c"
     break;
 
   case 349: /* Less: IS LESS THAN BEING LESS THAN SMALLER THAN BEING SMALLER THAN  */
-#line 1912 "parser.y"
+#line 1914 "parser.y"
                                                                                { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5094 "parser.c"
     break;
 
   case 350: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER  */
-#line 1913 "parser.y"
+#line 1915 "parser.y"
                                                                         { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5100 "parser.c"
     break;
 
   case 351: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER BEING SMALLER THAN  */
-#line 1914 "parser.y"
+#line 1916 "parser.y"
                                                                              { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5106 "parser.c"
     break;
 
   case 352: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER  */
-#line 1915 "parser.y"
+#line 1917 "parser.y"
                                                                              { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5112 "parser.c"
     break;
 
   case 353: /* Less: IS LESS THAN BEING LESS THAN IS SMALLER THAN BEING SMALLER THAN  */
-#line 1916 "parser.y"
+#line 1918 "parser.y"
                                                                                   { NEW(Less, *((Literal **)&yylval)); ((*yyvalp).Less)=process_less(Less); }
 #line 5118 "parser.c"
     break;
 
   case 354: /* Later: IS AT LEAST  */
-#line 1922 "parser.y"
+#line 1924 "parser.y"
                                                                   { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
 #line 5124 "parser.c"
     break;
 
   case 355: /* Later: IS AT THE LEAST  */
-#line 1923 "parser.y"
+#line 1925 "parser.y"
                                                                   { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
 #line 5130 "parser.c"
     break;
 
   case 356: /* Later: LIES AT LEAST  */
-#line 1924 "parser.y"
+#line 1926 "parser.y"
                                                                   { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
 #line 5136 "parser.c"
     break;
 
   case 357: /* Later: LIES AT THE LEAST  */
-#line 1925 "parser.y"
+#line 1927 "parser.y"
                                                                   { NEW(Later, *((Literal **)&yylval)); ((*yyvalp).Later)=process_later(Later); }
 #line 5142 "parser.c"
     break;
 
   case 358: /* Scalar_Expression: Symbol  */
-#line 1931 "parser.y"
+#line 1933 "parser.y"
                                                                   { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
 #line 5148 "parser.c"
     break;
 
   case 359: /* Scalar_Expression: Scalar  */
-#line 1932 "parser.y"
+#line 1934 "parser.y"
                                                                   { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Scalar=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
 #line 5154 "parser.c"
     break;
 
   case 360: /* Scalar_Expression: Point_In_Time  */
-#line 1933 "parser.y"
+#line 1935 "parser.y"
                                                                   { NEW(Scalar_Expression, *((Literal **)&yylval)); Scalar_Expression->Point_In_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Point_In_Time); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
 #line 5160 "parser.c"
     break;
 
   case 361: /* Scalar_Expression: ESCROW  */
-#line 1934 "parser.y"
+#line 1936 "parser.y"
                                                                   { NEW(Scalar_Expression, *((Literal **)&yylval)); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
 #line 5166 "parser.c"
     break;
 
   case 362: /* Scalar_Expression: THE ESCROW  */
-#line 1935 "parser.y"
+#line 1937 "parser.y"
                                                                   { NEW(Scalar_Expression, *((Literal **)&yylval)); ((*yyvalp).Scalar_Expression)=process_scalar_expression(Scalar_Expression); }
 #line 5172 "parser.c"
     break;
 
   case 363: /* Combination: Combinor  */
-#line 1941 "parser.y"
+#line 1943 "parser.y"
                                                                   { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinor); ((*yyvalp).Combination)=process_combination(Combination); }
 #line 5178 "parser.c"
     break;
 
   case 364: /* Combination: Combinor Comma Combination  */
-#line 1942 "parser.y"
+#line 1944 "parser.y"
                                                                   { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Combinor); Combination->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Combination)=process_combination(Combination); }
 #line 5184 "parser.c"
     break;
 
   case 365: /* Combination: Combinor Comma Combinator Combination  */
-#line 1943 "parser.y"
+#line 1945 "parser.y"
                                                                   { NEW(Combination, *((Literal **)&yylval)); Combination->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Combinor); Combination->Combinator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Combinator); Combination->Combination=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combination); ((*yyvalp).Combination)=process_combination(Combination); }
 #line 5190 "parser.c"
     break;
 
   case 366: /* Combinor: Combinand  */
-#line 1949 "parser.y"
+#line 1951 "parser.y"
                                                                   { NEW(Combinor, *((Literal **)&yylval)); Combinor->Combinand=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinand); ((*yyvalp).Combinor)=process_combinor(Combinor); }
 #line 5196 "parser.c"
     break;
 
   case 367: /* Combinor: Combinand Combinator Combinor  */
-#line 1950 "parser.y"
+#line 1952 "parser.y"
                                                                   { NEW(Combinor, *((Literal **)&yylval)); Combinor->Combinand=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Combinand); Combinor->Combinator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Combinator); Combinor->Combinor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Combinor); ((*yyvalp).Combinor)=process_combinor(Combinor); }
 #line 5202 "parser.c"
     break;
 
   case 368: /* Combinand: Symbol  */
-#line 1956 "parser.y"
+#line 1958 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5208 "parser.c"
     break;
 
   case 369: /* Combinand: Symbol Expiration  */
-#line 1957 "parser.y"
+#line 1959 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Combinand->Expiration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expiration); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5214 "parser.c"
     break;
 
   case 370: /* Combinand: Symbol Timeliness  */
-#line 1958 "parser.y"
+#line 1960 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Symbol); Combinand->Timeliness=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Timeliness); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5220 "parser.c"
     break;
 
   case 371: /* Combinand: Reflexive  */
-#line 1959 "parser.y"
+#line 1961 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Reflexive=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Reflexive); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5226 "parser.c"
     break;
 
   case 372: /* Combinand: Description  */
-#line 1960 "parser.y"
+#line 1962 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Description); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5232 "parser.c"
     break;
 
   case 373: /* Combinand: Article Description  */
-#line 1961 "parser.y"
+#line 1963 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Article=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Article); Combinand->Description=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Description); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5238 "parser.c"
     break;
 
   case 374: /* Combinand: Scalar_Comparison  */
-#line 1962 "parser.y"
+#line 1964 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Scalar_Comparison=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Scalar_Comparison); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5244 "parser.c"
     break;
 
   case 375: /* Combinand: Negation  */
-#line 1963 "parser.y"
+#line 1965 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Negation=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Negation); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5250 "parser.c"
     break;
 
   case 376: /* Combinand: Existence  */
-#line 1964 "parser.y"
+#line 1966 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Existence=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Existence); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5256 "parser.c"
     break;
 
   case 377: /* Combinand: Point_In_Time  */
-#line 1965 "parser.y"
+#line 1967 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Point_In_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Point_In_Time); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5262 "parser.c"
     break;
 
   case 378: /* Combinand: Expiration  */
-#line 1966 "parser.y"
+#line 1968 "parser.y"
                                                                   { NEW(Combinand, *((Literal **)&yylval)); Combinand->Expiration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Expiration); ((*yyvalp).Combinand)=process_combinand(Combinand); }
 #line 5268 "parser.c"
     break;
 
   case 379: /* Combinator: Or_  */
-#line 1972 "parser.y"
+#line 1974 "parser.y"
                                                                   { NEW(Combinator, *((Literal **)&yylval)); Combinator->Or_=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Or_); ((*yyvalp).Combinator)=process_combinator(Combinator); }
 #line 5274 "parser.c"
     break;
 
   case 380: /* Combinator: And  */
-#line 1973 "parser.y"
+#line 1975 "parser.y"
                                                                   { NEW(Combinator, *((Literal **)&yylval)); Combinator->And=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.And); ((*yyvalp).Combinator)=process_combinator(Combinator); }
 #line 5280 "parser.c"
     break;
 
   case 381: /* Combinator: Neither  */
-#line 1974 "parser.y"
+#line 1976 "parser.y"
                                                                   { NEW(Combinator, *((Literal **)&yylval)); Combinator->Neither=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Neither); ((*yyvalp).Combinator)=process_combinator(Combinator); }
 #line 5286 "parser.c"
     break;
 
   case 382: /* Combinator: Nor  */
-#line 1975 "parser.y"
+#line 1977 "parser.y"
                                                                   { NEW(Combinator, *((Literal **)&yylval)); Combinator->Nor=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Nor); ((*yyvalp).Combinator)=process_combinator(Combinator); }
 #line 5292 "parser.c"
     break;
 
   case 383: /* Or_: OR  */
-#line 1981 "parser.y"
+#line 1983 "parser.y"
                                                                   { NEW(Or_, *((Literal **)&yylval)); ((*yyvalp).Or_)=process_or_(Or_); }
 #line 5298 "parser.c"
     break;
 
   case 384: /* And: AND  */
-#line 1987 "parser.y"
+#line 1989 "parser.y"
                                                                   { NEW(And, *((Literal **)&yylval)); ((*yyvalp).And)=process_and(And); }
 #line 5304 "parser.c"
     break;
 
   case 385: /* Neither: NEITHER  */
-#line 1993 "parser.y"
+#line 1995 "parser.y"
                                                                   { NEW(Neither, *((Literal **)&yylval)); ((*yyvalp).Neither)=process_neither(Neither); }
 #line 5310 "parser.c"
     break;
 
   case 386: /* Nor: NOR  */
-#line 1999 "parser.y"
+#line 2001 "parser.y"
                                                                   { NEW(Nor, *((Literal **)&yylval)); ((*yyvalp).Nor)=process_nor(Nor); }
 #line 5316 "parser.c"
     break;
 
   case 387: /* Existence: Symbol Equal Fixed  */
-#line 2005 "parser.y"
+#line 2007 "parser.y"
                                                                   { NEW(Existence, *((Literal **)&yylval)); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Existence->Equal=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Equal); Existence->Fixed=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixed); ((*yyvalp).Existence)=process_existence(Existence); }
 #line 5322 "parser.c"
     break;
 
   case 388: /* Existence: THERE Be Symbol  */
-#line 2006 "parser.y"
+#line 2008 "parser.y"
                                                                   { NEW(Existence, *((Literal **)&yylval)); Existence->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Existence)=process_existence(Existence); }
 #line 5328 "parser.c"
     break;
 
   case 389: /* Existence: Contract Be Symbol  */
-#line 2007 "parser.y"
+#line 2009 "parser.y"
                                                                   { NEW(Existence, *((Literal **)&yylval)); Existence->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Existence->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Existence)=process_existence(Existence); }
 #line 5334 "parser.c"
     break;
 
   case 390: /* Existence: Symbol Being True  */
-#line 2008 "parser.y"
+#line 2010 "parser.y"
                                                                   { NEW(Existence, *((Literal **)&yylval)); Existence->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Existence->Being=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Being); Existence->True=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.True); ((*yyvalp).Existence)=process_existence(Existence); }
 #line 5340 "parser.c"
     break;
 
   case 391: /* Negation: Negator Symbol  */
-#line 2014 "parser.y"
+#line 2016 "parser.y"
                                                                   { NEW(Negation, *((Literal **)&yylval)); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
 #line 5346 "parser.c"
     break;
 
   case 392: /* Negation: Symbol Negator Fixed  */
-#line 2015 "parser.y"
+#line 2017 "parser.y"
                                                                   { NEW(Negation, *((Literal **)&yylval)); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Symbol); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Fixed=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Fixed); ((*yyvalp).Negation)=process_negation(Negation); }
 #line 5352 "parser.c"
     break;
 
   case 393: /* Negation: THERE Negator Symbol  */
-#line 2016 "parser.y"
+#line 2018 "parser.y"
                                                                   { NEW(Negation, *((Literal **)&yylval)); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
 #line 5358 "parser.c"
     break;
 
   case 394: /* Negation: Contract Negator Symbol  */
-#line 2017 "parser.y"
+#line 2019 "parser.y"
                                                                   { NEW(Negation, *((Literal **)&yylval)); Negation->Contract=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Contract); Negation->Negator=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Negator); Negation->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Negation)=process_negation(Negation); }
 #line 5364 "parser.c"
     break;
 
   case 395: /* Negator: NOT  */
-#line 2023 "parser.y"
+#line 2025 "parser.y"
                                                                   { NEW(Negator, *((Literal **)&yylval)); ((*yyvalp).Negator)=process_negator(Negator); }
 #line 5370 "parser.c"
     break;
 
   case 396: /* Negator: Be NOT  */
-#line 2024 "parser.y"
+#line 2026 "parser.y"
                                                                   { NEW(Negator, *((Literal **)&yylval)); Negator->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Negator)=process_negator(Negator); }
 #line 5376 "parser.c"
     break;
 
   case 397: /* Negator: NO  */
-#line 2025 "parser.y"
+#line 2027 "parser.y"
                                                                   { NEW(Negator, *((Literal **)&yylval)); ((*yyvalp).Negator)=process_negator(Negator); }
 #line 5382 "parser.c"
     break;
 
   case 398: /* Negator: Be NO  */
-#line 2026 "parser.y"
+#line 2028 "parser.y"
                                                                   { NEW(Negator, *((Literal **)&yylval)); Negator->Be=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Be); ((*yyvalp).Negator)=process_negator(Negator); }
 #line 5388 "parser.c"
     break;
 
   case 399: /* Being: IS  */
-#line 2032 "parser.y"
+#line 2034 "parser.y"
                                                                   { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
 #line 5394 "parser.c"
     break;
 
   case 400: /* Being: HAS BEEN  */
-#line 2033 "parser.y"
+#line 2035 "parser.y"
                                                                   { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
 #line 5400 "parser.c"
     break;
 
   case 401: /* Being: WAS  */
-#line 2034 "parser.y"
+#line 2036 "parser.y"
                                                                   { NEW(Being, *((Literal **)&yylval)); ((*yyvalp).Being)=process_being(Being); }
 #line 5406 "parser.c"
     break;
 
   case 402: /* True: TRUE  */
-#line 2040 "parser.y"
+#line 2042 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5412 "parser.c"
     break;
 
   case 403: /* True: YES  */
-#line 2041 "parser.y"
+#line 2043 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5418 "parser.c"
     break;
 
   case 404: /* True: CERTIFIED  */
-#line 2042 "parser.y"
+#line 2044 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5424 "parser.c"
     break;
 
   case 405: /* True: DECLARED  */
-#line 2043 "parser.y"
+#line 2045 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5430 "parser.c"
     break;
 
   case 406: /* True: ANNOUNCED  */
-#line 2044 "parser.y"
+#line 2046 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5436 "parser.c"
     break;
 
   case 407: /* True: FILED  */
-#line 2045 "parser.y"
+#line 2047 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5442 "parser.c"
     break;
 
   case 408: /* True: FILED FOR  */
-#line 2046 "parser.y"
+#line 2048 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5448 "parser.c"
     break;
 
   case 409: /* True: SIGNED OFF  */
-#line 2047 "parser.y"
+#line 2049 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5454 "parser.c"
     break;
 
   case 410: /* True: SIGNED OFF ON  */
-#line 2048 "parser.y"
+#line 2050 "parser.y"
                                                                   { NEW(True, *((Literal **)&yylval)); ((*yyvalp).True)=process_true(True); }
 #line 5460 "parser.c"
     break;
 
   case 411: /* Article: A  */
-#line 2054 "parser.y"
+#line 2056 "parser.y"
                                                                   { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
 #line 5466 "parser.c"
     break;
 
   case 412: /* Article: AN  */
-#line 2055 "parser.y"
+#line 2057 "parser.y"
                                                                   { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
 #line 5472 "parser.c"
     break;
 
   case 413: /* Article: THE  */
-#line 2056 "parser.y"
+#line 2058 "parser.y"
                                                                   { NEW(Article, *((Literal **)&yylval)); ((*yyvalp).Article)=process_article(Article); }
 #line 5478 "parser.c"
     break;
 
   case 414: /* New: NEW  */
-#line 2062 "parser.y"
+#line 2064 "parser.y"
                                                                   { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
 #line 5484 "parser.c"
     break;
 
   case 415: /* New: NEXT  */
-#line 2063 "parser.y"
+#line 2065 "parser.y"
                                                                   { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
 #line 5490 "parser.c"
     break;
 
   case 416: /* New: COMING  */
-#line 2064 "parser.y"
+#line 2066 "parser.y"
                                                                   { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
 #line 5496 "parser.c"
     break;
 
   case 417: /* New: INCOMING  */
-#line 2065 "parser.y"
+#line 2067 "parser.y"
                                                                   { NEW(New, *((Literal **)&yylval)); ((*yyvalp).New)=process_new(New); }
 #line 5502 "parser.c"
     break;
 
   case 418: /* Point_In_Time: Current_Time  */
-#line 2071 "parser.y"
+#line 2073 "parser.y"
                                                                   { NEW(Point_In_Time, *((Literal **)&yylval)); Point_In_Time->Current_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Current_Time); ((*yyvalp).Point_In_Time)=process_point_in_time(Point_In_Time); }
 #line 5508 "parser.c"
     break;
 
   case 419: /* Point_In_Time: Relative_Time  */
-#line 2072 "parser.y"
+#line 2074 "parser.y"
                                                                   { NEW(Point_In_Time, *((Literal **)&yylval)); Point_In_Time->Relative_Time=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Relative_Time); ((*yyvalp).Point_In_Time)=process_point_in_time(Point_In_Time); }
 #line 5514 "parser.c"
     break;
 
   case 420: /* Current_Time: THE CURRENT TIME  */
-#line 2078 "parser.y"
+#line 2080 "parser.y"
                                                                   { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
 #line 5520 "parser.c"
     break;
 
   case 421: /* Current_Time: THE THEN CURRENT TIME  */
-#line 2079 "parser.y"
+#line 2081 "parser.y"
                                                                   { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
 #line 5526 "parser.c"
     break;
 
   case 422: /* Current_Time: THE RESPECTIVE CURRENT TIME  */
-#line 2080 "parser.y"
+#line 2082 "parser.y"
                                                                   { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
 #line 5532 "parser.c"
     break;
 
   case 423: /* Current_Time: THE RESPECTIVE THEN CURRENT TIME  */
-#line 2081 "parser.y"
+#line 2083 "parser.y"
                                                                   { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
 #line 5538 "parser.c"
     break;
 
   case 424: /* Current_Time: NOW  */
-#line 2082 "parser.y"
+#line 2084 "parser.y"
                                                                   { NEW(Current_Time, *((Literal **)&yylval)); ((*yyvalp).Current_Time)=process_current_time(Current_Time); }
 #line 5544 "parser.c"
     break;
 
   case 425: /* Relative_Time: Duration PAST  */
-#line 2088 "parser.y"
+#line 2090 "parser.y"
                                                                   { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Duration); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
 #line 5550 "parser.c"
     break;
 
   case 426: /* Relative_Time: Duration PAST Symbol  */
-#line 2089 "parser.y"
+#line 2091 "parser.y"
                                                                   { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
 #line 5556 "parser.c"
     break;
 
   case 427: /* Relative_Time: Duration IN THE PAST  */
-#line 2090 "parser.y"
+#line 2092 "parser.y"
                                                                   { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-3)].yystate.yysemantics.yyval.Duration); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
 #line 5562 "parser.c"
     break;
 
   case 428: /* Relative_Time: Duration IN THE PAST Symbol  */
-#line 2091 "parser.y"
+#line 2093 "parser.y"
                                                                   { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-4)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
 #line 5568 "parser.c"
     break;
 
   case 429: /* Relative_Time: Duration AFTER Symbol  */
-#line 2092 "parser.y"
+#line 2094 "parser.y"
                                                                   { NEW(Relative_Time, *((Literal **)&yylval)); Relative_Time->Duration=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-2)].yystate.yysemantics.yyval.Duration); Relative_Time->Symbol=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Symbol); ((*yyvalp).Relative_Time)=process_relative_time(Relative_Time); }
 #line 5574 "parser.c"
     break;
 
   case 430: /* Duration: Scalar_Expression Time_Unit  */
-#line 2098 "parser.y"
+#line 2100 "parser.y"
                                                                   { NEW(Duration, *((Literal **)&yylval)); Duration->Scalar_Expression=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (-1)].yystate.yysemantics.yyval.Scalar_Expression); Duration->Time_Unit=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Time_Unit); ((*yyvalp).Duration)=process_duration(Duration); }
 #line 5580 "parser.c"
     break;
 
   case 431: /* Time_Unit: Years  */
-#line 2104 "parser.y"
+#line 2106 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Years=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Years); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5586 "parser.c"
     break;
 
   case 432: /* Time_Unit: Months  */
-#line 2105 "parser.y"
+#line 2107 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Months=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Months); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5592 "parser.c"
     break;
 
   case 433: /* Time_Unit: Weeks  */
-#line 2106 "parser.y"
+#line 2108 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Weeks=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Weeks); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5598 "parser.c"
     break;
 
   case 434: /* Time_Unit: Days  */
-#line 2107 "parser.y"
+#line 2109 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Days=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Days); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5604 "parser.c"
     break;
 
   case 435: /* Time_Unit: Hours  */
-#line 2108 "parser.y"
+#line 2110 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Hours=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Hours); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5610 "parser.c"
     break;
 
   case 436: /* Time_Unit: Minutes  */
-#line 2109 "parser.y"
+#line 2111 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Minutes=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Minutes); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5616 "parser.c"
     break;
 
   case 437: /* Time_Unit: Seconds  */
-#line 2110 "parser.y"
+#line 2112 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Seconds=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Seconds); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5622 "parser.c"
     break;
 
   case 438: /* Time_Unit: Milliseconds  */
-#line 2111 "parser.y"
+#line 2113 "parser.y"
                                                                   { NEW(Time_Unit, *((Literal **)&yylval)); Time_Unit->Milliseconds=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.Milliseconds); ((*yyvalp).Time_Unit)=process_time_unit(Time_Unit); }
 #line 5628 "parser.c"
     break;
 
   case 439: /* Years: YEAR  */
-#line 2117 "parser.y"
+#line 2119 "parser.y"
                                                                   { NEW(Years, *((Literal **)&yylval)); ((*yyvalp).Years)=process_years(Years); }
 #line 5634 "parser.c"
     break;
 
   case 440: /* Years: YEARS  */
-#line 2118 "parser.y"
+#line 2120 "parser.y"
                                                                   { NEW(Years, *((Literal **)&yylval)); ((*yyvalp).Years)=process_years(Years); }
 #line 5640 "parser.c"
     break;
 
   case 441: /* Months: MONTH  */
-#line 2124 "parser.y"
+#line 2126 "parser.y"
                                                                   { NEW(Months, *((Literal **)&yylval)); ((*yyvalp).Months)=process_months(Months); }
 #line 5646 "parser.c"
     break;
 
   case 442: /* Months: MONTHS  */
-#line 2125 "parser.y"
+#line 2127 "parser.y"
                                                                   { NEW(Months, *((Literal **)&yylval)); ((*yyvalp).Months)=process_months(Months); }
 #line 5652 "parser.c"
     break;
 
   case 443: /* Weeks: WEEK  */
-#line 2131 "parser.y"
+#line 2133 "parser.y"
                                                                   { NEW(Weeks, *((Literal **)&yylval)); ((*yyvalp).Weeks)=process_weeks(Weeks); }
 #line 5658 "parser.c"
     break;
 
   case 444: /* Weeks: WEEKS  */
-#line 2132 "parser.y"
+#line 2134 "parser.y"
                                                                   { NEW(Weeks, *((Literal **)&yylval)); ((*yyvalp).Weeks)=process_weeks(Weeks); }
 #line 5664 "parser.c"
     break;
 
   case 445: /* Days: DAY  */
-#line 2138 "parser.y"
+#line 2140 "parser.y"
                                                                   { NEW(Days, *((Literal **)&yylval)); ((*yyvalp).Days)=process_days(Days); }
 #line 5670 "parser.c"
     break;
 
   case 446: /* Days: DAYS  */
-#line 2139 "parser.y"
+#line 2141 "parser.y"
                                                                   { NEW(Days, *((Literal **)&yylval)); ((*yyvalp).Days)=process_days(Days); }
 #line 5676 "parser.c"
     break;
 
   case 447: /* Hours: HOUR  */
-#line 2145 "parser.y"
+#line 2147 "parser.y"
                                                                   { NEW(Hours, *((Literal **)&yylval)); ((*yyvalp).Hours)=process_hours(Hours); }
 #line 5682 "parser.c"
     break;
 
   case 448: /* Hours: HOURS  */
-#line 2146 "parser.y"
+#line 2148 "parser.y"
                                                                   { NEW(Hours, *((Literal **)&yylval)); ((*yyvalp).Hours)=process_hours(Hours); }
 #line 5688 "parser.c"
     break;
 
   case 449: /* Minutes: MINUTE  */
-#line 2152 "parser.y"
+#line 2154 "parser.y"
                                                                   { NEW(Minutes, *((Literal **)&yylval)); ((*yyvalp).Minutes)=process_minutes(Minutes); }
 #line 5694 "parser.c"
     break;
 
   case 450: /* Minutes: MINUTES  */
-#line 2153 "parser.y"
+#line 2155 "parser.y"
                                                                   { NEW(Minutes, *((Literal **)&yylval)); ((*yyvalp).Minutes)=process_minutes(Minutes); }
 #line 5700 "parser.c"
     break;
 
   case 451: /* Seconds: SECOND  */
-#line 2159 "parser.y"
+#line 2161 "parser.y"
                                                                   { NEW(Seconds, *((Literal **)&yylval)); ((*yyvalp).Seconds)=process_seconds(Seconds); }
 #line 5706 "parser.c"
     break;
 
   case 452: /* Seconds: SECONDS  */
-#line 2160 "parser.y"
+#line 2162 "parser.y"
                                                                   { NEW(Seconds, *((Literal **)&yylval)); ((*yyvalp).Seconds)=process_seconds(Seconds); }
 #line 5712 "parser.c"
     break;
 
   case 453: /* Milliseconds: MILLISECOND  */
-#line 2166 "parser.y"
+#line 2168 "parser.y"
                                                                   { NEW(Milliseconds, *((Literal **)&yylval)); ((*yyvalp).Milliseconds)=process_milliseconds(Milliseconds); }
 #line 5718 "parser.c"
     break;
 
   case 454: /* Milliseconds: MILLISECONDS  */
-#line 2167 "parser.y"
+#line 2169 "parser.y"
                                                                   { NEW(Milliseconds, *((Literal **)&yylval)); ((*yyvalp).Milliseconds)=process_milliseconds(Milliseconds); }
 #line 5724 "parser.c"
     break;
 
   case 455: /* Expiration: HAS PASSED  */
-#line 2173 "parser.y"
+#line 2175 "parser.y"
                                                                   { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
 #line 5730 "parser.c"
     break;
 
   case 456: /* Expiration: PAST  */
-#line 2174 "parser.y"
+#line 2176 "parser.y"
                                                                   { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
 #line 5736 "parser.c"
     break;
 
   case 457: /* Expiration: IS PAST  */
-#line 2175 "parser.y"
+#line 2177 "parser.y"
                                                                   { NEW(Expiration, *((Literal **)&yylval)); ((*yyvalp).Expiration)=process_expiration(Expiration); }
 #line 5742 "parser.c"
     break;
 
   case 458: /* Timeliness: NOT PASSED  */
-#line 2181 "parser.y"
+#line 2183 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5748 "parser.c"
     break;
 
   case 459: /* Timeliness: NOT YET PASSED  */
-#line 2182 "parser.y"
+#line 2184 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5754 "parser.c"
     break;
 
   case 460: /* Timeliness: HAS NOT PASSED  */
-#line 2183 "parser.y"
+#line 2185 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5760 "parser.c"
     break;
 
   case 461: /* Timeliness: HAS NOT YET PASSED  */
-#line 2184 "parser.y"
+#line 2186 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5766 "parser.c"
     break;
 
   case 462: /* Timeliness: NOT PAST  */
-#line 2185 "parser.y"
+#line 2187 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5772 "parser.c"
     break;
 
   case 463: /* Timeliness: NOT PAST YET  */
-#line 2186 "parser.y"
+#line 2188 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5778 "parser.c"
     break;
 
   case 464: /* Timeliness: NOT YET PAST  */
-#line 2187 "parser.y"
+#line 2189 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5784 "parser.c"
     break;
 
   case 465: /* Timeliness: NOT YET PAST YET  */
-#line 2188 "parser.y"
+#line 2190 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5790 "parser.c"
     break;
 
   case 466: /* Timeliness: IS NOT PAST  */
-#line 2189 "parser.y"
+#line 2191 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5796 "parser.c"
     break;
 
   case 467: /* Timeliness: IS NOT PAST YET  */
-#line 2190 "parser.y"
+#line 2192 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5802 "parser.c"
     break;
 
   case 468: /* Timeliness: IS NOT YET PAST  */
-#line 2191 "parser.y"
+#line 2193 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5808 "parser.c"
     break;
 
   case 469: /* Timeliness: IS NOT YET PAST YET  */
-#line 2192 "parser.y"
+#line 2194 "parser.y"
                                                                   { NEW(Timeliness, *((Literal **)&yylval)); ((*yyvalp).Timeliness)=process_timeliness(Timeliness); }
 #line 5814 "parser.c"
     break;
 
   case 470: /* Name: NAME  */
-#line 2196 "parser.y"
+#line 2198 "parser.y"
                                                                 { ((*yyvalp).Name)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.NAME); }
 #line 5820 "parser.c"
     break;
 
   case 471: /* Description: DESCRIPTION  */
-#line 2199 "parser.y"
+#line 2201 "parser.y"
                                                                                 { ((*yyvalp).Description)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.DESCRIPTION); }
 #line 5826 "parser.c"
     break;
 
   case 472: /* Scalar: SCALAR  */
-#line 2202 "parser.y"
+#line 2204 "parser.y"
                                                                 { ((*yyvalp).Scalar)=(YY_CAST (yyGLRStackItem const *, yyvsp)[YYFILL (0)].yystate.yysemantics.yyval.SCALAR); }
 #line 5832 "parser.c"
     break;
@@ -7514,7 +7514,7 @@ yypdumpstack (yyGLRStack* yystackp)
 
 
 
-#line 2207 "parser.y"
+#line 2209 "parser.y"
 
 
 /* Epilogue */
@@ -7562,6 +7562,7 @@ void yyerror(const char *s) {
 	fprintf(stderr, "Lexon: %s -- check %s, line %d: %s\n>> %s\n", s, prec_file, prec_line, yytext, context);
 	exit(1);
 }
+
 
 /* action handler (stub) functions */
 

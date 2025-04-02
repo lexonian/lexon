@@ -1,7 +1,7 @@
 ( document 
     ( head 
         ( lex «ucc-financing-statement» ) 
-        ( comment "%ERR") 
+        ( comment "% ERR - (used to fail for double sentence)") 
         ( lexon "0.3 alpha 97") ) 
     ( terms 
         ( provisions 

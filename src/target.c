@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.103 beta 3"
+/*JS */ #define backend_version "javascript 0.3.104 beta 4"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.103 beta 3"
+/*Sol*/ #define backend_version "solidity 0.3.104 beta 4"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.103 beta 3"
+/*Sop*/ #define backend_version "sophia 0.3.104 beta 4"
 /*Sop*/ #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -161,9 +161,8 @@ extern const char *get_lexcom(const char *);
 /* optical convenience */
 #define C (2 + (opt_comment?0:1))
 
-/* extern calls from lexon.l */
 const char *str(int line);
-extern struct Document *root;
+static struct Document *root;
 
 bool xxx_document(char **production, struct Document *root, int indent);
 
@@ -456,6 +455,7 @@ static bool in(char *hay, char *needle) { // ◊ unify w/lexon.l
 /*T*/		struct Head *Head;
 /*T*/		struct Terms *Terms;
 /*T*/		struct Covenants *Covenants;
+/*T*/		Literal *Literal;
 /*T*/	} Document;
 /*T*/
 /*T*/	typedef struct Head {
@@ -2571,8 +2571,8 @@ static bool is_payment(Predicates *predicates) {
 	   where one sentence has NO subject. This summary access control
 	   protects the subject-less sentences. They are only reachable when
 	   any of the other sentences that has a subject is. */
-	char *courtesy;
-	char *courtesy_track;
+	static char *courtesy;
+	static char *courtesy_track;
 
 /*T*/	bool xxx_body(char **production, Body *Body, int indent) {
 /*T*/		if(!Body) return false;

@@ -721,7 +721,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		Literal *Literal;
 	} Timeliness;
 	
-	/*T*/	extern struct Document *root;
+	/*T*/	static struct Document *root;
 	bool core_document(char **production, Document *root, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 
   #define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, null, #orig_, __FILE__, __LINE__)
@@ -765,7 +765,6 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		padcat(0, 0, production, Hex, " ");
 		return true;
 	}
-
 /* AST walk (stub) functions */
 
 	bool core_document(char **production, Document *Document, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
@@ -884,6 +883,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	bool core_milliseconds(char **production, Milliseconds *Milliseconds, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_expiration(char **production, Expiration *Expiration, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_timeliness(char **production, Timeliness *Timeliness, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+
 /* AST walk (stub) functions */
 
 	bool core_document(char **production, Document *Document, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {

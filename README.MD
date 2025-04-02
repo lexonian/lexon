@@ -1,6 +1,6 @@
 # Lexon Compiler 0.3
 
-	0.3 beta 3, grammar 0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+	0.3 beta 4, grammar 0.2.20 / subset 0.3.11 beta 4 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**
@@ -275,9 +275,9 @@ Build by
 
 #### Tested With
 
-	gcc 7.5.0 / c99
-	clang 12.0.5 / c99
-	make 3.81 and 4.1
+	gcc (c99) 7.5.0, 13.3.0
+	clang (c99) 12.0.5
+	make 3.8, 4.1, 4.3
 
 
 ### Alternatives to Building
@@ -328,11 +328,11 @@ compilers:
 
 #### Tested With
 
-	gcc 7.5.0 / c99
-	clang 12.0.5 / c99
-	bison 3.8
-	flex 2.5.35 and 2.6.4
-	make 3.81 and 4.1
+	gcc (c99) 7.5.0, 13.3.0
+	clang (c99) 12.0.5
+	bison 3.8, 3.8.2
+	flex 2.5.35, 2.6.4
+	make 3.81, 4.1, 4.3
 
 
 #### Optional

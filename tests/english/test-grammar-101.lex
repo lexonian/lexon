@@ -1,5 +1,5 @@
 LEX Bar.
-COMMENT: %ERR - supposed to fail for double clause name.
+COMMENT: % ERR - used to be supposed to fail for double clause name.
 
 PREAMBLE:  Aenean commodo.
 

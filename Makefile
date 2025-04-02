@@ -21,7 +21,7 @@
 
 SHELL := /bin/bash
 VPATH = bin:grammar:src:build
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS += --no-print-directory --no-builtin-rules
 path = $(FILE)
 file = $(notdir FILE)
 
@@ -62,7 +62,7 @@ else
   endef
 endif
 
-all: build sample
+all: build sample build/.checkonce
 
 help:
 	# make rules
@@ -116,7 +116,7 @@ help:
 	#
 	# * the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
 
-build:
+build: build/.timefix
 	@# the conditional building replaces lexccc with build/.lexccc as dependency
 	@# to enable cycle2-only building as default, with no lexccc present. 
 	@if (! $(MAKE) -s -o lexccc -q build/.lexccc build/.parser build/core.c) ; then \
@@ -131,6 +131,12 @@ build:
 		printf "$(ok)build done: bin/lexon.$(off)\n\n" ; \
 		touch build/.built ; \
 	fi
+
+build/.timefix: # files can arrive in random millisecond order after clone
+	@mkdir -p build
+	@mkdir -p bin
+	@touch build/.timefix
+	@touch -r build/.timefix grammar/* src/* build/* build/.* bin/*
 
 lexccc build/.lexccc: build/lexccc.c
 	@mkdir -p bin
@@ -251,7 +257,7 @@ ifeq (,$(wildcard .nosample))
 	@echo
 endif
 
-test: build
+filetest: build
 ifneq ($(FILE),)
 	@printf "$(ok)» test file $(path)$(off)\n"
 	@mkdir -p tmp
@@ -266,7 +272,11 @@ else
 	@printf "$(ok)usage: make test FILE=<filename>$(off)\n"
 endif
 
-check: focustest deeptest
+check test: focustest deeptest
+
+build/.checkonce:
+	@touch build/.checkonce
+	@$(MAKE) check
 
 devcheck: envtest grammarcheck memtest focustest deeptest
 
@@ -451,6 +461,8 @@ distclean: restore_binaries
 	rm -f bin/lexon
 	rm -f build/.indent.pro
 	rm -f build/.built
+	rm -f build/.timefix
+	rm -f build/.checkonce
 	rm -f build/MANUAL
 	@echo cd tests
 	@cd tests ; $(MAKE) clean
@@ -470,7 +482,7 @@ distclean: restore_binaries
 	@echo ".indent.pro	lexon.l		target.c"
 	@echo ""
 	@echo "ls -A build"
-	@echo ".backend	.targets	javascript.c	parser.c	parser.y	scanner.l	sophia.c"
+	@echo ".backend	.targets	javascript.c	parser.c	parser.y	scanner.l	sophia.c	.lexccc"
 	@echo ".parser		core.c		lexccc.c	parser.h	scanner.c	solidity.c"
 	@echo ""
 	@echo "ls -A bin"
@@ -603,24 +615,34 @@ rulecheck:
 	echo 'n' | $(MAKE) distclean
 	$(MAKE) all
 	echo 'n' | $(MAKE) distclean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) build
 	$(MAKE) devclean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) all
 	$(MAKE) devclean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) build
 	$(MAKE) diffclean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) all
 	$(MAKE) diffclean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) build
 	$(MAKE) clean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) lexccc
 	$(MAKE) clean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) lexon
 	$(MAKE) clean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) all
 	$(MAKE) clean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) build
 	$(MAKE) srcclean
+	@mkdir -p build ; touch build/.checkonce
 	$(MAKE) all
 	$(MAKE) new
 	echo 'y' | $(MAKE) expectations
@@ -650,6 +672,6 @@ rulecheck:
 	$(MAKE) ls
 	@printf "\n$(hi)√ sanity check of make rules complete$(off)\n\n"
 
-.PHONY: all help build install sample test check comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
+.PHONY: all help build install sample test check checkonce comptest compall devcheck grammarcheck conflicts counter focusprep focustest focuscomp expclean deeptest update autoupdate autocomp recheck expectations new envtest testlog cleanlog clean distclean binaries restore_binaries diffclean devclean srcclean ls license rulecheck
 
 # (c) 2025 H. Diedrich, see file LICENSE

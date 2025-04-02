@@ -2,17 +2,17 @@
  **
  **	code:        UCC Financing Statement
  **
- **	comment:     "%ERR"
+ **	comment:     "% ERR - (used to fail for double subject)"
  **
  **	file:        cover/statement-0.3-double-subject.lex
  **
  **	code tagged: 0.3 alpha 97
  **
- **	compiler:    lexon 0.3 beta 2
+ **	compiler:    lexon 0.3 beta 4
  **
- **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
- **	backend:     javascript 0.3.102 beta 2
+ **	backend:     javascript 0.3.103 beta 4
  **
  **	target:      node 14.1+
  **
@@ -134,7 +134,7 @@ var last_passphrase;
  | 	LEX UCC Financing Statement.
  | 
  | 	LEXON: 0.3 alpha 97
- | 	COMMENT: %ERR
+ | 	COMMENT: % ERR - (used to fail for double subject)
  | 
  | 	"Financing Statement" is this contract. 
  | 	"File Number" is data.

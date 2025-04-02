@@ -18,7 +18,7 @@
 
   /*    sophia.c - Sophia backend       */
 
-#define backend_version "sophia 0.3.103 beta 3"
+#define backend_version "sophia 0.3.103 beta 4"
 #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -103,9 +103,8 @@ extern const char *get_lexcom(const char *);
 /* optical convenience */
 #define C (2 + (opt_comment?0:1))
 
-/* extern calls from lexon.l */
 const char *str(int line);
-extern struct Document *root;
+static struct Document *root;
 
 bool sophia_document(char **production, struct Document *root, int indent);
 
@@ -371,6 +370,7 @@ typedef struct Document {
 	struct Head *Head;
 	struct Terms *Terms;
 	struct Covenants *Covenants;
+	Literal *Literal;
 } Document;
 
 typedef struct Head {
@@ -2161,8 +2161,8 @@ bool sophia_clause(char **production, Clause *Clause, int indent) {
 	 * where one sentence has NO subject. This summary access control
 	 * protects the subject-less sentences. They are only reachable when
 	 * any of the other sentences that has a subject is. */
-char *courtesy;
-char *courtesy_track;
+static char *courtesy;
+static char *courtesy_track;
 
 bool sophia_body(char **production, Body *Body, int indent) {
 	if (!Body) return false;
