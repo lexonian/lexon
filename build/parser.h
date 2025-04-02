@@ -765,8 +765,10 @@ typedef struct Timeliness {
 } Timeliness;
 
 
-Document *root;
+static Document *root;
+
 /* action handler (stub) functions */
+
 Document *process_document(Document *Document);
 Head *process_head(Head *Head);
 Lex *process_lex(Lex *Lex);
@@ -884,7 +886,7 @@ Milliseconds *process_milliseconds(Milliseconds *Milliseconds);
 Expiration *process_expiration(Expiration *Expiration);
 Timeliness *process_timeliness(Timeliness *Timeliness);
 
-#line 888 "parser.h"
+#line 890 "parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -1184,7 +1186,7 @@ union YYSTYPE
   Weeks * Weeks;                           /* Weeks  */
   Years * Years;                           /* Years  */
 
-#line 1188 "parser.h"
+#line 1190 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

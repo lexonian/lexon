@@ -2,7 +2,7 @@
     ( head 
         ( lex «bar» ) 
         ( preamble "Aenean commodo.") 
-        ( comment "%ERR - supposed to fail for double clause name.") ) 
+        ( comment "% ERR - used to be supposed to fail for double clause name.") ) 
     ( terms 
         ( provisions 
             ( definitions 

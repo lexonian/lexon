@@ -731,8 +731,10 @@ typedef struct Timeliness {
 } Timeliness;
 
 
-Document *root;
+static Document *root;
+
 /* action handler (stub) functions */
+
 Document *process_document(Document *Document);
 Head *process_head(Head *Head);
 Lex *process_lex(Lex *Lex);
@@ -2251,6 +2253,7 @@ void yyerror(const char *s) {
 	fprintf(stderr, "Lexon: %s -- check %s, line %d: %s\n>> %s\n", s, prec_file, prec_line, yytext, context);
 	exit(1);
 }
+
 
 /* action handler (stub) functions */
 

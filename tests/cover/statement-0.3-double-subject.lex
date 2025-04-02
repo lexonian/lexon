@@ -1,7 +1,7 @@
 LEX UCC Financing Statement.
 
 LEXON: 0.3 alpha 97
-COMMENT: %ERR
+COMMENT: % ERR - (used to fail for double subject)
 
 "Financing Statement" is this contract. 
 "File Number" is data.

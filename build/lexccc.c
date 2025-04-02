@@ -3473,7 +3473,7 @@ char *yytext;
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 3"
+#define program_vers "0.3 beta 4"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -3971,11 +3971,13 @@ union YYSTYPE
 	char *Hex;
 };
 typedef union YYSTYPE YYSTYPE;
+
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
-#endif
 
 YYSTYPE yylval;
+
+#endif
 
 int yyparse (void);
 
@@ -4004,7 +4006,7 @@ int yyparse (void);
 /* extension parsing */
 
 
-#line 4008 "lexccc.c"
+#line 4010 "lexccc.c"
 
 #define INITIAL 0
 #define BOFTRIM 1
@@ -4207,7 +4209,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 616 "../src/lexon.l"
+#line 618 "../src/lexon.l"
 
 
  if(YY_START==INITIAL) BEGIN ((opt_bnf || opt_yacc || opt_keywords || opt_template || opt_bootstrap || opt_samples ? LGF : BOFTRIM));
@@ -4216,7 +4218,7 @@ YY_DECL
     for the liberal use of tabs and newlines even within variable names.
     At the ocassion, double newline (which semantically equal '.') is also normalized. */
 
-#line 4220 "lexccc.c"
+#line 4222 "lexccc.c"
 
 	if ( !(yy_init) )
 		{
@@ -4333,71 +4335,71 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 625 "../src/lexon.l"
+#line 627 "../src/lexon.l"
 { D; BEGIN(LXF); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 626 "../src/lexon.l"
+#line 628 "../src/lexon.l"
 { D; BEGIN(LGF); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 627 "../src/lexon.l"
+#line 629 "../src/lexon.l"
 { D; lineno(); concat(&buf, "\n\n"); line+=2; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 628 "../src/lexon.l"
+#line 630 "../src/lexon.l"
 { D; lineno(); concat(&buf, ".\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 629 "../src/lexon.l"
+#line 631 "../src/lexon.l"
 { D; lineno(); concat(&buf, ",\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 630 "../src/lexon.l"
+#line 632 "../src/lexon.l"
 { D; lineno(); concat(&buf, ";\n"); line++; plhd=lhd=false; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 631 "../src/lexon.l"
+#line 633 "../src/lexon.l"
 { D; lineno(); concat(&buf, ":\n"); line++; plhd=lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 632 "../src/lexon.l"
+#line 634 "../src/lexon.l"
 /* under, after include */				{ D;           concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 633 "../src/lexon.l"
+#line 635 "../src/lexon.l"
 { D;           concat(&buf, " "); _lastline=++line; }
 	YY_BREAK
 case 10:
-YY_RULE_SETUP
-#line 634 "../src/lexon.l"
-{ D; if(_lastline==line) _lastline--;
-								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
-	YY_BREAK
-case 11:
 YY_RULE_SETUP
 #line 636 "../src/lexon.l"
 { D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 	YY_BREAK
-case 12:
+case 11:
 YY_RULE_SETUP
 #line 638 "../src/lexon.l"
+{ D; if(_lastline==line) _lastline--;
+								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 640 "../src/lexon.l"
 { D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t"); // ◊ separate TERMS PER
 									 concat(&buf, yytext);
@@ -4405,75 +4407,75 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 642 "../src/lexon.l"
+#line 644 "../src/lexon.l"
 { D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", "", "", yytext, ". \t");
 									 concat(&buf, yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 645 "../src/lexon.l"
+#line 647 "../src/lexon.l"
 { D; freeline(); BEGIN(INCLUDE); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 646 "../src/lexon.l"
+#line 648 "../src/lexon.l"
 { D; lineno(); concat(&buf, yytext); BEGIN(LAW); }
 	YY_BREAK
 /* ---> 2ND CYCLE LGF GENERATED TYPE NAMES HERE ---> */
 /* <--- TO HERE <--- */
 case 16:
 YY_RULE_SETUP
-#line 649 "../src/lexon.l"
+#line 651 "../src/lexon.l"
 { D; lineno(); concat(&buf, trim(yytext), ": ‹"); BEGIN(LONGQUOTE); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 650 "../src/lexon.l"
+#line 652 "../src/lexon.l"
 { D; lineno(); concat(&buf, trim(yytext), ": "); BEGIN(TEXTQUOTE); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 651 "../src/lexon.l"
+#line 653 "../src/lexon.l"
 { D; lineno(); concat(&buf, trim(yytext), " "); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 652 "../src/lexon.l"
+#line 654 "../src/lexon.l"
 { D; lineno(); concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 653 "../src/lexon.l"
+#line 655 "../src/lexon.l"
 { D;           concat(&buf, yytext); BEGIN(NAME_PROCESSING); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 654 "../src/lexon.l"
+#line 656 "../src/lexon.l"
 { D;           concat(&buf, yytext); BEGIN(QUOTED_TEXT); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 655 "../src/lexon.l"
+#line 657 "../src/lexon.l"
 { D;           concat(&buf, " "); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 656 "../src/lexon.l"
+#line 658 "../src/lexon.l"
 /* these 2 lines emulate ^[^"“”]: */			{ D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 657 "../src/lexon.l"
+#line 659 "../src/lexon.l"
 { D0; yyless(0); if(plhd && pretty) freeline(); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 658 "../src/lexon.l"
+#line 660 "../src/lexon.l"
 { D; lineno(); concat(&buf, yytext); }
 	YY_BREAK
 case YY_STATE_EOF(PRE):
-#line 659 "../src/lexon.l"
+#line 661 "../src/lexon.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done()) {
 										// yy_set_bol(true); // ◊ added for no effect
@@ -4494,18 +4496,18 @@ case YY_STATE_EOF(PRE):
 
 case 26:
 YY_RULE_SETUP
-#line 677 "../src/lexon.l"
+#line 679 "../src/lexon.l"
 { D; process("", "", "", "", "", yytext, " \t"); concat(&buf, yytext); lhd=true; BEGIN(PRE); } // should be {term}/{space}* but that triggers a Flex (buggy) warning
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 678 "../src/lexon.l"
+#line 680 "../src/lexon.l"
 /* description string */		{ D; concat(&buf, "‹", yytext, "›"); BEGIN(PRE); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 679 "../src/lexon.l"
+#line 681 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); }
 	YY_BREAK
 
@@ -4513,61 +4515,61 @@ YY_RULE_SETUP
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 683 "../src/lexon.l"
+#line 685 "../src/lexon.l"
 { D; concat(&buf, "‹", yytext, "›"); BEGIN(PRE); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 684 "../src/lexon.l"
+#line 686 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); } // ◊ error msg for empty text ""
 	YY_BREAK
 
 
 case 31:
 YY_RULE_SETUP
-#line 688 "../src/lexon.l"
+#line 690 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 689 "../src/lexon.l"
+#line 691 "../src/lexon.l"
 { D; line++; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 690 "../src/lexon.l"
+#line 692 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(BOFTRIM):
-#line 691 "../src/lexon.l"
+#line 693 "../src/lexon.l"
 { D; syntax("empty file (or only whitespace)", yytext); }
 	YY_BREAK
 
 
 case 34:
 YY_RULE_SETUP
-#line 695 "../src/lexon.l"
+#line 697 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 696 "../src/lexon.l"
+#line 698 "../src/lexon.l"
 { D; if(!pretty) concat(&buf, "\n"); line++; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 697 "../src/lexon.l"
+#line 699 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 698 "../src/lexon.l"
+#line 700 "../src/lexon.l"
 { D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 	YY_BREAK
 case YY_STATE_EOF(TRIM):
-#line 699 "../src/lexon.l"
+#line 701 "../src/lexon.l"
 { D0; new_lexcom("_pre_", "");
 									if(include_done()) {
 										// yy_set_bol(true); // ◊ added for no effect 
@@ -4588,76 +4590,76 @@ case YY_STATE_EOF(TRIM):
 
 case 38:
 YY_RULE_SETUP
-#line 718 "../src/lexon.l"
+#line 720 "../src/lexon.l"
 { D; process2(yytext, ". \t", "«", "»"); concat(&buf, yytext); BEGIN(PRE); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 719 "../src/lexon.l"
+#line 721 "../src/lexon.l"
 { D; syntax("unexpected character in name", yytext); }
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 720 "../src/lexon.l"
+#line 722 "../src/lexon.l"
 { D; syntax("unexpected end of line instead of name", ""); }
 	YY_BREAK
 case YY_STATE_EOF(NAMEQUOTE):
-#line 721 "../src/lexon.l"
+#line 723 "../src/lexon.l"
 { D; syntax("unexpected end of file instead of name", yytext); }
 	YY_BREAK
 
 
 case 41:
 YY_RULE_SETUP
-#line 725 "../src/lexon.l"
+#line 727 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 726 "../src/lexon.l"
+#line 728 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 727 "../src/lexon.l"
+#line 729 "../src/lexon.l"
 { D; concat(&buf, "‹", yytext, "›."); }
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
-#line 728 "../src/lexon.l"
+#line 730 "../src/lexon.l"
 /* used to be \.*{space}*\n */		{ D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
 
 case 45:
 YY_RULE_SETUP
-#line 732 "../src/lexon.l"
+#line 734 "../src/lexon.l"
 { D; concat(&buf, yytext); }
 	YY_BREAK
 case 46:
 /* rule 46 can match eol */
 YY_RULE_SETUP
-#line 733 "../src/lexon.l"
+#line 735 "../src/lexon.l"
 { D; concat(&buf, "›."); concat(&buf, yytext); line+=strlen(yytext); plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 47:
 /* rule 47 can match eol */
 YY_RULE_SETUP
-#line 734 "../src/lexon.l"
+#line 736 "../src/lexon.l"
 { D; concat(&buf, "›."); concat(&buf, yytext); line+=strlen(yytext); plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 case 48:
 /* rule 48 can match eol */
 YY_RULE_SETUP
-#line 735 "../src/lexon.l"
+#line 737 "../src/lexon.l"
 { D; concat(&buf, "\n"); line++; plhd=lhd; lhd=false; }
 	YY_BREAK
 case 49:
 /* rule 49 can match eol */
 YY_RULE_SETUP
-#line 736 "../src/lexon.l"
+#line 738 "../src/lexon.l"
 { D; concat(&buf, "›.\n\n\n"); line+=3; plhd=lhd; lhd=false; BEGIN(TRIM); }
 	YY_BREAK
 
@@ -4667,22 +4669,22 @@ case 50:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 739 "../src/lexon.l"
+#line 741 "../src/lexon.l"
 { D; input(); include(yytext); yy_set_bol(true); BEGIN(PRE); }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 740 "../src/lexon.l"
+#line 742 "../src/lexon.l"
 { D; syntax("unexpected character in include filename and path", yytext); }
 	YY_BREAK
 case 52:
 /* rule 52 can match eol */
 YY_RULE_SETUP
-#line 741 "../src/lexon.l"
+#line 743 "../src/lexon.l"
 { D; syntax("unexpected end of line instead of include filename and path", ""); }
 	YY_BREAK
 case YY_STATE_EOF(INCLUDE):
-#line 742 "../src/lexon.l"
+#line 744 "../src/lexon.l"
 { D; syntax("unexpected end of file instead of include filename and path", yytext); }
 	YY_BREAK
 case 53:
@@ -4691,22 +4693,22 @@ case 53:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 744 "../src/lexon.l"
+#line 746 "../src/lexon.l"
 { D; input(); concat(&buf, yytext); setlaw(yytext); BEGIN(PRE); }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 745 "../src/lexon.l"
+#line 747 "../src/lexon.l"
 { D; syntax("unexpected character in jurisdiction tag", yytext); }
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 746 "../src/lexon.l"
+#line 748 "../src/lexon.l"
 { D; syntax("unexpected end of line instead of jurisdiction tag", ""); }
 	YY_BREAK
 case YY_STATE_EOF(LAW):
-#line 747 "../src/lexon.l"
+#line 749 "../src/lexon.l"
 { D; syntax("unexpected end of file in jurisdiction tag", yytext); }
 	YY_BREAK
 /* MAIN */
@@ -4716,84 +4718,84 @@ case 56:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 753 "../src/lexon.l"
+#line 755 "../src/lexon.l"
 { D; mtrac_free(prec_file); prec_file = trim(mtrac_strdup(yytext));
 									if(opt_debug_mainscan) printf("file %s ", yytext); BEGIN(LINENO); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 755 "../src/lexon.l"
+#line 757 "../src/lexon.l"
 { D; DX(Colon); return Colon; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 756 "../src/lexon.l"
+#line 758 "../src/lexon.l"
 { D; DX(Comma); return Comma; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 757 "../src/lexon.l"
+#line 759 "../src/lexon.l"
 { D; DX(Semicolon); return Semicolon; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 758 "../src/lexon.l"
+#line 760 "../src/lexon.l"
 { D; DX(Dash); return Dash; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 759 "../src/lexon.l"
+#line 761 "../src/lexon.l"
 { D; DX(Percent); return Percent; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 760 "../src/lexon.l"
+#line 762 "../src/lexon.l"
 { D; DX(Quote); return Quote; }
 	YY_BREAK
 case 63:
 /* rule 63 can match eol */
 YY_RULE_SETUP
-#line 761 "../src/lexon.l"
+#line 763 "../src/lexon.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 64:
 /* rule 64 can match eol */
 YY_RULE_SETUP
-#line 762 "../src/lexon.l"
+#line 764 "../src/lexon.l"
 { D; DX(Separator); return Separator; }
 	YY_BREAK
 case 65:
 /* rule 65 can match eol */
 YY_RULE_SETUP
-#line 763 "../src/lexon.l"
+#line 765 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 764 "../src/lexon.l"
+#line 766 "../src/lexon.l"
 { D; BEGIN(NAME_); }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 765 "../src/lexon.l"
+#line 767 "../src/lexon.l"
 { D; BEGIN(DESCRIPTION_); }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 766 "../src/lexon.l"
+#line 768 "../src/lexon.l"
 { D; DX(SCALAR); yylval.Scalar=mtrac_strdup_gross(yytext); return SCALAR; }
 	YY_BREAK
 /* //# {hex}								{ D; DX(HEX); yylval.Hex=mtrac_strdup_gross(yytext); return HEX; } */
 /* --> 2ND CYCLE LGF GENERATED KEYWORDS HERE --> */
 case 69:
 YY_RULE_SETUP
-#line 769 "../src/lexon.l"
+#line 771 "../src/lexon.l"
 { D; printf(" %s", yytext); }
 	YY_BREAK
 /* <-- TO HERE <-- */
 case 70:
 YY_RULE_SETUP
-#line 771 "../src/lexon.l"
+#line 773 "../src/lexon.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 
@@ -4803,22 +4805,22 @@ case 71:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 775 "../src/lexon.l"
+#line 777 "../src/lexon.l"
 { D; prec_line = atoi(yytext); if(opt_debug_mainscan) printf("line %s: ", yytext); }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 776 "../src/lexon.l"
+#line 778 "../src/lexon.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 777 "../src/lexon.l"
+#line 779 "../src/lexon.l"
 { D; syntax("unexpected character in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LINENO):
-#line 779 "../src/lexon.l"
+#line 781 "../src/lexon.l"
 { D; syntax("unexpected end of file in line number (after precompilation, use -P to check)",
 									yytext); }
 	YY_BREAK
@@ -4827,16 +4829,16 @@ case YY_STATE_EOF(LINENO):
 case 74:
 /* rule 74 can match eol */
 YY_RULE_SETUP
-#line 784 "../src/lexon.l"
+#line 786 "../src/lexon.l"
 { D; DX(NAME); yylval.Name=mtrac_strdup_gross(yytext); return NAME; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 785 "../src/lexon.l"
+#line 787 "../src/lexon.l"
 { D; BEGIN(MAIN); }
 	YY_BREAK
 case YY_STATE_EOF(NAME_):
-#line 786 "../src/lexon.l"
+#line 788 "../src/lexon.l"
 { D; syntax("unexpected end of file - precompiler name quote error", yytext); }
 	YY_BREAK
 
@@ -4844,13 +4846,13 @@ case YY_STATE_EOF(NAME_):
 case 76:
 /* rule 76 can match eol */
 YY_RULE_SETUP
-#line 790 "../src/lexon.l"
+#line 792 "../src/lexon.l"
 { D; DX(DESCRIPTION); yylval.Description=mtrac_strdup_gross(yytext); return DESCRIPTION; }
 	YY_BREAK
 case 77:
 /* rule 77 can match eol */
 YY_RULE_SETUP
-#line 791 "../src/lexon.l"
+#line 793 "../src/lexon.l"
 { D; DX(Separator); BEGIN(MAIN); return Separator; }
 	YY_BREAK
 case 78:
@@ -4858,11 +4860,11 @@ case 78:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 792 "../src/lexon.l"
+#line 794 "../src/lexon.l"
 { D;                BEGIN(MAIN); }
 	YY_BREAK
 case YY_STATE_EOF(DESCRIPTION_):
-#line 793 "../src/lexon.l"
+#line 795 "../src/lexon.l"
 { D; syntax("unexpected end of file - precompiler description quote error", yytext); }
 	YY_BREAK
 
@@ -4874,7 +4876,7 @@ case 79:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 799 "../src/lexon.l"
+#line 801 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 80:
@@ -4883,7 +4885,7 @@ case 80:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 800 "../src/lexon.l"
+#line 802 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 81:
@@ -4892,7 +4894,7 @@ case 81:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 801 "../src/lexon.l"
+#line 803 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 82:
@@ -4901,7 +4903,7 @@ case 82:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 802 "../src/lexon.l"
+#line 804 "../src/lexon.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 83:
@@ -4910,7 +4912,7 @@ case 83:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 803 "../src/lexon.l"
+#line 805 "../src/lexon.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 84:
@@ -4919,7 +4921,7 @@ case 84:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 804 "../src/lexon.l"
+#line 806 "../src/lexon.l"
 { D; BEGIN(EMBED); }
 	YY_BREAK
 case 85:
@@ -4928,47 +4930,47 @@ case 85:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 805 "../src/lexon.l"
+#line 807 "../src/lexon.l"
 { D; start_definition(yytext); }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 806 "../src/lexon.l"
+#line 808 "../src/lexon.l"
 { D; start_alternation(yytext); start_alternate(); }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 807 "../src/lexon.l"
+#line 809 "../src/lexon.l"
 { D; start_rule(active, personal); }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 808 "../src/lexon.l"
+#line 810 "../src/lexon.l"
 { D; start_rule(passive, personal); }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 809 "../src/lexon.l"
+#line 811 "../src/lexon.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 810 "../src/lexon.l"
+#line 812 "../src/lexon.l"
 { D; start_rule(passive, factual); }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 811 "../src/lexon.l"
+#line 813 "../src/lexon.l"
 { D; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 812 "../src/lexon.l"
+#line 814 "../src/lexon.l"
 { D; start_option(spaced); }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 813 "../src/lexon.l"
+#line 815 "../src/lexon.l"
 { D; start_option(unspaced); }
 	YY_BREAK
 case 94:
@@ -4977,76 +4979,76 @@ case 94:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 814 "../src/lexon.l"
+#line 816 "../src/lexon.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 815 "../src/lexon.l"
+#line 817 "../src/lexon.l"
 { D; end_option(spaced); }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 816 "../src/lexon.l"
+#line 818 "../src/lexon.l"
 { D; end_option(unspaced); }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 817 "../src/lexon.l"
+#line 819 "../src/lexon.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 818 "../src/lexon.l"
+#line 820 "../src/lexon.l"
 { D; add_keyword(yytext); }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 819 "../src/lexon.l"
+#line 821 "../src/lexon.l"
 { D; add_word(yytext); }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 820 "../src/lexon.l"
+#line 822 "../src/lexon.l"
 { D; start_alternate(); }
 	YY_BREAK
 case 101:
 /* rule 101 can match eol */
 YY_RULE_SETUP
-#line 821 "../src/lexon.l"
+#line 823 "../src/lexon.l"
 { D; line++; /* end_rule(); */ }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 822 "../src/lexon.l"
+#line 824 "../src/lexon.l"
 { D; }
 	YY_BREAK
 case 103:
 /* rule 103 can match eol */
 YY_RULE_SETUP
-#line 823 "../src/lexon.l"
+#line 825 "../src/lexon.l"
 { D; line++; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 824 "../src/lexon.l"
+#line 826 "../src/lexon.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LXF):
 case YY_STATE_EOF(EMBED):
-#line 825 "../src/lexon.l"
+#line 827 "../src/lexon.l"
 { D; produce_extension(grammar); exit(0); yyterminate(); return 0; }
 	YY_BREAK
 
 case 105:
 YY_RULE_SETUP
-#line 828 "../src/lexon.l"
+#line 830 "../src/lexon.l"
 { D; add_embed(yytext); }
 	YY_BREAK
 case 106:
 /* rule 106 can match eol */
 YY_RULE_SETUP
-#line 829 "../src/lexon.l"
+#line 831 "../src/lexon.l"
 { D; lineno(); add_embed(yytext); }
 	YY_BREAK
 /* Lexon Grammar Form: precompiling LGF to BNF */
@@ -5057,7 +5059,7 @@ case 107:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 835 "../src/lexon.l"
+#line 837 "../src/lexon.l"
 /* grammar version */		{ D; S; mtrac_free(grammar_version);
 									grammar_version = trim(mtrac_strdup(strstr(yytext, "Version") + 7)); }
 	YY_BREAK
@@ -5067,7 +5069,7 @@ case 108:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 837 "../src/lexon.l"
+#line 839 "../src/lexon.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 109:
@@ -5076,7 +5078,7 @@ case 109:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 838 "../src/lexon.l"
+#line 840 "../src/lexon.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 110:
@@ -5085,22 +5087,22 @@ case 110:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 839 "../src/lexon.l"
+#line 841 "../src/lexon.l"
 /* comment */			{ D; }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 840 "../src/lexon.l"
+#line 842 "../src/lexon.l"
 /* spaces make it longest pattern */	{ D; S; start_rule(none, neutral); }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 841 "../src/lexon.l"
+#line 843 "../src/lexon.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 842 "../src/lexon.l"
+#line 844 "../src/lexon.l"
 { D; start_definition(yytext); start_rule(none, neutral); S; }
 	YY_BREAK
 case 114:
@@ -5108,7 +5110,7 @@ case 114:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 843 "../src/lexon.l"
+#line 845 "../src/lexon.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 115:
@@ -5116,62 +5118,62 @@ case 115:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 844 "../src/lexon.l"
+#line 846 "../src/lexon.l"
 { D; S; add_word(yytext); start_alternation(yytext); }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 845 "../src/lexon.l"
+#line 847 "../src/lexon.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 846 "../src/lexon.l"
+#line 848 "../src/lexon.l"
 { D; S; start_alternate(); add_word(yytext); }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 847 "../src/lexon.l"
+#line 849 "../src/lexon.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 848 "../src/lexon.l"
+#line 850 "../src/lexon.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 849 "../src/lexon.l"
+#line 851 "../src/lexon.l"
 { D; S; continue_rule(); add_word("colon"); }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 850 "../src/lexon.l"
+#line 852 "../src/lexon.l"
 { D; S; continue_rule(); add_word("comma"); }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 851 "../src/lexon.l"
+#line 853 "../src/lexon.l"
 { D; S; continue_rule(); add_word("percent"); }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 852 "../src/lexon.l"
+#line 854 "../src/lexon.l"
 { D; S; continue_rule(); add_word(yytext); }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 853 "../src/lexon.l"
+#line 855 "../src/lexon.l"
 { D; S; end_option(spaced); start_option(spaced); }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 854 "../src/lexon.l"
+#line 856 "../src/lexon.l"
 { D; S; start_option(spaced); }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 855 "../src/lexon.l"
+#line 857 "../src/lexon.l"
 { D; S; start_option(unspaced); }
 	YY_BREAK
 case 127:
@@ -5180,46 +5182,46 @@ case 127:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 856 "../src/lexon.l"
+#line 858 "../src/lexon.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 857 "../src/lexon.l"
+#line 859 "../src/lexon.l"
 { D; S; end_option(spaced); }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 858 "../src/lexon.l"
+#line 860 "../src/lexon.l"
 { D; S; end_option(unspaced); }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 859 "../src/lexon.l"
+#line 861 "../src/lexon.l"
 { D; S; }
 	YY_BREAK
 case 131:
 /* rule 131 can match eol */
 YY_RULE_SETUP
-#line 860 "../src/lexon.l"
+#line 862 "../src/lexon.l"
 { D; S; line++; }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 861 "../src/lexon.l"
+#line 863 "../src/lexon.l"
 { D; syntax("unexpected character", yytext); }
 	YY_BREAK
 case YY_STATE_EOF(LGF):
-#line 862 "../src/lexon.l"
+#line 864 "../src/lexon.l"
 { D; produce_grammar(grammar); yyterminate(); }
 	YY_BREAK
 
 case 133:
 YY_RULE_SETUP
-#line 865 "../src/lexon.l"
+#line 867 "../src/lexon.l"
 ECHO;
 	YY_BREAK
-#line 5223 "lexccc.c"
+#line 5225 "lexccc.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(NAME_PROCESSING):
 			case YY_STATE_EOF(QUOTED_TEXT):
@@ -6195,7 +6197,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 865 "../src/lexon.l"
+#line 867 "../src/lexon.l"
 
 
 
@@ -8224,10 +8226,10 @@ void produce_grammar(struct definition *definition) {
 				//"%expect-rr 1\n"
 				"%define parse.trace\n\n");
 	char *bnf = mtrac_strdup("");
-	char *fdecl = mtrac_strdup("/* action handler (stub) functions */\n");
-	char *funcs = mtrac_strdup("/* action handler (stub) functions */\n\n");
-	char *tdecl = mtrac_strdup("/* AST walk (stub) functions */\n\n");
-	char *templ = mtrac_strdup("/* AST walk (stub) functions */\n\n");
+	char *fdecl = mtrac_strdup("\n/* action handler (stub) functions */\n\n");
+	char *funcs = mtrac_strdup("\n/* action handler (stub) functions */\n\n");
+	char *tdecl = mtrac_strdup("\n/* AST walk (stub) functions */\n\n");
+	char *templ = mtrac_strdup("\n/* AST walk (stub) functions */\n\n");
 	stringlist *results = new_result_dup(null, "", no_pipe);
 
 	if(opt_verbose || opt_debug) printf("• constructing rules\n");
@@ -8676,7 +8678,8 @@ void produce_grammar(struct definition *definition) {
 		}
 		char *include = mtrac_strdup("");
 		//if(opt_header) concat(&include, "#include \"", opt_header, "\"\n");
-		char *root = mtrac_strdup(""); concat(&root, UP(grammar->name), " *root;");
+		char *root = mtrac_strdup("");
+		concat(&root, "static ", UP(grammar->name), " *root;");
 		concat(&req, include, /* enu, "\n", */ stru, "\n", root, "\n", /* uni, "\n", */ fdecl, "}");
 		FILE *out = stdout;
 		if(strlen(opt_yacc)) {
@@ -9359,7 +9362,7 @@ const char *yacc_stub() {
 
 const char *walk_stub() {
 	return
-		"/*T*/	extern struct <roottype> *root;\n"
+		"/*T*/	static struct <roottype> *root;\n"
 		"/*T*/	bool <prefix>_<low-roottype>(char **production, <roottype> *root, int indent, bool topcall,"
 			" bool sibbling, bool highlight, bool subhighlight);\n"
 		"/*T*/\n"

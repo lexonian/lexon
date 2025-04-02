@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 3"
+#define program_vers "0.3 beta 4"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -544,11 +544,13 @@ union YYSTYPE
 	char *Hex;
 };
 typedef union YYSTYPE YYSTYPE;
+
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
-#endif
 
 YYSTYPE yylval;
+
+#endif
 
 int yyparse (void);
 
@@ -2889,10 +2891,10 @@ void produce_grammar(struct definition *definition) {
 				//"%expect-rr 1\n"
 				"%define parse.trace\n\n");
 	char *bnf = mtrac_strdup("");
-	char *fdecl = mtrac_strdup("/* action handler (stub) functions */\n");
-	char *funcs = mtrac_strdup("/* action handler (stub) functions */\n\n");
-	char *tdecl = mtrac_strdup("/* AST walk (stub) functions */\n\n");
-	char *templ = mtrac_strdup("/* AST walk (stub) functions */\n\n");
+	char *fdecl = mtrac_strdup("\n/* action handler (stub) functions */\n\n");
+	char *funcs = mtrac_strdup("\n/* action handler (stub) functions */\n\n");
+	char *tdecl = mtrac_strdup("\n/* AST walk (stub) functions */\n\n");
+	char *templ = mtrac_strdup("\n/* AST walk (stub) functions */\n\n");
 	stringlist *results = new_result_dup(null, "", no_pipe);
 
 	if(opt_verbose || opt_debug) printf("• constructing rules\n");
@@ -3341,7 +3343,8 @@ void produce_grammar(struct definition *definition) {
 		}
 		char *include = mtrac_strdup("");
 		//if(opt_header) concat(&include, "#include \"", opt_header, "\"\n");
-		char *root = mtrac_strdup(""); concat(&root, UP(grammar->name), " *root;");
+		char *root = mtrac_strdup("");
+		concat(&root, "static ", UP(grammar->name), " *root;");
 		concat(&req, include, /* enu, "\n", */ stru, "\n", root, "\n", /* uni, "\n", */ fdecl, "}");
 		FILE *out = stdout;
 		if(strlen(opt_yacc)) {
@@ -4024,7 +4027,7 @@ const char *yacc_stub() {
 
 const char *walk_stub() {
 	return
-		"/*T*/	extern struct <roottype> *root;\n"
+		"/*T*/	static struct <roottype> *root;\n"
 		"/*T*/	bool <prefix>_<low-roottype>(char **production, <roottype> *root, int indent, bool topcall,"
 			" bool sibbling, bool highlight, bool subhighlight);\n"
 		"/*T*/\n"
