@@ -1,0 +1,15 @@
+
+precompilation:
+---------------
+
+delay 105 after   1:   LEX: «Time Lock»
+
+delay 105 after   3:   "«Payer»" is a person.
+delay 105 after   4:   "«Receiver»" is a person.
+delay 105 after   5:   "«Unlock Time»" is a time.
+
+delay 105 after   7:   The «Payer» pays an amount into escrow, appoints the «Receiver», and fixes an «Unlock Time».
+
+delay 105 after   9:   CLAUSE: «Draw».
+delay 105 after  10:   The «Receiver» may, after the «Unlock Time», pay the escrow to themselves.
+

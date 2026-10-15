@@ -4,8 +4,7 @@
     ( terms 
         ( provisions 
             ( definitions 
-                ( definition «payer» ( type person ) ) 
-                ( definition «amount» ( type amount ) ) ) 
+                ( definition «payer» ( type person ) ) ) 
             ( statements 
                 ( statement 
                     ( action 
@@ -14,6 +13,6 @@
                         ( predicates 
                             ( predicate 
                                 ( payment pay 
-                                    ( expression ( combination ( combinor ( combinand ( symbol «amount» ) ) ) ) ) 
+                                    ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) ) 
                                     preposition 
                                     ( object ) ) ) ) ) ) ) ) ) )

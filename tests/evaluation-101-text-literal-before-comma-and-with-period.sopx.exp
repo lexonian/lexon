@@ -10,11 +10,11 @@
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 beta 3
+ **	compiler:    lexon 0.3 beta 5
  **
  **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
- **	backend:     sophia 0.3.103 beta 3c
+ **	backend:     sophia 0.3.105 beta 5
  **
  **	target:      sophia 8+
  **
@@ -206,7 +206,7 @@ main contract EvaluationLicenseSystem : Main =
  **/
 
 /*
- | 	TERMS PER License
+ | 	TERMS PER License:
  | 
  | 	"Description of Goods" is a text.
  | 	"Licensee" is a person.

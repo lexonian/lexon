@@ -65,7 +65,8 @@ endif
 all: build sample build/.checkonce
 
 help:
-	# make rules
+	#
+	# ▫️  MAKE RULES
 	#
 	# all           build compiler and run an example (default)
 	# build         build compiler
@@ -85,6 +86,7 @@ help:
 	#
 	# lexccc        a build part: build lexccc compiler compiler
 	# lexon         a build part: build lexon compiler
+	# lexwasm       build wasm version of compiler bin/lexwasm
 	# distclean     clean and pre-build cycle 2 sources for master branch
 	# devclean      clean and delete pre-build binaries (dev branch)
 	# diffclean     clean and pre-build backend modules (targets branch)
@@ -92,6 +94,7 @@ help:
 	# rulecheck     test of different repository clean state transitions
 	#
 	# ▫️  3rd level of tests: grammar
+	#
 	# grammarcheck  grammar check with extended yacc grammar checks
 	# conflicts     grammar check that lists ambiguously used tokens (slow)
 	# counter       grammar check that lists examples for ambiguous code
@@ -99,6 +102,7 @@ help:
 	# focusprep     build result references for future focustest runs
 	#
 	# ▫️  2nd level of tests: components
+	#
 	# focuscomp     syntax check of focus tests by native compilation, linting*
 	# deeptest      memory handling, includes, language parser, compiler
 	# comptest      natively compile* the result of all failing deep tests
@@ -110,11 +114,14 @@ help:
 	# autoupdate    automatic update of failing deeptests's result references
 	# expectations  full non-interactive update of all deeptest result references
 	# new           creation of missing deeptest result references
+	# filetest FILE=<text.lex> compile and natively compile* one lexon text
 	#
 	# ▫️  1st level of tests: build environment
+	#
 	# envtest       test of build environment, gcc, flex, mtrac memory checks
 	#
 	# * the extended compilation tests use node, eslint, solcjs, and aesophia_cli.
+	#
 
 build: build/.timefix
 	@# the conditional building replaces lexccc with build/.lexccc as dependency
@@ -136,7 +143,7 @@ build/.timefix: # files can arrive in random millisecond order after clone
 	@mkdir -p build
 	@mkdir -p bin
 	@touch build/.timefix
-	@touch -r build/.timefix grammar/* src/* build/* build/.* bin/*
+	@touch -r build/.timefix grammar/* src/* build/* bin/*
 
 lexccc build/.lexccc: build/lexccc.c
 	@mkdir -p bin
@@ -162,6 +169,11 @@ build/.parser: build/.lexccc src/lexon.l grammar/english.lgf
 lexon: build/.parser build/.targets
 	@printf "$(ok)» compiler $(off)\n\n"
 	cd build ; gcc -std=c99 -o ../bin/lexon scanner.c parser.c core.c javascript.c solidity.c sophia.c
+	@echo
+
+lexwasm: build/.parser build/.targets
+	@printf "$(ok)» wasm compiler $(off)\n\n"
+	cd build ; emcc -std=c99 -o ../bin/lexwasm scanner.c parser.c core.c javascript.c solidity.c sophia.c
 	@echo
 
 build/.targets: build/scanner.c build/parser.c build/.backend build/core.c build/javascript.c build/solidity.c build/sophia.c
@@ -439,6 +451,7 @@ clean:
 	rm -f build/.lexccc
 	rm -f bin/lexon
 	rm -rf build
+	rm -rf tmp
 	@echo
 	@cd tests ; $(MAKE) clean
 	@echo

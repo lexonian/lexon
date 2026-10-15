@@ -1,6 +1,5 @@
 LEX Burn.
 
-"Payer" is a person.
-"Amount" is an amount.
+A "Payer" is a person.
 
-The Payer pays an Amount into escrow.
+The Payer pays an amount into escrow.

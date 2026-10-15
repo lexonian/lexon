@@ -13,11 +13,11 @@ pragma solidity ^0.8.17;
  **
  **	code tagged: 0.2.1
  **
- **	compiler:    lexon 0.3 beta 2
+ **	compiler:    lexon 0.3 beta 5
  **
- **	grammar:     0.2.20 / subset 0.3.9 beta 1 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
- **	backend:     solidity 0.3.102 beta 2
+ **	backend:     solidity 0.3.105 beta 5
  **
  **	target:      solidity 0.8.17+
  **
@@ -130,7 +130,7 @@ contract EvaluationLicenseSystem {
  **/
 
 /*
- | 	TERMS PER License
+ | 	TERMS PER License:
  | 
  | 	"Description of Goods" is text.
  | 	"Licensee" is person.

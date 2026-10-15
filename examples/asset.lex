@@ -7,5 +7,5 @@ LEX Asset.
 The Creator fixes the Id, and appoints the Owner.
 
 CLAUSE: Transfer Ownership.
-The Owner may appoint the Owner.
+The Owner may appoint a new Owner.
 

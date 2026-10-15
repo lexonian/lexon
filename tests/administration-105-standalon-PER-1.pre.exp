@@ -1,0 +1,34 @@
+
+precompilation:
+---------------
+
+administration 105 standalon PER 1   1:   LEX: «Administration».
+
+administration 105 standalon PER 1   3:   The "«Manager»" is a person.
+administration 105 standalon PER 1   4:   A "«Secretary»" is a person.
+administration 105 standalon PER 1   5:   "«Proposed New Secretary»" is a person.
+administration 105 standalon PER 1   6:   "«Accepted New Secretary»" is a person.
+
+administration 105 standalon PER 1   8:   The «Manager» appoints the «Secretary».
+
+
+administration 105 standalon PER 1  11:   CLAUSE: «New Secretary».
+administration 105 standalon PER 1  12:   The «Manager» may appoint a new «Secretary».
+
+administration 105 standalon PER 1  14:   CLAUSE: «New Manager».
+administration 105 standalon PER 1  15:   The «Manager» may appoint a new «Manager».
+
+
+administration 105 standalon PER 1  18:   PER «Member»:
+
+administration 105 standalon PER 1  20:   "«Proposal»" is a text.
+administration 105 standalon PER 1  21:   "«Member»" is a person.
+
+administration 105 standalon PER 1  23:   The «Secretary» may appoint a «Member».
+
+administration 105 standalon PER 1  25:   CLAUSE: «Notify».
+administration 105 standalon PER 1  26:   The «Member» may send a «Proposal» to the «Manager».
+
+administration 105 standalon PER 1  28:   CLAUSE: «Acknowledge».
+administration 105 standalon PER 1  29:   The «Secretary» may notify the «Member» of "‹Acknowledgement the Proposal›".
+

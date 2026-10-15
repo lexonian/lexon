@@ -1,0 +1,18 @@
+( document 
+    ( head 
+        ( lex «burn-0» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «dummy» ( type time ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol ( type person ) ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) ) ) ) ) ) ) )

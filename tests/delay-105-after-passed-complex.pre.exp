@@ -1,0 +1,16 @@
+
+precompilation:
+---------------
+
+delay 105 after passed complex   1:   LEX: «Time Lock»
+
+delay 105 after passed complex   3:   "«Payer»" is a person.
+delay 105 after passed complex   4:   "«Receiver»" is a person.
+delay 105 after passed complex   5:   "«Unlock Time»" is a time.
+delay 105 after passed complex   6:   "«Alternate Unlock Time»" is a time.
+
+delay 105 after passed complex   8:   The «Payer» pays an amount into escrow, appoints the «Receiver», fixes the «Unlock Time», and fixes the «Alternate Unlock Time».
+
+delay 105 after passed complex  10:   CLAUSE: «Draw».
+delay 105 after passed complex  11:   The «Receiver» may, after the «Unlock Time» has passed and the «Alternate Unlock Time» has passed, pay the escrow to themselves.
+

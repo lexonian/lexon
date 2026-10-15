@@ -505,12 +505,17 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	typedef struct Condition {
 		struct If *If;
 		struct Expression *Expression;
+		struct After *After;
 		Literal *Literal;
 	} Condition;
 	
 	typedef struct If {
 		Literal *Literal;
 	} If;
+	
+	typedef struct After {
+		Literal *Literal;
+	} After;
 	
 	typedef struct Expression {
 		struct Combination *Combination;
@@ -845,6 +850,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 	bool core_flagging(char **production, Flagging *Flagging, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_condition(char **production, Condition *Condition, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_if(char **production, If *If, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
+	bool core_after(char **production, After *After, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_expression(char **production, Expression *Expression, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_scalar_comparison(char **production, Scalar_Comparison *Scalar_Comparison, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
 	bool core_comparison_operator(char **production, Comparison_Operator *Comparison_Operator, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight);
@@ -4104,7 +4110,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		bool sameline;
 		bool has_more_recursion = false;
 		bool skipped = false;
-		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Condition->If?1:0) + (!!Condition->Expression?1:0)));
+		bool terse = opt_produce_terse && (skipped || (1 == 0 + (!!Condition->If?1:0) + (!!Condition->Expression?1:0) + (!!Condition->After?1:0)));
 		if(opt_produce_tree) {
 			if(!(opt_produce_flat && has_more_recursion) && !terse)
 				padcat(1, indent, production, "↳  ", color, "condition", off, " ");
@@ -4118,7 +4124,7 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		grid <<= !terse ? 1 : 0;
 		int irx = !terse ? 1 : 0;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = !!(Condition->Expression);
+		sibbling_follows = !!(Condition->Expression || Condition->After);
 		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
@@ -4126,11 +4132,19 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 		core_if(production, Condition->If, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "condition"), opt_subvalues && !!strstr(opt_subvalues, "condition"));
 		subhighlight = false;
 		if(!terse) grid &= 4294967294;
-		sibbling_follows = false;
+		sibbling_follows = !!(Condition->After);
+		if(opt_produce_tree) { bool line = opt_produce_flat && sibbling || sibbling_follows; if(line) grid |=1; }
 		irx = !terse ? 1 : 0;
 		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
 		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
 		core_expression(production, Condition->Expression, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "condition"), opt_subvalues && !!strstr(opt_subvalues, "condition"));
+		subhighlight = false;
+		if(!terse) grid &= 4294967294;
+		sibbling_follows = false;
+		irx = !terse ? 1 : 0;
+		if(opt_produce_tree && opt_produce_flat) grid |= sibbling;
+		if(!opt_produce_flat && !sibbling_follows) grid &= 0xFFFFFFFE;
+		core_after(production, Condition->After, indent+irx, true, false, subhighlight || opt_values && !!strstr(opt_values, "condition"), opt_subvalues && !!strstr(opt_subvalues, "condition"));
 		subhighlight = false;
 		grid >>= !terse ? 1 : 0;
 		padcat(0, 0, production, opt_produce_tree?"":closing_bracket, " ");
@@ -4154,6 +4168,32 @@ extern unsigned int grid; // optics: bitpattern of vertical tree branch lines, a
 				padcat(1, indent, production, "↳  ", color, "if", off, " ");
 		} else {
 			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "if", off, " ");
+			sameline = !bracket_just_closed;
+			bracket_just_closed=false;
+		}
+		bool sibbling_follows;
+		grid <<= !terse ? 1 : 0;
+		int irx = !terse ? 1 : 0;
+		grid >>= !terse ? 1 : 0;
+
+		return true;
+	}
+
+	bool core_after(char **production, After *After, int indent, bool topcall, bool sibbling, bool highlight, bool subhighlight) {
+		if(!After) return false;
+		if(opt_debug) printf("producing After\n");
+
+		char *color = !!opt_color && (highlight || opt_highlight && strstr(opt_highlight, "after")) ? opt_color : "";
+		char *off = *color ? "\033[0m" : "";
+		bool sameline;
+		bool has_more_recursion = false;
+		bool skipped = false;
+		bool terse = opt_produce_terse && (skipped || (1 == 0));
+		if(opt_produce_tree) {
+			if(!(opt_produce_flat && has_more_recursion) && !terse)
+				padcat(1, indent, production, "↳  ", color, "after", off, " ");
+		} else {
+			padcat(bracket_just_closed?1:0, bracket_just_closed?indent:0, production, color, "after", off, " ");
 			sameline = !bracket_just_closed;
 			bracket_just_closed=false;
 		}

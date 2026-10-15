@@ -1,10 +1,18 @@
 # Lexon Compiler 0.3
 
-	0.3 beta 4, grammar 0.2.20 / subset 0.3.11 beta 4 - English / Reyes
+	0.3 beta 5, grammar 0.2.20 / subset 0.3.12 beta 5 - English / Reyes
 
 **This is about developing the Lexon grammar and compiler, not about
 writing or reading Lexon texts.**
 
+**To see how a Lexon text looks, check out these
+[examples](https://lexon.org/vocabulary.html#examples). To learn more about
+Lexon, visit the [resources](https://lexon.org/resources.html) page.**
+
+**To write and compile Lexon texts, you can use the [online
+compiler](https://lexon.org/compiler.html), or install the pre-built
+[binaries](#pre-built) in this repo, or build from source as described
+below.**
 
 
 ## Quick Start
@@ -15,7 +23,10 @@ writing or reading Lexon texts.**
 	cd lexon ; make && sudo make install
 	lexon --solidity examples/escrow.lex
 
-Also see **Install Pre-built Binaries**, below.
+
+The standard build is easy to do and portable, see [requirements](#prereq).
+
+Also see [**Install Pre-built Binaries**](#pre-build), below.
 
 
 ## Introduction
@@ -55,7 +66,7 @@ unambiguous texts, which turns out to be relevant to achieve computability,
 instead of the creation of an unambiguous lexicon (cf.
 [Characteristica](https://lexon.org/books.html#characteristica)).
 
-This grammar release is nicknamed 'Reyes' in honor of asst. prof. of law Carla
+This grammar release is nicknamed 'Reyes' in honor of professor of law Carla
 L. Reyes' contribution and support. The file [CREDITS](CREDITS) lists more
 contributors and supporters. Input that shaped the grammar came from about one
 hundred developers, lawyers, scholars, finance, governance, and business
@@ -82,31 +93,41 @@ approaches in Computational Law.
 Examples of Lexon texts are in the [`examples/`](examples/) folder. They can
 also be explored crosslinked, word for word, at the online
 [vocabulary](https://lexon.org/vocabulary.html#examples).  Note that it is not
-required——neither for reading nor writing Lexon——to memorize this word list.
-Just like programmers do not memorize references, nor lawyers memorize the
-lexicon of legalese.  All the while, by necessity, Lexon is more accessible
-than legalese or programming languages.
+required——neither for reading nor writing Lexon——to memorize this word list;
+just like programmers do not memorize references, nor lawyers memorize the
+lexicon of legalese.  Lexon is more accessible though than legalese or
+programming languages. It is learned the same way though, by picking it up, not
+by learning by heart. Haphazardly clicking around in the
+[vocabulary](https://lexon.org/vocabulary.html#examples) is probably the most
+productive way of doing that.
 
 The compiler is licensed to you under the conditions and terms explained in the
 file [`LICENSE`](LICENSE).
 
 
+## Reading Lexon
+
+Anyone can **read** Lexon, with no requirements or prior learning required,
+which is the point.
+
+Lexon texts are readable without any preparation or familiarity with
+programming.  Lexon thus includes non-programmers into the discussion of
+programs——notably also lawyers and judges——for example, to understand the
+meaning of a smart contract like a fintech instrument.
+
+Reading is the main use case of a Lexon text and Lexon is optimized for
+readability because *"a contract, as well as a program, is more often read than
+written"* (Brian Fox).
 
 
 ## Writing Lexon
 
-Lexon texts are **readable** without any preparation or familiarity with
-programming.  Lexon thus includes non-programmers into the discussion of
-programs——notably also lawyers and judges——to understand the meaning of a smart
-contract, for example a fintech instrument.
-
-There are no requirements for reading Lexon, which is its primary use case.
-
-To **write** Lexon, you also don't need to install this program but can use the
+To **write** Lexon, you don't need to install this program but can use the
 [online compiler](https://www.lexon.org/compiler.html) instead.
 
 **To learn to write, read the examples provided by the online compiler (click
-the `example` button repeatedly), then briefly explore the online
+the `example` button repeatedly), check out the [examples](examples/) folder,
+then briefly explore the online
 [vocabulary](https://lexon.org/vocabulary.html), before using the
 [manual](https://lexon.org/docs/Lexon%20Manual%200.3.pdf) or the
 [tutorial](https://lexon.org/docs/Lexon%20Tutorial%200.3.pdf) for a structured
@@ -116,13 +137,13 @@ However, note that most anything in this repository, including the downloaded
 binaries, is to be used from the command-line of a terminal. (The online
 compiler does not require any installation or knowledge of the terminal.)
 
-The following, accordingly, is not about writing nor reading Lexon but **for
+The following, accordingly, is not about writing nor reading Lexon but for
 developers who would like to take part in developing the Lexon language and the
-Lexon compiler.**
+Lexon compiler.
 
 
 
-# The Compiler
+# The Compiler <a name="compiler"></a>
 
 ## Online Documentation
 
@@ -176,19 +197,20 @@ seen in file [`build/parser.y`](build/parser.y#L1056) from tag `%%`.
 BNF and Bison are preferred over RE-based compiler building suits because BNF
 is more versatile and Bison's GLR is more powerful for human language parsing
 than PEG or ALL(*), as it can deal with the temporary ambiguities found in
-natural language. Compiler tools have for obvious reasons prioritized
+natural language. Compiler tools have for perfectly valid reasons prioritized
 simplicity and compilation speed based on what emerged as common denominators
-of modern programming languages; but in the process they confined the path of
-language development to the status quo, basically, the 3rd generation language
-syntax. It is considered obvious currently that a programming language should
-not require the parser to look ahead to figure out the meaning of a token.
-Lexon breaks with the de facto standards in multiple ways. Its philosphy is
-based on the idea to use BNF to describe natural language, which connects with
-BNF's purported origin, the 1950s linguistics department at MIT. In this, Lexon
-merely acknowledges that the era of optimization for the needs of the machine
-is over and programmer productivity has been firmly established as priority in
-programming; for which the unintended consequenes of path dependency in
-compiler building have to be addressed, and overcome.
+of modern programming languages. But in the process they confined the path of
+language development to the status quo, i.e. basically, to the 3rd generation
+language syntax. It is considered obvious currently that a programming language
+should not require the parser to look ahead to figure out the meaning of a
+token.  Lexon breaks with the de facto standards in multiple ways. Its
+philosophy is based on the idea to use BNF to describe natural language, which
+connects with BNF's purported origin, the 1950s linguistics department at MIT.
+In doing so, Lexon merely acknowledges that the era of optimization for the
+needs of the machine is over and that programmer productivity has instead been
+firmly established as priority. Lexon addresses the unintended consequenes of
+the path dependency in compiler building—that we got stuck with the 3rd
+generation mold—and overcomes it.
 
 
 
@@ -218,7 +240,7 @@ stand-alone, human-readable file, not mixed with target code. It also creates
 type-safe abstract syntax trees and template walk code for it (option `-T`).
 This makes the 2nd cycle the language development work phase, where the actual
 work happens, both in terms of iterating the grammar and adapting the code
-generation to it; with changes to `lexccc` and its code base being rare in
+generation to it. Changes to `lexccc` and its code base are rare in
 comparison.
 
 
@@ -263,7 +285,7 @@ is tested on Linux and Mac. The `dev` branch starts from this stage.
 
 
 
-## Prerequisites for Standard Build
+## Prerequisites for Standard Build <a name=prereq></a>
 
 * C
 * make
@@ -283,24 +305,30 @@ Build by
 ### Alternatives to Building
 
 
-#### Pre-built Binaries
+#### Pre-built Binaries <a name="pre-built"></a>
 
 You can use the pre-built binaries `lexon_mac` or `lexon_linux` in
 [`bin/`](bin/) to skip building. The following installs the pre-built binaries
 from `bin/`. It also copies them over `bin/lexon`. (The latter is undone buy
 running `make` again, which will build a new `bin/lexon` from source.)
 
+
+	$ git clone https://github.com/lexonian/lexon.git
+	$ cd lexon
 	$ sudo make mac install
 
 or
 
+	$ git clone https://github.com/lexonian/lexon.git
+	$ cd lexon
 	$ sudo make linux install
 
 
 #### Download Binaries
 
-You can also [download](https://lexon.org/download.html) the binaries, or use
-the [online](https://lexon.org/compiler.html) compiler.
+You can also just download `lexon_mac` or `lexon_linux` from [bin/](bin/) or go
+by the easy [instructions](https://lexon.org/download.html) on the Lexon site,
+or use the [online](https://lexon.org/compiler.html) compiler.
 
 
 ### Alternative to `make`
@@ -399,6 +427,14 @@ matter to what language, even to Javascript. The above applies solely for
 executing the produced Javascript at a later time.
 
 
+## Prerequisites for WASM Build
+
+* emcc
+
+
+#### Tested With
+
+	emcc 4.0.6
 
 
 ## Building
@@ -518,6 +554,13 @@ you were looking elsewhere.  Use `make comptest` to check the syntax of the
 failing regression tests of `make check`. 
 
 
+## WASM Build
+
+	$ make lexwasm
+
+Creates `bin/lexwasm` and `bin/lexwasm.wasm`.
+
+
 ## Build Rules
 
 	$ make <rules>
@@ -538,8 +581,9 @@ failing regression tests of `make check`.
 
 **dev support**
 
-	lexcc           a build part: build lexccc compiler compiler
+	lexccc          a build part: build lexccc compiler compiler
 	lexon           a build part: build lexon compiler
+	lexwasm         build wasm version of compiler bin/lexwasm
 	distclean       clean and pre-build cycle 2 sources for master branch
 	diffclean       clean and pre-build backend modules (targets branch)
 	devclean        clean and delete pre-build binaries (dev branch)
@@ -567,6 +611,7 @@ failing regression tests of `make check`.
 	autoupdate      automatic update of failing deeptests's result references
 	expectations    full non-interactive update of all deeptest result references
 	new             creation of missing deeptest result references
+	filetest FILE=<text.lex> compile and natively compile* one lexon text 
 
 **1st level of tests: build environment**
 
@@ -723,7 +768,7 @@ See [`src/target.c`](src/target.c) for more details.
 
 ## License
 
-Copyright (C) 2016-25 Henning Diedrich.
+Copyright (C) 2016-26 Henning Diedrich.
 
 Licensed under AGPL3 subject to the conditions described in the file
 [LICENSE](LICENSE).

@@ -4,11 +4,11 @@
  **
  **	file:        cover/burn.lex
  **
- **	compiler:    lexon 0.3 beta 2
+ **	compiler:    lexon 0.3 beta 5
  **
- **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.12 beta 5 - English / Reyes
  **
- **	backend:     sophia 0.3.102 beta 2
+ **	backend:     sophia 0.3.105 beta 5
  **
  **	target:      sophia 8+
  **
@@ -58,22 +58,19 @@
 /*
  | 	LEX Burn.
  | 
- | 	"Payer" is a person.
- | 	"Amount" is an amount.
+ | 	A "Payer" is a person.
  | 
- | 	The Payer pays an Amount into escrow.
+ | 	The Payer pays an amount into escrow.
  */
 
 
 payable main contract Burn =
     record state = {
         
-            payer : option(address),
-            amount : option(int)
+            payer : option(address)
         }
     entrypoint init() = {
-            payer = Some(Call.caller),
-            amount = Some(Call.value)
+            payer = Some(Call.caller)
         }
     
 
