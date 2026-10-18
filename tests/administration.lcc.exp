@@ -5,9 +5,7 @@
         ( provisions 
             ( definitions 
                 ( definition «manager» ( type person ) ) 
-                ( definition «secretary» ( type person ) ) 
-                ( definition «proposed-new-secretary» ( type person ) ) 
-                ( definition «accepted-new-secretary» ( type person ) ) ) 
+                ( definition «secretary» ( type person ) ) ) 
             ( clauses 
                 ( clause «new-secretary» 
                     ( body 
@@ -18,7 +16,7 @@
                                         ( symbols ( symbol «manager» ) ) ) 
                                     ( predicates 
                                         ( predicate 
-                                            ( appointment appoint ( symbol «secretary» ) ) ) ) 
+                                            ( appointment appoint ( symbol «secretary» new ) ) ) ) 
                                     permission ) ) ) ) ) 
                 ( clause «new-manager» 
                     ( body 
@@ -29,7 +27,7 @@
                                         ( symbols ( symbol «manager» ) ) ) 
                                     ( predicates 
                                         ( predicate 
-                                            ( appointment appoint ( symbol «manager» ) ) ) ) 
+                                            ( appointment appoint ( symbol «manager» new ) ) ) ) 
                                     permission ) ) ) ) ) ) 
             ( statements 
                 ( statement 
@@ -43,8 +41,8 @@
         ( covenant «member» 
             ( provisions 
                 ( definitions 
-                    ( definition «proposal» ( type text ) ) 
-                    ( definition «member» ( type person ) ) ) 
+                    ( definition «member» ( type person ) ) 
+                    ( definition «proposal» ( type text ) ) ) 
                 ( clauses 
                     ( clause «notify» 
                         ( body 
@@ -72,7 +70,7 @@
                                                 ( notification notify 
                                                     ( object ( symbol «member» ) ) 
                                                     preposition 
-                                                    ( expression ( combination ( combinor ( combinand "Acknowledgement the Proposal") ) ) ) ) ) ) 
+                                                    ( expression ( combination ( combinor ( combinand "Acknowledgement of the Proposal") ) ) ) ) ) ) 
                                         permission ) ) ) ) ) ) 
                 ( statements 
                     ( statement 
@@ -81,5 +79,5 @@
                                 ( symbols ( symbol «secretary» ) ) ) 
                             ( predicates 
                                 ( predicate 
-                                    ( appointment appoint ( symbol «member» ) ) ) ) 
+                                    ( appointment appoint ( symbol «member» new ) ) ) ) 
                             permission ) ) ) ) ) ) )

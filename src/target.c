@@ -7,7 +7,7 @@
  **
  **                  Lexon — natural language programming
  **
- **     Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+ **     Copyright (C) 2016-25 Henning Diedrich. Licensed to you under
  **     AGPL3 subject to the conditions described in the file LICENSE.
  **
  **     Also see https://www.lexon.org/license-0.3.html
@@ -64,17 +64,17 @@
 
 /*JS */   /*	javascript.c - Javascript backend	*/
 /*JS */
-/*JS */ #define backend_version "javascript 0.3.104 beta 4"
+/*JS */ #define backend_version "javascript 0.3.105 beta 5"
 /*JS */ #define target_version "node 14.1+"
 
 /*Sol*/   /*	solidity.c - Solidity backend	*/
 /*Sol*/
-/*Sol*/ #define backend_version "solidity 0.3.104 beta 4"
+/*Sol*/ #define backend_version "solidity 0.3.105 beta 5"
 /*Sol*/ #define target_version "solidity 0.8.17+" // sync w/[5]
 
 /*Sop*/   /*	sophia.c - Sophia backend	*/
 /*Sop*/
-/*Sop*/ #define backend_version "sophia 0.3.104 beta 4"
+/*Sop*/ #define backend_version "sophia 0.3.105 beta 5"
 /*Sop*/ #define target_version "sophia 8+"
 
 #define CYCLE_2 true
@@ -108,7 +108,7 @@ static void error(char *msg, const char *cargo);
 #define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)
 #define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)
 #define replace_first_from(orig_, rep_, with_, from_) \
-	_replace(orig_, rep_, with_, false, from_, false, #orig_, __FILE__, __LINE__)
+	_replace(orig_, rep_, with_, false, from_, false, null, null, #orig_, __FILE__, __LINE__)
 void *_mtrac_malloc(size_t size, char *name, char *file, int line);
 void *_mtrac_strdup(const char *string, char *name, char *file, int line);
 void _mtrac_free(void *p, char *name, char *file, int line);
@@ -166,8 +166,8 @@ static struct Document *root;
 
 bool xxx_document(char **production, struct Document *root, int indent);
 
-#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, #orig_, __FILE__, __LINE__)
-extern char *_replace(char **orig, const char *rep, const char *with, int all, char *from, bool whole, char *origname, char *file, int line);
+#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, null, null, #orig_, __FILE__, __LINE__)
+extern char *_replace(char **orig, const char *rep, const char *with, int all, char *from, bool whole, char *quote, char *unquote, char *origname, char *file, int line);
 extern const char *str(int line);
 static char *quote_trimmed(const char *token);
 static char *dash_spaced(const char *token);
@@ -813,6 +813,7 @@ static bool in(char *hay, char *needle) { // ◊ unify w/lexon.l
 /*T*/	} Sending;
 /*T*/
 /*T*/	typedef struct Send {
+/*T*/		Literal *Literal;
 /*T*/	} Send;
 /*T*/
 /*T*/	typedef struct Notification {
@@ -820,33 +821,45 @@ static bool in(char *hay, char *needle) { // ◊ unify w/lexon.l
 /*T*/		struct Object *Object;
 /*T*/		struct Preposition *Preposition;
 /*T*/		struct Expression *Expression;
+/*T*/		Literal *Literal;
 /*T*/	} Notification;
 /*T*/
 /*T*/	typedef struct Notify {
+/*T*/		Literal *Literal;
 /*T*/	} Notify;
 /*T*/
 /*T*/	typedef struct Termination {
 /*T*/		struct Terminate *Terminate;
 /*T*/		struct This_Contract *This_Contract;
 /*T*/		struct All_Contracts *All_Contracts;
+/*T*/		Literal *Literal;
 /*T*/	} Termination;
 /*T*/
 /*T*/	typedef struct Terminate {
+/*T*/		Literal *Literal;
 /*T*/	} Terminate;
 /*T*/
 /*T*/	typedef struct Flagging {
 /*T*/		struct Illocutor *Illocutor;
 /*T*/		struct Symbol *Symbol;
 /*T*/		struct This_Contract *This_Contract;
+/*T*/		Literal *Literal;
 /*T*/	} Flagging;
 /*T*/
 /*T*/	typedef struct Condition {
 /*T*/		struct If *If;
 /*T*/		struct Expression *Expression;
+/*T*/		struct After *After;
+/*T*/		Literal *Literal;
 /*T*/	} Condition;
 /*T*/
 /*T*/	typedef struct If {
+/*T*/		Literal *Literal;
 /*T*/	} If;
+/*T*/
+/*T*/	typedef struct After {
+/*T*/		Literal *Literal;
+/*T*/	} After;
 /*T*/
 /*T*/	typedef struct Expression {
 /*T*/		struct Combination *Combination;
@@ -1098,6 +1111,7 @@ static const char *lexsymtype(Symbol *symbol);
 /*T*/	bool xxx_flagging(char **production, Flagging *Flagging, int indent);
 /*T*/	bool xxx_condition(char **production, Condition *Condition, int indent);
 /*T*/	bool xxx_if(char **production, If *If, int indent);
+/*T*/	bool xxx_after(char **production, After *After, int indent);
 /*T*/	bool xxx_expression(char **production, Expression *Expression, int indent);
 /*T*/	bool xxx_scalar_comparison(char **production, Scalar_Comparison *Scalar_Comparison, int indent);
 /*T*/	bool xxx_comparison_operator(char **production, Comparison_Operator *Comparison_Operator, int indent);
@@ -1168,6 +1182,7 @@ static bool is_payment(Predicates *predicates) {
 	static char *parameta = null;
 	static char *emits = null;
 	static char *caller = null;
+	static char *creator = null;
 	static size_t paratag = -1;
 	static int preass_indent = 0;
 	static Action *action = null;
@@ -1270,7 +1285,7 @@ static bool is_payment(Predicates *predicates) {
 
 /*JS */ static void optional_caller(char **production) {
 /*JS */		if(opt_log)
-/*JS */			concat(production, active_subjects && (!current_function && !class) ? SNAKE(active_subjects->item) : "caller", ", ");
+/*JS */			concat(production, active_subjects && (!current_function && !class) ? SNAKE(active_subjects->item) : caller&&*caller?caller:"caller", ", ");
 /*JS */	}
 
 /*T*/	bool xxx_walk(char **production) {
@@ -1493,7 +1508,7 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		/* note this must follow after the class definitions, to be able to use the main_constructor_bodys in `restorers` */
 /*JS */		if(opt_persistence) {
 /*JS */			if(opt_comment) padcat(2, indent+2, production, "/* restore object from file - must be below class definition */");
-/*JS */			padcat(C, indent+2, production, "if(typeof ", caller, " === 'undefined') {");
+/*JS */			padcat(C, indent+2, production, "if(typeof ", creator&&*creator?creator:"person", " === 'undefined') {"); // person <- literal name
 /*JS */ 		padcat(1, indent+3, production, "console.log(\"> restore from file '", opt_persistence, "'\");");
 /*JS */ 		padcat(1, indent+3, production, "let data = fs.readFileSync('", opt_persistence, "', ()=>{});");
 /*JS */ 		padcat(1, indent+3, production, "let live = eval('(' + data + ')');");
@@ -1804,6 +1819,7 @@ static bool is_payment(Predicates *predicates) {
 		mtrac_free(parameta), parameta = null;
 		mtrac_free(emits), emits = null;
 		if(caller) mtrac_free(caller), caller = null;
+		if(creator) mtrac_free(creator), creator = null;
 		mtrac_free(methods);
 		mtrac_free(globals);
 		mtrac_free(declarations);
@@ -2285,6 +2301,7 @@ static bool is_payment(Predicates *predicates) {
 /*S+S*/		msg_value = null;
 /*S+S*/		is_payable = false;
 /*S+S*/		is_stateful = false;
+		assert(caller == null);
 /*T*/		xxx_statements(production, Provisions->Statements, indent);
 /*S+S*/		if(msg_sender) mtrac_free(msg_sender);
 /*S+S*/		if(msg_value) mtrac_free(msg_value);
@@ -2298,11 +2315,15 @@ static bool is_payment(Predicates *predicates) {
 		covenant_constructor_body = false;
 
 		/* insert caller argumnet and 'payable' modifier */
-/*JS */		replace(production, "%7%", caller?caller:"caller"); // ! caller is not yet set at (*) above.
+/*JS */		replace(production, "%7%", caller?*caller?caller:"person":"caller"); // ! caller is not yet set at (*) above.
 /*S+S*/		replace(production, "%28%", is_payable?"payable ":"");
 
+		if(caller) mtrac_free(caller), caller = null;
+
 		/* clauses */
+		assert(caller == null);
 /*T*/		xxx_clauses(instance ? production : &methods, Provisions->Clauses, indent - (instance ? 0 : 1));
+		if(caller) mtrac_free(caller), caller = null;
 
 /*JS */		/* add element this.terminated, if needed */
 /*JS */		char *terminated = mtrac_strdup("");
@@ -2669,7 +2690,13 @@ static bool is_payment(Predicates *predicates) {
 			/* this takes care of the subject person 1) becoming a parameter and 2) an object member that 3) gets the parameter assigned */
 			insert_parameter_and_set_member(production, null, Action->Subject->Symbols->Symbol, payment, paratag, indent, __LINE__);
 			/* the function we are in, if it had no caller set yet, the subject will be used as the caller, LITERALLY. */
-			if(!caller) caller = snakedup(Action->Subject->Symbols->Symbol->Name); // ...
+			if(!caller) {
+				Symbol *s = Action->Subject->Symbols->Symbol;
+				assert(s->Name || s->Type && s->Type->Literal);
+				caller = snakedup(s->Name&&*s->Name?s->Name:s->Type->Literal);
+				if(!creator) // this is currently redundant but caller should be used for covenants, too
+					creator = mtrac_strdup(caller);
+			}
 		}
 
 		/* for main_constructor_bodys, enforce that if there are multiple sentences, they all use the same subjects */
@@ -3010,8 +3037,8 @@ static bool is_payment(Predicates *predicates) {
 /*JS */	static void log_entry(char **production, char *name, char *action, int indent) {
 /*JS */		if(opt_log || opt_feedback) {
 /*JS */			padcat(1, indent, production, (!class?"this":"main"),
-/*JS */				".log(", recital_of_terms && !class ?caller:"caller", ", \"✓ ", name, " ", action, "\");");
-/*JS */			if(current_function) current_function->uses_caller |= class || !strcmp(caller, "caller");
+/*JS */				".log(", recital_of_terms && !class && caller && *caller ? caller : "caller", ", \"✓ ", name, " ", action, "\");");
+/*JS */			if(current_function) current_function->uses_caller |= class || caller && !strcmp(caller, "caller");
 /*JS */		}
 /*JS */	}
 
@@ -3233,8 +3260,10 @@ static bool is_payment(Predicates *predicates) {
 /*JS */			xxx_escrow(production, Payment->Escrow, 0);
 /*JS */		else if(Payment->From_Escrow)
 /*JS */			xxx_from_escrow(production, Payment->From_Escrow, 0);
-/*JS */		else
+/*JS */		else if(subject)
 /*JS */			xxx_name(production, (Name *)subject, false, 0);
+/*JS */		else
+/*JS */			concat(production, "person");
 /*JS */		padcat(0, 0, production, ", ");
 
 
@@ -3419,17 +3448,26 @@ static bool is_payment(Predicates *predicates) {
 /*T*/		return true;
 /*T*/	}
 /*T*/
+	static bool no_after_yet;
 /*T*/	bool xxx_condition(char **production, Condition *Condition, int indent) {
 /*T*/		if(!Condition) return false;
 /*T*/		if(opt_debug) printf("producing Condition\n");
 
 /*T*/		xxx_if(production, Condition->If, indent);
+/*T*/		xxx_after(production, Condition->After, indent);
 
+		no_after_yet = true;
 /*Sop*/		conditional_expression = true;
 /*Sop*/		require_mandat = true;
 /*T*/		xxx_expression(production, Condition->Expression, indent+1);
 /*Sop*/		conditional_expression = false;
 /*Sop*/		require_mandat = false;
+
+		if(Condition->After && no_after_yet) {
+/*JS */			padcat(0, 0, production, " < Date.now()");
+/*Sol*/			padcat(0, 0, production, " < block.timestamp");
+/*Sop*/			padcat(0, 0, production, " < Chain.timestamp");
+		}
 
 /*J+S*/		padcat(0, 0, production, ") {");
 /*Sop*/		padcat(0, 0, production, ")");
@@ -3440,6 +3478,13 @@ static bool is_payment(Predicates *predicates) {
 /*T*/	bool xxx_if(char **production, If *If, int indent) {
 /*T*/		if(!If) return false;
 /*T*/		if(opt_debug) printf("producing If\n");
+		padcat(1, indent, production, "if(");
+/*T*/		return true;
+/*T*/	}
+/*T*/
+/*T*/	bool xxx_after(char **production, After *After, int indent) {
+/*T*/		if(!After) return false;
+/*T*/		if(opt_debug) printf("producing After\n");
 		padcat(1, indent, production, "if(");
 /*T*/		return true;
 /*T*/	}
@@ -3927,6 +3972,7 @@ static bool is_payment(Predicates *predicates) {
 /*JS */		padcat(0, 0, production, " <= Date.now()");
 /*Sol*/        	padcat(0, 0, production, " <= block.timestamp");
 /*Sop*/		padcat(0, 0, production, " =< Chain.timestamp");
+		no_after_yet = false;
 		inference = "bool";
 /*T*/	        return true;
 /*T*/	}

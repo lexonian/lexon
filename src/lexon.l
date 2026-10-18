@@ -6,7 +6,7 @@
  **
  **                  Lexon — natural language programming
  **
- **     Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+ **     Copyright (C) 2016-25 Henning Diedrich. Licensed to you under
  **	AGPL3 subject to the conditions described in the file LICENSE.
  **
  **	Also see https://www.lexon.org/license-0.3.html
@@ -46,7 +46,7 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 4"
+#define program_vers "0.3 beta 5"
 #define grammar_vers "[no grammar]"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
@@ -103,7 +103,7 @@ void parsargs(int argc, char **argv);
 void syntax(char *message, char *violation);
 void yacc_printf(FILE *stream, char *format, ...);
 char *coredup(char *src);
-void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);
+char *process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);
 void process2(char *pif, char *rtrim, char *open, char *close);
 void include(char *pif);
 int include_done();
@@ -637,10 +637,11 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 ^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
-^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
-									 process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t"); // ◊ separate TERMS PER
-									 concat(&buf, yytext);
-									 concat(&buf, ":"); } // ◊ why is the : lost in the scan? (and needs re-adding here)
+^{space}*(TERMS)?{space}*PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--;
+											freeline(); lineno();
+											char *cov = process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t");
+											new_lexcom(cov, yytext);
+									 		concat(&buf, yytext); }
 ^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", "", "", yytext, ". \t");
 									 concat(&buf, yytext); }
@@ -660,7 +661,6 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 .								{ D; lineno(); concat(&buf, yytext); }
 <<EOF>>		        					{ D0; new_lexcom("_pre_", "");
 									if(include_done()) {
-										// yy_set_bol(true); // ◊ added for no effect
 										BEGIN(PRE);
 									} else {
 										precompile();
@@ -700,7 +700,6 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 .								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 <<EOF>>				  				{ D0; new_lexcom("_pre_", "");
 									if(include_done()) {
-										// yy_set_bol(true); // ◊ added for no effect 
 										BEGIN(PRE);
 									} else {
 										precompile();
@@ -1004,7 +1003,7 @@ int main(int argc, char **argv) {
 			/* backup previous output */
 			if(access(opt_output, F_OK) != -1) {
 				char *bak = mtrac_malloc(strlen(opt_output) + 1 + 1 + 6 + 4);
-				sprintf(bak, "%s-%ld.bak", opt_output, time(NULL) % 100000);
+				sprintf(bak, "%s-%ld.bak", opt_output, (long)time(NULL) % 100000); // cast for emscripten
 				if(rename(opt_output, bak)) {
 					fprintf(stderr, "cant create backup for existing %s. ", opt_output);
 					perror(bak); exit(1);
@@ -1742,12 +1741,14 @@ void precompile() {
 
 	if(opt_verbose || opt_debug) fprintf(stderr, "• precompilation\n"); // not quite, the start of PRE is the real start of precompilation
 
-	/* protect pre-existing « » ◊ cover */
-	replace(&buf, "«", "\\«");
-	replace(&buf, "»", "\\»");
+	// To protect the name mark. Solidity also would need unicode 'casting' to allow in strings.
+	if(strstr(buf, "«") || strstr(buf, "»")) {
+		fprintf(stderr, "Lexon: swiss double quotes not allowed ('«', '»')");
+		exit(1);
+	}
 
 	/* unicode chars are not processed correctly by Flex, it takes the bytes
-	   apert, specifically the negative calls notquote can't work */
+	   apart, specifically the negative calls notquote can't work */
 
 	/* list presorted for length, descending two steps: replace by tag [n] first */
 	node *cur = symbols;
@@ -2153,7 +2154,7 @@ void delete_include_trace() {
 }
 
 /* add a symbol (name) to the symbols list, scanned directly from the code buffer */
-void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {
+char *process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {
 	pif += strspn(pif, ltrim);
 	if(tolower(*pif) == tolower(*skip1)) pif += strlen(skip1);
 	pif += strspn(pif, mtrim);
@@ -2183,6 +2184,8 @@ void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, ch
 	n->prev = ins;
 	if(next) { assert(next->prev==ins); next->prev = n; }
 	else symbols = n;
+
+	return pif;
 }
 
 /* add a symbol (name) to the symbols list, scanned directly from the code buffer */
@@ -4203,7 +4206,7 @@ typedef struct mtrac {
 	unsigned long __attribute__((aligned(8))) magic2;
 } mtrac;
 
-const unsigned long mtrac_magic = 0xCCCCCCCCCCCCCCCC;
+const unsigned long mtrac_magic = 0xCCCCCCCC;
 mtrac *mtrac_first = null;
 mtrac *mtrac_last = null;
 int mtrac_action = 0;

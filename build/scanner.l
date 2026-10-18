@@ -10,7 +10,7 @@
  **
  **                  Lexon — natural language programming
  **
- **     Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+ **     Copyright (C) 2016-25 Henning Diedrich. Licensed to you under
  **	AGPL3 subject to the conditions described in the file LICENSE.
  **
  **	Also see https://www.lexon.org/license-0.3.html
@@ -50,8 +50,8 @@
 #define PATH_MAX 1000
 #endif
 
-#define program_vers "0.3 beta 4"
-#define grammar_vers "0.2.20 / subset 0.3.11 beta 3 - English / Reyes"
+#define program_vers "0.3 beta 5"
+#define grammar_vers "0.2.20 / subset 0.3.12 beta 5 - English / Reyes"
 #ifndef CYCLE_2
 #define program_name "Lexon grammar compiler"
 #define slug program_name " " program_vers
@@ -107,7 +107,7 @@ void parsargs(int argc, char **argv);
 void syntax(char *message, char *violation);
 void yacc_printf(FILE *stream, char *format, ...);
 char *coredup(char *src);
-void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);
+char *process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);
 void process2(char *pif, char *rtrim, char *open, char *close);
 void include(char *pif);
 int include_done();
@@ -641,10 +641,11 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
 ^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;
 								     freeline(); lineno(); concat(&buf, trim(yytext), ": "); BEGIN(NAMEQUOTE); }
-^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
-									 process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t"); // ◊ separate TERMS PER
-									 concat(&buf, yytext);
-									 concat(&buf, ":"); } // ◊ why is the : lost in the scan? (and needs re-adding here)
+^{space}*(TERMS)?{space}*PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--;
+											freeline(); lineno();
+											char *cov = process(" \t", "TERMS", " \t", "PER", " \t", yytext, ": \t");
+											new_lexcom(cov, yytext);
+									 		concat(&buf, yytext); }
 ^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);
 									 concat(&funclist, ":", yytext, ":"); process(" \t", "CLAUSE", ": \t", "", "", yytext, ". \t");
 									 concat(&buf, yytext); }
@@ -662,7 +663,6 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 .								{ D; lineno(); concat(&buf, yytext); }
 <<EOF>>		        					{ D0; new_lexcom("_pre_", "");
 									if(include_done()) {
-										// yy_set_bol(true); // ◊ added for no effect
 										BEGIN(PRE);
 									} else {
 										precompile();
@@ -702,7 +702,6 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 .								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }
 <<EOF>>				  				{ D0; new_lexcom("_pre_", "");
 									if(include_done()) {
-										// yy_set_bol(true); // ◊ added for no effect 
 										BEGIN(PRE);
 									} else {
 										precompile();
@@ -885,6 +884,8 @@ LGF{space}*:?{space}*						{ D; BEGIN(LGF); }
 "seconds"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SECONDS; }
 "send"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SEND; }
 "sends"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SENDS; }
+"set"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SET; }
+"sets"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SETS; }
 "signed"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SIGNED; }
 "smaller"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SMALLER; }
 "so"								{ D; *((char **)&yylval) = mtrac_strdup_gross(yytext); return SO; }
@@ -1153,7 +1154,7 @@ int main(int argc, char **argv) {
 			/* backup previous output */
 			if(access(opt_output, F_OK) != -1) {
 				char *bak = mtrac_malloc(strlen(opt_output) + 1 + 1 + 6 + 4);
-				sprintf(bak, "%s-%ld.bak", opt_output, time(NULL) % 100000);
+				sprintf(bak, "%s-%ld.bak", opt_output, (long)time(NULL) % 100000); // cast for emscripten
 				if(rename(opt_output, bak)) {
 					fprintf(stderr, "cant create backup for existing %s. ", opt_output);
 					perror(bak); exit(1);
@@ -1891,12 +1892,14 @@ void precompile() {
 
 	if(opt_verbose || opt_debug) fprintf(stderr, "• precompilation\n"); // not quite, the start of PRE is the real start of precompilation
 
-	/* protect pre-existing « » ◊ cover */
-	replace(&buf, "«", "\\«");
-	replace(&buf, "»", "\\»");
+	// To protect the name mark. Solidity also would need unicode 'casting' to allow in strings.
+	if(strstr(buf, "«") || strstr(buf, "»")) {
+		fprintf(stderr, "Lexon: swiss double quotes not allowed ('«', '»')");
+		exit(1);
+	}
 
 	/* unicode chars are not processed correctly by Flex, it takes the bytes
-	   apert, specifically the negative calls notquote can't work */
+	   apart, specifically the negative calls notquote can't work */
 
 	/* list presorted for length, descending two steps: replace by tag [n] first */
 	node *cur = symbols;
@@ -2302,7 +2305,7 @@ void delete_include_trace() {
 }
 
 /* add a symbol (name) to the symbols list, scanned directly from the code buffer */
-void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {
+char *process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {
 	pif += strspn(pif, ltrim);
 	if(tolower(*pif) == tolower(*skip1)) pif += strlen(skip1);
 	pif += strspn(pif, mtrim);
@@ -2332,6 +2335,8 @@ void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, ch
 	n->prev = ins;
 	if(next) { assert(next->prev==ins); next->prev = n; }
 	else symbols = n;
+
+	return pif;
 }
 
 /* add a symbol (name) to the symbols list, scanned directly from the code buffer */
@@ -4243,7 +4248,7 @@ void prepfile(char *outfile, char *header, char *template, char *grammar_path, c
 
 	/* read template lexer (this here) file */
 	char *src = filedup(template, own);
-	replace(&src, "0.2.20 / subset 0.3.11 beta 3 - English / Reyes", grammar_version);
+	replace(&src, "0.2.20 / subset 0.3.12 beta 5 - English / Reyes", grammar_version);
 	char *src_imbue = str_escape(src, "own");
 
 	/* read grammer file */
@@ -4352,7 +4357,7 @@ typedef struct mtrac {
 	unsigned long __attribute__((aligned(8))) magic2;
 } mtrac;
 
-const unsigned long mtrac_magic = 0xCCCCCCCCCCCCCCCC;
+const unsigned long mtrac_magic = 0xCCCCCCCC;
 mtrac *mtrac_first = null;
 mtrac *mtrac_last = null;
 int mtrac_action = 0;
@@ -4616,7 +4621,7 @@ const char *own =
 	" **\n"
 	" **                  Lexon — natural language programming\n"
 	" **\n"
-	" **     Copyright (C) 2016-24 Henning Diedrich. Licensed to you under\n"
+	" **     Copyright (C) 2016-25 Henning Diedrich. Licensed to you under\n"
 	" **	AGPL3 subject to the conditions described in the file LICENSE.\n"
 	" **\n"
 	" **	Also see https://www.lexon.org/license-0.3.html\n"
@@ -4656,8 +4661,8 @@ const char *own =
 	"#define PATH_MAX 1000\n"
 	"#endif\n"
 	"\n"
-	"#define program_vers \"0.3 beta 4\"\n"
-	"#define grammar_vers \"0.2.20 / subset 0.3.11 beta 3 - English / Reyes\"\n"
+	"#define program_vers \"0.3 beta 5\"\n"
+	"#define grammar_vers \"0.2.20 / subset 0.3.12 beta 5 - English / Reyes\"\n"
 	"#ifndef CYCLE_2\n"
 	"#define program_name \"Lexon grammar compiler\"\n"
 	"#define slug program_name \" \" program_vers\n"
@@ -4713,7 +4718,7 @@ const char *own =
 	"void syntax(char *message, char *violation);\n"
 	"void yacc_printf(FILE *stream, char *format, ...);\n"
 	"char *coredup(char *src);\n"
-	"void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);\n"
+	"char *process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim);\n"
 	"void process2(char *pif, char *rtrim, char *open, char *close);\n"
 	"void include(char *pif);\n"
 	"int include_done();\n"
@@ -5247,10 +5252,11 @@ const char *own =
 	"								     freeline(); lineno(); concat(&buf, trim(yytext), \": \"); BEGIN(NAMEQUOTE); }\n"
 	"^{space}*OPERATING{space}+AGREEMENT{space}*(OF)*(:|{space})+	{ D; if(_lastline==line) _lastline--;\n"
 	"								     freeline(); lineno(); concat(&buf, trim(yytext), \": \"); BEGIN(NAMEQUOTE); }\n"
-	"^{space}*(TERMS)?{space}+PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);\n"
-	"									 process(\" \\t\", \"TERMS\", \" \\t\", \"PER\", \" \\t\", yytext, \": \\t\"); // ◊ separate TERMS PER\n"
-	"									 concat(&buf, yytext);\n"
-	"									 concat(&buf, \":\"); } // ◊ why is the : lost in the scan? (and needs re-adding here)\n"
+	"^{space}*(TERMS)?{space}*PER{space}+{letter}({letter}|{digit}|{space})*:	{ D0; if(_lastline==line) _lastline--;\n"
+	"											freeline(); lineno();\n"
+	"											char *cov = process(\" \\t\", \"TERMS\", \" \\t\", \"PER\", \" \\t\", yytext, \": \\t\");\n"
+	"											new_lexcom(cov, yytext);\n"
+	"									 		concat(&buf, yytext); }\n"
 	"^{space}*CLAUSE(:|{space})+{letter}({letter}|{digit}|{space})*	{ D0; if(_lastline==line) _lastline--; freeline(); lineno(); new_lexcom(yytext, yytext);\n"
 	"									 concat(&funclist, \":\", yytext, \":\"); process(\" \\t\", \"CLAUSE\", \": \\t\", \"\", \"\", yytext, \". \\t\");\n"
 	"									 concat(&buf, yytext); }\n"
@@ -5270,7 +5276,6 @@ const char *own =
 	".								{ D; lineno(); concat(&buf, yytext); }\n"
 	"<<EOF>>		        					{ D0; new_lexcom(\"_pre_\", \"\");\n"
 	"									if(include_done()) {\n"
-	"										// yy_set_bol(true); // ◊ added for no effect\n"
 	"										BEGIN(PRE);\n"
 	"									} else {\n"
 	"										precompile();\n"
@@ -5310,7 +5315,6 @@ const char *own =
 	".								{ D0; yyless(0); BEGIN(PRE); yy_set_bol(true); }\n"
 	"<<EOF>>				  				{ D0; new_lexcom(\"_pre_\", \"\");\n"
 	"									if(include_done()) {\n"
-	"										// yy_set_bol(true); // ◊ added for no effect \n"
 	"										BEGIN(PRE);\n"
 	"									} else {\n"
 	"										precompile();\n"
@@ -5614,7 +5618,7 @@ const char *own =
 	"			/* backup previous output */\n"
 	"			if(access(opt_output, F_OK) != -1) {\n"
 	"				char *bak = mtrac_malloc(strlen(opt_output) + 1 + 1 + 6 + 4);\n"
-	"				sprintf(bak, \"%s-%ld.bak\", opt_output, time(NULL) % 100000);\n"
+	"				sprintf(bak, \"%s-%ld.bak\", opt_output, (long)time(NULL) % 100000); // cast for emscripten\n"
 	"				if(rename(opt_output, bak)) {\n"
 	"					fprintf(stderr, \"cant create backup for existing %s. \", opt_output);\n"
 	"					perror(bak); exit(1);\n"
@@ -6352,12 +6356,14 @@ const char *own =
 	"\n"
 	"	if(opt_verbose || opt_debug) fprintf(stderr, \"• precompilation\\n\"); // not quite, the start of PRE is the real start of precompilation\n"
 	"\n"
-	"	/* protect pre-existing « » ◊ cover */\n"
-	"	replace(&buf, \"«\", \"\\\\«\");\n"
-	"	replace(&buf, \"»\", \"\\\\»\");\n"
+	"	// To protect the name mark. Solidity also would need unicode 'casting' to allow in strings.\n"
+	"	if(strstr(buf, \"«\") || strstr(buf, \"»\")) {\n"
+	"		fprintf(stderr, \"Lexon: swiss double quotes not allowed ('«', '»')\");\n"
+	"		exit(1);\n"
+	"	}\n"
 	"\n"
 	"	/* unicode chars are not processed correctly by Flex, it takes the bytes\n"
-	"	   apert, specifically the negative calls notquote can't work */\n"
+	"	   apart, specifically the negative calls notquote can't work */\n"
 	"\n"
 	"	/* list presorted for length, descending two steps: replace by tag [n] first */\n"
 	"	node *cur = symbols;\n"
@@ -6763,7 +6769,7 @@ const char *own =
 	"}\n"
 	"\n"
 	"/* add a symbol (name) to the symbols list, scanned directly from the code buffer */\n"
-	"void process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {\n"
+	"char *process(char *ltrim, char *skip1, char *mtrim, char *skip2, char *ctrim, char *pif, char *rtrim) {\n"
 	"	pif += strspn(pif, ltrim);\n"
 	"	if(tolower(*pif) == tolower(*skip1)) pif += strlen(skip1);\n"
 	"	pif += strspn(pif, mtrim);\n"
@@ -6793,6 +6799,8 @@ const char *own =
 	"	n->prev = ins;\n"
 	"	if(next) { assert(next->prev==ins); next->prev = n; }\n"
 	"	else symbols = n;\n"
+	"\n"
+	"	return pif;\n"
 	"}\n"
 	"\n"
 	"/* add a symbol (name) to the symbols list, scanned directly from the code buffer */\n"
@@ -8704,7 +8712,7 @@ const char *own =
 	"\n"
 	"	/* read template lexer (this here) file */\n"
 	"	char *src = filedup(template, own);\n"
-	"	replace(&src, \"0.2.20 / subset 0.3.11 beta 3 - English / Reyes\", grammar_version);\n"
+	"	replace(&src, \"0.2.20 / subset 0.3.12 beta 5 - English / Reyes\", grammar_version);\n"
 	"	char *src_imbue = str_escape(src, \"own\");\n"
 	"\n"
 	"	/* read grammer file */\n"
@@ -8813,7 +8821,7 @@ const char *own =
 	"	unsigned long __attribute__((aligned(8))) magic2;\n"
 	"} mtrac;\n"
 	"\n"
-	"const unsigned long mtrac_magic = 0xCCCCCCCCCCCCCCCC;\n"
+	"const unsigned long mtrac_magic = 0xCCCCCCCC;\n"
 	"mtrac *mtrac_first = null;\n"
 	"mtrac *mtrac_last = null;\n"
 	"int mtrac_action = 0;\n"
@@ -9077,7 +9085,7 @@ const char *owngrm =
 	"##\n"
 	"##	Lexon — natural language programming\n"
 	"##\n"
-	"##	Copyright (C) 2016-24 Henning Diedrich. Licensed to you under\n"
+	"##	Copyright (C) 2016-25 Henning Diedrich. Licensed to you under\n"
 	"##	AGPL3 subject to the conditions described in the file LICENSE.\n"
 	"##\n"
 	"##	Also see https://www.lexon.org/license-0.3.html\n"
@@ -9086,7 +9094,7 @@ const char *owngrm =
 	"##\n"
 	"##	english.lgf — Lexon controlled English grammar\n"
 	"##\n"
-	"##	Version 0.2.20 / subset 0.3.11 beta 3 - English / Reyes\n"
+	"##	Version 0.2.20 / subset 0.3.12 beta 5 - English / Reyes\n"
 	"##\n"
 	"##	This document is in Lexon Grammar Form, a variation of BNF.\n"
 	"##	Square brackets indicate optionality, 'or' separates variants.\n"
@@ -9213,7 +9221,7 @@ const char *owngrm =
 	"\n"
 	"## PREDICATE\n"
 	"\n"
-	"   predicates:	predicates comma [\"and\" [\"also\"]] [\"if\" \"so\"] [\"afterwards\"] predicate\n"
+	"   predicates:	predicates comma [\"and\" [\"then\"] [\"also\"]] [\"if\" \"so\"] [\"afterwards\"] predicate\n"
 	"		or predicates comma \"and\" \"with\" \"this\" predicate\n"
 	"		or predicate\n"
 	"\n"
@@ -9303,9 +9311,9 @@ const char *owngrm =
 	"   fixture:	fix symbol [\"as\" expression]\n"
 	"		or fix contract \"as\" symbol\n"
 	"\n"
-	"   fix:		\"fix\" or \"fixes\"\n"
+	"   fix:		\"fix\" or \"fixes\" or \"set\" or \"sets\"\n"
 	"\n"
-	"   fixed:	\"fixed\"\n"
+	"   fixed:	\"fixed\" or \"set\"\n"
 	"\n"
 	"\n"
 	"## FIXTURE PREDICATE / PASSIVE\n"
@@ -9368,9 +9376,11 @@ const char *owngrm =
 	"## CONDITIONS\n"
 	"\n"
 	"   condition:	if expression\n"
+	"   		or after expression\n"
 	"\n"
 	"   if:		\"if\" or \"given\" \"that\" or \"provided\"\n"
 	"\n"
+	"   after:	\"after\"\n"
 	"\n"
 	"## EXPRESSION\n"
 	"\n"
@@ -9524,7 +9534,7 @@ const char *manual =
 	"        Characteristica Universalis is a high-level,\n"
 	"        philosophical book covering 350+ years of\n"
 	"        research into language and logic, up to\n"
-	"        AI. \n"
+	"        AI.\n"
 	"\n"
 	"        This manual includes excerpts from these\n"
 	"        sources but focuses on the practical and\n"
@@ -9543,7 +9553,7 @@ const char *manual =
 	"\n"
 	"Lexon is not an all-purpose human language. An unambiguous language is\n"
 	"desirable for programming and lawmaking, less so for other purposes of human\n"
-	"communication.1\n"
+	"communication.\n"
 	"\n"
 	"Lexon compiler output must be audited before using it in production. There is\n"
 	"no warranty for fitness for any purpose, nor any other warranty for the\n"
@@ -9580,7 +9590,7 @@ const char *manual =
 	"\n"
 	"Lexon's digital contracts inherit their unstoppable power from smart contracts. That they are also readable by anyone - not just programmers - is their interface to the real world. They connect to the legal system, for far-reaching consequences: a digital contract cannot be broken and is a legal agreement.\n"
 	"\n"
-	"To work its magic, Lexon perfects an AI language processing approach that had been researched for decades.2 Its contribution is 'Zen-like,' reducing transformation steps to stay closer to how human thought works: its internal data model retains human-readability. This makes Lexon transparent as well as precise and provides unparalleled agency.\n"
+	"To work its magic, Lexon perfects an AI language processing approach that had been researched for decades. Its contribution is 'Zen-like,' reducing transformation steps to stay closer to how human thought works: its internal data model retains human-readability. This makes Lexon transparent as well as precise and provides unparalleled agency.\n"
 	"\n"
 	"The example contract below is a minimal escrow that is an agreement between a payer and a receiver. The notary decides whether a payment in escrow should be paid out to the receiver or sent back to the payer. This could be the reaction to a corresponding deal being aborted, goods not arriving or being returned for any reason. The contract looks only at the payment side, with the notary in the role of the oracle, i.e., the connection from the blockchain to the real world.\n"
 	"\n"
@@ -9603,7 +9613,7 @@ const char *manual =
 	"        The Notary may pay from escrow the Fee to themselves, and afterwards pay the remainder of the escrow to the Receiver.\n"
 	"\n"
 	"        CLAUSE: Pay Back.\n"
-	"        The Notary may pay from escrow the Fee to themselves, and afterwards return the \n"
+	"        The Notary may pay from escrow the Fee to themselves, and afterwards return the\n"
 	"        remainder of the escrow to the Payer.\n"
 	"\n"
 	"\n"
@@ -9640,20 +9650,20 @@ const char *manual =
 	"\n"
 	"LEXON\n"
 	"\n"
-	"Lexon unites developments in computational law, cryptography, computer sciences, AI3 and linguistics to achieve long-sought milestones in each field: digital contract analysis, legally enforceable smart contracts, self-documenting code, deterministic language processing, and an executable human language. The resulting accessibility and agency open new ways even to think about some of the more intractable-looking challenges of our times and solve them. It is perfect for trustless private law, i.e., legally valid agreements implemented on the blockchain that can't be broken.\n"
+	"Lexon unites developments in computational law, cryptography, computer sciences, AI and linguistics to achieve long-sought milestones in each field: digital contract analysis, legally enforceable smart contracts, self-documenting code, deterministic language processing, and an executable human language. The resulting accessibility and agency open new ways even to think about some of the more intractable-looking challenges of our times and solve them. It is perfect for trustless private law, i.e., legally valid agreements implemented on the blockchain that can't be broken.\n"
 	"\n"
 	"LEXON COMPILER\n"
 	"\n"
-	"The Lexon compiler4, 5 accepts text adhering to Lexon's grammar and transposes this natural-language code to the Ethereum language Solidity. It is a web3 application interacting with the Ethereum blockchain to help creating new web3 applications that run on Ethereum.\n"
+	"The Lexon compiler accepts text adhering to Lexon's grammar and transposes this natural-language code to the Ethereum language Solidity. It is a web3 application interacting with the Ethereum blockchain to help creating new web3 applications that run on Ethereum.\n"
 	"\n"
 	"DIGITAL CONTRACTS\n"
 	"\n"
 	"Blockchain smart contracts written in Lexon are called digital contracts. While lawmakers will need time to understand their new options, Lexon shines as a language for private law, i.e., contracting. Digital contracts are legally enforceable agreements.\n"
 	"\n"
-	"SOLIDITY \n"
+	"SOLIDITY\n"
 	"\n"
 	"Solidity is the language that smart contracts are programmed in for the Ethereum blockchain. It is a purpose-built, 3rd generation language, designed to be as safe as possible. Lexon users, however, do not need to learn Solidity to be able to create smart contracts.\n"
-	" \n"
+	"\n"
 	"\n"
 	"\n"
 	"\n"
@@ -9664,17 +9674,17 @@ const char *manual =
 	"\n"
 	"The point of Lexon is that one does NOT have to learn it to READ it.\n"
 	"\n"
-	"But even learning to write Lexon is best done by looking at examples rather than memorizing words. This is no different than how a human language, or a programming language, or even legalese is usually picked up. The allowed use of a word, its context, are what matters. \n"
+	"But even learning to write Lexon is best done by looking at examples rather than memorizing words. This is no different than how a human language, or a programming language, or even legalese is usually picked up. The allowed use of a word, its context, are what matters.\n"
 	"\n"
-	"The Lexon 0.3 word list starts on pg. 23 and is online at http://lexon.org/vocabulary. The webpage is a learning tool to help grasp the bigger picture, not neccessarily to memorize individual words. To this end, one thousand links are at your disposal for fast navigation between words, examples and references. You will find that clicking around reveals the deeper structure of Lexon, beyond words.\n"
+	"The Lexon 0.3 word list below is also online at http://lexon.org/vocabulary. The webpage is a learning tool to help grasp the bigger picture, not neccessarily to memorize individual words. To this end, one thousand links are at your disposal for fast navigation between words, examples and references. You will find that clicking around reveals the deeper structure of Lexon, beyond words.\n"
 	"\n"
 	"As the Lexon grammar is a so-called controlled grammar, only some ways of using a word are permitted, fewer than in normal English. This is why it is better learned by doing than done by learning. In fact, it can be particularly hard to 'unlearn' what you know is correct in normal language. But you will – and that is a unique quality of Lexon for a programming language – get a feel for what works.\n"
 	"\n"
-	"The following is the list of the known words in Lexon 0.3 (13) that between themselves stand up the Lexon grammar. Because you can define words and phrases when writing Lexon, the vocabulary and grammar complexity of Lexon are unlimited from the point of view of natural language. This is discussed below.\n"
+	"The following is the list of the known words in Lexon 0.3 that between themselves stand up the Lexon grammar. Because you can define words and phrases when writing Lexon, the vocabulary and grammar complexity of Lexon are unlimited from the point of view of natural language. This is discussed below.\n"
 	"\n"
 	"Note that these words can be redefined as names but in that case cannot serve their original function anywhere in the contract. The exception are category names (types; marked with an asterisk (*) above). They cannot be redefined but can be used as generic names (see, e.g., amount). All words can be used as part of names without losing their original, stand-alone function.\n"
 	"\n"
-	"In the individual, per-word entries on the following pages, the first information about each word is, in what linguistic capacity it is used in Lexon. This angle can help because English words frequently cover two ore more different grammatical roles. The second line is technical, based on computer science designations for the function that a word is used in in Lexon. It will more often than not be a helpful pointer for non-programmers, too. In many cases, a description follows that describes the use of the word and occasionally presents additional context. Note that the description often seems to explain the obvious, because you know how English works. However, it can help to spell it out to learn to write Lexon. After that, one or more examples show the word in the context of an examples sentence. \n"
+	"In the individual, per-word entries on the following pages, the first information about each word is, in what linguistic capacity it is used in Lexon. This angle can help because English words frequently cover two ore more different grammatical roles. The second line is technical, based on computer science designations for the function that a word is used in in Lexon. It will more often than not be a helpful pointer for non-programmers, too. In many cases, a description follows that describes the use of the word and occasionally presents additional context. Note that the description often seems to explain the obvious, because you know how English works. However, it can help to spell it out to learn to write Lexon. After that, one or more examples show the word in the context of an examples sentence.\n"
 	"\n"
 	"Note that at http://lexon.org/vocabulary this sentence can be inspected in the context of a complete digital contract by clicking the link immediately below the example sentence. The link leads to a contract that contains the examples sentence, and highlights it.\n"
 	"\n"
@@ -9686,29 +9696,29 @@ const char *manual =
 	"\n"
 	"a) Definitions:\n"
 	"\n"
-	"see Payer, Payee, etc. in the Escrow example (pg. 6).\n"
+	"see Payer, Payee, etc. in the Escrow example.\n"
 	"\n"
 	"b) Clauses:\n"
 	"\n"
 	"cf. Noticed, Factually Breached, etc. in the Evaluation License example, see\n"
 	"\n"
-	"https://lexon.org/vocabulary.html#LicenseEvaluation \n"
+	"https://lexon.org/vocabulary.html#LicenseEvaluation\n"
 	"\n"
 	"c) Keywords:\n"
 	"\n"
-	"cf. vocabulary 0.3 from pg. 23 vs. 0.2 in the 2020 (DRAFT 3) Lexon Bible, and the forthcoming Lexon Extension Form.\n"
+	"cf. vocabulary 0.3 below vs. 0.2 in the 2020 (DRAFT 3) Lexon Bible, and the forthcoming Lexon Extension Form.\n"
 	"\n"
-	"The latter—Keywords—is a slow and incremental process. A special, faster process has been prepared for verbs of foundational importance – like move for robotics – that can sustain an entire domain.14 The two former bullet points—Definitions and Clauses—are instant and happen when a writer authors a Lexon text.\n"
+	"The latter—Keywords—is a slow and incremental process. A special, faster process has been prepared for verbs of foundational importance – like move for robotics – that can sustain an entire domain. The two former bullet points—Definitions and Clauses—are instant and happen when a writer authors a Lexon text.\n"
 	"\n"
 	"Each Lexon digital contract therefore has its own vocabulary, extending the dictionary on the fly while drafting, as integral and organic part of the writing process. This is in keeping with the way that paper contracts are written: terms are being defined for clarity, laying the ground for an agreement's text. That's exactly how Lexon's vocabulary grows while penning a digital contract.\n"
 	"\n"
 	"However, as it comes, before any definitions are added, Lexon 0.3 understands 91 keywords plus variations, of which roughly half are processed in an interesting way. Many have only one specific function as marker, like CLAUSE, or make the list solely by virtue of being part of a fix multi-word term, with no independent function, like OFF in SIGN OFF.\n"
 	"\n"
-	"To put the word count into perspective, a modern 3rd generation programming language like Rust has about 50 reserved keywords, which are mostly used in the rigid, less interesting way. Beginner's English is said to consist of about 300 words, the Basic English world language project15 has about 850. These latter counts include many nouns; Lexon's vocabulary contains almost no nouns because these are as a rule defined by the writer of a Lexon text and the Lexon compiler understands them from their function as implied by the rest of the text.16 This is a fundamental aspect of Lexon's approach and the reason why the Lexon compiler needs to 'understand' relatively few words out of the box. The nouns and phrases that a user adds are inevitably what gives a text depth. The way that definitions work, the compiler learns the role of the new words on the go and recognizes them in the text from that point on. Clause names, however, can be the most interesting because they are the way to insert any complexity of grammar, which can make Lexon texts look rich and elegant. This is a consequential design choice that serves to include language constructs outside of the limit up to which the controlled grammar has to be observed – offering instead of a hard stop, freedom to be fully creative within the safety of a well defined reference frame. Lexon 'understands' such phrases (the clause names) en block, the clause itself defines their meaning. The (multi-word) name of a clause's internal grammatical composition is not analysed. The way that the processing of clause names is isolated from the rest of the text makes it possible to mix these monolithic elements with the bulk of the text that the Lexon compiler processes word-for-word, i.e., 'more truely understands'. This combination is a pragmatic way to empower writers to add complexity without having to think about any controlled grammar rules, but importantly also: to freely add vocabulary. The new words are baked into the specific grammatical way that they are presented (in the clause name). They need not be explained further. This mode of extension makes perfect sense for Lexon.\n"
+	"To put the word count into perspective, a modern 3rd generation programming language like Rust has about 50 reserved keywords, which are mostly used in the rigid, less interesting way. Beginner's English is said to consist of about 300 words, the Basic English world language project has about 850. These latter counts include many nouns; Lexon's vocabulary contains almost no nouns because these are as a rule defined by the writer of a Lexon text and the Lexon compiler understands them from their function as implied by the rest of the text. This is a fundamental aspect of Lexon's approach and the reason why the Lexon compiler needs to 'understand' relatively few words out of the box. The nouns and phrases that a user adds are inevitably what gives a text depth. The way that definitions work, the compiler learns the role of the new words on the go and recognizes them in the text from that point on. Clause names, however, can be the most interesting because they are the way to insert any complexity of grammar, which can make Lexon texts look rich and elegant. This is a consequential design choice that serves to include language constructs outside of the limit up to which the controlled grammar has to be observed – offering instead of a hard stop, freedom to be fully creative within the safety of a well defined reference frame. Lexon 'understands' such phrases (the clause names) en block, the clause itself defines their meaning. The (multi-word) name of a clause's internal grammatical composition is not analysed. The way that the processing of clause names is isolated from the rest of the text makes it possible to mix these monolithic elements with the bulk of the text that the Lexon compiler processes word-for-word, i.e., 'more truely understands'. This combination is a pragmatic way to empower writers to add complexity without having to think about any controlled grammar rules, but importantly also: to freely add vocabulary. The new words are baked into the specific grammatical way that they are presented (in the clause name). They need not be explained further. This mode of extension makes perfect sense for Lexon.\n"
 	"\n"
 	"Third generation programming languages generally allow to add variable names and add types. But they can never reach beyond their fix grammar. Lexon, in contrast, accepts any grammatical extension through the freedom it offers in naming clauses. There is not even a requirement to avoid the initial 91 words that Lexon knows when creating compound new compositions.\n"
 	"\n"
-	"But the list of initial words cannot be redefined. It is therefore on the one hand desirable that it includes few nouns. The reason that Lexon, on the other hand, has a larger basic vocabulary than, e.g., Rust is that Lexon's grammar is designed to enable multiple ways of expressing the same, to make writing more intuitive, and to allow for more fluid, natural-appearing texts. This does not mean that Lexon's grammar is ambigious, i.e., that the same sentence could have multiple meanings. It only means that the same meaning can be expressed by differently worded sentences.17\n"
+	"But the list of initial words cannot be redefined. It is therefore on the one hand desirable that it includes few nouns. The reason that Lexon, on the other hand, has a larger basic vocabulary than, e.g., Rust is that Lexon's grammar is designed to enable multiple ways of expressing the same, to make writing more intuitive, and to allow for more fluid, natural-appearing texts. This does not mean that Lexon's grammar is ambigious, i.e., that the same sentence could have multiple meanings. It only means that the same meaning can be expressed by differently worded sentences.\n"
 	"\n"
 	"\n"
 	"\n"
@@ -11089,23 +11099,23 @@ const char *manual =
 	"\n"
 	"LEXON FOR LAW\n"
 	"\n"
-	"Lexon allows for law to be executed as a program. Asst. prof. Carla L. Reyes of SMU pioneers the use of Lexon to write statute – shown below – in her seminal 2021 paper Creating Cryptolaw for the Uniform Commercial Code.18 She created the following Lexon code as a proposal to the commission that is tasked with the reform of the U.S. trade law, which she advised on blockchain topics. This code could become model law, be adapted by states to be executed on the computers of their local agencies and protect billions of dollars of collateral.\n"
+	"Lexon allows for law to be executed as a program. Asst. prof. Carla L. Reyes of SMU pioneers the use of Lexon to write statute – shown below – in her seminal 2021 paper Creating Cryptolaw for the Uniform Commercial Code. She created the following Lexon code as a proposal to the commission that is tasked with the reform of the U.S. trade law, which she advised on blockchain topics. This code could become model law, be adapted by states to be executed on the computers of their local agencies and protect billions of dollars of collateral.\n"
 	"\n"
 	"    The salient point is that the law itself, without further changes is the program that the respective office runs to implement the law. The productivity gains of Lexon could not be illustrated better.\n"
-	"    \n"
+	"\n"
 	"The motivation for this proposal is a concrete shortfall of the existing statute. Asst. prof. Reyes writes (emphasis added):\n"
 	"\n"
-	"    “Under certain conditions, security interests not only bind the creditor and debtor, but also third-party creditors seeking to lend against the same collateral. To receive this extraordinary benefit, creditors must put the world on notice, usually by filing a financing statement with the state in which the debtor is located. Unfortunately, the Uniform Commercial Code (U.C.C.) Article 9 filing system fails to provide actual notice to interested parties and introduces risk of heavy financial losses. To solve this problem, this Article introduces a smart-contract-based U.C.C.-1 form built using Lexon, an innovative new programming language that enables the development of smart contracts in English. The proposed “Lexon U.C.C. Financing Statement” does much more than merely replicate the financing statement in digital form; it also performs several U.C.C. rules so that, for the first time, the filing system works as intended. In demonstrating that such a system remains compatible with existing law, the Lexon U.C.C. Financing Statement also reveals important lessons about the interaction of technology and commercial law.” ibid. 15\n"
+	"    “Under certain conditions, security interests not only bind the creditor and debtor, but also third-party creditors seeking to lend against the same collateral. To receive this extraordinary benefit, creditors must put the world on notice, usually by filing a financing statement with the state in which the debtor is located. Unfortunately, the Uniform Commercial Code (U.C.C.) Article 9 filing system fails to provide actual notice to interested parties and introduces risk of heavy financial losses. To solve this problem, this Article introduces a smart-contract-based U.C.C.-1 form built using Lexon, an innovative new programming language that enables the development of smart contracts in English. The proposed “Lexon U.C.C. Financing Statement” does much more than merely replicate the financing statement in digital form; it also performs several U.C.C. rules so that, for the first time, the filing system works as intended. In demonstrating that such a system remains compatible with existing law, the Lexon U.C.C. Financing Statement also reveals important lessons about the interaction of technology and commercial law.”\n"
 	"\n"
 	"\n"
 	"        LEX UCC Financing Statement.\n"
 	"\n"
 	"        LEXON: 0.2.12\n"
 	"\n"
-	"        \"Financing Statement\" is this contract. \n"
+	"        \"Financing Statement\" is this contract.\n"
 	"        \"File Number\" is data.\n"
 	"        \"Initial Statement Date\" is a time.\n"
-	"        \"Filer\" is a person. \n"
+	"        \"Filer\" is a person.\n"
 	"        \"Debtor\" is a person.\n"
 	"        \"Secured Party\" is a person.\n"
 	"        \"Filing Office\" is a person.\n"
@@ -11120,7 +11130,7 @@ const char *manual =
 	"        \"Continuation Statement\" is a binary.\n"
 	"        \"Termination Statement\" is a binary.\n"
 	"        \"Termination Statement Time\" is a time.\n"
-	"        \"Notification Statement\" is a text. \n"
+	"        \"Notification Statement\" is a text.\n"
 	"\n"
 	"        The Filer fixes the Filing Office, fixes the Debtor, fixes the Secured Party, and fixes the Collateral.\n"
 	"\n"
@@ -11128,7 +11138,7 @@ const char *manual =
 	"        The Filing Office may certify the File Number.\n"
 	"\n"
 	"        Clause: Set File Date.\n"
-	"        The Filing Office may fix the Initial Statement Date as the current time. \n"
+	"        The Filing Office may fix the Initial Statement Date as the current time.\n"
 	"\n"
 	"        Clause: Set Lapse.\n"
 	"        The Filing Office may fix the Lapse Date.\n"
@@ -11137,7 +11147,7 @@ const char *manual =
 	"        The Filing Office may fix the Continuation Window Start.\n"
 	"\n"
 	"        Clause: Pay Fee.\n"
-	"        The Secured Party may pay a Reminder Fee into escrow. \n"
+	"        The Secured Party may pay a Reminder Fee into escrow.\n"
 	"\n"
 	"        Clause: Notice.\n"
 	"        The Filing Office may fix the Notification Statement.\n"
@@ -11182,7 +11192,7 @@ const char *manual =
 	"\n"
 	"This digital contract was created by F. Idelberger, Phd candidate at the European University Institute in Florence. It appears in Merging traditional contracts (or law) and (smart) e-contracts – a novel approach, comparing this text to smart contracts written in other languages.\n"
 	"Idelberger’s paper about the contract is available at\n"
-	"https://lawgorithm.com.br/wp-content/uploads/2020/09/MLR2020-Florian-Idelberger.pdf. \n"
+	"https://lawgorithm.com.br/wp-content/uploads/2020/09/MLR2020-Florian-Idelberger.pdf.\n"
 	"\n"
 	"        LEX: Evaluation License System.\n"
 	"\n"
@@ -11254,55 +11264,55 @@ const char *manual =
 	"\n"
 	"INTERNAL MODEL\n"
 	"\n"
-	"The following is a part of the abstract syntax tree (AST), the internal model the compiler creates when processing the grammar and text discussed in chapter Grammar, pg. 54. It reflects natural language grammar rather than programming logic. Such a tree can be created from any Lexon text using the tree options.\n"
+	"The following is a part of the abstract syntax tree (AST), the internal model the compiler creates when processing the grammar and text as discussed. It reflects natural language grammar rather than programming logic. Such a tree can be created from any Lexon text using the tree options.\n"
 	"\n"
-	"    \n"
-	"            ↳  statements \n"
-	"                ↳  statement \n"
-	"                    ↳  action \n"
-	"                        ↳  subject \n"
-	"                        ⎸   ↳  symbols \n"
-	"                        ⎸       ↳  symbol «payer» \n"
-	"                        ⎸           ↳  article    \n"
-	"                        ↳  predicates \n"
-	"                            ↳  predicate \n"
-	"                            ⎸   ↳  payment \n"
-	"                            ⎸       ↳  pay \n"
-	"                            ⎸       ⎸ \n"
-	"                            ⎸       ↳  expression \n"
-	"                            ⎸       ⎸   ↳  combination \n"
-	"                            ⎸       ⎸       ↳  combinor \n"
-	"                            ⎸       ⎸           ↳  combinand \n"
-	"                            ⎸       ⎸               ↳  symbol «amount» \n"
-	"                            ⎸       ⎸                   ↳  article      \n"
-	"                            ⎸       ⎸ \n"
-	"                            ⎸       ↳  preposition \n"
-	"                            ⎸       ⎸ \n"
-	"                            ⎸       ↳  object     \n"
-	"                            ⎸ \n"
-	"                            ↳  predicate \n"
-	"                            ⎸   ↳  appointment \n"
-	"                            ⎸       ↳  appoint \n"
-	"                            ⎸       ⎸ \n"
-	"                            ⎸       ↳  symbol «payee» \n"
-	"                            ⎸           ↳  article    \n"
-	"                            ⎸ \n"
-	"                            ↳  predicate \n"
-	"                            ⎸   ↳  appointment \n"
-	"                            ⎸       ↳  appoint \n"
-	"                            ⎸       ⎸ \n"
-	"                            ⎸       ↳  symbol «arbiter» \n"
-	"                            ⎸           ↳  article    \n"
-	"                            ↳  predicate \n"
-	"                                ↳  fixture \n"
-	"                                    ↳  fix \n"
-	"                                    ↳  symbol «fee» \n"
+	"\n"
+	"            ↳  statements\n"
+	"                ↳  statement\n"
+	"                    ↳  action\n"
+	"                        ↳  subject\n"
+	"                        ⎸   ↳  symbols\n"
+	"                        ⎸       ↳  symbol «payer»\n"
+	"                        ⎸           ↳  article\n"
+	"                        ↳  predicates\n"
+	"                            ↳  predicate\n"
+	"                            ⎸   ↳  payment\n"
+	"                            ⎸       ↳  pay\n"
+	"                            ⎸       ⎸\n"
+	"                            ⎸       ↳  expression\n"
+	"                            ⎸       ⎸   ↳  combination\n"
+	"                            ⎸       ⎸       ↳  combinor\n"
+	"                            ⎸       ⎸           ↳  combinand\n"
+	"                            ⎸       ⎸               ↳  symbol «amount»\n"
+	"                            ⎸       ⎸                   ↳  article\n"
+	"                            ⎸       ⎸\n"
+	"                            ⎸       ↳  preposition\n"
+	"                            ⎸       ⎸\n"
+	"                            ⎸       ↳  object\n"
+	"                            ⎸\n"
+	"                            ↳  predicate\n"
+	"                            ⎸   ↳  appointment\n"
+	"                            ⎸       ↳  appoint\n"
+	"                            ⎸       ⎸\n"
+	"                            ⎸       ↳  symbol «payee»\n"
+	"                            ⎸           ↳  article\n"
+	"                            ⎸\n"
+	"                            ↳  predicate\n"
+	"                            ⎸   ↳  appointment\n"
+	"                            ⎸       ↳  appoint\n"
+	"                            ⎸       ⎸\n"
+	"                            ⎸       ↳  symbol «arbiter»\n"
+	"                            ⎸           ↳  article\n"
+	"                            ↳  predicate\n"
+	"                                ↳  fixture\n"
+	"                                    ↳  fix\n"
+	"                                    ↳  symbol «fee»\n"
 	"                                        ↳  article\n"
 	"\n"
 	"To create such a tree for your own Lexon text, check out the --tree option.\n"
 	"\n"
 	"There are fine-grained options for highlighting specific elements of the tree: color, highlight etc.\n"
-	"    \n"
+	"\n"
 	"© 2025 Henning Diedrich\n"
 	"\n"
 	"\n"

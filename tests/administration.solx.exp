@@ -7,11 +7,11 @@ pragma solidity ^0.8.17;
  **
  **	file:        cover/administration.lex
  **
- **	compiler:    lexon 0.3 beta 2
+ **	compiler:    lexon 0.3 beta 5
  **
- **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.12 beta 5 - English / Reyes
  **
- **	backend:     solidity 0.3.102 beta 2
+ **	backend:     solidity 0.3.105 beta 5
  **
  **	target:      solidity 0.8.17+
  **
@@ -63,10 +63,8 @@ pragma solidity ^0.8.17;
 /*
  | 	LEX Administration.
  | 
- | 	"Manager" is a person.
- | 	"Secretary" is a person.
- | 	"Proposed New Secretary" is a person.
- | 	"Accepted New Secretary" is a person.
+ | 	The "Manager" is a person.
+ | 	The "Secretary" is a person.
  | 
  | 	The Manager appoints the Secretary.
  */
@@ -75,8 +73,6 @@ contract Administration {
 
     address payable public manager;
     address payable public secretary;
-    address payable public proposed_new_secretary;
-    address payable public accepted_new_secretary;
 
 
     constructor(address payable _secretary) {
@@ -107,7 +103,7 @@ contract Administration {
 
     /*
      |  CLAUSE: New Secretary.
-     |  The Manager may appoint a Secretary.
+     |  The Manager may appoint a new Secretary.
      */
 
     function new_secretary(address payable _secretary) public {
@@ -120,7 +116,7 @@ contract Administration {
 
     /*
      |  CLAUSE: New Manager.
-     |  The Manager may appoint a Manager.
+     |  The Manager may appoint a new Manager.
      */
 
     function new_manager(address payable _manager) public {
@@ -136,19 +132,19 @@ contract Administration {
  **/
 
 /*
- | 	TERMS PER Member
+ | 	TERMS PER Member:
  | 
- | 	"Proposal" is a text.
  | 	"Member" is a person.
+ | 	"Proposal" is a text.
  | 
- | 	The Secretary may appoint a Member.
+ | 	The Secretary may appoint a new Member.
  */
 
 contract Member {
 
     Administration main;
-    string public proposal;
     address payable public member;
+    string public proposal;
 
 
     event Message(
@@ -181,12 +177,12 @@ contract Member {
 
     /*
      |  CLAUSE: Acknowledge.
-     |  The Secretary may notify the Member of ‹Acknowledgement the Proposal›.
+     |  The Secretary may notify the Member of "Acknowledgement of the Proposal".
      */
 
     function acknowledge() public {
         permit(main.secretary());
-        notify(member, "Acknowledgement the Proposal");
+        notify(member, "Acknowledgement of the Proposal");
     }
 
     /* built-in caller assertion */

@@ -548,12 +548,17 @@ typedef struct Flagging {
 typedef struct Condition {
 	struct If *If;
 	struct Expression *Expression;
+	struct After *After;
 	Literal *Literal;
 } Condition;
 
 typedef struct If {
 	Literal *Literal;
 } If;
+
+typedef struct After {
+	Literal *Literal;
+} After;
 
 typedef struct Expression {
 	struct Combination *Combination;
@@ -847,6 +852,7 @@ Terminate *process_terminate(Terminate *Terminate);
 Flagging *process_flagging(Flagging *Flagging);
 Condition *process_condition(Condition *Condition);
 If *process_if(If *If);
+After *process_after(After *After);
 Expression *process_expression(Expression *Expression);
 Scalar_Comparison *process_scalar_comparison(Scalar_Comparison *Scalar_Comparison);
 Comparison_Operator *process_comparison_operator(Comparison_Operator *Comparison_Operator);
@@ -886,7 +892,7 @@ Milliseconds *process_milliseconds(Milliseconds *Milliseconds);
 Expiration *process_expiration(Expiration *Expiration);
 Timeliness *process_timeliness(Timeliness *Timeliness);
 
-#line 890 "parser.h"
+#line 896 "parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -1022,39 +1028,41 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
     SECONDS = 380,                 /* SECONDS  */
     SEND = 381,                    /* SEND  */
     SENDS = 382,                   /* SENDS  */
-    SIGNED = 383,                  /* SIGNED  */
-    SMALLER = 384,                 /* SMALLER  */
-    SO = 385,                      /* SO  */
-    TERMINATE = 386,               /* TERMINATE  */
-    TERMINATES = 387,              /* TERMINATES  */
-    TERMS = 388,                   /* TERMS  */
-    TEXT = 389,                    /* TEXT  */
-    THAN = 390,                    /* THAN  */
-    THAT = 391,                    /* THAT  */
-    THE = 392,                     /* THE  */
-    THEMSELF = 393,                /* THEMSELF  */
-    THEMSELVES = 394,              /* THEMSELVES  */
-    THEN = 395,                    /* THEN  */
-    THERE = 396,                   /* THERE  */
-    THEREFOR = 397,                /* THEREFOR  */
-    THEREFORE = 398,               /* THEREFORE  */
-    THESE = 399,                   /* THESE  */
-    THIS = 400,                    /* THIS  */
-    TIME = 401,                    /* TIME  */
-    TO = 402,                      /* TO  */
-    TRANSFER = 403,                /* TRANSFER  */
-    TRANSFERS = 404,               /* TRANSFERS  */
-    TRUE = 405,                    /* TRUE  */
-    WAS = 406,                     /* WAS  */
-    WEEK = 407,                    /* WEEK  */
-    WEEKS = 408,                   /* WEEKS  */
-    WITH = 409,                    /* WITH  */
-    YEAR = 410,                    /* YEAR  */
-    YEARS = 411,                   /* YEARS  */
-    YES = 412,                     /* YES  */
-    YET = 413,                     /* YET  */
-    YOURSELF = 414,                /* YOURSELF  */
-    YOURSELVES = 415               /* YOURSELVES  */
+    SET = 383,                     /* SET  */
+    SETS = 384,                    /* SETS  */
+    SIGNED = 385,                  /* SIGNED  */
+    SMALLER = 386,                 /* SMALLER  */
+    SO = 387,                      /* SO  */
+    TERMINATE = 388,               /* TERMINATE  */
+    TERMINATES = 389,              /* TERMINATES  */
+    TERMS = 390,                   /* TERMS  */
+    TEXT = 391,                    /* TEXT  */
+    THAN = 392,                    /* THAN  */
+    THAT = 393,                    /* THAT  */
+    THE = 394,                     /* THE  */
+    THEMSELF = 395,                /* THEMSELF  */
+    THEMSELVES = 396,              /* THEMSELVES  */
+    THEN = 397,                    /* THEN  */
+    THERE = 398,                   /* THERE  */
+    THEREFOR = 399,                /* THEREFOR  */
+    THEREFORE = 400,               /* THEREFORE  */
+    THESE = 401,                   /* THESE  */
+    THIS = 402,                    /* THIS  */
+    TIME = 403,                    /* TIME  */
+    TO = 404,                      /* TO  */
+    TRANSFER = 405,                /* TRANSFER  */
+    TRANSFERS = 406,               /* TRANSFERS  */
+    TRUE = 407,                    /* TRUE  */
+    WAS = 408,                     /* WAS  */
+    WEEK = 409,                    /* WEEK  */
+    WEEKS = 410,                   /* WEEKS  */
+    WITH = 411,                    /* WITH  */
+    YEAR = 412,                    /* YEAR  */
+    YEARS = 413,                   /* YEARS  */
+    YES = 414,                     /* YES  */
+    YET = 415,                     /* YET  */
+    YOURSELF = 416,                /* YOURSELF  */
+    YOURSELVES = 417               /* YOURSELVES  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -1066,6 +1074,7 @@ union YYSTYPE
   Accept * Accept;                         /* Accept  */
   Acceptance * Acceptance;                 /* Acceptance  */
   Action * Action;                         /* Action  */
+  After * After;                           /* After  */
   All_Contracts * All_Contracts;           /* All_Contracts  */
   Amount * Amount;                         /* Amount  */
   And * And;                               /* And  */
@@ -1186,7 +1195,7 @@ union YYSTYPE
   Weeks * Weeks;                           /* Weeks  */
   Years * Years;                           /* Years  */
 
-#line 1190 "parser.h"
+#line 1199 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

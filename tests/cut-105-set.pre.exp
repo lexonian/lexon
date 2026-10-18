@@ -1,0 +1,17 @@
+
+precompilation:
+---------------
+
+cut 105 set   1:   LEX: «Asset with Cut».
+
+cut 105 set   3:   "«Id»" is a text.
+cut 105 set   4:   "«Creator»" is a person.
+cut 105 set   5:   "«Owner»" is a person.
+cut 105 set   6:   "«Cut»" is an amount.
+
+cut 105 set   8:   The «Creator» sets the «Id», fixes the «Cut», and appoints the «Owner».
+
+cut 105 set  10:   CLAUSE: «Transfer Ownership».
+cut 105 set  11:   The «Owner» may pay the «Cut» to the «Creator», and then appoint a new «Owner».
+
+

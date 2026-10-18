@@ -7,11 +7,11 @@ pragma solidity ^0.8.17;
  **
  **	file:        cover/administration-102-per.lex
  **
- **	compiler:    lexon 0.3 beta 2
+ **	compiler:    lexon 0.3 beta 5
  **
  **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
  **
- **	backend:     solidity 0.3.102 beta 2
+ **	backend:     solidity 0.3.105 beta 5
  **
  **	target:      solidity 0.8.17+
  **
@@ -121,14 +121,6 @@ contract Administration {
     /*
      |  CLAUSE: New Manager.
      |  The Manager may appoint a new Manager.
-     |  
-     |  
-     |  PER Member:
-     |  
-     |  "Member" is a person.
-     |  "Proposal" is a text.
-     |  
-     |  The Secretary appoint a new Member.
      */
 
     function new_manager(address payable _manager) public {
@@ -144,7 +136,12 @@ contract Administration {
  **/
 
 /*
- | 	
+ | 	PER Member:
+ | 
+ | 	"Member" is a person.
+ | 	"Proposal" is a text.
+ | 
+ | 	The Secretary appoint a new Member.
  */
 
 contract Member {

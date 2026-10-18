@@ -514,12 +514,17 @@ typedef struct Flagging {
 typedef struct Condition {
 	struct If *If;
 	struct Expression *Expression;
+	struct After *After;
 	Literal *Literal;
 } Condition;
 
 typedef struct If {
 	Literal *Literal;
 } If;
+
+typedef struct After {
+	Literal *Literal;
+} After;
 
 typedef struct Expression {
 	struct Combination *Combination;
@@ -813,6 +818,7 @@ Terminate *process_terminate(Terminate *Terminate);
 Flagging *process_flagging(Flagging *Flagging);
 Condition *process_condition(Condition *Condition);
 If *process_if(If *If);
+After *process_after(After *After);
 Expression *process_expression(Expression *Expression);
 Scalar_Comparison *process_scalar_comparison(Scalar_Comparison *Scalar_Comparison);
 Comparison_Operator *process_comparison_operator(Comparison_Operator *Comparison_Operator);
@@ -992,6 +998,8 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%token SECONDS
 	%token SEND
 	%token SENDS
+	%token SET
+	%token SETS
 	%token SIGNED
 	%token SMALLER
 	%token SO
@@ -1028,6 +1036,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	%nterm <Accept *> Accept
 	%nterm <Acceptance *> Acceptance
 	%nterm <Action *> Action
+	%nterm <After *> After
 	%nterm <All_Contracts *> All_Contracts
 	%nterm <Amount *> Amount
 	%nterm <And *> And
@@ -1479,6 +1488,14 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 		| Predicates Comma AND ALSO AFTERWARDS Predicate  { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
 		| Predicates Comma AND ALSO IF SO Predicate       { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
 		| Predicates Comma AND ALSO IF SO AFTERWARDS Predicate { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN Predicate             { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN AFTERWARDS Predicate  { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN IF SO Predicate       { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN IF SO AFTERWARDS Predicate { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN ALSO Predicate        { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN ALSO AFTERWARDS Predicate { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN ALSO IF SO Predicate  { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
+		| Predicates Comma AND THEN ALSO IF SO AFTERWARDS Predicate { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
 		| Predicates Comma AND WITH THIS Predicate        { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicates=$1; Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
 		| Predicate                                       { NEW(Predicates, *((Literal **)&yylval)); Predicates->Predicate=$Predicate; $$=process_predicates(Predicates); }
 		;
@@ -1650,12 +1667,15 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	Fix:	
 		  FIX                                             { NEW(Fix, *((Literal **)&yylval)); $$=process_fix(Fix); }
 		| FIXES                                           { NEW(Fix, *((Literal **)&yylval)); $$=process_fix(Fix); }
+		| SET                                             { NEW(Fix, *((Literal **)&yylval)); $$=process_fix(Fix); }
+		| SETS                                            { NEW(Fix, *((Literal **)&yylval)); $$=process_fix(Fix); }
 		;
 
 
 	
 	Fixed:	
 		  FIXED                                           { NEW(Fixed, *((Literal **)&yylval)); $$=process_fixed(Fixed); }
+		| SET                                             { NEW(Fixed, *((Literal **)&yylval)); $$=process_fixed(Fixed); }
 		;
 
 
@@ -1791,6 +1811,7 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 	
 	Condition:	
 		  If Expression                                   { NEW(Condition, *((Literal **)&yylval)); Condition->If=$If; Condition->Expression=$Expression; $$=process_condition(Condition); }
+		| After Expression                                { NEW(Condition, *((Literal **)&yylval)); Condition->After=$After; Condition->Expression=$Expression; $$=process_condition(Condition); }
 		;
 
 
@@ -1799,6 +1820,12 @@ Timeliness *process_timeliness(Timeliness *Timeliness);
 		  IF                                              { NEW(If, *((Literal **)&yylval)); $$=process_if(If); }
 		| GIVEN THAT                                      { NEW(If, *((Literal **)&yylval)); $$=process_if(If); }
 		| PROVIDED                                        { NEW(If, *((Literal **)&yylval)); $$=process_if(If); }
+		;
+
+
+	
+	After:	
+		  AFTER                                           { NEW(After, *((Literal **)&yylval)); $$=process_after(After); }
 		;
 
 
@@ -2779,12 +2806,18 @@ Condition *process_condition(Condition *Condition) {
 	if(opt_debug_actions) printf("actions: parsing Condition '%s'\n", Condition->Literal);
 	// Condition->If
 	// Condition->Expression
+	// Condition->After
 	return Condition;
 }
 
 If *process_if(If *If) {
 	if(opt_debug_actions) printf("actions: parsing If '%s'\n", If->Literal);
 	return If;
+}
+
+After *process_after(After *After) {
+	if(opt_debug_actions) printf("actions: parsing After '%s'\n", After->Literal);
+	return After;
 }
 
 Expression *process_expression(Expression *Expression) {

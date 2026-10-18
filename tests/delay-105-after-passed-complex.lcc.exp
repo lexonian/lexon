@@ -1,0 +1,48 @@
+( document 
+    ( head 
+        ( lex «time-lock» ) ) 
+    ( terms 
+        ( provisions 
+            ( definitions 
+                ( definition «payer» ( type person ) ) 
+                ( definition «receiver» ( type person ) ) 
+                ( definition «unlock-time» ( type time ) ) 
+                ( definition «alternate-unlock-time» ( type time ) ) ) 
+            ( clauses 
+                ( clause «draw» 
+                    ( body 
+                        ( statements 
+                            ( statement 
+                                ( action 
+                                    ( subject 
+                                        ( symbols ( symbol «receiver» ) ) ) 
+                                    ( predicates 
+                                        ( predicate 
+                                            ( payment pay preposition 
+                                                ( object reflexive ) 
+                                                escrow ) ) ) 
+                                    permission 
+                                    ( condition 
+                                        ( expression ( combination ( combinor ( combinor ( combinand ( symbol «alternate-unlock-time» ) 
+                                                            expiration ) ) 
+                                                    ( combinand ( symbol «unlock-time» ) 
+                                                        expiration ) 
+                                                    ( combinator and ) ) ) ) 
+                                        after ) ) ) ) ) ) ) 
+            ( statements 
+                ( statement 
+                    ( action 
+                        ( subject 
+                            ( symbols ( symbol «payer» ) ) ) 
+                        ( predicates 
+                            ( predicate 
+                                ( payment pay 
+                                    ( expression ( combination ( combinor ( combinand ( symbol ( type amount ) ) ) ) ) ) 
+                                    preposition 
+                                    ( object ) ) ) 
+                            ( predicate 
+                                ( appointment appoint ( symbol «receiver» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «unlock-time» ) ) ) 
+                            ( predicate 
+                                ( fixture fix ( symbol «alternate-unlock-time» ) ) ) ) ) ) ) ) ) )

@@ -7,11 +7,11 @@ pragma solidity ^0.8.17;
  **
  **	file:        cover/burn.lex
  **
- **	compiler:    lexon 0.3 alpha 99 U
+ **	compiler:    lexon 0.3 beta 5
  **
- **	grammar:     0.2.20 / subset 0.3.9 alpha 99 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.12 beta 5 - English / Reyes
  **
- **	backend:     solidity 0.3.99a U
+ **	backend:     solidity 0.3.105 beta 5
  **
  **	target:      solidity 0.8.17+
  **
@@ -55,22 +55,18 @@ pragma solidity ^0.8.17;
 /*
  | 	LEX Burn.
  | 
- | 	"Payer" is a person.
- | 	"Amount" is an amount.
+ | 	A "Payer" is a person.
  | 
- | 	The Payer pays an Amount into escrow.
+ | 	The Payer pays an amount into escrow.
  */
 
 contract Burn {
 
     address payable public payer;
-    uint public amount;
-    bool amount__set = false;
+
 
     constructor() payable {
         payer = payable(msg.sender);
-        amount = msg.value;
-        amount__set = true;
     }
 }
 

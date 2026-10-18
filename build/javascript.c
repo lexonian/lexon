@@ -7,7 +7,7 @@
   **
   **                  Lexon — natural language programming
   **
-  **     Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+  **     Copyright (C) 2016-25 Henning Diedrich. Licensed to you under
   **     AGPL3 subject to the conditions described in the file LICENSE.
   **
   **     Also see https://www.lexon.org/license-0.3.html
@@ -18,7 +18,7 @@
 
   /*    javascript.c - Javascript backend       */
 
-#define backend_version "javascript 0.3.103 beta 4"
+#define backend_version "javascript 0.3.105 beta 5"
 #define target_version "node 14.1+"
 
 #define CYCLE_2 true
@@ -48,7 +48,7 @@ static void error(char *msg, const char *cargo);
 #define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)
 #define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)
 #define replace_first_from(orig_, rep_, with_, from_) \
-	_replace(orig_, rep_, with_, false, from_, false, #orig_, __FILE__, __LINE__)
+	_replace(orig_, rep_, with_, false, from_, false, null, null, #orig_, __FILE__, __LINE__)
 void *_mtrac_malloc(size_t size, char *name, char *file, int line);
 void *_mtrac_strdup(const char *string, char *name, char *file, int line);
 void _mtrac_free(void *p, char *name, char *file, int line);
@@ -108,10 +108,10 @@ static struct Document *root;
 
 bool js_document(char **production, struct Document *root, int indent);
 
-#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, #orig_, __FILE__, __LINE__)
+#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, null, null, #orig_, __FILE__, __LINE__)
 extern char *_replace(char **orig, const char *rep, const char *with, int all,
-		      char *from, bool whole, char *origname, char *file,
-		      int line);
+		      char *from, bool whole, char *quote, char *unquote,
+		      char *origname, char *file, int line);
 extern const char *str(int line);
 static char *quote_trimmed(const char *token);
 static char *dash_spaced(const char *token);
@@ -743,6 +743,7 @@ typedef struct Sending {
 } Sending;
 
 typedef struct Send {
+	Literal *Literal;
 } Send;
 
 typedef struct Notification {
@@ -750,33 +751,45 @@ typedef struct Notification {
 	struct Object *Object;
 	struct Preposition *Preposition;
 	struct Expression *Expression;
+	Literal *Literal;
 } Notification;
 
 typedef struct Notify {
+	Literal *Literal;
 } Notify;
 
 typedef struct Termination {
 	struct Terminate *Terminate;
 	struct This_Contract *This_Contract;
 	struct All_Contracts *All_Contracts;
+	Literal *Literal;
 } Termination;
 
 typedef struct Terminate {
+	Literal *Literal;
 } Terminate;
 
 typedef struct Flagging {
 	struct Illocutor *Illocutor;
 	struct Symbol *Symbol;
 	struct This_Contract *This_Contract;
+	Literal *Literal;
 } Flagging;
 
 typedef struct Condition {
 	struct If *If;
 	struct Expression *Expression;
+	struct After *After;
+	Literal *Literal;
 } Condition;
 
 typedef struct If {
+	Literal *Literal;
 } If;
+
+typedef struct After {
+	Literal *Literal;
+} After;
 
 typedef struct Expression {
 	struct Combination *Combination;
@@ -1033,6 +1046,7 @@ bool js_terminate(char **production, Terminate * Terminate, int indent);
 bool js_flagging(char **production, Flagging * Flagging, int indent);
 bool js_condition(char **production, Condition * Condition, int indent);
 bool js_if(char **production, If * If, int indent);
+bool js_after(char **production, After * After, int indent);
 bool js_expression(char **production, Expression * Expression, int indent);
 bool js_scalar_comparison(char **production,
 			  Scalar_Comparison * Scalar_Comparison, int indent);
@@ -1107,6 +1121,7 @@ static char *arguments = null;
 static char *parameta = null;
 static char *emits = null;
 static char *caller = null;
+static char *creator = null;
 static size_t paratag = -1;
 static int preass_indent = 0;
 static Action *action = null;
@@ -1165,8 +1180,8 @@ static void optional_caller(char **production) {
 	if (opt_log)
 		concat(production, active_subjects
 		       && (!current_function
-			   && !class) ? SNAKE(active_subjects->item) : "caller",
-		       ", ");
+			   && !class) ? SNAKE(active_subjects->item) : caller
+		       && *caller ? caller : "caller", ", ");
 }
 
 bool js_walk(char **production) {
@@ -1266,7 +1281,7 @@ bool js_document(char **production, Document *Document, int indent) {
 		    && strcspn(rump,
 			       "/.-0123456789") > 1) *(rump + strcspn(rump,
 								      "/.-0123456789"))
-			  = 0;
+				= 0;
 		else if (*rump && strcspn(rump, "/.-0123456789") == 1
 			 && strlen(rump) > 2) {
 			rump += 2;
@@ -1280,9 +1295,9 @@ bool js_document(char **production, Document *Document, int indent) {
 
 	/* obtain the names of the clauses */
 	Clauses *clauses =
-		!Document->Terms ? null : (!Document->Terms->
-					   Provisions ? null : Document->Terms->
-					   Provisions->Clauses);
+		!Document->Terms ? null : (!Document->
+					   Terms->Provisions ? null : Document->
+					   Terms->Provisions->Clauses);
 	while (clauses) {
 		char *name = !clauses->Clause ? null : clauses->Clause->Name;
 
@@ -1368,8 +1383,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	if (opt_persistence) {
 		if (opt_comment) padcat(2, indent + 2, production,
 					"/* restore object from file - must be below class definition */");
-		padcat(C, indent + 2, production, "if(typeof ", caller,
-		       " === 'undefined') {");
+		padcat(C, indent + 2, production, "if(typeof ", creator && *creator ? creator : "person", " === 'undefined') {");	// person <- literal name
 		padcat(1, indent + 3, production,
 		       "console.log(\"> restore from file '", opt_persistence,
 		       "'\");");
@@ -1701,6 +1715,7 @@ bool js_document(char **production, Document *Document, int indent) {
 	mtrac_free(parameta), parameta = null;
 	mtrac_free(emits), emits = null;
 	if (caller) mtrac_free(caller), caller = null;
+	if (creator) mtrac_free(creator), creator = null;
 	mtrac_free(methods);
 	mtrac_free(globals);
 	mtrac_free(declarations);
@@ -2120,6 +2135,7 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	multi_sentence_clause = Provisions->Statements
 		&& Provisions->Statements->Statements;
 
+	assert(caller == null);
 	js_statements(production, Provisions->Statements, indent);
 	recital_of_terms = false;
 	enforce_same_subject = false;
@@ -2131,10 +2147,14 @@ bool js_provisions(char **production, Provisions *Provisions, int indent) {
 	covenant_constructor_body = false;
 
 	/* insert caller argumnet and 'payable' modifier */
-	replace(production, "%7%", caller ? caller : "caller");	// ! caller is not yet set at (*) above.
+	replace(production, "%7%", caller ? *caller ? caller : "person" : "caller");	// ! caller is not yet set at (*) above.
+	if (caller) mtrac_free(caller), caller = null;
+
 	/* clauses */
+	assert(caller == null);
 	js_clauses(instance ? production : &methods, Provisions->Clauses,
 		   indent - (instance ? 0 : 1));
+	if (caller) mtrac_free(caller), caller = null;
 
 	/* add element this.terminated, if needed */
 	char *terminated = mtrac_strdup("");
@@ -2464,11 +2484,20 @@ bool js_action(char **production, Action *Action, int indent) {
 
 		/* this takes care of the subject person 1) becoming a parameter and 2) an object member that 3) gets the parameter assigned */
 		insert_parameter_and_set_member(production, null,
-						Action->Subject->Symbols->
-						Symbol, payment, paratag,
-						indent, __LINE__);
+						Action->Subject->
+						Symbols->Symbol, payment,
+						paratag, indent, __LINE__);
 		/* the function we are in, if it had no caller set yet, the subject will be used as the caller, LITERALLY. */
-		if (!caller) caller = snakedup(Action->Subject->Symbols->Symbol->Name);	// ...
+		if (!caller) {
+			Symbol *s = Action->Subject->Symbols->Symbol;
+
+			assert(s->Name || s->Type && s->Type->Literal);
+			caller = snakedup(s->Name
+					  && *s->Name ? s->Name : s->
+					  Type->Literal);
+			if (!creator)  // this is currently redundant but caller should be used for covenants, too
+				creator = mtrac_strdup(caller);
+		}
 	}
 
 	/* for main_constructor_bodys, enforce that if there are multiple sentences, they all use the same subjects */
@@ -2497,10 +2526,9 @@ bool js_action(char **production, Action *Action, int indent) {
 		Symbols *symbols = Action->Subject->Symbols;
 
 		while (symbols && symbols->Symbol) {
-			if (symbols->Symbol->
-			    Name
+			if (symbols->Symbol->Name
 			    /* && !in_list(active_subjects, symbol->Symbol->Name) */
-			    ) {
+				) {
 				list_add(&active_subjects,
 					 symbols->Symbol->Name);
 			}
@@ -2555,8 +2583,9 @@ bool js_action(char **production, Action *Action, int indent) {
 				js_symbol(&symbol, Symbols->Symbol, false, 0);
 				if (i++) padcat(0, 0, production, " || ");
 				padcat(0, 0, production, "caller == ", symbol);
-				if (current_function) current_function->
-						uses_caller = true;
+				if (current_function)
+						current_function->uses_caller =
+						true;
 
 				/* aggregated, potentially shortened access condition for revert message */
 				if (multi_sentence_clause) {
@@ -2565,17 +2594,15 @@ bool js_action(char **production, Action *Action, int indent) {
 					padcat(0, 0, &search, ":", symbol, ":");
 					if (!strstr(courtesy_track, search)) {
 						if (strlen(courtesy_track))
-								padcat(0, 0,
-								       &courtesy,
-								       " || ");
+							padcat(0, 0, &courtesy,
+							       " || ");
 						padcat(0, 0, &courtesy_track,
 						       search);
 						padcat(0, 0, &courtesy,
 						       "caller == ", symbol);
 						if (current_function)
-								current_function->
-								uses_caller =
-								true;
+							current_function->uses_caller
+								= true;
 					}
 					mtrac_free(search);
 				}
@@ -2804,11 +2831,11 @@ static void assign(char **production, int indent, Symbol *symbol,
 static void log_entry(char **production, char *name, char *action, int indent) {
 	if (opt_log || opt_feedback) {
 		padcat(1, indent, production, (!class ? "this" : "main"),
-		       ".log(", recital_of_terms
-		       && !class ? caller : "caller", ", \"✓ ", name, " ",
+		       ".log(", recital_of_terms && !class && caller
+		       && *caller ? caller : "caller", ", \"✓ ", name, " ",
 		       action, "\");");
 		if (current_function) current_function->uses_caller |= class
-				|| !strcmp(caller, "caller");
+				|| caller && !strcmp(caller, "caller");
 	}
 }
 
@@ -3021,8 +3048,10 @@ bool js_payment(char **production, Payment *Payment, int indent) {
 		js_escrow(production, Payment->Escrow, 0);
 	else if (Payment->From_Escrow)
 		js_from_escrow(production, Payment->From_Escrow, 0);
-	else
+	else if (subject)
 		js_name(production, (Name *) subject, false, 0);
+	else
+		concat(production, "person");
 	padcat(0, 0, production, ", ");
 	/* receiver */
 	if (!explicit_to_escrow) {
@@ -3201,13 +3230,20 @@ bool js_flagging(char **production, Flagging *Flagging, int indent) {
 	return true;
 }
 
+static bool no_after_yet;
 bool js_condition(char **production, Condition *Condition, int indent) {
 	if (!Condition) return false;
 	if (opt_debug) printf("producing Condition\n");
 
 	js_if(production, Condition->If, indent);
+	js_after(production, Condition->After, indent);
 
+	no_after_yet = true;
 	js_expression(production, Condition->Expression, indent + 1);
+
+	if (Condition->After && no_after_yet) {
+		padcat(0, 0, production, " < Date.now()");
+	}
 
 	padcat(0, 0, production, ") {");
 	return true;
@@ -3216,6 +3252,13 @@ bool js_condition(char **production, Condition *Condition, int indent) {
 bool js_if(char **production, If *If, int indent) {
 	if (!If) return false;
 	if (opt_debug) printf("producing If\n");
+	padcat(1, indent, production, "if(");
+	return true;
+}
+
+bool js_after(char **production, After *After, int indent) {
+	if (!After) return false;
+	if (opt_debug) printf("producing After\n");
 	padcat(1, indent, production, "if(");
 	return true;
 }
@@ -3639,6 +3682,7 @@ bool js_expiration(char **production, Expiration *Expiration, int indent) {
 
 	/* 'has passed' means that the moment has happened that the millisecond was counted as passed -> <= */
 	padcat(0, 0, production, " <= Date.now()");
+	no_after_yet = false;
 	inference = "bool";
 	return true;
 }

@@ -6,7 +6,7 @@
 ##
 ##	Lexon — natural language programming
 ##
-##	Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+##	Copyright (C) 2016-25 Henning Diedrich. Licensed to you under
 ##	AGPL3 subject to the conditions described in the file LICENSE.
 ##
 ##	Also see https://www.lexon.org/license-0.3.html
@@ -15,7 +15,7 @@
 ##
 ##	english.lgf — Lexon controlled English grammar
 ##
-##	Version 0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+##	Version 0.2.20 / subset 0.3.12 beta 5 - English / Reyes
 ##
 ##	This document is in Lexon Grammar Form, a variation of BNF.
 ##	Square brackets indicate optionality, 'or' separates variants.
@@ -142,7 +142,7 @@
 
 ## PREDICATE
 
-   predicates:	predicates comma ["and" ["also"]] ["if" "so"] ["afterwards"] predicate
+   predicates:	predicates comma ["and" ["then"] ["also"]] ["if" "so"] ["afterwards"] predicate
 		or predicates comma "and" "with" "this" predicate
 		or predicate
 
@@ -232,9 +232,9 @@
    fixture:	fix symbol ["as" expression]
 		or fix contract "as" symbol
 
-   fix:		"fix" or "fixes"
+   fix:		"fix" or "fixes" or "set" or "sets"
 
-   fixed:	"fixed"
+   fixed:	"fixed" or "set"
 
 
 ## FIXTURE PREDICATE / PASSIVE
@@ -297,9 +297,11 @@
 ## CONDITIONS
 
    condition:	if expression
+   		or after expression
 
    if:		"if" or "given" "that" or "provided"
 
+   after:	"after"
 
 ## EXPRESSION
 

@@ -431,8 +431,7 @@ expclean: clean
 deeptest:
 	@$(call log,DEEP TEST)
 	@echo
-	@echo Running all deep tests with a single-character bar indicating successes,
-	@echo failures and final tally.
+	@echo Running all deep tests with progress bar and final tally.
 	@echo
 	@touch concise
 	@touch noupdate

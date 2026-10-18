@@ -4,11 +4,11 @@
  **
  **	file:        cover/administration.lex
  **
- **	compiler:    lexon 0.3 beta 2
+ **	compiler:    lexon 0.3 beta 5
  **
- **	grammar:     0.2.20 / subset 0.3.11 beta 3 - English / Reyes
+ **	grammar:     0.2.20 / subset 0.3.12 beta 5 - English / Reyes
  **
- **	backend:     sophia 0.3.102 beta 2
+ **	backend:     sophia 0.3.105 beta 5
  **
  **	target:      sophia 8+
  **
@@ -63,8 +63,6 @@ namespace MainState =
     record main_state = {
             manager : option(address),
             secretary : option(address),
-            proposed_new_secretary : option(address),
-            accepted_new_secretary : option(address),
             _member_list : list(address),
             _member_count : int
         }
@@ -84,10 +82,8 @@ contract interface Main =
 /*
  | 	LEX Administration.
  | 
- | 	"Manager" is a person.
- | 	"Secretary" is a person.
- | 	"Proposed New Secretary" is a person.
- | 	"Accepted New Secretary" is a person.
+ | 	The "Manager" is a person.
+ | 	The "Secretary" is a person.
  | 
  | 	The Manager appoints the Secretary.
  */
@@ -101,8 +97,6 @@ main contract Administration : Main =
     entrypoint init(secretary : address) = {
             manager = Some(Call.caller),
             secretary = Some(secretary),
-            proposed_new_secretary = None,
-            accepted_new_secretary = None,
             _member_list = [],
             _member_count = 0
         }
@@ -132,7 +126,7 @@ main contract Administration : Main =
 
     /*
      |  CLAUSE: New Secretary.
-     |  The Manager may appoint a Secretary.
+     |  The Manager may appoint a new Secretary.
      */
 
     stateful entrypoint new_secretary(secretary : address) =
@@ -144,7 +138,7 @@ main contract Administration : Main =
 
     /*
      |  CLAUSE: New Manager.
-     |  The Manager may appoint a Manager.
+     |  The Manager may appoint a new Manager.
      */
 
     stateful entrypoint new_manager(manager : address) =
@@ -158,27 +152,27 @@ main contract Administration : Main =
  **/
 
 /*
- | 	TERMS PER Member
+ | 	TERMS PER Member:
  | 
- | 	"Proposal" is a text.
  | 	"Member" is a person.
+ | 	"Proposal" is a text.
  | 
- | 	The Secretary may appoint a Member.
+ | 	The Secretary may appoint a new Member.
  */
 
 contract Member =
 
     record state = {
             global : main_state,
-            proposal : option(string),
-            member : option(address)
+            member : option(address),
+            proposal : option(string)
         }
 
     datatype event = Message(indexed address, indexed address, string)
 
     entrypoint init(global : Main, member : address) = {
-            proposal = None,
             member = Some(member),
+            proposal = None,
             global = global.get_state()
         }
 
@@ -200,12 +194,12 @@ contract Member =
 
     /*
      |  CLAUSE: Acknowledge.
-     |  The Secretary may notify the Member of ‹Acknowledgement the Proposal›.
+     |  The Secretary may notify the Member of "Acknowledgement of the Proposal".
      */
 
     stateful entrypoint acknowledge() =
         permit(state.global.secretary, "Secretary")
-        notify(Option.force_msg(state.member, "Member"), "Acknowledgement the Proposal")
+        notify(Option.force_msg(state.member, "Member"), "Acknowledgement of the Proposal")
 
     /* built-in caller assertion */
 

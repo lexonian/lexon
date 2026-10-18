@@ -4,8 +4,7 @@ precompilation:
 
 burn  1:   LEX: «Burn».
 
-burn  3:   "«Payer»" is a person.
-burn  4:   "«Amount»" is an amount.
+burn  3:   A "«Payer»" is a person.
 
-burn  6:   The «Payer» pays an «Amount» into escrow.
+burn  5:   The «Payer» pays an amount into escrow.
 

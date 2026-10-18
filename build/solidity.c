@@ -7,7 +7,7 @@
   **
   **                  Lexon — natural language programming
   **
-  **     Copyright (C) 2016-24 Henning Diedrich. Licensed to you under
+  **     Copyright (C) 2016-25 Henning Diedrich. Licensed to you under
   **     AGPL3 subject to the conditions described in the file LICENSE.
   **
   **     Also see https://www.lexon.org/license-0.3.html
@@ -17,7 +17,7 @@
   */
   /*    solidity.c - Solidity backend   */
 
-#define backend_version "solidity 0.3.103 beta 4"
+#define backend_version "solidity 0.3.105 beta 5"
 #define target_version "solidity 0.8.17+"	// sync w/[5]
 #define CYCLE_2 true
 
@@ -46,7 +46,7 @@ static void error(char *msg, const char *cargo);
 #define mtrac_free(var_) _mtrac_free(var_, #var_, __FILE__, __LINE__)
 #define mtrac_concat(...) _mtrac_concat(__FILE__, __LINE__, 0, 0, __VA_ARGS__, null)
 #define replace_first_from(orig_, rep_, with_, from_) \
-	_replace(orig_, rep_, with_, false, from_, false, #orig_, __FILE__, __LINE__)
+	_replace(orig_, rep_, with_, false, from_, false, null, null, #orig_, __FILE__, __LINE__)
 void *_mtrac_malloc(size_t size, char *name, char *file, int line);
 void *_mtrac_strdup(const char *string, char *name, char *file, int line);
 void _mtrac_free(void *p, char *name, char *file, int line);
@@ -106,10 +106,10 @@ static struct Document *root;
 
 bool sol_document(char **production, struct Document *root, int indent);
 
-#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, #orig_, __FILE__, __LINE__)
+#define replace(orig_, rep_, with_) _replace(orig_, rep_, with_, true, null, false, null, null, #orig_, __FILE__, __LINE__)
 extern char *_replace(char **orig, const char *rep, const char *with, int all,
-		      char *from, bool whole, char *origname, char *file,
-		      int line);
+		      char *from, bool whole, char *quote, char *unquote,
+		      char *origname, char *file, int line);
 extern const char *str(int line);
 static char *quote_trimmed(const char *token);
 static char *dash_spaced(const char *token);
@@ -742,6 +742,7 @@ typedef struct Sending {
 } Sending;
 
 typedef struct Send {
+	Literal *Literal;
 } Send;
 
 typedef struct Notification {
@@ -749,33 +750,45 @@ typedef struct Notification {
 	struct Object *Object;
 	struct Preposition *Preposition;
 	struct Expression *Expression;
+	Literal *Literal;
 } Notification;
 
 typedef struct Notify {
+	Literal *Literal;
 } Notify;
 
 typedef struct Termination {
 	struct Terminate *Terminate;
 	struct This_Contract *This_Contract;
 	struct All_Contracts *All_Contracts;
+	Literal *Literal;
 } Termination;
 
 typedef struct Terminate {
+	Literal *Literal;
 } Terminate;
 
 typedef struct Flagging {
 	struct Illocutor *Illocutor;
 	struct Symbol *Symbol;
 	struct This_Contract *This_Contract;
+	Literal *Literal;
 } Flagging;
 
 typedef struct Condition {
 	struct If *If;
 	struct Expression *Expression;
+	struct After *After;
+	Literal *Literal;
 } Condition;
 
 typedef struct If {
+	Literal *Literal;
 } If;
+
+typedef struct After {
+	Literal *Literal;
+} After;
 
 typedef struct Expression {
 	struct Combination *Combination;
@@ -1032,6 +1045,7 @@ bool sol_terminate(char **production, Terminate * Terminate, int indent);
 bool sol_flagging(char **production, Flagging * Flagging, int indent);
 bool sol_condition(char **production, Condition * Condition, int indent);
 bool sol_if(char **production, If * If, int indent);
+bool sol_after(char **production, After * After, int indent);
 bool sol_expression(char **production, Expression * Expression, int indent);
 bool sol_scalar_comparison(char **production,
 			   Scalar_Comparison * Scalar_Comparison, int indent);
@@ -1106,6 +1120,7 @@ static char *arguments = null;
 static char *parameta = null;
 static char *emits = null;
 static char *caller = null;
+static char *creator = null;
 static size_t paratag = -1;
 static int preass_indent = 0;
 static Action *action = null;
@@ -1253,7 +1268,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 		    && strcspn(rump,
 			       "/.-0123456789") > 1) *(rump + strcspn(rump,
 								      "/.-0123456789"))
-			  = 0;
+				= 0;
 		else if (*rump && strcspn(rump, "/.-0123456789") == 1
 			 && strlen(rump) > 2) {
 			rump += 2;
@@ -1267,9 +1282,9 @@ bool sol_document(char **production, Document *Document, int indent) {
 
 	/* obtain the names of the clauses */
 	Clauses *clauses =
-		!Document->Terms ? null : (!Document->Terms->
-					   Provisions ? null : Document->Terms->
-					   Provisions->Clauses);
+		!Document->Terms ? null : (!Document->
+					   Terms->Provisions ? null : Document->
+					   Terms->Provisions->Clauses);
 	while (clauses) {
 		char *name = !clauses->Clause ? null : clauses->Clause->Name;
 
@@ -1386,6 +1401,7 @@ bool sol_document(char **production, Document *Document, int indent) {
 	mtrac_free(parameta), parameta = null;
 	mtrac_free(emits), emits = null;
 	if (caller) mtrac_free(caller), caller = null;
+	if (creator) mtrac_free(creator), creator = null;
 	mtrac_free(methods);
 	mtrac_free(globals);
 	mtrac_free(declarations);
@@ -1796,6 +1812,7 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 	msg_value = null;
 	is_payable = false;
 	is_stateful = false;
+	assert(caller == null);
 	sol_statements(production, Provisions->Statements, indent);
 	if (msg_sender) mtrac_free(msg_sender);
 	if (msg_value) mtrac_free(msg_value);
@@ -1812,9 +1829,13 @@ bool sol_provisions(char **production, Provisions *Provisions, int indent) {
 
 	replace(production, "%28%", is_payable ? "payable " : "");
 
+	if (caller) mtrac_free(caller), caller = null;
+
 	/* clauses */
+	assert(caller == null);
 	sol_clauses(instance ? production : &methods, Provisions->Clauses,
 		    indent - (instance ? 0 : 1));
+	if (caller) mtrac_free(caller), caller = null;
 
 	char *termination_test = mtrac_strdup("");
 
@@ -2172,11 +2193,20 @@ bool sol_action(char **production, Action *Action, int indent) {
 
 		/* this takes care of the subject person 1) becoming a parameter and 2) an object member that 3) gets the parameter assigned */
 		insert_parameter_and_set_member(production, null,
-						Action->Subject->Symbols->
-						Symbol, payment, paratag,
-						indent, __LINE__);
+						Action->Subject->
+						Symbols->Symbol, payment,
+						paratag, indent, __LINE__);
 		/* the function we are in, if it had no caller set yet, the subject will be used as the caller, LITERALLY. */
-		if (!caller) caller = snakedup(Action->Subject->Symbols->Symbol->Name);	// ...
+		if (!caller) {
+			Symbol *s = Action->Subject->Symbols->Symbol;
+
+			assert(s->Name || s->Type && s->Type->Literal);
+			caller = snakedup(s->Name
+					  && *s->Name ? s->Name : s->
+					  Type->Literal);
+			if (!creator)  // this is currently redundant but caller should be used for covenants, too
+				creator = mtrac_strdup(caller);
+		}
 	}
 
 	/* for main_constructor_bodys, enforce that if there are multiple sentences, they all use the same subjects */
@@ -2205,10 +2235,9 @@ bool sol_action(char **production, Action *Action, int indent) {
 		Symbols *symbols = Action->Subject->Symbols;
 
 		while (symbols && symbols->Symbol) {
-			if (symbols->Symbol->
-			    Name
+			if (symbols->Symbol->Name
 			    /* && !in_list(active_subjects, symbol->Symbol->Name) */
-			    ) {
+				) {
 				list_add(&active_subjects,
 					 symbols->Symbol->Name);
 			}
@@ -2266,8 +2295,9 @@ bool sol_action(char **production, Action *Action, int indent) {
 				padcat(0, 0, production, "msg.sender == ",
 				       symbol);
 
-				if (current_function) current_function->
-						uses_caller = true;
+				if (current_function)
+						current_function->uses_caller =
+						true;
 
 				/* aggregated, potentially shortened access condition for revert message */
 				if (multi_sentence_clause) {
@@ -2276,9 +2306,8 @@ bool sol_action(char **production, Action *Action, int indent) {
 					padcat(0, 0, &search, ":", symbol, ":");
 					if (!strstr(courtesy_track, search)) {
 						if (strlen(courtesy_track))
-								padcat(0, 0,
-								       &courtesy,
-								       " || ");
+							padcat(0, 0, &courtesy,
+							       " || ");
 						padcat(0, 0, &courtesy_track,
 						       search);
 
@@ -2287,9 +2316,8 @@ bool sol_action(char **production, Action *Action, int indent) {
 						       symbol);
 
 						if (current_function)
-								current_function->
-								uses_caller =
-								true;
+							current_function->uses_caller
+								= true;
 					}
 					mtrac_free(search);
 				}
@@ -2708,12 +2736,12 @@ bool sol_payment(char **production, Payment *Payment, int indent) {
 			assert(Payment->Expression->Combination);
 			assert(!Payment->Expression->Combination->Combination);
 			assert(Payment->Expression->Combination->Combinor);
-			assert(!Payment->Expression->Combination->Combinor->
-			       Combinor);
-			assert(Payment->Expression->Combination->Combinor->
-			       Combinand);
-			assert(Payment->Expression->Combination->Combinor->
-			       Combinand->Symbol);
+			assert(!Payment->Expression->Combination->
+			       Combinor->Combinor);
+			assert(Payment->Expression->Combination->
+			       Combinor->Combinand);
+			assert(Payment->Expression->Combination->
+			       Combinor->Combinand->Symbol);
 			no_literal = true;
 			payment_expression = true;
 			sol_expression(production, Payment->Expression, 0);
@@ -2896,13 +2924,22 @@ bool sol_flagging(char **production, Flagging *Flagging, int indent) {
 	return true;
 }
 
+static bool no_after_yet;
 bool sol_condition(char **production, Condition *Condition, int indent) {
 	if (!Condition) return false;
 	if (opt_debug) printf("producing Condition\n");
 
 	sol_if(production, Condition->If, indent);
+	sol_after(production, Condition->After, indent);
 
+	no_after_yet = true;
 	sol_expression(production, Condition->Expression, indent + 1);
+
+	if (Condition->After && no_after_yet) {
+
+		padcat(0, 0, production, " < block.timestamp");
+
+	}
 
 	padcat(0, 0, production, ") {");
 	return true;
@@ -2911,6 +2948,13 @@ bool sol_condition(char **production, Condition *Condition, int indent) {
 bool sol_if(char **production, If *If, int indent) {
 	if (!If) return false;
 	if (opt_debug) printf("producing If\n");
+	padcat(1, indent, production, "if(");
+	return true;
+}
+
+bool sol_after(char **production, After *After, int indent) {
+	if (!After) return false;
+	if (opt_debug) printf("producing After\n");
 	padcat(1, indent, production, "if(");
 	return true;
 }
@@ -3386,6 +3430,7 @@ bool sol_expiration(char **production, Expiration *Expiration, int indent) {
 
 	padcat(0, 0, production, " <= block.timestamp");
 
+	no_after_yet = false;
 	inference = "bool";
 	return true;
 }
@@ -3486,15 +3531,14 @@ void insert_parameter_and_set_member(char **production, char **instructions,
 			} else {
 				/* inside a function (clause) */
 				padcat(0, 0, &current_function->parameters,
-				       *current_function->
-				       parameters ? ", " : "",
-				       typed_parameter_varname);
+				       *current_function->parameters ? ", " :
+				       "", typed_parameter_varname);
 				// arguments don't happen in this case
 				if (instructions)
 					padcat(0, 0,
 					       &current_function->parameta,
-					       *current_function->
-					       parameta ? ", " : "", "<",
+					       *current_function->parameta ?
+					       ", " : "", "<",
 					       pretty_typed_varname, ">");
 			}
 		}
